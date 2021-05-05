@@ -1,14 +1,14 @@
-Doolehealth APP
+# DooleHealth APP
 
-Hecho con Ionic 5 y Capacitor
-
-Contiene:
-Interceptores de errores, respuestas de API (fakebackend), 
-Servicios de notificacion a usuarios, redes, multi idioma, manejo de errores, almacenamiento
-Integracion con Google Services
-Imagen de desarrollo con Docker
+## Contiene:
+Interceptores de errores, respuestas de API (fakebackend), errores de servidor y timeouts
+Servicios de notificacion a usuarios, redes, multi idioma, manejo de errores, logging de errores
+Integracion con Firebase, Google Fit y Apple Health
+Contenedor Docker de desarrollo
+Guards de autenticacion 
 Componentes Web
-Guards
 
-Instalar librerias con npm install
+## Hecho con Ionic 5 y Capacitor
+
+Plugins para fotos/imagenes, opentok, autenticacion biometrica, redes sociales, calendarios y coneccion a la red.
 
