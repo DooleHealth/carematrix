@@ -1,0 +1,15 @@
+<!-- Generated template for the ImageDownloadComponent component -->
+<div>
+
+  <div *ngIf="!downloaded">
+      <div *ngIf="status == 'downloading'">
+        <div class="progress-outer">
+          <div class="progress-inner" [style.width]="percentage + '%'">
+            {{percent}} %
+        </div>
+      </div>
+    </div>
+  </div>
+  <img src="{{temporaryUrl}}" (click)="openImage()"> 
+  <!--<div *ngIf="downloaded"><img src="{{localfileNormalized}}" (click)="openImage()"></div>-->
+</div>

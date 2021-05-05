@@ -1,0 +1,7 @@
+{
+  "name": "DooleApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

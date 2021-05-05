@@ -1,0 +1,22 @@
+<ion-nav-link (click)="selectSource()" expand="block" color="dark">
+  <ion-icon size="large" name="attach"></ion-icon>{{ this.text }}</ion-nav-link
+>
+<input
+  type="file"
+  #fileInput
+  (change)="uploadFileFromBrowser($event)"
+  hidden="true"
+  accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword">
+
+
+<div id="container" style="margin-top: 10px;">
+  <div *ngFor="let file of this.files">
+  <div id="left">
+    <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+  </div>
+  <div id="middle">
+    <p class="titule">{{ file.name }}</p>
+  </div>
+  <div id="right">
+    <ion-icon name="close-circle" color="primary" (click)="removeFile(file.name)"></ion-icon>
+</div>

@@ -1,0 +1,34 @@
+<!-- Generated template for the ChatBubbleComponent component -->
+<ng-content></ng-content>
+<div>
+  <div class="chat-bubble {{message.from == 'message_response' ? 'right' : 'left'}} {{message.mediaType == 'UPLOADING' ? 'uploading' : ''}}"   >
+    <div>
+      <div class="message">{{message.fromName}}</div>
+    </div>
+    <div *ngIf="message.mediaType=='UPLOADING'">
+      <div class="message">
+        <div class="progress-outer">
+          <div class="progress-inner" [style.width]="message.percentage + '%'">
+            {{message.percentage}} %
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="message.mediaType=='TEXT'">
+      <div class="message" [innerHtml]="message.message"></div>
+    </div>
+    <div *ngIf="message.mediaType=='GEOLOCATION'">
+      <img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=16&size=600x400&key=AIzaSyCSG5Itu_gLT4XZO2u3DK46Q-RCAVvPX5c'">
+    </div>
+
+    <div *ngIf="message.mediaType=='PHOTO'">
+      <image-download [url]="message.fileUrl" [target]="message.timestamp" [clickable]="true"></image-download>
+    </div>
+    <div *ngIf="message.mediaType=='FILE'">
+      <div class="message" (click)="openFile(message)"><a>Obrir arxiu</a></div>
+    </div>
+    <div class="message-detail" style="float:right">
+      <span>{{formatEpoch(message.timestamp)}}</span>
+    </div>
+  </div>
+</div>

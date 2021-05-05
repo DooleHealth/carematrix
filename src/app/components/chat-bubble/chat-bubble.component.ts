@@ -1,0 +1,128 @@
+import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import moment from 'moment';
+import { DooleService } from 'src/app/services/doole.service';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+
+
+@Component({
+  selector: 'chat-bubble',
+  templateUrl: './chat-bubble.component.html',
+  styleUrls: ['./chat-bubble.component.scss'],
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ChatBubbleComponent), multi: true }
+  ],
+  encapsulation: ViewEncapsulation.None
+})
+export class ChatBubbleComponent implements OnInit {
+
+  @Input('chatMessage') message;
+
+  localfile : string ='';
+  localfileNormalized : string ='';
+  temporaryUrl : string ='';
+  downloaded = false;
+  status = '';
+  percent = 0;
+  target:number;
+  public lat: string;
+  public lon: string;
+
+  constructor(private dooleService : DooleService, private document: DocumentViewer) { 
+    
+  }
+
+  ngOnInit() {
+    this.format(this.message);
+    console.log("Init");
+  }
+
+  nl2br(text: string) { return text.replace(/(\\n)/, "<br/>");}
+
+  format(message){
+    console.log(message);
+    if(message.mediaType=="TEXT"){
+      if(message.message){
+        message.message=this.nl2br(message.message);
+        message.message=message.message.replace(String.fromCharCode(92),''); //treiem \'
+        message.message=message.message.replace("\\/", "/");
+        this.message.message=message.message;
+        console.log(this.message.message);
+      }
+
+    }else if(message.mediaType=="FILE"){
+      this.dooleService.downloadFile(this.message.fileUrl,message.timestamp+".pdf").subscribe(data => {
+        //downloadFile subscribefile:///var/mobile/Containers/Data/Application/4D8A5FB4-B486-498D-97E8-76F404A6315F/Documents/1535373755996
+        //downloadFile subscribehttp://localhost:8080/var/mobile/Containers/Data/Application/946A8956-0513-469B-803D-4C6F34087DDC/Library/Caches/1535374599756
+        console.log('res in chat bubble: ', data)
+        this.localfile = data.file;
+        this.localfileNormalized = data.fileNormalized;
+
+      });
+
+    }else if(message.mediaType=="GEOLOCATION"){
+
+      
+      var t = message.message;
+      var array_message = t.split (","); 
+      this.lat = array_message[0].substring(5);
+      this.lon = array_message[1].substring(4,array_message[1].length - 1);
+     
+     
+      console.log(this.lat, this.lon);
+    }
+  
+
+  }
+
+  static getEpoch(): number {
+    return moment().unix();
+  }
+
+  static getCalendarDay(epoch: number): string {
+    if (!epoch) {
+      return null;
+    }
+    let timeString = 'h:mm A';
+
+    return moment(epoch).calendar(null, {
+      sameDay: '[Hoy] ' + timeString,
+      lastDay: '[Ayer] ' + timeString,
+      sameElse: 'DD/MM/YY ' + timeString
+    });
+  }
+
+  formatEpoch(epoch): string {
+    return ChatBubbleComponent.getCalendarDay(epoch);
+  }
+
+  openFile(message){
+    this.target = message.timestamp;
+    var dict = [];
+    console.log("clicked message: ", message.fileUrl);
+    dict.push({file:message.fileUrl});
+    this.dooleService.post("message/temporaryUrl", {file:message.fileUrl}).subscribe(data=>{
+      console.log('post("message/temporaryUrl"', data);
+      this.temporaryUrl=data.temporaryUrl;
+      this.dooleService.downloadFile(data.temporaryUrl,this.target).subscribe(datad => {
+        console.log("***", datad);
+        //console.log("downloadFile subscribe"+datad.fileNormalized);
+        //console.log(data.percent);
+        this.percent=datad.percent;
+        this.status=datad.status;
+        //downloadFile subscribefile:///var/mobile/Containers/Data/Application/4D8A5FB4-B486-498D-97E8-76F404A6315F/Documents/1535373755996
+        //downloadFile subscribehttp://localhost:8080/var/mobile/Containers/Data/Application/946A8956-0513-469B-803D-4C6F34087DDC/Library/Caches/1535374599756
+        this.localfile = datad.file;
+        this.localfileNormalized = datad.fileNormalized;
+        this.downloaded = datad.downloaded;
+        window.open(this.temporaryUrl, "");
+        //window.open("data:application/pdf," + encodeURI(this.localfile)); 
+        //this.document.viewDocument(this.localfile, 'application/pdf',null);
+      });
+    });
+
+    
+    
+  }
+
+}
