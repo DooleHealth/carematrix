@@ -16,11 +16,11 @@ const routes: Routes = [
   },
   {
     path: 'landing',
-    loadChildren: () => import('./pages/landing/landing.module').then( m => m.LandingPageModule)
+    loadChildren: () => import('./pages/login/landing/landing.module').then( m => m.LandingPageModule)
   },
   {
     path: 'legal',
-    loadChildren: () => import('./pages/legal/legal.module').then( m => m.LegalPageModule)
+    loadChildren: () => import('./pages/login/legal/legal.module').then( m => m.LegalPageModule)
   }
 
 ];

@@ -17,15 +17,22 @@ ion-item-divider {
     border-radius: 10px;
     height: 45px;
   }
-
+  
   /* Global classes*/
 
   .main-container {
     margin-left: 5%;
     margin-right: 5%;
     margin-top:10%;
+    margin-bottom: 5%;
   }
 
   .buttonLink{
     color: #3498DB;
+    --box-shadow:none;
+    
+  }
+
+  .toolbarTitle{
+text-align: center;
   }
