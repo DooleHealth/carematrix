@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: LandingPage
+  },
+  {
+    path: 'legal',
+    loadChildren: () => import('../legal/legal.module').then( m => m.LegalPageModule)
   }
 ];
 
