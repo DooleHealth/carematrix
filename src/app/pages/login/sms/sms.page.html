@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="toolbarTitle">Verificación de Identidad</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <div class="main-container">
+    <ion-grid>
+      <h2 class="bold">Empezamos por tu número de teléfono</h2>
+      <ion-text>Recibirás un SMS con un código de verificación.
+        ¡Porque tu privacidad es lo más importante!</ion-text>
+      <ion-col>
+        <div style="padding-top: 15%;">
+          <ion-item-divider>
+            <ion-input placeholder="+34">
+            </ion-input>
+          </ion-item-divider>
+          <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" routerLink="verification">
+            Continuar
+          </ion-button>
+          <div style="padding-top:5%;">
+            <ion-text>Tu número únicamente será utilizado para situaciones urgentes o de emergencia,
+              pero nunca será compartido con otras empresas o terceros.</ion-text>
+          </div>
+        </div>
+      </ion-col>
+    </ion-grid>
+  </div>
+</ion-content>

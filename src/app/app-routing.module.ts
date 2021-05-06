@@ -16,7 +16,19 @@ const routes: Routes = [
   },
   {
     path: 'landing',
-    loadChildren: () => import('./pages/landing/landing.module').then( m => m.LandingPageModule)
+    loadChildren: () => import('./pages/login/landing/landing.module').then( m => m.LandingPageModule)
+  },
+  {
+    path: 'legal',
+    loadChildren: () => import('./pages/login/legal/legal.module').then( m => m.LegalPageModule)
+  },
+  {
+    path: 'sms',
+    loadChildren: () => import('./pages/login/sms/sms.module').then( m => m.SmsPageModule)
+  },
+  {
+    path: 'verification',
+    loadChildren: () => import('./pages/login/verification/verification.module').then( m => m.VerificationPageModule)
   }
 
 ];
