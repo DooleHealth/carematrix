@@ -4,11 +4,10 @@
 /** Ionic CSS Variables **/
 
 $colors: (
-   primary:   #0091b3,
-  /* primary:   #006488,*/
-  secondary:  #ffa303,
-  /* primary:    #9b9b9b,#4a5f9f,*/
-  /* secondary:  #b8db15,*/
+  primary:   #009cb3,
+  secondary:  #3498DB,
+  tertiary:    #F39C12,
+  grey:  #BDC3C7,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222
@@ -27,11 +26,15 @@ $chat-bubble: (
   background-right: map-get($colors, primary)
 );
 
+
 :root {
+  
   /** font-family **/
-  --ion-font-family: 'MyriadPro-Regular'!important;
+  --ion-font-family: 'Roboto-Regular'!important;
+  /** background **/
+  --ion-background-color:#E5E5E5;
   /** primary **/
-  --ion-color-primary: #006172; 
+  --ion-color-primary: #009cb3; 
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -39,7 +42,7 @@ $chat-bubble: (
   --ion-color-primary-tint: #ca9b01; 
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: #3498DB;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -47,7 +50,7 @@ $chat-bubble: (
   --ion-color-secondary-tint: #50c8ff;
 
   /** tertiary **/
-  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary: #F39C12;
   --ion-color-tertiary-rgb: 82, 96, 255;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
