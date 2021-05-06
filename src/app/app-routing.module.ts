@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'sms',
     loadChildren: () => import('./pages/login/sms/sms.module').then( m => m.SmsPageModule)
+  },
+  {
+    path: 'verification',
+    loadChildren: () => import('./pages/login/verification/verification.module').then( m => m.VerificationPageModule)
   }
 
 ];
