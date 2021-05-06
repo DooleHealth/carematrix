@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'legal',
     loadChildren: () => import('./pages/login/legal/legal.module').then( m => m.LegalPageModule)
+  },
+  {
+    path: 'sms',
+    loadChildren: () => import('./pages/login/sms/sms.module').then( m => m.SmsPageModule)
   }
 
 ];
