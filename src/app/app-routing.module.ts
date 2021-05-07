@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'verification',
     loadChildren: () => import('./pages/login/verification/verification.module').then( m => m.VerificationPageModule)
+  },
+  {
+    path: 'intro',
+    loadChildren: () => import('./pages/onboarding/intro/intro.module').then( m => m.IntroPageModule)
   }
 
 ];
