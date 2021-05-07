@@ -1,0 +1,42 @@
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("/assets/fonts/Roboto-Regular.ttf");
+    color: black;
+  }
+
+ /* Global styles of the components*/
+
+ion-icon {
+    color:#BDC3C7;
+}
+
+ion-item-divider {
+    background-color: rgb(253, 253, 252);
+    margin-bottom: 15px;
+    padding: 3%;
+    border-radius: 10px;
+    height: 45px;
+  }
+  
+  /* Global classes*/
+
+  .main-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top:10%;
+    margin-bottom: 5%;
+  }
+
+  .buttonLink{
+    color: #3498DB;
+    --box-shadow:none;
+    
+  }
+
+  .toolbarTitle{
+text-align: center;
+  }
+
+  .bold{
+      font-weight: 800;
+  }

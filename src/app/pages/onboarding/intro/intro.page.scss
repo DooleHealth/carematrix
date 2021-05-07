@@ -1,0 +1,54 @@
+.titleBold{
+    font-weight: 1000;
+    margin-top: 10%;
+    font-size: 40px;
+    text-align: left;
+}
+.iconPadding{
+    padding-top: 90%;
+}
+.titleBoldCentered{
+    font-weight: 1000;
+    margin-top: 10%;
+    font-size: 40px;
+    text-align: center;
+}
+.iconPadddingCenter{
+    padding-top: 20%;
+}
+
+.buttonPadding{
+    margin-bottom:3%;
+    margin-top: 7%;
+}
+.buttonPadding2{
+    margin-bottom:3%;
+    margin-top: 10%;
+    
+}
+
+/* ----------- iPhone 10 ----------- */
+@media only screen
+  and (min-device-height : 800px)
+  and (orientation: portrait)
+{
+    .buttonPadding{
+        margin-top:40%;
+    }
+    
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+@media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 330px)
+{
+    .main-container {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top:0%;
+        margin-bottom: 5%;
+      }
+    
+}
+
