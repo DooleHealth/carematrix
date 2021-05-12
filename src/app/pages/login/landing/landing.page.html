@@ -11,11 +11,11 @@
                     </ion-item-divider>
                     <ion-item-divider>
                         <ion-icon name="lock-closed"></ion-icon>
-                        <ion-input type="password" placeholder="Contraseña" formControlName="password">
+                        <ion-input type="password" placeholder="{{'password.placeholder' | translate }}" formControlName="password">
                         </ion-input>
                     </ion-item-divider>
                     <ion-text>
-                        <a> ¿Has olvidado la contraseña?</a>
+                        <a>{{ 'login.password_recovery' | translate}}</a>
                     </ion-text>
                   
                     <!-- <ion-button type="submit" color="primary" expand="block" class="enter-btn" routerLink="legal">
@@ -23,7 +23,7 @@
                     </ion-button> -->
 
                     <ion-button type="submit" size="medium" [disabled]="!loginForm.valid"
-                    color="primary" expand="block" class="enter-btn" routerLink="legal">
+                    color="primary" expand="block" class="enter-btn">
                         Iniciar sesión</ion-button>
        
                     <ion-button expand="block" color="transparent" class="buttonLink">

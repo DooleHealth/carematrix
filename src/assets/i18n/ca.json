@@ -1,3 +1,21 @@
 {
-  
+    "login": {
+        "header": "Inici de sessió",
+        "button": "Entra-hi",
+        "text": "Accedeix-hi amb l’accés MGC:",
+        "placeholder": "Número de mutualista",
+        "username_val": "requerit",
+        "password": "Contrasenya",
+        "password_val": "requerit",
+        "fail": "Les dades són incorrectes",
+        "password_recovery": "Has oblidat la contrasenya?",
+        "google_signin": "Entra-hi amb Google",
+        "apple_signin": "Entra-hi amb Apple",
+        "submit": "S’està iniciant la sessió amb "
+      },
+      "legal": {
+        "header": "Condicions legals i d’ús de l’aplicació",
+        "ok_button": "Les accepto",
+        "ko_button": "No les accepto"
+      }
 }

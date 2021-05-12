@@ -21,7 +21,14 @@ const TOKEN_KEY = 'token';
 export class User{
   
   condicion_legal: boolean;
-  constructor(){};
+  constructor(
+    @Inject(String) public username:string, 
+    @Inject(String) public id_usuari_mgc?:string, 
+    @Inject(String) public id_usuari_amiq?:string,  
+    @Inject(String) public mutua?:string, 
+    @Inject(String) public quadre?:string, 
+    @Inject(String) public idioma?: string){};
+  //constructor(){};
 }
 
 @Injectable({
@@ -33,6 +40,9 @@ export class AuthenticationService {
   public mutua: string;
   public isRecovery: boolean = false;
   public action:string;
+
+  public id_usuari_mgc:string;
+
   public data : Array<any>;
   public email: string;
   public agendaUser = [];
@@ -74,11 +84,24 @@ export class AuthenticationService {
   }
   
 
-  setUser(){
+/*   setUser(){
 
     this.user = new User();
     
+  }  */ 
+  setUser(username: string, id_usuari_mgc?: string ,id_usuari_amiq?: string, mutua?: string, quadre?:string, language_id?:number ){
+
+    // convert language Id to locale code
+    // Català = 1, Castellano = 2, English = 3
+
+    let idioma = language_id == 2? 'es':'ca'; 
+    //console.log("idioma: ", idioma);
+    this.user = new User(username, id_usuari_mgc, id_usuari_amiq, mutua, quadre, idioma);
+    //console.log("user: ", this.user );
   }
+  
+
+  
 
   login(credentials: {username, password, credencial, mutua?:string}): Observable<any> {
 
