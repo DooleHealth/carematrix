@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: VerificationPage
+  },
+  {
+    path: 'intro',
+    loadChildren: () => import('../../onboarding/intro/intro.module').then( m => m.IntroPageModule)
   }
 ];
 

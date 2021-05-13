@@ -1,23 +1,25 @@
 /** Ionic CSS Variables **/
 :root {
   /** font-family **/
-  --ion-font-family: "MyriadPro-Regular"!important;
+  --ion-font-family: "Roboto-Regular"!important;
+  /** background **/
+  --ion-background-color:#E5E5E5;
   /** primary **/
-  --ion-color-primary: #006172;
+  --ion-color-primary: #3498DB;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #02859c;
   --ion-color-primary-tint: #ca9b01;
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: #009cb3;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
   --ion-color-secondary-shade: #36abe0;
   --ion-color-secondary-tint: #50c8ff;
   /** tertiary **/
-  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary: #F39C12;
   --ion-color-tertiary-rgb: 82, 96, 255;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
@@ -1730,6 +1732,39 @@ mat-row,mat-header-row,mat-footer-row,th.mat-header-cell,td.mat-cell,td.mat-foot
 .mat-snack-bar-container{color:rgba(255,255,255,.7);background:#323232;box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0, 0, 0, 0.12)}
 .mat-simple-snackbar-action{color:#ffd740}
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("/assets/fonts/Roboto-Regular.ttf");
+  color: black;
+}
+/* Global styles of the components*/
+ion-icon {
+  color: #BDC3C7;
+}
+ion-item-divider {
+  background-color: #fdfdfc;
+  margin-bottom: 15px;
+  padding: 3%;
+  border-radius: 10px;
+  height: 45px;
+}
+/* Global classes*/
+.main-container {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+.buttonLink {
+  color: #3498DB;
+  --box-shadow:none;
+}
+.toolbarTitle {
+  text-align: center;
+}
+.bold {
+  font-weight: 800;
+}
 :root h1 > app-text-shell {
   --font-size: 32px;
   --text-shell-line-height: calc(var(--font-size) * 1.2);
