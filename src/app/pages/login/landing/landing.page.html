@@ -6,16 +6,16 @@
                 <form [formGroup]="loginForm" (ngSubmit)="doDooleAppLogin()">
                     <ion-item-divider>
                         <ion-icon name="person"></ion-icon>
-                        <ion-input type="text" placeholder="Usuario" formControlName="username" >
+                        <ion-input type="text" placeholder="{{'landing.user_placeholder' | translate }}" formControlName="username" >
                         </ion-input>
                     </ion-item-divider>
                     <ion-item-divider>
                         <ion-icon name="lock-closed"></ion-icon>
-                        <ion-input type="password" placeholder="{{'password.placeholder' | translate }}" formControlName="password">
+                        <ion-input type="password" placeholder="{{'landing.password_placeholder' | translate }}" formControlName="password">
                         </ion-input>
                     </ion-item-divider>
                     <ion-text>
-                        <a>{{ 'login.password_recovery' | translate}}</a>
+                        <a>{{ 'landing.password_recovery' | translate}}</a>
                     </ion-text>
                   
                     <!-- <ion-button type="submit" color="primary" expand="block" class="enter-btn" routerLink="legal">
@@ -24,10 +24,10 @@
 
                     <ion-button type="submit" size="medium" [disabled]="!loginForm.valid"
                     color="primary" expand="block" class="enter-btn">
-                        Iniciar sesión</ion-button>
+                    {{ 'landing.button_signin' | translate}}</ion-button>
        
                     <ion-button expand="block" color="transparent" class="buttonLink">
-                        Crear Usuario
+                        {{ 'landing.button_registre' | translate}}
                     </ion-button>
                 </form>
             </ion-col>

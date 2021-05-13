@@ -21,13 +21,7 @@ const TOKEN_KEY = 'token';
 export class User{
   
   condicion_legal: boolean;
-  constructor(
-    @Inject(String) public username:string, 
-    @Inject(String) public id_usuari_mgc?:string, 
-    @Inject(String) public id_usuari_amiq?:string,  
-    @Inject(String) public mutua?:string, 
-    @Inject(String) public quadre?:string, 
-    @Inject(String) public idioma?: string){};
+  constructor(){};
   //constructor(){};
 }
 
@@ -83,49 +77,28 @@ export class AuthenticationService {
     localStorage.setItem(TOKEN_KEY, token);
   }
   
-
-/*   setUser(){
-
-    this.user = new User();
-    
-  }  */ 
-  setUser(username: string, id_usuari_mgc?: string ,id_usuari_amiq?: string, mutua?: string, quadre?:string, language_id?:number ){
-
-    // convert language Id to locale code
-    // Català = 1, Castellano = 2, English = 3
-
-    let idioma = language_id == 2? 'es':'ca'; 
-    //console.log("idioma: ", idioma);
-    this.user = new User(username, id_usuari_mgc, id_usuari_amiq, mutua, quadre, idioma);
-    //console.log("user: ", this.user );
-  }
   
 
   
 
   login(credentials: {username, password, credencial, mutua?:string}): Observable<any> {
 
-    const endpoint = this.api.getEndpoint('login');
+    const endpoint = this.api.getEndpoint('patient/login');
 
     return this.http.post(endpoint, credentials).pipe(
       map((res: any) => {
 
         console.log("Login res: ", res);
 
-        if(res.status == 301 || res.status == 302 || res.status == 392){
-          return res;
+        if(!res.success){
+          this.throwError(res);
         }
-
-        if(res.status != 200){
-           return this.throwError(res);
-        }
-
         // save user's token
-        if(res.data.token)
-          localStorage.setItem(TOKEN_KEY, res.data.token);
+        if(res.token)
+          localStorage.setItem(TOKEN_KEY, res.token);
           
-        if(res.data.firebaseToken){
-          this.firebaseAuth.signInWithCustomToken(res.data.firebaseToken).then((data) => {
+        if(res.firebaseToken){
+          this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if(!this.platform.is('mobileweb') && !this.platform.is('desktop')){
               this.registerDevice();
             }

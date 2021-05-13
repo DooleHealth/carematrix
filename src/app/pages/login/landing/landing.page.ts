@@ -71,17 +71,7 @@ export class LandingPage implements OnInit {
     }
   }
 
-  setUser(data: { id_usuari_mgc: string; mutua: string; name: string; id_usuari_amiq: string; quadre:string, language_id:number}){
-    //console.log("setUser", data);
-    this.authService.id_usuari_mgc = data.id_usuari_mgc;
-    this.authService.mutua = data.mutua;
-  
-    this.authService.setUser(data.name, data.id_usuari_mgc, data.id_usuari_amiq, data.mutua, data.quadre, data.language_id);
-    let language = this.authService.user.idioma;
-    this.languageService.changeLanguage(language);
-    localStorage.setItem('language', language);
-  
-  }
+
 
   resetSubmitError() {
     this.submitError = null;
@@ -96,7 +86,7 @@ export class LandingPage implements OnInit {
     // That's why we need to wrap the router navigation call inside an ngZone wrapper
     this.ngZone.run(() => {      
       //this.router.navigate(['app/home']);
-      this.router.navigate(['legal']);
+      this.router.navigate(['home']);
     });
   }
 
@@ -112,30 +102,11 @@ export class LandingPage implements OnInit {
       this.redirectLoader = loader;
       this.redirectLoader.present();
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
+        console.log('[LandingPage] doDooleAppLogin()', await res);
+        this.dismissLoading();
+        this.router.navigate(['/legal']);
+        //this.redirectLoggedUserToHomePage();
 
-        console.log('doMgcLogin', res);
-        if(res.status == 301 || res.status == 302 || res.status == 392){
-          this.showAlert(this.translate.instant('login.fail'));
-          this.dismissLoading();
-        }else{
-
-          this.setUser(await res);
-          console.log("this mutua: ", res.mutua);
-          this.saveInLocalStorage('mutua')
-         
-          this.resetSubmitError();
-          // Must sign agreement, redirect to /legal
-          if (res.condicion_legal == 0) {
-            console.log(res);
-            this.dismissLoading();
-            this.router.navigate(['/legal'], { state: { agreement: res.condicion_legal_contingut.contingut } });
-            
-          } else{
-            this.dismissLoading();
-            this.redirectLoggedUserToHomePage();
-          }
-
-        }
       }, async (error) => {
        console.log('doMGCLogin ERROR', await error);
        this.dismissLoading();

@@ -1,8 +1,15 @@
 {
+    "landing": {
+        "user_placeholder": "Usuari",
+        "password_placeholder": "Contrasenya",
+        "password_recovery": "Has oblidat la contrasenya?",
+        "button_signin": "Inici de sessió",
+        "button_registre": "Crear Usuari"
+      },    
     "login": {
         "header": "Inici de sessió",
         "button": "Entra-hi",
-        "text": "Accedeix-hi amb l’accés MGC:",
+        "text": "Accedeix-hi amb l’accés Doole:",
         "placeholder": "Número de mutualista",
         "username_val": "requerit",
         "password": "Contrasenya",
