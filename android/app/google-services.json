@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "344383195320",
+    "firebase_url": "https://covid-39b96.firebaseio.com",
+    "project_id": "covid-39b96",
+    "storage_bucket": "covid-39b96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344383195320:android:df6665c344487d6613cc4d",
+        "android_client_info": {
+          "package_name": "com.doole.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344383195320-dtgs8008unua7nu9rjarnpia6majfqcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9oILPDVf_OPHtjA5rvOHXw16TOgiQrzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344383195320-dtgs8008unua7nu9rjarnpia6majfqcm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "344383195320-c4rsp8enq54f6rhd1p4u05v5988ian41.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doole.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344383195320:android:35aac1e54f54239913cc4d",
+        "android_client_info": {
+          "package_name": "com.flsida.covidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344383195320-dtgs8008unua7nu9rjarnpia6majfqcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9oILPDVf_OPHtjA5rvOHXw16TOgiQrzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344383195320-dtgs8008unua7nu9rjarnpia6majfqcm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "344383195320-c4rsp8enq54f6rhd1p4u05v5988ian41.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doole.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344383195320:android:b5947866acb8d57c13cc4d",
+        "android_client_info": {
+          "package_name": "com.miquelvalls.linkela"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344383195320-dtgs8008unua7nu9rjarnpia6majfqcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9oILPDVf_OPHtjA5rvOHXw16TOgiQrzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344383195320-dtgs8008unua7nu9rjarnpia6majfqcm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "344383195320-c4rsp8enq54f6rhd1p4u05v5988ian41.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doole.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

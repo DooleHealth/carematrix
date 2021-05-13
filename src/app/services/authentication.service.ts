@@ -22,6 +22,7 @@ export class User{
   
   condicion_legal: boolean;
   constructor(){};
+  //constructor(){};
 }
 
 @Injectable({
@@ -33,6 +34,9 @@ export class AuthenticationService {
   public mutua: string;
   public isRecovery: boolean = false;
   public action:string;
+
+  public id_usuari_mgc:string;
+
   public data : Array<any>;
   public email: string;
   public agendaUser = [];
@@ -73,36 +77,28 @@ export class AuthenticationService {
     localStorage.setItem(TOKEN_KEY, token);
   }
   
+  
 
-  setUser(){
-
-    this.user = new User();
-    
-  }
+  
 
   login(credentials: {username, password, credencial, mutua?:string}): Observable<any> {
 
-    const endpoint = this.api.getEndpoint('login');
+    const endpoint = this.api.getEndpoint('patient/login');
 
     return this.http.post(endpoint, credentials).pipe(
       map((res: any) => {
 
         console.log("Login res: ", res);
 
-        if(res.status == 301 || res.status == 302 || res.status == 392){
-          return res;
+        if(!res.success){
+          this.throwError(res);
         }
-
-        if(res.status != 200){
-           return this.throwError(res);
-        }
-
         // save user's token
-        if(res.data.token)
-          localStorage.setItem(TOKEN_KEY, res.data.token);
+        if(res.token)
+          localStorage.setItem(TOKEN_KEY, res.token);
           
-        if(res.data.firebaseToken){
-          this.firebaseAuth.signInWithCustomToken(res.data.firebaseToken).then((data) => {
+        if(res.firebaseToken){
+          this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if(!this.platform.is('mobileweb') && !this.platform.is('desktop')){
               this.registerDevice();
             }

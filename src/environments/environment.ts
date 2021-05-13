@@ -9,14 +9,24 @@ export const environment = {
     networkDelay: 500
   },
   firebase : {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
+    apiKey: "AIzaSyDcd9Q5boJJ46VGoGn1MYAN3BOJp6EaCv8",
+    authDomain: "covid-39b96.firebaseapp.com",
+    databaseURL: "https://covid-39b96.firebaseio.com/",
+    projectId: "covid-39b96",
+    storageBucket: "covid-39b96.appspot.com",
+    messagingSenderId: "344383195320",
+    //appId: "1:1094231160196:web:11d4eecd087e565cbed9d1",
+    //measurementId: "G-4SW50F4HMH"
+
+/*     apiKey: "AIzaSyCg7GGDmwXpVjEaA1KodELEvk8mORKw6XM",
+    authDomain: "mgc-doole.firebaseapp.com",
+    databaseURL: "https://mgc-doole.firebaseio.com",
+    projectId: "mgc-doole",
+    storageBucket: "mgc-doole.appspot.com",
+    messagingSenderId: "1094231160196",
+    appId: "1:1094231160196:web:11d4eecd087e565cbed9d1",
+    measurementId: "G-4SW50F4HMH" */
+
   }
 };
 

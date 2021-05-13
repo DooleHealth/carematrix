@@ -1,3 +1,27 @@
 {
-  
+    "landing": {
+        "user_placeholder": "Usuario",
+        "password_placeholder": "Contraseña",
+        "password_recovery": "¿Has olvidado tu contraseña?",
+        "button_signin": "Iniciar sesión",
+        "button_registre": "Crear Usuario"
+      },
+    "login": {
+        "header": "Login",
+        "button": "Entrar",
+        "text": "Accede con tu acceso Doole:",
+        "placeholder": "Número de mutualista",
+        "password": "Contraseña",
+        "password_val": "requerido",
+        "fail": "Los datos son incorrectos",
+        "password_recovery": "¿Olvidaste tu contraseña?",
+        "google_signin": "Accede con Google",
+        "apple_signin": "Accede con Apple",
+        "submit":"Iniciando sesión con "
+      },
+      "legal": {
+        "header": "Condiciones legal y de uso de la aplicación",
+        "ok_button": "Acepto",
+        "ko_button": "No acepto"
+      }
 }
