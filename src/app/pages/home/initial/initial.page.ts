@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { of, Subject, throwError } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 import { Advice, Agenda, Diet, Drug, Game, Goal } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -50,7 +50,7 @@ export class InitialPage implements OnInit {
     private dooleService: DooleService) { }
 
   ngOnInit() {  
-   // this.showInformation()
+    this.showInformation()
   }
 
 /*   public ngOnDestroy() {
@@ -60,7 +60,8 @@ export class InitialPage implements OnInit {
 
   showInformation(){
     //this.getAllInformation();
-    this.getDAta()
+    this.getAll()
+    //this.getUserInformation()
 /*     this.getAdvices()
     this.getAgenda()
     this.getGames();
@@ -69,11 +70,29 @@ export class InitialPage implements OnInit {
 
   getAllInformation(){
     this.dooleService.getAPIhomeInitial(this.PATH_DIETS)
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe( async data =>{
-        console.log(`[InitialPage] getAllInformation()`, await data as any);
-        this.showParamsDiets( data as Diet[])
+      .subscribe( data =>{
+        console.log(`[InitialPage] getAllInformation()`, data as any);
+       // this.showParamsDiets( data as Diet[])
       })
+  }
+
+  getUserInformation(){
+    this.dooleService.getAPIhomeInitial('/user/informationUser')
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe( data =>{
+        console.log(`[InitialPage] getUserInformation()`, data.diets as Diet[]);
+       // this.showParamsDiets( data as Diet[])
+      })
+  }
+
+  getAll(){
+    this.dooleService.getAPIhome(this.PATH_DIETS).subscribe(
+      async (res: any) =>{
+        console.log('[InitialPage] getDAta()', await res);
+       },(err) => { 
+          console.log('getDAta ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
   }
 
   async getDiets(){
@@ -97,15 +116,18 @@ export class InitialPage implements OnInit {
       });
   }
 
-  showParamsDiets(res: Diet[]){
-    console.log('[InitialPage] showParamsDiets()');
-    res.forEach( data => {
+  showParamsDiets(res?: Diet[]){
+    this.getDiets().then((data) =>{
+      console.log('[InitialPage] showParamsDiets()', data);
+    })
+    
+/*     res.forEach( data => {
       let slider: SliderInfo = {
         description: data.name,
         image:  data.image
       }
       this.dietInfo.content.push(slider)
-    })
+    }) */
     this.dietInfo = {
       title: 'Tu Dia',
       subtitle: 'Almuerzo'
