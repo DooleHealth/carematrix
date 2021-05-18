@@ -197,20 +197,14 @@ export class DooleService {
     
   }
 
-  getAPIhome(path:string): Promise<any>{
+  getAPIhome(path:string) : Observable<any>{
     const endpoint = this.api.getEndpoint(path);
-    return new Promise<any>((resolve, reject) =>{
-      this.http.get(endpoint).pipe(
-        map((res: any) => {
-          console.log(`[DooleService] getAPIhome(${path}) res: `, res);
-          //return res.data;
-        })
-      )
-      .subscribe(
-        (res: any) =>{resolve(res); },
-        (err) => { reject(err); }
-        );
-    })
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhome(${path}) res: `, res);
+        return res;
+      })
+    );
   }
 
   postAPIhomeInitial(path:string, params: Object): Observable<any>{

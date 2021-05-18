@@ -88,11 +88,13 @@ export class InitialPage implements OnInit {
 
   getDAta(){
     console.log('[InitialPage] getDAta()');
-    this.dooleService.getAPIhome(this.PATH_DIETS).then((data) =>{
-      console.log('[InitialPage] getDAta()', data);
-    }).catch((err) => { 
-      console.log('getDAta ERROR(' + err.code + '): ' + err.message); 
-    });
+    this.dooleService.getAPIhome(this.PATH_DIETS).subscribe(
+      async (res: any) =>{
+        console.log('[InitialPage] getDAta()', await res);
+       },(err) => { 
+          console.log('getDAta ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
   }
 
   showParamsDiets(res: Diet[]){
