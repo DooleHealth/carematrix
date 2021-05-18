@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Subject, throwError } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
-import { Advice, Agenda, Diet, Drug, Game, Goal } from 'src/app/models/user';
+import { Advice, Agenda, Diet, Drug, Game, Goal, User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -28,25 +28,13 @@ export interface SliderInfo {
   styleUrls: ['./initial.page.scss'],
 })
 export class InitialPage implements OnInit {
-  PATH_ADVICES = 'user/advices'
-  PATH_DIETS = 'user/diets'
-  PATH_DRUGS = 'user/drugIntake/date'
-  PATH_AGENDA = 'user/agenda'
-  PATH_GAMES = 'user/games'
-  PATH_GOALS = 'user/element/goals'
-
-  advices: Advice[];
-  diets: Diet[];
-  agendas: Agenda[];
-  games: Game[];
-  drugs: Drug[];
-  goals: Goal[]
-
-  dietInfo: UserInformation;
+  PATH_USERDATA= '/user/informationUser'
+  userDoole : User
+  dietInfo: UserInformation
+  DrugInfo: UserInformation
   private onDestroy$ = new Subject();
 
   constructor(public router:Router,
-    private authService: AuthenticationService,
     private dooleService: DooleService) { }
 
   ngOnInit() {  
@@ -59,131 +47,90 @@ export class InitialPage implements OnInit {
   } */
 
   showInformation(){
-    //this.getAllInformation();
-    this.getAll()
+    this. getAll()
     //this.getUserInformation()
-/*     this.getAdvices()
-    this.getAgenda()
-    this.getGames();
-    this.postDrugs() */
-  }
-
-  getAllInformation(){
-    this.dooleService.getAPIhomeInitial(this.PATH_DIETS)
-      .subscribe( data =>{
-        console.log(`[InitialPage] getAllInformation()`, data as any);
-       // this.showParamsDiets( data as Diet[])
-      })
+    
   }
 
   getUserInformation(){
     this.dooleService.getAPIhomeInitial('/user/informationUser')
       .pipe(takeUntil(this.onDestroy$))
       .subscribe( data =>{
-        console.log(`[InitialPage] getUserInformation()`, data.diets as Diet[]);
-       // this.showParamsDiets( data as Diet[])
+        console.log(`[InitialPage] getUserInformation()`, data);
+
+        this.userDoole = data as User
+        this.dietInfo =  this.showDiets( this.userDoole )
+       // this.showDrugs(this.userDoole)
       })
   }
 
   getAll(){
-    this.dooleService.getAPIhome(this.PATH_DIETS).subscribe(
+    this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
       async (res: any) =>{
-        console.log('[InitialPage] getDAta()', await res);
+        console.log('[InitialPage] getAll()', await res);
+        this.userDoole = res as User
+        this.dietInfo =  this.showDiets( this.userDoole )
        },(err) => { 
-          console.log('getDAta ERROR(' + err.code + '): ' + err.message); 
+          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
 
-  async getDiets(){
-    this.dooleService.getAPIhomeInitial(this.PATH_DIETS).subscribe(async (res) => { 
-      console.log('[InitialPage] getDiets()', await res);
-      return res;
-    }, async (error) => {
-     console.log('[InitialPage] getDiets() ERROR', await error);
-     throw error;
-   });
-  }
 
-  getDAta(){
-    console.log('[InitialPage] getDAta()');
-    this.dooleService.getAPIhome(this.PATH_DIETS).subscribe(
-      async (res: any) =>{
-        console.log('[InitialPage] getDAta()', await res);
-       },(err) => { 
-          console.log('getDAta ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      });
-  }
-
-  showParamsDiets(res?: Diet[]){
-    this.getDiets().then((data) =>{
-      console.log('[InitialPage] showParamsDiets()', data);
-    })
-    
-/*     res.forEach( data => {
-      let slider: SliderInfo = {
-        description: data.name,
-        image:  data.image
-      }
-      this.dietInfo.content.push(slider)
-    }) */
-    this.dietInfo = {
+  showDiets(user: User): UserInformation{
+    let sliders = []
+    let diet:UserInformation = {
       title: 'Tu Dia',
-      subtitle: 'Almuerzo'
+      subtitle: 'Almuerzo',
+      icon: 'assets/icons/Agenda.svg',
+      hour: '12:00',
     }
-    console.log('[InitialPage] showParamsDiets()', this.dietInfo);
+    user.diets.forEach((diet) => {
+        let slider = {
+          tilte: diet.name,
+          hour: diet.hour
+        }      
+        sliders.push(slider)
+        console.log('[InitialPage] showParamsDiets()', slider);
+    })
+    diet.content = sliders
+    console.log('[InitialPage] showParamsDiets()', diet);
+    return diet
   }
 
-  getAdvices(){
-    this.dooleService.getAPIhomeInitial(this.PATH_ADVICES).subscribe(async (res) => {
-      console.log('[InitialPage] getAdvices()', await res);
-      this.advices = res as Advice[]
-    }, async (error) => {
-     console.log('[InitialPage] getAdvices() ERROR', await error);
-     throw error;
-   });
+  showAdvices(){
+
   }
 
-  getAgenda(){
-    this.dooleService.getAPIhomeInitial(this.PATH_AGENDA).subscribe(async (res) => {
-      console.log('[InitialPage] getAgenda()', await res);
-      this.agendas = res as Agenda[]
-    }, async (error) => {
-     console.log('[InitialPage] getAgenda() ERROR', await error);
-     throw error;
-   });
+  showAgenda(){
+
   }
 
-  getGames(){
-    this.dooleService.getAPIhomeInitial(this.PATH_GAMES).subscribe(async (res) => {
-      console.log('[InitialPage] getGames()', await res);
-      this.games = res as Game[]
-    }, async (error) => {
-     console.log('[InitialPage] getGames() ERROR', await error);
-     throw error;
-   });
+  showGames(){
+
   }
 
-  getGoals(){
-    this.dooleService.getAPIhomeInitial(this.PATH_GOALS).subscribe(async (res) => {
-      console.log('[InitialPage] getGames()', await res);
-      this.goals = res as Goal[]
-    }, async (error) => {
-     console.log('[InitialPage] getGames() ERROR', await error);
-     throw error;
-   });
+  showGoals(){
+
   }
 
-  postDrugs(){
-    let date = '2021-05-17'
-    this.dooleService.postAPIhomeInitial(this.PATH_DRUGS, {date: date}).subscribe(async (res) => {
-      console.log('[InitialPage] getGames()', await res);
-      this.drugs = res as Drug[]
-    }, async (error) => {
-     console.log('[InitialPage] getGames() ERROR', await error);
-     throw error;
-   });
+  showDrugs(user: User){
+    let sliders = []
+    this.DrugInfo = {
+      subtitle: 'Medication',
+      icon: 'assets/icons/Agenda.svg',
+    };
+/*     user.drugs.forEach((diet) => {
+        let slider = {
+          tilte: diet.name,
+          hour: diet.
+        } ;     
+        sliders.push(slider)
+        
+    })  */
+    this.DrugInfo.content = sliders
+    console.log('[InitialPage] showParamsDiets()', this.DrugInfo);
+    return this.DrugInfo
   }
 
 }

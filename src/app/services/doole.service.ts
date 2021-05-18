@@ -191,7 +191,7 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
-        return res.data;
+        return res;
       })
     )
     
@@ -212,7 +212,7 @@ export class DooleService {
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIhomeInitial(${path}) res: `, res);
-        return res.data;
+        return res;
 
       })
     );

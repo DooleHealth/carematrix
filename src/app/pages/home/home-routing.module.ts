@@ -28,18 +28,18 @@ const routes: Routes = [
         path: 'mydiary',
         loadChildren: () => import('./mydiary/mydiary.module').then( m => m.MydiaryPageModule)
       },
-/*       {
-        path: 'home',
+      {
+        path: '',
         redirectTo: 'home/initial',
         pathMatch: 'full'
-      } */
+      }
     ]
   },
-  {
-    path: 'home',
+/*   {
+    path: '',
     redirectTo: 'home/initial',
     pathMatch: 'full'
-  }
+  } */
 
 ];
 

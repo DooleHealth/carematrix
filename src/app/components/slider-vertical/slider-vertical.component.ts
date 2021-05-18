@@ -21,7 +21,7 @@ export interface SliderInfo {
   styleUrls: ['./slider-vertical.component.scss'],
 })
 export class SliderVerticalComponent implements OnInit {
-  //@Input()
+  @Input()
   information: UserInformation;
   isTitle = true;
   isHour = true;
@@ -32,7 +32,8 @@ export class SliderVerticalComponent implements OnInit {
    };
    title: string;
   constructor() {
-    this.setUserInformation();
+/*      if(this.information === undefined )
+    this.setUserInformation(); */
    }
 
   ngOnInit() {}
