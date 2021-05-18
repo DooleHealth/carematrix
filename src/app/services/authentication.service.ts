@@ -81,7 +81,7 @@ export class AuthenticationService {
 
   
 
-  login(credentials: {username, password, credencial, mutua?:string}): Observable<any> {
+  login(credentials: {username, password, credencial}): Observable<any> {
 
     const endpoint = this.api.getEndpoint('patient/login');
 

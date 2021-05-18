@@ -6,22 +6,23 @@
         "button_signin": "Iniciar sesión",
         "button_registre": "Crear Usuario"
       },
-    "login": {
-        "header": "Login",
-        "button": "Entrar",
-        "text": "Accede con tu acceso Doole:",
-        "placeholder": "Número de mutualista",
-        "password": "Contraseña",
-        "password_val": "requerido",
-        "fail": "Los datos son incorrectos",
-        "password_recovery": "¿Olvidaste tu contraseña?",
-        "google_signin": "Accede con Google",
-        "apple_signin": "Accede con Apple",
-        "submit":"Iniciando sesión con "
-      },
       "legal": {
         "header": "Condiciones legal y de uso de la aplicación",
         "ok_button": "Acepto",
         "ko_button": "No acepto"
+      },
+      "homeInitial": {
+        "goals_title": "Tu Objetivo",
+        "advices_title": "Novedades y Concejos",
+        "today_title": "Tu Dia",
+        "reminders_title": "Recodatorios",
+        "daily_goal_title": "Tu Objetivo Diario",
+        "lunch_subtitle": "Almuerzo",
+        "medication_subtitle": "Medicación",
+        "plays_subtitle": "Juegos",
+        "physical_activity_subtitle": "Actividad física",
+        "see_all_button": "Ver todas",
+        "detail_button": "Detalles",
+        "register_button": "Inscribirme"
       }
 }
