@@ -18,6 +18,8 @@ import { CustomHeaderComponent } from './custom-header/custom-header.component';
 import { PageHeaderComponent } from './page-header/page-header.component'
 import { RouterModule} from "@angular/router";
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { SliderVerticalComponent } from './slider-vertical/slider-vertical.component';
+import { SliderHorizontalComponent } from './slider-horizontal/slider-horizontal.component';
 
 @NgModule({
     imports: [
@@ -39,7 +41,10 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     ChatBubbleComponent,
     CustomHeaderComponent,
     PageHeaderComponent,
-    FileUploadComponent
+    FileUploadComponent,
+
+    SliderVerticalComponent,
+    SliderHorizontalComponent
   ],
   exports: [
     ShellModule,
@@ -54,7 +59,10 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     ChatBubbleComponent,
     CustomHeaderComponent,
     PageHeaderComponent,
-    FileUploadComponent
+    FileUploadComponent,
+
+    SliderVerticalComponent,
+    SliderHorizontalComponent
   ]
 })
 export class ComponentsModule {}

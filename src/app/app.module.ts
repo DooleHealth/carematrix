@@ -45,8 +45,6 @@ import localeEs from '@angular/common/locales/es';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@ionic-native/network/ngx";
 
-
-
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
 
@@ -55,7 +53,9 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserTransferStateModule,
@@ -67,7 +67,6 @@ export function createTranslateLoader(http: HttpClient) {
     ReactiveFormsModule,
     ComponentsModule,
     Ng2SearchPipeModule,
-   
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -113,7 +112,7 @@ export function createTranslateLoader(http: HttpClient) {
     Calendar,
     FingerprintAIO,
     Network,
-    //fakeBackendProvider,
+    fakeBackendProvider,
     {
       provide: APP_INITIALIZER,
       useFactory: (platformId: object, response: any) => {

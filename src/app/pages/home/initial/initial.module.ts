@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
-
-import { HomePage } from './home.page';
-
+import { InitialPageRoutingModule } from './initial-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { InitialPage } from './initial.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,9 +15,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    HomePageRoutingModule
+    TranslateModule,
+    InitialPageRoutingModule
   ],
-  declarations: [HomePage,
-    ]
+  declarations: [InitialPage]
 })
-export class HomePageModule {}
+export class InitialPageModule {}
