@@ -1,0 +1,25 @@
+<ion-content class="content">
+  <div *ngIf='this.isTitle' class="title" >{{information.title}}</div>
+  <ion-card class="card">
+    <ion-card-header class="line">
+      <div class="line">
+        <ion-icon name="flame-outline" style="margin-right: 5px;"></ion-icon>
+        <ion-card-subtitle>{{information.subtitle}}</ion-card-subtitle>
+      </div>
+      <div class="line">
+        <ion-card-subtitle *ngIf='this.isHour'>{{information.hour}}</ion-card-subtitle>
+        <ion-icon name="chevron-forward-outline" style="margin-left: 5px;"></ion-icon>
+      </div>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-slides #slider pager="true" [options]="sliderConfig" class="slides">
+        <ion-slide *ngFor="let slide of this.information.content">
+          <h2>{{slide.description}}</h2>
+        </ion-slide>
+        
+      </ion-slides>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
