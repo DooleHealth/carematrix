@@ -50,7 +50,7 @@ export class InitialPage implements OnInit {
     private dooleService: DooleService) { }
 
   ngOnInit() {  
-    this.showInformation()
+   // this.showInformation()
   }
 
 /*   public ngOnDestroy() {

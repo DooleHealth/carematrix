@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-intro',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroPage implements OnInit {
   
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
+
   }
+
+  async introAction(){
+    await Storage.set({
+     key: 'showIntro',
+     value: 'true'
+   });
+   console.log(`[IntroPage] introAction()`);
+   this.router.navigate(['/home/initial']);
+ }
+ 
 
 }

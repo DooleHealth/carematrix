@@ -244,7 +244,7 @@
   <ion-checkbox color="primary"></ion-checkbox>
   <ion-label>He leído y acepto las condiciones</ion-label>
 </ion-item>
-  <ion-button type="button" color="primary" expand="block" class="enter-btn" [disabled]="" routerLink="/home">
+  <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="acceptLegalConditions()" [disabled]="">
    Continuar
 </ion-button>
   </div>
