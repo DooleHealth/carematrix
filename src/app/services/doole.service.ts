@@ -186,6 +186,38 @@ export class DooleService {
 
   }
 
+  getAPIhomeInitial(path:string): Observable<any>{
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        return res;
+      })
+    )
+    
+  }
+
+  getAPIhome(path:string) : Observable<any>{
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhome(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIhomeInitial(path:string, params: Object): Observable<any>{
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIhomeInitial(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);

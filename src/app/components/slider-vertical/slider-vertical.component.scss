@@ -1,0 +1,40 @@
+.content{
+    max-height: 200px;
+
+    .title{
+        margin: 10px 0px 0px 15px;
+    }
+}
+
+.line{
+    display: inline-flex;  
+}
+
+.block{
+    display: inline-block;  
+}
+
+.card{
+    background-color: white;
+    max-height: 200px;
+
+    ion-card-content{
+        height: 80px;
+
+    }
+}
+
+
+.slides{
+    font-size: 12px;
+
+    h2{
+        margin-right: 25px;
+    }
+}
+
+ion-progress-bar{
+    height: 20px;
+    max-width: 92%;
+    margin-right: 25px;
+}

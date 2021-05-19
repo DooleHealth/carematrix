@@ -108,7 +108,7 @@ export class LandingPage implements OnInit {
         //this.redirectLoggedUserToHomePage();
 
       }, async (error) => {
-       console.log('doMGCLogin ERROR', await error);
+       console.log('doDooleAppLogin() ERROR', await error);
        this.dismissLoading();
        throw error;
      });
