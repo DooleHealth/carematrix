@@ -4,13 +4,11 @@
 </div>
 
 <ion-content>
-  <app-slider-vertical *ngIf="this.goalInfo" [information2]= 'this.goalInfo'></app-slider-vertical>
-  
-  <app-slider-horizontal *ngIf="this.appointment" [information2]= 'this.appointment' slidesType="2"></app-slider-horizontal>
-  <app-slider-horizontal *ngIf="this.advicesInfo" [information2]= 'this.advicesInfo' slidesType="1"></app-slider-horizontal>
-  
-  <app-slider-vertical *ngIf="this.dietInfo" [information2]= 'this.dietInfo'></app-slider-vertical>
-  <app-slider-vertical *ngIf="this.drugInfo" [information2]= 'this.drugInfo'></app-slider-vertical>
-  <app-slider-vertical *ngIf="this.playInfo" [information2]= 'this.playInfo'></app-slider-vertical>
-  <app-slider-vertical *ngIf="this.activityInfo" [information2]= 'this.activityInfo'></app-slider-vertical>
+  <app-slider-vertical  [information2]= 'this.goalInfo'></app-slider-vertical>  
+  <app-slider-horizontal [information2]= 'this.appointment' slidesType="2"></app-slider-horizontal>
+  <app-slider-horizontal [information2]= 'this.advicesInfo' slidesType="1"></app-slider-horizontal>
+  <app-slider-vertical  [information2]= 'this.dietInfo'></app-slider-vertical>
+  <app-slider-vertical [information2]= 'this.drugInfo'></app-slider-vertical>
+  <app-slider-vertical [information2]= 'this.playInfo'></app-slider-vertical>
+  <app-slider-vertical [information2]= 'this.activityInfo'></app-slider-vertical>
   </ion-content>
