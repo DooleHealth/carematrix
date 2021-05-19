@@ -49,14 +49,18 @@ export class InitialPage implements OnInit {
     private dooleService: DooleService) { }
 
   ngOnInit() {  
-    this.showInformation()
+    this. getAll() 
   }
 
   showInformation(){
-    this. getAll()
-    //this.getUserInformation()
-    //this.userImg()
-    
+    this.userImg()
+    this.showGoals()
+    this.showDiets()
+    this.showDrugs()
+    this.showGames()
+    this.showPhysical()
+    this.showAgenda()
+    this.showAdvices()
   }
 
   userImg(){
@@ -66,30 +70,12 @@ export class InitialPage implements OnInit {
       this.username = this.userDoole.username
   }
 
-  getUserInformation(){
-    this.dooleService.getAPIhomeInitial('/user/informationUser')
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe( data =>{
-        console.log(`[InitialPage] getUserInformation()`, data);
-
-        this.userDoole = data as User
-       // this.showDrugs(this.userDoole)
-      })
-  }
-
   getAll(){
     this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
       async (res: any) =>{
         //console.log('[InitialPage] getAll()', await res);
         this.userDoole = res as User
-        this.userImg()
-        this.showGoals()
-        this.showDiets()
-        this.showDrugs()
-        this.showGames()
-        this.showPhysical()
-        this.showAgenda()
-        this.showAdvices()
+        this.showInformation()
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           throw err; 
