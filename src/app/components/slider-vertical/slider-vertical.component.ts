@@ -1,19 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 export interface UserInformation {
   title?: string;
   subtitle?: string;
   icon?: string;
   hour?: string;
-  content?: Array<SliderInfo>;
+  color?: string;
+  bar?:boolean;
+  content?: SliderInfo[];
 }
 export interface SliderInfo {
   title?: string;
+  subtitle?: string;
   image?:string;
   icon?:string;
   description?:string;
   hour?: string;
-  porcentaje?: number;
+  porcentage?: number;
 }
 @Component({
   selector: 'app-slider-vertical',
@@ -21,7 +25,7 @@ export interface SliderInfo {
   styleUrls: ['./slider-vertical.component.scss'],
 })
 export class SliderVerticalComponent implements OnInit {
-  //@Input()
+  @Input() information2: UserInformation;
   information: UserInformation;
   isTitle = true;
   isHour = true;
@@ -29,19 +33,25 @@ export class SliderVerticalComponent implements OnInit {
     initialSlide: 0,
     slidesPerView: 1,
     direction: 'vertical',
+    centeredSlides: false,
    };
-   title: string;
+   @ViewChild('slider') slider: IonSlides;
   constructor() {
-    this.setUserInformation();
    }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.information2 !== undefined ){
+    //  console.log('[SliderVerticalComponent] ngOnInit()', this.information2);
+      this.information = this.information2
+    }else
+    this.setUserInformation(); 
+  }
 
   setUserInformation(){
     let slider: SliderInfo = {
       title: 'Medicación', 
       image: 'assets/images/logo.svg',
-      icon: 'assets/icons/Agenda.svg', 
+      icon: 'assets/images/logo.svg', 
       description:'Plazo para reservar tu cita online abierto', 
     }
      
@@ -61,12 +71,32 @@ export class SliderVerticalComponent implements OnInit {
     else return this.isTitle = false
   }
 
-  isDefinedHour(title:string) {
-    if(title !== null && title !== undefined){
-      this.information.hour = title;
+
+  isDefinedHour(hour:string) {
+    console.log('[SliderVerticalComponent] isDefinedHour()', hour);
+    if(hour !== null && hour !== undefined){
+      this.information.hour = hour;
       return this.isHour = true;
     }
     else return this.isHour = false
+  }
+
+  slideChange() {		    
+		this.slider.getActiveIndex().then(index => {      
+      console.log('[SliderVerticalComponent] ionSlideTouchEnd()', index);
+      let slider = this.information.content[index]
+      this.isDefinedHour(slider.hour)
+      this.changeNameDiet(slider.title)
+    });
+  }
+
+  changeNameDiet(nameDiet){
+    console.log('[SliderVerticalComponent] isDefinedHour()', nameDiet);
+    if(this.information.title !== 'Tu Dia')
+    return
+    if(nameDiet !== null && nameDiet !== undefined){
+      this.information.subtitle = nameDiet;
+    }
   }
 
 }

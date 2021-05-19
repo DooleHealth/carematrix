@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Advice, Agenda, Diet, Drug, Game, Goal } from 'src/app/models/user';
+import { Observable, of, Subject, throwError } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
+import { Advice, Agenda, Diet, Drug, Game, Goal, User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -11,15 +11,18 @@ export interface UserInformation {
   subtitle?: string;
   icon?: string;
   hour?: string;
-  content?: Array<SliderInfo>;
+  color?: string;
+  bar?:boolean;
+  content?: SliderInfo[];
 }
 export interface SliderInfo {
   title?: string;
+  subtitle?: string;
   image?:string;
   icon?:string;
   description?:string;
   hour?: string;
-  porcentaje?: number;
+  porcentage?: number;
 }
 
 @Component({
@@ -28,140 +31,186 @@ export interface SliderInfo {
   styleUrls: ['./initial.page.scss'],
 })
 export class InitialPage implements OnInit {
-  PATH_ADVICES = 'user/advices'
-  PATH_DIETS = 'user/diets'
-  PATH_DRUGS = 'user/drugIntake/date'
-  PATH_AGENDA = 'user/agenda'
-  PATH_GAMES = 'user/games'
-  PATH_GOALS = 'user/element/goals'
+  PATH_USERDATA= '/user/informationUser'
+  userDoole : User
+  dietInfo: UserInformation ={}
+  drugInfo: UserInformation ={}
+  playInfo: UserInformation ={}
+  activityInfo: UserInformation ={}
+  goalInfo: UserInformation ={}
+  advicesInfo: UserInformation ={}
+  appointment: UserInformation ={}
+  username:string = 'New User'
+  userImage:string = 'assets/icons/user_icon.svg'
 
-  advices: Advice[];
-  diets: Diet[];
-  agendas: Agenda[];
-  games: Game[];
-  drugs: Drug[];
-  goals: Goal[]
-
-  dietInfo: UserInformation;
   private onDestroy$ = new Subject();
 
   constructor(public router:Router,
-    private authService: AuthenticationService,
     private dooleService: DooleService) { }
 
   ngOnInit() {  
     this.showInformation()
   }
 
-/*   public ngOnDestroy() {
-    // Unsubscribe all subscriptions of this component.
-    this.onDestroy$.next();
-  } */
-
   showInformation(){
-    //this.getAllInformation();
-    this.getDAta()
-/*     this.getAdvices()
-    this.getAgenda()
-    this.getGames();
-    this.postDrugs() */
+    this. getAll()
+    //this.getUserInformation()
+    //this.userImg()
+    
   }
 
-  getAllInformation(){
-    this.dooleService.getAPIhomeInitial(this.PATH_DIETS)
+  userImg(){
+    if( this.userDoole.image !== null && this.userDoole.image !== undefined 
+      && this.userDoole.image !== '')
+      this.userImage = this.userDoole.image;
+      this.username = this.userDoole.username
+  }
+
+  getUserInformation(){
+    this.dooleService.getAPIhomeInitial('/user/informationUser')
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe( async data =>{
-        console.log(`[InitialPage] getAllInformation()`, await data as any);
-        this.showParamsDiets( data as Diet[])
+      .subscribe( data =>{
+        console.log(`[InitialPage] getUserInformation()`, data);
+
+        this.userDoole = data as User
+       // this.showDrugs(this.userDoole)
       })
   }
 
-  async getDiets(){
-    this.dooleService.getAPIhomeInitial(this.PATH_DIETS).subscribe(async (res) => { 
-      console.log('[InitialPage] getDiets()', await res);
-      return res;
-    }, async (error) => {
-     console.log('[InitialPage] getDiets() ERROR', await error);
-     throw error;
-   });
-  }
-
-  getDAta(){
-    console.log('[InitialPage] getDAta()');
-    this.dooleService.getAPIhome(this.PATH_DIETS).subscribe(
+  getAll(){
+    this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
       async (res: any) =>{
-        console.log('[InitialPage] getDAta()', await res);
+        //console.log('[InitialPage] getAll()', await res);
+        this.userDoole = res as User
+        this.userImg()
+        this.showGoals()
+        this.showDiets()
+        this.showDrugs()
+        this.showGames()
+        this.showPhysical()
+        this.showAgenda()
+        this.showAdvices()
        },(err) => { 
-          console.log('getDAta ERROR(' + err.code + '): ' + err.message); 
+          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
 
-  showParamsDiets(res: Diet[]){
-    console.log('[InitialPage] showParamsDiets()');
-    res.forEach( data => {
-      let slider: SliderInfo = {
-        description: data.name,
-        image:  data.image
-      }
-      this.dietInfo.content.push(slider)
+
+   showDiets() {
+    let sliders = []
+    this.dietInfo.title = 'Tu Dia'
+    this.dietInfo.subtitle = 'Almuerzo',
+    this.dietInfo.icon = 'assets/icons/apple-diet.svg'
+    this.dietInfo.hour = '00:00'
+    this.dietInfo.color = '#E67E22'
+    this.userDoole.diets. forEach((diet) => {
+        let slider = {
+          title: diet.name,
+          hour: diet.hour,
+          description: diet.description
+        }      
+        sliders.push(slider as SliderInfo)
     })
-    this.dietInfo = {
-      title: 'Tu Dia',
-      subtitle: 'Almuerzo'
-    }
-    console.log('[InitialPage] showParamsDiets()', this.dietInfo);
+    this.dietInfo.content = sliders
+  //  console.log('[InitialPage] showDiets() diet', this.dietInfo);
   }
 
-  getAdvices(){
-    this.dooleService.getAPIhomeInitial(this.PATH_ADVICES).subscribe(async (res) => {
-      console.log('[InitialPage] getAdvices()', await res);
-      this.advices = res as Advice[]
-    }, async (error) => {
-     console.log('[InitialPage] getAdvices() ERROR', await error);
-     throw error;
-   });
+  showGames(){
+    let sliders = []
+    this.playInfo.subtitle = 'Juegos'
+    this.playInfo.icon = 'assets/icons/game.svg'
+    this.playInfo.color = '#9B59B6'
+    this.userDoole.games.forEach((game)=>{
+      let slider:SliderInfo = {}
+      slider.description = game.name
+      sliders.push(slider)
+    })
+    this.playInfo.content = sliders
+  //  console.log('[InitialPage] showGames()', this.playInfo);
   }
 
-  getAgenda(){
-    this.dooleService.getAPIhomeInitial(this.PATH_AGENDA).subscribe(async (res) => {
-      console.log('[InitialPage] getAgenda()', await res);
-      this.agendas = res as Agenda[]
-    }, async (error) => {
-     console.log('[InitialPage] getAgenda() ERROR', await error);
-     throw error;
-   });
+  showGoals(){
+    let sliders = []
+    this.goalInfo.title = 'Tu Objetivo'
+    this.goalInfo.subtitle = 'Tu Objetivo Diario'
+    this.goalInfo.icon = 'assets/icons/goals.svg'
+    this.goalInfo.color = '#F39C12'
+    this.goalInfo.bar = true
+    this.userDoole.goals.forEach((goal)=>{
+      let slider:SliderInfo = {}
+      slider.description = goal.description
+      slider.porcentage = goal.steps
+      sliders.push(slider)
+    })
+    this.goalInfo.content = sliders
+   // console.log('[InitialPage] showGames()', this.goalInfo);
   }
 
-  getGames(){
-    this.dooleService.getAPIhomeInitial(this.PATH_GAMES).subscribe(async (res) => {
-      console.log('[InitialPage] getGames()', await res);
-      this.games = res as Game[]
-    }, async (error) => {
-     console.log('[InitialPage] getGames() ERROR', await error);
-     throw error;
-   });
+  showDrugs(){
+    let sliders = []
+    this.drugInfo.subtitle = 'Medication'
+    this.drugInfo.icon = 'assets/icons/medication.svg'
+    this.drugInfo.hour = '00:00'
+    this.drugInfo.color = '#2ECC71'
+    this.userDoole.drugs.forEach((drug) => {
+        let slider = {
+          title: drug.name,
+          hour: drug.hour_intake,
+          description: drug.name
+        }      
+        sliders.push(slider)
+        
+    })  
+    this.drugInfo.content = sliders
+   // console.log('[InitialPage] showParamsDiets()', this.drugInfo);
+    //return this.DrugInfo
   }
 
-  getGoals(){
-    this.dooleService.getAPIhomeInitial(this.PATH_GOALS).subscribe(async (res) => {
-      console.log('[InitialPage] getGames()', await res);
-      this.goals = res as Goal[]
-    }, async (error) => {
-     console.log('[InitialPage] getGames() ERROR', await error);
-     throw error;
-   });
+  showPhysical(){
+    let sliders = []
+    this.activityInfo.subtitle = 'Actividad Física'
+    this.activityInfo.icon = 'assets/icons/fire.svg'
+    this.activityInfo.color = '#E74C3C'
+    let slider: SliderInfo = {}
+    slider.title = ''
+    slider.description = '456 Cal'
+    sliders.push(slider);
+    sliders.push(slider)
+    this.activityInfo.content = sliders
   }
 
-  postDrugs(){
-    let date = '2021-05-17'
-    this.dooleService.postAPIhomeInitial(this.PATH_DRUGS, {date: date}).subscribe(async (res) => {
-      console.log('[InitialPage] getGames()', await res);
-      this.drugs = res as Drug[]
-    }, async (error) => {
-     console.log('[InitialPage] getGames() ERROR', await error);
-     throw error;
-   });
+  showAdvices(){
+    let sliders = []
+    this.advicesInfo.title = 'Novedades y Concejos'
+    this.advicesInfo.bar = true
+    let listAvices = this.userDoole.advices as Advice[];
+    listAvices.forEach((advice ) => {
+        let slider: SliderInfo = {}
+        slider.title = advice.name
+        slider.description = advice.description
+        slider.image = advice.image
+        sliders.push(slider)
+    })
+    this.advicesInfo.content = sliders
+    console.log('[InitialPage] showAdvices()', this.advicesInfo);
+  }
+
+  showAgenda(){
+    let sliders = []
+    this.appointment.title = 'Recordatorios'
+    this.appointment.bar = false
+    let listAgenda = this.userDoole.agendas as Agenda[];
+    console.log('[InitialPage] showAgenda() 1', listAgenda);
+    listAgenda.forEach((agenda ) => {
+      let slider: SliderInfo = {}
+      slider.title = agenda.title
+      slider.subtitle = agenda.doctor
+      slider.hour = agenda.start_date
+      sliders.push(slider)
+  }) 
+  this.appointment.content = sliders
+  console.log('[InitialPage] showParamsDiets()', this.appointment);
   }
 
 }

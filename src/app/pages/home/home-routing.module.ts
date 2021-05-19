@@ -25,21 +25,21 @@ const routes: Routes = [
         loadChildren: () => import('./follow/follow.module').then( m => m.FollowPageModule)
       },
       {
-        path: 'mydiary',
+        path: 'journal',
         loadChildren: () => import('./mydiary/mydiary.module').then( m => m.MydiaryPageModule)
       },
-/*       {
+      {
         path: 'home',
         redirectTo: 'home/initial',
         pathMatch: 'full'
-      } */
+      }
     ]
   },
-  {
-    path: 'home',
+/*   {
+    path: '',
     redirectTo: 'home/initial',
     pathMatch: 'full'
-  }
+  } */
 
 ];
 

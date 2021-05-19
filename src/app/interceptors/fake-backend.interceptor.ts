@@ -56,12 +56,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 username: 'David Valarezo León',
                 idUser: 15183,
                 image: '',
-                agenda: [
+                agendas: [
                     {
                         id: 668,
                         title: 'Dermatología',
                         doctor: 'Dr. Ricardo Sánchez',
-                        description: null,
+                        description: '',
                         start_time: "11:00",
                         start_date: "31/05/2021 11:00",
                         end_date: "31/05/2021 11:15",
@@ -72,7 +72,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         id: 669,
                         title: 'Cardiología',
                         doctor: 'Dra. Viviana Molina',
-                        description: null,
+                        description: '',
+                        start_time: "09:00",
                         start_date: "30/06/2021 09:00",
                         end_date: "30/06/2021 09:00",
                         start_date_iso8601: "2021-06-30T09:00:00+02:00",
@@ -82,7 +83,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         id: 889,
                         title: 'Pediatría',
                         doctor: 'Dr. Antonio Castellanos Mejía',
-                        description: null,
+                        description: '',
+                        start_time: "12:00",
                         start_date: "20/09/2021 12:00",
                         end_date: "20/09/2021 12:00",
                         start_date_iso8601: "2021-09-20T12:00:00+02:00",
@@ -112,18 +114,34 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 ],
                 diets: [
                     {
-                        name: "Almuerzo",
-                        id: 1,
-                        hour: '12:00',
+                        name: "Desayuno",
+                        id: 0,
+                        hour: '09:00',
                         start_date: "30/06/2021 09:00",
                         image: null,
                         description: "Yogurt desnatado con semillas de linaza"
                     },
                     {
+                        name: "Almuerzo",
+                        id: 1,
+                        hour: '12:00',
+                        start_date: "30/06/2021 12:00",
+                        image: null,
+                        description: "Yogurt desnatado con semillas de linaza, frutos secos"
+                    },
+                    {
+                        name: "Hora del Café",
+                        id: 0,
+                        hour: '15:00',
+                        start_date: "30/06/2021 15:00",
+                        image: null,
+                        description: "Café negro, 2 croissant de chocolate"
+                    },
+                    {
                         name: "Cena",
                         id: 2,
                         hour: '18:00',
-                        start_date: "30/06/2021 09:00",
+                        start_date: "30/06/2021 18:00",
                         image: null,
                         description: "Rollitos de queso"
                     },
@@ -131,7 +149,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         name: "Merienda",
                         id: 3,
                         hour: '21:00',
-                        start_date: "30/06/2021 09:00",
+                        start_date: "30/06/2021 21:00",
                         image: null,
                         description: "Jamón de pavo, Rollitos de queso"
                     }
@@ -139,19 +157,31 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 drugs: [
                     {
                         id: 1,
-                        name:  "prueba ibuprofeno",
+                        name:  "Prueba Ibuprofeno (1g)",
                         date_intake: "2021-05-17 12:00:00",
                         hour_intake: "12:00",
                     },
                     {
                         id: 2,
-                        name: "Cefazolina",
+                        name: "Cefazolina (500 mg)",
                         date_intake: "2021-05-17 12:30:00",
                         hour_intake: "12:30",
                     },
                     {
                         id: 3,
-                        name: "Cefuroxima Apotex",
+                        name: "Cefuroxima Apotex (200 mg)",
+                        date_intake: "2021-05-17 18:00:00",
+                        hour_intake: "18:00",
+                    },
+                    {
+                        id: 4,
+                        name: "Gamalate B6 (500 mg)",
+                        date_intake: "2021-05-17 12:30:00",
+                        hour_intake: "12:30",
+                    },
+                    {
+                        id: 5,
+                        name: "Pastilla Cetirizina (20 mg)",
                         date_intake: "2021-05-17 18:00:00",
                         hour_intake: "18:00",
                     }
@@ -173,7 +203,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         description: "Continua realizando los retos para bajar de peso",
                         min: 0,
                         max: 10,
-                        steps: 6,
+                        steps: 0.6,
                     },
                     {
                         id: 67,
@@ -181,7 +211,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         description: "Continua realizando los retos y alcanza tu objetivo",
                         min: 0,
                         max: 10,
-                        steps: 3,
+                        steps: 0.3,
                     },
                     {
                         id: 68,
@@ -189,7 +219,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         description: "Kilometros recorridos",
                         min: 0,
                         max: 100,
-                        steps: 53,
+                        steps: 0.53,
                     }
                 ]
 
