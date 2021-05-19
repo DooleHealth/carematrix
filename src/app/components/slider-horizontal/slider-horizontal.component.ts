@@ -2,20 +2,21 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export interface UserInformation {
   title?: string;
-  textTitleButton?: string;
-  content?: Array<SliderInfo>;
-}
-export interface Appointment {
-  doctorName?: string;
-  date?: string;
+  subtitle?: string;
+  icon?: string;
+  hour?: string;
+  color?: string;
+  bar?:boolean;
+  content?: SliderInfo[];
 }
 export interface SliderInfo {
   title?: string;
+  subtitle?: string;
   image?:string;
   icon?:string;
   description?:string;
-  detail?: string;
-  appointment?: Appointment
+  hour?: string;
+  porcentage?: number;
 }
 
 @Component({
@@ -24,37 +25,41 @@ export interface SliderInfo {
   styleUrls: ['./slider-horizontal.component.scss'],
 })
 export class SliderHorizontalComponent implements OnInit {
-  @Input()
-  slidesType = 1;
+  @Input()slidesType = 1;
+  @Input() information2: UserInformation;
+  information: UserInformation;
   sliderConfig = {
     initialSlide: 0,
     slidesPerView: 1.1,
     spaceBetween: 4,
     centeredSlides: false,
    };
-   information: UserInformation;
   constructor() {  
-    this.setUserInformation()
+   // this.setUserInformation()
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+     if(this.information2 !== undefined ){
+      console.log('[SliderVerticalComponent] ngOnInit()', this.information2);
+      this.information = this.information2
+    }else 
+    this.setUserInformation(); 
+  }
 
   setUserInformation(){
     let slider: SliderInfo = {
       title: 'CITA MEDICA', 
+      subtitle: 'Dr Ricardo Sanchez',
       image: 'assets/images/logo.svg',
       icon: 'assets/icons/Agenda.svg', 
       description:'Plazo para reservar tu cita online abierto', 
-    }
-
-    slider.appointment = {
-      doctorName: 'Dr Ricardo Sanchez',
-      date: 'Lunes, 15 Noviembre 15:00'
+      hour: 'Lunes, 15 Noviembre 15:00'
     }
      
       this.information = {
         title: 'Novedades y Consejos',
-        textTitleButton: 'Ver todas',
+        bar: true,
+       /*  textTitleButton: 'Ver todas', */
         content: [slider,slider,slider]
       }
   }

@@ -1,10 +1,11 @@
 <ion-content class="content">
-  <div *ngIf='this.isTitle' class="title" >{{information.title}}</div>
+  <div *ngIf='this.isTitle' class="title">
+    {{information.title}}</div>
   <ion-card class="card">
     <ion-card-header class="line">
       <div class="line">
-        <ion-icon name="flame-outline" style="margin-right: 5px;"></ion-icon>
-        <ion-card-subtitle>{{information.subtitle}}</ion-card-subtitle>
+        <ion-img  [src]="information.icon" style="margin-right: 5px;"></ion-img><br>
+        <ion-card-subtitle [ngStyle]="{color: information.color}">{{information.subtitle}}</ion-card-subtitle>
       </div>
       <div class="line">
         <ion-card-subtitle *ngIf='this.isHour'>{{information.hour}}</ion-card-subtitle>
@@ -13,8 +14,9 @@
     </ion-card-header>
   
     <ion-card-content>
-      <ion-slides #slider pager="true" [options]="sliderConfig" class="slides">
-        <ion-slide *ngFor="let slide of this.information.content">
+      <ion-slides #slider pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideChange()'>
+        <ion-slide *ngFor="let slide of this.information.content" class="block">
+         <ion-progress-bar *ngIf='slide.porcentage as Number' [value]="slide.porcentage"></ion-progress-bar>
           <h2>{{slide.description}}</h2>
         </ion-slide>
         

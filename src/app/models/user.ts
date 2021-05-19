@@ -7,7 +7,8 @@ export interface User {
     advices?: Advice[],
     games?: Game[],
     drugs?: Drug[],
-    goals?: Goal[]
+    goals?: Goal[],
+    physical?: PhysicalActivity[]
 }
 
 
@@ -64,5 +65,14 @@ export interface Goal {
     description?: string,
     min?: number,
     max?: number,
+    steps?: number
+}
+
+export interface PhysicalActivity {
+    id?: number,
+    name?: string,
+    description?: string,
+    calories?: number,
+    kilometers?: number,
     steps?: number
 }
