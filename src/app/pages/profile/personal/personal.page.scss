@@ -1,0 +1,29 @@
+ion-back-button {
+  display: block;
+  color: #3498db;
+}
+
+.img-wrapper {
+  max-height: 81px;
+  max-width: 81px;
+  display: block;
+  margin: auto;
+}
+
+.paddingGrid {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.txtTitle {
+  font-size: 18px;
+}
+
+.whiteBackground {
+  --ion-background-color: white !important;
+}
+
+.textMedium {
+  text-align: right;
+  color: #7f8c8d;
+}
