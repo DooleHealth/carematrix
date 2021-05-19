@@ -26,8 +26,7 @@ export interface SliderInfo {
 })
 export class SliderHorizontalComponent implements OnInit {
   @Input()slidesType = 1;
-  @Input() information2: UserInformation;
-  information: UserInformation;
+  @Input() information: UserInformation;
   sliderConfig = {
     initialSlide: 0,
     slidesPerView: 1.1,
@@ -35,15 +34,12 @@ export class SliderHorizontalComponent implements OnInit {
     centeredSlides: false,
    };
   constructor() {  
-   // this.setUserInformation()
   }
 
   ngOnInit() {
-     if(this.information2 !== undefined ){
-      console.log('[SliderVerticalComponent] ngOnInit()', this.information2);
-      this.information = this.information2
-    }else 
-    this.setUserInformation(); 
+    if(this.information === undefined ){
+      this.setUserInformation();
+    }
   }
 
   setUserInformation(){

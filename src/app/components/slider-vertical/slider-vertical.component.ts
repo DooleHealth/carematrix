@@ -25,8 +25,8 @@ export interface SliderInfo {
   styleUrls: ['./slider-vertical.component.scss'],
 })
 export class SliderVerticalComponent implements OnInit {
-  @Input() information2: UserInformation;
-  information: UserInformation;
+  @Input() information: UserInformation;
+ // _information: UserInformation;
   isTitle = true;
   isHour = true;
   sliderConfig = {
@@ -40,11 +40,10 @@ export class SliderVerticalComponent implements OnInit {
    }
 
   ngOnInit() {
-    if(this.information2 !== undefined ){
-    //  console.log('[SliderVerticalComponent] ngOnInit()', this.information2);
-      this.information = this.information2
-    }else
-    this.setUserInformation(); 
+    if(this.information === undefined ){
+      this.setUserInformation();
+    }
+  
   }
 
   setUserInformation(){
