@@ -1,9 +1,17 @@
-<div class="line">
-    <ion-title>Hola {{this.username}}</ion-title>
-    <ion-img  [src]="this.userImage"></ion-img>
-</div>
 
-<ion-content>
+<ion-content fullscreen scroll-y="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="10" style="text-align: left;">
+        <h3>Hola, {{this.username}}</h3>
+      </ion-col>
+      <ion-col size="2">
+     
+    <ion-img class="imgProfile" [src]="this.userImage" routerLink="profile"></ion-img>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
   <app-slider-vertical  [information2]= 'this.goalInfo'></app-slider-vertical>  
   <app-slider-horizontal [information2]= 'this.appointment' slidesType="2"></app-slider-horizontal>
   <app-slider-horizontal [information2]= 'this.advicesInfo' slidesType="1"></app-slider-horizontal>
@@ -11,4 +19,5 @@
   <app-slider-vertical [information2]= 'this.drugInfo'></app-slider-vertical>
   <app-slider-vertical [information2]= 'this.playInfo'></app-slider-vertical>
   <app-slider-vertical [information2]= 'this.activityInfo'></app-slider-vertical>
+
   </ion-content>
