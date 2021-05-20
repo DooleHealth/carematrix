@@ -17,7 +17,11 @@ ion-item-divider {
     border-radius: 10px;
     height: 45px;
   }
-  
+
+  ion-back-button {
+    display: block;
+    color:#3498DB;
+  }
   /* Global classes*/
 
   .main-container {
@@ -43,7 +47,22 @@ text-align: center;
   .cardProfile{
     --ion-background-color: white!important;
 }
-ion-back-button {
-  display: block;
-  color:#3498DB;
+
+.cardProfile{
+  --ion-background-color: white!important;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.txtTitle{
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 5%;
+}
+.txtTitle2{
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 5%;
+  padding-top: 10%;
+  
 }

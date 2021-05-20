@@ -59,6 +59,10 @@ const routes: Routes = [
   {
     path: 'family-unit',
     loadChildren: () => import('./pages/profile/family-unit/family-unit.module').then( m => m.FamilyUnitPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/profile/settings/settings.module').then( m => m.SettingsPageModule)
   }
 
 ];
