@@ -46,7 +46,8 @@ const routes: Routes = [
   {
     path: 'activity-goal',
     loadChildren: () => import('./pages/perfil/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
-
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
