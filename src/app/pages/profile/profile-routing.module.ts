@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'family',
     loadChildren: () => import('./family-unit/family-unit.module').then( m => m.FamilyUnitPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   }
 ];
 
