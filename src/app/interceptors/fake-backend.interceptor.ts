@@ -22,12 +22,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
-            
             switch (true) {
                 case url.includes('login') && method === 'POST':
                     return authenticate();
                 case url.endsWith('/user/informationUser') && method === 'GET':
                     return informationUser();
+                case url.endsWith('/user/element/goals') && method === 'GET':
+                    return goalsUser();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -224,6 +225,221 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 ]
 
             })
+        }
+
+        function goalsUser(){
+            {
+                return ok({
+                    success: true,
+                    goals: [
+                        {
+                            id: 22,
+                            user_id: 12473,
+                            element_id: 71,
+                            from_date: "2020-11-29 00:00:00",
+                            to_date: null,
+                            goalType: "a<x<b",
+                            value1: "65",
+                            value2: "68",
+                            frequency: "daily",
+                            score: 10,
+                            created_at: "2020-11-30T09:56:45.000000Z",
+                            updated_at: "2020-11-30T09:56:45.000000Z",
+                            deleted_at: null,
+                            typeString: " Entre 65 y 68",
+                            frequencyString: "Cada dia",
+                            element: {
+                                id: 71,
+                                center_id: 10,
+                                name: "Peso",
+                                element_type: "constant",
+                                element_group_id: 2,
+                                description: null,
+                                min: "0",
+                                max: "1000",
+                                steps: "0",
+                                data_type: "numeric",
+                                ext_code: "weight",
+                                ext_id: null,
+                                order: null,
+                                units: "",
+                                element_unit_id: 57,
+                                vat_id: null,
+                                price: null,
+                                created_at: "2020-08-19T09:26:15.000000Z",
+                                updated_at: "2021-02-24T11:16:31.000000Z",
+                                deleted_at: null,
+                                name_for_form: "Peso",
+                                element_unit: {
+                                    id: 57,
+                                    center_id: 10,
+                                    name: "Kilogramos",
+                                    abbreviation: "kg",
+                                    description: null,
+                                    ext_code: "",
+                                    created_at: "2020-08-19T09:25:53.000000Z",
+                                    updated_at: "2020-08-19T09:25:53.000000Z",
+                                    deleted_at: null
+                                }
+                            }
+                        },
+                        {
+                            id: 27,
+                            user_id: 12473,
+                            element_id: 71,
+                            from_date: null,
+                            to_date: null,
+                            goalType: "<",
+                            value1: "65",
+                            value2: null,
+                            frequency: "daily",
+                            score: 10,
+                            created_at: "2021-04-08T15:57:42.000000Z",
+                            updated_at: "2021-04-08T15:57:42.000000Z",
+                            deleted_at: null,
+                            typeString: " Menor que 65",
+                            frequencyString: "Cada dia",
+                            element: {
+                                id: 71,
+                                center_id: 10,
+                                name: "Peso",
+                                element_type: "constant",
+                                element_group_id: 2,
+                                description: null,
+                                min: "0",
+                                max: "1000",
+                                steps: "0",
+                                data_type: "numeric",
+                                ext_code: "weight",
+                                ext_id: null,
+                                order: null,
+                                units: "",
+                                element_unit_id: 57,
+                                vat_id: null,
+                                price: null,
+                                created_at: "2020-08-19T09:26:15.000000Z",
+                                updated_at: "2021-02-24T11:16:31.000000Z",
+                                deleted_at: null,
+                                name_for_form: "Peso",
+                                element_unit: {
+                                    id: 57,
+                                    center_id: 10,
+                                    name: "Kilogramos",
+                                    abbreviation: "kg",
+                                    description: null,
+                                    ext_code: "",
+                                    created_at: "2020-08-19T09:25:53.000000Z",
+                                    updated_at: "2020-08-19T09:25:53.000000Z",
+                                    deleted_at: null
+                                }
+                            }
+                        },
+                        {
+                            id: 27,
+                            user_id: 12473,
+                            element_id: 71,
+                            from_date: null,
+                            to_date: "2021-10-29 00:00:00",
+                            goalType: "<",
+                            value1: "65",
+                            value2: null,
+                            frequency: "daily",
+                            score: 6,
+                            created_at: "2021-04-08T15:57:42.000000Z",
+                            updated_at: "2021-04-08T15:57:42.000000Z",
+                            deleted_at: null,
+                            typeString: " Menor que 65",
+                            frequencyString: "Cada dia",
+                            element: {
+                                id: 71,
+                                center_id: 10,
+                                name: "Peso",
+                                element_type: "constant",
+                                element_group_id: 2,
+                                description: null,
+                                min: "0",
+                                max: "1000",
+                                steps: "0",
+                                data_type: "numeric",
+                                ext_code: "weight",
+                                ext_id: null,
+                                order: null,
+                                units: "",
+                                element_unit_id: 57,
+                                vat_id: null,
+                                price: null,
+                                created_at: "2020-08-19T09:26:15.000000Z",
+                                updated_at: "2021-02-24T11:16:31.000000Z",
+                                deleted_at: null,
+                                name_for_form: "Peso",
+                                element_unit: {
+                                    id: 57,
+                                    center_id: 10,
+                                    name: "Kilogramos",
+                                    abbreviation: "kg",
+                                    description: null,
+                                    ext_code: "",
+                                    created_at: "2020-08-19T09:25:53.000000Z",
+                                    updated_at: "2020-08-19T09:25:53.000000Z",
+                                    deleted_at: null
+                                }
+                            }
+                        },
+                        {
+                            id: 27,
+                            user_id: 12473,
+                            element_id: 71,
+                            from_date: "2021-1-29 00:00:00",
+                            to_date: "2021-12-29 00:00:00",
+                            goalType: "<",
+                            value1: "65",
+                            value2: null,
+                            frequency: "daily",
+                            score: 7,
+                            created_at: "2021-04-08T15:57:42.000000Z",
+                            updated_at: "2021-04-08T15:57:42.000000Z",
+                            deleted_at: null,
+                            typeString: " Menor que 65",
+                            frequencyString: "Cada dia",
+                            element: {
+                                id: 71,
+                                center_id: 10,
+                                name: "Peso",
+                                element_type: "constant",
+                                element_group_id: 2,
+                                description: null,
+                                min: "0",
+                                max: "1000",
+                                steps: "0",
+                                data_type: "numeric",
+                                ext_code: "weight",
+                                ext_id: null,
+                                order: null,
+                                units: "",
+                                element_unit_id: 57,
+                                vat_id: null,
+                                price: null,
+                                created_at: "2020-08-19T09:26:15.000000Z",
+                                updated_at: "2021-02-24T11:16:31.000000Z",
+                                deleted_at: null,
+                                name_for_form: "Peso",
+                                element_unit: {
+                                    id: 57,
+                                    center_id: 10,
+                                    name: "Kilogramos",
+                                    abbreviation: "kg",
+                                    description: null,
+                                    ext_code: "",
+                                    created_at: "2020-08-19T09:25:53.000000Z",
+                                    updated_at: "2020-08-19T09:25:53.000000Z",
+                                    deleted_at: null
+                                }
+                            }
+                        }
+                    ]
+                })
+                    
+            }
         }
 
         // helper functions
