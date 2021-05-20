@@ -168,7 +168,7 @@ export class InitialPage implements OnInit {
 
   showAdvices(){
     let sliders = []
-    this.advicesInfo.title = 'Novedades y Concejos'
+    this.advicesInfo.title = 'Novedades y Consejos'
     this.advicesInfo.bar = true
     let listAvices = this.userDoole.advices as Advice[];
     listAvices.forEach((advice ) => {
