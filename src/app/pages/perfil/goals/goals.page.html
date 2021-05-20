@@ -8,7 +8,7 @@
 
 <ion-content >
   <div *ngFor="let goal of this.listGoal" >
-    <ion-card>
+    <ion-card (click)="openActivities()">
       <ion-card-header>
         <ion-img  src='assets/icons/goals.svg' style="margin-right: 5px;"></ion-img>
         <ion-card-title>Objetivo de {{goal.element.name}}</ion-card-title><br>

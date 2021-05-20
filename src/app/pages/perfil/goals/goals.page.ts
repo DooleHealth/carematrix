@@ -37,4 +37,8 @@ export class GoalsPage implements OnInit {
    // this.nameGoal = this.listGoal.name
   }
 
+  openActivities(){
+    this.router.navigateByUrl('/activity-goal')
+  }
+
 }
