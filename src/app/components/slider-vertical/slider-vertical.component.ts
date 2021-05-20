@@ -26,7 +26,6 @@ export interface SliderInfo {
 })
 export class SliderVerticalComponent implements OnInit {
   @Input() information: UserInformation;
- // _information: UserInformation;
   isTitle = true;
   isHour = true;
   sliderConfig = {
