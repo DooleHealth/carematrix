@@ -39,12 +39,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/onboarding/intro/intro.module').then( m => m.IntroPageModule)
   },
   {
+
+    path: 'goals',
+    loadChildren: () => import('./pages/perfil/goals/goals.module').then( m => m.GoalsPageModule)
+  },
+  {
+    path: 'activity-goal',
+    loadChildren: () => import('./pages/perfil/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
+
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
     path: 'personal',
     loadChildren: () => import('./pages/profile/personal/personal.module').then( m => m.PersonalPageModule)
+
   }
 
 ];
