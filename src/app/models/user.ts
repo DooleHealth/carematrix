@@ -76,3 +76,17 @@ export interface PhysicalActivity {
     kilometers?: number,
     steps?: number
 }
+
+export interface UserProfile{
+    idUser: number,
+    image: string,
+    first_name: string,
+    last_name: string,
+    birthdate_european: string,
+    gender: string,
+    weight: string,
+    height: string,
+    blood_group: string,
+    diagnostics: [string,string],
+    allergies: [],
+}

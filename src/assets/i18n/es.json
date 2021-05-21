@@ -24,5 +24,42 @@
         "see_all_button": "Ver todas",
         "detail_button": "Detalles",
         "register_button": "Inscribirme"
+      },
+      "profile":{
+        "title_profile": "Mi Perfil",
+        "information": {
+          "title_information": "Información",
+          "data": "Tus Datos",
+          "family_unit": "Unidad Familiar",
+          "your_health_cards": "Tus Tarjetas Sanitarias", 
+          "your_goals": "Tus Objetivos",
+          "payment_method": "Método de Pago"
+        },
+        "configuration": {
+          "title_setting": "Configuración",
+          "linked_accounts":"Cuentas Vinculadas",
+          "settings": "Ajustes"
+        },
+        "help": {
+          "title_help":  "Ayuda",
+          "frequent_questions": "Preguntas Frecuentes",
+          "report_problem": "Reportar un problema",
+          "legal_warning": "Aviso Legal",
+          "us": "Nosotros"
+        },
+        "button_sign_off": "Cerrar Sesión"
+      },
+      "personal": {
+        "button_back": "Inicio",
+        "header": "Tus Datos",
+        "first_name": "Nombre",
+        "last_name": "Apellido",
+        "birthdate": "Fecha de Nacimiento",
+        "gender": "Género",
+        "weight":"Peso",
+        "height": "Altura",
+        "blood_group": "Grupo Sanguíneo",
+        "diagnostics":"Diagnóstico",
+        "allergies": "Alergias"
       }
 }

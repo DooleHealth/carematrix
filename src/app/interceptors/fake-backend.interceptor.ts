@@ -22,6 +22,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
+            
             switch (true) {
                 case url.includes('login') && method === 'POST':
                     return authenticate();
@@ -29,6 +30,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return informationUser();
                 case url.endsWith('/user/element/goals') && method === 'GET':
                     return goalsUser();
+                case url.endsWith('/user/profiles') && method === 'GET':
+                    return userProfile();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -52,11 +55,34 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             })
         }
 
+        function userProfile() {
+         
+            return ok({
+                    idUser: 15183,
+                    image: 'assets/icons/Mi Perfil.svg',
+                    first_name: 'David',
+                    last_name: 'Valarezo León',
+                    blood_group: 'O+',
+                    birthdate_european: null,
+                    gender: 'Masculino',
+                    weight: '53 Kg',
+                    height: '165 cm',
+                    diagnostics: [
+                        'Diabetes',
+                         'Anemia'
+                    ],
+                    allergies: [
+                        'Melocotón',
+                        'Frutos secos'
+                    ]               
+            })
+        }
+
         function informationUser() {
             return ok({
                 username: 'David Valarezo León',
                 idUser: 15183,
-                image: '',
+                image: 'assets/icons/Mi Perfil.svg',
                 agendas: [
                     {
                         id: 668,

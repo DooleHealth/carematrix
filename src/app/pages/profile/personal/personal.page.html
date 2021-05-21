@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Inicio"></ion-back-button>
+      <ion-back-button text="{{ 'personal.button_back' | translate }}" ></ion-back-button>
     </ion-buttons>
-    <ion-title>Tus Datos</ion-title>
+    <ion-title>{{ 'personal.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,49 +12,54 @@
     <ion-grid class="paddingGrid">
       <ion-row>
         <ion-col size="12">
-          <ion-img
-            src="assets/icons/Mi Perfil.svg"
+          <ion-img *ngIf='this.userProfile as UserProfile'
+            [src]="this.userProfile.image"
             class="img-wrapper"
           ></ion-img>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-list>
-      <ion-item>
-        <ion-label>Nombre</ion-label>
-        <ion-label class="textMedium">María</ion-label>
+    <ion-list *ngIf='this.userProfile as UserProfile'>
+      <ion-item *ngIf="this.userProfile.first_name !== null">
+        <ion-label>{{ 'personal.first_name' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.first_name}}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Apellidos</ion-label>
-        <ion-label class="textMedium">Fernández Gómez</ion-label>
+      <ion-item *ngIf="this.userProfile.last_name !== null">
+        <ion-label>{{ 'personal.last_name' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.last_name}}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Fecha de nacimiento</ion-label>
-        <ion-label class="textMedium">22/08/1987</ion-label>
+      <ion-item *ngIf="this.userProfile.birthdate_european !== null">
+        <ion-label>{{ 'personal.birthdate' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.birthdate_european}}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Sexo</ion-label>
-        <ion-label class="textMedium">Femenino</ion-label>
+      <ion-item *ngIf="this.userProfile.gender !== null">
+        <ion-label>{{ 'personal.gender' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.gender}}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Altura</ion-label>
-        <ion-label class="textMedium">1,69 cm</ion-label>
+      <ion-item *ngIf="this.userProfile.height !== null"> 
+        <ion-label>{{ 'personal.height' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.height}}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Peso</ion-label>
-        <ion-label class="textMedium">59 kg</ion-label>
+      <ion-item *ngIf="this.userProfile.weight !== null">
+        <ion-label>{{ 'personal.weight' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.weight }}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Grupo sanguíneo</ion-label>
-        <ion-label class="textMedium">0+</ion-label>
+      <ion-item *ngIf="this.userProfile.blood_group !== null">
+        <ion-label>{{ 'personal.blood_group' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.blood_group }}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Diagnósticos</ion-label>
-        <ion-label class="textMedium">Anemia</ion-label>
+      <ion-item *ngIf="this.userProfile.diagnostics !== null">
+        <ion-label>{{ 'personal.diagnostics' | translate}}</ion-label>
+        <div *ngFor="let diagnostic of this.userProfile.diagnostics " >
+          <ion-label class="textMedium">{{diagnostic}}</ion-label>
+        </div>
+         
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Alergias</ion-label>
-        <ion-label class="textMedium">Ácaros</ion-label>
+        <ion-label>{{ 'personal.allergies' | translate}}</ion-label>
+        <div *ngFor="let allergy of this.userProfile.allergies " >
+          <ion-label class="textMedium">{{allergy}}</ion-label>
+        </div>
       </ion-item>
     </ion-list>
   </div>
