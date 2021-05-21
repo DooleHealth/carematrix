@@ -24,5 +24,42 @@
         "see_all_button": "Veure totes",
         "detail_button": "Detalls",
         "register_button": "Inscriure"
+      },
+      "profile":{
+        "title_profile": "El meu perfil",
+        "information": {
+          "title_information": "Información",
+          "data": "Les teves Dades",
+          "family_unit": "Unitat Familiar",
+          "your_health_cards": "Les teves Targetes Sanitàries",
+          "your_goals": "Els teus Objectius",
+          "payment_method": "Mètode de pagament"
+        },
+        "configuration": {
+          "title_setting": "Configuració",
+          "linked_accounts":"Comptes Vinculades",
+          "settings": "Ajustaments"
+        },
+        "help": {
+          "title_help":  "Ajuda",
+          "frequent_questions": "Preguntes més Freqüents",
+          "report_problem":  "Informa d'un problema",
+          "legal_warning": "Avís Legal",
+          "us": "Nosaltres"
+        },
+        "button_sign_off": "Tancar Sessió"
+      },
+      "personal": {
+        "button_back": "Inici",
+        "header": "Les teves dades",
+        "first_name": "Nom",
+        "last_name": "Cognom",
+        "birthdate": "Data de Naixement",
+        "gender": "Gènere",
+        "weight":"Pes",
+        "height": "Alçada",
+        "blood_group": "Grup Sanguini",
+        "diagnostics":"Diagnòstic",
+        "allergies": "Al·lèrgies"
       }
 }
