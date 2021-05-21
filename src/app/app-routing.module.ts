@@ -63,6 +63,10 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./pages/profile/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'password',
+    loadChildren: () => import('./pages/profile/settings/password/password.module').then( m => m.PasswordPageModule)
   }
 
 ];
