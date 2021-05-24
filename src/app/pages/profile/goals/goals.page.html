@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Perfil" ></ion-back-button>
+      <ion-back-button text="{{'setting.button_profile' | translate }}"></ion-back-button>
     </ion-buttons>
-    <ion-title>Tus Objetivos</ion-title>
+    <ion-title>{{'goals.your_goals' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
         <ion-grid>
           <ion-row>
             <ion-col size="2"><ion-img  src='assets/icons/goals.svg' style="margin-right: 5px;"></ion-img></ion-col>
-            <ion-col size="6"><ion-card-title class="txtTitleGoals">Objetivo de {{goal.element.name}}</ion-card-title></ion-col>
+            <ion-col size="6"><ion-card-title class="txtTitleGoals">{{'goals.goals' | translate}} de {{goal.element.name}}</ion-card-title></ion-col>
             <ion-col size="4"><ion-text class="textMediumGreen">{{goal.score}} Healthies</ion-text></ion-col>
           </ion-row>
         </ion-grid>
@@ -28,10 +28,10 @@
         <div class="txtTitleGoals2">Alcanzar {{goal.typeString}} {{goal.element.element_unit.abbreviation}}</div>
         <div class="txtTitleGoalsLittle">
           <div *ngIf="(goal.from_date != null || goal.to_date != null); else objetive">
-            <div *ngIf='goal.from_date != null'>Inicio: {{goal.from_date | date: 'dd/MM/yyyy'}}</div>
-            <div *ngIf='goal.to_date != null'>Fin: {{goal.to_date | date: 'dd/MM/yyyy'}}</div>
+            <div *ngIf='goal.from_date != null'>{{'goals.start' | translate}}: {{goal.from_date | date: 'dd/MM/yyyy'}}</div>
+            <div *ngIf='goal.to_date != null'>{{'goals.end' | translate}}: {{goal.to_date | date: 'dd/MM/yyyy'}}</div>
           </div>
-          <ng-template #objetive>Objetivo {{goal.frequencyString}}</ng-template>
+          <ng-template #objetive>{{'goals.goals' | translate}}: {{goal.frequencyString}}</ng-template>
           
         </div>
       </ion-card-content>

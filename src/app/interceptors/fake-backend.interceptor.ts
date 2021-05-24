@@ -34,8 +34,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return userProfile();
                 case url.endsWith('user/changePassword') && method === 'POST':
                     return changePassword();
+                case url.endsWith('user/familyUnit') && method === 'GET':
+                    return familyUnit();
                 default:
-                    // pass through any requests not handled above
+                    // pass through any requests not handled above 
                     return next.handle(request);
             }    
         }
@@ -479,6 +481,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 })
                     
             }
+        }
+
+        function familyUnit() {
+         
+            return ok(
+                [
+                    {
+                        id: 12737,
+                        name: "Castañeda, Juanito",
+                        initials: "CJ",
+                        age: null,
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=CJ",
+                        family_relationship: "Relación familiar"
+                    },
+                    {
+                        id: 13015,
+                        name: "adjunto, Tania",
+                        initials: "AD",
+                        age: null,
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
+                        family_relationship: "Relación familiar"
+                    }
+                ] 
+            )
         }
 
         // helper functions

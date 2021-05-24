@@ -1,23 +1,23 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Perfil" ></ion-back-button>
+      <ion-back-button text="{{'setting.button_profile' | translate }}"></ion-back-button>
     </ion-buttons>
-    <ion-title>Unidad Familiar</ion-title>
+    <ion-title>{{ 'setting.family_unit.title_family_unit' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-card class="cardProfile">
+<ion-content *ngIf="listFamilyUnit !== undefined">
+  <ion-list *ngFor="let family of this.listFamilyUnit">
+    <ion-card class="cardProfile" (click)="changeAccount(family)">
       <ion-card-content>
     <ion-item lines="none">
       <ion-avatar slot="start">
-        <img src="assets/icons/Mi Perfil.svg">
+        <img [src]="family.thumbnail">
       </ion-avatar>
       <ion-label >
-        <h3>Nombre del familiar</h3>
-        <p>Relación familiar</p>
+        <h3>{{family.name}}</h3>
+        <p>{{family.family_relationship}}</p>
       </ion-label>
     </ion-item>
   </ion-card-content>

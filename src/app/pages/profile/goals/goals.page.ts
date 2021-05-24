@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { GoalUser } from 'src/app/models/goal-user';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -13,7 +14,9 @@ export class GoalsPage implements OnInit {
   listGoal: GoalUser[]
   nameGoal: string = 'Doolehealth'
 
-  constructor(public router:Router,
+  constructor(
+    public router:Router,
+    private translate: TranslateService,
     private dooleService: DooleService) { }
 
   ngOnInit() {
