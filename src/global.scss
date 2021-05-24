@@ -34,3 +34,8 @@
 // Add base shell styles
 @import "theme/shell-defaults.scss";
 
+.my-alert-class {
+    //--backdrop-opacity: 0.2;
+    --background: white;
+}
+

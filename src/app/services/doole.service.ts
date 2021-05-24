@@ -218,6 +218,18 @@ export class DooleService {
     );
   }
 
+  postAPIChangePassword(params: Object): Observable<any>{
+    let path = 'user/changePassword';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIChangePassword(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);

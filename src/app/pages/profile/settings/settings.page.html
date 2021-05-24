@@ -1,70 +1,70 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Perfil"></ion-back-button>
+      <ion-back-button text="{{'setting.button_profile' | translate }}"></ion-back-button>
     </ion-buttons>
-    <ion-title>Ajustes</ion-title>
+    <ion-title>{{ 'setting.title_setting' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
   <div class="txtTitle2"></div>
-    <ion-text class="txtTitle2">Seguridad</ion-text>
+    <ion-text class="txtTitle2">{{ 'setting.title_security' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
             <ion-item routerLink="password"  >
-              <ion-label>Cambiar Contraseña</ion-label>
+              <ion-label>{{ 'setting.password.title_change_password' | translate}}</ion-label>
               
             </ion-item>
             <ion-item >
-              <ion-label >Autentificación de doble factor</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{ 'setting.subtitle_authentication' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="authentication" (ionChange)="changeAuthentication()" checked></ion-toggle>
             </ion-item>
             <ion-item lines="none">
-              <ion-label>Face ID/Huella</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label>{{ 'setting.subtitle_face_id' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="faceId" (ionChange)="changeFaceId()" checked></ion-toggle>
             </ion-item>
        
           </ion-list>
     </ion-card>
-    <ion-text class="txtTitle">Notificaciones</ion-text>
+    <ion-text class="txtTitle">{{ 'setting.title_notification' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
             <ion-item>
-              <ion-label >Comunicados médicos</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_communications' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="communications" (ionChange)="changeCommunications()" checked></ion-toggle>
             </ion-item>
             <ion-item>
-              <ion-label >Citas y Recordatorios</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_appointment' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="appointment" (ionChange)="changeAppointment()" checked></ion-toggle>
             </ion-item>
             <ion-item>
-              <ion-label >Dietas</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_diets' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="diets" (ionChange)="changeDiets()" checked></ion-toggle>
             </ion-item>
             <ion-item>
-              <ion-label >Medicación</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_medication' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="medication" (ionChange)="changeMedication()" checked></ion-toggle>
             </ion-item>
             <ion-item>
-              <ion-label >Objetivos y Retos</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_goals' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="goals" (ionChange)="changeGoals()" checked></ion-toggle>
             </ion-item>
             <ion-item>
-              <ion-label >Consejos y Novedades</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >C{{'setting.subtitle_advices' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="advices" (ionChange)="changeAdvices()" checked></ion-toggle>
             </ion-item>
             <ion-item>
-              <ion-label >Promociones</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_offers' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="offers" (ionChange)="changeOffers()" checked></ion-toggle>
             </ion-item>
              <ion-item>
-              <ion-label >Formularios</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label >{{'setting.subtitle_form' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="form" (ionChange)="changeForm()" checked></ion-toggle>
             </ion-item>
             <ion-item lines="none">
-              <ion-label>Mensajes</ion-label>
-              <ion-toggle slot="end" color="success" checked></ion-toggle>
+              <ion-label>{{'setting.subtitle_messages' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="messages" (ionChange)="changeMessages()" checked></ion-toggle>
             </ion-item>
           </ion-list>
     </ion-card>
