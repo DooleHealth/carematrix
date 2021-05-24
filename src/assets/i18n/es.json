@@ -49,6 +49,13 @@
         },
         "button_sign_off": "Cerrar Sesión"
       },
+      "goals": {
+        "your_goals": "Tus Objetivos",
+        "goals": "Objetivos",
+        "start": "Inicio",
+        "end": "Fin",
+        "button_go_profile": "Perfil"
+      },
       "personal": {
         "button_back": "Inicio",
         "header": "Tus Datos",

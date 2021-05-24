@@ -49,6 +49,13 @@
         },
         "button_sign_off": "Tancar Sessió"
       },
+      "goals": {
+        "your_goals": "Els teus Objectius",
+        "goals": "Objectius",
+        "start": "Inici",
+        "end": "Fi",
+        "button_go_profile": "Perfil"
+      },
       "personal": {
         "button_back": "Inici",
         "header": "Les teves dades",
