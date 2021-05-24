@@ -65,6 +65,7 @@
       "alert": {
         "button_ok": "Aceptar", 
         "button_cancel": "Cancelar",
+        "button_change": "Cambiar",
         "header_error": "Error",
         "header_confirmation": "Confirmation"
       },
@@ -100,6 +101,10 @@
           "validators_check_password": "La contraseña no coincide con la anterior",
           "validators_new_password": "Debes ingresar la nueva contraseña",
           "validators_current_password": "Debes ingresar la contraseña actual"
+        },
+        "family_unit":{
+          "title_family_unit":"Unidad Familiar",
+          "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?"
         }
 
       }

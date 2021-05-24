@@ -90,3 +90,12 @@ export interface UserProfile{
     diagnostics: [string,string],
     allergies: [],
 }
+
+export interface FamilyUnit {
+    id?: number,
+    name?: string,
+    initials?: string,
+    age?: string,
+    thumbnail?: string,
+    family_relationship?: string
+}

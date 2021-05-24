@@ -65,6 +65,7 @@
       "alert": {
         "button_ok": "D'acord",
         "button_cancel": "Cancel",
+        "button_change": "Canviar",
         "header_error": "Error",
         "header_confirmation": "Confirmació"
       },
@@ -100,6 +101,10 @@
           "validators_check_password": "La contrasenya no coincideix amb l'anterior",
           "validators_new_password": "Has d'ingressar la nova Contrasenya",
           "validators_current_password": "Has d'ingressar la actual Contrasenya"
+        },
+        "family_unit":{
+          "title_family_unit":"Unitat Familiar",
+          "msg_alert_change_perfil": "Vols canviar a aquest perfil?"
         }
 
       }

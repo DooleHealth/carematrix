@@ -230,6 +230,17 @@ export class DooleService {
     );
   }
 
+  getAPIFamilyUnit(){
+    let path = 'user/familyUnit';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIFamilyUnit(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
