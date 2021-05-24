@@ -61,5 +61,46 @@
         "blood_group": "Grupo Sanguíneo",
         "diagnostics":"Diagnóstico",
         "allergies": "Alergias"
+      },
+      "alert": {
+        "button_ok": "Aceptar", 
+        "button_cancel": "Cancelar",
+        "header_error": "Error",
+        "header_confirmation": "Confirmation"
+      },
+      "setting":{
+        "title_setting": "Ajustes",
+        "button_profile": "Perfil",
+        "title_security": "Seguridad",
+        "title_notification": "Notificación",
+        "subtitle_authentication": "Autenticación de doble factor",
+        "subtitle_face_id": "Face ID/Huella",
+        "subtitle_communications":"Comunicados médicos",
+        "subtitle_appointment":"Citas y Recordatorios",
+        "subtitle_diets": "Dietas",
+        "subtitle_medication": "Medicación",
+        "subtitle_goals": "Objetivos y Retos",
+        "subtitle_advices": "Concejos y Novedades",
+        "subtitle_offers": "Promociones",
+        "subtitle_form": "Formularios",
+        "subtitle_messages": "Mensajes",
+        "password":{
+          "password": "Contrasenya",
+          "title_change_password": "Cambiar Contraseña",
+          "current-password": "Contraseña actual",
+          "new-password": "Nueva contraseña",
+          "confirmedPassword": "Repetir contraseña",
+          "password_confirmation": "¿Quieres cambiar de contraseña?",
+          "success_changed_password": "Contraseña se ha actualizado con éxito!",
+          "no_success_changed_password": "No se ha podido actualizar la contraseña!",
+          "error_changed_password": "Error al actualizar la contraseña!",
+
+          "validators_required": "Campo requerido",
+          "validators_minlength": "El tamaño mínimo es 4 carateres",
+          "validators_check_password": "La contraseña no coincide con la anterior",
+          "validators_new_password": "Debes ingresar la nueva contraseña",
+          "validators_current_password": "Debes ingresar la contraseña actual"
+        }
+
       }
 }

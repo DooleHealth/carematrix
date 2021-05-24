@@ -61,5 +61,46 @@
         "blood_group": "Grup Sanguini",
         "diagnostics":"Diagnòstic",
         "allergies": "Al·lèrgies"
+      },
+      "alert": {
+        "button_ok": "D'acord",
+        "button_cancel": "Cancel",
+        "header_error": "Error",
+        "header_confirmation": "Confirmació"
+      },
+      "setting":{
+        "title_setting": "Ajustos",
+        "button_profile": "Perfil",
+        "title_security": "Seguretat",
+        "title_notification": "Notificació",
+        "subtitle_authentication": "Autenticació de doble factor",
+        "subtitle_face_id": "Face ID/Petjada",
+        "subtitle_communications":"Comunicats mèdics",
+        "subtitle_appointment":"Cites i Recordatoris",
+        "subtitle_diets": "Dietes",
+        "subtitle_medication": "Medicació",
+        "subtitle_goals": "Objectius i Reptes",
+        "subtitle_advices": "Concejos i Novetats",
+        "subtitle_offers": "Promocions",
+        "subtitle_form": "Formularis",
+        "subtitle_messages": "Missatges",
+        "password":{
+          "password": "Contrasenya",
+          "title_change_password": "Canviar Contrasenya",
+          "current-password": "Contrasenya Actual",
+          "new-password": "Nova Contrasenya",
+          "confirmedPassword": "Repetir Contrasenya",
+          "password_confirmation": "Vols canviar de contrasenya?",
+          "success_changed_password": "Contrasenya s'ha actualitzat amb èxit!",
+          "no_success_changed_password": "No s'ha pogut actualitzar la contrasenya!",
+          "error_changed_password": "Error a l'actualitzar la contrasenya!",
+
+          "validators_required": "Camp requerit",
+          "validators_minlength": "La mida mínima és de 4 caràcters",
+          "validators_check_password": "La contrasenya no coincideix amb l'anterior",
+          "validators_new_password": "Has d'ingressar la nova Contrasenya",
+          "validators_current_password": "Has d'ingressar la actual Contrasenya"
+        }
+
       }
 }
