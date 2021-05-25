@@ -32,7 +32,7 @@
               <ion-label>{{ 'profile.information.family_unit' | translate}}</ion-label>
               <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
             </ion-item>
-            <ion-item>
+            <ion-item routerLink="cards" >
               <ion-label>{{ 'profile.information.your_health_cards' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
@@ -66,7 +66,7 @@
               <ion-label>{{'profile.help.frequent_questions' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item lines="none">
+            <ion-item>
               <ion-label>{{'profile.help.report_problem' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
@@ -80,7 +80,7 @@
             </ion-item>
           </ion-list>
     </ion-card>
-    <ion-button expand="block" color="transparent" class="buttonLink" (click)="signOut()">
+    <ion-button expand="block" color="transparent" class="buttonClose" (click)="signOut()">
       {{ 'profile.button_sign_off' | translate}}
   </ion-button>
 </ion-content>
