@@ -67,6 +67,14 @@ const routes: Routes = [
   {
     path: 'password',
     loadChildren: () => import('./pages/profile/settings/password/password.module').then( m => m.PasswordPageModule)
+  },
+  {
+    path: 'cards',
+    loadChildren: () => import('./pages/profile//cards/cards.module').then( m => m.CardsPageModule)
+  },
+  {
+    path: 'add-health-card',
+    loadChildren: () => import('./pages/profile/cards/add-health-card/add-health-card.module').then( m => m.AddHealthCardPageModule)
   }
 
 ];

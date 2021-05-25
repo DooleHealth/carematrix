@@ -33,8 +33,11 @@ ion-item-divider {
 
   .buttonLink{
     color: #3498DB;
-    --box-shadow:none;
-    
+    --box-shadow:none; 
+  }
+  .buttonClose{
+    color: red;
+    --box-shadow:none; 
   }
 
   .toolbarTitle{
@@ -79,10 +82,18 @@ text-align: center;
   font-size: 12px;
   font-weight: 400;
 }
+.txtPaddingLeft{
+padding-left: 5%;
+}
 .textMedium {
   text-align: right;
   color: #7f8c8d;
 }
+.textMedium {
+  text-align: right;
+  color: #7f8c8d;
+}
+
 .textMediumGreen {
   text-align: right;
   color: #27AE60;

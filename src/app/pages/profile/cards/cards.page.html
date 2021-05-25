@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Perfil" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tarjetas sanitarias</ion-title>
+    <ion-buttons slot="end" routerLink="addCard" >
+    <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card class="cardProfile">
+      <ion-card-content>
+    <ion-item lines="none">
+        <img src="assets/images/tarjeta.png">
+      <ion-label class="txtPaddingLeft" >
+        <h3>Seguridad social</h3>
+        <p>547738493</p>
+      </ion-label>
+    </ion-item>
+  </ion-card-content>
+  </ion-card>
+  </ion-list>
+</ion-content>
