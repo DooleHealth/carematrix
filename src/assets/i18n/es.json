@@ -27,6 +27,7 @@
       },
       "profile":{
         "title_profile": "Mi Perfil",
+        "button_go_init": "Inicio",
         "information": {
           "title_information": "Información",
           "data": "Tus Datos",
@@ -53,6 +54,7 @@
         "your_goals": "Tus Objetivos",
         "goals": "Objetivos",
         "start": "Inicio",
+        "achieve": "Alcanzar",
         "end": "Fin",
         "button_go_profile": "Perfil"
       },
@@ -114,5 +116,8 @@
           "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?"
         }
 
+      },
+      "report_problem":{
+        "title_report_problem": "Reportar Problema"
       }
 }
