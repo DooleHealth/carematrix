@@ -28,6 +28,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/user/informationUser') && method === 'GET':
                     return informationUser();
+                case url.endsWith('/user/legal') && method === 'GET':
+                    return legalInformation();
                 case url.endsWith('/user/element/goals') && method === 'GET':
                     return goalsUser();
                 case url.endsWith('/user/profiles') && method === 'GET':
@@ -48,13 +50,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 success: true,
                 idUser: 15183,
                 message: "Success! you are logged in successfully",
-                token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGRmMmJhODUzNjEwYTk2MmExZWNmYjI5YWIyZTUyOTY4NzI2NTI2MmMyNmQ3MjY5MzI1Y2U5ODEyMWZkYWIzNjE1ODFmOGI3ZDZkNDcyMmMiLCJpYXQiOjE2MjEyNzA0NzIsIm5iZiI6MTYyMTI3MDQ3MiwiZXhwIjoxNjUyODA2NDcyLCJzdWIiOiIxNTE4MyIsInNjb3BlcyI6W119.flXERBucYoy2Rywip-eZ7SV91Mc9laXGoS2wiIbbTSH7cC8cHvJKIGuHnrSXQdc0ZZzvnEaLUTIRwkIbPPStFhiZFsCBY88ji5qFGicyQu2xs5095QONUTeip-TWPDe4eSLrW4-5AKkDGwfR2-DhTUbkQeNxiviW77vu-pxv1vZM7ogzfs1NzD2Z-a6Ejp96sd1pz_ILheT7Z03jZj45ZAXdB5CsgD6FIqiN0U7bxv6xwjqHtM1iWzQSk-79aRQua6WPn3IqhafulN1fCsSNqF3pJIHAKSBKOjdAH-r5MOohjaPvmnsOojj1wE8EjG7WJZLaadsInt1prp-zGiOGyMoHNmTK75V_30Xm7sG019EBuzBTqn5jwu9v5AjGVuruYzaqwpqyTT3zSzjektR5SJMNBuO8-2t9m2wwwKSSDEGmu75lMRsc9rM7JErA931h27CI0k4jAIXbCUODVSwGzBcQleaS45cRY0GHxpI65c3qtetNFotR9Q_TWdQpp0PcCAMHO1D3hzQgJue_awpzYqdKwT3MteL4IH_zcsgP6XfYIsKOznku2UfY1UO4ZpUlnE_ZbXSB5-_WIySBzEj9nsnDw5WNooJH5iz9vxzNjOeSdgvC9ZopfWPnWJDoSjl0fjYS4ZZyWqxRofOTmjPC_u7uz4AbWZZTT_SE1u1MUQM",
+                //token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGRmMmJhODUzNjEwYTk2MmExZWNmYjI5YWIyZTUyOTY4NzI2NTI2MmMyNmQ3MjY5MzI1Y2U5ODEyMWZkYWIzNjE1ODFmOGI3ZDZkNDcyMmMiLCJpYXQiOjE2MjEyNzA0NzIsIm5iZiI6MTYyMTI3MDQ3MiwiZXhwIjoxNjUyODA2NDcyLCJzdWIiOiIxNTE4MyIsInNjb3BlcyI6W119.flXERBucYoy2Rywip-eZ7SV91Mc9laXGoS2wiIbbTSH7cC8cHvJKIGuHnrSXQdc0ZZzvnEaLUTIRwkIbPPStFhiZFsCBY88ji5qFGicyQu2xs5095QONUTeip-TWPDe4eSLrW4-5AKkDGwfR2-DhTUbkQeNxiviW77vu-pxv1vZM7ogzfs1NzD2Z-a6Ejp96sd1pz_ILheT7Z03jZj45ZAXdB5CsgD6FIqiN0U7bxv6xwjqHtM1iWzQSk-79aRQua6WPn3IqhafulN1fCsSNqF3pJIHAKSBKOjdAH-r5MOohjaPvmnsOojj1wE8EjG7WJZLaadsInt1prp-zGiOGyMoHNmTK75V_30Xm7sG019EBuzBTqn5jwu9v5AjGVuruYzaqwpqyTT3zSzjektR5SJMNBuO8-2t9m2wwwKSSDEGmu75lMRsc9rM7JErA931h27CI0k4jAIXbCUODVSwGzBcQleaS45cRY0GHxpI65c3qtetNFotR9Q_TWdQpp0PcCAMHO1D3hzQgJue_awpzYqdKwT3MteL4IH_zcsgP6XfYIsKOznku2UfY1UO4ZpUlnE_ZbXSB5-_WIySBzEj9nsnDw5WNooJH5iz9vxzNjOeSdgvC9ZopfWPnWJDoSjl0fjYS4ZZyWqxRofOTmjPC_u7uz4AbWZZTT_SE1u1MUQM",
+                token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWUwNzAyMzQ2Mjc5NDNiNGI3ZjdkNGIwMGRjOTdlNmZjYmY1N2FmNTg1MDhmMDk5MmEwOWQyNWU0Yjk4MDcxMmU5MmQzOGIyMjM3MWJjYTciLCJpYXQiOjE2MjIwMjQ5MTAsIm5iZiI6MTYyMjAyNDkxMCwiZXhwIjoxNjUzNTYwOTEwLCJzdWIiOiIxNTE4MyIsInNjb3BlcyI6W119.CDMeoHnmdnGG06pFiyD7gJ4ukOqxt5Xey1etsRuLr5vmq3BOHryyKKxAbWS737o9gD-kAIOwtbqioYV-QG5DfdLulEFrV49IHelZS9k3j3apNFToeUF5vqoA1XrRp8faHqrjIRGSfHK76Pak0hQ4p-cMIv8-wFmxPJJDqfkiyhuKoPry2wcXucywggjtRD3b7fpsP524aubogv-aGHkUnRjPyZlKYFMwOzOL3Q3aNoZ9Ak8wxMcgRT_AhR1Di276XXRnr62XE5Z1P4J28y1shMjeMJcZkacIDHVw8sguL1T3BC39O-SLhAwTzADLT43U2ixJFYQGUWkovvIagHL60VmUEgX63mUOnUctSir3vmUQB8Tn9Jyo8q7Q11hUrG--1SyDBimKZUtZk_6mMTY1w4HQhAGwkoBXp6aUWpskuTDMbBLutfYR8Q5rCeICJtcUstg4Eqt8bVIK-DPj_vpFrLBG97nIOcrjYjLiUA7_IhHsFeSaWeKjZBJnASkqtsgfUDW__WEw8LR6cVoU0IDzhhxfVBy0ic_NhaqqppC-KyhSrUmt6ppZH5QvW8j4NBCTZfaWt5LfT9DCpTUQ-N6v8tjdPL4uyvFfzE3Qk2HYnnXc_X6MQh-AtsycOHIdMpnwUCUoOVfj62LzL7kYNmC32ZzZ_KMSJ8zAuRKiQDCT88E",
                 roles: [
                     "patient",
                     "staff",
                     "superadmin"
                 ],
-                firebaseToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay15cnc1aUBjb3ZpZC0zOWI5Ni5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImZpcmViYXNlLWFkbWluc2RrLXlydzVpQGNvdmlkLTM5Yjk2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6XC9cL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbVwvZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxNTE4MyIsImlhdCI6MTYyMTI3MDQ3MiwiZXhwIjoxNjIxMjc0MDcyfQ.NqEtC0WbUdKdBYvw29FoGVQRwy765fMfsFeLRZsfXWJ85mUb0467cXFsglpiFx0b0gzkjS4hVGmJAHwmQZyCsiBzUiUZiiuLpWo2w3BgBpqVMWoG2cjmx-_V7MNLtYoeCKpN8Yi6cYdHVEf_qSxyMbOga5jUnR4RozL4oF_o26PKhdJkBEN2bl98epdB4so9drY8NtWdVCdZCyaZA3KB65y-mwu02lawA6v_JVELVRmtV-GrRX8d8gDvo2tOusGkVqEipN9IFtnAGX4heIoD_g1ySpeLPFMjrDwU8KxD5I6z487gA7U58tvCZrw9QhsRsDRQs7dsMUMptV5AR8xWtw",
+                //firebaseToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay15cnc1aUBjb3ZpZC0zOWI5Ni5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImZpcmViYXNlLWFkbWluc2RrLXlydzVpQGNvdmlkLTM5Yjk2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6XC9cL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbVwvZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxNTE4MyIsImlhdCI6MTYyMTI3MDQ3MiwiZXhwIjoxNjIxMjc0MDcyfQ.NqEtC0WbUdKdBYvw29FoGVQRwy765fMfsFeLRZsfXWJ85mUb0467cXFsglpiFx0b0gzkjS4hVGmJAHwmQZyCsiBzUiUZiiuLpWo2w3BgBpqVMWoG2cjmx-_V7MNLtYoeCKpN8Yi6cYdHVEf_qSxyMbOga5jUnR4RozL4oF_o26PKhdJkBEN2bl98epdB4so9drY8NtWdVCdZCyaZA3KB65y-mwu02lawA6v_JVELVRmtV-GrRX8d8gDvo2tOusGkVqEipN9IFtnAGX4heIoD_g1ySpeLPFMjrDwU8KxD5I6z487gA7U58tvCZrw9QhsRsDRQs7dsMUMptV5AR8xWtw",
+                firebaseToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay15cnc1aUBjb3ZpZC0zOWI5Ni5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImZpcmViYXNlLWFkbWluc2RrLXlydzVpQGNvdmlkLTM5Yjk2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6XC9cL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbVwvZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxNTE4MyIsImlhdCI6MTYyMjAyNDkxMCwiZXhwIjoxNjIyMDI4NTEwfQ.emChHusTaUnIsJLoj3DbYahGwqlumm8iAbS3Hxf3JteKW-v-_JjrprSWjkvkWw60ZO6leaeW8TDR4hPr23e6-J_zUiu9ZX0qdJTM4pL3EUyQskPqs_ZImnZg7h4K0-BYxTly9-OoqPCqkncxjX0dfeKaufkl3E20LshXThvXMG1rv49HhuNtdd3oDwQF97ttu-HJlxdt6rssf3EtgYBgmQaMOfh43kbZhNMDbI0MkDl-IfmtfjRx4dB3grZ2NVxtR0Bsg5IZxHFqes-77Y8GTIASyMs7SW7JwnNLm3W1bBnsZn7djsmLfPyRUHlCKrzvZUhy7TzwyyEIz-IktoHSXA",
                 familyUnit: []
             })
         }
@@ -484,6 +488,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function familyUnit() {
+         
+            return ok(
+                [
+                    {
+                        id: 12737,
+                        name: "Castañeda, Juanito",
+                        initials: "CJ",
+                        age: null,
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=CJ",
+                        family_relationship: "Relación familiar"
+                    },
+                    {
+                        id: 13015,
+                        name: "adjunto, Tania",
+                        initials: "AD",
+                        age: null,
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
+                        family_relationship: "Relación familiar"
+                    }
+                ] 
+            )
+        }
+
+        function legalInformation() {
          
             return ok(
                 [

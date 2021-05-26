@@ -39,7 +39,8 @@ export class DooleService {
     const fileTransfer: FileTransferObject = this.transfer.create();
     // Add files for new or saved diagnostics. 
     // uses diagnostic/media when diagnostic is new 
-    const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
+    //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
+    const endpoint = this.api.getEndpoint('media/upload/temp') ;
     console.log("* uploadFile endpoint", endpoint);
     
     return new Promise(function(resolve,reject) {
@@ -52,6 +53,7 @@ export class DooleService {
           reject(err);
       })
     })
+    
   }
   
 
@@ -237,6 +239,18 @@ export class DooleService {
       map((res: any) => {
         console.log(`[DooleService] getAPIFamilyUnit(${path}) res: `, res);
         return res;
+      })
+    );
+  }
+
+  postAPIReportProblem(params: Object): Observable<any>{
+    let path = 'media/upload/temp' // 'user/reportProblem';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        return res;
+
       })
     );
   }

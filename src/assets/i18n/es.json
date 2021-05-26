@@ -118,6 +118,16 @@
 
       },
       "report_problem":{
-        "title_report_problem": "Reportar Problema"
+        "title_report_problem": "Reportar Problema",
+        "alert_confirm_exit": "La información introducida se perderá ¿Quieres salir de todas formas?",
+        "alert_successful_response": "Problema reportado con éxito",
+        "alert_no_successful_response": "Ha ocurrido un error al reportat el problema",
+        "button_send": "Enviar",
+        "subtitle_category": "Categoría",
+        "subtitle_description": "Descripción",
+        "subtitle_screenshot": "Captura de pantall",
+        "description_screenshot": "Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
+        "button_add_file": "Añadir archivos"
+
       }
 }

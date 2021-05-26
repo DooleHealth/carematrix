@@ -1,3 +1,132 @@
 {
-  
+    "landing": {
+        "user_placeholder": "Usuari",
+        "password_placeholder": "Contrasenya",
+        "password_recovery": "Has oblidat la contrasenya?",
+        "button_signin": "Inici de sessió",
+        "button_registre": "Crear Usuari"
+      },    
+      "legal": {
+        "header": "Condicions legals i d’ús de l’aplicació",
+        "ok_button": "Les accepto",
+        "ko_button": "No les accepto"
+      },
+      "homeInitial": {
+        "goals_title": "El teu objectiu",
+        "advices_title": "Novetats i Consells",
+        "today_title": "El teu Dia",
+        "reminders_title": "Recordatoris",
+        "daily_goal_title": "El teu objectiu diari",
+        "lunch_subtitle": "Dinar",
+        "medication_subtitle": "Medicació",
+        "plays_subtitle": "Jocs",
+        "physical_activity_subtitle": "Activitat física",
+        "see_all_button": "Veure totes",
+        "detail_button": "Detalls",
+        "register_button": "Inscriure"
+      },
+      "profile":{
+        "title_profile": "El meu perfil",
+        "button_go_init": "Inici",
+        "information": {
+          "title_information": "Información",
+          "data": "Les teves Dades",
+          "family_unit": "Unitat Familiar",
+          "your_health_cards": "Les teves Targetes Sanitàries",
+          "your_goals": "Els teus Objectius",
+          "payment_method": "Mètode de pagament"
+        },
+        "configuration": {
+          "title_setting": "Configuració",
+          "linked_accounts":"Comptes Vinculades",
+          "settings": "Ajustaments"
+        },
+        "help": {
+          "title_help":  "Ajuda",
+          "frequent_questions": "Preguntes més Freqüents",
+          "report_problem":  "Informa d'un problema",
+          "legal_warning": "Avís Legal",
+          "us": "Nosaltres"
+        },
+        "button_sign_off": "Tancar Sessió"
+      },
+      "goals": {
+        "your_goals": "Els teus Objectius",
+        "goals": "Objectius",
+        "start": "Inici",
+        "achieve": "Assolir",
+        "end": "Fi",
+        "button_go_profile": "Perfil"
+      },
+      "personal": {
+        "button_back": "Inici",
+        "header": "Les teves dades",
+        "first_name": "Nom",
+        "last_name": "Cognom",
+        "birthdate": "Data de Naixement",
+        "gender": "Gènere",
+        "weight":"Pes",
+        "height": "Alçada",
+        "blood_group": "Grup Sanguini",
+        "diagnostics":"Diagnòstic",
+        "allergies": "Al·lèrgies"
+      },
+      "alert": {
+        "button_ok": "D'acord",
+        "button_cancel": "Cancel",
+        "button_change": "Canviar",
+        "header_error": "Error",
+        "header_confirmation": "Confirmació"
+      },
+      "setting":{
+        "title_setting": "Ajustos",
+        "button_profile": "Perfil",
+        "title_security": "Seguretat",
+        "title_notification": "Notificació",
+        "subtitle_authentication": "Autenticació de doble factor",
+        "subtitle_face_id": "Face ID/Petjada",
+        "subtitle_communications":"Comunicats mèdics",
+        "subtitle_appointment":"Cites i Recordatoris",
+        "subtitle_diets": "Dietes",
+        "subtitle_medication": "Medicació",
+        "subtitle_goals": "Objectius i Reptes",
+        "subtitle_advices": "Concejos i Novetats",
+        "subtitle_offers": "Promocions",
+        "subtitle_form": "Formularis",
+        "subtitle_messages": "Missatges",
+        "password":{
+          "password": "Contrasenya",
+          "title_change_password": "Canviar Contrasenya",
+          "current-password": "Contrasenya Actual",
+          "new-password": "Nova Contrasenya",
+          "confirmedPassword": "Repetir Contrasenya",
+          "password_confirmation": "Vols canviar de contrasenya?",
+          "success_changed_password": "Contrasenya s'ha actualitzat amb èxit!",
+          "no_success_changed_password": "No s'ha pogut actualitzar la contrasenya!",
+          "error_changed_password": "Error a l'actualitzar la contrasenya!",
+
+          "validators_required": "Camp requerit",
+          "validators_minlength": "La mida mínima és de 4 caràcters",
+          "validators_check_password": "La contrasenya no coincideix amb l'anterior",
+          "validators_new_password": "Has d'ingressar la nova Contrasenya",
+          "validators_current_password": "Has d'ingressar la actual Contrasenya"
+        },
+        "family_unit":{
+          "title_family_unit":"Unitat Familiar",
+          "msg_alert_change_perfil": "Vols canviar a aquest perfil?"
+        }
+
+      },
+      "report_problem":{
+        "title_report_problem": "Reportar Problema",
+        "alert_confirm_exit": "La informació introduïda es perdrà, Vols sortir de totes maneres?",
+        "alert_successful_response": "Problema reportat amb èxit",
+        "alert_no_successful_response": "Hi ha hagut un error a l'reportat el problema",
+        "button_send": "Enviar",
+        "subtitle_category": "Categoria",
+        "subtitle_description": "Descripció",
+        "subtitle_screenshot": "Captura de pantall",
+        "description_screenshot": "Pots adjuntar captures de pantalla per ajudar-nos a solucionar el teu problema",
+        "button_add_file": "Afegir arxius"
+      }
 }

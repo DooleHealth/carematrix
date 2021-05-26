@@ -1,3 +1,133 @@
 {
-  
+    "landing": {
+        "user_placeholder": "Usuario",
+        "password_placeholder": "Contraseña",
+        "password_recovery": "¿Has olvidado tu contraseña?",
+        "button_signin": "Iniciar sesión",
+        "button_registre": "Crear Usuario"
+      },
+      "legal": {
+        "header": "Condiciones legal y de uso de la aplicación",
+        "ok_button": "Acepto",
+        "ko_button": "No acepto"
+      },
+      "homeInitial": {
+        "goals_title": "Tu Objetivo",
+        "advices_title": "Novedades y Consejos",
+        "today_title": "Tu Dia",
+        "reminders_title": "Recodatorios",
+        "daily_goal_title": "Tu Objetivo Diario",
+        "lunch_subtitle": "Almuerzo",
+        "medication_subtitle": "Medicación",
+        "plays_subtitle": "Juegos",
+        "physical_activity_subtitle": "Actividad física",
+        "see_all_button": "Ver todas",
+        "detail_button": "Detalles",
+        "register_button": "Inscribirme"
+      },
+      "profile":{
+        "title_profile": "Mi Perfil",
+        "button_go_init": "Inicio",
+        "information": {
+          "title_information": "Información",
+          "data": "Tus Datos",
+          "family_unit": "Unidad Familiar",
+          "your_health_cards": "Tus Tarjetas Sanitarias", 
+          "your_goals": "Tus Objetivos",
+          "payment_method": "Método de Pago"
+        },
+        "configuration": {
+          "title_setting": "Configuración",
+          "linked_accounts":"Cuentas Vinculadas",
+          "settings": "Ajustes"
+        },
+        "help": {
+          "title_help":  "Ayuda",
+          "frequent_questions": "Preguntas Frecuentes",
+          "report_problem": "Reportar un problema",
+          "legal_warning": "Aviso Legal",
+          "us": "Nosotros"
+        },
+        "button_sign_off": "Cerrar Sesión"
+      },
+      "goals": {
+        "your_goals": "Tus Objetivos",
+        "goals": "Objetivos",
+        "start": "Inicio",
+        "achieve": "Alcanzar",
+        "end": "Fin",
+        "button_go_profile": "Perfil"
+      },
+      "personal": {
+        "button_back": "Inicio",
+        "header": "Tus Datos",
+        "first_name": "Nombre",
+        "last_name": "Apellido",
+        "birthdate": "Fecha de Nacimiento",
+        "gender": "Género",
+        "weight":"Peso",
+        "height": "Altura",
+        "blood_group": "Grupo Sanguíneo",
+        "diagnostics":"Diagnóstico",
+        "allergies": "Alergias"
+      },
+      "alert": {
+        "button_ok": "Aceptar", 
+        "button_cancel": "Cancelar",
+        "button_change": "Cambiar",
+        "header_error": "Error",
+        "header_confirmation": "Confirmation"
+      },
+      "setting":{
+        "title_setting": "Ajustes",
+        "button_profile": "Perfil",
+        "title_security": "Seguridad",
+        "title_notification": "Notificación",
+        "subtitle_authentication": "Autenticación de doble factor",
+        "subtitle_face_id": "Face ID/Huella",
+        "subtitle_communications":"Comunicados médicos",
+        "subtitle_appointment":"Citas y Recordatorios",
+        "subtitle_diets": "Dietas",
+        "subtitle_medication": "Medicación",
+        "subtitle_goals": "Objetivos y Retos",
+        "subtitle_advices": "Concejos y Novedades",
+        "subtitle_offers": "Promociones",
+        "subtitle_form": "Formularios",
+        "subtitle_messages": "Mensajes",
+        "password":{
+          "password": "Contrasenya",
+          "title_change_password": "Cambiar Contraseña",
+          "current-password": "Contraseña actual",
+          "new-password": "Nueva contraseña",
+          "confirmedPassword": "Repetir contraseña",
+          "password_confirmation": "¿Quieres cambiar de contraseña?",
+          "success_changed_password": "Contraseña se ha actualizado con éxito!",
+          "no_success_changed_password": "No se ha podido actualizar la contraseña!",
+          "error_changed_password": "Error al actualizar la contraseña!",
+
+          "validators_required": "Campo requerido",
+          "validators_minlength": "El tamaño mínimo es 4 carateres",
+          "validators_check_password": "La contraseña no coincide con la anterior",
+          "validators_new_password": "Debes ingresar la nueva contraseña",
+          "validators_current_password": "Debes ingresar la contraseña actual"
+        },
+        "family_unit":{
+          "title_family_unit":"Unidad Familiar",
+          "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?"
+        }
+
+      },
+      "report_problem":{
+        "title_report_problem": "Reportar Problema",
+        "alert_confirm_exit": "La información introducida se perderá ¿Quieres salir de todas formas?",
+        "alert_successful_response": "Problema reportado con éxito",
+        "alert_no_successful_response": "Ha ocurrido un error al reportat el problema",
+        "button_send": "Enviar",
+        "subtitle_category": "Categoría",
+        "subtitle_description": "Descripción",
+        "subtitle_screenshot": "Captura de pantall",
+        "description_screenshot": "Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
+        "button_add_file": "Añadir archivos"
+
+      }
 }

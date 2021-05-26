@@ -118,6 +118,15 @@
 
       },
       "report_problem":{
-        "title_report_problem": "Reportar Problema"
+        "title_report_problem": "Reportar Problema",
+        "alert_confirm_exit": "La informació introduïda es perdrà, Vols sortir de totes maneres?",
+        "alert_successful_response": "Problema reportat amb èxit",
+        "alert_no_successful_response": "Hi ha hagut un error a l'reportat el problema",
+        "button_send": "Enviar",
+        "subtitle_category": "Categoria",
+        "subtitle_description": "Descripció",
+        "subtitle_screenshot": "Captura de pantall",
+        "description_screenshot": "Pots adjuntar captures de pantalla per ajudar-nos a solucionar el teu problema",
+        "button_add_file": "Afegir arxius"
       }
 }

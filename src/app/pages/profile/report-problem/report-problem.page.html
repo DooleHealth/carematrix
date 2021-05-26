@@ -1,62 +1,67 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button icon="" text="{{'alert.button_cancel' | translate }}" ></ion-back-button>
-    </ion-buttons>
+    <ion-button slot="start" fill="clear" (click)="goBacktoProfile()">{{'alert.button_cancel' | translate }}
+     <!--  <ion-back-button icon="" text="" ></ion-back-button> -->
+    </ion-button>
     <ion-title>{{'report_problem.title_report_problem' | translate }}</ion-title>
-    <ion-button slot="end" fill="clear" (click)="sendProblemReport()">Enviar
+    <ion-button slot="end" fill="clear" (click)="submit()">
+      {{'report_problem.button_send' | translate }}
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card class="cardProfile">
+    <form (ngSubmit)="submit()" [formGroup]="form">
     <ion-list>
       <ion-item>
-        <ion-label>Categoría</ion-label>
+        <ion-label>{{'report_problem.subtitle_category' | translate }}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-        <ion-input></ion-input>
+        <ion-input formControlName="category"></ion-input>
       </ion-item>
       <ion-item >
-        <ion-label>Descripción</ion-label>
+        <ion-label>{{'report_problem.subtitle_description' | translate }}</ion-label>
         <ion-textarea
-        placeholder="Descripción"
-      ></ion-textarea>          <!-- formControlName="description" -->
+        formControlName="description"
+      ></ion-textarea>       
       </ion-item>
       <ion-item lines="none" >
-        <ion-label>Captura de Pantalla</ion-label>
-        <ion-label slot="end">1/6</ion-label>
+        <ion-label>{{'report_problem.subtitle_screenshot' | translate }}</ion-label>
+        <ion-label slot="end">{{this.numFile}}/6</ion-label>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema</ion-label>
+        <ion-label>{{'report_problem.description_screenshot' | translate }}</ion-label>
       </ion-item>
       <ion-item lines="none" *ngIf="this.patient_files.length > 0">
         <div id="container" style="margin-top: 10px;">
           <div *ngFor="let file of this.patient_files">
-            <div id="left">
-              <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
-            </div>
-            <div id="middle">
-              <p class="titule">{{ file.name }}</p>
-            </div>
-            <div id="right">
-              <ion-icon name="close-circle" color="primary" (click)="removeFile(file.name)"></ion-icon>
-            </div> 
+            <!-- <ion-card class="cardProfile"> -->
+              <div id="left">
+                <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+              </div>
+              <div id="middle">
+                <p class="titule">{{ file.name }}</p>
+              </div>
+              <div id="right">
+                <ion-icon name="close-circle" color="primary" (click)="removeFile(file.name)"></ion-icon>
+              </div> 
+          <!-- </ion-card> -->
           </div>       
         </div>
       </ion-item>
-
-      <ion-button slot="start" fill="clear" (click)="addFile()">Añadir archivos
-      </ion-button>
-
-      <ion-label>Añadir archivos</ion-label>
-
       <input
       type="file"
       #fileInput
       (change)="uploadFileFromBrowser($event)"
       hidden="true"
       accept="image/*">
+
+      <ion-button slot="start" 
+      fill="clear" 
+      (click)="selectImageSource()"
+      [disabled]="enableButtonAddFile()">{{'report_problem.button_add_file' | translate }}
+      </ion-button>
     </ion-list>
+  </form>
   </ion-card>
 </ion-content>
