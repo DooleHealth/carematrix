@@ -188,6 +188,28 @@ export class DooleService {
 
   }
 
+  getAPILegalInformation(): Observable<any>{
+    let path = '/user/legal';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+  postAPILegalConfirmation(params: Object): Observable<any>{
+    let path = '/user/legal';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIConfirmationLegal(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   getAPIhomeInitial(path:string): Observable<any>{
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -196,7 +218,6 @@ export class DooleService {
         return res;
       })
     )
-    
   }
 
   getAPIhome(path:string) : Observable<any>{
@@ -244,7 +265,7 @@ export class DooleService {
   }
 
   postAPIReportProblem(params: Object): Observable<any>{
-    let path = 'media/upload/temp' // 'user/reportProblem';
+    let path = 'user/reportProblem'; // 'media/upload/temp' 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {

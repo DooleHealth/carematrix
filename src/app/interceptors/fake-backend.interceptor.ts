@@ -30,6 +30,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return informationUser();
                 case url.endsWith('/user/legal') && method === 'GET':
                     return legalInformation();
+                case url.endsWith('user/legal') && method === 'POST':
+                    return confirmLegal();
                 case url.endsWith('/user/element/goals') && method === 'GET':
                     return goalsUser();
                 case url.endsWith('/user/profiles') && method === 'GET':
@@ -511,27 +513,55 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             )
         }
 
+        function confirmLegal() {
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
         function legalInformation() {
          
             return ok(
-                [
                     {
                         id: 12737,
-                        name: "Castañeda, Juanito",
-                        initials: "CJ",
-                        age: null,
-                        thumbnail: "https://via.placeholder.com/300x300.png?text=CJ",
-                        family_relationship: "Relación familiar"
-                    },
-                    {
-                        id: 13015,
-                        name: "adjunto, Tania",
-                        initials: "AD",
-                        age: null,
-                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
-                        family_relationship: "Relación familiar"
+                        title: "PRIVACIDAD Y TRATAMIENTO DE LA INFORMACIÓN Doole Health",
+                        introduction: [
+                            "La App de Doole Health es una aplicación que facilita la comunicación entre usuarios y profesionales sanitarios así como determinadas actividades sanitarias y "
+                            +"de atención social. Su objetivo es sustituir aquellas actividades o acciones presenciales susceptibles de realizarse a distancia para su mayor comodidad, mejora de la atención prestada, disminución de desplazamientos -y contaminación asociada- y optimización de los recursos disponibles.",
+
+                            "Al utilizarla, usted está dando su consentimiento para que los profesionales "+
+                            "sanitarios o sociosanitarios se comuniquen con usted por este medio a través de "+
+                            "mensajería segura, videoconferencia u otros sistemas de comunicación o almacenaje "+
+                            "de información.",
+
+                            "Estos sistemas no evitan que usted en cualquier momento pueda utilizar "+
+                            "los canales de atención convencionales (presencia física, comunicación "+
+                            "telefónica, etc). De hecho, si por cualquier motivo usted no recibe una "+
+                            "respuesta adecuada a través de +Apropp, deberá recurrir a estos canales "+
+                            "convencionales.",
+
+                            "La App de Doole Health es pues una herramienta que quiere hacerle la vida más fácil pero "+
+                            "como el tipo de información y datos con los que trabaja son de alta "+
+                            "confidencialidad (aspecto que nos tomamos como de máxima importancia) "+
+                            "queremos detallarle los aspectos legales de esta relación."
+                        ],
+                        sections: [
+                            {
+                                title: "1.- DERECHO DE INFORMACIÓN",
+                                description: [
+                                            "De acuerdo con lo dispuesto en el artículo 11 de la Ley Orgánica 3/2018, de "+
+                                            "5 de diciembre, de Protección de Datos Personales y garantía de los "+
+                                            "derechos digitales (en adelante LOPDGDD) y el artículo 13 del Reglamento "+
+                                            "General de Protección de datos 2016/679 le informamos de:"
+                                ]
+                            }
+                        ],
+
                     }
-                ] 
             )
         }
 

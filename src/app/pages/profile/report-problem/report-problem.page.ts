@@ -22,18 +22,16 @@ export class ReportProblemPage implements OnInit {
   patient_files: Array<{ name: string, file: string, type: string }> = [];
   form: FormGroup;
   //file: any;
-  file64: SafeResourceUrl;
+  //file64: SafeResourceUrl;
   numFile = 0;
-  mediaFiles: any = [];
   private images : any = [];
-  private mimes : any = [];
-  private imagesTemp : any = [];
+
   constructor(
     private translate: TranslateService,
     public router: Router,
     private dooleService: DooleService,
-    private chooser: Chooser,
-    private sanitizer: DomSanitizer,
+    //private chooser: Chooser,
+    //private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     public platform: Platform,
     public file: File,
@@ -45,8 +43,7 @@ export class ReportProblemPage implements OnInit {
     this.form = this.fb.group({
       category: [''],
       description: ['', [Validators.required]],
-      //images:[this.images]
-      images:[]
+      images:[this.images]
     });
   }
 
@@ -171,9 +168,10 @@ export class ReportProblemPage implements OnInit {
       let description = this.form.get('description').value
       this.form.get('description').setValue(description);
 
-/*       this.patient_files.forEach(item => {
+      this.patient_files.forEach(item => {
         this.images.push(item.file);   
-      }); */
+      });
+      this.form.get('images').setValue(this.images);
   
       console.log("data:", this.images);
       this.dooleService.postAPIReportProblem(/* this.form.value */
@@ -262,6 +260,8 @@ export class ReportProblemPage implements OnInit {
     }
 
     async saveFile(data){
+      const loading = await this.loadingController.create();
+      await loading.present();
       this.dooleService.uploadFile(data).then( res =>{
         let isSuccess = (res as any).success
         if(isSuccess)
@@ -270,9 +270,10 @@ export class ReportProblemPage implements OnInit {
         this.presentAlert(this.translate.instant("report_problem.alert_no_successful_response"));
       }).catch(err => {
         console.log("Error uploadFile: ", err);
+        loading.dismiss();
         this.presentAlert(err);
       }).finally(() => {
-        //loading.dismiss();
+        loading.dismiss();
       })
     }
 
@@ -285,9 +286,6 @@ export class ReportProblemPage implements OnInit {
         console.log("savePicture() saveBase64 res: ",res);
         this.dooleService.uploadFile(res).then(data => {
           console.log("savePicture() uploadFile res: ",res);
-          this.mediaFiles.push(data);
-          this.imagesTemp.push(data);
-          console.log("savePicture() this.mediafiles.: ", this.mediaFiles);
           //loading.dismiss();
         }).catch(err => {
           console.log("Error uploadFile: ", err);
