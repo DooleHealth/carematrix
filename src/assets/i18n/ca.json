@@ -27,6 +27,7 @@
       },
       "profile":{
         "title_profile": "El meu perfil",
+        "button_go_init": "Inici",
         "information": {
           "title_information": "Información",
           "data": "Les teves Dades",
@@ -53,6 +54,7 @@
         "your_goals": "Els teus Objectius",
         "goals": "Objectius",
         "start": "Inici",
+        "achieve": "Assolir",
         "end": "Fi",
         "button_go_profile": "Perfil"
       },
@@ -114,5 +116,17 @@
           "msg_alert_change_perfil": "Vols canviar a aquest perfil?"
         }
 
+      },
+      "report_problem":{
+        "title_report_problem": "Reportar Problema",
+        "alert_confirm_exit": "La informació introduïda es perdrà, Vols sortir de totes maneres?",
+        "alert_successful_response": "Problema reportat amb èxit",
+        "alert_no_successful_response": "Hi ha hagut un error a l'reportat el problema",
+        "button_send": "Enviar",
+        "subtitle_category": "Categoria",
+        "subtitle_description": "Descripció",
+        "subtitle_screenshot": "Captura de pantall",
+        "description_screenshot": "Pots adjuntar captures de pantalla per ajudar-nos a solucionar el teu problema",
+        "button_add_file": "Afegir arxius"
       }
 }

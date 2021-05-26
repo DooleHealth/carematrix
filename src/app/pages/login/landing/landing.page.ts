@@ -104,8 +104,8 @@ export class LandingPage implements OnInit {
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
         console.log('[LandingPage] doDooleAppLogin()', await res);
         this.dismissLoading();
+        //this.checkConditionLegal(res.condicion_legal)
         this.router.navigate(['/legal']);
-        //this.redirectLoggedUserToHomePage();
 
       }, async (error) => {
        console.log('doDooleAppLogin() ERROR', await error);
@@ -114,6 +114,12 @@ export class LandingPage implements OnInit {
      });
     });
    
+  }
+
+  checkConditionLegal(condicion){
+      if(!condicion)
+      this.router.navigate(['/legal']);
+      else this.redirectLoggedUserToHomePage();
   }
 
   private async saveInLocalStorage(data: any){
@@ -125,6 +131,11 @@ export class LandingPage implements OnInit {
       key: 'mutua',
       value: data
     });
+  }
+
+
+  passwordRecovery(){
+    console.log('[LandingPage] passwordRecovery()');
   }
  
 

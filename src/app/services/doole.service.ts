@@ -39,7 +39,8 @@ export class DooleService {
     const fileTransfer: FileTransferObject = this.transfer.create();
     // Add files for new or saved diagnostics. 
     // uses diagnostic/media when diagnostic is new 
-    const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
+    //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
+    const endpoint = this.api.getEndpoint('media/upload/temp') ;
     console.log("* uploadFile endpoint", endpoint);
     
     return new Promise(function(resolve,reject) {
@@ -52,6 +53,7 @@ export class DooleService {
           reject(err);
       })
     })
+    
   }
   
 
@@ -186,6 +188,28 @@ export class DooleService {
 
   }
 
+  getAPILegalInformation(): Observable<any>{
+    let path = '/user/legal';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+  postAPILegalConfirmation(params: Object): Observable<any>{
+    let path = '/user/legal';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIConfirmationLegal(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   getAPIhomeInitial(path:string): Observable<any>{
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -194,7 +218,6 @@ export class DooleService {
         return res;
       })
     )
-    
   }
 
   getAPIhome(path:string) : Observable<any>{
@@ -237,6 +260,18 @@ export class DooleService {
       map((res: any) => {
         console.log(`[DooleService] getAPIFamilyUnit(${path}) res: `, res);
         return res;
+      })
+    );
+  }
+
+  postAPIReportProblem(params: Object): Observable<any>{
+    let path = 'user/reportProblem'; // 'media/upload/temp' 
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        return res;
+
       })
     );
   }

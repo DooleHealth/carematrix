@@ -11,64 +11,32 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <div class="main-container">
+  <div class="main-container" *ngIf="this.legal !== undefined">
     <p align="center">
-      <strong>PRIVACIDAD Y TRATAMIENTO DE LA INFORMACIÓN Doole Health</strong>
+      <strong>{{this.legal.title}}</strong>
   </p>
-  <p>
-      <em>
-          La App de Doole Health es una aplicación que facilita la comunicación entre usuarios y
-          profesionales sanitarios así como determinadas actividades sanitarias y
-          de atención social. Su objetivo es sustituir aquellas actividades o
-          acciones presenciales susceptibles de realizarse a distancia para su
-          mayor comodidad, mejora de la atención prestada, disminución de
-          desplazamientos -y contaminación asociada- y optimización de los
-          recursos disponibles.
-      </em>
-  </p>
-  <p>
-      <em> </em>
-  </p>
-  <p>
-      <em>
-          Al utilizarla, usted está dando su consentimiento para que los
-          profesionales sanitarios o sociosanitarios se comuniquen con usted por
-          este medio a través de mensajería segura, videoconferencia u otros
-          sistemas de comunicación o almacenaje de información.
-      </em>
-  </p>
-  <p>
-      <em> </em>
-  </p>
-  <p>
-      <em>
-          Estos sistemas no evitan que usted en cualquier momento pueda utilizar
-          los canales de atención convencionales (presencia física, comunicación
-          telefónica, etc). De hecho, si por cualquier motivo usted no recibe una
-          respuesta adecuada a través de +Apropp, deberá recurrir a estos canales
-          convencionales.
-      </em>
-  </p>
-  <p>
-      <em> </em>
-  </p>
-  <p>
-      <em>
-          La App de Doole Health es pues una herramienta que quiere hacerle la vida más fácil pero
-          como el tipo de información y datos con los que trabaja son de alta
-          confidencialidad (aspecto que nos tomamos como de máxima importancia)
-          queremos detallarle los aspectos legales de esta relación.
-      </em>
-  </p>
-  <p>
-      <strong>1.- DERECHO DE INFORMACIÓN</strong>
-  </p>
-  <p>
-      De acuerdo con lo dispuesto en el artículo 11 de la Ley Orgánica 3/2018, de
-      5 de diciembre, de Protección de Datos Personales y garantía de los
-      derechos digitales (en adelante LOPDGDD) y el artículo 13 del Reglamento
-      General de Protección de datos 2016/679 le informamos de:
-  </p>
+  <div *ngFor="let paragraph of legal.introduction">
+    <p>
+        <em>
+            {{paragraph}}
+        </em>
+    </p>
+    <p>
+        <em> </em>
+    </p>
+  </div>
+
+    <div *ngFor="let section of legal.sections">
+        <p>
+            <strong>{{section.title}}</strong>
+        </p>
+        <div *ngIf="section.description !== undefined">
+            <p *ngFor="let description of section.description">
+                {{description}}
+            </p>
+        </div>
+    </div>
+
   <p>
       <strong>1.1.- Identificación de responsables:</strong>
   </p>
@@ -241,10 +209,10 @@
       <strong> </strong>
   </p>
   <ion-item lines="none">
-  <ion-checkbox color="primary"></ion-checkbox>
+  <ion-checkbox color="primary" [(ngModel)]="this.isChecked"></ion-checkbox>
   <ion-label>He leído y acepto las condiciones</ion-label>
 </ion-item>
-  <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="acceptLegalConditions()" [disabled]="">
+  <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="acceptLegalConditions()" [disabled]="!this.isChecked">
    Continuar
 </ion-button>
   </div>

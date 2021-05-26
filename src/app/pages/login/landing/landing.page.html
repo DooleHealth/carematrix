@@ -11,10 +11,12 @@
                     </ion-item-divider>
                     <ion-item-divider>
                         <ion-icon name="lock-closed"></ion-icon>
-                        <ion-input type="password" placeholder="{{'landing.password_placeholder' | translate }}" formControlName="password">
-                        </ion-input>
+                        <app-show-hide-password>
+                            <ion-input type="password" placeholder="{{'landing.password_placeholder' | translate }}" formControlName="password">
+                            </ion-input>
+                        </app-show-hide-password>
                     </ion-item-divider>
-                    <ion-text>
+                    <ion-text (click)="passwordRecovery()">
                         <a>{{ 'landing.password_recovery' | translate}}</a>
                     </ion-text>
                   

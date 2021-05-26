@@ -100,6 +100,10 @@ const routes = [
     {
         path: '',
         component: _verification_page__WEBPACK_IMPORTED_MODULE_3__["VerificationPage"]
+    },
+    {
+        path: 'intro',
+        loadChildren: () => __webpack_require__.e(/*! import() | onboarding-intro-intro-module */ "onboarding-intro-intro-module").then(__webpack_require__.bind(null, /*! ../../onboarding/intro/intro.module */ "hxez")).then(m => m.IntroPageModule)
     }
 ];
 let VerificationPageRoutingModule = class VerificationPageRoutingModule {
@@ -137,7 +141,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button [text]=\"buttonText\" [icon]=\"buttonIcon\">\n      </ion-back-button>\n    </ion-buttons>\n    <ion-title class=\"toolbarTitle\">Verificación de Identidad</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content fullscreen>\n  <div class=\"main-container\">\n    <ion-grid>\n      <h2 class=\"bold\">Confirma tu código de verificación</h2>\n      <ion-text>Te hemos enviado un SMS con un código para verificar tu número teléfonico y poder continuar.\n        Si no ha recibido ningún mensaje pulse </ion-text><a>aquí.</a>\n      <ion-col>\n        <div style=\"padding-top: 15%;\">\n          <ion-item-divider>\n            <ion-input placeholder=\"\">\n            </ion-input>\n          </ion-item-divider>\n          <ion-button type=\"button\" color=\"primary\" expand=\"block\" style=\"margin-top:15%;\" routerLink=\"verification\">\n            Continuar\n          </ion-button>\n        </div>\n      </ion-col>\n    </ion-grid>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button [text]=\"buttonText\" [icon]=\"buttonIcon\">\n      </ion-back-button>\n    </ion-buttons>\n    <ion-title class=\"toolbarTitle\">Verificación de Identidad</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content fullscreen>\n  <div class=\"main-container\">\n    <ion-grid>\n      <h2 class=\"bold\">Confirma tu código de verificación</h2>\n      <ion-text>Te hemos enviado un SMS con un código para verificar tu número teléfonico y poder continuar.\n        Si no ha recibido ningún mensaje pulse </ion-text><a>aquí.</a>\n      <ion-col>\n        <div style=\"padding-top: 15%;\">\n          <ion-item-divider>\n            <ion-input placeholder=\"\">\n            </ion-input>\n          </ion-item-divider>\n          <ion-button type=\"button\" color=\"primary\" expand=\"block\" style=\"margin-top:15%;\" routerLink=\"/home\">\n          <ion-button type=\"button\" color=\"primary\" expand=\"block\" style=\"margin-top:15%;\" routerLink=\"intro\">\n\n            Continuar\n          </ion-button>\n        </div>\n      </ion-col>\n    </ion-grid>\n  </div>\n</ion-content>");
 
 /***/ })
 
