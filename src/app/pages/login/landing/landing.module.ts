@@ -9,6 +9,7 @@ import { LandingPageRoutingModule } from './landing-routing.module';
 import { LandingPage } from './landing.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     IonicModule,
     ReactiveFormsModule,
     TranslateModule,
+    ComponentsModule,
     RouterModule.forChild(routes),
     LandingPageRoutingModule
   ],
