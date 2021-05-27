@@ -4,27 +4,31 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title class="toolbarTitle">Verificación de Identidad</ion-title>
+    <ion-title class="toolbarTitle">{{ 'sms.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
   <div class="main-container">
     <ion-grid>
-      <h2 class="bold">Empezamos por tu número de teléfono</h2>
-      <ion-text>Recibirás un SMS con un código de verificación.
-        ¡Porque tu privacidad es lo más importante!</ion-text>
+      <h2 class="bold">{{ 'sms.title' | translate}}</h2>
+      <ion-text>{{ 'sms.text1' | translate}}</ion-text>
       <ion-col>
         <div style="padding-top: 15%;">
-          <ion-item-divider>
-            <ion-input placeholder="+34">
-            </ion-input>
+          <ion-item-divider>  
+            <span>+34 </span>          
+            <ion-input type="tel-country-code" (ionInput)="isSubmitted = false" [formControl]="telephone" maxlength="9"  required></ion-input>
+            <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.telephone.hasError('required')">
+              {{ 'sms.error_required' | translate}}
+            </ion-label>
+            <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.telephone.hasError('minlength')">
+              {{ 'sms.error_min_lenght' | translate}}
+            </ion-label>
           </ion-item-divider>
-          <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" routerLink="verification">
-            Continuar
+          <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" (click)="goVerification()">
+            {{ 'sms.next_button' | translate}}
           </ion-button>
           <div style="padding-top:5%;">
-            <ion-text>Tu número únicamente será utilizado para situaciones urgentes o de emergencia,
-              pero nunca será compartido con otras empresas o terceros.</ion-text>
+            <ion-text>{{ 'sms.text2' | translate}}</ion-text>
           </div>
         </div>
       </ion-col>

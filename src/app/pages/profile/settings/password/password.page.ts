@@ -24,9 +24,9 @@ export class PasswordPage implements OnInit {
 
   ngOnInit() {
      this.formPassword = this.formBuilder.group({
-     newPassword: ['', [Validators.required, Validators.minLength(4)]],
-     confirmedPassword: ['', [Validators.required, Validators.minLength(4), this.checkPasswords.bind(this)]],
-      currentPassword: ['', [Validators.required, Validators.minLength(4)]],
+     newPassword: ['', [Validators.required, Validators.minLength(6)]],
+     confirmedPassword: ['', [Validators.required, Validators.minLength(6), this.checkPasswords.bind(this)]],
+      currentPassword: ['', [Validators.required, Validators.minLength(6)]],
    })
  
   }

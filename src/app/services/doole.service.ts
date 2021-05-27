@@ -276,6 +276,30 @@ export class DooleService {
     );
   }
 
+  postAPIsmsVerification(params: Object): Observable<any>{
+    let path = 'user/smsVerification'; 
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  postAPIsmsConfirmation(params: Object): Observable<any>{
+    let path = 'user/smsConfirmation'; 
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
