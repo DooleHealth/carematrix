@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
+import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { LegalInformation } from 'src/app/models/legal-information';
 import { DooleService } from 'src/app/services/doole.service';
@@ -18,6 +19,7 @@ export class LegalPage implements OnInit {
   constructor(
     public router: Router,    
     private translate: TranslateService,
+    private alertController: AlertController,
     private dooleService: DooleService) { }
 
   ngOnInit() {
@@ -46,16 +48,17 @@ export class LegalPage implements OnInit {
       console.log('[LegalPage] sendLegalConformation()', await res);
       let legal = (res as any).success
       if(legal){
-        this.saveStorage()
+        this.router.navigate(['/sms']);
       }
 
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+        this.presentAlert(err.message)
         throw err; 
     });
   }
 
-  async saveStorage(){
+  async getStorage(){
     Storage.get({key: this.KEY_LOCAL_STORAGE}).then((data)=>{
       //console.log(`[IntroPage] ngOnInit()`,data.value.toString());
       let  showIntro = Boolean(data.value)
@@ -66,6 +69,23 @@ export class LegalPage implements OnInit {
         this.router.navigate(['/intro']);
       }
     })
+  }
+
+  async presentAlert(message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      message: message,
+      buttons: [{
+        text: this.translate.instant("alert.button_ok"),
+        handler: () => {
+          console.log('Confirm Okay');
+          this.router.navigateByUrl('/login');
+        }
+      }],
+      backdropDismiss: false
+    });
+
+    await alert.present();
   }
 
 

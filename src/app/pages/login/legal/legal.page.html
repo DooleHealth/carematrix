@@ -6,7 +6,7 @@
             [icon]="buttonIcon">
         </ion-back-button>
       </ion-buttons>
-    <ion-title class="toolbarTitle" >Condiciones de uso</ion-title>
+    <ion-title class="toolbarTitle" >{{ 'legal.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -210,10 +210,10 @@
   </p>
   <ion-item lines="none">
   <ion-checkbox color="primary" [(ngModel)]="this.isChecked"></ion-checkbox>
-  <ion-label>He leído y acepto las condiciones</ion-label>
+  <ion-label>{{ 'legal.acept_conditions_label' | translate}}</ion-label>
 </ion-item>
   <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="acceptLegalConditions()" [disabled]="!this.isChecked">
-   Continuar
+    {{ 'legal.next_button' | translate}}
 </ion-button>
   </div>
 </ion-content>

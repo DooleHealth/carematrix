@@ -7,9 +7,34 @@
         "button_registre": "Crear Usuario"
       },
       "legal": {
-        "header": "Condiciones legal y de uso de la aplicación",
+        "header": "Condiciones de uso",
         "ok_button": "Acepto",
-        "ko_button": "No acepto"
+        "ko_button": "No acepto",
+        "next_button":"Continuar",
+        "acept_conditions_label": "He leído y acepto las condiciones"
+      },
+      "sms":{
+        "header": "Verificación de Identidad",
+        "title":"Empezamos por tu número de teléfono",
+        "text1": "Recibirás un SMS con un código de verificación. ¡Porque tu privacidad es lo más importante!",
+        "text2": "Tu número únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
+        "alert_message": "¿Es el número correcto?",
+        "ok_button": "Si",
+        "ko_button": "Editar",
+        "next_button":"Continuar",
+        "error_required": "Error: Campo requerido",
+        "error_min_lenght": "Error: Debe ser 9 digitos"
+      },
+      "verification":{
+        "header": "Verificación de Identidad",
+        "title":"Confirma tu código de verificación",
+        "text1": "Te hemos enviado un SMS con un código para verificar tu número teléfonico y poder continuar. Si no ha recibido ningún mensaje pulse ",
+        "text2": "aquí",
+        "alert_message": "El código no es válido",
+        "send_telephone_alert_message": "El código de verificación ha sido enviado de nuevo",
+        "next_button":"Continuar",
+        "error_required": "Error: Campo requerido",
+        "error_min_lenght": "Error: Debe ser 4 digitos"
       },
       "homeInitial": {
         "goals_title": "Tu Objetivo",
