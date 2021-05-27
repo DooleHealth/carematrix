@@ -10,7 +10,6 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./goals.page.scss'],
 })
 export class GoalsPage implements OnInit {
-  PATH_USERDATA= '/user/element/goals'
   listGoal: GoalUser[]
   nameGoal: string = 'Doolehealth'
 
@@ -20,25 +19,20 @@ export class GoalsPage implements OnInit {
     private dooleService: DooleService) { }
 
   ngOnInit() {
-    this.getAll()
+    this.getGoalImformation()
   }
 
-  getAll(){
-    this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
+  getGoalImformation(){
+    this.dooleService.getAPIgoals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getAll()', await res);
         this.listGoal = res.goals as GoalUser[]
-        //this.showInformation()
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
 
-  showInformation(){
-    //
-   // this.nameGoal = this.listGoal.name
-  }
 
   openActivities(){
     this.router.navigateByUrl('/activity-goal')

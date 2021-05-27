@@ -183,9 +183,20 @@ export class DooleService {
     return this.alertController.create({
       header: 'Info',
       message: message,
-      buttons: ['OK']
+      buttons: ['OK'],
+      backdropDismiss: false
     });
 
+  }
+
+  async presentAlert(message, button?:string) {
+    let buttonName = (button !== undefined)? button: 'Ok' 
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      message: message,
+      buttons: [buttonName]
+    });
+    await alert.present();
   }
 
   getAPILegalInformation(): Observable<any>{
@@ -210,17 +221,8 @@ export class DooleService {
     );
   }
 
-  getAPIhomeInitial(path:string): Observable<any>{
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
-        return res;
-      })
-    )
-  }
 
-  getAPIhome(path:string) : Observable<any>{
+   getAPIhome(path:string) : Observable<any>{
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -228,6 +230,17 @@ export class DooleService {
         return res;
       })
     );
+  } 
+
+  getAPIgoals(): Observable<any>{
+    let path = '/user/element/goals'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        return res;
+      })
+    )
   }
 
   postAPIhomeInitial(path:string, params: Object): Observable<any>{

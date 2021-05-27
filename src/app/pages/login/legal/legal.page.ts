@@ -50,10 +50,11 @@ export class LegalPage implements OnInit {
       if(legal){
         this.router.navigate(['/sms']);
       }
+      //else this.dooleService.presentAlert("Server response is false ")
 
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
-        this.presentAlert(err.message)
+        this.dooleService.presentAlert(err.message)
         throw err; 
     });
   }
@@ -70,23 +71,5 @@ export class LegalPage implements OnInit {
       }
     })
   }
-
-  async presentAlert(message) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
-      message: message,
-      buttons: [{
-        text: this.translate.instant("alert.button_ok"),
-        handler: () => {
-          console.log('Confirm Okay');
-          this.router.navigateByUrl('/login');
-        }
-      }],
-      backdropDismiss: false
-    });
-
-    await alert.present();
-  }
-
 
 }

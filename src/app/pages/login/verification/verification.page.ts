@@ -42,7 +42,7 @@ export class VerificationPage implements OnInit {
         if(isSuccess){
           this.router.navigateByUrl("intro")
         }else{
-          this.presentAlert(this.translate.instant("verification.alert_message"))
+          this.dooleService.presentAlert(this.translate.instant("verification.alert_message"))
         }
        },(err) => { 
           console.log('VerificationPage checkCode()  ERROR(' + err.code + '): ' + err.message); 
@@ -50,19 +50,6 @@ export class VerificationPage implements OnInit {
       });
   }
 
-  async presentAlert(message) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
-      message: message,
-      buttons: [{
-        text: this.translate.instant("alert.button_ok"),
-        handler: () => {
-          console.log('Confirm Okay');
-        }
-      }],
-    });
-    await alert.present();
-  }
 
   sendTelephone(telephone){
     console.log('[VerificationPage] sendTelephone()',telephone );
@@ -71,8 +58,8 @@ export class VerificationPage implements OnInit {
         console.log('[LegalPage] sendTelephone()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          this.presentAlert(
-            this.translate.instant("verification.send_telephone_alert_message"))
+          let messagge = this.translate.instant("verification.send_telephone_alert_message")
+          await  this.dooleService.presentAlert(messagge)
         }
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 

@@ -35,11 +35,10 @@ export class SmsPage implements OnInit {
   }
 
   async presentAlertConfirm() {
-    const telephoneTemp =  this.telephone.value
-    this.telephone.setValue(this.COUNTRY_CODE + telephoneTemp)
+    const telephoneTemp =  this.COUNTRY_CODE + this.telephone.value
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      header: this.COUNTRY_CODE +" "+  telephoneTemp,
+      header: this.COUNTRY_CODE +" "+  this.telephone.value,
       message: this.translate.instant("sms.alert_message"),
       buttons: [
         {
@@ -53,7 +52,7 @@ export class SmsPage implements OnInit {
           text: this.translate.instant("sms.ok_button"),
           handler: () => {
             console.log('Confirm Okay');
-            this.sendTelephone(this.telephone.value);
+            this.sendTelephone(telephoneTemp);
           }
         }
       ]
@@ -83,7 +82,7 @@ export class SmsPage implements OnInit {
   async saveTelephone(){
     await Storage.set({
      key: 'telephone',
-     value: this.telephone.value
+     value: this.COUNTRY_CODE + this.telephone.value
    });
    console.log(`[VerificationPage] saveTelephone()`);
  }

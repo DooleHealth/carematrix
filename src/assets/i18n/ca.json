@@ -31,7 +31,7 @@
         "text1": "T'hem enviat un SMS amb un codi per verificar el teu número telefònic i poder continuar. Si no ha rebut cap missatge premi ",
         "text2": "aquí",
         "alert_message": "El codi no és vàlid",
-        "send_telephone_alert_message": "El codi de verificació ha estat enviat de nou",
+        "send_telephone_alert_message": "El codi de verificació s'ha enviat de nou",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"
@@ -98,9 +98,11 @@
       },
       "alert": {
         "button_ok": "D'acord",
+        "button_acept": "Acceptar",
         "button_cancel": "Cancel",
         "button_change": "Canviar",
         "header_error": "Error",
+        "header_info": "Informació",
         "header_confirmation": "Confirmació"
       },
       "setting":{
