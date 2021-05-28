@@ -1,16 +1,12 @@
 import { Inject, Injectable, PLATFORM_ID, ViewChild } from '@angular/core';
-
 import { Plugins } from '@capacitor/core';
-
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
-
 import { ApiEndpointsService } from '../services/api-endpoints.service';
 import { HttpService } from '../services/http.service';
 import { Constants } from '../config/constants';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Platform } from '@ionic/angular';
-
 import {AngularFireAuth} from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
 const { Storage } = Plugins;
@@ -34,14 +30,12 @@ export class AuthenticationService {
   public mutua: string;
   public isRecovery: boolean = false;
   public action:string;
-
   public id_usuari_mgc:string;
-
   public data : Array<any>;
   public email: string;
   public agendaUser = [];
   public tiene_email: boolean;
-  public deviceToken: string; //="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay00Zm00NUBtZ2MtZG9vbGUuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay00Zm00NUBtZ2MtZG9vbGUuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczpcL1wvaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tXC9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsInVpZCI6IjE2NCIsImlhdCI6MTYxMjUxNzQ1NCwiZXhwIjoxNjEyNTIxMDU0fQ.TUngoAxjR8CUY7yiWX8MB3LLwpwmYJgrkVdfNlL7PE4Y-dyJir_jGkwlhAbgFtTOtXio2n6Tyv3B4adUTdF-bsnViVPuwbdRrBX2_Cme9NYB11IvI2vKEMoqua0OYmq5ol9B-6lG_634Cdu1Vh3neTyUhnZhjm9JdHDGyQfFqXQ4rXp2P_M6Woq7d_Wr-Gfo6RDJNRIxvRfy_S9yebzw1r3rUrtXaUCa5Y6RvIAiJEZv0eH1VdTHDiX4ISAkb_bQqr1883ySV47_Rk8FTKyl3MoU534hgk0Qk3ISf7wKTSgZAowleSQrIe9VTkjIVBFgnQoeu97NmmdOXMcpHSb11A";
+  public deviceToken: string;
   public devicePlatform: string;
   public dietsAndAdvices: [];
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
@@ -77,19 +71,13 @@ export class AuthenticationService {
     localStorage.setItem(TOKEN_KEY, token);
   }
   
-  
-
-  
-
   login(credentials: {username, password, credencial}): Observable<any> {
 
     const endpoint = this.api.getEndpoint('patient/login');
 
     return this.http.post(endpoint, credentials).pipe(
       map((res: any) => {
-
         console.log("Login res: ", res);
-
         if(!res.success){
           this.throwError(res);
         }
@@ -107,7 +95,6 @@ export class AuthenticationService {
             console.log(error);
           });
         }
-        
         // user's data
         return res.data;
 
@@ -123,33 +110,12 @@ export class AuthenticationService {
     this.isAuthenticated.next(false);
     return Storage.remove({key: TOKEN_KEY});    
   }
-
-  validateCredentials(credentials: Object, resource : string): Observable<any> {
-    
-    const endpoint = this.api.getEndpoint('appamiq/' + resource);
-    //console.log("endpoint_ ", endpoint);
-    return this.http.post(endpoint, credentials).pipe(
-      map((res: any) => {
-       
-        if(res.status != 200)
-          this.throwError(res);
-        else
-          return res.data;
-       
-      }),
-      tap(_ => {
-        this.isAuthenticated.next(true);
-      })
-    )
-  }
-
+  
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(
         map((res: any) => {
-
           return res;
-
         })
     );
 
@@ -160,13 +126,9 @@ export class AuthenticationService {
    
     return this.http.post(endpoint, items).pipe(
         map((res: any) => {
-
           return res;
-
         })
     );
-
-
   }
 
   throwError(error: any) {
@@ -178,8 +140,6 @@ export class AuthenticationService {
 
 
   public registerDevice() {
-
-    //console.log("register device token:"+this.deviceToken+" "+this.devicePlatform);
 
     const postData = {
       token: this.deviceToken,
@@ -194,10 +154,6 @@ export class AuthenticationService {
           // Called when error
           console.log('error: ', error);
           throw new HttpErrorResponse(error);
-        },
-        () => {
-          // Called when operation is complete (both success and error)
-          // loading.dismiss();
         });
   }
 }
