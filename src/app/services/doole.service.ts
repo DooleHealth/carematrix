@@ -222,7 +222,7 @@ export class DooleService {
   }
 
 
-   getAPIhome(path:string) : Observable<any>{
+  getAPIhome(path:string) : Observable<any>{
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -234,6 +234,28 @@ export class DooleService {
 
   getAPIgoals(): Observable<any>{
     let path = '/user/element/goals'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
+  getAPIinformationUser(): Observable<any>{
+    let path = '/user/informationUser'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
+  getAPIuserProfile(): Observable<any>{
+    let path = '/user/profiles'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -329,6 +351,17 @@ export class DooleService {
         map((res: any) => {
           return res;
         })
+    );
+  }
+
+  getAPIhealthCards(){
+    let path = 'user/healthCards';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPhealthCards(${path}) res: `, res);
+        return res;
+      })
     );
   }
 

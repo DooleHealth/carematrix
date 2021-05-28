@@ -44,6 +44,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return smsConfirmation();
                 case url.endsWith('user/familyUnit') && method === 'GET':
                     return familyUnit();
+                case url.endsWith('user/healthCards') && method === 'GET':
+                    return getAPhealthCards();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -534,6 +536,46 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         age: null,
                         thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
                         family_relationship: "Relación familiar"
+                    }
+                ] 
+            )
+        }
+
+        function getAPhealthCards() {
+         
+            return ok(
+                [
+                    {
+                        id: 12737,
+                        name: "Seguridad Social",
+                        modality: "Mutuas Seguros",
+                        affiliation_number: "0006852369517",
+                        expiration_date: "2022-04-01T15:57:42.000000Z",
+                        thumbnail: "https://via.placeholder.com/300x200/09f/fff?text=Seguridad+S",
+                    },
+                    {
+                        id: 13015,
+                        name: "Seguro Asisa",
+                        modality: "Sanidad Pública",
+                        affiliation_number: "147852369517",
+                        expiration_date: "2023-08-08T15:57:42.000000Z",
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
+                    },
+                    {
+                        id: 12739,
+                        name: "Cat Salut",
+                        modality: "Sanidad Publica",
+                        affiliation_number: "VALE0900413002",
+                        expiration_date: null,
+                        thumbnail: "https://via.placeholder.com/300x200/09f/fff?text=Seguridad+S",
+                    },
+                    {
+                        id: 13089,
+                        name: "Seguros Catalana Occidente",
+                        modality: "Sanidad Privada",
+                        affiliation_number: "DDD 007852369517",
+                        expiration_date: "2021-04-15T15:57:42.000000Z",
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
                     }
                 ] 
             )

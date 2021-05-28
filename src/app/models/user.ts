@@ -2,6 +2,8 @@ export interface User {
     username?: string,
     idUser?:number,
     image?:string,
+    first_name?: string,
+    last_name?: string,
     agendas?: Agenda[],
     diets?: Diet[],
     advices?: Advice[],

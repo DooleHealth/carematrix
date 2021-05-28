@@ -10,18 +10,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-card class="cardProfile">
+<ion-content *ngIf="listCard !== undefined">
+  <ion-list *ngFor="let card of listCard">
+    <ion-card class="cardProfile" (click)=getDetailCard(card)>
       <ion-card-content>
-    <ion-item lines="none">
-        <img src="assets/images/tarjeta.png">
-      <ion-label class="txtPaddingLeft" >
-        <h3>Seguridad social</h3>
-        <p>547738493</p>
-      </ion-label>
-    </ion-item>
-  </ion-card-content>
+        <ion-item lines="none">
+            <img src="assets/images/tarjeta.png">
+          <ion-label class="txtPaddingLeft" >
+            <h3>{{ card.name}}</h3>
+            <div>
+              <p>{{ card.affiliation_number}}</p>
+              <p *ngIf="card.expiration_date !== null && card.expiration_date !== undefined"> 
+                {{ card.expiration_date | date: 'MM/yyyy'}}</p>
+            </div>
+            
+          </ion-label>
+        </ion-item>
+    </ion-card-content>
   </ion-card>
   </ion-list>
 </ion-content>
