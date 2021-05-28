@@ -90,7 +90,7 @@
         _createClass(InitialPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            this.getAll();
+            this.getUserInformation();
           }
         }, {
           key: "showInformation",
@@ -111,17 +111,17 @@
             this.username = this.userDoole.username;
           }
         }, {
-          key: "getAll",
-          value: function getAll() {
+          key: "getUserInformation",
+          value: function getUserInformation() {
             var _this = this;
 
-            this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(function (res) {
+            this.dooleService.getAPIinformationUser().subscribe(function (res) {
               return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
                       case 0:
-                        //console.log('[InitialPage] getAll()', await res);
+                        //console.log('[InitialPage] getUserProfile()', await res);
                         this.userDoole = res;
                         this.showInformation();
 
@@ -133,7 +133,7 @@
                 }, _callee, this);
               }));
             }, function (err) {
-              console.log('getAll ERROR(' + err.code + '): ' + err.message);
+              console.log('[InitialPage] getUserProfile() ERROR(' + err.code + '): ' + err.message);
               throw err;
             });
           }

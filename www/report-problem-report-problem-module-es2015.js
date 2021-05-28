@@ -19,12 +19,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/doole.service */ "tE2R");
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @capacitor/core */ "gcOT");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/platform-browser */ "jhN1");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic-native/file/ngx */ "FAH8");
-
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic-native/file/ngx */ "FAH8");
 
 
 
@@ -40,44 +38,29 @@ __webpack_require__.r(__webpack_exports__);
 
 const { Camera } = _capacitor_core__WEBPACK_IMPORTED_MODULE_7__["Plugins"];
 let ReportProblemPage = class ReportProblemPage {
-    constructor(translate, router, dooleService, chooser, sanitizer, fb, platform, file, loadingController, alertController) {
+    constructor(translate, router, dooleService, 
+    //private chooser: Chooser,
+    //private sanitizer: DomSanitizer,
+    fb, platform, file, loadingController, alertController) {
         this.translate = translate;
         this.router = router;
         this.dooleService = dooleService;
-        this.chooser = chooser;
-        this.sanitizer = sanitizer;
         this.fb = fb;
         this.platform = platform;
         this.file = file;
         this.loadingController = loadingController;
         this.alertController = alertController;
         this.patient_files = [];
+        //file: any;
+        //file64: SafeResourceUrl;
         this.numFile = 0;
-        this.mediaFiles = [];
         this.images = [];
-        this.mimes = [];
-        this.imagesTemp = [];
     }
     ngOnInit() {
         this.form = this.fb.group({
             category: [''],
             description: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required]],
-            //images:[this.images]
-            images: []
-        });
-    }
-    addFile() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.chooser.getFile().then((file) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-                //console.log(file ? file : 'canceled');
-                if (file) {
-                    //console.log("file", file);
-                    //console.log(" base64result.split(',')[1] ", file.dataURI.split(',')[1]);
-                    this.patient_files.push({ name: file.name, file: file.dataURI.split(',')[1], type: file.mediaType });
-                }
-            })).catch((error) => {
-                console.error(error);
-            });
+            images: [this.images]
         });
     }
     addImage(source) {
@@ -93,7 +76,7 @@ let ReportProblemPage = class ReportProblemPage {
             if (image) {
                 console.log("image: ", image);
                 var fileUri = _capacitor_core__WEBPACK_IMPORTED_MODULE_7__["Capacitor"].convertFileSrc(image.dataUrl);
-                var filename = new Date().getTime();
+                var filename = Date.now(); //new Date().getTime(); 
                 this.saveBase64(fileUri, filename.toString()).then((file) => {
                     this.patient_files.push({ name: filename + '.' + image.format, file: file, type: image.format });
                     this.form.patchValue({
@@ -191,9 +174,10 @@ let ReportProblemPage = class ReportProblemPage {
             this.form.get('category').setValue(category);
             let description = this.form.get('description').value;
             this.form.get('description').setValue(description);
-            /*       this.patient_files.forEach(item => {
-                    this.images.push(item.file);
-                  }); */
+            this.patient_files.forEach(item => {
+                this.images.push(item.file);
+            });
+            this.form.get('images').setValue(this.images);
             console.log("data:", this.images);
             this.dooleService.postAPIReportProblem(/* this.form.value */ this.images[0]).subscribe((data) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
                 console.log("data:", data);
@@ -203,7 +187,7 @@ let ReportProblemPage = class ReportProblemPage {
                 // Called when error
                 loading.dismiss();
                 console.log("error: ", error);
-                throw new _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpErrorResponse"](error);
+                throw new _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpErrorResponse"](error);
             }, () => {
                 // Called when operation is complete (both success and error)
                 loading.dismiss();
@@ -272,6 +256,8 @@ let ReportProblemPage = class ReportProblemPage {
     }
     saveFile(data) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const loading = yield this.loadingController.create();
+            yield loading.present();
             this.dooleService.uploadFile(data).then(res => {
                 let isSuccess = res.success;
                 if (isSuccess)
@@ -280,9 +266,10 @@ let ReportProblemPage = class ReportProblemPage {
                     this.presentAlert(this.translate.instant("report_problem.alert_no_successful_response"));
             }).catch(err => {
                 console.log("Error uploadFile: ", err);
+                loading.dismiss();
                 this.presentAlert(err);
             }).finally(() => {
-                //loading.dismiss();
+                loading.dismiss();
             });
         });
     }
@@ -296,9 +283,6 @@ let ReportProblemPage = class ReportProblemPage {
                 console.log("savePicture() saveBase64 res: ", res);
                 this.dooleService.uploadFile(res).then(data => {
                     console.log("savePicture() uploadFile res: ", res);
-                    this.mediaFiles.push(data);
-                    this.imagesTemp.push(data);
-                    console.log("savePicture() this.mediafiles.: ", this.mediaFiles);
                     //loading.dismiss();
                 }).catch(err => {
                     console.log("Error uploadFile: ", err);
@@ -345,15 +329,13 @@ let ReportProblemPage = class ReportProblemPage {
 };
 ReportProblemPage.ctorParameters = () => [
     { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_12__["Router"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_11__["Router"] },
     { type: src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_6__["DooleService"] },
-    { type: _ionic_native_chooser_ngx__WEBPACK_IMPORTED_MODULE_4__["Chooser"] },
-    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__["DomSanitizer"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["Platform"] },
-    { type: _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_13__["File"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["LoadingController"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__["AlertController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["Platform"] },
+    { type: _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_12__["File"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["LoadingController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["AlertController"] }
 ];
 ReportProblemPage.propDecorators = {
     fileInput: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ['fileInput', { static: false },] }]

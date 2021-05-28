@@ -7,9 +7,34 @@
         "button_registre": "Crear Usuari"
       },    
       "legal": {
-        "header": "Condicions legals i d’ús de l’aplicació",
+        "header": "Condicions d'ús",
         "ok_button": "Les accepto",
-        "ko_button": "No les accepto"
+        "ko_button": "No les accepto",
+        "next_button":"Continuar",
+        "acept_conditions_label": "He llegit i accepto les condicions"
+      },
+      "sms":{
+        "header": "Verificació d'Identitat",
+        "title":"Comencem per el teu número de telèfon",
+        "text1": "Rebràs un SMS amb un codi de verificació. Perquè la teva privacitat és el més important!",
+        "text2": "El teu número únicament serà utilitzat per a situacions urgents o d'emergència, però mai serà compartit amb altres empreses o tercers.",
+        "alert_message": "És el nombre correcte?",
+        "ok_button": "Si",
+        "ko_button": "Edita",
+        "next_button":"Continuar",
+        "error_required": "Error: Camp requerit",
+        "error_min_lenght": "Error: Ha de ser 9 digits"
+      },
+      "verification":{
+        "header": "Verificació d'Identitat",
+        "title":"Confirma la teva codi de verificació",
+        "text1": "T'hem enviat un SMS amb un codi per verificar el teu número telefònic i poder continuar. Si no ha rebut cap missatge premi ",
+        "text2": "aquí",
+        "alert_message": "El codi no és vàlid",
+        "send_telephone_alert_message": "El codi de verificació s'ha enviat de nou",
+        "next_button":"Continuar",
+        "error_required": "Error: Camp requerit",
+        "error_min_lenght": "Error: Ha de ser 4 digits"
       },
       "homeInitial": {
         "goals_title": "El teu objectiu",
@@ -73,9 +98,11 @@
       },
       "alert": {
         "button_ok": "D'acord",
+        "button_acept": "Acceptar",
         "button_cancel": "Cancel",
         "button_change": "Canviar",
         "header_error": "Error",
+        "header_info": "Informació",
         "header_confirmation": "Confirmació"
       },
       "setting":{

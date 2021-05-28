@@ -172,7 +172,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Perfil\" ></ion-back-button>\n    </ion-buttons>\n    <ion-title>Tarjetas sanitarias</ion-title>\n    <ion-buttons slot=\"end\" routerLink=\"addCard\" >\n    <ion-icon slot=\"icon-only\" name=\"add\" color=\"primary\"></ion-icon>\n  </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-card class=\"cardProfile\">\n      <ion-card-content>\n    <ion-item lines=\"none\">\n        <img src=\"assets/images/tarjeta.png\">\n      <ion-label class=\"txtPaddingLeft\" >\n        <h3>Seguridad social</h3>\n        <p>547738493</p>\n      </ion-label>\n    </ion-item>\n  </ion-card-content>\n  </ion-card>\n  </ion-list>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Perfil\" ></ion-back-button>\n    </ion-buttons>\n    <ion-title>Tarjetas sanitarias</ion-title>\n    <ion-buttons slot=\"end\" routerLink=\"addCard\" >\n    <ion-icon slot=\"icon-only\" name=\"add\" color=\"primary\"></ion-icon>\n  </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content *ngIf=\"listCard !== undefined\">\n  <ion-list *ngFor=\"let card of listCard\">\n    <ion-card class=\"cardProfile\" (click)=getDetailCard(card)>\n      <ion-card-content>\n        <ion-item lines=\"none\">\n            <img src=\"assets/images/tarjeta.png\">\n          <ion-label class=\"txtPaddingLeft\" >\n            <h3>{{ card.name}}</h3>\n            <div>\n              <p>{{ card.affiliation_number}}</p>\n              <p *ngIf=\"card.expiration_date !== null && card.expiration_date !== undefined\"> \n                {{ card.expiration_date | date: 'MM/yyyy'}}</p>\n            </div>\n            \n          </ion-label>\n        </ion-item>\n    </ion-card-content>\n  </ion-card>\n  </ion-list>\n</ion-content>\n";
       /***/
     },
 
@@ -219,22 +219,101 @@
       var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
+      /* harmony import */
+
+
+      var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @angular/router */
+      "tyNb");
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! @ionic/angular */
+      "TEn/");
+      /* harmony import */
+
+
+      var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @ngx-translate/core */
+      "sYmb");
+      /* harmony import */
+
+
+      var src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! src/app/services/doole.service */
+      "tE2R");
 
       var CardsPage = /*#__PURE__*/function () {
-        function CardsPage() {
+        function CardsPage(router, translate, alertController, dooleService) {
           _classCallCheck(this, CardsPage);
+
+          this.router = router;
+          this.translate = translate;
+          this.alertController = alertController;
+          this.dooleService = dooleService;
+          this.listCard = [];
         }
 
         _createClass(CardsPage, [{
           key: "ngOnInit",
-          value: function ngOnInit() {}
+          value: function ngOnInit() {
+            this.getHealthCards();
+          }
+        }, {
+          key: "getHealthCards",
+          value: function getHealthCards() {
+            var _this = this;
+
+            this.dooleService.getAPIhealthCards().subscribe(function (res) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        _context.t0 = console;
+                        _context.next = 3;
+                        return res;
+
+                      case 3:
+                        _context.t1 = _context.sent;
+
+                        _context.t0.log.call(_context.t0, '[GoalsPage] getHealthCards()', _context.t1);
+
+                        this.listCard = res;
+
+                      case 6:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee, this);
+              }));
+            }, function (err) {
+              console.log('[GoalsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message);
+              throw err;
+            });
+          }
+        }, {
+          key: "getDetailCard",
+          value: function getDetailCard(card) {
+            console.log('[GoalsPage] getDetailCard()', card.name);
+          }
         }]);
 
         return CardsPage;
       }();
 
       CardsPage.ctorParameters = function () {
-        return [];
+        return [{
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]
+        }, {
+          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"]
+        }, {
+          type: src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_7__["DooleService"]
+        }];
       };
 
       CardsPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

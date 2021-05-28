@@ -29,25 +29,19 @@ let GoalsPage = class GoalsPage {
         this.router = router;
         this.translate = translate;
         this.dooleService = dooleService;
-        this.PATH_USERDATA = '/user/element/goals';
         this.nameGoal = 'Doolehealth';
     }
     ngOnInit() {
-        this.getAll();
+        this.getGoalImformation();
     }
-    getAll() {
-        this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+    getGoalImformation() {
+        this.dooleService.getAPIgoals().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             console.log('[GoalsPage] getAll()', yield res);
             this.listGoal = res.goals;
-            //this.showInformation()
         }), (err) => {
             console.log('getAll ERROR(' + err.code + '): ' + err.message);
             throw err;
         });
-    }
-    showInformation() {
-        //
-        // this.nameGoal = this.listGoal.name
     }
     openActivities() {
         this.router.navigateByUrl('/activity-goal');

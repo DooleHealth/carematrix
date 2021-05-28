@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content fullscreen>\n    <div class=\"main-container\">\n        <img style=\"padding-top: 40%;\" src=\"/assets/images/logo.svg\" />\n        <ion-grid>\n            <ion-col>\n                <form [formGroup]=\"loginForm\" (ngSubmit)=\"doDooleAppLogin()\">\n                    <ion-item-divider>\n                        <ion-icon name=\"person\"></ion-icon>\n                        <ion-input type=\"text\" placeholder=\"{{'landing.user_placeholder' | translate }}\" formControlName=\"username\" >\n                        </ion-input>\n                    </ion-item-divider>\n                    <ion-item-divider>\n                        <ion-icon name=\"lock-closed\"></ion-icon>\n                        <ion-input type=\"password\" placeholder=\"{{'landing.password_placeholder' | translate }}\" formControlName=\"password\">\n                        </ion-input>\n                    </ion-item-divider>\n                    <ion-text>\n                        <a>{{ 'landing.password_recovery' | translate}}</a>\n                    </ion-text>\n                  \n                    <!-- <ion-button type=\"submit\" color=\"primary\" expand=\"block\" class=\"enter-btn\" routerLink=\"legal\">\n                        Iniciar sesión\n                    </ion-button> -->\n\n                    <ion-button type=\"submit\" size=\"medium\" [disabled]=\"!loginForm.valid\"\n                    color=\"primary\" expand=\"block\" class=\"enter-btn\">\n                    {{ 'landing.button_signin' | translate}}</ion-button>\n       \n                    <ion-button expand=\"block\" color=\"transparent\" class=\"buttonLink\">\n                        {{ 'landing.button_registre' | translate}}\n                    </ion-button>\n                </form>\n            </ion-col>\n        </ion-grid>\n    </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content fullscreen>\n    <div class=\"main-container\">\n        <img style=\"padding-top: 40%;\" src=\"/assets/images/logo.svg\" />\n        <ion-grid>\n            <ion-col>\n                <form [formGroup]=\"loginForm\" (ngSubmit)=\"doDooleAppLogin()\">\n                    <ion-item-divider>\n                        <ion-icon name=\"person\"></ion-icon>\n                        <ion-input type=\"text\" placeholder=\"{{'landing.user_placeholder' | translate }}\" formControlName=\"username\" >\n                        </ion-input>\n                    </ion-item-divider>\n                    <ion-item-divider>\n                        <ion-icon name=\"lock-closed\"></ion-icon>\n                        <app-show-hide-password>\n                            <ion-input type=\"password\" placeholder=\"{{'landing.password_placeholder' | translate }}\" formControlName=\"password\">\n                            </ion-input>\n                        </app-show-hide-password>\n                    </ion-item-divider>\n                    <ion-text (click)=\"passwordRecovery()\">\n                        <a>{{ 'landing.password_recovery' | translate}}</a>\n                    </ion-text>\n                  \n                    <!-- <ion-button type=\"submit\" color=\"primary\" expand=\"block\" class=\"enter-btn\" routerLink=\"legal\">\n                        Iniciar sesión\n                    </ion-button> -->\n\n                    <ion-button type=\"submit\" size=\"medium\" [disabled]=\"!loginForm.valid\"\n                    color=\"primary\" expand=\"block\" class=\"enter-btn\">\n                    {{ 'landing.button_signin' | translate}}</ion-button>\n       \n                    <ion-button expand=\"block\" color=\"transparent\" class=\"buttonLink\">\n                        {{ 'landing.button_registre' | translate}}\n                    </ion-button>\n                </form>\n            </ion-col>\n        </ion-grid>\n    </div>\n</ion-content>");
 
 /***/ }),
 
@@ -178,14 +178,20 @@ let LandingPage = class LandingPage {
             this.authService.login(this.loginForm.value).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
                 console.log('[LandingPage] doDooleAppLogin()', yield res);
                 this.dismissLoading();
+                //this.checkConditionLegal(res.condicion_legal)
                 this.router.navigate(['/legal']);
-                //this.redirectLoggedUserToHomePage();
             }), (error) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
                 console.log('doDooleAppLogin() ERROR', yield error);
                 this.dismissLoading();
                 throw error;
             }));
         });
+    }
+    checkConditionLegal(condicion) {
+        if (!condicion)
+            this.router.navigate(['/legal']);
+        else
+            this.redirectLoggedUserToHomePage();
     }
     saveInLocalStorage(data) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -198,6 +204,9 @@ let LandingPage = class LandingPage {
                 value: data
             });
         });
+    }
+    passwordRecovery() {
+        console.log('[LandingPage] passwordRecovery()');
     }
 };
 LandingPage.ctorParameters = () => [
@@ -242,6 +251,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _landing_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./landing.page */ "tV2Q");
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/core */ "sYmb");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var src_app_components_components_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/components/components.module */ "j1ZV");
+
 
 
 
@@ -267,6 +278,7 @@ LandingPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateModule"],
+            src_app_components_components_module__WEBPACK_IMPORTED_MODULE_9__["ComponentsModule"],
             _angular_router__WEBPACK_IMPORTED_MODULE_8__["RouterModule"].forChild(routes),
             _landing_routing_module__WEBPACK_IMPORTED_MODULE_5__["LandingPageRoutingModule"]
         ],
