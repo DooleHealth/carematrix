@@ -20,13 +20,13 @@ export class ProfilePage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
-    this.getUserDoole()
+    this.getUserProfile()
   }
 
-  getUserDoole(){
-    this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
+  getUserProfile(){
+    this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
-        //console.log('[InitialPage] getAll()', await res);
+        console.log('[InitialPage] getAll()', await res);
         this.userDoole = res as User
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 

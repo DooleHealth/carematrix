@@ -10,7 +10,6 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./personal.page.scss'],
 })
 export class PersonalPage implements OnInit {
-  PATH_USERDATA= '/user/profiles'
   userProfile: UserProfile;
   constructor(private dooleService: DooleService,
     private router: Router,
@@ -21,7 +20,7 @@ export class PersonalPage implements OnInit {
   }
 
   getDataProfile(){
-    this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
+    this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
         this.userProfile = res as UserProfile;
         console.log('[InitialPage] getDataProfile()', await this.userProfile);

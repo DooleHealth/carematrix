@@ -6,7 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-health-card.page.scss'],
 })
 export class AddHealthCardPage implements OnInit {
-
+  cards = [
+    {
+      modality: "Mutuas Seguros",
+      color: "BDC3C7"
+    },
+    {
+      modality: "Sanidad Pública",
+      color: "2980B9"
+    },
+    {
+      modality: "Sanidad Privada",
+      color: "09f"
+    }
+  ]
   constructor() { }
 
   ngOnInit() {

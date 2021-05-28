@@ -49,7 +49,7 @@ export class InitialPage implements OnInit {
     private dooleService: DooleService) { }
 
   ngOnInit() {  
-    this. getAll() 
+    this. getUserInformation() 
   }
 
   showInformation(){
@@ -70,14 +70,14 @@ export class InitialPage implements OnInit {
       this.username = this.userDoole.username
   }
 
-  getAll(){
-    this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(
+  getUserInformation(){
+    this.dooleService.getAPIinformationUser().subscribe(
       async (res: any) =>{
-        //console.log('[InitialPage] getAll()', await res);
+        //console.log('[InitialPage] getUserProfile()', await res);
         this.userDoole = res as User
         this.showInformation()
        },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          console.log('[InitialPage] getUserProfile() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
