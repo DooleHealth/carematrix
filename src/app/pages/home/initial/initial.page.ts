@@ -31,7 +31,6 @@ export interface SliderInfo {
   styleUrls: ['./initial.page.scss'],
 })
 export class InitialPage implements OnInit {
-  PATH_USERDATA= '/user/informationUser'
   userDoole : User
   dietInfo: UserInformation ={}
   drugInfo: UserInformation ={}
@@ -67,7 +66,6 @@ export class InitialPage implements OnInit {
     if( this.userDoole.image !== null && this.userDoole.image !== undefined 
       && this.userDoole.image !== '')
       this.userImage = this.userDoole.image;
-      this.username = this.userDoole.username
   }
 
   getUserInformation(){

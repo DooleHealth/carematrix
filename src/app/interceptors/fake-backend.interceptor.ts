@@ -26,6 +26,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.includes('login') && method === 'POST':
                     return authenticate();
+                case url.includes('/user/password_recovery') && method === 'POST':
+                    return passwordRecovery();
                 case url.endsWith('/user/informationUser') && method === 'GET':
                     return informationUser();
                 case url.endsWith('/user/legal') && method === 'GET':
@@ -44,8 +46,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return smsConfirmation();
                 case url.endsWith('user/familyUnit') && method === 'GET':
                     return familyUnit();
-                case url.endsWith('user/healthCards') && method === 'GET':
-                    return getAPhealthCards();
+                case url.endsWith('user/health_cards') && method === 'GET':
+                    return getAPIhealthCards();
+                case url.endsWith('user/health_cards') && method === 'POST':
+                    return postAPIhealthCards();
+                case url.includes('user/health_cards') && method === 'PUT':
+                    return putAPIhealthCard();
+                case url.includes('user/health_cards') && method === 'DELETE':
+                    return deleteAPIhealthCards();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -130,6 +138,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function informationUser() {
             return ok({
                 username: 'David Valarezo León',
+                first_name: "David",
+                last_name: "Valarezo León",
                 idUser: 15183,
                 image: 'assets/icons/Mi Perfil.svg',
                 agendas: [
@@ -541,7 +551,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             )
         }
 
-        function getAPhealthCards() {
+        function getAPIhealthCards() {
          
             return ok(
                 [
@@ -551,6 +561,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         modality: "Mutuas Seguros",
                         affiliation_number: "0006852369517",
                         expiration_date: "2022-04-01T15:57:42.000000Z",
+                        expedition_date: "2013-08-08T15:57:42.000000Z",
                         thumbnail: "https://via.placeholder.com/300x200/09f/fff?text=Seguridad+S",
                     },
                     {
@@ -559,14 +570,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         modality: "Sanidad Pública",
                         affiliation_number: "147852369517",
                         expiration_date: "2023-08-08T15:57:42.000000Z",
-                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
+                        expedition_date: "2003-08-08T15:57:42.000000Z",
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=SA",
                     },
                     {
                         id: 12739,
                         name: "Cat Salut",
-                        modality: "Sanidad Publica",
+                        modality: "Sanidad Pública",
                         affiliation_number: "VALE0900413002",
                         expiration_date: null,
+                        expedition_date: "2019-08-08T15:57:42.000000Z",
                         thumbnail: "https://via.placeholder.com/300x200/09f/fff?text=Seguridad+S",
                     },
                     {
@@ -575,13 +588,54 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         modality: "Sanidad Privada",
                         affiliation_number: "DDD 007852369517",
                         expiration_date: "2021-04-15T15:57:42.000000Z",
+                        expedition_date: null,
                         thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
                     }
                 ] 
             )
         }
 
+        function postAPIhealthCards(){
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
+        function putAPIhealthCard(){
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
+        function deleteAPIhealthCards(){
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
         function confirmLegal() {
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
+        function passwordRecovery(){
             return ok({
                 success: true,
                 idUser: 15183,

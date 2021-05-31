@@ -101,3 +101,13 @@ export interface FamilyUnit {
     thumbnail?: string,
     family_relationship?: string
 }
+
+export interface HealthCard {
+    id?: number,
+    name?: string,
+    modality?: string,
+    affiliation_number?: string,
+    expiration_date?: string,
+    expedition_date?: string,
+    thumbnail?: string,
+}

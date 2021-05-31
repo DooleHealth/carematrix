@@ -8,6 +8,8 @@ import { AlertController, Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { Capacitor } from '@capacitor/core';
 import { map } from 'rxjs/operators';
+import { HealthCard } from '../models/user';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,8 +17,15 @@ import { map } from 'rxjs/operators';
 })
 export class DooleService {
  
-  constructor(private transfer: FileTransfer, private file : File, private http: HttpService,  
-    private api: ApiEndpointsService, public events: Events, private platform: Platform, public alertController: AlertController) { }
+  constructor(
+    private transfer: FileTransfer, 
+    private file : File, 
+    private http: HttpService,  
+    private api: ApiEndpointsService, 
+    public events: Events, 
+    private platform: Platform,
+    public router: Router,
+    public alertController: AlertController) { }
 
 
   uploadFile(image: string, id?:string){
@@ -183,10 +192,31 @@ export class DooleService {
     return this.alertController.create({
       header: 'Info',
       message: message,
-      buttons: ['OK'],
-      backdropDismiss: false
+      backdropDismiss: false,
+      buttons: ['OK']
     });
 
+  }
+
+  async showAlertAndReturn(header: string, message: string, isDismiss?: boolean, route?: string) {
+    console.log(`[DooleService] showAlertAndReturn()`);
+    let dismiss = (isDismiss !== undefined)? isDismiss: false
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      backdropDismiss: dismiss,
+      buttons: [
+        {
+          text: 'OK',
+          handler: (blah) => {
+            console.log('Confirm OK: blah');
+            if(route !== undefined && route !== null )
+            this.router.navigateByUrl(route);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async presentAlert(message, button?:string) {
@@ -222,11 +252,12 @@ export class DooleService {
   }
 
 
-  getAPIhome(path:string) : Observable<any>{
+  postAPIpasswordRecovery(params: Object) : Observable<any>{
+    let path = '/user/password_recovery'
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIhome(${path}) res: `, res);
+        console.log(`[DooleService] postAPIpasswordRecovery(${path}) res: `, res);
         return res;
       })
     );
@@ -265,17 +296,6 @@ export class DooleService {
     )
   }
 
-  postAPIhomeInitial(path:string, params: Object): Observable<any>{
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.post(endpoint, params).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] postAPIhomeInitial(${path}) res: `, res);
-        return res;
-
-      })
-    );
-  }
-
   postAPIChangePassword(params: Object): Observable<any>{
     let path = 'user/changePassword';
     const endpoint = this.api.getEndpoint(path);
@@ -286,6 +306,44 @@ export class DooleService {
 
       })
     );
+  }
+
+  postAPIConfiguration(params: Object): Observable<any>{
+    let path = 'user/configuration';
+    let paramsNotification = this.getConfigurationParams(params)
+    const endpoint = this.api.getEndpoint(paramsNotification);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIConfiguration(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  getConfigurationParams(params: any){
+    switch(params.name){
+      case 'authentication':
+        return {authenticationNotificaton: params.value}
+      case 'faceId':
+        return {faceIdNotificaton: params.value}
+      case 'communications':
+          return {communicationsNotificaton: params.value}
+      case 'appointment':
+        return {appointmentNotificaton: params.value}
+      case 'medication':
+        return {drugIntakeNotificationMail: params.value} as Object
+      case 'advices':
+        return {advicesNotificaton: params.value}
+      case 'offers':
+        return {offersNotificaton: params.value}
+      case 'goals':
+        return {goalsNotificaton: params.value}
+      case 'form':
+        return {formNotificaton: params.value}
+      case 'messages':
+        return {messagesNotificaton: params.value}
+    }
   }
 
   getAPIFamilyUnit(){
@@ -335,7 +393,55 @@ export class DooleService {
     );
   }
 
-  
+  getAPIhealthCards(){
+    let path = 'user/health_cards';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPhealthCards(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIhealthCards(params: Object): Observable<any>{
+    let path = 'user/health_cards';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  putAPIhealthCard(params: HealthCard): Observable<any>{
+    let path = `user/health_cards/${params.id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] putAPIhealthCard(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIhealthCard(params: HealthCard): Observable<any>{
+    let path = `user/health_cards/${params.id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res) );
+        return res;
+
+      })
+    );
+  }
+
+
+
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(
@@ -351,17 +457,6 @@ export class DooleService {
         map((res: any) => {
           return res;
         })
-    );
-  }
-
-  getAPIhealthCards(){
-    let path = 'user/healthCards';
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] getAPhealthCards(${path}) res: `, res);
-        return res;
-      })
     );
   }
 

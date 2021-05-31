@@ -74,7 +74,7 @@ export class SmsPage implements OnInit {
           console.log('[LegalPage] sendTelephone() Unsuccessful response', await res);
         }
        },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          console.log('[LegalPage] sendTelephone() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }

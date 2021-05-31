@@ -25,10 +25,10 @@ export class GoalsPage implements OnInit {
   getGoalImformation(){
     this.dooleService.getAPIgoals().subscribe(
       async (res: any) =>{
-        console.log('[GoalsPage] getAll()', await res);
+        console.log('[GoalsPage] getGoalImformation()', await res);
         this.listGoal = res.goals as GoalUser[]
        },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
