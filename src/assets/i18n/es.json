@@ -195,5 +195,9 @@
         "confirmation_delete_card": "¿Quieres eliminar esta tarjeta?",
         "button_edit_card": "Editar Tarjeta",
         "button_delete_card": "Eliminar Tarjeta"
+      },
+      "faqs":{
+        "header_faqs": "Pregunstas Frecuentes",
+        "button_perfil": "Perfil"
       }
 }
