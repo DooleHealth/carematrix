@@ -70,11 +70,7 @@ const routes: Routes = [
   },
   {
     path: 'cards',
-    loadChildren: () => import('./pages/profile//cards/cards.module').then( m => m.CardsPageModule)
-  },
-  {
-    path: 'add-health-card',
-    loadChildren: () => import('./pages/profile/cards/add-health-card/add-health-card.module').then( m => m.AddHealthCardPageModule)
+    loadChildren: () => import('./pages/profile/cards/cards.module').then( m => m.CardsPageModule)
   }
 
 ];

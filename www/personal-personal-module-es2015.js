@@ -29,13 +29,12 @@ let PersonalPage = class PersonalPage {
         this.dooleService = dooleService;
         this.router = router;
         this.translate = translate;
-        this.PATH_USERDATA = '/user/profiles';
     }
     ngOnInit() {
         this.getDataProfile();
     }
     getDataProfile() {
-        this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        this.dooleService.getAPIuserProfile().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.userProfile = res;
             console.log('[InitialPage] getDataProfile()', yield this.userProfile);
         }), (err) => {

@@ -16,24 +16,20 @@ export class PersonalPage implements OnInit {
     public translate: TranslateService,) { }
 
   ngOnInit() {
-    this.getDataProfile()
+    this.getPersonalInformation()
   }
 
-  getDataProfile(){
+  getPersonalInformation(){
     this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
         this.userProfile = res as UserProfile;
-        console.log('[InitialPage] getDataProfile()', await this.userProfile);
+        console.log('[PersonalPage] getPersonalInformation()', await this.userProfile);
 
 
        },(err) => { 
-          console.log('getDataProfile() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
-  }
-
-  goBack(){
-    this.router.navigateByUrl('/profile')
   }
 
 }

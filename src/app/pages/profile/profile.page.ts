@@ -11,8 +11,8 @@ import { FirebaseAuthService } from 'src/app/services/firebase/auth/firebase-aut
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  PATH_USERDATA= '/user/informationUser'
   userDoole : User
+  userImage:string = 'assets/icons/user_icon.svg'
   constructor( 
     private authService: AuthenticationService,
     private firebaseService: FirebaseAuthService,
@@ -24,14 +24,15 @@ export class ProfilePage implements OnInit {
   }
 
   getUserProfile(){
-    this.dooleService.getAPIuserProfile().subscribe(
-      async (res: any) =>{
-        console.log('[InitialPage] getAll()', await res);
-        this.userDoole = res as User
-       },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      });
+    this.userDoole = history.state.user;
+    console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
+    this.userImg()
+  }
+
+  userImg(){
+    if(this.userDoole !== undefined && this.userDoole.image !== undefined && this.userDoole.image !== null 
+      && this.userDoole.image !== '')
+      this.userImage = this.userDoole.image;
   }
 
 

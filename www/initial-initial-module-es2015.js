@@ -41,7 +41,7 @@ let InitialPage = class InitialPage {
         this.onDestroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_5__["Subject"]();
     }
     ngOnInit() {
-        this.getAll();
+        this.getUserInformation();
     }
     showInformation() {
         this.userImg();
@@ -59,13 +59,13 @@ let InitialPage = class InitialPage {
             this.userImage = this.userDoole.image;
         this.username = this.userDoole.username;
     }
-    getAll() {
-        this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            //console.log('[InitialPage] getAll()', await res);
+    getUserInformation() {
+        this.dooleService.getAPIinformationUser().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            //console.log('[InitialPage] getUserProfile()', await res);
             this.userDoole = res;
             this.showInformation();
         }), (err) => {
-            console.log('getAll ERROR(' + err.code + '): ' + err.message);
+            console.log('[InitialPage] getUserProfile() ERROR(' + err.code + '): ' + err.message);
             throw err;
         });
     }

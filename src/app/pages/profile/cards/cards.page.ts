@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { HealthCard } from 'src/app/models/user';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./cards.page.scss'],
 })
 export class CardsPage implements OnInit {
-  listCard: any = [];
+  listCard: HealthCard[] =[];
   constructor(
     public router: Router,    
     private translate: TranslateService,
@@ -25,16 +26,18 @@ export class CardsPage implements OnInit {
   getHealthCards(){
     this.dooleService.getAPIhealthCards().subscribe(
       async (res: any) =>{
-        console.log('[GoalsPage] getHealthCards()', await res);
-        this.listCard = res as any[]
+        console.log('[CardsPage] getHealthCards()', await res);
+        this.listCard = res as HealthCard[]
        },(err) => { 
-          console.log('[GoalsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[CardsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
 
   getDetailCard(card){
-    console.log('[GoalsPage] getDetailCard()', card.name);
+    console.log('[CardsPage] getDetailCard()', card.name);
+    //this.router.navigateByUrl('cards/detailCard')
+    this.router.navigate(['cards/detailCard', {id: card.id}]);
   }
 
 }

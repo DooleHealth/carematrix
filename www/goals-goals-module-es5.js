@@ -75,21 +75,20 @@
           this.router = router;
           this.translate = translate;
           this.dooleService = dooleService;
-          this.PATH_USERDATA = '/user/element/goals';
           this.nameGoal = 'Doolehealth';
         }
 
         _createClass(GoalsPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            this.getAll();
+            this.getGoalImformation();
           }
         }, {
-          key: "getAll",
-          value: function getAll() {
+          key: "getGoalImformation",
+          value: function getGoalImformation() {
             var _this = this;
 
-            this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(function (res) {
+            this.dooleService.getAPIgoals().subscribe(function (res) {
               return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                   while (1) {
@@ -104,7 +103,7 @@
 
                         _context.t0.log.call(_context.t0, '[GoalsPage] getAll()', _context.t1);
 
-                        this.listGoal = res.goals; //this.showInformation()
+                        this.listGoal = res.goals;
 
                       case 6:
                       case "end":
@@ -117,11 +116,6 @@
               console.log('getAll ERROR(' + err.code + '): ' + err.message);
               throw err;
             });
-          }
-        }, {
-          key: "showInformation",
-          value: function showInformation() {//
-            // this.nameGoal = this.listGoal.name
           }
         }, {
           key: "openActivities",

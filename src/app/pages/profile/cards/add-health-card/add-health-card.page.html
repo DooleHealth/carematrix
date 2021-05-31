@@ -1,9 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-button slot="start" fill="clear" routerLink="/cards">{{ 'health_card.button_return' | translate}}</ion-button>
+<!--     <ion-buttons slot="start">
       <ion-back-button text="Inicio"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ 'Agregar Tarjeta Sanitaria' | translate}}</ion-title>
+    </ion-buttons> -->
+    <ion-title>{{ isAddCard? ('add_health_card.header_add_card' | translate) : ('edit_health_card.header_edit_card' | translate) }}</ion-title>
+    <ion-button slot="end" fill="clear" (click)="this.isAddCard? addCard(): editCard()">
+      {{ isAddCard? ('add_health_card.button_add' | translate) : ('edit_health_card.button_edit' | translate) }}</ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
@@ -17,13 +20,13 @@
     </ion-row>
   </ion-grid>
 
-
+  <form [formGroup]="formHealthCard" (ngSubmit)="addCard()">
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item lines="none">
-        <ion-label>{{ 'Modalidad' | translate}}</ion-label>
-        <ion-select interface="action-sheet" placeholder="Modalidad">
-          <ion-select-option *ngFor="let card of cards" [value]="card">{{card.modality}}</ion-select-option>
+        <ion-label>{{ 'health_card.modality' | translate}}</ion-label>
+        <ion-select interface="action-sheet" placeholder="Selecciona uno" formControlName="modality" required>
+          <ion-select-option *ngFor="let card of cards" [value]="card.modality">{{card.modality}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -31,26 +34,28 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
-        <ion-label>Nombre</ion-label>
-        <ion-label class="textMedium">Nombre</ion-label>
+        <ion-label>{{ 'health_card.name' | translate}}</ion-label>
+        <ion-input formControlName="name" placeholder="" slot="end" (ionInput)="isSubmitted = false" maxlength="50" required></ion-input>
+        <ion-label *ngIf="this.isSubmittedName && this.formHealthCard.get('name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'health_card.error_required' | translate}}</p></ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-label>{{ 'Número Filiación' | translate}}</ion-label>
-        <ion-label class="textMedium">Número Filiación</ion-label>
+        <ion-label>{{ 'health_card.affiliation_number' | translate}}</ion-label>
+        <ion-input formControlName="affiliation_number" placeholder="" (ionInput)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
+        <ion-label *ngIf="this.isSubmittedAffiliationNumber && this.formHealthCard.get('affiliation_number').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'health_card.error_required' | translate}}</p></ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-label>{{ 'Caducidad' | translate}}</ion-label>
-        <ion-label class="textMedium">Caducidad</ion-label>
+        <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
+        <ion-datetime formControlName="expiration_date" displayFormat="DD/MM/YY" placeholder="Opcional" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label lines="none">{{ 'Fecha expedición' | translate}}</ion-label>
-        <ion-label class="textMedium">Fecha expedición</ion-label>
+        <ion-label lines="none">{{ 'health_card.expedition_date' | translate}}</ion-label>
+        <ion-datetime formControlName="expedition_date" displayFormat="DD/MM/YY" placeholder="Opcional" min="1990-01-01"></ion-datetime>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
     </ion-list>
   </ion-card>
-
+</form>
 </ion-content>

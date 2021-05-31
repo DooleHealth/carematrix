@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'journal',
-        loadChildren: () => import('./mydiary/mydiary.module').then( m => m.MydiaryPageModule)
+        loadChildren: () => import('./journal/journal.module').then( m => m.JournalPageModule)
       },
       {
         path: 'home',
@@ -35,11 +35,12 @@ const routes: Routes = [
       }
     ]
   },
-/*   {
-    path: '',
+
+   {
+    path: 'home',
     redirectTo: 'home/initial',
     pathMatch: 'full'
-  } */
+  }
 
 ];
 

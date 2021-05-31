@@ -75,7 +75,6 @@
           this.dooleService = dooleService;
           this.router = router;
           this.translate = translate;
-          this.PATH_USERDATA = '/user/profiles';
         }
 
         _createClass(PersonalPage, [{
@@ -88,7 +87,7 @@
           value: function getDataProfile() {
             var _this = this;
 
-            this.dooleService.getAPIhome(this.PATH_USERDATA).subscribe(function (res) {
+            this.dooleService.getAPIuserProfile().subscribe(function (res) {
               return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                   while (1) {

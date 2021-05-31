@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Inicio\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{ 'Agregar Tarjeta Sanitaria' | translate}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content fullscreen>\n  <ion-grid>\n    <ion-row>\n      <ion-col size=\"12\">\n        <img class=\"img-wrapperCard\" src=\"assets/images/Subtract.png\">\n      </ion-col>\n    </ion-row>\n    <ion-row>\n    </ion-row>\n  </ion-grid>\n\n\n  <ion-card class=\"cardProfile\">\n    <ion-list>\n      <ion-item lines=\"none\">\n        <ion-label>{{ 'Modalidad' | translate}}</ion-label>\n        <ion-label class=\"textMedium\">Modalidad</ion-label>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n    </ion-list>\n  </ion-card>\n  <ion-card class=\"cardProfile\">\n    <ion-list>\n      <ion-item>\n        <ion-label>{{ 'Número Filiación' | translate}}</ion-label>\n        <ion-label class=\"textMedium\">Número Filiación</ion-label>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ 'Caducidad' | translate}}</ion-label>\n        <ion-label class=\"textMedium\">Caducidad</ion-label>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n      <ion-item lines=\"none\">\n        <ion-label lines=\"none\">{{ 'Fecha expedición' | translate}}</ion-label>\n        <ion-label class=\"textMedium\">Fecha expedición</ion-label>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n    </ion-list>\n  </ion-card>\n\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Inicio\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{ 'Agregar Tarjeta Sanitaria' | translate}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content fullscreen>\n  <ion-grid>\n    <ion-row>\n      <ion-col size=\"12\">\n        <img class=\"img-wrapperCard\" src=\"assets/images/Subtract.png\">\n      </ion-col>\n    </ion-row>\n    <ion-row>\n    </ion-row>\n  </ion-grid>\n\n\n  <ion-card class=\"cardProfile\">\n    <ion-list>\n      <ion-item lines=\"none\">\n        <ion-label>{{ 'Modalidad' | translate}}</ion-label>\n        <ion-select interface=\"action-sheet\" placeholder=\"Modalidad\">\n          <ion-select-option *ngFor=\"let card of cards\" [value]=\"card\">{{card.modality}}</ion-select-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n  </ion-card>\n  <ion-card class=\"cardProfile\">\n    <ion-list>\n      <ion-item>\n        <ion-label>Nombre</ion-label>\n        <ion-label class=\"textMedium\">Nombre</ion-label>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ 'Número Filiación' | translate}}</ion-label>\n        <ion-label class=\"textMedium\">Número Filiación</ion-label>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ 'Caducidad' | translate}}</ion-label>\n        <ion-datetime displayFormat=\"DD MM YY\" placeholder=\"Caducidad\" min=\"1990-01-01\"></ion-datetime>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n      <ion-item lines=\"none\">\n        <ion-label lines=\"none\">{{ 'Fecha expedición' | translate}}</ion-label>\n        <ion-datetime displayFormat=\"DD MM YY\" placeholder=\"Fecha expedición\" min=\"1990-01-01\"></ion-datetime>\n        <ion-icon name=\"chevron-forward-outline\" slot=\"end\" size=\"small\"></ion-icon>\n      </ion-item>\n    </ion-list>\n  </ion-card>\n\n</ion-content>");
 
 /***/ }),
 
@@ -32,7 +32,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AddHealthCardPage = class AddHealthCardPage {
-    constructor() { }
+    constructor() {
+        this.cards = [
+            {
+                modality: "Mutuas Seguros",
+                color: "BDC3C7"
+            },
+            {
+                modality: "Sanidad Pública",
+                color: "2980B9"
+            },
+            {
+                modality: "Sanidad Privada",
+                color: "09f"
+            }
+        ];
+    }
     ngOnInit() {
     }
 };

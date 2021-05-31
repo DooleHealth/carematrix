@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { LanguageService } from 'src/app/services/language.service';
+import { DooleService } from 'src/app/services/doole.service';
 const { Storage } = Plugins;
 
 
@@ -19,24 +20,18 @@ export class LandingPage implements OnInit {
   loginForm: FormGroup;
   submitError: string;
   redirectLoader: HTMLIonLoadingElement;
-  validation_messages = {
-    'username': [
-      { type: 'required', message: 'login.username_val' }
-    ],
-    'password': [
-      { type: 'required', message: 'login.password_val' },
-    ]
-  };
+
   constructor(
-    public router: Router,
+    private router: Router,
     public route: ActivatedRoute,
-    public translate: TranslateService,
+    private translate: TranslateService,
     public loadingController: LoadingController,
     public location: Location,
     private authService: AuthenticationService,
     public alertController: AlertController,
     private ngZone: NgZone,
     public languageService: LanguageService,
+    private dooleService: DooleService
   ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', 
@@ -53,15 +48,6 @@ export class LandingPage implements OnInit {
   ngOnInit() {
   }
 
-  showAlert(message:string) {
-    this.alertController.create({
-      header: 'Error',
-      message: message,
-      buttons: ['OK']
-    }).then(res => {
-      res.present();
-    });
-  }
 
   async dismissLoading() {
    
@@ -134,8 +120,48 @@ export class LandingPage implements OnInit {
   }
 
 
-  passwordRecovery(){
+  sendPassword(username){
     console.log('[LandingPage] passwordRecovery()');
+    this.dooleService.postAPIpasswordRecovery(username) .subscribe(
+      async (res: any) =>{
+        //console.log('[InitialPage] passwordRecovery()', await res);
+
+       },(err) => { 
+          console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+  }
+
+  async passwordRecovery() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('landing.header_message_password_recovery'),
+      message: this.translate.instant('landing.message_password_recovery'),
+      inputs: [
+        {
+          name: 'username',
+          type: 'text',
+          placeholder: this.translate.instant('landing.user'),
+        }],
+        buttons: [
+          {
+            text: this.translate.instant("alert.button_cancel"),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('[LandingPage] AlertConfirm Cancel');
+            }
+          }, {
+            text: this.translate.instant("alert.button_send"),
+            handler: (data) => {
+              console.log('[LandingPage] AlertConfirm Okay', data.username );
+              this.sendPassword(data.username)
+            }
+          }
+        ]
+    });
+
+    await alert.present();
   }
  
 
