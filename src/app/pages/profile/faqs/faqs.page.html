@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="{{ 'faqs.button_perfil' | translate}}" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'faqs.header_faqs' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="this.listFaqs !== undefined">
+    <div [innerHtml]="this.listFaqs"></div>
+  </div>
+
+</ion-content>

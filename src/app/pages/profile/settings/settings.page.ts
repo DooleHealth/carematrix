@@ -20,8 +20,7 @@ export class SettingsPage implements OnInit {
   form = true
   messages = true
   constructor(
-    private translate: TranslateService,
-    private dooleService: DooleService,) { }
+    private dooleService: DooleService) { }
   ngOnInit() {
   }
 

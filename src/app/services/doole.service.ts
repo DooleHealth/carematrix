@@ -346,6 +346,17 @@ export class DooleService {
     }
   }
 
+  getAPIFaqs(): Observable<any>{
+    let path = 'user/faqs'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
   getAPIFamilyUnit(){
     let path = 'user/familyUnit';
     const endpoint = this.api.getEndpoint(path);
