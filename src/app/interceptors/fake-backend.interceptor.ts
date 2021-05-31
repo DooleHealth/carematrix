@@ -54,6 +54,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return putAPIhealthCard();
                 case url.includes('user/health_cards') && method === 'DELETE':
                     return deleteAPIhealthCards();
+                case url.endsWith('user/emergency_contact') && method === 'GET':
+                    return emergencyContact();
+                case url.endsWith('user/emergency_contact') && method === 'POST':
+                    return saveEmergencyContact();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -685,6 +689,48 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
                     }
             )
+        }
+
+        function emergencyContact() {
+         
+            return ok(
+                [
+                    {
+                        id: 12737,
+                        name: "Asunción Mateo",
+                        initials: "AM",
+                        telephone: "671467799",
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=AM",
+                        family_relationship: "Hermano"
+                    },
+                    {
+                        id: 13015,
+                        name: "Eduard García",
+                        initials: "EG",
+                        telephone: "671467799",
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
+                        family_relationship: "Madre"
+                    },
+                    {
+                        id: 13015,
+                        name: "David Serrano",
+                        initials: "DS",
+                        telephone: "671467799",
+                        thumbnail: "https://via.placeholder.com/300x300.png?text=DS",
+                        family_relationship: "Padre"
+                    }
+                ] 
+            )
+        }
+
+        function saveEmergencyContact(){
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
         }
 
         // helper functions

@@ -451,7 +451,52 @@ export class DooleService {
     );
   }
 
+  getAPIemergencyContact(){
+    let path = 'user/emergency_contact';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIemergencyContact(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
+  postAPIemergencyContact(params: Object){
+    let path = 'user/emergency_contact';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIemergencyContact(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  putAPIemergencyContact(params: any){
+    let path = `user/emergency_contact/${params.id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] putAPIemergencyContact(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIemergencyContact(params: Object): Observable<any>{
+    let path = `user/emergency_contact/${params}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIemergencyContact(${path}) res: ${res}`, JSON.stringify(res) );
+        return res;
+
+      })
+    );
+  }
 
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);

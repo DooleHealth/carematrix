@@ -199,5 +199,26 @@
       "faqs":{
         "header_faqs": "Pregunstas Frecuentes",
         "button_perfil": "Perfil"
+      },
+      "emergency_contact":{
+        "header": "Contactos de Emergencia"
+      },
+      "detail_contact":{
+        "header": "Detalle de Contacto",
+        "username":"Nombre",
+        "telephone": "Teléfono",
+        "family_relationship":"Relación Familiar",
+        "call": "Llamar",
+        "button_edit": "Editar",
+        "button_Ok": "Ok",
+        "button_delete": "Eliminar"
+      },
+      "edit_contact":{
+        "header": "Editar de Contacto",
+        "error_required": "Requerido",
+        "alert_message_new_contact":"Se ha creado un nuevo contacto",
+        "alert_message_delete_contact":"El contacto ha sido eliminado",
+        "alert_message_update_contact":"El contacto ha sido actualizado",
+        "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?"
       }
 }
