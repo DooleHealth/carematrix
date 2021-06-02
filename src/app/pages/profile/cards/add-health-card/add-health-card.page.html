@@ -1,9 +1,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-button slot="start" fill="clear" routerLink="/cards">{{ 'health_card.button_return' | translate}}</ion-button>
-<!--     <ion-buttons slot="start">
-      <ion-back-button text="Inicio"></ion-back-button>
-    </ion-buttons> -->
     <ion-title>{{ isAddCard? ('add_health_card.header_add_card' | translate) : ('edit_health_card.header_edit_card' | translate) }}</ion-title>
     <ion-button slot="end" fill="clear" (click)="this.isAddCard? addCard(): editCard()">
       {{ isAddCard? ('add_health_card.button_add' | translate) : ('edit_health_card.button_edit' | translate) }}</ion-button>
