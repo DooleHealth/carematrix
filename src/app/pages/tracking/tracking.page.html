@@ -6,15 +6,13 @@
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline"></ion-icon>&nbsp;
       <ion-icon class="primaryIcon" slot="icon-only" name="add"></ion-icon>
-
     </ion-buttons>
- 
-   
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+
 <!-- SegmentBar -->
+
   <ion-segment value="documents" [(ngModel)]="segment" scrollable>
     <ion-segment-button value="documents">
       <ion-label>Documentos</ion-label>
@@ -32,7 +30,7 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <ion-list>
       <ion-card class="cardProfile" *ngSwitchCase="'documents'">
-        <ion-item lines="none">
+        <ion-item lines="none" routerLink="document-detail">
           <div class="verticalLine"></div>
           <ion-grid>
             <ion-row>
@@ -44,7 +42,7 @@
                 <ion-card-title class="txtTitleGoals">Análisis de sangre</ion-card-title>
               </ion-col>
               <ion-col size="4">
-                <ion-card-title class="txtTitleTrackingLittle">fecha 18/09/21</ion-card-title>
+                <ion-card-title class="txtTitleTrackingLittle" >fecha 18/09/21</ion-card-title>
               </ion-col>
             </ion-row>
 
