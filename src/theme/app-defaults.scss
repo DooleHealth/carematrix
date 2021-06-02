@@ -7,7 +7,11 @@
  /* Global styles of the components*/
 
 ion-icon {
-    color:#BDC3C7;
+    color:#7f8c8d;
+}
+
+.primaryIcon {
+  color:#3498DB;
 }
 
 ion-item-divider {
@@ -83,9 +87,9 @@ padding-left: 5%;
   color: #7f8c8d;
  
 }
-.textMedium {
-  text-align: right;
-  color: #7f8c8d;
+.textMediumLeft {
+  text-align: left;
+  color: #7f8c8d!important;
 }
 
 .textMediumGreen {

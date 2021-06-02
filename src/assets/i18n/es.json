@@ -159,7 +159,9 @@
         "subtitle_description": "Descripción",
         "subtitle_screenshot": "Captura de pantall",
         "description_screenshot": "Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
-        "button_add_file": "Añadir archivos"
+        "button_add_file": "Añadir archivos",
+        "placeholder":"Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
+        "placeholderDescription":"Cuéntanos aquí cual ha sido tu problema"
 
       },
       "health_card":{
