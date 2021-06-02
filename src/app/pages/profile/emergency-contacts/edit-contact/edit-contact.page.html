@@ -3,11 +3,10 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'edit_contact.header' | translate}}</ion-title>
-<!--     <ion-buttons slot="end" routerLink="addCard" >
-    <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
-  </ion-buttons>  -->
-  <ion-button slot="end" fill="clear" (click)="editContact()">
+    <ion-title>
+      {{ isNewContact? ('edit_contact.header_add' | translate) : ('edit_contact.header' | translate) }}
+    </ion-title>
+  <ion-button slot="end" fill="clear" (click)="sumittedContact()">
     {{ 'detail_contact.button_Ok' | translate}}</ion-button>
   </ion-toolbar>
 </ion-header>
@@ -52,7 +51,7 @@
   </ion-card>
 
 
-  <section>
+  <section *ngIf="!this.isNewContact">
     <ion-button expand="block" (click)="delete(this.contact)">{{ 'detail_contact.button_delete' | translate}}</ion-button>
   </section>
 </ion-content>

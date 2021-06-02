@@ -451,6 +451,17 @@ export class DooleService {
     );
   }
 
+  getAPIfamilyRelationship(){
+    let path = 'user/relationship';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIemergencyContact(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIemergencyContact(){
     let path = 'user/emergency_contact';
     const endpoint = this.api.getEndpoint(path);
@@ -474,8 +485,10 @@ export class DooleService {
     );
   }
 
-  putAPIemergencyContact(params: any){
-    let path = `user/emergency_contact/${params.id}`;
+  putAPIemergencyContact(params: Object){
+    let id = (params as any).id
+   // let path = `user/emergency_contact/${id}`;
+    let path = `user/emergency_contact`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {

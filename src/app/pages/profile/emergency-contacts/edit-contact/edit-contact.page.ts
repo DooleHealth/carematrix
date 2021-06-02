@@ -15,6 +15,7 @@ export class EditContactPage implements OnInit {
   isSubmittedName = false;
   isSubmittedTelephone = false;
   isSubmittedRelationship = false;
+  isNewContact= true;
   formContact: FormGroup;
   contact
   constructor(  
@@ -34,14 +35,18 @@ export class EditContactPage implements OnInit {
   }
 
   getContact(){
-    this.contact = history.state.contact;
-    let isNewContact = history.state.newcontact;
-    if(isNewContact)
-    return
-    console.log('[EditContactPage] getContact()' ,  this.contact); 
+    let oldContact = history.state.contact;
+    let newContact = history.state.newContact;
+    if(newContact){
+      this.contact = newContact
+    }else if(oldContact){
+      this.contact = oldContact
+      this.isNewContact = false
+    }
+    this.showContact()   
+    console.log('[EditContactPage] getContact()' , JSON.stringify(this.contact) ); 
     this.userImg()
-    if(this.contact)
-    this.showContact()
+
   }
 
   userImg(){
@@ -56,11 +61,13 @@ export class EditContactPage implements OnInit {
     this.formContact.get('family_relationship').setValue(this.contact.family_relationship)
   }
 
-  editContact(){
+  sumittedContact(){
     console.log('[EditContactPage] editContact()' ,  this.contact); 
     this.isSubmittedFields(true)
     if(this.formContact.valid){
+      if(this.isNewContact)
         this.saveContact()
+      else this.updateContact()
     }
   }
 

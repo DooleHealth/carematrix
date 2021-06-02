@@ -4,7 +4,10 @@
         "password_placeholder": "Contraseña",
         "password_recovery": "¿Has olvidado tu contraseña?",
         "button_signin": "Iniciar sesión",
-        "button_registre": "Crear Usuario"
+        "button_registre": "Crear Usuario",
+        "user": "Usuario",
+        "header_message_password_recovery": "Ingresa tu Usuario",
+        "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña"
       },
       "legal": {
         "header": "Condiciones de uso",
@@ -57,6 +60,7 @@
           "title_information": "Información",
           "data": "Tus Datos",
           "family_unit": "Unidad Familiar",
+          "emergency": "Contactos de Emergencia",
           "your_health_cards": "Tus Tarjetas Sanitarias", 
           "your_goals": "Tus Objetivos",
           "payment_method": "Método de Pago"
@@ -101,9 +105,10 @@
         "button_acept": "Aceptar",
         "button_cancel": "Cancelar",
         "button_change": "Cambiar",
+        "button_send": "Enviar",
         "header_error": "Error",
         "header_info": "Información",
-        "header_confirmation": "Confirmation"
+        "header_confirmation": "Confirmación"
       },
       "setting":{
         "title_setting": "Ajustes",
@@ -156,5 +161,67 @@
         "description_screenshot": "Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
         "button_add_file": "Añadir archivos"
 
+      },
+      "health_card":{
+        "header_card": "Tus Tarjeta Sanitaria",
+
+        "modality": "Modalidad",
+        "name": "Nombre",
+        "affiliation_number":"Número de afilación",
+        "expiration_date":"Caducidad",
+        "expedition_date": "Fecha de Expedición",
+        "Optional": "Opcional",
+        "error_required": "Requerido",
+        "button_return": "Inicio",
+        "modality_type":{
+          "text0": "Mutua Seguros",
+          "text1": "Sanidad Pública",
+          "text2": "Sanidad Privada"
+        }
+      },
+      "add_health_card":{
+        "header_add_card": "Agregar Tarjeta Sanitaria",
+        "alert_message_add_card": "La tarjeta ha sido añadida correctamente",
+        "button_add": "Agregar"
+      },
+      "edit_health_card":{
+        "header_edit_card": "Editar Tarjeta Sanitaria",
+        "alert_message_edit_card": "La tarjeta ha sido editada correctamente",
+        "button_edit": "Editar"
+      },
+      "detail_health_card":{
+        "header_detail_card": "Detalle Tarjeta Sanitaria",
+        "alert_message_delete_card": "La tarjeta ha sido eliminada correctamente",
+        "confirmation_delete_card": "¿Quieres eliminar esta tarjeta?",
+        "button_edit_card": "Editar Tarjeta",
+        "button_delete_card": "Eliminar Tarjeta"
+      },
+      "faqs":{
+        "header_faqs": "Pregunstas Frecuentes",
+        "button_perfil": "Perfil"
+      },
+      "emergency_contact":{
+        "header": "Contactos de Emergencia",
+        "header_relationship":"Relación",
+        "contact": "Contacto"
+      },
+      "detail_contact":{
+        "header": "Detalle de Contacto",
+        "username":"Nombre",
+        "telephone": "Teléfono",
+        "family_relationship":"Relación Familiar",
+        "call": "Llamar",
+        "button_edit": "Editar",
+        "button_Ok": "Ok",
+        "button_delete": "Eliminar"
+      },
+      "edit_contact":{
+        "header": "Editar Contacto",
+        "header_add": "Añadir Contacto",
+        "error_required": "Requerido",
+        "alert_message_new_contact":"Se ha creado un nuevo contacto",
+        "alert_message_delete_contact":"El contacto ha sido eliminado",
+        "alert_message_update_contact":"El contacto ha sido actualizado",
+        "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?"
       }
 }

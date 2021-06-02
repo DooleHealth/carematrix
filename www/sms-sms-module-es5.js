@@ -303,7 +303,7 @@
                 }, _callee2, this);
               }));
             }, function (err) {
-              console.log('getAll ERROR(' + err.code + '): ' + err.message);
+              console.log('[LegalPage] sendTelephone() ERROR(' + err.code + '): ' + err.message);
               throw err;
             });
           }

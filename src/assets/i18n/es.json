@@ -201,7 +201,9 @@
         "button_perfil": "Perfil"
       },
       "emergency_contact":{
-        "header": "Contactos de Emergencia"
+        "header": "Contactos de Emergencia",
+        "header_relationship":"Relación",
+        "contact": "Contacto"
       },
       "detail_contact":{
         "header": "Detalle de Contacto",
@@ -214,7 +216,8 @@
         "button_delete": "Eliminar"
       },
       "edit_contact":{
-        "header": "Editar de Contacto",
+        "header": "Editar Contacto",
+        "header_add": "Añadir Contacto",
         "error_required": "Requerido",
         "alert_message_new_contact":"Se ha creado un nuevo contacto",
         "alert_message_delete_contact":"El contacto ha sido eliminado",

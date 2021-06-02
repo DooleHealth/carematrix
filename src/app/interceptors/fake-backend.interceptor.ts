@@ -58,6 +58,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return emergencyContact();
                 case url.endsWith('user/emergency_contact') && method === 'POST':
                     return saveEmergencyContact();
+                case url.includes('user/emergency_contact') && method === 'PUT':
+                return updateEmergencyContact();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -724,6 +726,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function saveEmergencyContact(){
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
+        function updateEmergencyContact(){
             return ok({
                 success: true,
                 idUser: 15183,

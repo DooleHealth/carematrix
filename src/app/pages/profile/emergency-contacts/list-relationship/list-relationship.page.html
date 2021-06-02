@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Cancelar" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'emergency_contact.contact' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar 
+  [animated]="true" 
+  (ionInput)="filterList($event)" >
+</ion-searchbar>
+<ion-list *ngFor="let relationship of listRelationship">
+  <ion-item (click)="getDataContact(relationship)" class="ion-activatable ripple-parent" routerLink="../edit-contact" [state]="{newContact:emergencyContact}">
+    <ion-label class="txtPaddingLeft" >
+      {{relationship}}
+    </ion-label>
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-item>
+
+</ion-list>
+
+</ion-content>

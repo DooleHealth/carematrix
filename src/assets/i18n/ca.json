@@ -200,7 +200,9 @@
         "button_perfil": "Perfil"
       },      
       "emergency_contact":{
-        "header": "Contactes d'Emergència"
+        "header": "Contactes d'Emergència",
+        "header_relationship":"Relació",
+        "contact": "Contacte"
       },
       "detail_contact":{
         "header": "Detall de Contacte",
@@ -213,7 +215,8 @@
         "button_delete": "Eliminar"
       },
       "edit_contact":{
-        "header": "Edita de Contacte",
+        "header": "Edita Contacte",
+        "header_add": "Afegir Contacte",
         "error_required": "Requerit",
         "alert_message_new_contact":"S'ha creat un nou contacte",
         "alert_message_delete_contact":"El contacte ha estat eliminat",

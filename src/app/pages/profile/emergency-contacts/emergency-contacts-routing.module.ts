@@ -15,6 +15,14 @@ const routes: Routes = [
   {
     path: 'edit-contact',
     loadChildren: () => import('./edit-contact/edit-contact.module').then( m => m.EditContactPageModule)
+  },
+  {
+    path: 'list-my-contacts',
+    loadChildren: () => import('./list-my-contacts/list-my-contacts.module').then( m => m.ListMyContactsPageModule)
+  },
+  {
+    path: 'list-relationship',
+    loadChildren: () => import('./list-relationship/list-relationship.module').then( m => m.ListRelationshipPageModule)
   }
 ];
 

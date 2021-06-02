@@ -4,7 +4,10 @@
         "password_placeholder": "Contrasenya",
         "password_recovery": "Has oblidat la contrasenya?",
         "button_signin": "Inici de sessió",
-        "button_registre": "Crear Usuari"
+        "button_registre": "Crear Usuari",
+        "user": "Usuari",
+        "header_message_password_recovery": "Ingressa el teu Usuari",
+        "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya."
       },    
       "legal": {
         "header": "Condicions d'ús",
@@ -54,9 +57,10 @@
         "title_profile": "El meu perfil",
         "button_go_init": "Inici",
         "information": {
-          "title_information": "Información",
+          "title_information": "Informació",
           "data": "Les teves Dades",
           "family_unit": "Unitat Familiar",
+          "emergency": "Contactes d'Emergència",
           "your_health_cards": "Les teves Targetes Sanitàries",
           "your_goals": "Els teus Objectius",
           "payment_method": "Mètode de pagament"
@@ -101,6 +105,7 @@
         "button_acept": "Acceptar",
         "button_cancel": "Cancel",
         "button_change": "Canviar",
+        "button_send": "Enviar",
         "header_error": "Error",
         "header_info": "Informació",
         "header_confirmation": "Confirmació"
@@ -155,5 +160,67 @@
         "subtitle_screenshot": "Captura de pantall",
         "description_screenshot": "Pots adjuntar captures de pantalla per ajudar-nos a solucionar el teu problema",
         "button_add_file": "Afegir arxius"
+      },
+      "health_card":{
+        "header_card": "Els teus Targeta Sanitària",
+
+        "modality": "Modalitat",
+        "name": "Nom",
+        "affiliation_number":"Número d'afiliació",
+        "expiration_date":"Caducitat",
+        "expedition_date": "Data d'Expedició",
+        "Optional": "Opcional",
+        "error_required": "Requerit",
+        "button_return": "Inici",
+        "modality_type":{
+          "text0": "Mútua Assegurances",
+          "text1": "Sanitat Pública",
+          "text2": "Sanitat Privada"
+        }
+      },
+      "add_health_card":{
+        "header_add_card": "Afegir Targeta Sanitària",
+        "alert_message_add_card": "La targeta s'ha afegit correctament",
+        "button_add": "Afegir"
+      },
+      "edit_health_card":{
+        "header_edit_card": "Edita Targeta Sanitària",
+        "alert_message_edit_card": "La targeta ha estat editada correctament",
+        "button_edit": "Edita"
+      },
+      "detail_health_card":{
+        "header_detail_card": "Detall targeta sanitària",
+        "alert_message_delete_card": "La targeta ha estat eliminada correctament",
+        "confirmation_delete_card": "Vols eliminar aquesta targeta?",
+        "button_edit_card": "Edita Targeta",
+        "button_delete_card": "Eliminar Tarjeta"
+      },
+      "faqs":{
+        "header_faqs": "Preguntes més freqüents",
+        "button_perfil": "Perfil"
+      },      
+      "emergency_contact":{
+        "header": "Contactes d'Emergència",
+        "header_relationship":"Relació",
+        "contact": "Contacte"
+      },
+      "detail_contact":{
+        "header": "Detall de Contacte",
+        "username":"Nom",
+        "telephone": "Telèfon",
+        "family_relationship":"Relació Familiar",
+        "call": "Trucar",
+        "button_edit": "Edita",
+        "button_Ok": "Ok",
+        "button_delete": "Eliminar"
+      },
+      "edit_contact":{
+        "header": "Edita Contacte",
+        "header_add": "Afegir Contacte",
+        "error_required": "Requerit",
+        "alert_message_new_contact":"S'ha creat un nou contacte",
+        "alert_message_delete_contact":"El contacte ha estat eliminat",
+        "alert_message_update_contact":"El contacte ha estat actualitzat",
+        "alert_message_confirmation_delete":"Vols eliminar aquest contacte?"
       }
 }

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Cancelar" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'emergency_contact.header_relationship' | translate}}</ion-title>
+    <ion-button *ngIf="!this.isHybrid" slot="end" fill="clear" routerLink="../list-relationship" [state]="{newContact:this.emergencyContact}">
+      Next
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  <ion-searchbar 
+  [animated]="true" 
+  (ionInput)="filterList($event)" >
+</ion-searchbar>
+  <div *ngIf="contacts !== undefined">
+    <ion-list *ngFor="let contact of contacts">
+      <ion-item *ngIf="contact !== undefined" routerLink="../list-relationship" [state]="{contact:contact}">
+        <ion-label class="txtPaddingLeft" *ngIf="contact.displayName !== undefined">
+          {{contact.displayName}}
+        </ion-label>
+        <div *ngIf="contact.phoneNumbers !== undefined && contact.phoneNumbers[0] !== undefined">
+          <p *ngIf="contact.phoneNumbers[0].number !== undefined">
+            {{ contact.phoneNumbers[0].number}}</p>
+        </div>
+      </ion-item>
+  
+    </ion-list>
+  </div>
+
+
+</ion-content>

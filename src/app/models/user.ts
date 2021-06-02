@@ -111,3 +111,13 @@ export interface HealthCard {
     expedition_date?: string,
     thumbnail?: string,
 }
+
+export interface EmergencyContact {
+    id?: number,
+    name?: string,
+    initials?: string,
+    telephone?: string,
+    thumbnail?: string,
+    expedition_date?: string,
+    family_relationship?: string,
+}

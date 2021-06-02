@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content fullscreen>\n    <div class=\"main-container\">\n        <img style=\"padding-top: 40%;\" src=\"/assets/images/logo.svg\" />\n        <ion-grid>\n            <ion-col>\n                <form [formGroup]=\"loginForm\" (ngSubmit)=\"doDooleAppLogin()\">\n                    <ion-item-divider>\n                        <ion-icon name=\"person\"></ion-icon>\n                        <ion-input type=\"text\" placeholder=\"{{'landing.user_placeholder' | translate }}\" formControlName=\"username\" >\n                        </ion-input>\n                    </ion-item-divider>\n                    <ion-item-divider>\n                        <ion-icon name=\"lock-closed\"></ion-icon>\n                        <app-show-hide-password>\n                            <ion-input type=\"password\" placeholder=\"{{'landing.password_placeholder' | translate }}\" formControlName=\"password\">\n                            </ion-input>\n                        </app-show-hide-password>\n                    </ion-item-divider>\n                    <ion-text (click)=\"passwordRecovery()\">\n                        <a>{{ 'landing.password_recovery' | translate}}</a>\n                    </ion-text>\n                  \n                    <!-- <ion-button type=\"submit\" color=\"primary\" expand=\"block\" class=\"enter-btn\" routerLink=\"legal\">\n                        Iniciar sesión\n                    </ion-button> -->\n\n                    <ion-button type=\"submit\" size=\"medium\" [disabled]=\"!loginForm.valid\"\n                    color=\"primary\" expand=\"block\" class=\"enter-btn\">\n                    {{ 'landing.button_signin' | translate}}</ion-button>\n       \n                    <ion-button expand=\"block\" color=\"transparent\" class=\"buttonLink\">\n                        {{ 'landing.button_registre' | translate}}\n                    </ion-button>\n                </form>\n            </ion-col>\n        </ion-grid>\n    </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content fullscreen>\n    <div class=\"main-container\">\n        <img style=\"padding-top: 40%;\" src=\"/assets/images/logo.svg\" />\n        <ion-grid>\n            <ion-col>\n                <form [formGroup]=\"loginForm\" (ngSubmit)=\"doDooleAppLogin()\">\n                    <ion-item-divider>\n                        <ion-icon name=\"person\"></ion-icon>\n                        <ion-input type=\"text\" placeholder=\"{{'landing.user_placeholder' | translate }}\" formControlName=\"username\" >\n                        </ion-input>\n                    </ion-item-divider>\n                    <ion-item-divider>\n                        <ion-icon name=\"lock-closed\"></ion-icon>\n                        <app-show-hide-password>\n                            <ion-input type=\"password\" placeholder=\"{{'landing.password_placeholder' | translate }}\" formControlName=\"password\">\n                            </ion-input>\n                        </app-show-hide-password>\n                    </ion-item-divider>\n                    <ion-text (click)=\"passwordRecovery()\">\n                        <a>{{ 'landing.password_recovery' | translate}}</a>\n                    </ion-text>\n                  \n                    <!-- <ion-button type=\"submit\" color=\"primary\" expand=\"block\" class=\"enter-btn\" routerLink=\"legal\">\n                        Iniciar sesión\n                    </ion-button> -->\n\n                    <ion-button type=\"submit\" size=\"medium\" [disabled]=\"!loginForm.valid\"\n                    color=\"primary\" expand=\"block\" class=\"enter-btn\">\n                    {{ 'landing.button_signin' | translate}}</ion-button>\n       \n<!--                     <ion-button expand=\"block\" color=\"transparent\" class=\"buttonLink\">\n                        {{ 'landing.button_registre' | translate}}\n                    </ion-button> -->\n                </form>\n            </ion-col>\n        </ion-grid>\n    </div>\n</ion-content>");
 
 /***/ }),
 
@@ -89,6 +89,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @capacitor/core */ "gcOT");
 /* harmony import */ var src_app_services_language_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/app/services/language.service */ "kyOO");
+/* harmony import */ var src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! src/app/services/doole.service */ "tE2R");
+
 
 
 
@@ -103,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const { Storage } = _capacitor_core__WEBPACK_IMPORTED_MODULE_10__["Plugins"];
 let LandingPage = class LandingPage {
-    constructor(router, route, translate, loadingController, location, authService, alertController, ngZone, languageService) {
+    constructor(router, route, translate, loadingController, location, authService, alertController, ngZone, languageService, dooleService) {
         this.router = router;
         this.route = route;
         this.translate = translate;
@@ -113,14 +115,7 @@ let LandingPage = class LandingPage {
         this.alertController = alertController;
         this.ngZone = ngZone;
         this.languageService = languageService;
-        this.validation_messages = {
-            'username': [
-                { type: 'required', message: 'login.username_val' }
-            ],
-            'password': [
-                { type: 'required', message: 'login.password_val' },
-            ]
-        };
+        this.dooleService = dooleService;
         this.loginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
             username: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([
                 _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required
@@ -131,15 +126,6 @@ let LandingPage = class LandingPage {
         });
     }
     ngOnInit() {
-    }
-    showAlert(message) {
-        this.alertController.create({
-            header: 'Error',
-            message: message,
-            buttons: ['OK']
-        }).then(res => {
-            res.present();
-        });
     }
     dismissLoading() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -205,8 +191,47 @@ let LandingPage = class LandingPage {
             });
         });
     }
-    passwordRecovery() {
+    sendPassword(username) {
         console.log('[LandingPage] passwordRecovery()');
+        this.dooleService.postAPIpasswordRecovery(username).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            //console.log('[InitialPage] passwordRecovery()', await res);
+        }), (err) => {
+            console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message);
+            throw err;
+        });
+    }
+    passwordRecovery() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                cssClass: 'my-alert-class',
+                subHeader: this.translate.instant('landing.header_message_password_recovery'),
+                message: this.translate.instant('landing.message_password_recovery'),
+                inputs: [
+                    {
+                        name: 'username',
+                        type: 'text',
+                        placeholder: this.translate.instant('landing.user'),
+                    }
+                ],
+                buttons: [
+                    {
+                        text: this.translate.instant("alert.button_cancel"),
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            console.log('[LandingPage] AlertConfirm Cancel');
+                        }
+                    }, {
+                        text: this.translate.instant("alert.button_send"),
+                        handler: (data) => {
+                            console.log('[LandingPage] AlertConfirm Okay', data.username);
+                            this.sendPassword(data.username);
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
+        });
     }
 };
 LandingPage.ctorParameters = () => [
@@ -218,7 +243,8 @@ LandingPage.ctorParameters = () => [
     { type: src_app_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["NgZone"] },
-    { type: src_app_services_language_service__WEBPACK_IMPORTED_MODULE_11__["LanguageService"] }
+    { type: src_app_services_language_service__WEBPACK_IMPORTED_MODULE_11__["LanguageService"] },
+    { type: src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_12__["DooleService"] }
 ];
 LandingPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
