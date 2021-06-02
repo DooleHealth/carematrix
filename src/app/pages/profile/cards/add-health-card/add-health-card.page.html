@@ -58,7 +58,7 @@
     </ion-list>
   </ion-card>
 </form>
-<section>
+<section *ngIf="!isAddCard">
   <ion-button class="deleteButton"  expand="block" (click)="deleteHealthCard()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
   </section> 
 </ion-content>
