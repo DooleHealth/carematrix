@@ -202,6 +202,14 @@
         "header_faqs": "Pregunstas Frecuentes",
         "button_perfil": "Perfil"
       },
+      "about_us":{
+        "header": "Nosotros",
+        "button_perfil": "Perfil"
+      },
+      "profile_legal":{
+        "header": "Legal",
+        "button_perfil": "Perfil"
+      },
       "emergency_contact":{
         "header": "Contactos de Emergencia",
         "header_relationship":"Relación",

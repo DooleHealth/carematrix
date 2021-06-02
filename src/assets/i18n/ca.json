@@ -200,7 +200,15 @@
       "faqs":{
         "header_faqs": "Preguntes més freqüents",
         "button_perfil": "Perfil"
-      },      
+      },   
+      "about_us":{
+        "header": "Nosaltres",
+        "button_perfil": "Perfil"
+      },
+      "profile_legal":{
+        "header": "Legal",
+        "button_perfil": "Perfil"
+      },   
       "emergency_contact":{
         "header": "Contactes d'Emergència",
         "header_relationship":"Relació",
