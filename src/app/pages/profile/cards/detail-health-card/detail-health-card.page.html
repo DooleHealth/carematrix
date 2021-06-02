@@ -4,6 +4,10 @@
       <ion-back-button text="Inicio"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'detail_health_card.header_detail_card' | translate}}</ion-title>
+    <ion-buttons slot="end" routerLink="addCard" >
+      <!-- <ion-icon slot="icon-only" name="add" color="primary" routerLink="../addCard" [state]="{card:card}"></ion-icon> -->
+      <ion-button routerLink="../addCard" [state]="{card:card}">{{ 'edit_health_card.button_edit' | translate}}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
@@ -30,7 +34,7 @@
   <ion-card class="cardProfile" *ngIf="this.card !== undefined">
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'health_card.name' | translate}}</ion-label>
+        <ion-label class="txtTitleGoals">{{ 'health_card.name' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.card.name}}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
@@ -52,12 +56,12 @@
     </ion-list>
   </ion-card>
 
-    <section>
+    <!-- <section>
       <ion-button expand="block" routerLink="../addCard" [state]="{card:card}">{{ 'detail_health_card.button_edit_card' | translate}}</ion-button>
     </section>
     <section>
-      <ion-button expand="block" (click)="deleteHealthCard()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
-    </section>
+    <ion-button expand="block" (click)="deleteHealthCard()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
+    </section> -->
 
 
 </ion-content>

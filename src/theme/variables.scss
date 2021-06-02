@@ -9,9 +9,10 @@ $colors: (
   tertiary:    #F39C12,
   grey:  #BDC3C7,
   danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
-);
+  light:      #fff,
+  dark:       #222,
+  );
+
 
 $chat: (
   footer: white,
@@ -98,7 +99,7 @@ $chat-bubble: (
   --ion-color-medium-tint: #9d9fa6;
 
   /** light **/
-  --ion-color-light: #f4f5f8;
+  --ion-color-light: #fff;
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;

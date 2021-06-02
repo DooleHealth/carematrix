@@ -34,7 +34,7 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'health_card.name' | translate}}</ion-label>
+        <ion-label >{{ 'health_card.name' | translate}}</ion-label>
         <ion-input formControlName="name" placeholder="" slot="end" (ionInput)="isSubmitted = false" maxlength="50" required></ion-input>
         <ion-label *ngIf="this.isSubmittedName && this.formHealthCard.get('name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'health_card.error_required' | translate}}</p></ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
@@ -58,4 +58,7 @@
     </ion-list>
   </ion-card>
 </form>
+<section>
+  <ion-button class="deleteButton"  expand="block" (click)="deleteHealthCard()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
+  </section> 
 </ion-content>
