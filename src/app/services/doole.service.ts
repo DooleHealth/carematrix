@@ -511,6 +511,18 @@ export class DooleService {
     );
   }
 
+
+  getAPIaboutUs(){
+    let path = 'user/about_us';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIaboutUs(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

@@ -14,7 +14,8 @@ export class FaqsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getFaqs()
+    this.listFaqs = '<div class="demo"><b>This is my Legal HTML.</b></div>';
+    //this.getFaqs()
   }
 
 

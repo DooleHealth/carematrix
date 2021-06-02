@@ -89,7 +89,8 @@ export class AddHealthCardPage implements OnInit {
           let  isSuccess = res.success 
           if(isSuccess){
             let messagge = this.translate.instant('add_health_card.alert_message_add_card')
-            this.presentAlert(messagge)
+            let header = this.translate.instant('alert.header_info')
+            this.dooleService.showAlertAndReturn(header,messagge,false, '/cards')
           }else{
             console.log('[AddHealthCardPage] addCard() Unsuccessful response', await res);
           }
@@ -111,33 +112,17 @@ export class AddHealthCardPage implements OnInit {
           let  isSuccess = res.success 
           if(isSuccess){
             let messagge = this.translate.instant('edit_health_card.alert_message_edit_card')
-            this.presentAlert(messagge)
+            let header = this.translate.instant('alert.header_info')
+            this.dooleService.showAlertAndReturn(header,messagge,false, '/cards')
           }else{
-            console.log('[InitialPage] editCard() Unsuccessful response', await res);
+            console.log('[AddHealthCardPage] editCard() Unsuccessful response', await res);
           }
          },(err) => { 
-            console.log('[InitialPage] editCard() ERROR(' + err.code + '): ' + err.message); 
+            console.log('[AddHealthCardPage] editCard() ERROR(' + err.code + '): ' + err.message); 
              this.dooleService.presentAlert(err.messagge)
             throw err; 
         });
     }
-  }
-
-  async presentAlert(message) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
-      message: message,
-      buttons: [{
-        text: this.translate.instant("alert.button_ok"),
-        handler: () => {
-          console.log('Confirm Okay');
-          this.router.navigateByUrl('/cards');
-        }
-      }],
-      backdropDismiss: false
-    });
-
-    await alert.present();
   }
 
 
@@ -145,6 +130,59 @@ export class AddHealthCardPage implements OnInit {
     this.isSubmittedName = isSubmitted
     this.isSubmittedAffiliationNumber = isSubmitted;
     this.isSubmittedModality = isSubmitted;
+  }
+
+  deleteHealthCard(){
+    console.log('[AddHealthCardPage] deleteHealthCard()');
+    if(this.card === undefined || this.card === null ) return
+    this.presentAlertConfirm()
+  }
+
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      header: this.translate.instant(this.card.name),
+      message: this.translate.instant("detail_health_card.confirmation_delete_card"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('[AddHealthCardPage] AlertConfirm Cancel');
+          }
+        }, {
+          text: this.translate.instant("alert.button_ok"),
+          handler: () => {
+            console.log('[AddHealthCardPage] AlertConfirm Okay');
+            this.serviceDeleteHealthCard();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  serviceDeleteHealthCard(){
+    this.dooleService.deleteAPIhealthCard( this.card).subscribe(
+      async (res: any) =>{
+        console.log('[DetailHealthCardPage] serviceDeleteHealthCard()', await res);
+        let  isSuccess = res.success 
+        if(isSuccess){
+          let messagge = this.translate.instant('detail_health_card.alert_message_delete_card')
+          let header = this.translate.instant('alert.header_info')
+           this.dooleService.showAlertAndReturn(header, messagge, false, '/cards' )
+          
+        }else{
+          console.log('[DetailHealthCardPage] serviceDeleteHealthCard() Unsuccessful response', await res);
+        }
+       },(err) => { 
+          console.log('[DetailHealthCardPage] serviceDeleteHealthCard() ERROR(' + err.code + '): ' + err.message); 
+           this.dooleService.presentAlert(err.messagge)
+          throw err; 
+      });
   }
 
 
