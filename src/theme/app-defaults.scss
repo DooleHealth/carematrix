@@ -31,15 +31,6 @@ ion-item-divider {
     margin-bottom: 5%;
   }
 
-  .buttonLink{
-    color: #3498DB;
-    --box-shadow:none; 
-  }
-  .buttonClose{
-    color: red;
-    --box-shadow:none; 
-  }
-
   .toolbarTitle{
 text-align: center;
   }
@@ -56,6 +47,8 @@ text-align: center;
   font-size: 14px;
   font-weight: 400;
 }
+
+/*Custom Text*/
 
 .txtTitle{
   font-size: 18px;
@@ -97,4 +90,20 @@ padding-left: 5%;
 .textMediumGreen {
   text-align: right;
   color: #27AE60;
+}
+
+
+/*Custom Buttons*/
+
+.deleteButton{
+  color: red !important;
+  --background: #ffffff;
+}
+.buttonLink{
+  color: #3498DB;
+  --box-shadow:none; 
+}
+.buttonClose{
+  color: red;
+  --box-shadow:none; 
 }

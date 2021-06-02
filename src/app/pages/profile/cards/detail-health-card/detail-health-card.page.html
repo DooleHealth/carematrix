@@ -34,7 +34,7 @@
   <ion-card class="cardProfile" *ngIf="this.card !== undefined">
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'health_card.name' | translate}}</ion-label>
+        <ion-label class="txtTitleGoals">{{ 'health_card.name' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.card.name}}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
