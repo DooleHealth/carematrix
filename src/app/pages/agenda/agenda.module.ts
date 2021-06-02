@@ -8,11 +8,10 @@ import { AgendaPageRoutingModule } from './agenda-routing.module';
 
 import { AgendaPage } from './agenda.page';
 
-import { NgCalendarModule  } from 'ionic2-calendar';
- 
+//import { NgCalendarModule  } from 'ionic2-calendar';
+import { CalModalPageModule } from './cal-modal/cal-modal.module';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import { CalModalPageModule } from './cal-modal/cal-modal.module';
 registerLocaleData(localeDe);
 
 @NgModule({
@@ -21,12 +20,12 @@ registerLocaleData(localeDe);
     FormsModule,
     IonicModule,
     AgendaPageRoutingModule,
-    NgCalendarModule,
+   // NgCalendarModule,
     CalModalPageModule
   ],
   declarations: [AgendaPage],
   providers: [
-    { provide: LOCALE_ID, useValue: 'de-DE' }
+    { provide: LOCALE_ID, useValue: 'ca-ES' }
   ]
 })
 export class AgendaPageModule {}

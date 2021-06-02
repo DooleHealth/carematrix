@@ -1,4 +1,4 @@
-import { CalendarComponent } from 'ionic2-calendar/calendar';
+//import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
@@ -20,7 +20,7 @@ export class AgendaPage implements OnInit {
  
   selectedDate: Date;
  
-  @ViewChild(CalendarComponent) myCal: CalendarComponent;
+  //@ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
     private alertCtrl: AlertController,
@@ -32,20 +32,20 @@ export class AgendaPage implements OnInit {
   }
 
   // Change current month/week/day
-  next() {
+ /*  next() {
     this.myCal.slideNext();
   }
   
   back() {
     this.myCal.slidePrev();
-  }
+  } */
   
   // Selected date reange and hence title changed
   onViewTitleChanged(title) {
     this.viewTitle = title;
   }
 
-
+/* 
   // Calendar event was clicked
   async onEventSelected(event) {
     // Use Angular date pipe for conversion
@@ -59,9 +59,9 @@ export class AgendaPage implements OnInit {
       buttons: ['OK'],
     });
     alert.present();
-  }
+  } */
 
-  createRandomEvents() {
+/*   createRandomEvents() {
     var events = [];
     for (var i = 0; i < 50; i += 1) {
       var date = new Date();
@@ -120,13 +120,13 @@ export class AgendaPage implements OnInit {
       }
     }
     this.eventSource = events;
-  }
+  } */
 
-  removeEvents() {
+ /*  removeEvents() {
     this.eventSource = [];
-  }
+  } */
 
-
+/* 
   async openCalModal() {
     const modal = await this.modalCtrl.create({
       component: CalModalPage,
@@ -160,6 +160,6 @@ export class AgendaPage implements OnInit {
         this.myCal.loadEvents();
       }
     });
-  }
+  } */
 
 }

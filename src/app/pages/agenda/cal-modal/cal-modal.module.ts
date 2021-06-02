@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CalModalPageRoutingModule } from './cal-modal-routing.module';
 
 import { CalModalPage } from './cal-modal.page';
-import { NgCalendarModule  } from 'ionic2-calendar';
+/* import { NgCalendarModule  } from 'ionic2-calendar'; */
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { NgCalendarModule  } from 'ionic2-calendar';
     FormsModule,
     IonicModule,
     CalModalPageRoutingModule,
-    NgCalendarModule
+ /*    NgCalendarModule */
   ],
   declarations: [CalModalPage]
 })
