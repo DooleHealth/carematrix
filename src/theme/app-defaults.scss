@@ -79,6 +79,11 @@ text-align: center;
   font-size: 12px;
   font-weight: 400;
 }
+.txtTitleTrackingLittle{
+  font-size: 12px;
+  font-weight: 400;
+  color: #7f8c8d;
+}
 .txtPaddingLeft{
 padding-left: 5%;
 }
@@ -96,7 +101,16 @@ padding-left: 5%;
   text-align: right;
   color: #27AE60;
 }
-
+.textMediumGreen {
+  text-align: right;
+  color: #27AE60;
+}
+.textBlue {
+  color: #3498DB;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+}
 
 /*Custom Buttons*/
 

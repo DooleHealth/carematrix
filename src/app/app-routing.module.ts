@@ -71,6 +71,10 @@ const routes: Routes = [
   {
     path: 'cards',
     loadChildren: () => import('./pages/profile/cards/cards.module').then( m => m.CardsPageModule)
+  },
+  {
+    path: 'tracking',
+    loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
   }
 
 ];
