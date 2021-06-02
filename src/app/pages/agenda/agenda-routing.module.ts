@@ -9,13 +9,9 @@ const routes: Routes = [
     component: AgendaPage
   },
   {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then( m => m.ListPageModule)
+    path: 'cal-modal',
+    loadChildren: () => import('./cal-modal/cal-modal.module').then( m => m.CalModalPageModule)
   }
-/*   {
-    path: 'list',
-    loadChildren: () => import('./pages/home/agenda/list/list.module').then( m => m.ListPageModule)
-  } */
 ];
 
 @NgModule({

@@ -71,7 +71,11 @@ const routes: Routes = [
   {
     path: 'cards',
     loadChildren: () => import('./pages/profile/cards/cards.module').then( m => m.CardsPageModule)
-  }
+  },
+  {
+    path: 'agenda',
+    loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
+  },
 
 ];
 @NgModule({
