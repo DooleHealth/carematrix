@@ -36,10 +36,10 @@ let GoalsPage = class GoalsPage {
     }
     getGoalImformation() {
         this.dooleService.getAPIgoals().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log('[GoalsPage] getAll()', yield res);
+            console.log('[GoalsPage] getGoalImformation()', yield res);
             this.listGoal = res.goals;
         }), (err) => {
-            console.log('getAll ERROR(' + err.code + '): ' + err.message);
+            console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message);
             throw err;
         });
     }

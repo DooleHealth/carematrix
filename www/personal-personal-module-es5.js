@@ -80,11 +80,11 @@
         _createClass(PersonalPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            this.getDataProfile();
+            this.getPersonalInformation();
           }
         }, {
-          key: "getDataProfile",
-          value: function getDataProfile() {
+          key: "getPersonalInformation",
+          value: function getPersonalInformation() {
             var _this = this;
 
             this.dooleService.getAPIuserProfile().subscribe(function (res) {
@@ -101,7 +101,7 @@
                       case 4:
                         _context.t1 = _context.sent;
 
-                        _context.t0.log.call(_context.t0, '[InitialPage] getDataProfile()', _context.t1);
+                        _context.t0.log.call(_context.t0, '[PersonalPage] getPersonalInformation()', _context.t1);
 
                       case 6:
                       case "end":
@@ -111,14 +111,9 @@
                 }, _callee, this);
               }));
             }, function (err) {
-              console.log('getDataProfile() ERROR(' + err.code + '): ' + err.message);
+              console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
               throw err;
             });
-          }
-        }, {
-          key: "goBack",
-          value: function goBack() {
-            this.router.navigateByUrl('/profile');
           }
         }]);
 

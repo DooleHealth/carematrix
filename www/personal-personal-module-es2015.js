@@ -31,19 +31,16 @@ let PersonalPage = class PersonalPage {
         this.translate = translate;
     }
     ngOnInit() {
-        this.getDataProfile();
+        this.getPersonalInformation();
     }
-    getDataProfile() {
+    getPersonalInformation() {
         this.dooleService.getAPIuserProfile().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.userProfile = res;
-            console.log('[InitialPage] getDataProfile()', yield this.userProfile);
+            console.log('[PersonalPage] getPersonalInformation()', yield this.userProfile);
         }), (err) => {
-            console.log('getDataProfile() ERROR(' + err.code + '): ' + err.message);
+            console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
             throw err;
         });
-    }
-    goBack() {
-        this.router.navigateByUrl('/profile');
     }
 };
 PersonalPage.ctorParameters = () => [

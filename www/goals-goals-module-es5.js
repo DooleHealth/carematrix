@@ -101,7 +101,7 @@
                       case 3:
                         _context.t1 = _context.sent;
 
-                        _context.t0.log.call(_context.t0, '[GoalsPage] getAll()', _context.t1);
+                        _context.t0.log.call(_context.t0, '[GoalsPage] getGoalImformation()', _context.t1);
 
                         this.listGoal = res.goals;
 
@@ -113,7 +113,7 @@
                 }, _callee, this);
               }));
             }, function (err) {
-              console.log('getAll ERROR(' + err.code + '): ' + err.message);
+              console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message);
               throw err;
             });
           }

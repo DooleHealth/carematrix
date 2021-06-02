@@ -55,15 +55,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_settings_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./settings.page.html */ "yqnf");
 /* harmony import */ var _settings_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settings.page.scss */ "J5bP");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "sYmb");
+/* harmony import */ var src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/doole.service */ "tE2R");
 
 
 
 
 
 let SettingsPage = class SettingsPage {
-    constructor(translate) {
-        this.translate = translate;
+    constructor(dooleService) {
+        this.dooleService = dooleService;
         this.authentication = true;
         this.faceId = true;
         this.communications = true;
@@ -80,40 +80,110 @@ let SettingsPage = class SettingsPage {
     }
     changeAuthentication() {
         console.log(`[SettingsPage] changeAuthentication(${this.authentication})`);
+        let params = {
+            name: 'authentication',
+            value: this.authentication
+        };
+        this.sendConfigution(params);
     }
     changeFaceId() {
         console.log(`[SettingsPage] changeFaceId(${this.faceId})`);
+        let params = {
+            name: 'faceId',
+            value: this.faceId
+        };
+        this.sendConfigution(params);
     }
     changeCommunications() {
         console.log(`[SettingsPage] changeCommunications(${this.communications})`);
+        let params = {
+            name: 'communications',
+            value: this.communications
+        };
+        this.sendConfigution(params);
     }
     changeAppointment() {
         console.log(`[SettingsPage] changeAppointment(${this.appointment})`);
+        let params = {
+            name: 'appointment',
+            value: this.appointment
+        };
+        this.sendConfigution(params);
     }
     changeDiets() {
         console.log(`[SettingsPage] changeDiets(${this.diets})`);
+        let params = {
+            name: 'diets',
+            value: this.diets
+        };
+        this.sendConfigution(params);
     }
     changeMedication() {
         console.log(`[SettingsPage] changeMedication(${this.medication})`);
+        let params = {
+            name: 'medication',
+            value: this.medication
+        };
+        //let params2 = {drugIntakeNotificationMail: 1}
+        this.sendConfigution(params);
     }
     changeAdvices() {
         console.log(`[SettingsPage] changeAdvices(${this.advices})`);
+        let params = {
+            name: 'advices',
+            value: this.advices
+        };
+        this.sendConfigution(params);
     }
     changeOffers() {
         console.log(`[SettingsPage] changeOffers(${this.offers})`);
+        let params = {
+            name: 'offers',
+            value: this.offers
+        };
+        this.sendConfigution(params);
     }
     changeGoals() {
         console.log(`[SettingsPage] changeGoals(${this.goals})`);
+        let params = {
+            name: 'goals',
+            value: this.goals
+        };
+        this.sendConfigution(params);
     }
     changeForm() {
         console.log(`[SettingsPage] changeForm(${this.form})`);
+        let params = {
+            name: 'form',
+            value: this.form
+        };
+        this.sendConfigution(params);
     }
     changeMessages() {
         console.log(`[SettingsPage] changeMessages(${this.messages})`);
+        let params = {
+            name: 'messages',
+            value: this.messages
+        };
+        this.sendConfigution(params);
+    }
+    sendConfigution(params) {
+        this.dooleService.postAPIConfiguration(params).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            console.log('[SettingsPage] sendConfigution()', yield res);
+            if (res.success) {
+                console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
+            }
+            else {
+                console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
+            }
+        }), (err) => {
+            console.log('p[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message);
+            throw err;
+        });
     }
 };
 SettingsPage.ctorParameters = () => [
-    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"] }
+    { type: src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_4__["DooleService"] }
 ];
 SettingsPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

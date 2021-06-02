@@ -143,7 +143,7 @@ let SmsPage = class SmsPage {
                 console.log('[LegalPage] sendTelephone() Unsuccessful response', yield res);
             }
         }), (err) => {
-            console.log('getAll ERROR(' + err.code + '): ' + err.message);
+            console.log('[LegalPage] sendTelephone() ERROR(' + err.code + '): ' + err.message);
             throw err;
         });
     }

@@ -28,7 +28,6 @@ let InitialPage = class InitialPage {
     constructor(router, dooleService) {
         this.router = router;
         this.dooleService = dooleService;
-        this.PATH_USERDATA = '/user/informationUser';
         this.dietInfo = {};
         this.drugInfo = {};
         this.playInfo = {};
@@ -57,7 +56,6 @@ let InitialPage = class InitialPage {
         if (this.userDoole.image !== null && this.userDoole.image !== undefined
             && this.userDoole.image !== '')
             this.userImage = this.userDoole.image;
-        this.username = this.userDoole.username;
     }
     getUserInformation() {
         this.dooleService.getAPIinformationUser().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -292,7 +290,7 @@ InitialPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n\n<ion-content>\n<ion-grid>\n  <ion-row>\n    <ion-col size=\"10\" style=\"text-align: left;\">\n      <h3>Hola, {{this.username}}</h3>\n    </ion-col>\n    <ion-col size=\"2\">\n   \n  <ion-img class=\"imgProfile\" [src]=\"this.userImage\" routerLink=\"/profile\"></ion-img>\n    </ion-col>\n  </ion-row>\n  \n</ion-grid>\n\n  <app-slider-vertical  [information]= 'this.goalInfo'></app-slider-vertical>  \n  <app-slider-horizontal [information]= 'this.appointment' slidesType=\"2\"></app-slider-horizontal>\n  <app-slider-horizontal [information]= 'this.advicesInfo' slidesType=\"1\"></app-slider-horizontal>\n  <app-slider-vertical  [information]= 'this.dietInfo'></app-slider-vertical>\n  <app-slider-vertical [information]= 'this.drugInfo'></app-slider-vertical>\n  <app-slider-vertical [information]= 'this.playInfo'></app-slider-vertical>\n  <app-slider-vertical [information]= 'this.activityInfo'></app-slider-vertical>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n\n<ion-content>\n<ion-grid>\n  <ion-row>\n    <ion-col size=\"10\" style=\"text-align: left;\">\n      <h3 *ngIf=\"this.userDoole as User\">Hola, {{this.userDoole.first_name}} {{ this.userDoole.last_name}}</h3>\n    </ion-col>\n    <ion-col size=\"2\">\n   \n  <ion-img class=\"imgProfile\" [src]=\"this.userImage\" routerLink=\"/profile\" [state]=\"{user:this.userDoole}\"></ion-img>\n    </ion-col>\n  </ion-row>\n  \n</ion-grid>\n\n  <app-slider-vertical  [information]= 'this.goalInfo'></app-slider-vertical>  \n  <app-slider-horizontal [information]= 'this.appointment' slidesType=\"2\"></app-slider-horizontal>\n  <app-slider-horizontal [information]= 'this.advicesInfo' slidesType=\"1\"></app-slider-horizontal>\n  <app-slider-vertical  [information]= 'this.dietInfo'></app-slider-vertical>\n  <app-slider-vertical [information]= 'this.drugInfo'></app-slider-vertical>\n  <app-slider-vertical [information]= 'this.playInfo'></app-slider-vertical>\n  <app-slider-vertical [information]= 'this.activityInfo'></app-slider-vertical>\n</ion-content>\n");
 
 /***/ }),
 

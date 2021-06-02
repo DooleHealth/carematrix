@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'detail_contact.header' | translate}}</ion-title>
+<!--     <ion-buttons slot="end" routerLink="addCard" >
+    <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+  </ion-buttons>  -->
+  <ion-button slot="end" fill="clear" routerLink="../edit-contact" [state]="{contact:contact}">
+    {{ 'detail_contact.button_edit' | translate}}</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngIf="this.userImage!== undefined">
+        <ion-img [src]="this.userImage" class="img-wrapper"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf='this.contact !== undefined'>
+        <h3 style="text-align: center;"> {{this.contact.name}}</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item>
+        <ion-label>{{ 'detail_contact.telephone' | translate}}</ion-label>
+        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.telephone}}</ion-label>
+        <ion-button slot="end" fill="clear" size="small" [href]="ref_telephone">
+          <ion-icon slot="end" name="call-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{ 'detail_contact.family_relationship' | translate}}</ion-label>
+        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.family_relationship}}</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Perfil" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'emergency_contact.header' | translate}}</ion-title>
+    <ion-buttons slot="end" routerLink="list-my-contacts" >
+    <ion-icon slot="icon-only" name="add" color="primary" ></ion-icon>
+  </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let contact of this.listContact">
+    <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}">
+      <ion-card-content>
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="contact.thumbnail">
+      </ion-avatar>
+      <ion-label >
+        <h3>{{contact.name}}</h3>
+        <ion-item lines="none">
+          <ion-text><p>{{contact.family_relationship}}</p></ion-text>
+          <ion-text slot="end"><p>{{contact.telephone}}</p></ion-text>
+        </ion-item>
+      </ion-label>
+    </ion-item>
+  </ion-card-content>
+  </ion-card>
+  </ion-list>
+</ion-content>

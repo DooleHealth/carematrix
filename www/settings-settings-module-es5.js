@@ -123,15 +123,15 @@
       /* harmony import */
 
 
-      var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! @ngx-translate/core */
-      "sYmb");
+      var src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/doole.service */
+      "tE2R");
 
       var SettingsPage = /*#__PURE__*/function () {
-        function SettingsPage(translate) {
+        function SettingsPage(dooleService) {
           _classCallCheck(this, SettingsPage);
 
-          this.translate = translate;
+          this.dooleService = dooleService;
           this.authentication = true;
           this.faceId = true;
           this.communications = true;
@@ -152,56 +152,150 @@
           key: "changeAuthentication",
           value: function changeAuthentication() {
             console.log("[SettingsPage] changeAuthentication(".concat(this.authentication, ")"));
+            var params = {
+              name: 'authentication',
+              value: this.authentication
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeFaceId",
           value: function changeFaceId() {
             console.log("[SettingsPage] changeFaceId(".concat(this.faceId, ")"));
+            var params = {
+              name: 'faceId',
+              value: this.faceId
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeCommunications",
           value: function changeCommunications() {
             console.log("[SettingsPage] changeCommunications(".concat(this.communications, ")"));
+            var params = {
+              name: 'communications',
+              value: this.communications
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeAppointment",
           value: function changeAppointment() {
             console.log("[SettingsPage] changeAppointment(".concat(this.appointment, ")"));
+            var params = {
+              name: 'appointment',
+              value: this.appointment
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeDiets",
           value: function changeDiets() {
             console.log("[SettingsPage] changeDiets(".concat(this.diets, ")"));
+            var params = {
+              name: 'diets',
+              value: this.diets
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeMedication",
           value: function changeMedication() {
             console.log("[SettingsPage] changeMedication(".concat(this.medication, ")"));
+            var params = {
+              name: 'medication',
+              value: this.medication
+            }; //let params2 = {drugIntakeNotificationMail: 1}
+
+            this.sendConfigution(params);
           }
         }, {
           key: "changeAdvices",
           value: function changeAdvices() {
             console.log("[SettingsPage] changeAdvices(".concat(this.advices, ")"));
+            var params = {
+              name: 'advices',
+              value: this.advices
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeOffers",
           value: function changeOffers() {
             console.log("[SettingsPage] changeOffers(".concat(this.offers, ")"));
+            var params = {
+              name: 'offers',
+              value: this.offers
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeGoals",
           value: function changeGoals() {
             console.log("[SettingsPage] changeGoals(".concat(this.goals, ")"));
+            var params = {
+              name: 'goals',
+              value: this.goals
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeForm",
           value: function changeForm() {
             console.log("[SettingsPage] changeForm(".concat(this.form, ")"));
+            var params = {
+              name: 'form',
+              value: this.form
+            };
+            this.sendConfigution(params);
           }
         }, {
           key: "changeMessages",
           value: function changeMessages() {
             console.log("[SettingsPage] changeMessages(".concat(this.messages, ")"));
+            var params = {
+              name: 'messages',
+              value: this.messages
+            };
+            this.sendConfigution(params);
+          }
+        }, {
+          key: "sendConfigution",
+          value: function sendConfigution(params) {
+            var _this = this;
+
+            this.dooleService.postAPIConfiguration(params).subscribe(function (res) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        _context.t0 = console;
+                        _context.next = 3;
+                        return res;
+
+                      case 3:
+                        _context.t1 = _context.sent;
+
+                        _context.t0.log.call(_context.t0, '[SettingsPage] sendConfigution()', _context.t1);
+
+                        if (res.success) {
+                          console.log("[SettingsPage] sendConfigution(success: ".concat(res.success, ")"));
+                        } else {
+                          console.log("[SettingsPage] sendConfigution(success: ".concat(res.success, ")"));
+                        }
+
+                      case 6:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+            }, function (err) {
+              console.log('p[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message);
+              throw err;
+            });
           }
         }]);
 
@@ -210,7 +304,7 @@
 
       SettingsPage.ctorParameters = function () {
         return [{
-          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]
+          type: src_app_services_doole_service__WEBPACK_IMPORTED_MODULE_4__["DooleService"]
         }];
       };
 

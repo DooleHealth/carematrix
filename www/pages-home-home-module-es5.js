@@ -200,11 +200,11 @@
           path: 'journal',
           loadChildren: function loadChildren() {
             return __webpack_require__.e(
-            /*! import() | mydiary-mydiary-module */
-            "mydiary-mydiary-module").then(__webpack_require__.bind(null,
-            /*! ./mydiary/mydiary.module */
-            "yNZ6")).then(function (m) {
-              return m.MydiaryPageModule;
+            /*! import() | journal-journal-module */
+            "journal-journal-module").then(__webpack_require__.bind(null,
+            /*! ./journal/journal.module */
+            "q8aZ")).then(function (m) {
+              return m.JournalPageModule;
             });
           }
         }, {
@@ -212,6 +212,10 @@
           redirectTo: 'home/initial',
           pathMatch: 'full'
         }]
+      }, {
+        path: 'home',
+        redirectTo: 'home/initial',
+        pathMatch: 'full'
       }];
 
       var HomePageRoutingModule = function HomePageRoutingModule() {
@@ -241,7 +245,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-tabs>\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"initial\">\n      <ion-icon name=\"home\"></ion-icon>\n      <ion-label>Inicio</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"agenda\">\n      <ion-icon name=\"calendar\"></ion-icon>\n      <ion-label>Agenda</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"contact\">\n      <ion-icon name=\"chatbubble\"></ion-icon>\n      <ion-label>Contacto</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"follow\">\n      <ion-icon name=\"search\"></ion-icon>\n      <ion-label>Seguimiento</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"mydiary\">\n      <ion-icon name=\"heart\"></ion-icon>\n      <ion-label>Mi diario</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n</ion-tabs>\n";
+      __webpack_exports__["default"] = "<ion-tabs>\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"initial\">\n      <ion-icon name=\"home\"></ion-icon>\n      <ion-label>Inicio</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"agenda\">\n      <ion-icon name=\"calendar\"></ion-icon>\n      <ion-label>Agenda</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"contact\">\n      <ion-icon name=\"chatbubble\"></ion-icon>\n      <ion-label>Contacto</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"follow\">\n      <ion-icon name=\"search\"></ion-icon>\n      <ion-label>Seguimiento</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"journal\">\n      <ion-icon name=\"heart\"></ion-icon>\n      <ion-label>Mi diario</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n</ion-tabs>\n";
       /***/
     },
 

@@ -71,6 +71,10 @@ const routes = [
     {
         path: 'addCard',
         loadChildren: () => __webpack_require__.e(/*! import() | add-health-card-add-health-card-module */ "add-health-card-add-health-card-module").then(__webpack_require__.bind(null, /*! ./add-health-card/add-health-card.module */ "tryS")).then(m => m.AddHealthCardPageModule)
+    },
+    {
+        path: 'detailCard',
+        loadChildren: () => __webpack_require__.e(/*! import() | detail-health-card-detail-health-card-module */ "detail-health-card-detail-health-card-module").then(__webpack_require__.bind(null, /*! ./detail-health-card/detail-health-card.module */ "+4VH")).then(m => m.DetailHealthCardPageModule)
     }
 ];
 let CardsPageRoutingModule = class CardsPageRoutingModule {
@@ -95,7 +99,7 @@ CardsPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Perfil\" ></ion-back-button>\n    </ion-buttons>\n    <ion-title>Tarjetas sanitarias</ion-title>\n    <ion-buttons slot=\"end\" routerLink=\"addCard\" >\n    <ion-icon slot=\"icon-only\" name=\"add\" color=\"primary\"></ion-icon>\n  </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content *ngIf=\"listCard !== undefined\">\n  <ion-list *ngFor=\"let card of listCard\">\n    <ion-card class=\"cardProfile\" (click)=getDetailCard(card)>\n      <ion-card-content>\n        <ion-item lines=\"none\">\n            <img src=\"assets/images/tarjeta.png\">\n          <ion-label class=\"txtPaddingLeft\" >\n            <h3>{{ card.name}}</h3>\n            <div>\n              <p>{{ card.affiliation_number}}</p>\n              <p *ngIf=\"card.expiration_date !== null && card.expiration_date !== undefined\"> \n                {{ card.expiration_date | date: 'MM/yyyy'}}</p>\n            </div>\n            \n          </ion-label>\n        </ion-item>\n    </ion-card-content>\n  </ion-card>\n  </ion-list>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Perfil\" ></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{ 'health_card.header_card' | translate}}</ion-title>\n    <ion-buttons slot=\"end\" routerLink=\"addCard\" >\n    <ion-icon slot=\"icon-only\" name=\"add\" color=\"primary\"></ion-icon>\n  </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content *ngIf=\"listCard !== undefined\">\n  <ion-list *ngFor=\"let card of listCard\">\n    <ion-card class=\"cardProfile\" routerLink=\"detailCard\" [state]=\"{card:card}\">\n      <ion-card-content>\n        <ion-item lines=\"none\">\n            <img src=\"assets/images/tarjeta.png\">\n          <ion-label class=\"txtPaddingLeft\" >\n            <h3>{{ card.name}}</h3>\n            <div>\n              <p>{{ card.affiliation_number}}</p>\n              <p *ngIf=\"card.expiration_date !== null && card.expiration_date !== undefined\"> \n                {{ card.expiration_date | date: 'MM/yyyy'}}</p>\n            </div>\n            \n          </ion-label>\n        </ion-item>\n    </ion-card-content>\n  </ion-card>\n  </ion-list>\n</ion-content>\n");
 
 /***/ }),
 
@@ -138,15 +142,17 @@ let CardsPage = class CardsPage {
     }
     getHealthCards() {
         this.dooleService.getAPIhealthCards().subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log('[GoalsPage] getHealthCards()', yield res);
+            console.log('[CardsPage] getHealthCards()', yield res);
             this.listCard = res;
         }), (err) => {
-            console.log('[GoalsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message);
+            console.log('[CardsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message);
             throw err;
         });
     }
     getDetailCard(card) {
-        console.log('[GoalsPage] getDetailCard()', card.name);
+        console.log('[CardsPage] getDetailCard()', card.name);
+        //this.router.navigateByUrl('cards/detailCard')
+        this.router.navigate(['cards/detailCard', { id: card.id }]);
     }
 };
 CardsPage.ctorParameters = () => [
