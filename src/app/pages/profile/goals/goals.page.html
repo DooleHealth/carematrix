@@ -27,12 +27,12 @@
       <ion-card-content>
         <div class="txtTitleGoals2">{{'goals.achieve' | translate}} {{goal.typeString}} {{goal.element.element_unit.abbreviation}}</div>
         <div class="txtTitleGoalsLittle">
-          <div *ngIf="(goal.from_date != null || goal.to_date != null); else objetive">
-            <div *ngIf='goal.from_date != null'>{{'goals.start' | translate}}: {{goal.from_date | date: 'dd/MM/yyyy'}}</div>
-            <div *ngIf='goal.to_date != null'>{{'goals.end' | translate}}: {{goal.to_date | date: 'dd/MM/yyyy'}}</div>
-          </div>
+          <ion-row><ion-col size="12" *ngIf="(goal.from_date != null || goal.to_date != null); else objetive"></ion-col></ion-row>
+            <ion-row>
+              <ion-col size="6" style="margin-left: -1.5%;" *ngIf='goal.from_date != null'>{{'goals.start' | translate}}: {{goal.from_date | date: 'dd/MM/yyyy'}}</ion-col>
+              <ion-col size="6" style="margin-left: -1.5%;" *ngIf='goal.to_date != null'>{{'goals.end' | translate}}: {{goal.to_date | date: 'dd/MM/yyyy'}}</ion-col>
+            </ion-row>
           <ng-template #objetive>{{'goals.goals' | translate}}: {{goal.frequencyString}}</ng-template>
-          
         </div>
       </ion-card-content>
     </ion-card>

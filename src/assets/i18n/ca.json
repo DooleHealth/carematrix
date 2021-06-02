@@ -159,7 +159,9 @@
         "subtitle_description": "Descripció",
         "subtitle_screenshot": "Captura de pantall",
         "description_screenshot": "Pots adjuntar captures de pantalla per ajudar-nos a solucionar el teu problema",
-        "button_add_file": "Afegir arxius"
+        "button_add_file": "Afegir arxius",
+        "placeholder":"Pots adjuntar captures de pantalla per a ajudar-nos a solucionar el teu problema",
+        "placeholderDescription":"Explica'ns aquí com ha estat el teu problema"
       },
       "health_card":{
         "header_card": "Els teus Targeta Sanitària",
