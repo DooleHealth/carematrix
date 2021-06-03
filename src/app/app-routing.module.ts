@@ -83,6 +83,10 @@ const routes: Routes = [
   {
     path: 'documents-filter',
     loadChildren: () => import('./pages/tracking/documents-filter/documents-filter.module').then( m => m.DocumentsFilterPageModule)
+  },
+  {
+    path: 'documents-add',
+    loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
   }
 
 ];
