@@ -47,10 +47,11 @@
       </ion-list>
 </ion-card>
     <ion-text class="txtTitle">Detalle</ion-text>
-    <ion-card class="cardProfile">
+    <!-- <ion-card class="cardProfile">
       <ion-item lines="none">
-        <ion-label>Categoría</ion-label>
+        <ion-label>Categoríaaaa</ion-label>
         <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+     
       </ion-item>
     </ion-card>
     <ion-card class="cardProfile">
@@ -70,5 +71,35 @@
         <ion-label>Categoría</ion-label>
         <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
       </ion-item>
+    </ion-card> -->
+
+    <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile">
+      <ion-item lines="none">
+        <ion-label>Categoría</ion-label>
+        <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-card-content>
+        
+        <app-expandable expandHeight="100px" [expanded]="item.expanded">
+          <p>
+            Resultados de la analítica
+          </p>
+          <p>
+            Resultados de la analítica
+          </p>
+          <p>
+            Resultados de la analítica
+          </p>
+          <p>
+            Resultados de la analítica
+          </p>
+          <p>
+            Resultados de la analítica
+          </p>
+          <p>
+            Resultados de la analítica
+          </p>
+        </app-expandable>
+      </ion-card-content>
     </ion-card>
 </ion-content>

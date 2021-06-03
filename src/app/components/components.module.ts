@@ -20,6 +20,7 @@ import { RouterModule} from "@angular/router";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SliderVerticalComponent } from './slider-vertical/slider-vertical.component';
 import { SliderHorizontalComponent } from './slider-horizontal/slider-horizontal.component';
+import { ExpandableComponent } from './expandable/expandable.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { SliderHorizontalComponent } from './slider-horizontal/slider-horizontal
     CustomHeaderComponent,
     PageHeaderComponent,
     FileUploadComponent,
+    ExpandableComponent,
 
     SliderVerticalComponent,
     SliderHorizontalComponent
@@ -60,6 +62,7 @@ import { SliderHorizontalComponent } from './slider-horizontal/slider-horizontal
     CustomHeaderComponent,
     PageHeaderComponent,
     FileUploadComponent,
+    ExpandableComponent,
 
     SliderVerticalComponent,
     SliderHorizontalComponent
