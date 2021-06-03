@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./documents-filter.page.scss'],
 })
 export class DocumentsFilterPage implements OnInit {
-
+// toggle = Boolean(true)
   constructor() { }
 
   ngOnInit() {

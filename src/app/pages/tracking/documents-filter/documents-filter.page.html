@@ -4,31 +4,60 @@
       <ion-back-button text="Cancelar"></ion-back-button>
     </ion-buttons>
     <ion-title>Filtro</ion-title>
-    <ion-buttons slot="end" >
-    <ion-button color="primary">Aplicar</ion-button>
-  </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="primary">Aplicar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-searchbar></ion-searchbar>
-  <ion-card class="cardProfile">
+  <ion-item lines="none">
+    <ion-text class="txtTitleNoMargin">Fecha</ion-text>
+    <ion-toggle slot="end" color="success" (ionChange)='(toggle = ! toggle) ? toggle : !toggle;'></ion-toggle>
+  </ion-item>
+  <ion-card class="cardProfile" *ngIf="toggle">
     <ion-list>
-      <ion-item lines="none">
+      <ion-item>
         <ion-label>Desde</ion-label>
+        <ion-select placeholder="Selecciona uno">
+          <ion-select-option>dia</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Hasta</ion-label>
         <ion-select placeholder="Selecciona uno">
           <ion-select-option>dia</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
   </ion-card>
-  <ion-card class="cardProfile">
+
+  <ion-item lines="none">
+    <ion-text class="txtTitleNoMargin">Tipo de prueba</ion-text>
+    <ion-toggle slot="end" color="success" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2;'></ion-toggle>
+  </ion-item>
+  <ion-card class="cardProfile" *ngIf="toggle2">
     <ion-list>
-      <ion-item lines="none">
-        <ion-label>Hasta</ion-label>
-        <ion-select placeholder="Selecciona uno">
-          <ion-select-option>dia</ion-select-option>
-        </ion-select>
+      <ion-item>
+        <ion-label>texto</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>texto</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>texto</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>texto</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>texto</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
       </ion-item>
     </ion-list>
   </ion-card>
