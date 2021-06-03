@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'documents-filter',
     loadChildren: () => import('./documents-filter/documents-filter.module').then( m => m.DocumentsFilterPageModule)
+  },
+  {
+    path: 'documents-add',
+    loadChildren: () => import('./documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
   }
 ];
 
