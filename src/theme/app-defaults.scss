@@ -35,7 +35,11 @@ ion-item-divider {
     margin-top:10%;
     margin-bottom: 5%;
   }
-
+  .main-container2 {
+  padding-left: 5%;
+  padding-top: 5%;
+    background-color: white;
+  }
   .toolbarTitle{
 text-align: center;
   }
@@ -52,7 +56,12 @@ text-align: center;
   font-size: 14px;
   font-weight: 400;
 }
-
+.cardProfilePadding{
+  --ion-background-color: white!important;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 3%;
+}
 /*Custom Text*/
 
 .txtTitle{
@@ -81,9 +90,27 @@ text-align: center;
   font-size: 14px;
   font-weight: 400;
 }
+.txtTitleGoals3{
+  font-size: 14px;
+  font-weight: 500; 
+  padding-left: 15px;
+
+}
 .txtTitleGoalsLittle{
   font-size: 12px;
   font-weight: 400;
+}
+.txtTitleGoalsLittle2{
+  font-size: 12px;
+  font-weight: 400;
+  padding-top: 5%;
+  text-align: justify;
+  
+}
+.txtTitleGoalsGreenBig{
+  font-size: 24px;
+  font-weight: 700;
+  color: #2ECC71;
 }
 .txtTitleTrackingLittle{
   font-size: 12px;
@@ -131,4 +158,10 @@ padding-left: 5%;
 .buttonClose{
   color: red;
   --box-shadow:none; 
+}
+.imgCard{
+background-image: url(https://img.mobiscroll.com/demos/card_5.png); 
+background-repeat: no-repeat;
+background-size:cover; margin: -10px;
+background-position: center;
 }
