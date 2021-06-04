@@ -79,6 +79,7 @@
     "firebase": "^7.24.0",
     "google-libphonenumber": "^3.2.16",
     "highcharts": "^9.0.1",
+    "ionic2-calendar": "^0.6.7",
     "jetifier": "^1.6.6",
     "moment": "^2.29.1",
     "ngx-pagination": "^5.0.0",

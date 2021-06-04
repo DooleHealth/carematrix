@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: AgendaPage
   },
-  {
-    path: 'cal-modal',
-    loadChildren: () => import('./cal-modal/cal-modal.module').then( m => m.CalModalPageModule)
-  }
 ];
 
 @NgModule({

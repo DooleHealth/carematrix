@@ -1,9 +1,7 @@
-//import { CalendarComponent } from 'ionic2-calendar/calendar';
+import { CalendarComponent } from 'ionic2-calendar';
 import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
-import { CalModalPage } from './cal-modal/cal-modal.page';
-
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.page.html',
@@ -11,6 +9,7 @@ import { CalModalPage } from './cal-modal/cal-modal.page';
 })
 export class AgendaPage implements OnInit {
   eventSource = [];
+  event: any
   viewTitle: string;
  
   calendar = {
@@ -20,7 +19,7 @@ export class AgendaPage implements OnInit {
  
   selectedDate: Date;
  
-  //@ViewChild(CalendarComponent) myCal: CalendarComponent;
+  @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
     private alertCtrl: AlertController,
@@ -32,44 +31,35 @@ export class AgendaPage implements OnInit {
   }
 
   // Change current month/week/day
- /*  next() {
+   next() {
     this.myCal.slideNext();
   }
   
   back() {
     this.myCal.slidePrev();
-  } */
+  } 
   
   // Selected date reange and hence title changed
   onViewTitleChanged(title) {
     this.viewTitle = title;
   }
 
-/* 
-  // Calendar event was clicked
-  async onEventSelected(event) {
-    // Use Angular date pipe for conversion
-    let start = formatDate(event.startTime, 'medium', this.locale);
-    let end = formatDate(event.endTime, 'medium', this.locale);
+  async onEventSelected(event){
+    this.event = event
+  }
   
-    const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK'],
-    });
-    alert.present();
-  } */
-
-/*   createRandomEvents() {
+  createRandomEvents() {
+    console.log('[HomePage] createRandomEvents()  ' )
     var events = [];
     for (var i = 0; i < 50; i += 1) {
+      var listType = ['Recordatorio Médico', 'Cita Extracción Sangre', 'Cita Nutricionista', 'Recordatorio Personal']
       var date = new Date();
       var eventType = Math.floor(Math.random() * 2);
       var startDay = Math.floor(Math.random() * 90) - 45;
       var endDay = Math.floor(Math.random() * 2) + startDay;
       var startTime;
       var endTime;
+      var type = listType[Math.floor(Math.random() * 3)]
       if (eventType === 0) {
         startTime = new Date(
           Date.UTC(
@@ -93,6 +83,7 @@ export class AgendaPage implements OnInit {
           startTime: startTime,
           endTime: endTime,
           allDay: true,
+          type: type
         });
       } else {
         var startMinute = Math.floor(Math.random() * 24 * 60);
@@ -116,11 +107,12 @@ export class AgendaPage implements OnInit {
           startTime: startTime,
           endTime: endTime,
           allDay: false,
+          type: type,
         });
       }
     }
     this.eventSource = events;
-  } */
+  } 
 
  /*  removeEvents() {
     this.eventSource = [];
