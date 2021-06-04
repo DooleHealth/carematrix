@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Análisis de sangre</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngIf='this.userDoole !== undefined'>
+        <h3 style="text-align: center;"> texto texto</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-text class="txtTitle">Información</ion-text>
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item routerLink="personal">
+        <ion-label>Motivo</ion-label>
+        <ion-label class="textMedium">ffffff</ion-label>
+      </ion-item>
+      <ion-item routerLink="cards" lines="none">
+        <ion-label>Fecha</ion-label>
+        <ion-label class="textMedium">ffffff</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item routerLink="personal">
+        <ion-label>Centro</ion-label>
+        <ion-label class="textMedium">ffffff</ion-label>
+      </ion-item>
+      <ion-item routerLink="cards">
+        <ion-label>Especialidad</ion-label>
+        <ion-label class="textMedium">ffffff</ion-label>
+      </ion-item>
+      <ion-item routerLink="cards" lines="none">
+        <ion-label>Profesional</ion-label>
+        <ion-label class="textMedium">ffffff</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-text class="txtTitle">Detalle</ion-text>
+  <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile">
+    <ion-item *ngIf="item.expanded" lines="none">
+      <ion-label>Categoría</ion-label>
+      <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="!item.expanded" lines="none">
+      <ion-label>Categoría</ion-label>
+      <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+    </ion-item>
+<!-- expandible accordion -->
+    <ion-card-content>
+      <app-expandable expandHeight="100px" [expanded]="item.expanded">
+        <ion-item>
+          <ion-label>Elemento</ion-label>
+          <p class="txtTitleTrackingLittle">resultado</p>
+        </ion-item>
+        <ion-item>
+          <ion-label>Elemento</ion-label>
+          <p class="txtTitleTrackingLittle">resultado</p>
+        </ion-item>
+        <ion-item>
+          <ion-label>Elemento</ion-label>
+          <p class="txtTitleTrackingLittle">resultado</p>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Elemento</ion-label>
+          <p class="txtTitleTrackingLittle">resultado</p>
+        </ion-item>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

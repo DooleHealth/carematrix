@@ -76,6 +76,22 @@ const routes: Routes = [
     path: 'agenda',
     loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
   },
+  {
+    path: 'tracking',
+    loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
+  },
+  {
+    path: 'document-detail',
+    loadChildren: () => import('./pages/tracking/document-detail/document-detail.module').then( m => m.DocumentDetailPageModule)
+  },
+  {
+    path: 'documents-filter',
+    loadChildren: () => import('./pages/tracking/documents-filter/documents-filter.module').then( m => m.DocumentsFilterPageModule)
+  },
+  {
+    path: 'documents-add',
+    loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
+  }
 
 ];
 @NgModule({
