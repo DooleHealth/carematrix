@@ -10,9 +10,13 @@ import { IonSlides} from '@ionic/angular';
 })
 
 export class DiaryPage implements OnInit {
-
+  public items: any = [];
   @ViewChild('slides') slides: IonSlides;
-  constructor() { }
+  constructor() {
+    this.items = [
+      { expanded: false }
+    ];
+  }
 
   ngOnInit() {
   }
@@ -23,5 +27,19 @@ export class DiaryPage implements OnInit {
   prev() {
     this.slides.slidePrev();
   }
-
+  expandItem(item): void {
+    if (item.expanded) {
+      item.expanded = false;
+    } else {
+      this.items.map(listItem => {
+        if (item == listItem) {
+          listItem.expanded = !listItem.expanded;
+        } else {
+          listItem.expanded = false;
+        }
+        return listItem;
+      });
+    }
+  }
 }
+

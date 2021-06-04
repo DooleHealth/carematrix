@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DiaryPage
+  },
+  {
+    path: 'activity-goal',
+    loadChildren: () => import('../profile/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
   }
 ];
 

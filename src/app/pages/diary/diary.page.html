@@ -28,6 +28,7 @@
     </ion-segment-button>
   </ion-segment>
 
+     <!-- Slides-->
     <ion-row>
       <ion-col size="2">
         <ion-buttons >
@@ -58,126 +59,121 @@
       </ion-col>
     </ion-row>
   
-      <!-- Slides-->
-<!--   
-      <ion-slides #slides >
-    <ion-slide>
-      <h1>Lunes 31</h1>
-
-    </ion-slide>
-    <ion-slide>
-      <h1>Martes 1</h1>
-
-    </ion-slide>
-    <ion-slide>
-      <h1>Miércoles 3</h1>
-  
-    </ion-slide>
-  </ion-slides> -->
+<!-- segment -->
+    <div class="verticalLine2" [ngSwitch]="segment">
 
     <!-- Diets-->
 
-  <div class="verticalLine2" [ngSwitch]="segment">
     <ion-list>
-      <ion-card class="cardProfile" *ngSwitchCase="'diets'">
-        <ion-item lines="none" routerLink="document-detail">
-          <div class="verticalLine"></div>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2">
-                <ion-img style="align-items: left;" src='assets/icons/document-attach.svg' style="margin-right: 5px;">
-                </ion-img>
-              </ion-col>
-              <ion-col size="6">
-                <ion-card-title class="txtTitleGoals">Análisis de sangre</ion-card-title>
-              </ion-col>
-              <ion-col size="4">
-                <ion-card-title class="txtTitleTrackingLittle" >fecha 18/09/21</ion-card-title>
-              </ion-col>
-            </ion-row>
-
-            <ion-col size="12">
-              <ion-card-title class="txtTitleGoals">Resultados de seguimiento hepatitis C
-              </ion-card-title>
-            </ion-col>
-            <ion-col size="12">
-              <ion-card-title class="txtTitleTrackingLittle">
-                Dr. Ricardo Sánchez</ion-card-title>
-            </ion-col>
-            <ion-col size="12">
-              <ion-card-title class="textBlue">
-                Detalle</ion-card-title>
-            </ion-col>
-          </ion-grid>
-        </ion-item>
-      </ion-card>
-    </ion-list>
+      <div *ngSwitchCase="'diets'">
+    
+    <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
+      <ion-item *ngIf="item.expanded" lines="none">
+        <ion-col size="2">
+          <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
+          </ion-img>
+        </ion-col>
+        <ion-label style="color:#E67E22;">Desayuno</ion-label>
+        <p class="txtTitleTrackingLittle">30/02/21</p>
+        <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item *ngIf="!item.expanded" lines="none">
+        <ion-col size="2">
+          <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
+          </ion-img>
+        </ion-col>
+        <ion-label style="color:#E67E22;">Desayuno</ion-label>
+        <p class="txtTitleTrackingLittle">30/02/21</p>
+        <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+ 
+     
+        <app-expandable expandHeight="100px" [expanded]="item.expanded">
+          <ion-item lines="none">
+            <ion-label>Elemento</ion-label>
+            <p class="txtTitleTrackingLittle">resultado</p>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Elemento</ion-label>
+            <p class="txtTitleTrackingLittle">resultado</p>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Elemento</ion-label>
+            <p class="txtTitleTrackingLittle">resultado</p>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Elemento</ion-label>
+            <p class="txtTitleTrackingLittle">resultado</p>
+          </ion-item>
+        </app-expandable>
+  
+    </ion-card>
+  </div>
+  </ion-list>
+    
 
     <!-- Medication-->
 
     <ion-list>
-      <ion-card class="cardProfile" *ngSwitchCase="'medication'">
-        <ion-item lines="none">
-          <div class="verticalLinePurple"></div>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2">
-                <ion-img src='assets/icons/document-text.svg' style="margin-right: 5px;">
-                </ion-img>
-              </ion-col>
-              <ion-col size="6">
-                <ion-card-title class="txtTitleGoals">Formulario título aquí</ion-card-title>
-              </ion-col>
-              <ion-col size="4">
-                <ion-card-title style="text-align: right;" class="txtTitleTrackingLittle">18/09/21</ion-card-title>
-              </ion-col>
-            </ion-row>
-            <ion-col size="12">
-              <ion-card-title class="txtTitleGoals">Formulario subtítulo general
-              </ion-card-title>
+      <div *ngSwitchCase="'medication'">
+        <ion-card *ngFor="let item of items" class="cardProfile" (click)="expandItem(item)">
+          <ion-item *ngIf="item.expanded" lines="none">
+            <ion-col size="2">
+              <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
+              </ion-img>
             </ion-col>
-            <ion-col size="12">
-              <ion-card-title class="txtTitleTrackingLittle">
-                Dr. Ricardo Sánchez</ion-card-title>
+            <ion-label style="color:#2ECC71;">Medicación</ion-label>
+            <p class="txtTitleTrackingLittle">30/02/21</p>
+            <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
+          </ion-item>
+          <ion-item *ngIf="!item.expanded" lines="none">
+            <ion-col size="2">
+              <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
+              </ion-img>
             </ion-col>
-            <ion-col size="12">
-              <ion-card-title class="textBlue">
-                Rellenar</ion-card-title>
-            </ion-col>
-          </ion-grid>
-        </ion-item>
+            <ion-label style="color:#2ECC71;">Medicación</ion-label>
+            <p class="txtTitleTrackingLittle">30/02/21</p>
+            <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+          </ion-item>
+   
+       
+          <app-expandable expandHeight="100px" [expanded]="item.expanded">
+            <ion-item lines="none">
+              <p class="txtTitleTrackingLittle">Pastilla Tensión (Vasotec 20 mg)
+              </p>
+            </ion-item>
+            <div class="main-container3">
+              <ion-button size="small" color="primary">Tomar</ion-button>&nbsp;
+              <ion-button size="small" color="transparent" class="buttonLink" >Ver detalle</ion-button>&nbsp;
+            </div>
+   
+          </app-expandable>
+    
       </ion-card>
+    </div>
     </ion-list>
 
     <!-- Games -->
 
-    <ion-list>
-      <ion-card class="cardProfile" *ngSwitchCase="'games'">
-        <ion-item lines="none" routerLink="activity-goal">
-          <div class="verticalLineRed"></div>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2">
-                <ion-img style="align-items: left;" src='assets/icons/VectorConsumo.svg' style="margin-right: 5px;">
-                </ion-img>
-              </ion-col>
-              <ion-col size="8">
-                <ion-card-title class="txtTitleGoals">Consumo energético</ion-card-title>
-              </ion-col>
-              <ion-col size="2">
-                <ion-label style="text-align: right;">
-                  <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
-                </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-col size="12">
-              <ion-card-title class="txtTitleGoals">456 Kcal
-              </ion-card-title>
-            </ion-col>
-          </ion-grid>
+    
+    <ion-card class="cardProfile" *ngSwitchCase="'games'">
+        <img src='assets/icons/Rectangle.png'/>
+        <ion-item lines="none">
+          <div>
+            <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
+            </ion-img>
+          </div>
+          <ion-label style="color:#9B59B6"> &nbsp;&nbsp; Juego de la memoria</ion-label>
+          <div>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
         </ion-item>
+        <ion-card-content>
+          Demuestra tu destreza y mejora la concentración. ¡Mantén tu mente en acción con este juego!
+        </ion-card-content>
+        <ion-button size="small" color="transparent" class="buttonLink">Ir a detalle</ion-button>&nbsp;
       </ion-card>
-    </ion-list>
+ 
 <!-- Health -->
     <ion-list>
       <ion-card class="cardProfile" *ngSwitchCase="'health'">
