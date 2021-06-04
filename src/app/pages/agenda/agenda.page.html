@@ -1,0 +1,85 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button ></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{'Agenda'}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content> 
+   <ion-row>
+     <!-- Move back one screen of the slides -->
+    <ion-col size="1.5">
+      <ion-button fill="clear" (click)="back()">
+        <ion-icon name="chevron-back-outline" slot="icon-only" color="primary" ></ion-icon>
+      </ion-button>
+    </ion-col>
+ 
+    <ion-col size="5" class="ion-text-center">
+      <h2>{{ viewTitle }}</h2>
+    </ion-col>
+
+    <ion-col size="1.5">
+      <ion-button fill="clear" (click)="createRandomEvents()">
+        <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>  
+    <ion-col size="1.5">
+      <ion-button fill="clear" (click)="createRandomEvents()">
+        <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>
+     <!-- Move forward one screen of the slides -->
+     <ion-col size="1.5">
+      <ion-button fill="clear" (click)="next()">
+        <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+ 
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onEventSelected)="onEventSelected($event)"
+    startHour="6"
+    endHour="20"
+    step="30"
+    startingDayWeek="1"
+    [monthviewDisplayEventTemplate]="template"
+    [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
+
+  >
+  </calendar>
+    <ng-template #template let-view="view" let-row="row" let-col="col">
+      <div [class.with-event]="view.dates[row*7+col].events.length">
+        {{view.dates[row*7+col].label}}
+        <div class="indicator-container">
+          <div class="event-indicator" *ngFor="let e of view.dates[row*7+col].events"></div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+      <ion-item class="event-detail-title">{{selectedDate.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-item>
+      <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
+          <ion-item *ngFor="let event of selectedDate?.events" (click)="eventSelected(event)">
+            <span class="event-detail"> {{event.type }} </span>
+            <span class="event-detail">  |  {{event.title}}</span>
+                  <span *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn"> |  {{event.startTime|date: 'HH:mm'}}
+                      -
+                      {{event.endTime|date: 'HH:mm'}}
+                  </span>
+              <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date: ['EEEE, d MMMM']}}</span>
+          </ion-item>
+          <ion-item lines="none" *ngIf="selectedDate?.events.length==0">
+              <div class="no-events-label">{{noEventsLabel}}</div>
+          </ion-item>
+      </ion-list>
+  </ng-template>
+</ion-content>

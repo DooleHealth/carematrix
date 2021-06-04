@@ -14,33 +14,12 @@ const routes: Routes = [
       },
       {
         path: 'agenda',
-        loadChildren: () => import('./agenda/agenda.module').then( m => m.AgendaPageModule)
+        loadChildren: () => import('../agenda/agenda.module').then( m => m.AgendaPageModule)
       },
-      {
-        path: 'contact',
-        loadChildren: () => import('./contact/contact.module').then( m => m.ContactPageModule)
-      },
-      {
-        path: 'follow',
-        loadChildren: () => import('./follow/follow.module').then( m => m.FollowPageModule)
-      },
-      {
-        path: 'journal',
-        loadChildren: () => import('./journal/journal.module').then( m => m.JournalPageModule)
-      },
-      {
-        path: 'home',
-        redirectTo: 'home/initial',
-        pathMatch: 'full'
-      }
-    ]
-  },
 
-   {
-    path: 'home',
-    redirectTo: 'home/initial',
-    pathMatch: 'full'
+    ]
   }
+
 
 ];
 
