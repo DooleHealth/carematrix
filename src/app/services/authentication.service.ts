@@ -17,6 +17,7 @@ const TOKEN_KEY = 'token';
 export class User{
   
   condicion_legal: boolean;
+  image: any;
   constructor(){};
   //constructor(){};
 }

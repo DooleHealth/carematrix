@@ -1,24 +1,114 @@
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="initial">
-      <ion-icon name="home"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="agenda">
-      <ion-icon name="calendar"></ion-icon>
-      <ion-label>Agenda</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="contact">
-      <ion-icon name="chatbubble"></ion-icon>
-      <ion-label>Contacto</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="follow">
-      <ion-icon name="search"></ion-icon>
-      <ion-label>Seguimiento</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="journal">
-      <ion-icon name="heart"></ion-icon>
-      <ion-label>Mi diario</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+<!-- <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="10" style="text-align: left;">
+        <h3 *ngIf="this.userDoole as User">Hola, {{this.userDoole.first_name}} {{ this.userDoole.last_name}}</h3>
+      </ion-col>
+      <ion-col size="2">
+     
+    <ion-img class="imgProfile" [src]="this.userImage" routerLink="../profile" [state]="{user:this.userDoole}"></ion-img>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-text>Tu Objetivo</ion-text>
+    </ion-row>
+    <ion-row>
+        <ion-card class="vertical-card">
+          <ion-card-header>
+          <ion-item>
+            <ion-img slot="start"  src='assets/icons/goals.svg'></ion-img>
+            <ion-card-subtitle>Tu Objetivo Diario</ion-card-subtitle>
+            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+          </ion-item>
+          </ion-card-header>
+
+          <ion-card-content>
+              <ion-slides #slider pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideChange()'>
+                <ion-slide *ngFor="let slide of this.goals">
+                  <ion-progress-bar *ngIf='slide.steps as Number' [value]="slide.steps"></ion-progress-bar>
+                   <h2>{{slide.description}}</h2>
+                 </ion-slide>
+              </ion-slides>
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
+
+    <ion-row>
+      <ion-text>Recordatorios</ion-text>
+    </ion-row>
+    <ion-row>
+        <ion-card>
+          <ion-card-header>
+            <ion-item>
+              <ion-card-subtitle slot="start">Cita Médica</ion-card-subtitle>
+              <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            </ion-item>
+          </ion-card-header>
+        </ion-card>
+    </ion-row>
+
+    <ion-row>
+      <ion-text>Novedades y Consejos</ion-text>
+    </ion-row>
+    <ion-row>
+        <ion-card>
+          <ion-card-header>Tu Objetivo Diario</ion-card-header>
+        </ion-card>
+    </ion-row>
+
+    <ion-row>
+      <ion-text>Tu Día</ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-card class="vertical-card">
+        <ion-card-header>
+        <ion-item>
+          <ion-img slot="start"  src='assets/icons/goals.svg'></ion-img>
+          <ion-card-subtitle>{{'information.hour'}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf='this.isHour'>{{'information.hour'}}</ion-card-subtitle>
+          <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        </ion-card-header>
+
+        <ion-card-content>
+            <ion-slides #slider pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideChange()'>
+              <ion-slide *ngFor="let slide of this.diets">
+                 <h2>{{slide.description}}</h2>               
+               </ion-slide>
+            </ion-slides>
+          </ion-card-content>
+      </ion-card>
+    </ion-row>
+
+  </ion-grid>
+</ion-content> -->
+ 
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="initial">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Inicio</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="agenda">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>Agenda</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="contact">
+        <ion-icon name="chatbubble"></ion-icon>
+        <ion-label>Contacto</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="follow">
+        <ion-icon name="search"></ion-icon>
+        <ion-label>Seguimiento</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="journal">
+        <ion-icon name="heart"></ion-icon>
+        <ion-label>Mi diario</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>

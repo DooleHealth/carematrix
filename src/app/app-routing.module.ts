@@ -73,6 +73,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/cards/cards.module').then( m => m.CardsPageModule)
   },
   {
+    path: 'agenda',
+    loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
+  },
+  {
     path: 'tracking',
     loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
   },
