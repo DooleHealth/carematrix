@@ -87,6 +87,10 @@ const routes: Routes = [
   {
     path: 'documents-add',
     loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
+  },
+  {
+    path: 'diary',
+    loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   }
 
 ];
