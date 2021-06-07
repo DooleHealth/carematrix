@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { JournalPageRoutingModule } from './journal-routing.module';
+import { TapPageRoutingModule } from './tap-routing.module';
 
-import { JournalPage } from './journal.page';
+import { TapPage } from './tap.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    JournalPageRoutingModule
+    TapPageRoutingModule
   ],
-  declarations: [JournalPage]
+  declarations: [TapPage]
 })
-export class JournalPageModule {}
+export class TapPageModule {}

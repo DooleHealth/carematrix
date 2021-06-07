@@ -62,6 +62,7 @@ export interface Drug {
 }
 
 export interface Goal {
+    hour: string;
     id?: number,
     name?: string,
     description?: string,

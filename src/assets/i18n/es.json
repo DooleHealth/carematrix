@@ -233,5 +233,10 @@
         "alert_message_delete_contact":"El contacto ha sido eliminado",
         "alert_message_update_contact":"El contacto ha sido actualizado",
         "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?"
+      },
+      "agenda":{
+        "agenda": "Agenda",
+        "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
+        "days": ["L", "M", "X", "J", "V", "S", "D"]
       }
 }

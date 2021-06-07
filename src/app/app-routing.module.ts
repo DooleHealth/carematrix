@@ -93,6 +93,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
   },
   {
+    path: 'app',
+    loadChildren: () => import('./pages/tap/tap.module').then( m => m.TapPageModule)
+  },
+  {
     path: 'diary',
     loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   }

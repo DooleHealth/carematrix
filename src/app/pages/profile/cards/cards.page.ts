@@ -13,8 +13,7 @@ import { DooleService } from 'src/app/services/doole.service';
 export class CardsPage implements OnInit {
   listCard: HealthCard[] =[];
   constructor(
-    public router: Router,    
-    private translate: TranslateService,
+    public router: Router,
     private alertController: AlertController,
     private dooleService: DooleService
   ) { }
