@@ -22,7 +22,7 @@ export class IntroPage implements OnInit {
      value: 'true'
    });
    console.log(`[IntroPage] introAction()`);
-   this.router.navigate(['/home/initial']);
+   this.router.navigate(['app/home']);
  }
  
 

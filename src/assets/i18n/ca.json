@@ -232,5 +232,10 @@
         "alert_message_delete_contact":"El contacte ha estat eliminat",
         "alert_message_update_contact":"El contacte ha estat actualitzat",
         "alert_message_confirmation_delete":"Vols eliminar aquest contacte?"
+      },
+      "agenda":{
+        "agenda": "Agenda",
+        "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
+        "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"]
       }
 }

@@ -7,18 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
-    children: [
-       {
-        path: 'initial',
-        loadChildren: () => import('./initial/initial.module').then( m => m.InitialPageModule)
-      },
-      {
-        path: 'agenda',
-        loadChildren: () => import('../agenda/agenda.module').then( m => m.AgendaPageModule)
-      },
+  },
 
-    ]
-  }
 
 
 ];

@@ -91,6 +91,10 @@ const routes: Routes = [
   {
     path: 'documents-add',
     loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
+  },
+  {
+    path: 'app',
+    loadChildren: () => import('./pages/tap/tap.module').then( m => m.TapPageModule)
   }
 
 ];

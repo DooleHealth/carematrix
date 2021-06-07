@@ -41,7 +41,7 @@
     </ion-col>
   </ion-row>
  
-  <calendar
+  <calendar 
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
     [currentDate]="calendar.currentDate"
@@ -53,6 +53,8 @@
     startingDayWeek="1"
     [monthviewDisplayEventTemplate]="template"
     [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
+    [locale]="this.languageService.getCurrent()"
+    [dateFormatter]="calendar.dateFormatter"
 
   >
   </calendar>
@@ -73,7 +75,7 @@
             <span class="event-detail">  |  {{event.title}}</span>
                   <span *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn"> |  {{event.startTime|date: 'HH:mm'}}
                       -
-                      {{event.endTime|date: 'HH:mm'}}
+                      {{event?.endTime|date: 'HH:mm'}}
                   </span>
               <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date: ['EEEE, d MMMM']}}</span>
           </ion-item>
