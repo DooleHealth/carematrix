@@ -11,6 +11,7 @@ import { AgendaPage } from './agenda.page';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { TranslateModule } from '@ngx-translate/core';
 registerLocaleData(localeDe);
 
 @NgModule({
@@ -19,6 +20,7 @@ registerLocaleData(localeDe);
     FormsModule,
     IonicModule,
     AgendaPageRoutingModule,
+    TranslateModule,
     NgCalendarModule
   ],
   declarations: [AgendaPage],

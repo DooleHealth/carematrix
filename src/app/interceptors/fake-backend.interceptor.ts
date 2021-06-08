@@ -62,6 +62,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateEmergencyContact();
                 case url.endsWith('user/appointment') && method === 'GET':
                     return appointmentAgenda();
+                case url.endsWith('user/appointment') && method === 'POST':
+                    return appointmentAgenda();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -807,7 +809,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         type: 'Recordatorio Personal',
                         endTime: "2021-06-08T15:57:42.000000Z",
                         startTime: "2021-06-08T16:57:42.000000Z",
+                    },
+                    {
+                        id: 13015,
+                        title: "Seguridad Social",
+                        type: 'Cita Extracción Sangre',
+                        endTime: "2021-06-06T15:57:42.000000Z",
+                        startTime: "2021-06-06T16:57:42.000000Z",
+                    },
+                    {
+                        id: 12739,
+                        title: "Seguridad Social",
+                        type: "Mutuas Seguros",
+                        endTime: "2021-06-07T15:57:42.000000Z",
+                        startTime: "2021-06-07T16:57:42.000000Z",
+                    },
+                    {
+                        id: 13089,
+                        title: "Seguridad Social",
+                        type: 'Recordatorio Personal',
+                        endTime: "2021-06-08T15:57:42.000000Z",
+                        startTime: "2021-06-08T16:57:42.000000Z",
+                    },
+                    {
+                        id: 13089,
+                        title: "Seguridad Social",
+                        type: 'Recordatorio Personal',
+                        endTime: "2021-08-08T15:57:42.000000Z",
+                        startTime: "2021-08-08T16:57:42.000000Z",
                     }
+
                 ] 
             )
         }

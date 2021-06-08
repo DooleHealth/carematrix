@@ -24,7 +24,8 @@ export class AgendaPage implements OnInit {
           formatMonthViewDay: function(date:Date) {
               return date.getDate().toString();
           },
-/*           formatMonthViewDayHeader: function(date:Date) {
+          /*           
+          formatMonthViewDayHeader: function(date:Date) {
             let days = ["L", "M", "X", "J", "V", "S", "D"]
             return this.days[date.getDay()] 
           }, */
@@ -74,8 +75,6 @@ export class AgendaPage implements OnInit {
 
   addScheduleToCalendar(appointments: any[]){
     var events = [];
-    var startTime: Date;
-    var endTime: Date;
     appointments.forEach((e) =>{
       let isAllDay = false
       if(e.startTime !== undefined && e.endTime !== undefined ){
@@ -185,48 +184,12 @@ export class AgendaPage implements OnInit {
         });
       }
     }
-    console.log('[HomePage] createRandomEvents()',events )
-    this.eventSource = events;
+    //console.log('[HomePage] createRandomEvents()',events )
+    this.eventSource = this.eventSource.concat(events) ;
   } 
 
- /*  removeEvents() {
-    this.eventSource = [];
-  } */
-
-/* 
-  async openCalModal() {
-    const modal = await this.modalCtrl.create({
-      component: CalModalPage,
-      cssClass: 'cal-modal',
-      backdropDismiss: false
-    });
-   
-    await modal.present();
-   
-    modal.onDidDismiss().then((result) => {
-      if (result.data && result.data.event) {
-        let event = result.data.event;
-        if (event.allDay) {
-          let start = event.startTime;
-          event.startTime = new Date(
-            Date.UTC(
-              start.getUTCFullYear(),
-              start.getUTCMonth(),
-              start.getUTCDate()
-            )
-          );
-          event.endTime = new Date(
-            Date.UTC(
-              start.getUTCFullYear(),
-              start.getUTCMonth(),
-              start.getUTCDate() + 1
-            )
-          );
-        }
-        this.eventSource.push(result.data.event);
-        this.myCal.loadEvents();
-      }
-    });
-  } */
+  eventSelected(event) {
+    console.log('[HomePage] eventSelected()',event)
+  }
 
 }

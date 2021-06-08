@@ -19,7 +19,11 @@ const routes: Routes = [
      {
       path: 'tracking',
       loadChildren: () => import('../tracking/tracking.module').then( m => m.TrackingPageModule)
-    },
+     },
+     {
+      path: 'diary',
+      loadChildren: () => import('../diary/diary.module').then( m => m.DiaryPageModule)
+     },
 
    ]
   }

@@ -39,7 +39,7 @@
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"
       },
-      "homeInitial": {
+      "home": {
         "goals_title": "El teu objectiu",
         "advices_title": "Novetats i Consells",
         "today_title": "El teu Dia",
@@ -51,7 +51,9 @@
         "physical_activity_subtitle": "Activitat física",
         "see_all_button": "Veure totes",
         "detail_button": "Detalls",
-        "register_button": "Inscriure"
+        "register_button": "Inscriure",
+        "take_button": "Prendre",
+        "go_play_button": "Anar a joc"
       },
       "profile":{
         "title_profile": "El meu perfil",
@@ -235,6 +237,7 @@
       },
       "agenda":{
         "agenda": "Agenda",
+        "no_events": "No hi ha esdeveniments",
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"]
       }

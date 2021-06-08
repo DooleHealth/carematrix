@@ -14,14 +14,14 @@
 
   <ion-grid>
     <ion-row>
-      <ion-text>Tu Objetivo</ion-text>
+      <ion-text>{{ 'home.goals_title' | translate}}</ion-text>
     </ion-row>
            <!-- Goals  --> 
     <ion-row>
-        <ion-card class="vertical-card">      
+        <ion-card class="vertical-card" routerLink="/activity-goal">      
             <ion-item lines="none">
               <ion-img slot="start"  src='assets/icons/goals.svg'></ion-img>
-              <ion-text slot="start">Tu Objetivo Diario</ion-text >
+              <ion-text slot="start">{{ 'home.daily_goal_title' | translate}}</ion-text >
               <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
             </ion-item>
 
@@ -41,9 +41,9 @@
             </ion-card-content>
         </ion-card>
     </ion-row>
-
+          <!-- Reminders --> 
     <ion-row>
-      <ion-text>Recordatorios</ion-text>
+      <ion-text>{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
@@ -64,7 +64,7 @@
                     <ion-card-subtitle>{{slide.doctor}}</ion-card-subtitle>
                     <ion-card-subtitle>{{slide.start_date_iso8601 | date: ['EEEE, d MMMM hh:mm']  }}</ion-card-subtitle>
                     <ion-button size="small" fill="clear" (click)="actionDetailAppointment(slide)">
-                      Detalle</ion-button>
+                      {{ 'home.detail_button' | translate}}</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -73,9 +73,12 @@
         </ion-slide>    
       </ion-slides>
     </ion-row>
-
+    <!-- Advices --> 
     <ion-row>
-      <ion-text>Novedades y Consejos</ion-text>
+      <ion-item lines="none">
+        <ion-text> {{ 'home.advices_title' | translate}}</ion-text>
+        <ion-button slot="end" fill="clear" size="small" class="bottonTitle" (click)="actionSeeAllAdvices()">{{ 'home.see_all_button' | translate}}</ion-button>
+      </ion-item>
     </ion-row>
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
@@ -85,14 +88,14 @@
             <ion-img  [src]="slide.image"></ion-img><br>
             <ion-card-title>{{slide.name}}</ion-card-title>
             <ion-card-subtitle>{{slide.description}}</ion-card-subtitle>
-            <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">Inscribirme</ion-button>
+            <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button>
           </ion-card>
         </ion-slide> 
       </ion-slides>
     </ion-row>
 
     <ion-row>
-      <ion-text>Tu Día</ion-text>
+      <ion-text>{{ 'home.today_title' | translate}}</ion-text>
     </ion-row>
     <!-- Diets -->
     <ion-row>
@@ -119,7 +122,7 @@
       <ion-card class="vertical-card">       
           <ion-item lines="none">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
-            <ion-text style="color:'#2ECC71';" slot="start">{{'Medicación'}}</ion-text>
+            <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf='infoDrugs as UserInformation'>{{infoDrugs?.hour}}</ion-text>
             <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
           </ion-item>
@@ -132,7 +135,7 @@
                     <p>{{slide.name}}</p>
                   </ion-row>
                   <ion-row>
-                    <ion-button size="small" (click)="actionButtonDrugs(slide)">Tomar</ion-button>  
+                    <ion-button size="small" (click)="actionButtonDrugs(slide)">{{ 'home.take_button' | translate}}</ion-button>  
                   </ion-row>
                 </ion-grid>             
                 </ion-slide>
@@ -146,7 +149,7 @@
       <ion-card class="vertical-card">       
           <ion-item lines="none">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
-            <ion-text style="color:'#9B59B6';" slot="start">{{'Juegos'}}</ion-text>
+            <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
             <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
@@ -158,7 +161,7 @@
                     <p>{{slide.name}}</p>
                   </ion-row>
                   <ion-row>
-                    <ion-button size="small" fill=clear (click)="actionButtonGames(slide)">Ir a Juego</ion-button>  
+                    <ion-button size="small" fill=clear (click)="actionButtonGames(slide)">{{ 'home.go_play_button' | translate}}</ion-button>  
                   </ion-row>
                 </ion-grid>             
                 </ion-slide>
@@ -172,7 +175,7 @@
           <ion-card class="vertical-card">       
               <ion-item lines="none">
                 <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
-                <ion-text style="color:'#E74C3C';" slot="start">{{'Actividad Física'}}</ion-text>
+                <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
                 <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
               </ion-item>
     

@@ -80,6 +80,10 @@ export class HomePage implements OnInit {
       });
   }
 
+  actionSeeAllAdvices(){
+    console.log('[HomePage] actionCloseAdvice()');
+  }
+
   actionCloseAdvice(slide){
     console.log('[HomePage] actionCloseAdvice()', slide.name);
   }
@@ -89,7 +93,9 @@ export class HomePage implements OnInit {
   }
 
   actionCloseAppointment(slide){
-    console.log('[HomePage] actionCloseAppointment()', slide.name);
+    console.log('[HomePage] actionCloseAppointment()', slide.title);
+    slide.hide = true
+    this.appointment = this.appointment.filter( slide => slide.hide == false)
   }
 
   actionDetailAppointment(slide){
@@ -123,7 +129,7 @@ export class HomePage implements OnInit {
   }
 
   slideDrugChange(){	   
-		this.sliderDiet.getActiveIndex().then(index => {      
+		this.sliderDrug.getActiveIndex().then(index => {      
       console.log('[HomePage] slideDrugChange()', index);
       let slider = this.drugs[index]
       this.infoDrugs = {

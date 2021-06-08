@@ -4,8 +4,8 @@
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>Seguimiento</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
-      <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" routerLink="documents-filter"></ion-icon>&nbsp;
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="documents-add"></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" routerLink="/documents-filter"></ion-icon>&nbsp;
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/documents-add"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -30,7 +30,7 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <ion-list>
       <ion-card class="cardProfile" *ngSwitchCase="'documents'">
-        <ion-item lines="none" routerLink="document-detail">
+        <ion-item lines="none" routerLink="/document-detail">
           <div class="verticalLine"></div>
           <ion-grid>
             <ion-row>
@@ -103,7 +103,7 @@
 
     <ion-list>
       <ion-card class="cardProfile" *ngSwitchCase="'graphics'">
-        <ion-item lines="none" routerLink="activity-goal">
+        <ion-item lines="none" routerLink="/activity-goal">
           <div class="verticalLineRed"></div>
           <ion-grid>
             <ion-row>

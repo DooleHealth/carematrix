@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button ></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{'Agenda'}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <!-- Move back one screen of the slides -->
+   <ion-col size="1.5">
+     <ion-button fill="clear" (click)="back()">
+       <ion-icon name="chevron-back-outline" slot="icon-only" color="primary" ></ion-icon>
+     </ion-button>
+   </ion-col>
+
+   <ion-col size="5" class="ion-text-center">
+     <h2>{{ viewTitle | date: ['MMM, yyyy']  }}</h2>
+   </ion-col>
+
+   <ion-col size="1.5">
+     <ion-button fill="clear" routerLink="../">
+       <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
+     </ion-button>
+   </ion-col>  
+   <ion-col size="1.5">
+     <ion-button fill="clear" (click)="createNewEvents()">
+       <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+     </ion-button>
+   </ion-col>
+    <!-- Move forward one screen of the slides -->
+    <ion-col size="1.5">
+     <ion-button fill="clear" (click)="next()">
+       <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+     </ion-button>
+   </ion-col>
+ </ion-row>
+
+    <ion-list *ngFor="let events of this.dayEvents">
+      <ion-item>{{events.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-item>
+      <ion-list *ngFor="let e of events.events">
+        <ion-item (click)="showDetailAppointment(e)"> 
+          <ion-grid>
+            <ion-row>{{e.type}}</ion-row>
+            <ion-row>{{e.title}}</ion-row>
+            <ion-row>{{e?.startTime |date: ['hh:mm'] }} - {{e?.endTime |date: ['hh:mm'] }}h </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+ 
+  <div *ngIf="dayEvents.length ==0 ">
+      <ion-item lines="none" >
+        <div class="no-events-label">{{'agenda.no_events' | translate}}</div>
+    </ion-item>
+  </div>
+
+</ion-content>

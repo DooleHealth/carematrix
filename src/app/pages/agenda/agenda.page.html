@@ -24,7 +24,7 @@
     </ion-col>
 
     <ion-col size="1.5">
-      <ion-button fill="clear" (click)="createRandomEvents()">
+      <ion-button fill="clear" routerLink="list-appointment" [state]="{calendar:eventSource}">
         <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
       </ion-button>
     </ion-col>  
@@ -41,7 +41,7 @@
     </ion-col>
   </ion-row>
  
-  <calendar 
+  <calendar
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
     [currentDate]="calendar.currentDate"
@@ -71,17 +71,17 @@
       <ion-item class="event-detail-title">{{selectedDate.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-item>
       <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
           <ion-item *ngFor="let event of selectedDate?.events" (click)="eventSelected(event)">
-            <span class="event-detail"> {{event.type }} </span>
-            <span class="event-detail">  |  {{event.title}}</span>
-                  <span *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn"> |  {{event.startTime|date: 'HH:mm'}}
-                      -
-                      {{event?.endTime|date: 'HH:mm'}}
-                  </span>
-              <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date: ['EEEE, d MMMM']}}</span>
+              <ion-grid>
+                <ion-row class="event-detail">{{event.type}}</ion-row>
+                <ion-row class="event-detail">{{event.title}}</ion-row>
+                <ion-row *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn"> {{event.startTime|date: 'HH:mm'}} - {{event?.endTime|date: 'HH:mm'}}h </ion-row>
+                <ion-row *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date: ['EEEE, d MMMM']}}</ion-row>
+              </ion-grid>
           </ion-item>
           <ion-item lines="none" *ngIf="selectedDate?.events.length==0">
-              <div class="no-events-label">{{noEventsLabel}}</div>
+              <div class="no-events-label">{{'agenda.no_events' | translate}}</div>
           </ion-item>
       </ion-list>
   </ng-template>
+
 </ion-content>
