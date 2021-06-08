@@ -99,7 +99,27 @@ const routes: Routes = [
   {
     path: 'diary',
     loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
-  }
+  },
+  {
+    path: 'document-detail',
+    loadChildren: () => import('./pages/tracking/document-detail/document-detail.module').then( m => m.DocumentDetailPageModule)
+  },
+  {
+    path: 'documents-filter',
+    loadChildren: () => import('./pages/tracking/documents-filter/documents-filter.module').then( m => m.DocumentsFilterPageModule)
+  },
+  {
+    path: 'documents-add',
+    loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
+  },
+  {
+    path: 'activity-goal',
+    loadChildren: () => import('./pages/profile/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
+  },
+/*   {
+    path: 'initial',
+    loadChildren: () => import('./pages/home/initial/initial.module').then( m => m.InitialPageModule)
+  }, */
 
 ];
 @NgModule({

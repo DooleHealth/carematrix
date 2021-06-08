@@ -24,7 +24,8 @@ export class AgendaPage implements OnInit {
           formatMonthViewDay: function(date:Date) {
               return date.getDate().toString();
           },
-/*           formatMonthViewDayHeader: function(date:Date) {
+          /*           
+          formatMonthViewDayHeader: function(date:Date) {
             let days = ["L", "M", "X", "J", "V", "S", "D"]
             return this.days[date.getDay()] 
           }, */
@@ -74,8 +75,6 @@ export class AgendaPage implements OnInit {
 
   addScheduleToCalendar(appointments: any[]){
     var events = [];
-    var startTime: Date;
-    var endTime: Date;
     appointments.forEach((e) =>{
       let isAllDay = false
       if(e.startTime !== undefined && e.endTime !== undefined ){
@@ -185,8 +184,8 @@ export class AgendaPage implements OnInit {
         });
       }
     }
-    console.log('[HomePage] createRandomEvents()',events )
-    this.eventSource = events;
+    //console.log('[HomePage] createRandomEvents()',events )
+    this.eventSource = this.eventSource.concat(events) ;
   } 
 
  /*  removeEvents() {

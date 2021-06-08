@@ -39,7 +39,7 @@
         "error_required": "Error: Campo requerido",
         "error_min_lenght": "Error: Debe ser 4 digitos"
       },
-      "homeInitial": {
+      "home": {
         "goals_title": "Tu Objetivo",
         "advices_title": "Novedades y Consejos",
         "today_title": "Tu Dia",
@@ -51,7 +51,9 @@
         "physical_activity_subtitle": "Actividad física",
         "see_all_button": "Ver todas",
         "detail_button": "Detalles",
-        "register_button": "Inscribirme"
+        "register_button": "Inscribirme",
+        "take_button": "Tomar",
+        "go_play_button": "Ir a juego"
       },
       "profile":{
         "title_profile": "Mi Perfil",
@@ -236,6 +238,7 @@
       },
       "agenda":{
         "agenda": "Agenda",
+        "no_events": "No hay eventos",
         "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
         "days": ["L", "M", "X", "J", "V", "S", "D"]
       }

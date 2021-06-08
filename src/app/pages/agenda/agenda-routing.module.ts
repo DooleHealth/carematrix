@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: AgendaPage
   },
+  {
+    path: 'list-appointment',
+    loadChildren: () => import('./list-appointment/list-appointment.module').then( m => m.ListAppointmentPageModule)
+  },
 ];
 
 @NgModule({
