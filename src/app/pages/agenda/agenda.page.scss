@@ -42,6 +42,9 @@ td {
     background-color: #F0F0F0 !important;
     color: #7F8C8D !important;
   }
+  .monthview-eventdetail-timecolumn{
+    color: #7f8c8d!important;
+  }
  
   .monthview-selected  {
     background-color: var(--ion-color-primary) !important;
@@ -50,9 +53,9 @@ td {
     color: white !important;
   }
 
-  .event-detail-container {
-    background-color: white !important; 
-  }
+.blanco{
+  background-color: white!important;
+}
 
   .dayHeaders{
     background-color: red !important;
@@ -69,6 +72,51 @@ td {
 } */
 
 .event-detail-title {
-    color: var(--ion-color-primary) !important;
+    color: var(--ion-color-secondary) !important;
+    background-color: rgb(255, 255, 255)!important;
+}
+.event-detail-container {
+  color: var(--ion-color-secondary) !important;
+  --ion-background-color: transparent !important;
+ 
+}
+.rowPadding{
+  background-color: rgb(255, 255, 255)!important;
+  padding: 3%;
+}
+.rowPadding2{
+  background-color: rgb(255, 255, 255)!important;
+  padding-bottom: 50%;
 }
 
+.verticalLine {
+  width:1%;
+  height:85%;
+  background:#2ECC71;
+  margin-left:2%;
+}
+.verticalLinePurple {
+  width:1%;
+  height:85%;
+  background:#9B59B6;
+  margin-left:2%;
+}
+.verticalLineRed {
+  width:1%;
+  height:85%;
+  background:#E74C3C;
+  margin-left:2%;
+}
+/*  .verticalLine2 {
+ border-left: 2px solid  #3498DB,;
+ margin-left: 5%;
+}*/
+ion-img{
+
+  height: 30px;
+  color: #2ECC71;
+}
+ion-segment {
+  margin: 10px 0;
+  background: #ffffff;
+}
