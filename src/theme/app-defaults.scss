@@ -53,8 +53,11 @@ text-align: center;
   .bold{
       font-weight: 800;
   }
-  .cardProfile{
+  .cardProfile2{
     --ion-background-color: white!important;
+    font-size: 14px;
+    font-weight: 400;
+    min-width: 300px;
 }
 
 .cardProfile{
@@ -151,6 +154,7 @@ padding-left: 5%;
   text-align: left;
 }
 
+
 /*Custom Buttons*/
 
 .deleteButton{
@@ -170,4 +174,19 @@ background-image: url(https://img.mobiscroll.com/demos/card_5.png);
 background-repeat: no-repeat;
 background-size:cover; margin: -10px;
 background-position: center;
+}
+
+
+/*MEDIA QUERIES IPHONE 5 PORTRAIT*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px)
+and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) and (orientation:portrait)
+{
+  .cardProfile2{
+    --ion-background-color: white!important;
+    font-size: 14px;
+    font-weight: 400;
+    min-width: 250px;
+}
+
 }
