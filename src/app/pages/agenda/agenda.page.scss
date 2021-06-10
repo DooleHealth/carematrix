@@ -55,6 +55,7 @@ td {
 
 .blanco{
   background-color: white!important;
+  min-width: 400px;
 }
 
   .dayHeaders{
@@ -78,6 +79,10 @@ td {
 .event-detail-container {
   color: var(--ion-color-secondary) !important;
   --ion-background-color: transparent !important;
+.event-detail2{
+  font-size: medium;
+  font-weight: 600;
+}
  
 }
 .rowPadding{
