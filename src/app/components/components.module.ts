@@ -21,6 +21,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SliderVerticalComponent } from './slider-vertical/slider-vertical.component';
 import { SliderHorizontalComponent } from './slider-horizontal/slider-horizontal.component';
 import { ExpandableComponent } from './expandable/expandable.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import { ExpandableComponent } from './expandable/expandable.component';
     PageHeaderComponent,
     FileUploadComponent,
     ExpandableComponent,
+    TabsComponent,
 
     SliderVerticalComponent,
     SliderHorizontalComponent
@@ -63,6 +65,7 @@ import { ExpandableComponent } from './expandable/expandable.component';
     PageHeaderComponent,
     FileUploadComponent,
     ExpandableComponent,
+    TabsComponent,
 
     SliderVerticalComponent,
     SliderHorizontalComponent
