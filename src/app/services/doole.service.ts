@@ -545,6 +545,50 @@ export class DooleService {
       })
     );
   }
+  //documents-Tracking
+  getAPIdiagnosticTests(){
+    let path = 'user/diagnosticTests';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdiagnosticTests(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIdiagnosticTestID(id: Object){
+    let path = 'user/diagnosticTest/'+id;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdiagnosticTestID(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  //forms-Tracking
+  getAPIformsTracking(){
+    let path = 'user/tracking/forms';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIappointmentAgenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIgraphicsTracking(){
+    let path = 'user/tracking/graphics';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIappointmentAgenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);

@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DocumentsAddPage
+  },
+  {
+    path: 'test-type',
+    loadChildren: () => import('./test-type/test-type.module').then( m => m.TestTypePageModule)
   }
 ];
 

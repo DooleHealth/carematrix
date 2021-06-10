@@ -24,8 +24,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function handleRoute() {
             
             switch (true) {
-                case url.includes('login') && method === 'POST':
-                    return authenticate();
+/*                 case url.includes('login') && method === 'POST':
+                    return authenticate(); */
                 case url.includes('/user/password_recovery') && method === 'POST':
                     return passwordRecovery();
                 case url.endsWith('/user/informationUser') && method === 'GET':
@@ -64,6 +64,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return appointmentAgenda();
                 case url.endsWith('user/appointment') && method === 'POST':
                     return appointmentAgenda();
+                case url.endsWith('user/tracking/documents') && method === 'GET':
+                    return getAPIdocumentsTracking();
+                case url.endsWith('user/tracking/forms') && method === 'GET':
+                    return getAPIformsTracking();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -841,6 +845,111 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
                 ] 
             )
+        }
+
+        function getAPIdocumentsTracking(){
+            return ok([
+                {
+                    date: "2021-06-08T15:57:42.000000Z",
+                    documents:[
+                        {
+                            id: 12737,
+                            type: "Análisis de Sangre",
+                            title: "Resultados de seguimiento de colesterol",
+                            doctor: "Dr. Asunción Mateo",
+                            date: "2021-06-08T15:15:42.000000Z",
+                            reason: "Seguimiento Colesterol",
+                            especiality: "Medicina General",
+                            center: "Hospital Gregorio Marañon"
+
+                        },
+                        {
+                            id: 13015,
+                            type: "Análisis de Heces",
+                            title: "Resultados de seguimiento de colesterol",
+                            doctor: "Dr. Patricio Mora Mateo",
+                            date: "2021-06-08T17:30:42.000000Z",
+                            reason: "Seguimiento Colesterol",
+                            especiality: "Medicina General",
+                            center: "Hospital Gregorio Marañon"
+                        },
+                        {
+                            id: 130987,
+                            type: "Análisis de Orina",
+                            title: "Resultados de seguimiento hepatitis",
+                            doctor: "Dr. Mata Toro",
+                            date: "2021-06-08T20:00:42.000000Z",
+                            reason: "Seguimiento Colesterol",
+                            especiality: "Medicina General",
+                            center: "Hospital Gregorio Marañon"
+                        }
+                    ] 
+                },
+                {
+                    date: "2021-06-09T15:57:42.000000Z",
+                    documents:[
+                        {
+                            id: 12737,
+                            type: "Análisis de Sangre",
+                            title: "Resultados de seguimiento de colesterol",
+                            doctor: "Asunción Mateo",
+                            date: "2021-06-09T07:57:42.000000Z",
+                        },
+                        {
+                            id: 13015,
+                            type: "Análisis de Orina",
+                            title: "Resultados de seguimiento hepatitis",
+                            doctor:"Eduard García",
+                            date: "2021-06-09T10:57:42.000000Z",
+                        },
+                        {
+                            id: 13019,
+                            type: "Análisis de Sangre",
+                            title: "Resultados de seguimiento de colesterol",
+                            doctor: "David Serrano",
+                            date: "2021-06-09T11:57:42.000000Z",
+                        }
+                    ] 
+                },
+                {
+                    date: "2021-06-18T15:57:42.000000Z",
+                    documents:[
+                        {
+                            id: 12737,
+                            type: "Análisis de Orina",
+                            title: "Resultados de seguimiento hepatitis",
+                            doctor: "Asunción Mateo",
+                            date: "2021-06-18T15:57:42.000000Z",
+                        }
+                    ] 
+                }
+            ])
+        }
+
+        function getAPIformsTracking(){
+            return ok([
+                {
+                    id: 12737,
+                    type: "Formulario Seguimiento COVID-19",
+                    title: "Queremos saber cómo te encuentras",
+                    doctor: "Dr. Asunción Mateo",
+                    date: "2021-06-08T15:15:42.000000Z",
+                },
+                {
+                    id: 13015,
+                    type: "Formulario Seguimiento Peso",
+                    title: "Queremos conocer como van tus avances",
+                    doctor: "Dr. Patricio Mora Mateo",
+                    date: "2021-06-08T17:30:42.000000Z",
+                },
+                {
+                    id: 130987,
+                    type: "Formulario Seguimiento Glucosa",
+                    title: "Cuentanos si todo ha ido bien esta semana",
+                    doctor: "Dr. Mata Toro",
+                    date: "2021-06-08T20:00:42.000000Z",
+                }
+            ])
         }
 
     }
