@@ -1,9 +1,22 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>test-type</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'documents_add.header_test_type' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" >
+  <ion-searchbar 
+  [animated]="true" 
+  (ionInput)="filterList($event)" >
+</ion-searchbar>
+<ion-list *ngFor="let text of listTestType">
+  <ion-item>
+    <ion-label class="txtPaddingLeft">{{text.name}}</ion-label>
+  </ion-item>
+
+</ion-list>
 
 </ion-content>

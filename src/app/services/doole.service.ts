@@ -557,6 +557,17 @@ export class DooleService {
     );
   }
 
+  getAPIdiagnosticTestTypesAvailable(){
+    let path = 'diagnosticTestTypes/available';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdiagnosticTestTypesAvailable(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIdiagnosticTestID(id: Object){
     let path = 'user/diagnosticTest/'+id;
     const endpoint = this.api.getEndpoint(path);
@@ -564,6 +575,18 @@ export class DooleService {
       map((res: any) => {
         console.log(`[DooleService] getAPIdiagnosticTestID(${path}) res: `, res);
         return res;
+      })
+    );
+  }
+
+  postAPIdiagnosticTest(params: Object): Observable<any>{
+    let path = 'user/diagnosticTest';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIdiagnosticTest(${path}) res: `, res);
+        return res;
+
       })
     );
   }
