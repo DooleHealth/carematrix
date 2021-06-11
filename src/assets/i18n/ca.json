@@ -240,5 +240,35 @@
         "no_events": "No hi ha esdeveniments",
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"]
+      },
+      "tracking":{
+        "header": "Seguimiento",
+        "tap_documents": "Documentos",
+        "tap_forms": "Formularios",
+        "tap_graphics": "Gráficos" 
+      },
+      "documents":{
+        "subtitle_information": "Información",
+        "subtitle_detalle": "Detalle",
+        "subtitle_file": "Documentos Adjuntos",
+        "field_razon": "Motivo",
+        "field_date": "Fecha",
+        "field_center": "Centro",
+        "field_specially": "Especialidad",
+        "field_prfesional": "Profesional",
+        "button_detail": "Detalle",
+        "button_fill": "Rellenar"
+      },
+      "documents_add":{
+        "header": "Añadir Resultado",
+        "header_test_type": "Tipos de Prueba",
+        "field_test_type": "Tipos de prueba",
+        "field_source": "Fecha",
+        "field_center": "Centro",
+        "field_prfesional": "Profesional",
+        "button_add_files": "Añadir archivos",
+        "button_add_result": "Añadir Resultado",
+        "button_cancel": "Cancelar",
+        "button_ok": "OK"
       }
 }

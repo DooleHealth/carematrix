@@ -18,8 +18,6 @@ import { CustomHeaderComponent } from './custom-header/custom-header.component';
 import { PageHeaderComponent } from './page-header/page-header.component'
 import { RouterModule} from "@angular/router";
 import { FileUploadComponent } from './file-upload/file-upload.component';
-import { SliderVerticalComponent } from './slider-vertical/slider-vertical.component';
-import { SliderHorizontalComponent } from './slider-horizontal/slider-horizontal.component';
 import { ExpandableComponent } from './expandable/expandable.component';
 import { TabsComponent } from './tabs/tabs.component';
 
@@ -49,6 +47,7 @@ import { TabsComponent } from './tabs/tabs.component';
 
     SliderVerticalComponent,
     SliderHorizontalComponent
+
   ],
   exports: [
     ShellModule,
@@ -69,6 +68,7 @@ import { TabsComponent } from './tabs/tabs.component';
 
     SliderVerticalComponent,
     SliderHorizontalComponent
+
   ]
 })
 export class ComponentsModule {}
