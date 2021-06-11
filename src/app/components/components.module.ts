@@ -44,10 +44,6 @@ import { TabsComponent } from './tabs/tabs.component';
     FileUploadComponent,
     ExpandableComponent,
     TabsComponent,
-
-    SliderVerticalComponent,
-    SliderHorizontalComponent
-
   ],
   exports: [
     ShellModule,
@@ -65,9 +61,6 @@ import { TabsComponent } from './tabs/tabs.component';
     FileUploadComponent,
     ExpandableComponent,
     TabsComponent,
-
-    SliderVerticalComponent,
-    SliderHorizontalComponent
 
   ]
 })
