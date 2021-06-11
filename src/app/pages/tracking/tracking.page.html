@@ -2,7 +2,7 @@
   <!-- <ion-toolbar> -->
     
     <ion-toolbar [ngSwitch]="segment">
-      <ion-title>Seguimiento</ion-title>
+      <ion-title>{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" routerLink="/documents-filter"></ion-icon>&nbsp;
       <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/documents-add"></ion-icon>
@@ -15,13 +15,13 @@
 
   <ion-segment [(ngModel)]="segment" scrollable>
     <ion-segment-button value="documents">
-      <ion-label>Documentos</ion-label>
+      <ion-label>{{ 'tracking.header' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="forms">
-      <ion-label>Formularios</ion-label>
+      <ion-label>{{ 'tracking.tap_forms' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="graphics">
-      <ion-label>Gráficos</ion-label>
+      <ion-label>{{ 'tracking.tap_graphics' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -60,7 +60,7 @@
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" routerLink="/document-detail" [state]="{id: doc.id}">
-                    Detalle</ion-card-title>
+                    {{ 'documents.button_detail' | translate}}</ion-card-title>
                 </ion-col>
               </ion-grid>
             </ion-item>
@@ -99,7 +99,7 @@
           </ion-col>
           <ion-col size="12">
             <ion-card-title class="textBlue">
-              Rellenar</ion-card-title>
+              {{ 'documents.button_fill' | translate}}</ion-card-title>
           </ion-col>
         </ion-grid>
       </ion-item>
