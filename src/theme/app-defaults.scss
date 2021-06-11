@@ -71,6 +71,12 @@ text-align: center;
   font-weight: 400;
   padding: 3%;
 }
+.cardProfilePaddingBottom{
+  --ion-background-color: white!important;
+  font-size: 14px;
+  font-weight: 400;
+  padding-bottom: 3%;
+}
 /*Custom Text*/
 
 .txtTitle{
@@ -121,6 +127,11 @@ text-align: center;
   font-weight: 700;
   color: #2ECC71;
 }
+.txtTitleBig{
+  font-size: 24px;
+  font-weight: 700;
+  color: #000000;
+}
 .txtTitleTrackingLittle{
   font-size: 12px;
   font-weight: 400;
@@ -153,7 +164,14 @@ padding-left: 5%;
   font-weight: 400;
   text-align: left;
 }
-
+.alingLeft{
+text-align: left !important;
+padding-left: 8%;
+}
+.txtSubtitle{
+  font-size: 14px;
+  font-weight: 600; 
+}
 
 /*Custom Buttons*/
 
@@ -176,6 +194,10 @@ background-size:cover; margin: -10px;
 background-position: center;
 }
 
+
+.white{
+  --background: #ffffff!important;
+}
 
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 

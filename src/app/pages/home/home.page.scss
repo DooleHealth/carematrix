@@ -8,7 +8,7 @@ ion-img{
 }
 
 .vertical-card{
-    background-color: white;
+    background-color: white!important;
     width: 100%;
     max-height: 200px;
     ion-img{
@@ -53,5 +53,18 @@ ion-img{
   }
 
 
-
-
+.close-card{
+    position: absolute;
+    top:10px;
+    right: 13px;
+    color: black;
+    font-weight: 900;
+    overflow: hidden;
+  }
+  .my-buffer-progress{
+    --background:#82F038;
+    --buffer-background:#faeacc;
+    --progress-background:#F39C12;
+   
+    
+}
