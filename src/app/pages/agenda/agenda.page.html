@@ -71,7 +71,7 @@
       <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
         <ion-item class="rowPadding2">
           <ion-list>
-            <ion-item lines="full" class="blanco" *ngFor="let event of selectedDate?.events" (click)="eventSelected(event)">
+            <ion-item lines="full" class="blanco" *ngFor="let event of selectedDate?.events" (click)="eventSelected(event)" routerLink="reminder">
 
               <div class="verticalLine"></div>
               <ion-grid>
