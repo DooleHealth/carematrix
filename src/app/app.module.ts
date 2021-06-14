@@ -44,6 +44,7 @@ import localeCa from '@angular/common/locales/ca';
 import localeEs from '@angular/common/locales/es';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@ionic-native/network/ngx";
+import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
 
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
@@ -81,7 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    
+    TestTypePageModule
   ],
   providers: [
     StatusBar,

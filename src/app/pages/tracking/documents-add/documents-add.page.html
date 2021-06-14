@@ -11,14 +11,36 @@
 </ion-header>
 
 <ion-content>
-
+  <form (ngSubmit)="submit()" [formGroup]="form">
   <ion-card class="cardProfile">
     <ion-list>
-      <ion-item lines="none" (click)="openModal()">
+      <ion-item (click)="openModal()">
         <ion-label>Tipo de prueba</ion-label>
-<!--         <ion-select placeholder="Selecciona uno"> routerLink="test-type"
-          <ion-select-option>Analítica</ion-select-option>
-        </ion-select> -->
+        <ion-input formControlName="type" slot="end" [placeholder]="(this.isSubmittedType && this.form.get('type').invalid)? '': 'Selecciona uno' " (ionInput)="isSubmittedType = false"></ion-input>
+        <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>Titulo</ion-label>
+        <ion-input formControlName="title" slot="end" (ionInput)="isSubmittedTitle = false"></ion-input>
+        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha</ion-label>
+        <ion-datetime formControlName="date" displayFormat="DD/MM/YY" (ionInput)="isSubmittedDate = false" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>Descripción</ion-label>
+        <ion-textarea slot="end" formControlName="description"></ion-textarea>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{ 'diagnostics.private' | translate }}</ion-label>
+        <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
     </ion-list>
   </ion-card>
@@ -52,11 +74,43 @@
       <ion-item lines="none">
         <ion-label>Documentos Adjuntos</ion-label>
       </ion-item>
-      <ion-button slot="start" fill="clear">Añadir archivo
-        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
-      </ion-button>
+      <ion-item lines="none" *ngIf="this.mediaFiles.length > 0">
+        <div id="container" style="margin-top: 10px;">
+          <div *ngFor="let file of this.mediaFiles">
+            <!-- <ion-card class="cardProfile"> -->
+              <div id="left">
+                <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+              </div>
+              <div id="middle">
+                <p class="titule">{{ file.name }}</p>
+              </div>
+              <div id="right">
+                <ion-icon name="close-circle" color="primary" (click)="removeFile(file.name)"></ion-icon>
+              </div> 
+          <!-- </ion-card> -->
+          </div>       
+        </div>
+      </ion-item>
+      <input
+      type="file"
+      #fileInput
+      (change)="uploadFileFromBrowser($event)"
+      hidden="true"
+      accept="image/*">
+
+      <ion-button slot="start" 
+      fill="clear" 
+      (click)="selectImageSource()"
+      [disabled]="enableButtonAddFile()">{{'report_problem.button_add_file' | translate }}
+      <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
+    </ion-button>
+
     </ion-list>
   </form>
 </ion-card>
+</form>
 
+  <section>
+    <ion-button expand="block" (click)="showAlert()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
+  </section>  
 </ion-content>

@@ -5,13 +5,17 @@
     </ion-buttons>
     <ion-title>Filtro</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary">Aplicar</ion-button>
+      <ion-button color="primary" (click)="submit()">Aplicar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar></ion-searchbar>
+  <ion-searchbar 
+  [animated]="true" 
+  (ionInput)="filterList($event)" >
+</ion-searchbar>
+  <form (ngSubmit)="submit()" [formGroup]="form"> 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">Fecha</ion-text>
     <ion-toggle slot="end" color="success" (ionChange)='(toggle = ! toggle) ? toggle : !toggle;'></ion-toggle>
@@ -20,15 +24,11 @@
     <ion-list>
       <ion-item>
         <ion-label>Desde</ion-label>
-        <ion-select placeholder="Selecciona uno">
-          <ion-select-option>dia</ion-select-option>
-        </ion-select>
+        <ion-datetime formControlName="start_date" displayFormat="DD/MM/YY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
       <ion-item lines="none">
         <ion-label>Hasta</ion-label>
-        <ion-select placeholder="Selecciona uno">
-          <ion-select-option>dia</ion-select-option>
-        </ion-select>
+        <ion-datetime formControlName="end_date" displayFormat="DD/MM/YY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </ion-card>
@@ -38,27 +38,12 @@
     <ion-toggle slot="end" color="success" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2;'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle2">
-    <ion-list>
-      <ion-item>
-        <ion-label>texto</ion-label>
-        <ion-checkbox slot="start"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>texto</ion-label>
-        <ion-checkbox slot="start"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>texto</ion-label>
-        <ion-checkbox slot="start"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>texto</ion-label>
-        <ion-checkbox slot="start"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>texto</ion-label>
-        <ion-checkbox slot="start"></ion-checkbox>
+    <ion-list *ngFor="let test of listTestType; let i = index">
+      <ion-item [lines]="linesNone(i)">
+        <ion-label>{{test.name}}</ion-label>
+        <ion-checkbox slot="start"  (ionChange)="actionCheckboxTestType($event, test)"></ion-checkbox>
       </ion-item>
     </ion-list>
   </ion-card>
+</form>
 </ion-content>

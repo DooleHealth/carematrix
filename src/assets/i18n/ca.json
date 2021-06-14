@@ -112,6 +112,7 @@
         "header_info": "Informació",
         "header_confirmation": "Confirmació"
       },
+      "error_required": "Requerit",
       "setting":{
         "title_setting": "Ajustos",
         "button_profile": "Perfil",

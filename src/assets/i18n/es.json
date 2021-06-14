@@ -112,6 +112,8 @@
         "header_info": "Información",
         "header_confirmation": "Confirmación"
       },
+      "error_required": "Requerido",
+      
       "setting":{
         "title_setting": "Ajustes",
         "button_profile": "Perfil",
