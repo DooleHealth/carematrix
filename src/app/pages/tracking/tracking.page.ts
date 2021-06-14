@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 export interface ListDiagnosticTests {
   date?: string;
@@ -28,12 +29,16 @@ export class TrackingPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private loadingController: LoadingController,
+    public alertCtrl: AlertController,
+    public navCtrl:NavController,
+    private iab: InAppBrowser, 
+    private auth: AuthenticationService,
   ) { }
 
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
-    this.getDiagnosticTests()
-    this.getForms()
+    //this.getDiagnosticTests()
+    this.getFormLists()
     this.applyFilter()
   }
 
@@ -43,16 +48,39 @@ export class TrackingPage implements OnInit {
     this.applyFilter()
   }
 
+  ionViewWillEnter(){
+    console.log('[TrackingPage] ionViewWillEnter()');
+  }
+
   applyFilter(){
     this.filter = history.state.filter;
     console.log('[TrackingPage] applyFilter()' ,  this.filter);
     if(this.filter){
       this.getFilteredDiagnosticTests()
+    }else{
+      this.getDiagnosticTests();
     }
   }
 
-  getFilteredDiagnosticTests(){
+  async getFilteredDiagnosticTests(){
     console.log('[TrackingPage] getFilteredDiagnosticTests()' ,  this.filter);
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.dooleService.postAPIfilteredDiagnosticTest(this.filter).subscribe(
+      async (res: any) =>{
+        console.log('[TrackingPage] getDiagnosticTests()', await res);
+        let diagnosticTests = res.diagnosticTests
+        if(diagnosticTests && diagnosticTests >0){
+          this.diagnosticTests = []
+          this.listDiagnostic = []
+          this.orderDiagnosticsByDate(res)
+        }
+        loading.dismiss();
+       },(err) => { 
+          console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+          loading.dismiss();
+      });
   }
 
 
@@ -65,7 +93,7 @@ export class TrackingPage implements OnInit {
         this.listDiagnostic = []
         console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.diagnosticTests = res.diagnosticTests
-        //this.filterDiagnosticsByDate()
+        if(this.diagnosticTests )
         this.orderDiagnosticsByDate(res)
         loading.dismiss();
        },(err) => { 
@@ -75,19 +103,9 @@ export class TrackingPage implements OnInit {
       });
   }
 
-  getForms(){
-    this.dooleService.getAPIformsTracking().subscribe(
-      async (res: any) =>{
-        console.log('[TrackingPage] getForms()', await res);
-        this.forms = res
-       },(err) => { 
-          console.log('[TrackingPage] getForms() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      });
-  }
 
   getGraphics(){
-    this.dooleService.getAPIformsTracking().subscribe(
+    this.dooleService.getAPIgraphicsTracking().subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getGraphics()', await res); 
         this.graphics = res
@@ -97,7 +115,7 @@ export class TrackingPage implements OnInit {
       });
   }
 
-  filterDiagnosticsByDate(){
+/*   filterDiagnosticsByDate(){
     this.diagnosticTests.forEach( (diagnostic, index) =>{
       let date = diagnostic.date_european
       if(index == 0 || date !== this.diagnosticTests[index-1].date_european){
@@ -108,7 +126,7 @@ export class TrackingPage implements OnInit {
       } 
     })
     console.log('[TrackingPage] filterDiagnosticsByDate()', this.listDiagnostic);
-  }
+  } */
 
   orderDiagnosticsByDate(list){
     let diagnosticTests = list.diagnosticTests
@@ -122,6 +140,68 @@ export class TrackingPage implements OnInit {
       } 
     })
     console.log('[TrackingPage] filterDiagnosticsByDate()', this.listDiagnostic);
+  }
+
+
+  async getFormLists(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.dooleService.getAPIformLists().subscribe(
+      async (res: any) =>{
+         this.forms = []
+        console.log('[TrackingPage] getDiagnosticTests()', await res);
+        this.forms = res.forms
+        loading.dismiss();
+       },async (err) => { 
+          console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+          //throw err; 
+          loading.dismiss();
+          let alert = await this.alertCtrl.create({
+            header: 'Error',
+            message: 'Se ha producido un error',
+            buttons: [{
+              text: 'Ok',
+              handler: data => {
+                this.navCtrl.pop();
+              }
+            }]
+          });
+          await alert.present();
+      });
+  }
+
+  async openForm(form){
+    const options: InAppBrowserOptions = {
+      location: 'no',
+      toolbar: 'yes'
+    };
+
+    await this.auth.getUserLocalstorage().then(value =>{
+      this.auth.user = value
+    })
+
+    console.log('[TrackingPage] openForm()',  this.auth.user);
+
+    //if(this.auth==undefined || this.auth.user== undefined){
+      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+form.id+'" method="post" enctype="multipart/form-data">' +
+        '<input type="hidden" name="idForm" value="'+form.id+'">' +
+        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
+        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
+        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
+      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+      var browserRef = this.iab.create(
+        pageContentUrl,
+        "_blank",
+        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+      );
+/*     }else{
+      var browserRef = this.iab.create(
+        form.temporaryUrl,
+        "_blank",
+        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+      );
+    } */
+
   }
 
 }

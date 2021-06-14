@@ -88,7 +88,7 @@ export class LandingPage implements OnInit {
       this.redirectLoader = loader;
       this.redirectLoader.present();
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
-        console.log('[LandingPage] doDooleAppLogin()', await res);
+        console.log('[LandingPage] doDooleAppLogin()', res);
         this.dismissLoading();
         //this.checkConditionLegal(res.condicion_legal)
         this.router.navigate(['/legal']);
@@ -114,8 +114,8 @@ export class LandingPage implements OnInit {
      * Stored data is cleared if the app is uninstalled.
      */
     await Storage.set({
-      key: 'mutua',
-      value: data
+      key: 'user',
+      value: JSON.stringify(data)
     });
   }
 
@@ -163,7 +163,7 @@ export class LandingPage implements OnInit {
 
     await alert.present();
   }
- 
+
 
  
 }

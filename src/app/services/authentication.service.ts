@@ -18,8 +18,16 @@ export class User{
   
   condicion_legal: boolean;
   image: any;
-  constructor(){};
-  //constructor(){};
+  idPatient: string;
+  idUser: string;
+  secret: string;
+  roles : any = [];
+  familyUnit : string;
+  constructor(idUser:string, secret:string){
+    this.idUser = idUser
+    this.secret = secret
+  };
+
 }
 
 @Injectable({
@@ -31,7 +39,7 @@ export class AuthenticationService {
   public mutua: string;
   public isRecovery: boolean = false;
   public action:string;
-  public id_usuari_mgc:string;
+  public id_user:string;
   public data : Array<any>;
   public email: string;
   public agendaUser = [];
@@ -96,8 +104,10 @@ export class AuthenticationService {
             console.log(error);
           });
         }
+        this.user = new User(res.idUser, credentials.password);
+        this.setUserLocalstorage(this.user)
         // user's data
-        return res.data;
+        return res;
 
       }),
       tap(_ => {
@@ -106,9 +116,28 @@ export class AuthenticationService {
     );
   }
 
+  setUser(idUser: string, secret?: string ){
+    this.user = new User(idUser,secret);
+    console.log("user: ", this.user );
+    this.setUserLocalstorage(this.user)
+  }
+
+  setUserLocalstorage(user){
+     Storage.set({
+      key: 'user',
+      value: JSON.stringify(user)
+    });
+  }
+  getUserLocalstorage() : Promise<User>{
+    return Storage.get({key: 'user'}).then((val) => {
+      return JSON.parse(val.value);
+    });
+  }
+
   logout(): Promise<void> {
     console.log('logout');
     this.isAuthenticated.next(false);
+    Storage.remove({key: 'user'}).then((val) => { });
     return Storage.remove({key: TOKEN_KEY});    
   }
   
