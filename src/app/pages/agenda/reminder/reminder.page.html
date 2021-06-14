@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="{{ 'personal.button_back' | translate }}" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recordatorio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div  class="whiteBackground">
+    <ion-grid class="paddingGrid">
+      <ion-row>
+        <ion-col size="12">
+          <ion-img 
+            [src]="this.userProfile.image"
+            class="img-wrapper"
+          ></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list >
+      <ion-row >
+        <ion-text class="txtTitle">Tomar la Tensión Arterial</ion-text>
+      </ion-row>
+      <ion-item>
+        <ion-label>Médico</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.birthdate_european}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Notas</ion-label>
+        <ion-textarea class="textMedium">{{this.userProfile.birthdate_european}}</ion-textarea>
+      </ion-item>
+      <ion-item >
+        <ion-label>Tipo</ion-label>
+        <ion-label class="textMedium">Dr. Loquesea</ion-label>
+      </ion-item>
+      <ion-item >
+        <ion-label>Cita relacionada</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.last_name}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Empieza</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.gender}}</ion-label>
+      </ion-item>
+      <ion-item> 
+        <ion-label>Termina</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.height}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Repetir</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.weight }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Terminar repetición</ion-label>
+        <ion-label class="textMedium">{{this.userProfile.weight }}</ion-label>
+      </ion-item>
+      <!-- <ion-card class="cardProfile">
+        <ion-list>
+          <ion-item>
+            <ion-label>Avisar</ion-label>
+            <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+          </ion-item>
+          <ion-item lines="none" routerLink="settings">
+            <ion-label lines="none">gdfsgkgf</ion-label>
+            <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+          </ion-item>
+        </ion-list>
+  </ion-card> -->
+    </ion-list>
+  </div>
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item>
+        <ion-label>Avisar</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item lines="none" routerLink="settings">
+        <ion-label lines="none">Mostrar como</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+    </ion-list>
+</ion-card>
+<ion-card class="cardProfile">
+ 
+    <ion-item>
+      
+      <ion-label>Comentarios para el médico</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+   
+    </ion-item>
+   
+</ion-card>
+<ion-button fill="clear" expand="full" color="danger">
+  Eliminar</ion-button>
+</ion-content>

@@ -111,6 +111,10 @@ const routes: Routes = [
   {
     path: 'documents-add',
     loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
+  },
+  {
+    path: 'reminder',
+    loadChildren: () => import('./pages/agenda/reminder/reminder.module').then( m => m.ReminderPageModule)
   }
 
 
