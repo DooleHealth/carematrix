@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="" text="Cancelar"></ion-back-button>
+    </ion-buttons>
+    <ion-title text-wrap>Añadir Recordatorio</ion-title>
+    <ion-button slot="end" fill="clear">Añadir
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="whiteBackground">
+    <ion-card class="cardProfile">
+      <ion-list>
+        <ion-item>
+          <ion-label>Título</ion-label>
+          <ion-input class="textMedium"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Notas</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-textarea class="textMedium" placeholder="Enter more information here..."></ion-textarea>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Tipo</ion-label>
+          <ion-label class="textMedium"></ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item>
+        <ion-label>Todo el día</ion-label>
+        <ion-toggle slot="end" color="success" checked></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Empieza</ion-label>
+        <ion-input class="textMedium"></ion-input>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label lines="none">Termina</ion-label>
+        <ion-input class="textMedium"></ion-input>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label lines="none">Repetir</ion-label>
+        <ion-input class="textMedium"></ion-input>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card class="cardProfile">
+    <ion-item>
+      <ion-label lines="none">Avisar</ion-label>
+      <ion-input class="textMedium"></ion-input>
+      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label lines="none">Mostrar como</ion-label>
+      <ion-input class="textMedium"></ion-input>
+      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

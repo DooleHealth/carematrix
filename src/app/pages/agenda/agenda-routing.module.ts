@@ -11,6 +11,15 @@ const routes: Routes = [
   {
     path: 'list-appointment',
     loadChildren: () => import('./list-appointment/list-appointment.module').then( m => m.ListAppointmentPageModule)
+  },
+  {
+    path: 'reminder',
+    loadChildren: () => import('./reminder/reminder.module').then( m => m.ReminderPageModule)
+  }
+  ,
+  {
+    path: 'reminder-add',
+    loadChildren: () => import('./reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
   }
 ];
 

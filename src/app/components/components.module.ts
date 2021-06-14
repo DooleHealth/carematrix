@@ -19,6 +19,7 @@ import { PageHeaderComponent } from './page-header/page-header.component'
 import { RouterModule} from "@angular/router";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { ExpandableComponent } from './expandable/expandable.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { ExpandableComponent } from './expandable/expandable.component';
     PageHeaderComponent,
     FileUploadComponent,
     ExpandableComponent,
+    TabsComponent,
   ],
   exports: [
     ShellModule,
@@ -58,6 +60,8 @@ import { ExpandableComponent } from './expandable/expandable.component';
     PageHeaderComponent,
     FileUploadComponent,
     ExpandableComponent,
+    TabsComponent,
+
   ]
 })
 export class ComponentsModule {}

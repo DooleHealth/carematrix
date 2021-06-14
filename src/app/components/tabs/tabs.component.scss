@@ -1,0 +1,12 @@
+ion-tab-button{
+    --background-focused: rgb(80, 4, 80);
+    --color-selected: #a0a!important;
+
+    ion-icon{
+        --color-selected:  blue!important;
+    }
+}
+    
+ion-tab-button:active{
+        color: blue;
+    }
