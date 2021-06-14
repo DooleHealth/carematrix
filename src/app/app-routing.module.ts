@@ -68,10 +68,6 @@ const routes: Routes = [
     path: 'password',
     loadChildren: () => import('./pages/profile/settings/password/password.module').then( m => m.PasswordPageModule)
   },
-/*   {
-    path: 'cards',
-    loadChildren: () => import('./pages/profile/cards/cards.module').then( m => m.CardsPageModule)
-  }, */
   {
     path: 'agenda',
     loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)

@@ -19,7 +19,12 @@ export class CardsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('[CardsPage] ngOnInit()');
     this.getHealthCards()
+  }
+
+  ionViewDidEnter(){
+    console.log('[CardsPage] ionViewDidEnter()');
   }
 
   getHealthCards(){

@@ -9,7 +9,7 @@ const routes: Routes = [
     component: TrackingPage
   },
   {
-    path: 'document-detail',
+    path: 'document-detail:id',
     loadChildren: () => import('./document-detail/document-detail.module').then( m => m.DocumentDetailPageModule)
   },
   {

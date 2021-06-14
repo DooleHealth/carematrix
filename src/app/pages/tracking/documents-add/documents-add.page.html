@@ -4,7 +4,7 @@
       <ion-back-button text="Cancelar"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'documents_add.header' | translate }} </ion-title>
-    <ion-button fill="clear" slot="end" (click)="submit()">
+    <ion-button fill="clear" slot="end"  (click)="showAlert()">
       OK
     </ion-button>
   </ion-toolbar>
@@ -111,6 +111,6 @@
 </form>
 
   <section>
-    <ion-button expand="block" (click)="showAlert()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
+    <ion-button expand="block" [routerLink]="['/app/tracking']" >{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
   </section>  
 </ion-content>

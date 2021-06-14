@@ -590,13 +590,25 @@ export class DooleService {
       })
     );
   }
+
+  postAPIfilteredDiagnosticTest(params: Object): Observable<any>{
+    let path = 'user/diagnosticTests/';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIdiagnosticTest(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
   //forms-Tracking
-  getAPIformsTracking(): Observable<any>{
-    let path = 'user/tracking/forms';
+  getAPIformLists(): Observable<any>{
+    let path = 'forms/user';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIappointmentAgenda(${path}) res: `, res);
+        console.log(`[DooleService] getAPIformLists(${path}) res: `, res);
         return res;
       })
     );

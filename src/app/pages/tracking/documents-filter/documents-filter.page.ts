@@ -123,7 +123,7 @@ export class DocumentsFilterPage implements OnInit {
       //console.log('[DocumentsFilterPage] submit()', this.form.value);
 
       //this. router.navigate(['app/tracking', {filter: this.form.value}])
-      this.navCtrl.navigateBack('app/tracking')
+      this.navCtrl.navigateForward('app/tracking')
   }
 
 }

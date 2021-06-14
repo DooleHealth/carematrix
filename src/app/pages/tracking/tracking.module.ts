@@ -8,6 +8,7 @@ import { TrackingPageRoutingModule } from './tracking-routing.module';
 
 import { TrackingPage } from './tracking.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     TrackingPageRoutingModule
   ],
+  providers: [ InAppBrowser],
   declarations: [TrackingPage]
 })
 export class TrackingPageModule {}

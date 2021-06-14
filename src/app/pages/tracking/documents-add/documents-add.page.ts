@@ -44,7 +44,7 @@ export class DocumentsAddPage implements OnInit {
     public file: File, 
     public platform: Platform,
     public datepipe: DatePipe,
-    public navController: NavController
+    public navController: NavController,
   ) { }
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class DocumentsAddPage implements OnInit {
     await loading.present();
 
     let date = this.form.get('date').value;
-    var current = new Date(date.split('T')[0]);
+    var current = new Date(date.split('T')[0]).toISOString();
     let data_prestacio = this.datepipe.transform(current, 'dd/MM/y');
     this.form.get('date').setValue(data_prestacio);
 
@@ -115,7 +115,7 @@ export class DocumentsAddPage implements OnInit {
 
   showAlert(){
     //this.router.navigate(['/app/tracking']);
-    this.navController.navigateForward(['/app/tracking']);
+    this.navController.navigateForward(['app/tracking']);
     let messagge = this.translate.instant('add_health_card.alert_message_add_card')
     let header = this.translate.instant('alert.header_info')
    // this.dooleService.showAlertAndReturn(header,messagge,false, '/app/tracking')
@@ -337,6 +337,5 @@ export class DocumentsAddPage implements OnInit {
 
     })
   }
-
 
 }
