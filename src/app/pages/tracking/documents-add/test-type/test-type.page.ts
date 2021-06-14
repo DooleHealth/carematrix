@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -12,23 +12,33 @@ export class TestTypePage implements OnInit {
   listTestTypeBackup = []
   constructor(
     private modalController: ModalController,
-    //private navParams: NavParams,
     private dooleService: DooleService,
+    private loadingController: LoadingController,
   ) { }
 
   ngOnInit() {
     this.getTestType()
   }
 
-  getTestType(){
+  async getTestType(){
+    console.log("submit");
+    const loading = await this.loadingController.create();
+    await loading.present();
+
     this.dooleService.getAPIdiagnosticTestTypesAvailable().subscribe(
       async (res: any) =>{
         console.log('[TestTypePage] getTestType()', await res);
         this.listTestType = res.diagnosticTestTypes
         this.listTestTypeBackup = this.listTestType
+        loading.dismiss();
        },(err) => { 
+        loading.dismiss();
           console.log('[TestTypePage] getTestType() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
+      },
+      () => {
+        // Called when operation is complete (both success and error)
+        loading.dismiss();
       });
   }
 
@@ -55,9 +65,9 @@ export class TestTypePage implements OnInit {
     return await modal.present();
   }
 
-  async closeModal(text: any) {
-    if(text)
-    await this.modalController.dismiss(text);
+  async closeModal(test?: any) {
+    if(test)
+    await this.modalController.dismiss(test);
     else
     await this.modalController.dismiss();
   }

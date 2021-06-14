@@ -357,7 +357,7 @@ export class DooleService {
     )
   }
 
-  getAPIFamilyUnit(){
+  getAPIFamilyUnit(): Observable<any>{
     let path = 'user/familyUnit';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -404,7 +404,7 @@ export class DooleService {
     );
   }
 
-  getAPIhealthCards(){
+  getAPIhealthCards(): Observable<any>{
     let path = 'user/health_cards';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -451,7 +451,7 @@ export class DooleService {
     );
   }
 
-  getAPIfamilyRelationship(){
+  getAPIfamilyRelationship(): Observable<any>{
     let path = 'user/relationship';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -462,7 +462,7 @@ export class DooleService {
     );
   }
 
-  getAPIemergencyContact(){
+  getAPIemergencyContact(): Observable<any>{
     let path = 'user/emergency_contact';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -473,7 +473,7 @@ export class DooleService {
     );
   }
 
-  postAPIemergencyContact(params: Object){
+  postAPIemergencyContact(params: Object): Observable<any>{
     let path = 'user/emergency_contact';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -485,7 +485,7 @@ export class DooleService {
     );
   }
 
-  putAPIemergencyContact(params: Object){
+  putAPIemergencyContact(params: Object): Observable<any>{
     let id = (params as any).id
    // let path = `user/emergency_contact/${id}`;
     let path = `user/emergency_contact`;
@@ -512,7 +512,7 @@ export class DooleService {
   }
 
 
-  getAPIaboutUs(){
+  getAPIaboutUs(): Observable<any>{
     let path = 'user/about_us';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -523,7 +523,7 @@ export class DooleService {
     );
   }
 
-  getAPIappointmentAgenda(){
+  getAPIappointmentAgenda(): Observable<any>{
     let path = 'user/appointment';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -546,7 +546,7 @@ export class DooleService {
     );
   }
   //documents-Tracking
-  getAPIdiagnosticTests(){
+  getAPIdiagnosticTests(): Observable<any>{
     let path = 'user/diagnosticTests';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -557,7 +557,7 @@ export class DooleService {
     );
   }
 
-  getAPIdiagnosticTestTypesAvailable(){
+  getAPIdiagnosticTestTypesAvailable(): Observable<any>{
     let path = 'diagnosticTestTypes/available';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -568,7 +568,7 @@ export class DooleService {
     );
   }
 
-  getAPIdiagnosticTestID(id: Object){
+  getAPIdiagnosticTestID(id: Object): Observable<any>{
     let path = 'user/diagnosticTest/'+id;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -580,7 +580,7 @@ export class DooleService {
   }
 
   postAPIdiagnosticTest(params: Object): Observable<any>{
-    let path = 'user/diagnosticTest';
+    let path = 'user/diagnosticTests/';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -591,7 +591,7 @@ export class DooleService {
     );
   }
   //forms-Tracking
-  getAPIformsTracking(){
+  getAPIformsTracking(): Observable<any>{
     let path = 'user/tracking/forms';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -602,7 +602,7 @@ export class DooleService {
     );
   }
 
-  getAPIgraphicsTracking(){
+  getAPIgraphicsTracking(): Observable<any>{
     let path = 'user/tracking/graphics';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(

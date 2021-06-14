@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -8,6 +8,8 @@ import { DocumentsAddPageRoutingModule } from './documents-add-routing.module';
 
 import { DocumentsAddPage } from './documents-add.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { Chooser } from '@ionic-native/chooser/ngx';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,8 +17,11 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    DocumentsAddPageRoutingModule
+    ReactiveFormsModule,
+    DocumentsAddPageRoutingModule,
+    ComponentsModule,
   ],
+  providers:[DatePipe,Chooser],
   declarations: [DocumentsAddPage]
 })
 export class DocumentsAddPageModule {}
