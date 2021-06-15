@@ -21,6 +21,7 @@ const routes: Routes = [
     path: 'reminder-add',
     loadChildren: () => import('./reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
   }
+
 ];
 
 @NgModule({
