@@ -1,9 +1,59 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>doctors</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="{{ 'profile.button_go_init' | translate}}" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'profile.title_profile' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
 
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-img src='assets/images/avatar_masculino.png'  class="img-wrapper"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h3 style="text-align: center;">Ricardo Sánchez</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p style="text-align: center;">Medicina General</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+    <ion-card class="cardProfilePadding">
+              <ion-row style="font-weight: 600;">
+              <ion-label>Número de colegiado</ion-label>
+            </ion-row>
+            <ion-row>
+              <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
+            </ion-row> 
+    </ion-card>
+      
+    <ion-card class="cardProfilePadding">
+      <ion-row style="font-weight: 600;">
+      <ion-label>Ciudad</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
+    </ion-row> 
+</ion-card>
+  
+<ion-card class="cardProfilePadding">
+  <ion-row style="font-weight: 600;">
+  <ion-label>Centros de atención</ion-label>
+</ion-row>
+<ion-row>
+  <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
+</ion-row> 
+</ion-card>
+    <ion-button expand="block"  style="margin-top: 5%;">
+      Abrir Chat
+  </ion-button>
 </ion-content>

@@ -202,6 +202,17 @@ background-position: center;
   --background: #ffffff!important;
 }
 
+  /* IMAGES */
+.img-wrapper{
+    background-size: 100% auto;
+    border-radius: 50% !important;
+    overflow: hidden;
+    max-height: 100px;
+    max-width: 100px;
+    display: block;
+    margin: auto;
+    margin-top: 3%;
+}
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
