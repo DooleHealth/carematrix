@@ -124,6 +124,10 @@ const routes: Routes = [
     path: 'doctors',
     loadChildren: () => import('./pages/contact/doctors/doctors.module').then( m => m.DoctorsPageModule)
   },
+  {
+    path: 'agenda-detail',
+    loadChildren: () => import('./pages/agenda/agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
+  },
  
 
 

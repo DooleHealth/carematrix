@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="{{ 'personal.button_back' | translate }}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle cita</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="whiteBackground">
+  <div class="whiteBackground">
+    <ion-grid class="paddingGrid">
+      <ion-row>
+        <ion-col size="12">
+          <ion-img class="img-wrapper"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-list>
+      <ion-row>
+        <ion-text class="txtTitle">Cita Colonoscopia</ion-text>
+      </ion-row>
+      <ion-item>
+        <ion-label>Modalidad</ion-label>
+        <ion-label class="textMedium">Presencial</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha</ion-label>
+        <ion-label class="textMedium">23/08/21</ion-label>
+      </ion-item>
+      <ion-item routerLink="doctor">
+        <ion-label>Médico</ion-label>
+        <ion-label class="textMedium">Dr. Sánchez</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Especialidad</ion-label>
+        <ion-label class="textMedium">Digestivo</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Centro</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap class="textMediumLeft">Centro Asociado Santa Marina</ion-label>
+      </ion-item>
+      <ion-item>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11969.313337812735!2d2.1941609!3d41.4103908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1623755939112!5m2!1ses!2ses"
+          width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tipo de cita</ion-label>
+        <ion-label class="textMedium">Colonoscopia</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Instrucciones</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap class="textMediumLeft"> ir en ayunas, haber tomado medicación, enema</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Información</ion-label>
+        <ion-textarea class="textMedium"></ion-textarea>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Archivos Adjuntos</ion-label>
+        <ion-label class="textMedium"></ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ion-button fill="clear" expand="full" color="danger">
+    Eliminar</ion-button>
+</ion-content>
