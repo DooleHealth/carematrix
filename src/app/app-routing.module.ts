@@ -116,6 +116,14 @@ const routes: Routes = [
     path: 'reminder-add',
     loadChildren: () => import('./pages/agenda/reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
   },
+  {
+    path: 'contact',
+    loadChildren: () => import('./pages/contact/contact.module').then( m => m.ContactPageModule)
+  },
+  {
+    path: 'doctors',
+    loadChildren: () => import('./pages/contact/doctors/doctors.module').then( m => m.DoctorsPageModule)
+  },
  
 
 
