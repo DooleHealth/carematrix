@@ -114,11 +114,9 @@ export class DocumentsAddPage implements OnInit {
   }
 
   showAlert(){
-    //this.router.navigate(['/app/tracking']);
-    this.navController.navigateForward(['app/tracking']);
     let messagge = this.translate.instant('add_health_card.alert_message_add_card')
     let header = this.translate.instant('alert.header_info')
-   // this.dooleService.showAlertAndReturn(header,messagge,false, '/app/tracking')
+    this.dooleService.showAlertAndReturn(header,messagge,false, '/app/tracking')
   }
 
   async openModal() {

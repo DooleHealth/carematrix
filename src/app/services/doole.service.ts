@@ -230,7 +230,7 @@ export class DooleService {
   }
 
   getAPILegalInformation(): Observable<any>{
-    let path = '/user/legal';
+    let path = 'user/legal';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -240,7 +240,7 @@ export class DooleService {
     )
   }
   postAPILegalConfirmation(params: Object): Observable<any>{
-    let path = '/user/legal';
+    let path = 'user/legal';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -253,7 +253,7 @@ export class DooleService {
 
 
   postAPIpasswordRecovery(params: Object) : Observable<any>{
-    let path = '/user/password_recovery'
+    let path = 'user/password_recovery'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -264,7 +264,7 @@ export class DooleService {
   } 
 
   getAPIgoals(): Observable<any>{
-    let path = '/user/element/goals'
+    let path = 'user/element/goals'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -275,7 +275,7 @@ export class DooleService {
   }
 
   getAPIinformationUser(): Observable<any>{
-    let path = '/user/informationUser'
+    let path = 'user/informationUser'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -286,7 +286,7 @@ export class DooleService {
   }
 
   getAPIuserProfile(): Observable<any>{
-    let path = '/user/profiles'
+    let path = 'user/profiles'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -613,13 +613,57 @@ export class DooleService {
       })
     );
   }
-
-  getAPIgraphicsTracking(): Observable<any>{
-    let path = 'user/tracking/graphics';
+//graphics-Tracking
+  getAPIlistGoals(): Observable<any>{
+    let path = 'user/element/goals';   
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIappointmentAgenda(${path}) res: `, res);
+        console.log(`[DooleService] getAPIlistGoals(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIelementsList(): Observable<any>{  
+    let path =  /* 'user/elementsList'  */   'user/elementsList/v2'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIlistGoals(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIaddElement(id, params: Object): Observable<any>{
+    let path = 'user/element/' + id + '/value/add'  
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIcategory(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIgraphicsGoal(id: Object, query): Observable<any>{
+    let path = 'user/element/'+id +'?'+query;  
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgraphicsGoal(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIcategory(): Observable<any>{
+    let path = 'user/element/category';  
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIcategory(${path}) res: `, res);
         return res;
       })
     );

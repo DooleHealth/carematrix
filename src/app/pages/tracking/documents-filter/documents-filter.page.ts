@@ -119,11 +119,8 @@ export class DocumentsFilterPage implements OnInit {
         let endDateTemp = this.datepipe.transform(dateEnd, 'dd/MM/y');
         this.form.get('end_date').setValue(endDateTemp)
       }
-
-      //console.log('[DocumentsFilterPage] submit()', this.form.value);
-
-      //this. router.navigate(['app/tracking', {filter: this.form.value}])
-      this.navCtrl.navigateForward('app/tracking')
+      //this.router.navigate(['app/tracking', {filter: this.form.value}])
+      //this.navCtrl.navigateForward('app/tracking')
   }
 
 }

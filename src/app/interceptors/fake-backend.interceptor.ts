@@ -34,8 +34,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return legalInformation();
                 case url.endsWith('user/legal') && method === 'POST':
                     return confirmLegal();
-                case url.endsWith('/user/element/goals') && method === 'GET':
-                    return goalsUser();
+/*                 case url.endsWith('/user/element/goals') && method === 'GET':
+                    return goalsUser(); */
                 case url.endsWith('/user/profiles') && method === 'GET':
                     return userProfile();
                 case url.endsWith('user/changePassword') && method === 'POST':
@@ -68,6 +68,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIdocumentsTracking();
                 case url.endsWith('user/tracking/forms') && method === 'GET':
                     return getAPIformsTracking();
+                case url.endsWith('user/element/category') && method === 'GET':
+                    return getAPIcategoryElements();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -948,6 +950,38 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     title: "Cuentanos si todo ha ido bien esta semana",
                     doctor: "Dr. Mata Toro",
                     date: "2021-06-08T20:00:42.000000Z",
+                }
+            ])
+        }
+
+        function getAPIcategoryElements(){
+            return ok([
+                {
+                    group: 'Actividad Física',
+                    elements: [
+                        {id: 71, name: 'Consumo energético', unit: 'Cal'},
+                        {id: 31, name: 'Distancia', unit: 'Km'},
+                        {id: 30, name: 'Pasos', unit: 'm'}
+                    ]
+                },
+                {
+                    group: 'Bioquímica',
+                    elements: [
+                        {id: 3, name: 'Glucosa', unit: 'mg/dl'},
+                        {id: 63, name: 'Colestero', unit: 'mg/dl'},
+                    ]
+                },
+                {
+                    group: 'Constantes',
+                    elements: [
+                        {id: 58, name: 'Altura', unit: 'm'},
+                        {id: 71, name: 'Peso', unit: 'Kg'},
+                        {id: 39, name: 'Ritmo cardiaco', unit: 'LPM'},
+                        {id: 61, name: 'Electrocardiograma', unit: 'mm/seg'},
+                        {id: 4, name: 'Saturación de oxígeno', unit: '%'},
+                        {id: 1, name: 'Temperatura', unit: 'ºC'},
+                        {id: 33, name: 'Presión arterial', unit: 'mmHg'}
+                    ]
                 }
             ])
         }

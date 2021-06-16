@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="Inicio" ></ion-back-button>
     </ion-buttons>
-    <ion-title>Objectivos de Actividad</ion-title>
+    <ion-title>{{header}}</ion-title>
     <ion-buttons slot="end">
       <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
     </ion-buttons>
@@ -13,38 +13,46 @@
 
 <ion-content>
   
-    <ion-segment value="documents" scrollable style="background-color: white;">
-      <ion-segment-button value="">
+    <ion-segment 
+    value="day" 
+    [(ngModel)]="segmentFilter" 
+    (ionChange)="segmentChanged($event)"
+    scrollable style="background-color: white;">
+      <ion-segment-button value="1d" >
         <ion-label>D</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="">
+      <ion-segment-button value="1w">
         <ion-label>W</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="">
+      <ion-segment-button value="1m">
         <ion-label>M</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="">
+      <ion-segment-button value="1y">
         <ion-label>Y</ion-label>
       </ion-segment-button>
     </ion-segment>
     <div class="main-container2">
-  <ion-row><ion-col size="2" class="txtTitleGoalsGreenBig">100</ion-col><ion-col size="2" class="txtTitleGoalsLittle2">mg/dl</ion-col></ion-row>
-  <ion-row><ion-col size="4" class="txtTitleGoalsLittle">01/01/2020</ion-col></ion-row>
+  <ion-row *ngIf="this.values && this.values.length > 0"><ion-col size="2" class="txtTitleGoalsGreenBig">{{values[values.length-1].value}}</ion-col><ion-col size="2" class="txtTitleGoalsLittle2">{{units}}</ion-col></ion-row>
+  <ion-row *ngIf="this.values &&  this.values.length > 0"><ion-col size="4" class="txtTitleGoalsLittle">{{values[values.length-1].date_value | date: 'dd/MM/y'}}</ion-col></ion-row>
  </div>
-  <div id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
+
+<div id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
+
+<div *ngIf="goals !== undefined &&  goals.length >0"> 
   <div class="main-container">
     <ion-text class="txtTitleNoMargin">Recompensa</ion-text>
   </div>
-  <ion-card class="cardProfilePadding">
-    <ion-row>
-      <ion-col size="2">
-        <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
-      </ion-col>
-      <ion-col size="10" class="txtTitleGoals2">Alcanza tu objetivo y suma Healthies:<br>50 Healthies</ion-col>
-    </ion-row>
- 
 
-  </ion-card>
+    <ion-card  *ngFor="let goal of goals" class="cardProfilePadding">
+      <ion-row>
+        <ion-col size="2">
+          <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
+        </ion-col>
+        <ion-col size="10" class="txtTitleGoals2">Alcanza tu objetivo y suma Healthies:<br>{{goal.score}} Healthies</ion-col>
+      </ion-row>
+    </ion-card>
+</div>
+
 
   <div class="main-container">
     <ion-text class="txtTitleNoMargin">Información</ion-text>

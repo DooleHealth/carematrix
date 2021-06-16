@@ -23,7 +23,10 @@ export class TrackingPage implements OnInit {
   listDiagnostic:  ListDiagnosticTests[] = []
   diagnosticTests = []
   forms = []
-  graphics = []
+
+  groupedElements: any = [];
+  elementValues: any = [];
+
   segment = 'documents'
   filter: Filter;
   constructor(
@@ -37,24 +40,21 @@ export class TrackingPage implements OnInit {
 
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
-    //this.getDiagnosticTests()
-    this.getFormLists()
-    this.applyFilter()
+    this.segmentChanged()
   }
 
   ionViewDidEnter(){
     console.log('[TrackingPage] ionViewDidEnter()');
-    this.getDiagnosticTests();
-    this.applyFilter()
+    this.segmentChanged()
   }
 
   ionViewWillEnter(){
     console.log('[TrackingPage] ionViewWillEnter()');
   }
 
-  applyFilter(){
+  getDiagnosticTestsList(){
     this.filter = history.state.filter;
-    console.log('[TrackingPage] applyFilter()' ,  this.filter);
+    console.log('[TrackingPage] getDiagnosticTestsList()' ,  this.filter);
     if(this.filter){
       this.getFilteredDiagnosticTests()
     }else{
@@ -68,18 +68,18 @@ export class TrackingPage implements OnInit {
     await loading.present();
     this.dooleService.postAPIfilteredDiagnosticTest(this.filter).subscribe(
       async (res: any) =>{
-        console.log('[TrackingPage] getDiagnosticTests()', await res);
+        console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
         let diagnosticTests = res.diagnosticTests
         if(diagnosticTests && diagnosticTests >0){
           this.diagnosticTests = []
           this.listDiagnostic = []
-          this.orderDiagnosticsByDate(res)
+          this.groupDiagnosticsByDate(res)
         }
         loading.dismiss();
        },(err) => { 
-          console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
+          throw err; 
       });
   }
 
@@ -94,41 +94,45 @@ export class TrackingPage implements OnInit {
         console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.diagnosticTests = res.diagnosticTests
         if(this.diagnosticTests )
-        this.orderDiagnosticsByDate(res)
+        this.groupDiagnosticsByDate(res)
         loading.dismiss();
        },(err) => { 
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
           loading.dismiss();
-      });
-  }
-
-
-  getGraphics(){
-    this.dooleService.getAPIgraphicsTracking().subscribe(
-      async (res: any) =>{
-        console.log('[TrackingPage] getGraphics()', await res); 
-        this.graphics = res
-       },(err) => { 
-          console.log('[TrackingPage] getGraphics() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
 
-/*   filterDiagnosticsByDate(){
-    this.diagnosticTests.forEach( (diagnostic, index) =>{
-      let date = diagnostic.date_european
-      if(index == 0 || date !== this.diagnosticTests[index-1].date_european){
-        let list = this.diagnosticTests.filter( event => 
-          (event.date_european == date)
-        )
-        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list}) 
-      } 
-    })
-    console.log('[TrackingPage] filterDiagnosticsByDate()', this.listDiagnostic);
-  } */
 
-  orderDiagnosticsByDate(list){
+  async getElementsList(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.groupedElements = [];
+    this.elementValues = [];
+    this.dooleService.getAPIelementsList().subscribe(
+      async (data: any) =>{
+        console.log('[TrackingPage] getElementsList()', await data); 
+
+        if(data.eg){
+          // Iterate elements in the tree searching for element groups
+          this.treeIterate(data.eg, '');
+
+          // Order grouped elements by Name
+          this.groupedElements.sort(function(a,b){
+            return a.group.localeCompare(b.group);
+          })
+          this.elementValues = data.elementValues;
+        }
+        //console.log('[TrackingPage] getElementsList()',  this.groupedElements);
+        loading.dismiss();
+       },(err) => { 
+          console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          loading.dismiss();
+          throw err; 
+      });
+  }
+
+  groupDiagnosticsByDate(list){
     let diagnosticTests = list.diagnosticTests
     diagnosticTests.forEach( (diagnostic, index) =>{
       let date = diagnostic.date_european
@@ -139,11 +143,11 @@ export class TrackingPage implements OnInit {
         this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list}) 
       } 
     })
-    console.log('[TrackingPage] filterDiagnosticsByDate()', this.listDiagnostic);
+    console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);
   }
 
 
-  async getFormLists(){
+  async getFormList(){
     const loading = await this.loadingController.create();
     await loading.present();
     this.dooleService.getAPIformLists().subscribe(
@@ -154,19 +158,8 @@ export class TrackingPage implements OnInit {
         loading.dismiss();
        },async (err) => { 
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          //throw err; 
           loading.dismiss();
-          let alert = await this.alertCtrl.create({
-            header: 'Error',
-            message: 'Se ha producido un error',
-            buttons: [{
-              text: 'Ok',
-              handler: data => {
-                this.navCtrl.pop();
-              }
-            }]
-          });
-          await alert.present();
+          throw err; 
       });
   }
 
@@ -182,7 +175,7 @@ export class TrackingPage implements OnInit {
 
     console.log('[TrackingPage] openForm()',  this.auth.user);
 
-    //if(this.auth==undefined || this.auth.user== undefined){
+    if(this.auth !==undefined || this.auth.user !== undefined){
       var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+form.id+'" method="post" enctype="multipart/form-data">' +
         '<input type="hidden" name="idForm" value="'+form.id+'">' +
         '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
@@ -194,14 +187,50 @@ export class TrackingPage implements OnInit {
         "_blank",
         "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
       );
-/*     }else{
+    }else{
       var browserRef = this.iab.create(
         form.temporaryUrl,
         "_blank",
         "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
       );
-    } */
+    }
 
+  }
+
+  treeIterate(obj, stack) {
+    for (var property in obj) {
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+
+          this.treeIterate(obj[property], stack + '.' + property);
+        } else {
+          if(property=="group"){
+            obj['is_child'] = stack.includes('childs');
+            this.groupedElements.push(obj);
+
+          }
+
+        }
+      }
+    }
+  }
+
+  segmentChanged(){
+    console.log(this.segment);
+    switch (this.segment) {
+      case 'documents':
+        this.getDiagnosticTestsList()
+        break;
+      case 'forms':
+        this.getFormList()
+        break;
+      case 'graphics':
+        this.getElementsList()
+        break;
+      default:
+        this.getDiagnosticTestsList()
+        break;
+    }
   }
 
 }
