@@ -7,13 +7,19 @@
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" routerLink="/documents-filter"></ion-icon>&nbsp;
       <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/documents-add"></ion-icon>
     </ion-buttons>
+    <ion-buttons slot="end" *ngSwitchCase="'graphics'">
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="elements-add"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
 
 <!-- SegmentBar -->
 
-  <ion-segment [(ngModel)]="segment" scrollable>
+  <ion-segment 
+  (ionChange)="segmentChanged($event)"
+  [(ngModel)]="segment" 
+  scrollable>
     <ion-segment-button value="documents">
       <ion-label>{{ 'tracking.header' | translate}}</ion-label>
     </ion-segment-button>
@@ -108,10 +114,11 @@
 </div>
 
     <!-- Graphics -->
-
-    <ion-list>
-      <ion-card class="cardProfile" *ngSwitchCase="'graphics'">
-        <ion-item lines="none" routerLink="/activity-goal">
+<div  *ngSwitchCase="'graphics'">
+    <ion-list *ngFor="let group of this.groupedElements">
+      <ion-label color="primary">{{group.group  }}</ion-label>
+      <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
+        <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
           <div class="verticalLineRed"></div>
           <ion-grid>
             <ion-row>
@@ -120,7 +127,7 @@
                 </ion-img>
               </ion-col>
               <ion-col size="8">
-                <ion-card-title class="txtTitleGoals">Consumo energético</ion-card-title>
+                <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
               </ion-col>
               <ion-col size="2">
                 <ion-label style="text-align: right;">
@@ -129,7 +136,7 @@
               </ion-col>
             </ion-row>
             <ion-col size="12">
-              <ion-card-title class="txtTitleGoals">456 Kcal
+              <ion-card-title class="txtTitleGoals">{{element.value}} {{element.units}}
               </ion-card-title>
             </ion-col>
           </ion-grid>
@@ -137,4 +144,5 @@
       </ion-card>
     </ion-list>
   </div>
+</div>
 </ion-content>

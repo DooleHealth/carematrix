@@ -9,7 +9,7 @@
 
 <ion-content >
   <div *ngFor="let goal of this.listGoal" >
-    <ion-card (click)="openActivities()" class="cardProfile">
+    <ion-card routerLink="/activity-goal" [state]="{id: goal.element_id}" class="cardProfile">
  
         <ion-grid>
           <ion-row>

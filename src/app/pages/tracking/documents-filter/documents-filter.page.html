@@ -5,7 +5,10 @@
     </ion-buttons>
     <ion-title>Filtro</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="submit()">Aplicar</ion-button>
+      <ion-button color="primary"
+       (click)="submit()"
+       routerLink="/tracking" [state]="{filter: form.value}"
+       >Aplicar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

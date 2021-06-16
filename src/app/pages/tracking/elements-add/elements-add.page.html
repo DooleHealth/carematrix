@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Cancelar"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'elements-add'| translate  }}</ion-title>
+    <ion-button fill="clear" slot="end"  (click)="submit()">
+      OK
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item>
+        <ion-label>Categoría</ion-label>
+        <ion-select interface="action-sheet" (ionChange)="selectedCategory()" formControlName="category" placeholder="Selecciona uno">
+          <ion-select-option *ngFor="let group of groupElements" [value]="group.group">{{group.group}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none" *ngIf="this.group.elements">
+        <ion-label>Dato</ion-label>
+        <ion-select interface="action-sheet" (ionChange)="selectedElement()" formControlName="data" placeholder="Selecciona uno">
+          <ion-select-option *ngFor="let e of group.elements" [value]="e.name">{{e.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card class="cardProfile" *ngIf="this.element">
+    <ion-list>
+      <ion-item>
+        <ion-label>Medida</ion-label>
+        <ion-input formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
+        <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Unidades</ion-label>
+        <ion-text slot="end">{{this.element.unit}}</ion-text >
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</form>
+</ion-content>

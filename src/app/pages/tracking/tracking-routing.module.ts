@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'activity-goal',
     loadChildren: () => import('../profile/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
+  },
+  {
+    path: 'elements-add',
+    loadChildren: () => import('./elements-add/elements-add.module').then( m => m.ElementsAddPageModule)
   }
 ];
 

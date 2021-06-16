@@ -97,24 +97,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   },
   {
-    path: 'document-detail',
-    loadChildren: () => import('./pages/tracking/document-detail/document-detail.module').then( m => m.DocumentDetailPageModule)
-  },
-  {
-    path: 'documents-filter',
-    loadChildren: () => import('./pages/tracking/documents-filter/documents-filter.module').then( m => m.DocumentsFilterPageModule)
-  },
-  {
-    path: 'documents-add',
-    loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
-  },
-  {
     path: 'reminder',
     loadChildren: () => import('./pages/agenda/reminder/reminder.module').then( m => m.ReminderPageModule)
   },
   {
     path: 'reminder-add',
     loadChildren: () => import('./pages/agenda/reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
+  },
+  {
+    path: 'elements-add',
+    loadChildren: () => import('./pages/tracking/elements-add/elements-add.module').then( m => m.ElementsAddPageModule)
   },
   {
     path: 'contact',
