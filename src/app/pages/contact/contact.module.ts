@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ContactPageRoutingModule } from './contact-routing.module';
 
 import { ContactPage } from './contact.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ContactPageRoutingModule
+    ContactPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [ContactPage]
 })
