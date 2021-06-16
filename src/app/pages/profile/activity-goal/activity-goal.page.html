@@ -1,11 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Inicio" ></ion-back-button>
+      <ion-back-button ></ion-back-button>
     </ion-buttons>
     <ion-title>{{header}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+    <ion-buttons slot="end" >
+      <ion-icon slot="icon-only" name="add" color="primary"
+      routerLink="/elements-add" [state]="{id: id, name:header, units:units}"
+      ></ion-icon>
     </ion-buttons>
    
   </ion-toolbar>
@@ -40,7 +42,7 @@
 
 <div *ngIf="goals !== undefined &&  goals.length >0"> 
   <div class="main-container">
-    <ion-text class="txtTitleNoMargin">Recompensa</ion-text>
+    <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_reward' | translate}}</ion-text>
   </div>
 
     <ion-card  *ngFor="let goal of goals" class="cardProfilePadding">
@@ -48,14 +50,14 @@
         <ion-col size="2">
           <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
         </ion-col>
-        <ion-col size="10" class="txtTitleGoals2">Alcanza tu objetivo y suma Healthies:<br>{{goal.score}} Healthies</ion-col>
+        <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col>
       </ion-row>
     </ion-card>
 </div>
 
 
   <div class="main-container">
-    <ion-text class="txtTitleNoMargin">Información</ion-text>
+    <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
   </div>
   <ion-card class="cardProfilePadding">
     <ion-card-title class="txtTitleGoals">Definición</ion-card-title><br>
@@ -65,7 +67,7 @@
   </ion-card>
 
   <div class="main-container">
-    <ion-text class="txtTitleNoMargin">Consejos</ion-text>
+    <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_advices' | translate}}</ion-text>
   </div>
   <ion-card class="cardProfilePadding">
     <ion-row>

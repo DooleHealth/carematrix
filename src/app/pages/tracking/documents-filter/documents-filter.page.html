@@ -1,14 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Cancelar"></ion-back-button>
+      <ion-back-button text="{{ 'alert.button_cancel' | translate}}"></ion-back-button>
     </ion-buttons>
-    <ion-title>Filtro</ion-title>
+    <ion-title>{{ 'documents_filter.header' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary"
        (click)="submit()"
        routerLink="/tracking" [state]="{filter: form.value}"
-       >Aplicar</ion-button>
+       >{{ 'alert.button_apply' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,24 +20,24 @@
 </ion-searchbar>
   <form (ngSubmit)="submit()" [formGroup]="form"> 
   <ion-item lines="none">
-    <ion-text class="txtTitleNoMargin">Fecha</ion-text>
+    <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_date' | translate}}</ion-text>
     <ion-toggle slot="end" color="success" (ionChange)='(toggle = ! toggle) ? toggle : !toggle;'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle">
     <ion-list>
       <ion-item>
-        <ion-label>Desde</ion-label>
+        <ion-label>{{ 'documents_filter.from' | translate}}</ion-label>
         <ion-datetime formControlName="start_date" displayFormat="DD/MM/YY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Hasta</ion-label>
+        <ion-label>{{ 'documents_filter.until' | translate}}</ion-label>
         <ion-datetime formControlName="end_date" displayFormat="DD/MM/YY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </ion-card>
 
   <ion-item lines="none">
-    <ion-text class="txtTitleNoMargin">Tipo de prueba</ion-text>
+    <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_test_type' | translate}}</ion-text>
     <ion-toggle slot="end" color="success" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2;'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle2">

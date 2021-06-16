@@ -16,7 +16,11 @@ export class ElementsAddPage implements OnInit {
   group: any = []
   element: any
   isSubmittedData = false
-  public date: any;
+  date: any;
+  isNewValueElement = false
+  id:any
+  nameElement: any
+  units:any
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
@@ -35,11 +39,11 @@ export class ElementsAddPage implements OnInit {
       category: ['', [Validators.required]],
       data: ['', [Validators.required]],
       measure: ['', [Validators.required]],
-      unit: ['', [Validators.required]],
+      units: [''],
       date: [''],
 
     });
-    this.getCategoryElementList()
+    this.getIdElement()
   }
 
   submit(){
@@ -50,6 +54,21 @@ export class ElementsAddPage implements OnInit {
     this.addElement()
   }
 
+  getIdElement(){
+    this.id = history.state.id;
+    this.nameElement = history.state.name;
+    this.units = history.state.units
+    console.log('[ElementsAddPage] getIdElement()', this.id);
+    if(this.id){
+      this.isNewValueElement = true
+      this.form.get('data').setValue(this.nameElement)
+      this.form.get('category').setValue(this.nameElement)
+      this.element = {id: this.id, name: this.nameElement, units: this.units}
+    }else{
+      this.getCategoryElementList()
+    }
+  }
+
   async addElement() {
 
     const loading = await this.loadingController.create();
@@ -57,7 +76,7 @@ export class ElementsAddPage implements OnInit {
 
     const postData = {
       date_value: this.date,
-      value: this.form.get('data').value,
+      value: this.form.get('measure').value,
       value2: undefined //this.value2
     };
 
@@ -119,7 +138,7 @@ export class ElementsAddPage implements OnInit {
   selectedElement(){
     let name = this.form.get('data').value
     this.element = this.group.elements.find(element =>(element.name === name))
-    this.form.get('unit').setValue(this.element.unit)
+    this.form.get('units').setValue( this.element.units)
   }
 
 }

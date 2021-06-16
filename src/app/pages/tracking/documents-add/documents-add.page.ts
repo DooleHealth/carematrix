@@ -114,7 +114,7 @@ export class DocumentsAddPage implements OnInit {
   }
 
   showAlert(){
-    let messagge = this.translate.instant('add_health_card.alert_message_add_card')
+    let messagge = this.translate.instant('documents_add.alert_message')
     let header = this.translate.instant('alert.header_info')
     this.dooleService.showAlertAndReturn(header,messagge,false, '/app/tracking')
   }
@@ -137,21 +137,21 @@ export class DocumentsAddPage implements OnInit {
   async selectImageSource() {
 
     const buttons = {
-      header: this.translate.instant('Seleccionar'),
+      header: this.translate.instant('documents_add.select'),
       buttons: [
         {
-          text: this.translate.instant('Cámara'),
+          text: this.translate.instant('documents_add.camera'),
           handler: () => {
             this.addImage(CameraSource.Camera);
           }
         },
         {
-          text: this.translate.instant('Archivos'),
+          text: this.translate.instant('documents_add.file'),
           handler: () => {
             this.addFile();
           }
         },{
-          text: this.translate.instant('Cancelar'),
+          text: this.translate.instant('documents_add.button_cancel'),
           role: 'cancel',
           handler: () => {
           }
