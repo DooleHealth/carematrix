@@ -107,7 +107,19 @@ const routes: Routes = [
   {
     path: 'elements-add',
     loadChildren: () => import('./pages/tracking/elements-add/elements-add.module').then( m => m.ElementsAddPageModule)
-  }
+  },
+  {
+    path: 'contact',
+    loadChildren: () => import('./pages/contact/contact.module').then( m => m.ContactPageModule)
+  },
+  {
+    path: 'doctors',
+    loadChildren: () => import('./pages/contact/doctors/doctors.module').then( m => m.DoctorsPageModule)
+  },
+  {
+    path: 'agenda-detail',
+    loadChildren: () => import('./pages/agenda/agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
+  },
  
 
 

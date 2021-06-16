@@ -102,8 +102,14 @@ text-align: center;
   font-size: 14px;
   font-weight: 500; 
   text-align: left;
-
 }
+.txtTitleGoalsDarker{
+  font-size: 14px;
+  font-weight: 600; 
+  text-align: left;
+  color: #000000;
+}
+
 .txtTitleGoals2{
   font-size: 14px;
   font-weight: 400;
@@ -202,6 +208,17 @@ background-position: center;
   --background: #ffffff!important;
 }
 
+  /* IMAGES */
+.img-wrapper{
+    background-size: 100% auto;
+    border-radius: 50% !important;
+    overflow: hidden;
+    max-height: 100px;
+    max-width: 100px;
+    display: block;
+    margin: auto;
+    margin-top: 3%;
+}
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
