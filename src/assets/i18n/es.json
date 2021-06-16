@@ -87,7 +87,11 @@
         "start": "Inicio",
         "achieve": "Alcanzar",
         "end": "Fin",
-        "button_go_profile": "Perfil"
+        "button_go_profile": "Perfil",
+        "subtitle_reward": "Recompensa",
+        "description_reward": "Alcanza tu objetivo y suma Healthies:",
+        "subtitle_information": "Información",
+        "subtitle_advices": "Consejos"
       },
       "personal": {
         "button_back": "Inicio",
@@ -105,6 +109,7 @@
       "alert": {
         "button_ok": "Ok", 
         "button_acept": "Aceptar",
+        "button_apply": "Aplicar",
         "button_cancel": "Cancelar",
         "button_change": "Cambiar",
         "button_send": "Enviar",
@@ -113,7 +118,7 @@
         "header_confirmation": "Confirmación"
       },
       "error_required": "Requerido",
-      
+
       "setting":{
         "title_setting": "Ajustes",
         "button_profile": "Perfil",
@@ -252,26 +257,40 @@
       },
       "documents":{
         "subtitle_information": "Información",
-        "subtitle_detalle": "Detalle",
-        "subtitle_file": "Documentos Adjuntos",
+        "subtitle_detail": "Detalle",
         "field_razon": "Motivo",
-        "field_date": "Fecha",
-        "field_center": "Centro",
-        "field_specially": "Especialidad",
-        "field_prfesional": "Profesional",
         "button_detail": "Detalle",
         "button_fill": "Rellenar"
       },
       "documents_add":{
         "header": "Añadir Resultado",
         "header_test_type": "Tipos de Prueba",
-        "field_test_type": "Tipos de prueba",
-        "field_source": "Fecha",
+        "field_test_type": "Tipo de prueba",
+        "field_title": "Título",
+        "field_date": "Fecha",
+        "field_description": "Descripción",
+        "field_diagnostic": "Diagnóstico",
+        "field_private": "Privado",
+        "field_source": "Procedencia",
         "field_center": "Centro",
-        "field_prfesional": "Profesional",
+        "field_profesional": "Médico",
+        "attachments": "Docuemntos Adjuntos",
         "button_add_files": "Añadir archivos",
         "button_add_result": "Añadir Resultado",
         "button_cancel": "Cancelar",
-        "button_ok": "OK"
+        "button_ok": "OK",
+
+        "alert_message": "El documento ha sido añadido correctamente",
+        "select": "Seleccionar",
+        "camera": "Cámara",
+        "file": "Archivos"
+      },
+      "element":{
+        "elements_add": "Añadir Dato",
+          "field_category": "Categoría",
+          "field_data": "Dato",
+          "field_measure": "Medida",
+          "field_units": "Unidades"
       }
+
 }

@@ -14,15 +14,15 @@
     </ion-row>
   </ion-grid>
 
-  <ion-text class="txtTitle">Información</ion-text>
+  <ion-text class="txtTitle">{{ 'documents.subtitle_information' | translate}}</ion-text>
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item *ngIf="diagnosticTest.title !== null">
-        <ion-label>Título</ion-label>
+        <ion-label>{{ 'documents_add.field_title' | translate}}</ion-label>
         <ion-label class="textMedium">{{diagnosticTest.title}}</ion-label>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Fecha</ion-label>
+        <ion-label>{{ 'documents_add.field_date' | translate}}</ion-label>
         <ion-label *ngIf="diagnosticTest !== undefined" class="textMedium">{{diagnosticTest.data | date: 'dd MMM yyy'}}</ion-label>
       </ion-item>
     </ion-list>
@@ -30,30 +30,30 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item *ngIf="diagnosticTest.description !== null">
-        <ion-label>Descripción</ion-label>
+        <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
         <ion-label class="textMedium">{{diagnosticTest.description}}</ion-label>
       </ion-item>
       <ion-item *ngIf="diagnosticTest.diagnostic !== null" >
-        <ion-label>Diagnóstico</ion-label>
+        <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
         <ion-label class="textMedium">{{diagnosticTest.diagnostic}}</ion-label>
       </ion-item>
       <ion-item>
-        <ion-label>Centro</ion-label>
+        <ion-label>{{ 'documents_add.field_center' | translate}}</ion-label>
         <ion-label class="textMedium">{{'diagnosticTestType.center_id'}}</ion-label>
       </ion-item>
       <ion-item>
-        <ion-label>Especialidad</ion-label>
+        <ion-label>{{ 'documents_add.field_specially' | translate}}</ion-label>
         <ion-label class="textMedium">{{'diagnosticTest.specialty_id'}}</ion-label>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Profesional</ion-label>
+        <ion-label>{{ 'documents_add.field_prfesional' | translate}}</ion-label>
         <ion-label class="textMedium">{{'diagnosticTest.idDoctor'}}</ion-label>
       </ion-item>
     </ion-list>
   </ion-card>
 
   <div *ngIf="groupedElements.length > 0">
-    <ion-text class="txtTitle">Detalle</ion-text>
+    <ion-text class="txtTitle">{{ 'documents.subtitle_detail' | translate}}</ion-text>
     <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile">
       <ion-item *ngIf="item.expanded" lines="none">
         <ion-label>{{item.elements.group}}</ion-label>
@@ -77,7 +77,7 @@
     </ion-card>
   </div>
 
-      <ion-text *ngIf="this.mediaFiles && this.mediaFiles.length > 0" class="txtTitle">Documentos Adjuntos</ion-text>
+      <ion-text *ngIf="this.mediaFiles && this.mediaFiles.length > 0" class="txtTitle">{{ 'documents_add.attachments' | translate}}</ion-text>
       <ion-row class="files-row">
         <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of mediaFiles">
           <app-aspect-ratio [ratio]="{w: 1, h: 1}">

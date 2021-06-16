@@ -626,11 +626,11 @@ export class DooleService {
   }
 
   getAPIelementsList(): Observable<any>{  
-    let path =  /* 'user/elementsList'  */   'user/elementsList/v2'
+    let path =  'user/elementsList/v2'  /* 'user/elementsList'  */
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIlistGoals(${path}) res: `, res);
+        console.log(`[DooleService] getAPIelementsList(${path}) res: `, res);
         return res;
       })
     );
@@ -641,18 +641,18 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIcategory(${path}) res: `, res);
+        console.log(`[DooleService] postAPIaddElement(${path}) res: `, res);
         return res;
       })
     );
   }
 
-  getAPIgraphicsGoal(id: Object, query): Observable<any>{
+  getAPIgraphicsElement(id: Object, query): Observable<any>{
     let path = 'user/element/'+id +'?'+query;  
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgraphicsGoal(${path}) res: `, res);
+        console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
         return res;
       })
     );

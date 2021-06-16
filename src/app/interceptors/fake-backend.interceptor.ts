@@ -959,28 +959,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 {
                     group: 'Actividad Física',
                     elements: [
-                        {id: 71, name: 'Consumo energético', unit: 'Cal'},
-                        {id: 31, name: 'Distancia', unit: 'Km'},
-                        {id: 30, name: 'Pasos', unit: 'm'}
+                        {id: 71, name: 'Consumo energético', units: 'Cal'},
+                        {id: 31, name: 'Distancia', units: 'Km'},
+                        {id: 30, name: 'Pasos', units: 'm'}
                     ]
                 },
                 {
                     group: 'Bioquímica',
                     elements: [
-                        {id: 3, name: 'Glucosa', unit: 'mg/dl'},
-                        {id: 63, name: 'Colestero', unit: 'mg/dl'},
+                        {id: 3, name: 'Glucosa', units: 'mg/dl'},
+                        {id: 63, name: 'Colestero', units: 'mg/dl'},
                     ]
                 },
                 {
                     group: 'Constantes',
                     elements: [
-                        {id: 58, name: 'Altura', unit: 'm'},
-                        {id: 71, name: 'Peso', unit: 'Kg'},
-                        {id: 39, name: 'Ritmo cardiaco', unit: 'LPM'},
-                        {id: 61, name: 'Electrocardiograma', unit: 'mm/seg'},
-                        {id: 4, name: 'Saturación de oxígeno', unit: '%'},
-                        {id: 1, name: 'Temperatura', unit: 'ºC'},
-                        {id: 33, name: 'Presión arterial', unit: 'mmHg'}
+                        {id: 58, name: 'Altura', units: 'm'},
+                        {id: 71, name: 'Peso', units: 'Kg'},
+                        {id: 39, name: 'Ritmo cardiaco', units: 'LPM'},
+                        {id: 61, name: 'Electrocardiograma', units: 'mm/seg'},
+                        {id: 4, name: 'Saturación de oxígeno', units: '%'},
+                        {id: 1, name: 'Temperatura', units: 'ºC'},
+                        {id: 33, name: 'Presión arterial', units: 'mmHg'}
                     ]
                 }
             ])

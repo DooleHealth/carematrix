@@ -53,7 +53,7 @@ export class ActivityGoalPage implements OnInit {
 
     var dict = [];
     dict.push({key: "interval",value: interval});
-    this.dooleService.getAPIgraphicsGoal(this.id, dict).subscribe(async json=>{
+    this.dooleService.getAPIgraphicsElement(this.id, dict).subscribe(async json=>{
       console.log('[ActivityGoalPage] loadData()', await json); 
       this.title = json.name;
       this.units = json.units;

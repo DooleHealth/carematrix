@@ -1,5 +1,6 @@
 {
-    "landing": {
+    
+  "landing": {
         "user_placeholder": "Usuari",
         "password_placeholder": "Contrasenya",
         "password_recovery": "Has oblidat la contrasenya?",
@@ -87,7 +88,11 @@
         "start": "Inici",
         "achieve": "Assolir",
         "end": "Fi",
-        "button_go_profile": "Perfil"
+        "button_go_profile": "Perfil",
+        "subtitle_reward": "Recompensa",
+        "description_reward": "Aconsegueix el teu objectiu i suma Healthies:",
+        "subtitle_information": "Informació",
+        "subtitle_advices": "Consells"
       },
       "personal": {
         "button_back": "Inici",
@@ -105,6 +110,7 @@
       "alert": {
         "button_ok": "D'acord",
         "button_acept": "Acceptar",
+        "button_apply": "Aplicar",
         "button_cancel": "Cancel",
         "button_change": "Canviar",
         "button_send": "Enviar",
@@ -250,26 +256,45 @@
       },
       "documents":{
         "subtitle_information": "Información",
-        "subtitle_detalle": "Detalle",
-        "subtitle_file": "Documentos Adjuntos",
+        "subtitle_detail": "Detalle",
         "field_razon": "Motivo",
-        "field_date": "Fecha",
-        "field_center": "Centro",
-        "field_specially": "Especialidad",
-        "field_prfesional": "Profesional",
         "button_detail": "Detalle",
         "button_fill": "Rellenar"
       },
       "documents_add":{
         "header": "Añadir Resultado",
         "header_test_type": "Tipos de Prueba",
-        "field_test_type": "Tipos de prueba",
-        "field_source": "Fecha",
+        "field_test_type": "Tipo de prueba",
+        "field_title": "Título",
+        "field_date": "Fecha",
+        "field_description": "Descripción",
+        "field_diagnostic": "Diagnóstico",
+        "field_private": "Privado",
+        "field_source": "Procedencia",
         "field_center": "Centro",
+        "field_specially": "Especialidad",
         "field_prfesional": "Profesional",
+        "field_profesional": "Médico",
+        "attachments": "Docuemntos Adjuntos",
         "button_add_files": "Añadir archivos",
         "button_add_result": "Añadir Resultado",
         "button_cancel": "Cancelar",
-        "button_ok": "OK"
-      }
+        "button_ok": "OK",
+        "alert_message": "El document s'ha afegit correctament",
+        "select": "Seleccionar",
+        "camera": "Cambra",
+        "file": "Arxius"
+      },
+      "documents_filter":{
+        "header": "Filtro",
+        "from": "Desde",
+        "until": "Hasta"
+      },
+      "element":{
+        "elements_add": "Añadir Dato",
+        "field_category": "Categoría",
+        "field_data": "Dato",
+        "field_measure": "Medida",
+        "field_units": "Unidades"
+    }
 }
