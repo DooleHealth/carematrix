@@ -614,16 +614,6 @@ export class DooleService {
     );
   }
 //graphics-Tracking
-  getAPIlistGoals(): Observable<any>{
-    let path = 'user/element/goals';   
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] getAPIlistGoals(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
 
   getAPIelementsList(): Observable<any>{  
     let path =  'user/elementsList/v2'  /* 'user/elementsList'  */
@@ -665,6 +655,53 @@ export class DooleService {
       map((res: any) => {
         console.log(`[DooleService] getAPIcategory(${path}) res: `, res);
         return res;
+      })
+    );
+  }
+
+  getAPIlistDiets(): Observable<any>{
+    let path = 'user/diets';   
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIlistDiets(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIdetailDiets(id: any): Observable<any>{
+    let path = `diet/${id}`;   
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdetailDiets(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+
+  postAPIdrugIntake(params: Object): Observable<any>{
+    let path = 'user/drugIntake/date';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  postAPIchangeStatedrugIntake(id: Object, state: Object): Observable<any>{
+    let path = `user/drugIntake/${id}/set/${state}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
       })
     );
   }

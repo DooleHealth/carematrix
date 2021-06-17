@@ -13,7 +13,10 @@
 
 <!-- SegmentBar -->
 
-  <ion-segment value="diets" [(ngModel)]="segment" scrollable>
+  <ion-segment 
+  (ionChange)="segmentChanged($event)"
+  [(ngModel)]="segment" 
+  scrollable>
     <ion-segment-button value="diets">
       <ion-label>Dieta</ion-label>
     </ion-segment-button>
@@ -39,16 +42,7 @@
       <ion-col size="8">
         <ion-slides #slides >
           <ion-slide>
-            <p>Lunes 31</p>
-      
-          </ion-slide>
-          <ion-slide>
-            <p>Martes 1</p>
-      
-          </ion-slide>
-          <ion-slide>
-            <p>Miércoles 3</p>
-        
+            <p>{{this.date | date: 'EEEE, d MMMM' | titlecase}}</p>     
           </ion-slide>
         </ion-slides>
       </ion-col >
@@ -64,16 +58,16 @@
 
     <!-- Diets-->
 
-    <ion-list>
-      <div *ngSwitchCase="'diets'">
-    
+
+<div *ngSwitchCase="'diets'">
+  <ion-list *ngIf="items.length > 0; else noData">   
     <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
       <ion-item *ngIf="item.expanded" lines="none">
         <ion-col size="2">
-          <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
+          <ion-img [src]='item.item.image.thumbnailTemporaryUrl' style="margin-right: 5px;">
           </ion-img>
         </ion-col>
-        <ion-label style="color:#E67E22;">Desayuno</ion-label>
+        <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
         <p class="txtTitleTrackingLittle">30/02/21</p>
         <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
       </ion-item>
@@ -89,41 +83,34 @@
  
      
         <app-expandable expandHeight="100px" [expanded]="item.expanded">
-          <ion-item lines="none">
-            <ion-label>Elemento</ion-label>
-            <p class="txtTitleTrackingLittle">resultado</p>
+          <ion-item lines="none">            
+            <ion-label>Descripción</ion-label>
+           <!--  <p class="txtTitleTrackingLittle">resultado</p> -->
           </ion-item>
           <ion-item lines="none">
-            <ion-label>Elemento</ion-label>
-            <p class="txtTitleTrackingLittle">resultado</p>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label>Elemento</ion-label>
-            <p class="txtTitleTrackingLittle">resultado</p>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label>Elemento</ion-label>
-            <p class="txtTitleTrackingLittle">resultado</p>
+            <p class="txtTitleTrackingLittle" routerLink="diets-detail" [state]="{id: item.item.id}">Detalle</p>
           </ion-item>
         </app-expandable>
   
     </ion-card>
-  </div>
   </ion-list>
+</div>
+  
     
 
     <!-- Medication-->
 
-    <ion-list>
-      <div *ngSwitchCase="'medication'">
+
+    <div *ngSwitchCase="'medication'">
+      <ion-list *ngIf="items.length > 0; else noData">
         <ion-card *ngFor="let item of items" class="cardProfile" (click)="expandItem(item)">
           <ion-item *ngIf="item.expanded" lines="none">
             <ion-col size="2">
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">Medicación</ion-label>
-            <p class="txtTitleTrackingLittle">30/02/21</p>
+            <ion-label style="color:#2ECC71;">Medicación  {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
+            <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
           <ion-item *ngIf="!item.expanded" lines="none">
@@ -131,27 +118,39 @@
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">Medicación</ion-label>
-            <p class="txtTitleTrackingLittle">30/02/21</p>
+            <ion-label style="color:#2ECC71;">Medicación  {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
+            <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
           </ion-item>
    
        
           <app-expandable expandHeight="100px" [expanded]="item.expanded">
             <ion-item lines="none">
-              <p class="txtTitleTrackingLittle">Pastilla Tensión (Vasotec 20 mg)
+              <p class="txtTitleTrackingLittle">{{item.item.name}} (Dosis: {{item.item.dose}})
               </p>
             </ion-item>
             <div class="main-container3">
-              <ion-button size="small" color="primary">Tomar</ion-button>&nbsp;
-              <ion-button size="small" color="transparent" class="buttonLink" >Ver detalle</ion-button>&nbsp;
+
+              <ion-button *ngIf="item.item.forgotten == 2"  size="small" color="primary" 
+              (click)="changeTake(item.item.id, item.item.state)">{{ 'Tomar' }}</ion-button>
+              <ion-button *ngIf="item.item.forgotten == 1"  size="small" color="danger" 
+              (click)="changeTake(item.item.id, item.item.state)">{{'Olvidada'}}<ion-icon style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
+              </ion-button>
+              <ion-button *ngIf="item.item.forgotten == 0"  size="small" color="success" 
+              (click)="changeTake(item.item.id, item.item.state)">{{ 'Tomada' }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
+              </ion-button>&nbsp;
+
+              <ion-button size="small" color="transparent" class="buttonLink" 
+                routerLink="drugs-detail" [state]="{id: item.item.id, name:item.item.name}"
+              >Ver detalle</ion-button>&nbsp;
             </div>
    
           </app-expandable>
     
       </ion-card>
-    </div>
     </ion-list>
+  </div>
+
 
     <!-- Games -->
 
@@ -204,4 +203,8 @@
     </ion-list>
 
   </div>
+
+  <ng-template #noData>
+    <ion-label *ngIf="!this.isLoading"> No hay datos para mostrar </ion-label>
+  </ng-template>
 </ion-content>

@@ -69,6 +69,9 @@ export class DocumentsAddPage implements OnInit {
     this.isSubmittedTitle = isSubmitted;
     this.isSubmittedDate= isSubmitted;
   }
+  transformDate(date) {
+    return this.datepipe.transform(date, 'dd/MM/yyyy');
+  }
 
   // Save new diagnostic test
   async submit() {
@@ -81,8 +84,8 @@ export class DocumentsAddPage implements OnInit {
     await loading.present();
 
     let date = this.form.get('date').value;
-    var current = new Date(date.split('T')[0]).toISOString();
-    let data_prestacio = this.datepipe.transform(current, 'dd/MM/y');
+    var current = new Date(date)
+    let data_prestacio = this.transformDate(current)
     this.form.get('date').setValue(data_prestacio);
 
     let private_test = this.form.get('private').value ? 1 : 0;
