@@ -625,6 +625,17 @@ export class DooleService {
       })
     );
   }
+/** get elements with query by parameter date  */
+  getAPIelementsListByDate(params: Object): Observable<any>{  
+    let path =  'user/elementsList/v2'  /* 'user/elementsList'  */
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIelementsListByDate(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   postAPIaddElement(id, params: Object): Observable<any>{
     let path = 'user/element/' + id + '/value/add'  
@@ -658,13 +669,13 @@ export class DooleService {
       })
     );
   }
-
-  getAPIlistDiets(): Observable<any>{
+/** get diets with query by parameter date  */
+  getAPIlistDietsByDate(params: Object): Observable<any>{
     let path = 'user/diets';   
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIlistDiets(${path}) res: `, res);
+        console.log(`[DooleService] getAPIlistDietsByDate(${path}) res: `, res);
         return res;
       })
     );
@@ -682,12 +693,12 @@ export class DooleService {
   }
 
 
-  postAPIdrugIntake(params: Object): Observable<any>{
+  postAPIdrugIntakeByDate(params: Object): Observable<any>{
     let path = 'user/drugIntake/date';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        console.log(`[DooleService] postAPIdrugIntakeByDate(${path}) res: `, res);
         return res;
 
       })
@@ -702,6 +713,17 @@ export class DooleService {
         console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
         return res;
 
+      })
+    );
+  }
+/** get games with query by parameter date  */
+  getAPIgames(params: Object): Observable<any>{
+    let path = 'user/games';   
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
       })
     );
   }
