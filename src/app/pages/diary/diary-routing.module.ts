@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path: 'activity-goal',
     loadChildren: () => import('../profile/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
+  },
+  {
+    path: 'diets-detail',
+    loadChildren: () => import('./diets-detail/diets-detail.module').then( m => m.DietsDetailPageModule)
+  },
+  {
+    path: 'drugs-detail',
+    loadChildren: () => import('./drugs-detail/drugs-detail.module').then( m => m.DrugsDetailPageModule)
   }
 ];
 

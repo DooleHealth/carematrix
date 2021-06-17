@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{diet.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-card-header">
+      <ion-card-header>
+          <img *ngIf="diet.image" [src]="diet.image.temporaryUrl">
+          <div *ngIf="diet.image == null" class="card-title" text-wrap>{{diet.name}}</div>
+      </ion-card-header>
+      <ion-card-content>
+        {{diet.descripcio}}
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="diet.description" padding>
+        <span [innerHTML]="diet.description"></span>
+    </div>
+
+    <div *ngIf="link" #frame style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+      <iframe [src]="link" class="iframe" scrolling="yes" ></iframe>
+    </div>
+
+    <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+      <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
+    </div>
+
+</ion-content>
