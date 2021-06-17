@@ -228,6 +228,16 @@ background-position: center;
     margin: auto;
     margin-top: 3%;
 }
+.img-wrapper-doctors{
+  background-size: 100% auto;
+  border-radius: 50% !important;
+  overflow: hidden;
+  max-height: 70px;
+  max-width: 70px;
+  display: block;
+  margin: auto;
+ 
+}
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
