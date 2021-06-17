@@ -49,6 +49,10 @@ ion-item-divider {
     padding-bottom: 5%;
     
     }
+  .buttonContainer{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
   .toolbarTitle{
 text-align: center;
   }
@@ -74,6 +78,7 @@ text-align: center;
   font-weight: 400;
   padding: 3%;
 }
+
 .cardProfilePaddingBottom{
   --ion-background-color: white!important;
   font-size: 14px;
@@ -235,7 +240,7 @@ background-position: center;
   max-height: 70px;
   max-width: 70px;
   display: block;
-  margin: auto;
+  margin-left: 0%;
  
 }
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/

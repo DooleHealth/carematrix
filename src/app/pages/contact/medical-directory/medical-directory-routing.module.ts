@@ -8,6 +8,12 @@ const routes: Routes = [
     path: '',
     component: MedicalDirectoryPage
   }
+  ,
+  {
+    path: 'bookings',
+    loadChildren: () => import('../bookings/bookings.module').then( m => m.BookingsPageModule)
+  }
+
 ];
 
 @NgModule({

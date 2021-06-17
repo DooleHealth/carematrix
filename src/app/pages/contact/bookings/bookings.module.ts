@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MedicalDirectoryPageRoutingModule } from './medical-directory-routing.module';
+import { BookingsPageRoutingModule } from './bookings-routing.module';
 
-import { MedicalDirectoryPage } from './medical-directory.page';
+import { BookingsPage } from './bookings.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    MedicalDirectoryPageRoutingModule, 
+    BookingsPageRoutingModule,
     TranslateModule,
   ],
-  declarations: [MedicalDirectoryPage]
+  declarations: [BookingsPage]
 })
-export class MedicalDirectoryPageModule {}
+export class BookingsPageModule {}

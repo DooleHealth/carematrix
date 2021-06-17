@@ -124,6 +124,10 @@ const routes: Routes = [
     path: 'medical-directory',
     loadChildren: () => import('./pages/contact/medical-directory/medical-directory.module').then( m => m.MedicalDirectoryPageModule)
   },
+  {
+    path: 'bookings',
+    loadChildren: () => import('./pages/contact/bookings/bookings.module').then( m => m.BookingsPageModule)
+  },
  
 
 
