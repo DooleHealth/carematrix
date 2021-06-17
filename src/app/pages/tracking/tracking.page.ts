@@ -103,35 +103,6 @@ export class TrackingPage implements OnInit {
       });
   }
 
-
-  async getElementsList(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-    this.groupedElements = [];
-    this.elementValues = [];
-    this.dooleService.getAPIelementsList().subscribe(
-      async (data: any) =>{
-        console.log('[TrackingPage] getElementsList()', await data); 
-
-        if(data.eg){
-          // Iterate elements in the tree searching for element groups
-          this.treeIterate(data.eg, '');
-
-          // Order grouped elements by Name
-          this.groupedElements.sort(function(a,b){
-            return a.group.localeCompare(b.group);
-          })
-          this.elementValues = data.elementValues;
-        }
-        //console.log('[TrackingPage] getElementsList()',  this.groupedElements);
-        loading.dismiss();
-       },(err) => { 
-          console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
-          throw err; 
-      });
-  }
-
   groupDiagnosticsByDate(list){
     let diagnosticTests = list.diagnosticTests
     diagnosticTests.forEach( (diagnostic, index) =>{
@@ -195,6 +166,34 @@ export class TrackingPage implements OnInit {
       );
     }
 
+  }
+
+  async getElementsList(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.groupedElements = [];
+    this.elementValues = [];
+    this.dooleService.getAPIelementsList().subscribe(
+      async (data: any) =>{
+        console.log('[TrackingPage] getElementsList()', await data); 
+
+        if(data.eg){
+          // Iterate elements in the tree searching for element groups
+          this.treeIterate(data.eg, '');
+
+          // Order grouped elements by Name
+          this.groupedElements.sort(function(a,b){
+            return a.group.localeCompare(b.group);
+          })
+          this.elementValues = data.elementValues;
+        }
+        //console.log('[TrackingPage] getElementsList()',  this.groupedElements);
+        loading.dismiss();
+       },(err) => { 
+          console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          loading.dismiss();
+          throw err; 
+      });
   }
 
   treeIterate(obj, stack) {

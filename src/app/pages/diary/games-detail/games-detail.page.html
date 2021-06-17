@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Juegos"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="game">{{game.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="game">
+    <ion-card class="cardProfile">
+      <img *ngIf="game.image !== null"  [src]='game.image.temporaryUrl'/>
+      <ion-item lines="none">
+        <div>
+          <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
+          </ion-img>
+        </div>
+        <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{game.name}}</ion-label>
+        <div>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </ion-item>
+      <ion-card-content>
+        Demuestra tu destreza y mejora la concentración. ¡Mantén tu mente en acción con este juego!
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <section>
+    <ion-button expand="block"  (click)="openGames(game)">{{'Ir al juego' | translate }}</ion-button>
+  </section>
+
+</ion-content>

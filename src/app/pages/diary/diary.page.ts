@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { IonSlides, LoadingController} from '@ionic/angular'; 
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 export interface ItemDiary {
   expanded?: boolean;
@@ -17,6 +19,7 @@ export interface ItemDiary {
 export class DiaryPage implements OnInit {
   public items: ItemDiary[] = [];
   diets = []
+  groupedElements: any = [];
   date = Date.now()
   segment = 'diets'
   isLoading = false
@@ -24,7 +27,9 @@ export class DiaryPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private loadingController: LoadingController,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private iab: InAppBrowser,
+    private auth: AuthenticationService,
   ) {}
 
   ngOnInit() {
@@ -74,7 +79,9 @@ export class DiaryPage implements OnInit {
     this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
-    this.dooleService.getAPIlistDiets().subscribe(
+    let formattedDate = this.transformDate(this.date)
+    let date = {date: formattedDate}
+    this.dooleService.getAPIlistDietsByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDietList()', await res);
         if(res.diets)
@@ -97,7 +104,7 @@ export class DiaryPage implements OnInit {
     await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
-    this.dooleService.postAPIdrugIntake(date).subscribe(
+    this.dooleService.postAPIdrugIntakeByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDetailDiet()', await res);
         if(res.drugIntakes)
@@ -129,7 +136,123 @@ export class DiaryPage implements OnInit {
   });
   }
 
+  async getGameList(){
+    console.log('[DiaryPage] getGameList()');
+    this.items = []
+    this.isLoading = true
+    const loading = await this.loadingController.create();
+    await loading.present();
+    let formattedDate = this.transformDate(this.date)
+    let date = {date: formattedDate}
+    this.dooleService.getAPIgames(date).subscribe(
+      async (res: any) =>{
+        console.log('[DiaryPage] getGameList()', await res);
+         if(res.games)
+       this.addItems(res.games)
+        loading.dismiss();
+        this.isLoading = false
+       },(err) => { 
+          console.log('[DiaryPage] getGameList() ERROR(' + err.code + '): ' + err.message); 
+          loading.dismiss();
+          this.isLoading = false
+          throw err; 
+      });
+  }
 
+  async openGames(item){
+    var browser : any;
+    if(item.type=="html5"){
+      const iosoption: InAppBrowserOptions = {
+        zoom: 'no',
+        location:'yes',
+        toolbar:'yes',
+        clearcache: 'yes',
+        clearsessioncache: 'yes',
+        disallowoverscroll: 'yes',
+        enableViewportScale: 'yes'
+      }
+
+      await this.auth.getUserLocalstorage().then(value =>{
+        this.auth.user = value
+      })
+      
+      if(item.url.startsWith("http")){
+        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
+        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+      }
+      else
+        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+    }
+
+    if(item.type=="form") {
+      const options: InAppBrowserOptions = {
+        location: 'no',
+        toolbar: 'yes'
+      };
+
+      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+item.form_id+'" method="post" enctype="multipart/form-data">' +
+        '<input type="hidden" name="idForm" value="'+item.form_id+'">' +
+        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
+        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
+        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
+      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+      var browserRef = this.iab.create(
+        pageContentUrl,
+        "_blank",
+        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+      );
+    }
+
+  }
+
+  async getElementsList(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.items = []
+    this.groupedElements = [];
+    this.isLoading = true
+    let formattedDate = this.transformDate(this.date)
+    let date = {date: formattedDate}
+    this.dooleService.getAPIelementsListByDate(date).subscribe(
+      async (data: any) =>{
+        console.log('[DiaryPage] getElementsList()', await data); 
+
+        if(data.eg){
+          // Iterate elements in the tree searching for element groups
+          this.treeIterate(data.eg, '');
+          // Order grouped elements by Name
+          this.groupedElements.sort(function(a,b){
+            return a.group.localeCompare(b.group);
+          })
+          this.addItems(this.groupedElements);
+        }
+        loading.dismiss();
+        this.isLoading = false
+       },(err) => { 
+          console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          loading.dismiss();
+          this.isLoading = false
+          throw err; 
+      });
+  }
+
+  treeIterate(obj, stack) {
+    for (var property in obj) {
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+
+          this.treeIterate(obj[property], stack + '.' + property);
+        } else {
+          if(property=="group"){
+            obj['is_child'] = stack.includes('childs');
+            this.groupedElements.push(obj);
+
+          }
+
+        }
+      }
+    }
+  }
 
   segmentChanged(){
     console.log(this.segment);
@@ -141,10 +264,10 @@ export class DiaryPage implements OnInit {
         this.getDrugIntakeList()
         break;
       case 'games':
-        //this.getElementsList()
+        this.getGameList()
         break;
       case 'health':
-        //this.getElementsList()
+        this.getElementsList()
         break;
       default:
         //this.getDiagnosticTestsList()

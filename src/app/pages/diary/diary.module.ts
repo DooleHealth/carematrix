@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DiaryPageRoutingModule } from './diary-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { DiaryPage } from './diary.page';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { DiaryPage } from './diary.page';
     ComponentsModule,
     DiaryPageRoutingModule
   ],
-  providers: [DatePipe] ,
+  providers: [DatePipe, InAppBrowser] ,
   declarations: [DiaryPage]
 })
 export class DiaryPageModule {}
