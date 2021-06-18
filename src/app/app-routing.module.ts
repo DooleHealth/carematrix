@@ -132,6 +132,10 @@ const routes: Routes = [
     path: 'specialist-finder',
     loadChildren: () => import('./pages/contact/specialist-finder/specialist-finder.module').then( m => m.SpecialistFinderPageModule)
   },
+  {
+    path: 'medical-calendar',
+    loadChildren: () => import('./pages/contact/medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
+  },
  
 
 
