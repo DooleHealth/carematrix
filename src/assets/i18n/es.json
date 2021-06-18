@@ -291,6 +291,35 @@
           "field_data": "Dato",
           "field_measure": "Medida",
           "field_units": "Unidades"
+      },
+      "no_data": "No hay datos para mostrar",
+      "diary":{
+        "header_diary": "Mi diario",
+          "field_diet": "Dieta",
+          "field_drug": "Medicación",
+          "field_game": "Juegos",
+          "field_health": "Salud",
+          "description": "Descriptión",
+          "dose": "Dosi",
+          "morning": "mañana",
+          "noon": "medio dia",
+          "aftenoon": "tarde",
+          "night": "noche",
+          "midnight": "media noche",
+          "dawning": "madrugada",
+          "all_day": "todo el día"
+      },
+      "button":{
+        "detail": "Detalle",
+        "fill": "Rellenar",
+        "cancel": "Cancelar",
+        "ok": "OK",
+        "see_detail": "Ver detalle",
+        "go_detail": "Ir a detalle",
+        "take": "Tomar",
+        "taked": "Tomada",
+        "forgotten": "Olvidada"
       }
+      
 
 }

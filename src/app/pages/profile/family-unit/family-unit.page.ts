@@ -10,7 +10,8 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./family-unit.page.scss'],
 })
 export class FamilyUnitPage implements OnInit {
-  listFamilyUnit:FamilyUnit[];
+  listFamilyUnit:FamilyUnit[] = [];
+  isLoading = false
   constructor(
     private dooleService: DooleService,
     private alertController: AlertController,
@@ -21,12 +22,15 @@ export class FamilyUnitPage implements OnInit {
   }
 
   getFamilyUnitData(){
+    this.isLoading = true
     this.dooleService.getAPIFamilyUnit().subscribe(
       async (res: any) =>{
         console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
         this.listFamilyUnit = res
+        this.isLoading = false
        },(err) => { 
           console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
           throw err; 
       });
   }

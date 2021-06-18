@@ -11,6 +11,7 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="listContact.length > 0; else noData"> 
   <ion-list *ngFor="let contact of this.listContact">
     <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}">
       <ion-card-content>
@@ -29,4 +30,8 @@
   </ion-card-content>
   </ion-card>
   </ion-list>
+</div>
+  <ng-template #noData>
+    <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+  </ng-template>
 </ion-content>

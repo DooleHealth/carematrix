@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content >
+  <div *ngIf="listGoal.length > 0; else noData">  
   <div *ngFor="let goal of this.listGoal" >
     <ion-card routerLink="/activity-goal" [state]="{id: goal.element_id, header: goal.element.name}" class="cardProfile">
  
@@ -37,5 +38,9 @@
       </ion-card-content>
     </ion-card>
   </div>
+</div>
+<ng-template #noData>
+  <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+</ng-template>
 
 </ion-content>

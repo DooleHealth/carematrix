@@ -2,7 +2,7 @@
   <!-- <ion-toolbar> -->
     
     <ion-toolbar [ngSwitch]="segment">
-      <ion-title>Mi diario</ion-title>
+      <ion-title>{{'diary.header_diary' | translate}}</ion-title>
 <!--     <ion-buttons slot="end" *ngSwitchCase="'medication'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" ></ion-icon>
     </ion-buttons> -->
@@ -20,16 +20,16 @@
   [(ngModel)]="segment" 
   scrollable>
     <ion-segment-button value="diets">
-      <ion-label>Dieta</ion-label>
+      <ion-label>{{'diary.field_diet' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="medication">
-      <ion-label>Medicación</ion-label>
+      <ion-label>{{'diary.field_drug' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="games">
-      <ion-label>Juegos</ion-label>
+      <ion-label>{{'diary.field_game' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="health">
-      <ion-label>Salud</ion-label>
+      <ion-label>{{'diary.field_health' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -86,11 +86,11 @@
      
         <app-expandable expandHeight="100px" [expanded]="item.expanded">
           <ion-item lines="none">            
-            <ion-label>Descripción</ion-label>
+            <ion-label>{{'diary.description' | translate}}</ion-label>
            <!--  <p class="txtTitleTrackingLittle">resultado</p> -->
           </ion-item>
           <ion-item lines="none">
-            <p class="txtTitleTrackingLittle" routerLink="diets-detail" [state]="{id: item.item.id}">Detalle</p>
+            <p class="txtTitleTrackingLittle" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.detail' | translate}}</p>
           </ion-item>
         </app-expandable>
   
@@ -111,7 +111,7 @@
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">Medicación  {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
+            <ion-label style="color:#2ECC71;">{{'diary.field_drug' | translate}} {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
             <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
@@ -120,7 +120,7 @@
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">Medicación  {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
+            <ion-label style="color:#2ECC71;">{{'diary.field_drug' | translate}}  {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
             <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
           </ion-item>
@@ -128,23 +128,23 @@
        
           <app-expandable expandHeight="100px" [expanded]="item.expanded">
             <ion-item lines="none">
-              <p class="txtTitleTrackingLittle">{{item.item.name}} (Dosis: {{item.item.dose}})
+              <p class="txtTitleTrackingLittle">{{item.item.name}} (Dosi: {{item.item.dose}})
               </p>
             </ion-item>
             <div class="main-container3">
 
               <ion-button *ngIf="item.item.forgotten == 2"  size="small" color="primary" 
-              (click)="changeTake(item.item.id, item.item.state)">{{ 'Tomar' }}</ion-button>
+              (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
               <ion-button *ngIf="item.item.forgotten == 1"  size="small" color="danger" 
-              (click)="changeTake(item.item.id, item.item.state)">{{'Olvidada'}}<ion-icon style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
+              (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
               </ion-button>
               <ion-button *ngIf="item.item.forgotten == 0"  size="small" color="success" 
-              (click)="changeTake(item.item.id, item.item.state)">{{ 'Tomada' }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
+              (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
               </ion-button>&nbsp;
 
               <ion-button size="small" color="transparent" class="buttonLink" 
                 routerLink="drugs-detail" [state]="{id: item.item.id, name:item.item.name}"
-              >Ver detalle</ion-button>&nbsp;
+              >{{ 'button.see_detail' | translate }}</ion-button>&nbsp;
             </div>
    
           </app-expandable>
@@ -173,7 +173,7 @@
         <ion-card-content>
           Demuestra tu destreza y mejora la concentración. ¡Mantén tu mente en acción con este juego!
         </ion-card-content>
-        <ion-button size="small" color="transparent" class="buttonLink" routerLink="games-detail" [state]="{game: item.item}">Ir a detalle</ion-button>&nbsp;
+        <ion-button size="small" color="transparent" class="buttonLink" routerLink="games-detail" [state]="{game: item.item}">{{ 'button.go_detail' | translate }}</ion-button>&nbsp;
       </ion-card>
     </ion-list>
   </div> 
@@ -214,6 +214,6 @@
   </div>
 
   <ng-template #noData>
-    <ion-label *ngIf="!this.isLoading"> No hay datos para mostrar </ion-label>
+    <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
   </ng-template>
 </ion-content>

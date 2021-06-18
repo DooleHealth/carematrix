@@ -46,12 +46,13 @@ export class AgendaPage implements OnInit {
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService, 
     private languageService: LanguageService,
-    private dooleService: DooleService
+    private dooleService: DooleService,
   ) {}
 
   ngOnInit() {
     //this.getDays()
-    this.getAppointment()
+    //this.getAppointment()
+    this.getAgenda()
   }
 
    async getDays() {
@@ -73,25 +74,57 @@ export class AgendaPage implements OnInit {
       });
   }
 
+  getAgenda(){
+    this.dooleService.getAPIagenda().subscribe(
+      async (res: any) =>{
+        console.log('[AgendaPage] getAgenda()', await res);
+        if(res.agenda)
+        this.addScheduleToCalendar(res.agenda)
+       },(err) => { 
+          console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+  }
+
+/*   getInformationAppointment(appointments){
+    appointments.forEach( item =>{
+      let appointment= {
+        id: item.id, 
+        title: item.title, 
+        type: item.agenda_type.name,
+        color: item.agenda_type.color,
+        endTime: item.end_date,
+        startTime: item.start_date_iso8601
+      }
+    })
+
+  } */
+  transformDate(date) {
+    let auxDate = `${date.year}-${date.month}-${date.day} ${date.end_time}`
+    return new Date(auxDate)
+  }
+
   addScheduleToCalendar(appointments: any[]){
     var events = [];
     appointments.forEach((e) =>{
       let isAllDay = false
-      if(e.startTime !== undefined && e.endTime !== undefined ){
-        var startTime = new Date(e.startTime)
-        var endTime = new Date(e.endTime)
+      if(e.start_date_iso8601 !== undefined && e.end_date !== undefined ){
+        var startTime = new Date(e.start_date_iso8601)
+        var endTime = this.transformDate(e)
       }else{
         isAllDay = true
       }
         events.push({
+          id: e.id, 
           title: e.title,
           startTime: startTime,
           endTime: endTime,
           allDay: isAllDay,
-          type: e.type
+          type: e.agenda_type.name,
+          color: e.agenda_type.color,
         });
       })
-      console.log('[HomePage] addScheduleToCalendar()',events )
+      console.log('[AgendaPage] addScheduleToCalendar()',events )
       this.eventSource = events;
   }
 
