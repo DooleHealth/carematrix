@@ -1,0 +1,138 @@
+.indicator-container {
+    padding-left: 0.5rem;
+    padding-bottom: 0.4rem;
+  }
+   
+  .event-indicator {
+    background:  red;//var(--ion-color-success);
+    width: 4px;
+    height: 4px;
+    border-radius: 4px;
+    display: table-cell;
+  }
+   
+  :host ::ng-deep {
+  
+    table,
+  th,
+  td {
+    padding: 10px;
+    border: 0px !important;
+    border-bottom:  1px solid rgb(143, 143, 143) !important;
+    max-height: 60px!important;
+   
+     
+    
+  }
+  
+  
+  .dayWeek{
+  
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+  }
+      .monthview-container {
+          background-color: #F0F0F0 !important;
+      }
+  
+    .monthview-primary-with-event {
+      background-color: #F0F0F0 !important;
+      color: black !important;;
+    }
+  
+    .monthview-secondary-with-event{
+      background-color: #F0F0F0 !important;
+      color: #7F8C8D !important;
+    }
+    .monthview-eventdetail-timecolumn{
+      color: #7f8c8d!important;
+    }
+   
+    .monthview-selected  {
+      background-color: var(--ion-color-primary) !important;
+      border-radius: 50%;
+      max-width: 10px!important;
+      color: white !important;
+    }
+      .monthview-current  {
+        background-color: orange !important;
+        border-radius: 50%;
+        max-width: 10px!important;
+        color: white !important;
+    }
+  
+  .blanco{
+    background-color: white!important;
+    min-width: 400px;
+  }
+  
+    .dayHeaders{
+      background-color: red !important;
+      color: white !important;
+    }
+  
+  }
+  
+   
+  /*   .with-event {
+    //background-color: var(--ion-color-primary);
+    //border-radius: 15px;
+    color: black
+  } */
+  
+  .event-detail-title {
+      color: var(--ion-color-secondary) !important;
+      background-color: rgb(255, 255, 255)!important;
+  }
+  .event-detail-container {
+    color: var(--ion-color-secondary) !important;
+    --ion-background-color: transparent !important;
+  .event-detail2{
+    font-size: medium;
+    font-weight: 600;
+    
+  }
+   
+  }
+  .rowPadding{
+    background-color: rgb(255, 255, 255)!important;
+    padding: 3%;
+  }
+  .rowPadding2{
+    background-color: rgb(255, 255, 255)!important;
+    padding-bottom: 50%;
+  }
+  
+  .verticalLine {
+    width:1%;
+    height:85%;
+    background:#2ECC71;
+    margin-left:2%;
+  }
+  .verticalLinePurple {
+    width:1%;
+    height:85%;
+    background:#9B59B6;
+    margin-left:2%;
+  }
+  .verticalLineRed {
+    width:1%;
+    height:85%;
+    background:#E74C3C;
+    margin-left:2%;
+  }
+  /*  .verticalLine2 {
+   border-left: 2px solid  #3498DB,;
+   margin-left: 5%;
+  }*/
+  ion-img{
+  
+    height: 30px;
+    color: #2ECC71;
+  }
+  ion-segment {
+    margin: 10px 0;
+    background: #ffffff;
+  }
+  
