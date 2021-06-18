@@ -8,6 +8,16 @@ const routes: Routes = [
     path: '',
     component: ContactPage
   }
+  ,
+  {
+    path: 'medical-directory',
+    loadChildren: () => import('./medical-directory/medical-directory.module').then( m => m.MedicalDirectoryPageModule)
+  }
+  ,
+  {
+    path: 'specialist-finder',
+    loadChildren: () => import('./specialist-finder/specialist-finder.module').then( m => m.SpecialistFinderPageModule)
+  }
 ];
 
 @NgModule({
