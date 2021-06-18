@@ -128,6 +128,10 @@ const routes: Routes = [
     path: 'bookings',
     loadChildren: () => import('./pages/contact/bookings/bookings.module').then( m => m.BookingsPageModule)
   },
+  {
+    path: 'specialist-finder',
+    loadChildren: () => import('./pages/contact/specialist-finder/specialist-finder.module').then( m => m.SpecialistFinderPageModule)
+  },
  
 
 

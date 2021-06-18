@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Cancelar" icon=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reservar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <ion-list>
+    <ion-card class="cardProfile">
+
+   <!-- Los dos primeros items CIUDAD Y CENTRO SOLO HAN DE VISUALIZARSE si la cita es presencial -->
+      <ion-item>
+        <div>
+          <ion-label>Ciudad</ion-label>
+        </div>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <div>
+          <ion-label>Centro</ion-label>
+        </div>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+        <ion-item>
+          <div >
+            <ion-label>Especialidad</ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+        <ion-item lines="none">
+          <div>
+            <ion-label>Profesional</ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+
+        <!-- ESTA PARTE SE VISUALIZARÁ CUANDO SE HAYA SELECCIONADO AL PROFESIONAL -->
+
+
+        <!-- <ion-item lines="none" style="padding: 3%;">
+          <img src="assets/images/avatar_masculino.png" class="img-wrapper-doctors">
+          <div class="txtPaddingLeft">
+            <ion-label>Jesús Fernández</ion-label>
+            <ion-label class="textMediumLeft">
+              Medicina General
+            </ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item> -->
+
+
+    </ion-card>
+  </ion-list>
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item lines="none">
+        <ion-label>Fecha</ion-label>
+        <ion-label class="textMedium">Sin especificar</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item>
+        <ion-label class="txtTitleGoals">Tipo de cita</ion-label>
+        <ion-label class="textMedium">Primera Consulta</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>Motivo de la cita</ion-label>
+        <ion-textarea class="textMedium" placeholder="..." ></ion-textarea>
+      </ion-item>
+      <ion-item lines="none">
+        Documentos adjuntos
+      </ion-item>
+      <ion-item lines="none" class="textMediumLeft">Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor
+        diagnóstico
+      </ion-item>
+
+      <ion-button slot="start" fill="clear">{{'report_problem.button_add_file' | translate }}
+        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
+      </ion-button>
+    </ion-list>
+  </ion-card>
+  <div class="buttonContainer">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" >
+  Confirmar Videollamada
+  </ion-button>
+  </div>
+</ion-content>
