@@ -62,7 +62,7 @@ export class AgendaPage implements OnInit {
      });
   }
 
-  getAppointment(){
+/*   getAppointment(){
     this.dooleService.getAPIappointmentAgenda().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getAppointment()', await res);
@@ -72,7 +72,7 @@ export class AgendaPage implements OnInit {
           console.log('[AgendaPage] getAppointment() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
-  }
+  } */
 
   getAgenda(){
     this.dooleService.getAPIagenda().subscribe(
@@ -86,19 +86,7 @@ export class AgendaPage implements OnInit {
       });
   }
 
-/*   getInformationAppointment(appointments){
-    appointments.forEach( item =>{
-      let appointment= {
-        id: item.id, 
-        title: item.title, 
-        type: item.agenda_type.name,
-        color: item.agenda_type.color,
-        endTime: item.end_date,
-        startTime: item.start_date_iso8601
-      }
-    })
 
-  } */
   transformDate(date) {
     let auxDate = `${date.year}-${date.month}-${date.day} ${date.end_time}`
     return new Date(auxDate)
@@ -220,9 +208,5 @@ export class AgendaPage implements OnInit {
     //console.log('[HomePage] createRandomEvents()',events )
     this.eventSource = this.eventSource.concat(events) ;
   } 
-
-  eventSelected(event) {
-    console.log('[HomePage] eventSelected()',event)
-  }
 
 }

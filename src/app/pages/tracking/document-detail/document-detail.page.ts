@@ -24,14 +24,12 @@ export class DocumentDetailPage implements OnInit {
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
-    private activeRoute: ActivatedRoute
   ) {
   }
 
 
   ngOnInit() {
     this.id = history.state.id;
-    //this.id = this.activeRoute.snapshot.paramMap.get('id')
     console.log('[DocumentDetailPage] ngOnInit()', this.id);
     if(this.id)
     this.getDiagnosticData()

@@ -13,11 +13,11 @@ export interface DayEvent {
   styleUrls: ['./list-appointment.page.scss'],
 })
 export class ListAppointmentPage implements OnInit {
-  listAppointment: any[]
+  listAppointment: any[] = []
   eventMonth = [];
   dayEvents: DayEvent[] =[]
   month = 0;
-  viewTitle
+  viewTitle = Date.now()
   constructor(
     private dooleService: DooleService
   ) { }
@@ -25,14 +25,44 @@ export class ListAppointmentPage implements OnInit {
   ngOnInit() {
     this.listAppointment = history.state.calendar;
     console.log('[ListAppointmentPage] ngOnInit()' ,  this.listAppointment); 
-    if(this.listAppointment)
+    if(this.listAppointment !== undefined && this.listAppointment.length > 0)
     this.filterMonth()
     else {
-      this.getListAppointment(Date.now)
+      this.getListAppointment()
     }
   }
 
-  getListAppointment(date){
+  transformDate(date) {
+    let auxDate = `${date.year}-${date.month}-${date.day} ${date.end_time}`
+    return new Date(auxDate)
+  }
+
+  addScheduleToCalendar(appointments: any[]){
+    var events = [];
+    appointments.forEach((e) =>{
+      let isAllDay = false
+      if(e.start_date_iso8601 !== undefined && e.end_date !== undefined ){
+        var startTime = new Date(e.start_date_iso8601)
+        var endTime = this.transformDate(e)
+      }else{
+        isAllDay = true
+      }
+        events.push({
+          id: e.id, 
+          title: e.title,
+          startTime: startTime,
+          endTime: endTime,
+          allDay: isAllDay,
+          type: e.agenda_type.name,
+          color: e.agenda_type.color,
+        });
+      })
+      console.log('[AgendaPage] addScheduleToCalendar()',events )
+      this.listAppointment = events;
+  }
+
+
+/*   getListAppointment(date){
     this.dooleService.postAPIappointmentAgenda(date).subscribe(
       async (res: any) =>{
         console.log('[ListAppointmentPage] getListAppointment()', await res);
@@ -40,6 +70,20 @@ export class ListAppointmentPage implements OnInit {
         this.filterMonth()
        },(err) => { 
           console.log('[ListAppointmentPage] getListAppointment() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+  } */
+
+  getListAppointment(){
+    this.dooleService.getAPIagenda().subscribe(
+      async (res: any) =>{
+        console.log('[AgendaPage] getAgenda()', await res);
+        if(res.agenda){
+          this.addScheduleToCalendar(res.agenda) 
+          this.filterMonth()
+        }
+       },(err) => { 
+          console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
@@ -93,10 +137,6 @@ export class ListAppointmentPage implements OnInit {
 
   createNewEvents(){
 
-  }
-
-  showDetailAppointment(event){
-    console.log('[ListAppointmentPage] showDetailAppointment()', event );
   }
 
 

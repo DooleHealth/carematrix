@@ -1,9 +1,9 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+<!--     <ion-buttons slot="start">
       <ion-back-button ></ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title>
       {{'Agenda'}}
     </ion-title>
@@ -73,16 +73,13 @@
       <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
         <ion-item class="rowPadding2">
           <ion-list>
-            <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" (click)="eventSelected(event)" routerLink="reminder">
+            <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="reminder" [state]="{id: event.id, event: event}">
 
               <div [ngStyle]="{'background-color': (event?.color)? event?.color: 'red'  }" class="verticalLine"></div>
               <ion-grid>
                 <ion-row>
-                  <ion-col size="2">
-                    <ion-img class="svg" [ngStyle]="{'background-color': (event?.color)? event?.color: 'red'  }"
-                    style="align-items: left;"  
-                    src='assets/icons/document-attach-color.svg' style="margin-right: 5px;">
-                    </ion-img>
+                  <ion-col size="1">
+                    <ion-icon style="align-items: left" [ngStyle]="{'color': (event?.color)? event?.color: 'red'  }" name="calendar"></ion-icon>
                   </ion-col>
                   <ion-col size="10">
                     <ion-label class="event-detail2" text-wrap>{{event.type}}</ion-label>

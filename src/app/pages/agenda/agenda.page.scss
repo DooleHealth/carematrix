@@ -5,16 +5,11 @@
  
 .event-indicator {
   background:  red;//var(--ion-color-success);
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 4px;
   display: table-cell;
 }
-
-.ion-img {
-  color: #488aff !important;
-}
-
 
  
 :host ::ng-deep {

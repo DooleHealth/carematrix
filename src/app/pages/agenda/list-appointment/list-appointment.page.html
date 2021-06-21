@@ -44,14 +44,13 @@
 
     <ion-list *ngFor="let events of this.dayEvents">
       <ion-row class="rowPadding"><ion-text class="event-detail-title">{{events.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-text></ion-row>
-      <ion-list *ngFor="let e of events.events"lines="full" class="blanco" >
-        <ion-item (click)="showDetailAppointment(e)"  lines="full" class="blanco" > 
-          <div class="verticalLine"></div>
+      <ion-list *ngFor="let e of events.events; let i = index"lines="full" class="blanco" >
+        <ion-item routerLink="/reminder" [state]="{id: e.id, event: e}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" > 
+          <div [ngStyle]="{'background-color': (e?.color)? e?.color: 'red'  }"  class="verticalLine"></div>
           <ion-grid>  
             <ion-row>
-              <ion-col size="2">
-                <ion-img style="align-items: left;" src='assets/icons/document-attach.svg' style="margin-right: 5px;">
-                </ion-img>
+              <ion-col size="1">
+                <ion-icon style="align-items: left" [ngStyle]="{'color': (e?.color)? e?.color: 'red'  }" name="calendar"></ion-icon>
               </ion-col>
               <ion-col size="10">
                 <ion-text class="event-detail2" text-wrap>{{e.type}}</ion-text>
