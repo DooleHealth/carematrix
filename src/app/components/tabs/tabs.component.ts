@@ -23,7 +23,7 @@ export class TabsComponent implements OnInit {
   }
 
   public navigateAgenda() {
-    return this.router.navigateByUrl('/agenda');
+    return this.router.navigate(['/agenda'], {replaceUrl:true});
    
   }
   public navigateHome(){
@@ -39,7 +39,7 @@ export class TabsComponent implements OnInit {
   }
 
   public navigateDiary(){
-    return this.router.navigateByUrl('/diary');
+    return this.router.navigateByUrl('/journal');
   }
 
 }

@@ -1,6 +1,7 @@
 {
     
   "landing": {
+        "login":"Verificant credencials...",
         "user_placeholder": "Usuari",
         "password_placeholder": "Contrasenya",
         "password_recovery": "Has oblidat la contrasenya?",

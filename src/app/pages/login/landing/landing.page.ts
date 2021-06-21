@@ -57,8 +57,6 @@ export class LandingPage implements OnInit {
     }
   }
 
-
-
   resetSubmitError() {
     this.submitError = null;
   }
@@ -77,10 +75,10 @@ export class LandingPage implements OnInit {
   }
 
   doDooleAppLogin() : void {
-    let text = this.translate.instant('login.submit');
+    let text = this.translate.instant('landing.login');
     this.loadingController.create({
       spinner: 'lines',
-      message: text + 'DooleApp',
+      message: text,
       cssClass: 'custom-loading',
       backdropDismiss:false
     }).then((loader) => {
@@ -90,8 +88,7 @@ export class LandingPage implements OnInit {
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
         console.log('[LandingPage] doDooleAppLogin()', res);
         this.dismissLoading();
-        //this.checkConditionLegal(res.condicion_legal)
-        this.router.navigate(['/legal']);
+        this.checkConditionLegal(true);
 
       }, async (error) => {
        console.log('doDooleAppLogin() ERROR', await error);
@@ -104,8 +101,17 @@ export class LandingPage implements OnInit {
 
   checkConditionLegal(condicion){
       if(!condicion)
-      this.router.navigate(['/legal']);
-      else this.redirectLoggedUserToHomePage();
+        this.router.navigate(['/legal']);
+      else{
+        this.authService.showIntro().then((show)=>{
+          if(!show){
+          console.log('[HomePage] checkConditionLegal()');
+          this.router.navigate(['/intro']);
+        }else
+          this.redirectLoggedUserToHomePage();
+        });
+      }
+       
   }
 
   private async saveInLocalStorage(data: any){

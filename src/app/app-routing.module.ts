@@ -93,7 +93,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tap/tap.module').then( m => m.TapPageModule)
   },
   {
-    path: 'diary',
+    path: 'journal',
     loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   },
   {

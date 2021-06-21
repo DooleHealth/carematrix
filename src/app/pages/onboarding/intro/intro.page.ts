@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
-
+const INTRO_KEY = 'intro';
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.page.html',
@@ -18,11 +18,11 @@ export class IntroPage implements OnInit {
 
   async introAction(){
     await Storage.set({
-     key: 'showIntro',
+     key: INTRO_KEY,
      value: 'true'
    });
    console.log(`[IntroPage] introAction()`);
-   this.router.navigate(['app/home']);
+   this.router.navigate(['home']);
  }
  
 
