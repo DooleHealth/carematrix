@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Cancelar" icon=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reservar</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <ion-row>
+    <ion-text class="txtTitle2">Tus profesionales habituales</ion-text>
+  </ion-row>
+  <ion-list>
+    <ion-card class="cardProfile">
+      <ion-card-content>
+        <ion-item lines="none"  routerLink="bookings">
+          <img src="assets/images/avatar_masculino.png" class="img-wrapper-doctors">
+          <div class="txtPaddingLeft">
+            <ion-label>Jesús Fernández</ion-label>
+            <ion-label class="textMediumLeft">
+              Medicina General
+            </ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+</ion-content>

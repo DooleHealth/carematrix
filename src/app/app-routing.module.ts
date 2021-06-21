@@ -120,6 +120,22 @@ const routes: Routes = [
     path: 'agenda-detail',
     loadChildren: () => import('./pages/agenda/agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
   },
+  {
+    path: 'medical-directory',
+    loadChildren: () => import('./pages/contact/medical-directory/medical-directory.module').then( m => m.MedicalDirectoryPageModule)
+  },
+  {
+    path: 'bookings',
+    loadChildren: () => import('./pages/contact/bookings/bookings.module').then( m => m.BookingsPageModule)
+  },
+  {
+    path: 'specialist-finder',
+    loadChildren: () => import('./pages/contact/specialist-finder/specialist-finder.module').then( m => m.SpecialistFinderPageModule)
+  },
+  {
+    path: 'medical-calendar',
+    loadChildren: () => import('./pages/contact/medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
+  },
  
 
 
