@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: BookingsPage
-  }
+  },
+  {
+  path: 'medical-calendar',
+  loadChildren: () => import('../medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
+}
+
 ];
 
 @NgModule({
