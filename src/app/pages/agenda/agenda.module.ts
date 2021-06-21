@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -25,7 +25,7 @@ registerLocaleData(localeDe);
     NgCalendarModule
   ],
   declarations: [AgendaPage],
-  providers: [
+  providers: [ DatePipe,
     { provide: LOCALE_ID, useValue: 'ca-ES' }
   ]
 })

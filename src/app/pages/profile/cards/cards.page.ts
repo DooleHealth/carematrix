@@ -12,6 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class CardsPage implements OnInit {
   listCard: HealthCard[] =[];
+  isLoading = false
   constructor(
     public router: Router,
     private alertController: AlertController,
@@ -28,12 +29,15 @@ export class CardsPage implements OnInit {
   }
 
   getHealthCards(){
+    this.isLoading = true
     this.dooleService.getAPIhealthCards().subscribe(
       async (res: any) =>{
         console.log('[CardsPage] getHealthCards()', await res);
         this.listCard = res as HealthCard[]
+        this.isLoading = false
        },(err) => { 
           console.log('[CardsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
           throw err; 
       });
   }

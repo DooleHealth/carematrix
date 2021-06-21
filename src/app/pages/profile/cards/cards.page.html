@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="listCard !== undefined">
+<ion-content *ngIf="listCard.length > 0; else noData">
   <ion-list *ngFor="let card of listCard">
     <ion-card class="cardProfile" routerLink="detailCard" [state]="{card:card}">
       <ion-card-content>
@@ -30,3 +30,6 @@
   </ion-card>
   </ion-list>
 </ion-content>
+<ng-template #noData>
+  <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+</ng-template>

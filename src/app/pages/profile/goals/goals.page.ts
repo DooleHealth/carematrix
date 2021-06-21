@@ -10,12 +10,11 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./goals.page.scss'],
 })
 export class GoalsPage implements OnInit {
-  listGoal: GoalUser[]
+  listGoal: GoalUser[] = []
   nameGoal: string = 'Doolehealth'
-
+  isLoading = false
   constructor(
     public router:Router,
-    private translate: TranslateService,
     private dooleService: DooleService) { }
 
   ngOnInit() {
@@ -23,12 +22,15 @@ export class GoalsPage implements OnInit {
   }
 
   getGoalImformation(){
+    this.isLoading = true
     this.dooleService.getAPIgoals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
         this.listGoal = res.goals as GoalUser[]
+        this.isLoading = false
        },(err) => { 
           console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
           throw err; 
       });
   }

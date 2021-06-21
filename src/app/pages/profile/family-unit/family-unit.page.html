@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="listFamilyUnit !== undefined">
+<ion-content *ngIf="listFamilyUnit.length > 0; else noData">
   <ion-list *ngFor="let family of this.listFamilyUnit">
     <ion-card class="cardProfile" (click)="changeAccount(family)">
       <ion-card-content>
@@ -24,3 +24,7 @@
   </ion-card>
   </ion-list>
 </ion-content>
+
+<ng-template #noData>
+  <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+</ng-template>

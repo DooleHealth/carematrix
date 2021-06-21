@@ -8,7 +8,8 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./emergency-contacts.page.scss'],
 })
 export class EmergencyContactsPage implements OnInit {
-  listContact
+  listContact = []
+  isLoading = false
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService
@@ -20,12 +21,15 @@ export class EmergencyContactsPage implements OnInit {
 
 
   getListContact(){
+    this.isLoading = true
     this.dooleService.getAPIemergencyContact().subscribe(
       async (res: any) =>{
         console.log('[EmergencyContactsPage] getListContact()', await res);
         this.listContact = res
+        this.isLoading = false
        },(err) => { 
           console.log('[EmergencyContactsPage] getListContact() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
           throw err; 
       });
   }

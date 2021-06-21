@@ -8,6 +8,7 @@ import { DiaryPageRoutingModule } from './diary-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { DiaryPage } from './diary.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     FormsModule,
     IonicModule,
     ComponentsModule,
+    TranslateModule,
     DiaryPageRoutingModule
   ],
   providers: [DatePipe, InAppBrowser] ,

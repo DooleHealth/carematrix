@@ -545,6 +545,7 @@ export class DooleService {
       })
     );
   }
+  
   //documents-Tracking
   getAPIdiagnosticTests(): Observable<any>{
     let path = 'user/diagnosticTests';
@@ -723,6 +724,27 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIagenda(): Observable<any>{
+    let path = 'user/agenda';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIagenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  getAPIagendaID(id): Observable<any>{
+    let path = `user/agenda/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIagendaID(${path}) res: `, res);
         return res;
       })
     );

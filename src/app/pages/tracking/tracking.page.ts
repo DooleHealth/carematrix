@@ -23,10 +23,9 @@ export class TrackingPage implements OnInit {
   listDiagnostic:  ListDiagnosticTests[] = []
   diagnosticTests = []
   forms = []
-
   groupedElements: any = [];
   elementValues: any = [];
-
+  isLoading = false
   segment = 'documents'
   filter: Filter;
   constructor(
@@ -64,6 +63,7 @@ export class TrackingPage implements OnInit {
 
   async getFilteredDiagnosticTests(){
     console.log('[TrackingPage] getFilteredDiagnosticTests()' ,  this.filter);
+    this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
     this.dooleService.postAPIfilteredDiagnosticTest(this.filter).subscribe(
@@ -76,15 +76,18 @@ export class TrackingPage implements OnInit {
           this.groupDiagnosticsByDate(res)
         }
         loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }
 
 
   async getDiagnosticTests(){
+    this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
     this.dooleService.getAPIdiagnosticTests().subscribe(
@@ -96,9 +99,11 @@ export class TrackingPage implements OnInit {
         if(this.diagnosticTests )
         this.groupDiagnosticsByDate(res)
         loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }
@@ -119,6 +124,7 @@ export class TrackingPage implements OnInit {
 
 
   async getFormList(){
+    this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
     this.dooleService.getAPIformLists().subscribe(
@@ -127,9 +133,11 @@ export class TrackingPage implements OnInit {
         console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.forms = res.forms
         loading.dismiss();
+        this.isLoading = false
        },async (err) => { 
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }
@@ -169,6 +177,7 @@ export class TrackingPage implements OnInit {
   }
 
   async getElementsList(){
+    this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
     this.groupedElements = [];
@@ -189,9 +198,11 @@ export class TrackingPage implements OnInit {
         }
         //console.log('[TrackingPage] getElementsList()',  this.groupedElements);
         loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }

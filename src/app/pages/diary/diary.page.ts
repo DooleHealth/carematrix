@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { IonSlides, LoadingController} from '@ionic/angular'; 
+import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 export interface ItemDiary {
@@ -30,6 +31,7 @@ export class DiaryPage implements OnInit {
     private datePipe: DatePipe,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -279,24 +281,24 @@ export class DiaryPage implements OnInit {
   selectDayPeriod(time){
     let hour = new Date(time).getHours()
     if(hour <= 6  || hour < 12){
-      return 'mañana'
+      return this.translate.instant('diary.morning')
     }
     if(hour == 12){
-      return 'medio día'
+      return this.translate.instant('diary.noon')
     }
     if(hour >= 13 || hour < 20){
-      return 'tarde'
+      return this.translate.instant('diary.aftenoon')
     }
     if(hour >= 20 || hour < 24){
-      return 'noche'
+      return this.translate.instant('diary.night')
     }
     if(hour == 24){
-      return 'media noche'
+      return this.translate.instant('diary.midnight')
     }
     if(hour > 0 || hour < 6){
-      return 'madrugada'
+      return this.translate.instant('diary.dawning')
     }
-    return 'todo el día'
+    return this.translate.instant('diary.all_day')
   }
 }
 
