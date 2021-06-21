@@ -3,9 +3,9 @@
     
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>{{'diary.header_diary' | translate}}</ion-title>
-<!--     <ion-buttons slot="end" *ngSwitchCase="'medication'">
+    <ion-buttons slot="end" *ngSwitchCase="'medication'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" ></ion-icon>
-    </ion-buttons> -->
+    </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'health'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/elements-add"></ion-icon>
     </ion-buttons>
