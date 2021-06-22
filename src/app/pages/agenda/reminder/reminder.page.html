@@ -4,6 +4,9 @@
       <ion-back-button text="{{ 'Agenda' | translate }}"></ion-back-button>
     </ion-buttons>
     <ion-title >{{event.type}}</ion-title>
+    <ion-button fill="clear" slot="end"  routerLink="/reminder-add" [state]="{id: event.id, event: event}">
+       {{ 'Editar' | translate }}
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 

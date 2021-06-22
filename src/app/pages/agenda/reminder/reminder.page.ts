@@ -20,9 +20,10 @@ export class ReminderPage implements OnInit {
 
   ngOnInit() {
     this.id = history.state.id;
-    console.log('[ReminderPage] ngOnInit()', this.event);
+    //console.log('[ReminderPage] ngOnInit()', this.event);
     if(this.id){
       this.event = history.state.event;
+      console.log('[ReminderPage] ngOnInit()', this.event);
     }
     this.getReminderData()
   }
