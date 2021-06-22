@@ -1,5 +1,6 @@
 {
     "landing": {
+        "login":"Verificando credenciales...",
         "user_placeholder": "Usuario",
         "password_placeholder": "Contraseña",
         "password_recovery": "¿Has olvidado tu contraseña?",

@@ -8,6 +8,7 @@ import { TrackingPageRoutingModule } from './tracking-routing.module';
 
 import { TrackingPage } from './tracking.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     FormsModule,
     IonicModule,
     TranslateModule,
+    ComponentsModule,
     TrackingPageRoutingModule
   ],
   providers: [ InAppBrowser],

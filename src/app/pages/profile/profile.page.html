@@ -23,28 +23,28 @@
     </ion-grid>
     <ion-text class="txtTitle">{{ 'profile.information.title_information' | translate}}</ion-text>
     <ion-card class="cardProfile">
-          <ion-list>
-            <ion-item routerLink="personal" >
+          <ion-list >
+            <ion-item routerLink="personal" detail="false">
               <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="cards" >
+            <ion-item routerLink="cards" detail="false">
               <ion-label>{{ 'profile.information.your_health_cards' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="emergency-contacts">
+            <ion-item routerLink="emergency-contacts" detail="false">
               <ion-label>{{ 'profile.information.emergency' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="family">
+            <ion-item routerLink="family" detail="false">
               <ion-label>{{ 'profile.information.family_unit' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>          
-            <ion-item routerLink="goals">
+            <ion-item routerLink="goals" detail="false">
               <ion-label>{{ 'profile.information.your_goals' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item lines="none">
+            <ion-item lines="none" detail="false">
               <ion-label>{{ 'profile.information.payment_method' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
@@ -53,11 +53,11 @@
     <ion-text class="txtTitle">{{ 'profile.configuration.title_setting' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
-            <ion-item>
+            <ion-item detail="false">
               <ion-label>{{ 'profile.configuration.linked_accounts' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item>
-            <ion-item lines="none" routerLink="settings">
+            </ion-item >
+            <ion-item lines="none" routerLink="settings" detail="false">
               <ion-label lines="none">{{ 'profile.configuration.settings' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
@@ -66,19 +66,19 @@
     <ion-text class="txtTitle">{{ 'profile.help.title_help' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
-            <ion-item routerLink="faqs">
+            <ion-item routerLink="faqs" detail="false">
               <ion-label>{{'profile.help.frequent_questions' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="report-problem">
+            <ion-item routerLink="report-problem" detail="false">
               <ion-label>{{'profile.help.report_problem' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item>
-              <ion-label routerLink="legal">{{ 'profile.help.legal_warning' | translate}}</ion-label>
+              <ion-label routerLink="legal" detail="false">{{ 'profile.help.legal_warning' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="about-us" lines="none">
+            <ion-item routerLink="about-us" detail="false" lines="none">
               <ion-label>{{ 'profile.help.us' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>

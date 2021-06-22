@@ -30,7 +30,7 @@
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
                     <ion-row>
-                      <ion-progress-bar  class="my-buffer-progress" *ngIf='slide.steps as Number' [value]="slide.steps"></ion-progress-bar>
+                      <ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
                     </ion-row>
                       <p class="txtTitleGoalsLittle">{{slide.description}}</p>
                   </ion-grid>
@@ -60,7 +60,7 @@
                   </ion-col>
                   <ion-col size="10" class="alingLeft">
                     <p>{{slide.doctor}}</p>
-                    <ion-text>{{slide.start_date_iso8601 | date: ['EEEE, d MMMM hh:mm']  }}</ion-text>
+                    <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm'  }}</ion-text>
                     <ion-button size="small" fill="clear" (click)="actionDetailAppointment(slide)">
                       {{ 'home.detail_button' | translate}}</ion-button>
                   </ion-col>
@@ -100,8 +100,8 @@
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="white">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
-            <ion-text style="color:'#E67E22';" slot="start" *ngIf='infoDiet as UserInformation'>{{infoDiet?.title}}</ion-text>
-            <ion-text slot="end" *ngIf='infoDiet as UserInformation'>{{infoDiet?.hour}}</ion-text>
+            <ion-text style="color:'#E67E22';" slot="start" *ngIf="infoDiet as UserInformation">{{infoDiet?.title}}</ion-text>
+            <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
             <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
@@ -121,7 +121,7 @@
           <ion-item lines="none" class="white">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
-            <ion-text slot="end" *ngIf='infoDrugs as UserInformation'>{{infoDrugs?.hour}}</ion-text>
+            <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
             <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 

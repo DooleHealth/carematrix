@@ -11,11 +11,9 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
 const { Storage } = Plugins;
 const TOKEN_KEY = 'token';
+const INTRO_KEY = 'intro';
 
-
-@Injectable()
 export class User{
-  
   condicion_legal: boolean;
   image: any;
   idPatient: string;
@@ -36,7 +34,6 @@ export class User{
 export class AuthenticationService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public user: User;
-  public mutua: string;
   public isRecovery: boolean = false;
   public action:string;
   public id_user:string;
@@ -185,5 +182,15 @@ export class AuthenticationService {
           console.log('error: ', error);
           throw new HttpErrorResponse(error);
         });
+  }
+
+  async showIntro(){
+    return Storage.get({key: INTRO_KEY}).then(async (data)=>{
+      let showIntro = Boolean(data.value)
+      console.log(`[AuthService] showIntro()`, showIntro);
+      return showIntro;
+    
+    })
+
   }
 }
