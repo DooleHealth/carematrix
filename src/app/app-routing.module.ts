@@ -140,6 +140,10 @@ const routes: Routes = [
     path: 'drug-add',
     loadChildren: () => import('./pages/diary/drug-add/drug-add.module').then( m => m.DrugAddPageModule)
   },
+  {
+    path: 'advices',
+    loadChildren: () => import('./pages/home/advices/advices.module').then( m => m.AdvicesPageModule)
+  },
  
 
 
