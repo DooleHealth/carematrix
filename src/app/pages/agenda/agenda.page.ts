@@ -50,29 +50,8 @@ export class AgendaPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.getDays()
-    //this.getAppointment()
     this.getAgenda()
   }
-
-   async getDays() {
-     this.translate.get('agenda.days').subscribe((data:any)=> {
-      console.log('[AgendaPage] getDays()', data);
-      this.days = data
-     });
-  }
-
-/*   getAppointment(){
-    this.dooleService.getAPIappointmentAgenda().subscribe(
-      async (res: any) =>{
-        console.log('[AgendaPage] getAppointment()', await res);
-        //this.eventSource = res
-        this.addScheduleToCalendar(res)
-       },(err) => { 
-          console.log('[AgendaPage] getAppointment() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      });
-  } */
 
   getAgenda(){
     this.dooleService.getAPIagenda().subscribe(
@@ -110,6 +89,10 @@ export class AgendaPage implements OnInit {
           allDay: isAllDay,
           type: e.agenda_type.name,
           color: e.agenda_type.color,
+
+          site: e.site,
+          staff: e.staff,
+          agenda_type: e.agenda_type
         });
       })
       console.log('[AgendaPage] addScheduleToCalendar()',events )
@@ -141,72 +124,5 @@ export class AgendaPage implements OnInit {
   async onEventSelected(event){
     this.event = event
   }
-  
-  createRandomEvents() {
-    console.log('[HomePage] createRandomEvents()  ' )
-    var events = [];
-    for (var i = 0; i < 50; i += 1) {
-      var listType = ['Recordatorio Médico', 'Cita Extracción Sangre', 'Cita Nutricionista', 'Recordatorio Personal']
-      var date = new Date();
-      var eventType = Math.floor(Math.random() * 2);
-      var startDay = Math.floor(Math.random() * 90) - 45;
-      var endDay = Math.floor(Math.random() * 2) + startDay;
-      var startTime;
-      var endTime;
-      var type = listType[Math.floor(Math.random() * 3)]
-      if (eventType === 0) {
-        startTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + startDay
-          )
-        );
-        if (endDay === startDay) {
-          endDay += 1;
-        }
-        endTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + endDay
-          )
-        );
-        events.push({
-          title: 'All Day - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: true,
-          type: type
-        });
-      } else {
-        var startMinute = Math.floor(Math.random() * 24 * 60);
-        var endMinute = Math.floor(Math.random() * 180) + startMinute;
-        startTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + startDay,
-          0,
-          date.getMinutes() + startMinute
-        );
-        endTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + endDay,
-          0,
-          date.getMinutes() + endMinute
-        );
-        events.push({
-          title: 'Event - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: false,
-          type: type,
-        });
-      }
-    }
-    //console.log('[HomePage] createRandomEvents()',events )
-    this.eventSource = this.eventSource.concat(events) ;
-  } 
 
 }

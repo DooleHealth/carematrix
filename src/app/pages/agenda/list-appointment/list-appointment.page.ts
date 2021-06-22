@@ -135,9 +135,4 @@ export class ListAppointmentPage implements OnInit {
     this.filterMonth()
   }
 
-  createNewEvents(){
-
-  }
-
-
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,9 +14,11 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     ReminderAddPageRoutingModule,
     TranslateModule,
   ],
-  declarations: [ReminderAddPage]
+  declarations: [ReminderAddPage],
+  providers: [ DatePipe]
 })
 export class ReminderAddPageModule {}

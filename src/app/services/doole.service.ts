@@ -750,6 +750,17 @@ export class DooleService {
     );
   }
 
+  postAPIaddAgenda(params: Object): Observable<any>{
+    let path = 'user/agenda/'  
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIaddAgenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(
