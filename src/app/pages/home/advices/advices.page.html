@@ -1,0 +1,75 @@
+<ion-header>
+  <!-- <ion-toolbar> -->
+    
+    <ion-toolbar [ngSwitch]="segment">
+      <ion-title>{{ 'novedades y consejos' | translate}}</ion-title>
+  
+  </ion-toolbar>
+</ion-header>
+<ion-content view-cached=”false”>
+
+<!-- SegmentBar -->
+
+  <ion-segment 
+  (ionChange)="segmentChanged($event)"
+  [(ngModel)]="segment" 
+  scrollable>
+    <ion-segment-button value="news">
+      <ion-label>{{ 'NOVEDADES' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="advices">
+      <ion-label>{{ 'CONSEJOS' | translate}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <!--News -->
+  <ion-searchbar>
+  </ion-searchbar>
+  <div class="verticalLine2" [ngSwitch]="segment">
+    <div *ngSwitchCase="'news'"> 
+      <ion-list *ngIf="items.length > 0; else noData">   
+        <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
+          <img *ngIf="item.item.image !== null"[src]='item.item.image.temporaryUrl'/>
+          <ion-item lines="none" >
+          
+            <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.name}}</ion-label>
+            <div>
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </div>
+          </ion-item>
+  
+          <ion-item lines="none">
+            <ion-button  size="small" color="transparent" class="buttonLink" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.go_detail' | translate}}</ion-button>&nbsp;
+          </ion-item>
+     
+        </ion-card>
+      </ion-list>
+    </div> 
+    <!-- Advices -->
+<div *ngSwitchCase="'advices'"> 
+  <ion-list *ngIf="items.length > 0; else noData">   
+    <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
+      <img *ngIf="item.item.image !== null"[src]='item.item.image.temporaryUrl'/>
+      <ion-item lines="none" >
+      
+        <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.name}}</ion-label>
+        <div>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-button  size="small" color="transparent" class="buttonLink" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.go_detail' | translate}}</ion-button>&nbsp;
+      </ion-item>
+ 
+    </ion-card>
+  </ion-list>
+  </div> 
+
+
+</div>
+<ng-template #noData>
+  <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+</ng-template>
+</ion-content>
