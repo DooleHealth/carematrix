@@ -7,6 +7,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content>
+  <ion-card  class="cardProfilePaddingBottom" >
+
+      <form>
+      <ion-item>
+        <ion-label class="txtTitleGoals"  stacked>Fecha de inicio del tratamiento</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selecciona" pickerFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label class="txtTitleGoals"  stacked>Fecha fin del tratamiento</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selecciona" pickerFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item >
+      <ion-item>
+        <ion-label class="txtTitleGoals"  stacked>Ingesta</ion-label>
+        <ion-input type="number" placeholder="Nº de dosis" ></ion-input>
+      </ion-item >
+      <ion-item>
+        <ion-label class="txtTitleGoals" stacked>Añadir hora de toma</ion-label>
+        <ion-datetime displayFormat="H:mm" placeholder="+" minuteValues="0,15,30,45" >
+        </ion-datetime>
+      </ion-item >
+
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals" stacked>Alias
+        </ion-label>
+        <ion-input type="text" placeholder="Nombre alternativo" ></ion-input>
+      </ion-item >
+      <!-- <ion-button  expand="block" color="primary" >Guardar este medicamento</ion-button><br>
+       <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> 
+      <ion-button expand="block" color="danger" >Eliminar este medicamento</ion-button> -->
+    </form>
+    
+ 
+  </ion-card>
+  <div class="buttonContainer">
+  <ion-button  expand="block" color="primary" >Guardar este medicamento</ion-button><br>
+  <!-- <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> -->
+  <ion-button class="buttonClose" color="transparent" expand="block"  >Eliminar este medicamento</ion-button>
+</div>
 </ion-content>
+
+

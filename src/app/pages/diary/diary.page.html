@@ -4,7 +4,7 @@
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>{{'diary.header_diary' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" ></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="drug-add"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'health'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/elements-add"></ion-icon>
@@ -105,13 +105,15 @@
 
     <div *ngSwitchCase="'medication'">
       <ion-list *ngIf="items.length > 0; else noData">
-        <ion-card *ngFor="let item of items" class="cardProfile" (click)="expandItem(item)">
+        <!-- ESTE ES EL FILTRO QUE DEBEMOS ACTIVAR COMO UN TÍTULO (mañana/tarde/noche) -->
+        <!-- <ion-label>{{'diary.field_drug' | translate}} {{ selectDayPeriod(item.item.date_intake) }}</ion-label> -->
+        <ion-card *ngFor="let item of items" class="cardProfilePaddingBottom" (click)="expandItem(item)">
           <ion-item *ngIf="item.expanded" lines="none">
             <ion-col size="2">
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">{{'diary.field_drug' | translate}} {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
+            <ion-label style="color:#2ECC71;">{{item.item.name}} </ion-label>
             <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
@@ -120,7 +122,7 @@
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">{{'diary.field_drug' | translate}}  {{ selectDayPeriod(item.item.date_intake) }}</ion-label>
+            <ion-label style="color:#2ECC71;">{{item.item.name}}</ion-label>
             <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
           </ion-item>
@@ -144,7 +146,7 @@
 
               <ion-button size="small" color="transparent" class="buttonLink" 
                 routerLink="drugs-detail" [state]="{id: item.item.id, name:item.item.name}"
-              >{{ 'button.see_detail' | translate }}</ion-button>&nbsp;
+              >{{ 'detail_contact.button_edit' | translate }}</ion-button>&nbsp;
             </div>
    
           </app-expandable>

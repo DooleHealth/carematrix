@@ -136,6 +136,10 @@ const routes: Routes = [
     path: 'medical-calendar',
     loadChildren: () => import('./pages/contact/medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
   },
+  {
+    path: 'drug-add',
+    loadChildren: () => import('./pages/diary/drug-add/drug-add.module').then( m => m.DrugAddPageModule)
+  },
  
 
 

@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: () => import('./drugs-detail/drugs-detail.module').then( m => m.DrugsDetailPageModule)
   },
   {
+    path: 'drug-add',
+    loadChildren: () => import('./drug-add/drug-add.module').then( m => m.DrugAddPageModule)
+  },
+  {
     path: 'games-detail',
     loadChildren: () => import('./games-detail/games-detail.module').then( m => m.GamesDetailPageModule)
   }
