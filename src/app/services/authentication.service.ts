@@ -82,10 +82,34 @@ export class AuthenticationService {
     const endpoint = this.api.getEndpoint('patient/login');
 
     return this.http.post(endpoint, credentials).pipe(
-      map((data: any) => data.token),
-      switchMap(token => {
-        return from(Storage.set({key: TOKEN_KEY, value: token}));
+      map((res: any) => {
+       
+        if(!res.success){
+          this.throwError(res);
+        }
+        // save user's token
+        if(res.token){
+          console.log("[AuthService] setting token: ", res);
+          Storage.set({key: TOKEN_KEY, value: res.token})
+        }
+         
+        if(res.firebaseToken){
+          this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
+            if(!this.platform.is('mobileweb') && !this.platform.is('desktop')){
+              this.registerDevice();
+            }
+            
+          }, (error) => {
+            console.log(error);
+          });
+        }
+        this.user = new User(res.idUser, credentials.password);
+        this.setUserLocalstorage(this.user)
+        // user's data
+        return res;
+
       }),
+      
       tap(_ => {
         this.isAuthenticated.next(true);
       }),

@@ -1,68 +1,219 @@
 <ion-header>
-  <!-- <ion-toolbar> -->
-    
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>Contacta</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content >
+<ion-content>
 
 <!-- SegmentBar -->
 
-  <ion-segment [(ngModel)]="segment" scrollable>
-    <ion-segment-button value="video">
-      <ion-label>Videoconsulta</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="appointment">
-      <ion-label>Cita Presencial</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="chat">
-      <ion-label>Chat</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+<ion-segment [(ngModel)]="segment" scrollable>
+  <ion-segment-button value="video">
+    <ion-label>Videoconsulta</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="appointment">
+    <ion-label>Cita Presencial</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="chat">
+    <ion-label>Chat</ion-label>
+  </ion-segment-button>
+</ion-segment>
 
-  <!-- videocall-->
+<!-- videocall-->
 
-  <div class="verticalLine2" [ngSwitch]="segment">
-    <div *ngSwitchCase="'video'">
+<div class="verticalLine2" [ngSwitch]="segment">
+  <div *ngSwitchCase="'video'">
+    <ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src='assets/icons/Video.svg' class="img-wrapper"></ion-img>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h3 style="text-align: center;">Videoconsulta</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p class="txtContactLittle">Habla directamente con tu profesional habitualo un especialista desde donde tú
+              quieras.Te atenderán en el horario seleccionado</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list>
+        <ion-card class="cardProfile">
+          <ion-item lines="none" routerLink="medical-directory">
+            <div class="verticalLine"></div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-img style="align-items: left;" src='assets/icons/corazon.svg' style="width: 50%;padding: 3%;">
+                  </ion-img>
+                </ion-col>
+                <ion-col size="10">
+                  <ion-card-title class="txtTitleGoals">Profesional Habitual</ion-card-title>
+                  <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-col size="12">
+                <ion-card-title class="txtTitleTrackingLittle">Reserva una cita con tu médico o profesional de siempre
+                  para realizar la videoconsulta</ion-card-title>
+              </ion-col>
+              <ion-col size="12">
+                <ion-card-title class="textBlue" routerLink="">
+                  Continuar</ion-card-title>
+              </ion-col>
+            </ion-grid>
+          </ion-item>
+        </ion-card>
+        <ion-card class="cardProfile">
+          <ion-item lines="none"routerLink="specialist-finder">
+            <div class="verticalLine"></div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
+                  </ion-img>
+                </ion-col>
+                <ion-col size="8">
+                  <ion-card-title class="txtTitleGoals">Otros especialistas</ion-card-title>
+                  <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-col size="12">
+                <ion-card-title class="txtTitleTrackingLittle">Reserva una cita con un especialista para realizar la
+                  videoconsulta</ion-card-title>
+              </ion-col>
+              <ion-col size="12">
+                <ion-card-title class="textBlue" routerLink="">
+                  Continuar</ion-card-title>
+              </ion-col>
+            </ion-grid>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </ion-list>
+  </div>
+
+  <!-- Appointment -->
+<div  *ngSwitchCase="'appointment'">
+<ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-img src='assets/icons/Cita.svg' class="img-wrapper"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h3 style="text-align: center;">Cita Presencial</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="txtContactLittle">Reserva una cita presencial con tu  profesional habitual o un especialista cuando lo necesites.Te atenderán en el horario seleccionado</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-card class="cardProfile">
+      <ion-item lines="none" routerLink="medical-directory">
+        <div class="verticalLine"></div>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <ion-img style="align-items: left;" src='assets/icons/corazon.svg' style="width: 50%;padding: 3%;">
+              </ion-img>
+            </ion-col>
+            <ion-col size="8">
+              <ion-card-title class="txtTitleGoals">Profesional Habitual</ion-card-title>
+              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-col size="12">
+            <ion-card-title class="txtTitleTrackingLittle">Reserva tu cita presencial con el médico de siempre</ion-card-title>
+          </ion-col>
+          <ion-col size="12">
+            <ion-card-title class="textBlue" routerLink="">
+              Continuar</ion-card-title>
+          </ion-col>
+        </ion-grid>
+      </ion-item>
+    </ion-card>
+    <ion-card class="cardProfile">
+      <ion-item lines="none" routerLink="specialist-finder">
+        <div class="verticalLine"></div>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
+              </ion-img>
+            </ion-col>
+            <ion-col size="8">
+              <ion-card-title class="txtTitleGoals">Otros especialistas</ion-card-title>
+              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-col size="12">
+            <ion-card-title class="txtTitleTrackingLittle">Reserva tu cita presencial con otro especialista</ion-card-title>
+          </ion-col>
+          <ion-col size="12">
+            <ion-card-title class="textBlue" routerLink="">
+              Continuar</ion-card-title>
+          </ion-col>
+        </ion-grid>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-list>
+</div>
+
+
+  <!-- Chat -->
+
+<div *ngSwitchCase="'chat'">
+   
       <ion-list>
         <ion-grid>
           <ion-row>
             <ion-col size="12">
-              <ion-img src='assets/icons/Video.svg' class="img-wrapper"></ion-img>
+              <ion-img src='assets/icons/Chat2.svg' class="img-wrapper"></ion-img>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <h3 style="text-align: center;">Videoconsulta</h3>
+              <h3 style="text-align: center;">Chat</h3>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <p class="txtContactLittle">Habla directamente con tu profesional habitualo un especialista desde donde tú
-                quieras.Te atenderán en el horario seleccionado</p>
+              <p class="txtContactLittle">Ahora puedes hablar a través del chatcon tu médico habitual o un especialista.
+                Te atenderán lo antes posible.</p>
             </ion-col>
           </ion-row>
         </ion-grid>
-  
+    
         <ion-list>
           <ion-card class="cardProfile">
-            <ion-item lines="none" routerLink="medical-directory">
+            <ion-item lines="none">
               <div class="verticalLine"></div>
               <ion-grid>
                 <ion-row>
                   <ion-col size="2">
-                    <ion-img style="align-items: left;" src='assets/icons/corazon.svg' style="width: 50%;padding: 3%;">
+                    <ion-img style="align-items: left;" src='assets/icons/list.svg' style="width: 50%;padding: 3%;">
                     </ion-img>
                   </ion-col>
-                  <ion-col size="10">
-                    <ion-card-title class="txtTitleGoals">Profesional Habitual</ion-card-title>
+                  <ion-col size="8">
+                    <ion-card-title class="txtTitleGoals">Conversaciones recientes</ion-card-title>
                     <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
                   </ion-col>
                 </ion-row>
                 <ion-col size="12">
-                  <ion-card-title class="txtTitleTrackingLittle">Reserva una cita con tu médico o profesional de siempre
-                    para realizar la videoconsulta</ion-card-title>
+                  <ion-card-title class="txtTitleTrackingLittle">Accede a tus últimas conversaciones con tus profesionales habituales</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" routerLink="">
@@ -72,7 +223,7 @@
             </ion-item>
           </ion-card>
           <ion-card class="cardProfile">
-            <ion-item lines="none"routerLink="specialist-finder">
+            <ion-item lines="none">
               <div class="verticalLine"></div>
               <ion-grid>
                 <ion-row>
@@ -81,13 +232,12 @@
                     </ion-img>
                   </ion-col>
                   <ion-col size="8">
-                    <ion-card-title class="txtTitleGoals">Otros especialistas</ion-card-title>
+                    <ion-card-title class="txtTitleGoals">Nueva conversación</ion-card-title>
                     <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
                   </ion-col>
                 </ion-row>
                 <ion-col size="12">
-                  <ion-card-title class="txtTitleTrackingLittle">Reserva una cita con un especialista para realizar la
-                    videoconsulta</ion-card-title>
+                  <ion-card-title class="txtTitleTrackingLittle">Abre una nueva conversación con tus profesionales habituales</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" routerLink="">
@@ -98,158 +248,12 @@
           </ion-card>
         </ion-list>
       </ion-list>
-    </div>
+    </div> 
+  </div>
+</ion-content>
 
-    <!-- Appointment -->
-<div  *ngSwitchCase="'appointment'">
-  <ion-list>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12">
-          <ion-img src='assets/icons/Cita.svg' class="img-wrapper"></ion-img>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <h3 style="text-align: center;">Cita Presencial</h3>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <p class="txtContactLittle">Reserva una cita presencial con tu  profesional habitual o un especialista cuando lo necesites.Te atenderán en el horario seleccionado</p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-list>
-      <ion-card class="cardProfile">
-        <ion-item lines="none" routerLink="medical-directory">
-          <div class="verticalLine"></div>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2">
-                <ion-img style="align-items: left;" src='assets/icons/corazon.svg' style="width: 50%;padding: 3%;">
-                </ion-img>
-              </ion-col>
-              <ion-col size="8">
-                <ion-card-title class="txtTitleGoals">Profesional Habitual</ion-card-title>
-                <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-              </ion-col>
-            </ion-row>
-            <ion-col size="12">
-              <ion-card-title class="txtTitleTrackingLittle">Reserva tu cita presencial con el médico de siempre</ion-card-title>
-            </ion-col>
-            <ion-col size="12">
-              <ion-card-title class="textBlue" routerLink="">
-                Continuar</ion-card-title>
-            </ion-col>
-          </ion-grid>
-        </ion-item>
-      </ion-card>
-      <ion-card class="cardProfile">
-        <ion-item lines="none" routerLink="specialist-finder">
-          <div class="verticalLine"></div>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2">
-                <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
-                </ion-img>
-              </ion-col>
-              <ion-col size="8">
-                <ion-card-title class="txtTitleGoals">Otros especialistas</ion-card-title>
-                <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-              </ion-col>
-            </ion-row>
-            <ion-col size="12">
-              <ion-card-title class="txtTitleTrackingLittle">Reserva tu cita presencial con otro especialista</ion-card-title>
-            </ion-col>
-            <ion-col size="12">
-              <ion-card-title class="textBlue" routerLink="">
-                Continuar</ion-card-title>
-            </ion-col>
-          </ion-grid>
-        </ion-item>
-      </ion-card>
-    </ion-list>
-  </ion-list>
-</div>
-
-
-    <!-- Chat -->
-
- <div *ngSwitchCase="'chat'">
-     
-        <ion-list>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="12">
-                <ion-img src='assets/icons/Chat2.svg' class="img-wrapper"></ion-img>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <h3 style="text-align: center;">Chat</h3>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <p class="txtContactLittle">Ahora puedes hablar a través del chatcon tu médico habitual o un especialista.
-                  Te atenderán lo antes posible.</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-      
-          <ion-list>
-            <ion-card class="cardProfile">
-              <ion-item lines="none">
-                <div class="verticalLine"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-img style="align-items: left;" src='assets/icons/list.svg' style="width: 50%;padding: 3%;">
-                      </ion-img>
-                    </ion-col>
-                    <ion-col size="8">
-                      <ion-card-title class="txtTitleGoals">Conversaciones recientes</ion-card-title>
-                      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-                    </ion-col>
-                  </ion-row>
-                  <ion-col size="12">
-                    <ion-card-title class="txtTitleTrackingLittle">Accede a tus últimas conversaciones con tus profesionales habituales</ion-card-title>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-card-title class="textBlue" routerLink="">
-                      Continuar</ion-card-title>
-                  </ion-col>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-            <ion-card class="cardProfile">
-              <ion-item lines="none">
-                <div class="verticalLine"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
-                      </ion-img>
-                    </ion-col>
-                    <ion-col size="8">
-                      <ion-card-title class="txtTitleGoals">Nueva conversación</ion-card-title>
-                      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-                    </ion-col>
-                  </ion-row>
-                  <ion-col size="12">
-                    <ion-card-title class="txtTitleTrackingLittle">Abre una nueva conversación con tus profesionales habituales</ion-card-title>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-card-title class="textBlue" routerLink="">
-                      Continuar</ion-card-title>
-                  </ion-col>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-          </ion-list>
-        </ion-list>
-      </div> 
-      
-<!-- </ion-content> -->
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

@@ -90,7 +90,7 @@ export class LandingPage implements OnInit {
         this.dismissLoading();
         this.checkConditionLegal(true);
 
-      }, async (error) => {
+      }, async (error) => { 
        console.log('doDooleAppLogin() ERROR', await error);
        this.dismissLoading();
        throw error;

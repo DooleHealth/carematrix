@@ -8,6 +8,7 @@ import { ContactPageRoutingModule } from './contact-routing.module';
 
 import { ContactPage } from './contact.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ContactPageRoutingModule,
     TranslateModule,
+    ComponentsModule
   ],
   declarations: [ContactPage]
 })
