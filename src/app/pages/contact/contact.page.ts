@@ -6,9 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact.page.scss'],
 })
 export class ContactPage implements OnInit {
-
+  segment = 'video';
   constructor() { }
-
   ngOnInit() {
   }
 
