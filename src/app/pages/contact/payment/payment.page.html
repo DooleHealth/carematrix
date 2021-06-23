@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Método de pago</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <ion-text class="txtTitle2">Resumen de pago</ion-text>
+  <ion-card class="cardProfilePadding">
+    <ion-list>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Cita Presencial</ion-label>
+        <ion-label class="textMedium">50€</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-text class="textMediumLeft">Dra. Margarita del Bosque Pérez
+          Hospital Gregorio Marañón
+          18 nov. 2020, 15:00</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Subtotal</ion-label>
+        <ion-label class="textMedium">50€</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Gastos</ion-label>
+        <ion-label class="textMedium">5€</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="txtTitleGoals">IVA (21%)</ion-label>
+        <ion-label class="textMedium">10'5€</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Total</ion-label>
+        <ion-label class="textMedium">65'5€</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card class="cardProfile" routerLink="detailCard" >
+    
+      <ion-item>
+        <ion-label class="txtTitleGoals">Modalidad</ion-label>
+        <ion-label class="txtTitleTrackingLittle">Trajeta de crédito</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+          <img src="assets/images/tarjeta.png">
+        <ion-label class="txtPaddingLeft" >
+          <h3>...8730</h3>
+          <div>
+            <p> 
+              08/2026</p>
+          </div>
+        </ion-label>
+      </ion-item>
+
+</ion-card>
+<div class="buttonContainer">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;">
+    Confirmar Pago
+  </ion-button>
+</div>
+</ion-content>
