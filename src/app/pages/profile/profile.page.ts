@@ -36,8 +36,8 @@ export class ProfilePage implements OnInit {
   }
 
 
-  signOut() {
-    this.authService.logout();
+  async signOut() {
+    await this.authService.logout();
     this.firebaseService.signOut().subscribe(() => {
       // Sign-out successful.
       // Replace state as we are no longer authorized to access profile page.

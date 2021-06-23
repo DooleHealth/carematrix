@@ -31,7 +31,7 @@ export class TabsComponent implements OnInit {
   }
 
   public navigateMessages(){
-    return this.router.navigateByUrl('/agenda');
+    return this.router.navigateByUrl('/contact');
   }
 
   public navigateTracking(){

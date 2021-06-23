@@ -1,7 +1,7 @@
 import { Inject, Injectable, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Plugins } from '@capacitor/core';
-import { map, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { ApiEndpointsService } from '../services/api-endpoints.service';
 import { HttpService } from '../services/http.service';
 import { Constants } from '../config/constants';
@@ -82,30 +82,9 @@ export class AuthenticationService {
     const endpoint = this.api.getEndpoint('patient/login');
 
     return this.http.post(endpoint, credentials).pipe(
-      map((res: any) => {
-        console.log("Login res: ", res);
-        if(!res.success){
-          this.throwError(res);
-        }
-        // save user's token
-        if(res.token)
-          localStorage.setItem(TOKEN_KEY, res.token);
-          
-        if(res.firebaseToken){
-          this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
-            if(!this.platform.is('mobileweb') && !this.platform.is('desktop')){
-              this.registerDevice();
-            }
-            
-          }, (error) => {
-            console.log(error);
-          });
-        }
-        this.user = new User(res.idUser, credentials.password);
-        this.setUserLocalstorage(this.user)
-        // user's data
-        return res;
-
+      map((data: any) => data.token),
+      switchMap(token => {
+        return from(Storage.set({key: TOKEN_KEY, value: token}));
       }),
       tap(_ => {
         this.isAuthenticated.next(true);
