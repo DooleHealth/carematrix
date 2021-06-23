@@ -3,8 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button text="{{ 'Agenda' | translate }}"></ion-back-button>
     </ion-buttons>
-    <ion-title >{{event.type}}</ion-title>
-    <ion-button fill="clear" slot="end"  routerLink="/reminder-add" [state]="{id: event.id, event: event}">
+    <ion-title >{{ (reminder.origin == 1)? 'Recordatorio Personal': 'Recordatorio Médico'}}</ion-title>  <!-- event.type -->
+    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end"  routerLink="/reminder-add" [state]="{title:event.title, event: reminder}">
        {{ 'Editar' | translate }}
     </ion-button>
   </ion-toolbar>
@@ -23,38 +23,43 @@
       <ion-row>
         <ion-text *ngIf="event && event.title" class="txtTitle">{{event.title}}</ion-text>
       </ion-row>
-      <ion-item routerLink="doctor">
-        <ion-label>Médico</ion-label>
-        <ion-label class="textMedium"  >Médico nombre</ion-label>
+      <ion-item routerLink="doctor" 
+              [state]="{doctor: staff}" 
+              *ngFor="let staff of reminder.staff; let i = index" 
+              [lines]="(i == reminder?.staff.length-1)? 'full': 'none'">
+        <ion-label>{{(i == 0)? 'Médico': ''}}</ion-label>
+        <ion-text class="textMedium"  >{{staff.name}}</ion-text>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>Notas</ion-label>
-        <ion-textarea class="textMedium">{{reminder.description}}</ion-textarea>
+        <ion-textarea class="textMedium" [innerHtml]="reminder.description"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label>Tipo</ion-label>
-        <ion-label class="textMedium">Dr. Loquesea</ion-label>
+        <ion-text class="textMedium">{{reminder?.agendaType?.name}}</ion-text>
       </ion-item>
-      <ion-item routerLink="detail">
+      <ion-item routerLink="detail" [state]="{title:event.title, event: reminder}">
         <ion-label>Cita relacionada</ion-label>
-        <ion-label class="textMedium">Colonoscopia</ion-label>
+        <ion-text class="textMedium">{{event.title}}</ion-text>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>Empieza</ion-label>
-        <ion-text class="textMedium">{{reminder.start_date_iso8601 | date: 'EEEE, d MMMM yyyy, hh:mm'}}</ion-text>
+        <ion-text class="textMedium">{{reminder.start_date_iso8601 | date: 'EEEE, d MMMM yyyy, HH:mm'}}</ion-text>
       </ion-item>
-      <ion-item>
-        <ion-label>Termina</ion-label>
-        <ion-text class="textMedium">{{reminder.end_time}}</ion-text>
+      <ion-item lines="none">
+        <ion-label>Duración</ion-label>
+        <ion-text class="textMedium">{{this.duration}}</ion-text>
       </ion-item>
-      <ion-item>
+<!--       <ion-item>
         <ion-label>Repetir</ion-label>
         <ion-label class="textMedium"></ion-label>
       </ion-item>
       <ion-item lines="none">
         <ion-label>Terminar repetición</ion-label>
         <ion-label class="textMedium"></ion-label>
-      </ion-item>
+      </ion-item> -->
     </ion-list>
   </div>
   <ion-card class="cardProfile">
@@ -63,7 +68,7 @@
         <ion-label>Avisar</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-      <ion-item lines="none" routerLink="settings">
+      <ion-item lines="none">
         <ion-label lines="none">Mostrar como</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
@@ -77,6 +82,6 @@
       <ion-textarea placeholder="Enter more information here..."></ion-textarea>
     </ion-item>
   </ion-card>
-  <ion-button fill="clear" expand="full" color="danger">
-    Eliminar</ion-button>
+<!--   <ion-button fill="clear" expand="full" color="danger">
+    Eliminar</ion-button> -->
 </ion-content>

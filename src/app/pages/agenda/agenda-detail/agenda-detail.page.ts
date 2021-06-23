@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./agenda-detail.page.scss'],
 })
 export class AgendaDetailPage implements OnInit {
-
+  event: any = {}
+  title
   constructor() { }
 
   ngOnInit() {
+    this.event = history.state.event;
+    this.title = history.state.title;
+    console.log('[AgendaDetailPage] ngOnInit()', this.event);
   }
 
 }

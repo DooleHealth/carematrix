@@ -7,7 +7,7 @@ import { DooleService } from 'src/app/services/doole.service';
 
 export interface Filter {
   start_date?: string,
-  end_date?: number,
+  end_date?: string,
   testTypes?: [],
   profesional?: [],
   sources?: [],

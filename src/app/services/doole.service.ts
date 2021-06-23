@@ -10,6 +10,7 @@ import { Capacitor } from '@capacitor/core';
 import { map } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
 import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -592,12 +593,19 @@ export class DooleService {
     );
   }
 
-  postAPIfilteredDiagnosticTest(params: Object): Observable<any>{
-    let path = 'user/diagnosticTests/';
+  getAPIfilteredDiagnosticTest(params: any): Observable<any>{
+    let path = 'user/diagnosticTests';
     const endpoint = this.api.getEndpoint(path);
-    return this.http.post(endpoint, params).pipe(
+    let httpParams = new HttpParams();
+    // Begin assigning parameters
+    if(params !== undefined){
+      httpParams = (params.start_date)? httpParams.append('to_date', params.start_date): httpParams
+      httpParams = (params.end_date)? httpParams.append('from_date', params.end_date): httpParams
+     // httpParams = (params.end_date)? httpParams.append('from_date', params.end_date): httpParams
+    }
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIdiagnosticTest(${path}) res: `, res);
+        console.log(`[DooleService] getAPIfilteredDiagnosticTest(${path}) res: `, res);
         return res;
 
       })
@@ -768,6 +776,29 @@ export class DooleService {
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIaddAgenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  deleteAPIaddAgenda(id: Object): Observable<any>{
+    let params = {agenda: id}
+    let path = 'user/agenda/delete'  
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIaddAgenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIallowedContacts(): Observable<any>{
+    let path = `user/allowedContacts`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         return res;
       })
     );
