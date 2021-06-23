@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.service';
 
 import { AuthenticationService } from './services/authentication.service';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -29,10 +30,6 @@ const routes: Routes = [
   {
     path: 'verification',
     loadChildren: () => import('./pages/login/verification/verification.module').then( m => m.VerificationPageModule)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'intro',
@@ -89,8 +86,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tracking/documents-add/documents-add.module').then( m => m.DocumentsAddPageModule)
   },
   {
-    path: 'app',
-    loadChildren: () => import('./pages/tap/tap.module').then( m => m.TapPageModule)
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canLoad:[AuthGuard]
+  },
+  {
+    path: 'agenda',
+    loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
+  },
+  {
+   path: 'tracking',
+   loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
+  },
+  {
+   path: 'journal',
+   loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   },
   {
     path: 'journal',
@@ -146,12 +156,16 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {
-      // This value is required for server-side rendering to work.
-      initialNavigation: 'enabled',
-      scrollPositionRestoration: 'enabled',
-      anchorScrolling: 'enabled'
-    }),
+    RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules,  initialNavigation: 'enabled',
+    scrollPositionRestoration: 'enabled',
+    anchorScrolling: 'enabled'}),
+
+    // RouterModule.forRoot(routes, {
+    //   // This value is required for server-side rendering to work.
+    //   initialNavigation: 'enabled',
+    //   scrollPositionRestoration: 'enabled',
+    //   anchorScrolling: 'enabled'
+    // }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule
   ],
