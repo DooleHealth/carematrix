@@ -1,37 +1,64 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>payment</ion-title>
+    <ion-title>Método de pago</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <ion-card class="cardProfile">
+  <br>
+  <ion-text class="txtTitle2">Resumen de pago</ion-text>
+  <ion-card class="cardProfilePadding">
     <ion-list>
-      <ion-item>
-        <ion-label class="txtTitleGoals">Tipo de cita</ion-label>
-        <ion-label class="textMedium">Primera Consulta</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Cita Presencial</ion-label>
+        <ion-label class="textMedium">50€</ion-label>
       </ion-item>
+
       <ion-item>
-        <ion-label>Motivo de la cita</ion-label>
-        <ion-textarea class="textMedium" placeholder="..." ></ion-textarea>
+        <ion-text class="textMediumLeft">Dra. Margarita del Bosque Pérez
+          Hospital Gregorio Marañón
+          18 nov. 2020, 15:00</ion-text>
       </ion-item>
       <ion-item lines="none">
-        Documentos adjuntos
+        <ion-label class="txtTitleGoals">Subtotal</ion-label>
+        <ion-label class="textMedium">50€</ion-label>
       </ion-item>
-      <ion-item lines="none" class="textMediumLeft">Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor
-        diagnóstico
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Gastos</ion-label>
+        <ion-label class="textMedium">5€</ion-label>
       </ion-item>
-
-      <ion-button slot="start" fill="clear">{{'report_problem.button_add_file' | translate }}
-        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
-      </ion-button>
+      <ion-item>
+        <ion-label class="txtTitleGoals">IVA (21%)</ion-label>
+        <ion-label class="textMedium">10'5€</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">Total</ion-label>
+        <ion-label class="textMedium">65'5€</ion-label>
+      </ion-item>
     </ion-list>
   </ion-card>
-  <div class="buttonContainer">
-  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" >
-  Confirmar Videollamada
+
+  <ion-card class="cardProfile" routerLink="detailCard" >
+    
+      <ion-item>
+        <ion-label class="txtTitleGoals">Modalidad</ion-label>
+        <ion-label class="txtTitleTrackingLittle">Trajeta de crédito</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+          <img src="assets/images/tarjeta.png">
+        <ion-label class="txtPaddingLeft" >
+          <h3>...8730</h3>
+          <div>
+            <p> 
+              08/2026</p>
+          </div>
+        </ion-label>
+      </ion-item>
+
+</ion-card>
+<div class="buttonContainer">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;">
+    Confirmar Pago
   </ion-button>
-  </div>
+</div>
 </ion-content>
