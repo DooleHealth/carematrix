@@ -27,11 +27,11 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'documents_filter.from' | translate}}</ion-label>
-        <ion-datetime formControlName="start_date" displayFormat="DD/MM/YY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <ion-datetime (ionChange)="changeFormatToDate()" formControlName="start_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_filter.until' | translate}}</ion-label>
-        <ion-datetime formControlName="end_date" displayFormat="DD/MM/YY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <ion-datetime (ionChange)="changeFormatFromDate()" formControlName="end_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </ion-card>
@@ -44,7 +44,7 @@
     <ion-list *ngFor="let test of listTestType; let i = index">
       <ion-item [lines]="linesNone(i)">
         <ion-label>{{test.name}}</ion-label>
-        <ion-checkbox slot="start"  (ionChange)="actionCheckboxTestType($event, test)"></ion-checkbox>
+        <ion-checkbox slot="start"  (ionChange)="actionCheckboxTestType($event, test.id)"></ion-checkbox>
       </ion-item>
     </ion-list>
   </ion-card>

@@ -599,9 +599,13 @@ export class DooleService {
     let httpParams = new HttpParams();
     // Begin assigning parameters
     if(params !== undefined){
-      httpParams = (params.start_date)? httpParams.append('to_date', params.start_date): httpParams
-      httpParams = (params.end_date)? httpParams.append('from_date', params.end_date): httpParams
-     // httpParams = (params.end_date)? httpParams.append('from_date', params.end_date): httpParams
+      httpParams = (params.start_date)? httpParams.append('from_date', params.start_date): httpParams
+      httpParams = (params.end_date)? httpParams.append('to_date', params.end_date): httpParams
+      if(params.diagnosticTestTypes){
+        params.diagnosticTestTypes.forEach(element => {
+          httpParams = httpParams.append('diagnostic_test_type_id[]', element)
+        });
+      }
     }
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
@@ -787,6 +791,17 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIstaffId(id): Observable<any>{
+    let path = `user/staff/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIstaffId(${path}) res: `, res);
         return res;
       })
     );
