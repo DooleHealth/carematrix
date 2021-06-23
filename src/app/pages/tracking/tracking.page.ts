@@ -70,7 +70,7 @@ export class TrackingPage implements OnInit {
       async (res: any) =>{
         console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
         let diagnosticTests = res.diagnosticTests
-        if(diagnosticTests && diagnosticTests >0){
+        if(diagnosticTests && diagnosticTests.length >0){
           this.diagnosticTests = []
           this.listDiagnostic = []
           this.groupDiagnosticsByDate(res)
