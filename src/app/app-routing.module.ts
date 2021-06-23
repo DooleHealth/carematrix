@@ -144,6 +144,10 @@ const routes: Routes = [
     path: 'advices',
     loadChildren: () => import('./pages/home/advices/advices.module').then( m => m.AdvicesPageModule)
   },
+  {
+    path: 'payment',
+    loadChildren: () => import('./pages/contact/payment/payment.module').then( m => m.PaymentPageModule)
+  },
  
 
 

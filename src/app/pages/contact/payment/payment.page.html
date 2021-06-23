@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item>
+        <ion-label class="txtTitleGoals">Tipo de cita</ion-label>
+        <ion-label class="textMedium">Primera Consulta</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>Motivo de la cita</ion-label>
+        <ion-textarea class="textMedium" placeholder="..." ></ion-textarea>
+      </ion-item>
+      <ion-item lines="none">
+        Documentos adjuntos
+      </ion-item>
+      <ion-item lines="none" class="textMediumLeft">Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor
+        diagnóstico
+      </ion-item>
+
+      <ion-button slot="start" fill="clear">{{'report_problem.button_add_file' | translate }}
+        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
+      </ion-button>
+    </ion-list>
+  </ion-card>
+  <div class="buttonContainer">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" >
+  Confirmar Videollamada
+  </ion-button>
+  </div>
+</ion-content>
