@@ -8,7 +8,7 @@ import { DooleService } from 'src/app/services/doole.service';
 export interface Filter {
   start_date?: string,
   end_date?: string,
-  testTypes?: [],
+  diagnosticTestTypes?: [],
   profesional?: [],
   sources?: [],
 }
@@ -22,7 +22,7 @@ export class DocumentsFilterPage implements OnInit {
 // toggle = Boolean(true)
   listTestType =[]
   listTestTypeBackup = []
-  testTypes = []
+  diagnosticTestTypes = []
   filter: Filter
   currentDate = new Date().toISOString()
   form: FormGroup;
@@ -39,25 +39,25 @@ export class DocumentsFilterPage implements OnInit {
     this.form = this.fb.group({
       start_date: [],
       end_date: [],
-      testTypes: [this.testTypes],
+      diagnosticTestTypes: [this.diagnosticTestTypes],
     });
-    this.getTestType()
+    this.getDiagnosticTestType()
   }
 
-  async getTestType(){
+  async getDiagnosticTestType(){
     console.log("submit");
     const loading = await this.loadingController.create();
     await loading.present();
 
     this.dooleService.getAPIdiagnosticTestTypesAvailable().subscribe(
       async (res: any) =>{
-        console.log('[DocumentsFilterPage] getTestType()', await res);
+        console.log('[DocumentsFilterPage] getDiagnosticTestType()', await res);
         this.listTestType = res.diagnosticTestTypes
         this.listTestTypeBackup = this.listTestType
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
-          console.log('[DocumentsFilterPage] getTestType() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[DocumentsFilterPage] getDiagnosticTestType() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       },
       () => {
@@ -92,35 +92,37 @@ export class DocumentsFilterPage implements OnInit {
   actionCheckboxTestType(e, type){
     var isChecked = e.currentTarget.checked;
     if(isChecked)
-    this.testTypes.push(type)
+    this.diagnosticTestTypes.push(type)
     else{
-      var index =  this.testTypes.indexOf(type)
+      var index =  this.diagnosticTestTypes.indexOf(type)
       if (index > -1)
-      this.testTypes.splice(index, 1)
+      this.diagnosticTestTypes.splice(index, 1)
     }
-    console.log('[DocumentsFilterPage] actionCheckboxTestType()', isChecked, this.testTypes);
+    console.log('[DocumentsFilterPage] actionCheckboxTestType()', isChecked, this.diagnosticTestTypes);
   }
 
 
   submit(){
-      this.form.get('testTypes').setValue(this.testTypes)
+     // this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
+      console.log('[DocumentsFilterPage] submit()', this.form.value);
+  }
 
-      let start_date =  this.form.get('start_date').value
-      if(start_date !== null){
-        var dateStart = new Date(start_date.split('T')[0]);
-        let startDateTemp = this.datepipe.transform(dateStart, 'dd/MM/y');
-        this.form.get('start_date').setValue(start_date)
-      }
+  changeFormatToDate(){
+    let start_date =  this.form.get('start_date').value
+    if(start_date !== null){
+      var dateStart = new Date(start_date);
+      let startDateTemp = this.datepipe.transform(dateStart, 'y-MM-dd');
+      this.form.get('start_date').setValue(startDateTemp)
+    }
+  }
 
-
-      let end_date =  this.form.get('end_date').value
-      if(end_date !== null){
-        var dateEnd = new Date(end_date.split('T')[0]);
-        let endDateTemp = this.datepipe.transform(dateEnd, 'dd/MM/y');
-        this.form.get('end_date').setValue(endDateTemp)
-      }
-      //this.router.navigate(['app/tracking', {filter: this.form.value}])
-      //this.navCtrl.navigateForward('app/tracking')
+  changeFormatFromDate(){
+    let end_date =  this.form.get('end_date').value
+    if(end_date !== null){
+      var dateEnd = new Date(end_date);
+      let endDateTemp = this.datepipe.transform(dateEnd, 'y-MM-dd');
+      this.form.get('end_date').setValue(endDateTemp)
+    }
   }
 
 }
