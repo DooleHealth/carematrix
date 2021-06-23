@@ -52,6 +52,10 @@ export class AgendaPage implements OnInit {
   ngOnInit() {
     this.getAgenda()
   }
+  ionViewDidEnter(){
+    console.log('[AgendaPage] ionViewDidEnter()');
+    this.getAgenda()
+  }
 
   getAgenda(){
     this.dooleService.getAPIagenda().subscribe(

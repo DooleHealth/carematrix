@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -19,12 +19,15 @@ export class ReminderAddPage implements OnInit {
   isSubmittedStartDate = false;
   id:any
   event:any
+  title:any
+  isNewEvent = true
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
     public datepipe: DatePipe,
+    public alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -35,20 +38,25 @@ export class ReminderAddPage implements OnInit {
       title: ['', [Validators.required]],
       date: ['', [Validators.required]],
       duration: ['', [Validators.required]],
-      description: [],
+      indications: [],
     });
     this.getAppointment()
   }
 
   getAppointment(){
-    this.id = history.state.id;
-    if(this.id){
-      this.event = history.state.event;
+    this.event = history.state.event;
+    this.title = history.state.title;
+    if(this.event){
+      this.isNewEvent = false
+      this.id = this.event.id;
       console.log('[ReminderAddPage] getAppointment()', this.event);
       if(this.event.site) this.form.get('place').setValue(this.event.site)
-      if(this.event.title) this.form.get('title').setValue(this.event.title)
-      if(this.event.startTime) this.form.get('date').setValue(this.event.startTime)
-      if(this.event.endTime) this.form.get('duration').setValue(this.event.endTime)
+      //if(this.event.title) this.form.get('title').setValue(this.event.title)
+      if(this.title) this.form.get('title').setValue(this.title)
+      if(this.event.description) this.form.get('indications').setValue(this.event.description)
+      if(this.event.start_date_iso8601) this.form.get('date').setValue(this.transformDate(this.event.start_date_iso8601))
+      let duration = this.trasnforHourToMinutes(this.event.end_time) - this.trasnforHourToMinutes(this.event.start_time)
+      if(this.event.end_time) this.form.get('duration').setValue( duration )
     }
   }
 
@@ -59,20 +67,29 @@ export class ReminderAddPage implements OnInit {
     this.isSubmittedStartDate= isSubmitted;
   }
 
+  transformDate(date) {
+    return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
+  }
+
+  trasnforHourToMinutes(time): any{
+    let hour = time.split(':');
+    return (Number(hour[0]))*60 + (Number(hour[1]))  }
+
   async addAgenda(){
     const loading = await this.loadingController.create();
     await loading.present();
 
     let date = this.form.get('date').value 
-    let data_prestacio = this.datepipe.transform(date, "yyyy-MM-dd HH:mm:ss");
-    this.form.get('date').setValue(data_prestacio);
+    this.form.get('date').setValue(this.transformDate(date));
     console.log(`[AgendaAddPage] addAgenda()`,this.form.value );
 
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);
-
-
+        let message = 'Se ha creado un nuevo recordatorio'
+        if(!this.isNewEvent)
+        message = 'Se ha editado el recordatorio con éxito'
+        this.showAlert(message)
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
@@ -84,10 +101,24 @@ export class ReminderAddPage implements OnInit {
       };
   }
 
-  showAlert(){
-    let messagge = this.translate.instant('documents_add.alert_message')
+  async editAgenda(){
+    this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
+      async (res: any) =>{
+        console.log('[ReminderAddPage] deleteReminder()', await res);
+        this.addAgenda()
+       },(err) => { 
+          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      }) ,() => {
+        // Called when operation is complete (both success and error)
+
+      };
+  }
+
+  showAlert(message){
+    //let message = this.translate.instant('documents_add.alert_message')
     let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,messagge,false, '/app/tracking')
+    this.dooleService.showAlertAndReturn(header,message,false, '/agenda')
   }
 
   async submit() {
@@ -95,7 +126,60 @@ export class ReminderAddPage implements OnInit {
     this.isSubmittedFields(true);
     if(this.form.invalid)
     return 
+    if(this.isNewEvent)
     this.addAgenda()
-    
+    else
+    this.editAgenda()
+  }
+
+  async deleteReminder(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    let date = this.form.get('date').value 
+    this.form.get('date').setValue(this.transformDate(date));
+    console.log(`[AgendaAddPage] deleteReminder()`,this.form.value );
+
+    this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
+      async (res: any) =>{
+        console.log('[ReminderAddPage] deleteReminder()', await res);
+
+        let message = 'Se ha eliminado el recordatorio'
+        this.showAlert(message)
+        loading.dismiss();
+       },(err) => { 
+        loading.dismiss();
+          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      }) ,() => {
+        // Called when operation is complete (both success and error)
+        loading.dismiss();
+      };
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      header: this.translate.instant("header_confirmation"),
+      message: this.translate.instant("reminder.confirmation_delete_reminder"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('[AddHealthCardPage] AlertConfirm Cancel');
+          }
+        }, {
+          text: this.translate.instant("alert.button_ok"),
+          handler: () => {
+            console.log('[AddHealthCardPage] AlertConfirm Okay');
+            this.deleteReminder()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

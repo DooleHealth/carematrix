@@ -12,7 +12,8 @@ import { LanguageService } from 'src/app/services/language.service';
 export class ReminderPage implements OnInit {
   id:any
   event = []
-  reminder = []
+  reminder = {}
+  duration = 0
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -20,7 +21,6 @@ export class ReminderPage implements OnInit {
 
   ngOnInit() {
     this.id = history.state.id;
-    //console.log('[ReminderPage] ngOnInit()', this.event);
     if(this.id){
       this.event = history.state.event;
       console.log('[ReminderPage] ngOnInit()', this.event);
@@ -37,6 +37,7 @@ export class ReminderPage implements OnInit {
         console.log('[ReminderPage] getReminderData()', await res);
         if (res.agenda) {
           this.reminder = res.agenda
+          this.duration = this.trasnforHourToMinutes(res.agenda.end_time) - this.trasnforHourToMinutes(res.agenda.start_time)
         }
 
         loading.dismiss();
@@ -48,6 +49,11 @@ export class ReminderPage implements OnInit {
         // Called when operation is complete (both success and error)
         loading.dismiss();
       };
+  }
+
+  trasnforHourToMinutes(time): any{
+        let hour = time.split(':');
+        return (Number(hour[0]))*60 + (Number(hour[1]))
   }
 
   

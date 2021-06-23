@@ -66,7 +66,7 @@ export class TrackingPage implements OnInit {
     this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
-    this.dooleService.postAPIfilteredDiagnosticTest(this.filter).subscribe(
+    this.dooleService.getAPIfilteredDiagnosticTest(this.filter).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
         let diagnosticTests = res.diagnosticTests
