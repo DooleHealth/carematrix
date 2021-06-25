@@ -752,6 +752,16 @@ export class DooleService {
       })
     );
   }
+  getAPIgameId(id): Observable<any>{
+    let path = `user/game/${id}`;   
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgameId(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   getAPIagenda(): Observable<any>{
     let path = 'user/agenda';

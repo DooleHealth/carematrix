@@ -5,7 +5,7 @@
       <ion-back-button ></ion-back-button>
     </ion-buttons> -->
     <ion-title>
-      {{'Agenda'}}
+      {{'agenda.header_agenda' | translate}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -73,7 +73,7 @@
       <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
         <ion-item class="rowPadding2">
           <ion-list>
-            <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="reminder" [state]="{id: event.id, event: event}">
+            <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="reminder" [state]="{id: event.id}">
 
               <div [ngStyle]="{'background-color': (event?.color)? event?.color: 'red'  }" class="verticalLine"></div>
               <ion-grid>

@@ -11,7 +11,7 @@
 
   <ion-list *ngIf="game">
     <ion-card class="cardProfile">
-      <img *ngIf="game.image !== null"  [src]='game.image.temporaryUrl'/>
+      <img *ngIf="game.image !== null"  [src]='game.image?.temporaryUrl'/>
       <ion-item lines="none">
         <div>
           <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
@@ -22,8 +22,8 @@
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </ion-item>
-      <ion-card-content>
-        Demuestra tu destreza y mejora la concentración. ¡Mantén tu mente en acción con este juego!
+      <ion-card-content [innerHtml]="description">
+
       </ion-card-content>
     </ion-card>
   </ion-list>

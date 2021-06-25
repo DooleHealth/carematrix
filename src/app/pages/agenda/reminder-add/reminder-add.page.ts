@@ -19,7 +19,6 @@ export class ReminderAddPage implements OnInit {
   isSubmittedStartDate = false;
   id:any
   event:any
-  title:any
   isNewEvent = true
   constructor(
     private fb: FormBuilder,
@@ -45,14 +44,12 @@ export class ReminderAddPage implements OnInit {
 
   getAppointment(){
     this.event = history.state.event;
-    this.title = history.state.title;
     if(this.event){
       this.isNewEvent = false
       this.id = this.event.id;
       console.log('[ReminderAddPage] getAppointment()', this.event);
       if(this.event.site) this.form.get('place').setValue(this.event.site)
-      //if(this.event.title) this.form.get('title').setValue(this.event.title)
-      if(this.title) this.form.get('title').setValue(this.title)
+      if(this.event.title) this.form.get('title').setValue(this.event.title)
       if(this.event.description) this.form.get('indications').setValue(this.event.description)
       if(this.event.start_date_iso8601) this.form.get('date').setValue(this.transformDate(this.event.start_date_iso8601))
       let duration = this.trasnforHourToMinutes(this.event.end_time) - this.trasnforHourToMinutes(this.event.start_time)
@@ -86,9 +83,9 @@ export class ReminderAddPage implements OnInit {
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);
-        let message = 'Se ha creado un nuevo recordatorio'
+        let message = this.translate.instant('reminder.message_added_reminder')
         if(!this.isNewEvent)
-        message = 'Se ha editado el recordatorio con éxito'
+        message = this.translate.instant('reminder.message_updated_reminder')
         this.showAlert(message)
         loading.dismiss();
        },(err) => { 
@@ -135,16 +132,11 @@ export class ReminderAddPage implements OnInit {
   async deleteReminder(){
     const loading = await this.loadingController.create();
     await loading.present();
-
-    let date = this.form.get('date').value 
-    this.form.get('date').setValue(this.transformDate(date));
-    console.log(`[AgendaAddPage] deleteReminder()`,this.form.value );
-
     this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
 
-        let message = 'Se ha eliminado el recordatorio'
+        let message = this.translate.instant('reminder.message_deleted_reminder')
         this.showAlert(message)
         loading.dismiss();
        },(err) => { 
@@ -160,7 +152,7 @@ export class ReminderAddPage implements OnInit {
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      header: this.translate.instant("header_confirmation"),
+      header: this.translate.instant("alert.header_confirmation"),
       message: this.translate.instant("reminder.confirmation_delete_reminder"),
       buttons: [
         {

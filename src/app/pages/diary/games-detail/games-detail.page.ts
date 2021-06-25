@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
   selector: 'app-games-detail',
@@ -8,14 +10,42 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./games-detail.page.scss'],
 })
 export class GamesDetailPage implements OnInit {
-  game:any
+  game:any ={}
+  id:any
+  description = ''
   constructor(
     private iab: InAppBrowser,
     private auth: AuthenticationService,
+    private loadingController: LoadingController,
+    private dooleService: DooleService,
   ) { }
 
   ngOnInit() {
+    //this.id = history.state.id;
     this.game = history.state.game;
+    if(this.game)
+    this.getGameData()
+  }
+
+  async getGameData(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.dooleService.getAPIgameId(this.game.id).subscribe(
+      async (res: any) =>{
+        console.log('[GamesDetailPage] getGameData()', await res);
+        if (res.game) {
+          this.description = res.game.description
+        }
+
+        loading.dismiss();
+       },(err) => { 
+        loading.dismiss();
+          console.log('[GamesDetailPage] getGameData() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      }) ,() => {
+        // Called when operation is complete (both success and error)
+        loading.dismiss();
+      };
   }
 
 
