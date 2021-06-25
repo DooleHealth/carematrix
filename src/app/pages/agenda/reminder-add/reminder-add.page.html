@@ -3,8 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button icon="" text="Cancelar"></ion-back-button>
     </ion-buttons>
-    <ion-title text-wrap>Añadir Recordatorio</ion-title>
-    <ion-button slot="end" fill="clear" (click)="submit()">{{(this.isNewEvent)? 'Añadir': 'Editar'}}
+    <ion-title text-wrap>{{'reminder.personal_reminder'| translate }}</ion-title>
+    <ion-button slot="end" fill="clear" (click)="submit()">{{(this.isNewEvent)? ('button.add' | translate): ('button.ok' | translate)}}
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -15,18 +15,18 @@
     <ion-card class="cardProfile">
       <ion-list>
         <ion-item>
-          <ion-label>Título</ion-label>
+          <ion-label>{{'reminder.field_title' | translate}}</ion-label>
           <ion-input formControlName="title" class="textMedium" required></ion-input>
           <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         </ion-item>
         <ion-item lines="none">
-          <ion-label>Notas</ion-label>
+          <ion-label>{{'reminder.field_notes' | translate}}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-textarea formControlName="indications" class="textMedium" placeholder="Enter more information here..."></ion-textarea>
+          <ion-textarea formControlName="indications" class="textMedium" placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
         </ion-item>
         <ion-item lines="none">
-          <ion-label>Lugar</ion-label>
+          <ion-label>{{'reminder.field_place' | translate}}</ion-label>
           <ion-input formControlName="place" class="textMedium"></ion-input>
 <!--           <ion-note *ngIf="this.isSubmittedPlace && this.form.get('place').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note> -->
         </ion-item>
@@ -36,23 +36,23 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
-        <ion-label>Todo el día</ion-label>
+        <ion-label>{{'reminder.field_all_day' | translate}}</ion-label>
         <ion-toggle slot="end" color="success" checked></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label>Empieza</ion-label>
+        <ion-label>{{'reminder.field_start' | translate}}</ion-label>
         <ion-datetime displayFormat="D MMM YYYY H:mm" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime>
         <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-label lines="none">Duración</ion-label>
-        <ion-input formControlName="duration" inputmode="numeric" type="number" placeholder="{{'minutos' | translate}}" class="textMedium" required></ion-input>
+        <ion-label lines="none">{{'reminder.field_duration' | translate}}</ion-label>
+        <ion-input formControlName="duration" inputmode="numeric" type="number" placeholder="{{'minutes' | translate}}" class="textMedium" required></ion-input>
         <ion-note *ngIf="this.isSubmittedDuration && this.form.get('duration').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label lines="none">Repetir</ion-label>
+        <ion-label lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
         <ion-input class="textMedium"></ion-input>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
@@ -60,12 +60,12 @@
   </ion-card>
   <ion-card class="cardProfile">
     <ion-item>
-      <ion-label lines="none">Avisar</ion-label>
+      <ion-label lines="none">{{'reminder.field_notice' | translate}}</ion-label>
       <ion-input class="textMedium"></ion-input>
       <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
     </ion-item>
     <ion-item>
-      <ion-label lines="none">Mostrar como</ion-label>
+      <ion-label lines="none">{{'reminder.field_show_as' | translate}}</ion-label>
       <ion-input class="textMedium"></ion-input>
       <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
     </ion-item>

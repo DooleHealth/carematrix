@@ -172,8 +172,7 @@
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </div>
         </ion-item>
-        <ion-card-content>
-          Demuestra tu destreza y mejora la concentración. ¡Mantén tu mente en acción con este juego!
+        <ion-card-content [innerHtml]="item.item?.description">
         </ion-card-content>
         <ion-button size="small" color="transparent" class="buttonLink" routerLink="games-detail" [state]="{game: item.item}">{{ 'button.go_detail' | translate }}</ion-button>&nbsp;
       </ion-card>

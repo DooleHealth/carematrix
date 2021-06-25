@@ -102,10 +102,6 @@ const routes: Routes = [
    loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   },
   {
-    path: 'journal',
-    loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
-  },
-  {
     path: 'reminder',
     loadChildren: () => import('./pages/agenda/reminder/reminder.module').then( m => m.ReminderPageModule)
   },
