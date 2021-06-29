@@ -1,10 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Añadir medicamento</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'medication.add_medication' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar>
+  <ion-searchbar (ionInput)="filterList($event)" >
 </ion-searchbar>
+<ion-list>
+  <ion-item type="text" routerLink="../drugs-detail" [state]="{drug: drug}" *ngFor="let drug of drugs">{{drug.name}}</ion-item>
+</ion-list>
 </ion-content>

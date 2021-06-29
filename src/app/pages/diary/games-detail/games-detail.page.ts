@@ -12,7 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
 export class GamesDetailPage implements OnInit {
   game:any ={}
   id:any
-  description = ''
+  score = 0
   constructor(
     private iab: InAppBrowser,
     private auth: AuthenticationService,
@@ -34,7 +34,7 @@ export class GamesDetailPage implements OnInit {
       async (res: any) =>{
         console.log('[GamesDetailPage] getGameData()', await res);
         if (res.game) {
-          this.description = res.game.description
+          this.score = res.game.score
         }
 
         loading.dismiss();

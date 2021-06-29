@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { LegalInformation } from 'src/app/models/legal-information';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
-const { Storage } = Plugins;
 
 @Component({
   selector: 'app-legal',
@@ -13,13 +11,14 @@ const { Storage } = Plugins;
   styleUrls: ['./legal.page.scss'],
 })
 export class LegalPage implements OnInit {
-  KEY_LOCAL_STORAGE = 'showIntro';
-  legal: LegalInformation;
+  //KEY_LOCAL_STORAGE = 'showIntro';
+  legal:any = {};
   isChecked = false;
   constructor(
     public router: Router,    
     private translate: TranslateService,
     private alertController: AlertController,
+    private authService: AuthenticationService,
     private dooleService: DooleService) { }
 
   ngOnInit() {
@@ -30,8 +29,7 @@ export class LegalPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LegalPage] getAPILegalInformation()', await res);
-        this.legal = res as LegalInformation
-        //this.showInformation()
+        this.legal = res.legalTerm
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           throw err; 
@@ -39,19 +37,15 @@ export class LegalPage implements OnInit {
   }
 
   acceptLegalConditions(){
-      this.sendLegalConformation()
-  }
-
-  sendLegalConformation(){
-    this.dooleService.postAPILegalConfirmation(this.isChecked).subscribe(
+    let confirmation = {lt_id: this.legal.id}
+    this.dooleService.postAPILegalConfirmation(confirmation).subscribe(
     async (res: any) =>{
       console.log('[LegalPage] sendLegalConformation()', await res);
-      let legal = (res as any).success
-      if(legal){
-        this.router.navigate(['/sms']);
+      if(res.success){
+        this.showIntro()
+        //this.router.navigate(['/sms']);
       }
       //else this.dooleService.presentAlert("Server response is false ")
-
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
         this.dooleService.presentAlert(err.message)
@@ -59,17 +53,15 @@ export class LegalPage implements OnInit {
     });
   }
 
-  async getStorage(){
-    Storage.get({key: this.KEY_LOCAL_STORAGE}).then((data)=>{
-      //console.log(`[IntroPage] ngOnInit()`,data.value.toString());
-      let  showIntro = Boolean(data.value)
-      if(showIntro){
-        console.log(`[IntroPage] ngOnInit() localStorage`,showIntro);
-              this.router.navigate(['/home/initial']);
-      }else{
-        this.router.navigate(['/intro']);
-      }
-    })
+  showIntro(){
+      this.authService.getShowIntroLocalstorage().then((showIntro) =>{
+        console.log(`[LegalPage] showIntro() localStorage`,showIntro);
+        if(showIntro){
+          this.router.navigate(['/home']);
+        }else{
+          this.router.navigate(['/intro']);
+        }
+      })
   }
 
 }

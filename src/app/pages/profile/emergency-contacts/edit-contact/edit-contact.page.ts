@@ -99,7 +99,7 @@ export class EditContactPage implements OnInit {
 
   updateContact(){
     console.log('[EditContactPage] updateContact()' , this.formContact.value); 
-      this.dooleService.putAPIemergencyContact(this.formContact.value).subscribe(
+      this.dooleService.putAPIemergencyContact(this.contact.id ,this.formContact.value).subscribe(
         async (res: any) =>{
           console.log('[EditContactPage] updateContact()', await res);
           let  isSuccess = res.success 

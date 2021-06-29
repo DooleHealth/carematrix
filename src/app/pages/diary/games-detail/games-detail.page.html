@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Juegos"></ion-back-button>
+      <ion-back-button text="{{'game.games' | translate}}"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="game">{{game.name}}</ion-title>
   </ion-toolbar>
@@ -22,14 +22,36 @@
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </ion-item>
-      <ion-card-content [innerHtml]="description">
+      <ion-card-content [innerHtml]="game?.description">
 
       </ion-card-content>
     </ion-card>
   </ion-list>
 
+  <div class="main-container">
+    <ion-text class="txtTitleNoMargin">{{ 'game.reward' | translate}}</ion-text>
+  </div>
+  <ion-card class="cardProfilePadding">
+    <ion-grid>
+      <ion-item>
+        <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
+        <ion-text  slot="start" class="txtTitleGoals2">{{ 'goals.goals' | translate}} de {{game?.name}}</ion-text >
+      </ion-item>
+      <ion-row>
+        <ion-progress-bar  class="my-buffer-progress" [value]="score/100"></ion-progress-bar>
+      </ion-row>
+        <p class="txtTitleGoalsLittle">{{'game.description_score' | translate}} {{score}} {{'game.points' | translate}}</p>
+      <ion-row>
+        <ion-col size="2">
+          <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
+        </ion-col>
+        <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{score}} Healthies<br></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
   <section>
-    <ion-button expand="block"  (click)="openGames(game)">{{'Ir al juego' | translate }}</ion-button>
+    <ion-button expand="block"  (click)="openGames(game)">{{'game.go_game' | translate }}</ion-button>
   </section>
 
 </ion-content>

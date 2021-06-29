@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: DrugAddPage
-  }
+  },
+/*   {
+    path: 'drugs-detail',
+    loadChildren: () => import('./pages/diary/diets-detail/diets-detail.module').then( m => m.DietsDetailPageModule)
+  }, */
 ];
 
 @NgModule({

@@ -142,10 +142,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/contact/medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
   },
   {
-    path: 'drug-add',
-    loadChildren: () => import('./pages/diary/drug-add/drug-add.module').then( m => m.DrugAddPageModule)
-  },
-  {
     path: 'advices',
     loadChildren: () => import('./pages/home/advices/advices.module').then( m => m.AdvicesPageModule)
   },
@@ -159,16 +155,16 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules,  initialNavigation: 'enabled',
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled'}),
+    // RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules,  initialNavigation: 'enabled',
+    // scrollPositionRestoration: 'enabled',
+    // anchorScrolling: 'enabled'}),
 
-    // RouterModule.forRoot(routes, {
-    //   // This value is required for server-side rendering to work.
-    //   initialNavigation: 'enabled',
-    //   scrollPositionRestoration: 'enabled',
-    //   anchorScrolling: 'enabled'
-    // }),
+    RouterModule.forRoot(routes, {
+      // This value is required for server-side rendering to work.
+      initialNavigation: 'enabled',
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled'
+    }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule
   ],

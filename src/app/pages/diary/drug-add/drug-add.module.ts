@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { DrugAddPageRoutingModule } from './drug-add-routing.module';
 
 import { DrugAddPage } from './drug-add.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     DrugAddPageRoutingModule
   ],
   declarations: [DrugAddPage]
