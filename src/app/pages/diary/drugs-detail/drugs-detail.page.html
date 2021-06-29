@@ -3,37 +3,59 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{drug.name}}</ion-title>
+    <ion-title>{{ isEditDrug? ('medication.edit_medication' | translate): ('medication.add_medication' | translate) }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
   <ion-card  class="cardProfilePaddingBottom" >
-
-      <form>
+    <ion-item lines="none">
+      <ion-text style="margin: 10px;" class="txtTitleGoals" stacked>{{drug?.name}}</ion-text>
+    </ion-item>
+  </ion-card>
+  <ion-card  class="cardProfilePaddingBottom" >
+      <form (ngSubmit)="submit()" [formGroup]="form">
       <ion-item>
-        <ion-label class="txtTitleGoals"  stacked>Fecha de inicio del tratamiento</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selecciona" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_from_date' | translate}}</ion-label>
+        <ion-datetime (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-note *ngIf="this.isSubmittedFromDate && this.form.get('from_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
       <ion-item>
-        <ion-label class="txtTitleGoals"  stacked>Fecha fin del tratamiento</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selecciona" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_to_date' | translate}}</ion-label>
+        <ion-datetime (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-note *ngIf="this.isSubmittedToDate && this.form.get('to_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
       <ion-item>
-        <ion-label class="txtTitleGoals"  stacked>Ingesta</ion-label>
-        <ion-input type="number" placeholder="Nº de dosis" ></ion-input>
+        <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_dose' | translate}}</ion-label>
+        <ion-input (ionChange)="this.isSubmittedDosis = false" formControlName="dose"  type="number" placeholder="{{ 'medication.placeholder_dose' | translate}}" ></ion-input>
+        <ion-note *ngIf="this.isSubmittedDosis && this.form.get('dose').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
       <ion-item>
-        <ion-label class="txtTitleGoals" stacked>Añadir hora de toma</ion-label>
-        <ion-datetime displayFormat="H:mm" placeholder="+" minuteValues="0,15,30,45" >
+        <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_take_time' | translate}}</ion-label>
+        <ion-datetime (ionChange)="inputDate(); this.isSubmittedTimes = false"  formControlName="time" displayFormat="H:mm" placeholder="+" minuteValues="0,15,30,45" >
         </ion-datetime>
+        <ion-note *ngIf="this.isSubmittedTimes && this.times==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
+      <ion-item  *ngFor="let time of times">
+        <ion-chip slot="end">
+          <ion-label class="txtTitleGoals">{{time}}</ion-label>
+          <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
+        </ion-chip>
+      </ion-item>
+<!--       <ng-container 
+        *ngFor="let item of this.times | paginate: { itemsPerPage: 10, currentPage: page };let i = index"
+      >
+        <ion-chip>
+          <ion-label>{{time}} </ion-label>
+          <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
+        </ion-chip>
+      </ng-container> -->
 
       <ion-item lines="none">
-        <ion-label class="txtTitleGoals" stacked>Alias
+        <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}
         </ion-label>
-        <ion-input type="text" placeholder="Nombre alternativo" ></ion-input>
+        <ion-input formControlName="alias" type="text" placeholder="{{ 'medication.placeholder_alias' | translate}}" ></ion-input>
       </ion-item >
       <!-- <ion-button  expand="block" color="primary" >Guardar este medicamento</ion-button><br>
        <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> 
@@ -43,9 +65,9 @@
  
   </ion-card>
   <div class="buttonContainer">
-  <ion-button  expand="block" color="primary" >Guardar este medicamento</ion-button><br>
+  <ion-button  expand="block" (click)="submit()" color="primary" >{{'medication.save_medication' | translate}}</ion-button><br>
   <!-- <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> -->
-  <ion-button class="buttonClose" color="transparent" expand="block"  >Eliminar este medicamento</ion-button>
+  <ion-button *ngIf="isEditDrug" class="buttonClose" color="transparent" expand="block">{{'medication.delete_medication' | translate}}</ion-button>
 </div>
 </ion-content>
 

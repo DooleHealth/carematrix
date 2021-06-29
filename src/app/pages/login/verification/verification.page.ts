@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 const { Storage } = Plugins;
 @Component({
@@ -13,16 +14,20 @@ const { Storage } = Plugins;
 })
 export class VerificationPage implements OnInit {
   KEY_TELEPHONE_STORAGE = 'telephone';
+  phone = ''
   isSubmitted= false
   code = new FormControl('', [Validators.required, Validators.minLength(4)]);
   constructor(
     public router: Router,    
     private translate: TranslateService,
     private alertController: AlertController,
-    private dooleService: DooleService
+    private dooleService: DooleService,
+    private authService: AuthenticationService,
   ) { }
 
   ngOnInit() {
+    this.phone = history.state.phone;
+    console.log('[VerificationPage] ngOnInit()', this.phone);
   }
 
 
@@ -40,7 +45,8 @@ export class VerificationPage implements OnInit {
         console.log('[VerificationPage] checkCode()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          this.router.navigateByUrl("intro")
+          this.checkConditionLegal()
+          //this.router.navigateByUrl("intro")
         }else{
           this.dooleService.presentAlert(this.translate.instant("verification.alert_message"))
         }
@@ -69,9 +75,39 @@ export class VerificationPage implements OnInit {
 
   async getVerificationCode(){
     console.log('[VerificationPage] getVerificationCode()' );
-    Storage.get({key: this.KEY_TELEPHONE_STORAGE}).then((data)=>{
-      let  telephone = data.value
-      this.sendTelephone(telephone)
+    this.sendTelephone(this.phone)
+  }
+
+  checkConditionLegal(){
+    this.dooleService.getAPILegalInformation().subscribe(
+      async (res: any) =>{
+        console.log('[LandingPage] checkConditionLegal()', await res);
+         //if(res.accepted_last)
+         this.redirectPage(res.accepted_last)
+
+       },(err) => { 
+          console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+     
+  }
+
+  redirectPage(condicion){
+    if(!condicion)
+      this.router.navigate(['/legal']);
+    else{
+      this.showIntro()
+    }      
+  }
+
+  showIntro(){
+    this.authService.getShowIntroLocalstorage().then((showIntro) =>{
+      console.log(`[LegalPage] getStorage() localStorage`,showIntro);
+      if(showIntro){
+        this.router.navigate(['/home']);
+      }else{
+        this.router.navigate(['/intro']);
+      }
     })
   }
 

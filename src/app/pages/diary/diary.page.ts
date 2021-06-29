@@ -161,6 +161,33 @@ export class DiaryPage implements OnInit {
       });
   }
 
+  async getGameListByDate(){
+    console.log('[DiaryPage] getGameList()');
+    this.items = []
+    this.isLoading = true
+    const loading = await this.loadingController.create();
+    await loading.present();
+    let date = this.transformDate(this.date)
+    this.dooleService.getAPIgamesByDate(date, date).subscribe(
+      async (res: any) =>{
+        console.log('[DiaryPage] getGameList()', await res);
+         if(res.gamePlays){
+          let games = []
+          res.gamePlays.forEach(element => {
+            games.push(element.game)
+          });
+          this.addItems(games)
+         }
+        loading.dismiss();
+        this.isLoading = false
+       },(err) => { 
+          console.log('[DiaryPage] getGameList() ERROR(' + err.code + '): ' + err.message); 
+          loading.dismiss();
+          this.isLoading = false
+          throw err; 
+      });
+  }
+
   async openGames(item){
     var browser : any;
     if(item.type=="html5"){
@@ -266,7 +293,8 @@ export class DiaryPage implements OnInit {
         this.getDrugIntakeList()
         break;
       case 'games':
-        this.getGameList()
+        //this.getGameList()
+        this.getGameListByDate()
         break;
       case 'health':
         this.getElementsList()

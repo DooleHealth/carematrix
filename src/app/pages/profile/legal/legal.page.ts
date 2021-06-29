@@ -7,21 +7,20 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./legal.page.scss'],
 })
 export class LegalPage implements OnInit {
-  information: any
+  legal: any = {}
   constructor(
     private dooleService: DooleService
   ) { }
 
   ngOnInit() {
-    this.information = '<div class="demo"><b>This is my Legal HTML.</b></div>';
-    //this.getInformationLegal()
+    this.getInformationLegal()
   }
 
   getInformationLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LegalPage] getInformationLegal()', await res);
-        this.information = res
+        this.legal = res.legalTerm
        },(err) => { 
           console.log('[LegalPage] getInformationLegal() ERROR(' + err.code + '): ' + err.message); 
           throw err; 

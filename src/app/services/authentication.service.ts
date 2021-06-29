@@ -128,11 +128,25 @@ export class AuthenticationService {
       value: JSON.stringify(user)
     });
   }
+
   getUserLocalstorage() : Promise<User>{
     return Storage.get({key: 'user'}).then((val) => {
       return JSON.parse(val.value);
     });
   }
+
+  getShowIntroLocalstorage() : Promise<any>{
+    return Storage.get({key: 'showIntro'}).then((val) => {
+      return Boolean(val.value) 
+    });
+  }
+
+  async setShowIntroLocalstorage(){
+    await Storage.set({
+     key: 'showIntro',
+     value: 'true'
+   });
+ }
 
   logout(): Promise<void> {
     console.log('logout');

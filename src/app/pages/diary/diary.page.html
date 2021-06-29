@@ -145,7 +145,7 @@
               </ion-button>&nbsp;
 
               <ion-button size="small" color="transparent" class="buttonLink" 
-                routerLink="drugs-detail" [state]="{id: item.item.id, name:item.item.name}"
+                routerLink="drugs-detail" [state]="{id: item.item.id, drug:item.item}"
               >{{ 'detail_contact.button_edit' | translate }}</ion-button>&nbsp;
             </div>
    
@@ -161,7 +161,7 @@
   <div *ngSwitchCase="'games'"> 
     <ion-list *ngIf="items.length > 0; else noData">
       <ion-card class="cardProfile" *ngFor="let item of items" >
-        <img *ngIf="item.item.image !== null" (click)="openGames(item.item)" [src]='item.item.image.temporaryUrl'/>
+        <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)" [src]='item.item.file.temporaryUrl'/>
         <ion-item lines="none" (click)="openGames(item.item)">
           <div>
             <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >

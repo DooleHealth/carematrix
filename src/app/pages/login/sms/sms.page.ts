@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { Plugins } from '@capacitor/core';
@@ -20,7 +20,8 @@ export class SmsPage implements OnInit {
     public router: Router,    
     private translate: TranslateService,
     private alertController: AlertController,
-    private dooleService: DooleService
+    private dooleService: DooleService,
+    public nav: NavController
   ) { }
 
   ngOnInit() {
@@ -68,8 +69,8 @@ export class SmsPage implements OnInit {
         console.log('[LegalPage] sendTelephone()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          this.saveTelephone()
-          this.router.navigateByUrl("verification")
+          let value= this.COUNTRY_CODE + this.telephone.value
+          this.nav.navigateForward("verification", { state: {phone: value} });
         }else{
           console.log('[LegalPage] sendTelephone() Unsuccessful response', await res);
         }
@@ -79,12 +80,6 @@ export class SmsPage implements OnInit {
       });
   }
 
-  async saveTelephone(){
-    await Storage.set({
-     key: 'telephone',
-     value: this.COUNTRY_CODE + this.telephone.value
-   });
-   console.log(`[VerificationPage] saveTelephone()`);
- }
+
 
 }

@@ -119,7 +119,7 @@ export class DocumentsAddPage implements OnInit {
   showAlert(){
     let messagge = this.translate.instant('documents_add.alert_message')
     let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,messagge,false, '/app/tracking')
+    this.dooleService.showAlertAndReturn(header,messagge,false, '/tracking')
   }
 
   async openModal() {

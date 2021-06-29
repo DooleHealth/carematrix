@@ -12,30 +12,9 @@
 
 <ion-content fullscreen>
   <div class="main-container" *ngIf="this.legal !== undefined">
-    <p align="center">
-      <strong>{{this.legal.title}}</strong>
-  </p>
-  <div *ngFor="let paragraph of legal.introduction">
-    <p>
-        <em>
-            {{paragraph}}
-        </em>
-    </p>
-    <p>
-        <em> </em>
-    </p>
-  </div>
-
-    <div *ngFor="let section of legal.sections">
-        <p>
-            <strong>{{section.title}}</strong>
-        </p>
-        <div *ngIf="section.description !== undefined">
-            <p *ngFor="let description of section.description">
-                {{description}}
-            </p>
-        </div>
+    <div [innerHtml]="this.legal.legal_text">
     </div>
+
 
   <p>
       <strong>1.1.- Identificación de responsables:</strong>

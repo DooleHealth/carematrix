@@ -69,7 +69,6 @@ export class LandingPage implements OnInit {
     // As we are calling the Angular router navigation inside a subscribe method, the navigation will be triggered outside Angular zone.
     // That's why we need to wrap the router navigation call inside an ngZone wrapper
     this.ngZone.run(() => {      
-      //this.router.navigate(['app/home']);
       this.router.navigate(['home']);
     });
   }
@@ -87,9 +86,10 @@ export class LandingPage implements OnInit {
       this.redirectLoader.present();
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
         console.log('[LandingPage] doDooleAppLogin()', res);
+        if(res.success){
+        this.checkConditionLegal();
+        }
         this.dismissLoading();
-        this.checkConditionLegal(true);
-
       }, async (error) => { 
        console.log('doDooleAppLogin() ERROR', await error);
        this.dismissLoading();
@@ -99,19 +99,37 @@ export class LandingPage implements OnInit {
    
   }
 
-  checkConditionLegal(condicion){
-      if(!condicion)
-        this.router.navigate(['/legal']);
-      else{
-        this.authService.showIntro().then((show)=>{
-          if(!show){
-          console.log('[HomePage] checkConditionLegal()');
-          this.router.navigate(['/intro']);
-        }else
-          this.redirectLoggedUserToHomePage();
-        });
+  checkConditionLegal(){
+    this.dooleService.getAPILegalInformation().subscribe(
+      async (res: any) =>{
+        console.log('[LandingPage] checkConditionLegal()', await res);
+         //if(res.accepted_last)
+         this.redirectPage(res.accepted_last)
+
+       },(err) => { 
+          console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+     
+  }
+
+  redirectPage(condicion){
+    if(!condicion)
+      this.router.navigate(['/legal']);
+    else{
+      this.showIntro()
+    }      
+  }
+
+  showIntro(){
+    this.authService.getShowIntroLocalstorage().then((showIntro) =>{
+      console.log(`[LegalPage] getStorage() localStorage`,showIntro);
+      if(showIntro){
+        this.redirectLoggedUserToHomePage();
+      }else{
+        this.router.navigate(['/intro']);
       }
-       
+    })
   }
 
   private async saveInLocalStorage(data: any){

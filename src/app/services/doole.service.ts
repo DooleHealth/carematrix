@@ -231,7 +231,7 @@ export class DooleService {
   }
 
   getAPILegalInformation(): Observable<any>{
-    let path = 'user/legal';
+    let path = 'user/legalTerm/lastAccepted';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -241,7 +241,7 @@ export class DooleService {
     )
   }
   postAPILegalConfirmation(params: Object): Observable<any>{
-    let path = 'user/legal';
+    let path = 'user/legalTerm/lastAccepted';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -464,7 +464,18 @@ export class DooleService {
   }
 
   getAPIemergencyContact(): Observable<any>{
-    let path = 'user/emergency_contact';
+    let path = 'user/EmergencyContacts';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIemergencyContact(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIemergencyContactID(id: any): Observable<any>{
+    let path = `user/EmergencyContacts/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -475,7 +486,7 @@ export class DooleService {
   }
 
   postAPIemergencyContact(params: Object): Observable<any>{
-    let path = 'user/emergency_contact';
+    let path = 'user/EmergencyContact';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -486,12 +497,10 @@ export class DooleService {
     );
   }
 
-  putAPIemergencyContact(params: Object): Observable<any>{
-    let id = (params as any).id
-   // let path = `user/emergency_contact/${id}`;
-    let path = `user/emergency_contact`;
+  putAPIemergencyContact(id: any, params: Object): Observable<any>{
+    let path = `user/EmergencyContact/${id}`;
     const endpoint = this.api.getEndpoint(path);
-    return this.http.post(endpoint, params).pipe(
+    return this.http.put(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] putAPIemergencyContact(${path}) res: `, res);
         return res;
@@ -500,8 +509,8 @@ export class DooleService {
     );
   }
 
-  deleteAPIemergencyContact(params: Object): Observable<any>{
-    let path = `user/emergency_contact/${params}`;
+  deleteAPIemergencyContact(id: any): Observable<any>{
+    let path = `user/EmergencyContact/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
@@ -717,6 +726,19 @@ export class DooleService {
     );
   }
 
+  getAPIdrugsList(query: any): Observable<any>{
+    let path = `drugIntake/list`;  
+    let httpParams = new HttpParams();
+    httpParams = (query)? httpParams.append('search', query): httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint,httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdrugsList(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
 
   postAPIdrugIntakeByDate(params: Object): Observable<any>{
     let path = 'user/drugIntake/date';
@@ -724,6 +746,18 @@ export class DooleService {
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIdrugIntakeByDate(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  postAPIdrugIntake(params: Object): Observable<any>{
+    let path = 'user/drugIntake';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
         return res;
 
       })
@@ -741,17 +775,55 @@ export class DooleService {
       })
     );
   }
-/** get games with query by parameter date  */
-  getAPIgames(params: Object): Observable<any>{
-    let path = 'user/games';   
+
+  putAPIdrugIntake(id: any, params: Object): Observable<any>{
+    let path = `user/drugIntake/${id}`;
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.put(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        console.log(`[DooleService] putAPIdrugIntake(${path}) res: `, res);
         return res;
+
       })
     );
   }
+
+  deleteAPIdrugIntake(id: Object): Observable<any>{
+    let path = `user/drugIntake/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIdrugIntake(${path}) res: ${res}`, JSON.stringify(res) );
+        return res;
+
+      })
+    );
+  }
+
+getAPIgames(params: Object): Observable<any>{
+  let path = 'user/games';   
+  const endpoint = this.api.getEndpoint(path);
+  return this.http.get(endpoint).pipe(
+    map((res: any) => {
+      console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+      return res;
+    })
+  );
+}
+/** get games with query by parameter date  */
+getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
+  let path = 'user/gamePlays/scheduled';  
+  let httpParams = new HttpParams();
+  httpParams = (from_date)? httpParams.append('from_date', from_date): httpParams 
+  httpParams = (to_date)? httpParams.append('to_date', to_date): httpParams 
+  const endpoint = this.api.getEndpoint(path);
+  return this.http.get(endpoint, httpParams).pipe(
+    map((res: any) => {
+      console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+      return res;
+    })
+  );
+}
   getAPIgameId(id): Observable<any>{
     let path = `user/game/${id}`;   
     const endpoint = this.api.getEndpoint(path);

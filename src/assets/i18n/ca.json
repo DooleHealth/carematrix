@@ -41,6 +41,33 @@
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"
       },
+      "intro":{
+        "title1": "Benvingut a",
+        "slider1_text1": "Todo en uno",
+        "slider1_text2": "Toda tu información médica en una sola app",
+        "slider1_text3": "Contacta con tu médico",
+        "slider1_text4": "Habla con tu especialista directamente o solicita una consulta presencial",
+        "slider1_text5": "Salud y deporte",
+        "slider1_text6": "Conecta tus aplicaciones de salud para ver tu evolución",
+
+        "title2": "Agenda",
+        "slider2_text1": "La agenda de Doole Health te permite incluirtodos tus citas y recordatorios médicos. ¡No podrás vivir sin ella!",
+
+        "title3": "Contacta",
+        "slider3_text1": "Habla con tu médico y especialista a través de videollamada o chat y solicita una cita presencial ¡Nunca fué tan rápido y cómodo!",
+
+        "title4": "Seguimiento",
+        "slider4_text1": "Revisa resultados clínicos, contesta formularios o comprueba la evolución de tus constantes. ¡Ahora podrás revisarlos siempre que quieras!",
+
+        "title5": "Mi Diario",
+        "slider5_text1": "En un vistazo revisa tu dieta, medicación, juegos e información de salud del día. ¡Cuidar de tu salud nunca había sido tan fácil!",
+
+        "title6": "Novedades y Consejos",
+        "slider6_text1": "Dispón de las últimas novedades sanitarias y consejos por parte de equipo médico ¡Mantente actualizado en todo momento!",
+
+        "title7": "Mi Perfil",
+        "slider7_text1": "Configura tus datos y tus preferencias de notificación para poder estar siempre informado. ¡Disfruta tu experiencia en Doole Health!"
+      },
       "home": {
         "goals_title": "El teu objectiu",
         "advices_title": "Novetats i Consells",
@@ -299,6 +326,33 @@
         "field_centers": "Centres d'atenció",
         "button_chat":"Obrir Xat"
       },
+      "game":{
+        "games":"Jocs",
+        "reward":"Recompensa",
+        "go_game":"Anar a l'Joc",
+        "description_score": "El teu marcador és de",
+        "points": "punts"
+      },
+      "medication":{
+        "add_medication":"Afegir medicament",
+        "edit_medication":"Edita medicament",
+        "save_medication":"Desar medicament",
+        "delete_medication":"Eliminar medicament",
+        "message_add_medication":"S'ha afegit un nou medicament",
+        "message_edit_medication":"S'ha editat el medicament amb èxit",
+        "message_error_treatment_date":"La data d'inici de l'tractament ha de ser menor a la data final",
+        "confirmation_delete_medication":"Estàs segur d'eliminar la medicació?",
+        "message_deleted_medication":"S'ha eliminat el medicament amb èxit",
+
+        "field_from_date": "Data d'inici de l'tractament",
+        "field_to_date": "Data fi de l'tractament",
+        "field_dose": "Ingesta",
+        "field_take_time": "Afegir hora de presa",
+        "field_alias": "Àlias",
+        "placeholder_chosse":"Selecciona",
+        "placeholder_dose":"Nº de dosi",
+        "placeholder_alias":"Nom alternatiu"
+      },
       "tracking":{
         "header": "Seguiment",
         "tap_documents": "Documents",
@@ -377,6 +431,7 @@
         "go_detail": "Anar a detall",
         "take": "Prendre",
         "taked": "Presa",
-        "forgotten": "Oblidada"
+        "forgotten": "Oblidada",
+        "continue": "Continuar"
       }
 }

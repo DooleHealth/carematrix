@@ -5,7 +5,7 @@
         <!-- first slide -->
         <ion-slide>
           <div class="slide">
-            <h1 class="titleBold">Bienvenido a <br>
+            <h1 class="titleBold"> {{'intro.title1' | translate}}<br>
               <span style="color:#3498DB;">Doole Health</span>
             </h1>
 
@@ -15,8 +15,8 @@
                   <img class="iconPadding" src="assets/icons/Estrella.svg" />
                 </ion-col>
                 <ion-col size="10">
-                  <p><b>Todo en uno</b><br>Toda tu información médica
-                    en una sola app</p>
+                  <p><b>{{'intro.slider1_text1' | translate}}</b>
+                    <br>{{'intro.slider1_text2' | translate}}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -24,8 +24,8 @@
                   <img class="iconPadding" src="assets/icons/Icono.svg" />
                 </ion-col>
                 <ion-col size="10">
-                  <p><b>Contacta con tu médico</b><br> Habla con tu especialista directamente o solicita una consulta
-                    presencial
+                  <p><b>{{'intro.slider1_text3' | translate}}</b>
+                    <br> {{'intro.slider1_text4' | translate}}
                   </p>
                 </ion-col>
               </ion-row>
@@ -34,8 +34,8 @@
                   <img class="iconPadding" src="assets/icons/Vector.svg" />
                 </ion-col>
                 <ion-col size="10">
-                  <p><b>Salud y deporte</b><br>Conecta tus aplicaciones de salud
-                    para ver tu evolución</p><br>
+                  <p><b>{{'intro.slider1_text5' | translate}}</b>
+                    <br>{{'intro.slider1_text6' | translate}}</p><br>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -46,12 +46,11 @@
         <ion-slide>
           <div class="slide">
             <img class="iconPadddingCenter" src="assets/icons/calendar.svg" />
-            <h1 class="titleBoldCentered">Agenda<br>
+            <h1 class="titleBoldCentered">{{'intro.title2' | translate}}<br>
             </h1>
             <ion-grid style="text-align: center;">
               <ion-col size="12">
-                <p>La agenda de Doole Health te permite incluirtodos tus citas y recordatorios médicos.
-                  ¡No podrás vivir sin ella!</p>
+                <p>{{'intro.slider2_text1' | translate}}</p>
               </ion-col>
             </ion-grid>
           </div>
@@ -61,12 +60,11 @@
         <ion-slide>
           <div class="slide">
             <img class="iconPadddingCenter" src="assets/icons/chat.svg" />
-            <h1 class="titleBoldCentered">Contacta<br>
+            <h1 class="titleBoldCentered">{{'intro.title3' | translate}}<br>
             </h1>
             <ion-grid style="text-align: center;">
               <ion-col size="12">
-                <p>Habla con tu médico y especialista a través de videollamada o chat 
-                  y solicita una cita presencial ¡Nunca fué tan rápido y cómodo!</p>
+                <p>{{'intro.slider3_text1' | translate}}</p>
               </ion-col>
             </ion-grid>
           </div>
@@ -75,12 +73,11 @@
         <ion-slide>
           <div class="slide">
             <img class="iconPadddingCenter" src="assets/icons/Seguimiento.svg" />
-            <h1 class="titleBoldCentered">Seguimiento<br>
+            <h1 class="titleBoldCentered">{{'intro.title4' | translate}}<br>
             </h1>
             <ion-grid style="text-align: center;">
               <ion-col size="12">
-                <p>Revisa resultados clínicos, contesta formularios o comprueba la evolución de tus constantes.
-                  ¡Ahora podrás revisarlos siempre que quieras!</p>
+                <p>{{'intro.slider4_text1' | translate}}</p>
               </ion-col>
             </ion-grid>
           </div>
@@ -89,12 +86,11 @@
         <ion-slide>
           <div class="slide">
             <img class="iconPadddingCenter" src="assets/icons/Mi Diario.svg" />
-            <h1 class="titleBoldCentered">Mi Diario<br>
+            <h1 class="titleBoldCentered">{{'intro.title5' | translate}}<br>
             </h1>
             <ion-grid style="text-align: center;">
               <ion-col size="12">
-                <p>En un vistazo revisa tu dieta, medicación, juegos e información de salud del día.
-                  ¡Cuidar de tu salud nunca había sido tan fácil!</p>
+                <p>{{'intro.slider5_text1' | translate}}</p>
               </ion-col>
             </ion-grid>
           </div>
@@ -103,12 +99,11 @@
         <ion-slide>
           <div class="slide">
             <img class="iconPadddingCenter" src="assets/icons/Novedades.svg" />
-            <h1 class="titleBoldCentered">Novedades y Consejos<br>
+            <h1 class="titleBoldCentered">{{'intro.title6' | translate}}<br>
             </h1>
             <ion-grid style="text-align: center;">
               <ion-col size="12">
-                <p>Dispón de las últimas novedades sanitarias y consejos por parte de equipo médico
-                  ¡Mantente actualizado en todo momento!</p>
+                <p>{{'intro.slider6_text1' | translate}}</p>
               </ion-col>
             </ion-grid>
           </div>
@@ -117,12 +112,11 @@
         <ion-slide>
           <div class="slide">
             <img class="iconPadddingCenter" src="assets/icons/Mi Perfil.svg" />
-            <h1 class="titleBoldCentered">Mi Perfil<br>
+            <h1 class="titleBoldCentered">{{'intro.title7' | translate}}<br>
             </h1>
             <ion-grid style="text-align: center;">
               <ion-col size="12">
-                <p>Configura tus datos y tus preferencias de notificación para poder estar siempre informado.
-                  ¡Disfruta tu experiencia en Doole Health!</p>
+                <p>{{'intro.slider7_text1' | translate}}</p>
               </ion-col>
             </ion-grid>
           </div>
@@ -130,7 +124,7 @@
         
       </ion-slides>
       <ion-button type="button" color="primary" expand="block" class="buttonPadding" (click)="introAction()">
-        Continuar
+        {{'button.continue' | translate}}
       </ion-button>
     </div>
   </ion-content>

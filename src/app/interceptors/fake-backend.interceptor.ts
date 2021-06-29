@@ -709,25 +709,25 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 [
                     {
                         id: 12737,
-                        name: "Asunción Mateo",
+                        full_name: "Asunción Mateo",
                         initials: "AM",
-                        telephone: "671467799",
+                        phone: "671467799",
                         thumbnail: "https://via.placeholder.com/300x300.png?text=AM",
                         family_relationship: "Hermano"
                     },
                     {
                         id: 13015,
-                        name: "Eduard García",
+                        full_name: "Eduard García",
                         initials: "EG",
-                        telephone: "671467799",
+                        phone: "671467799",
                         thumbnail: "https://via.placeholder.com/300x300.png?text=AD",
                         family_relationship: "Madre"
                     },
                     {
                         id: 13015,
-                        name: "David Serrano",
+                        full_name: "David Serrano",
                         initials: "DS",
-                        telephone: "671467799",
+                        phone: "671467799",
                         thumbnail: "https://via.placeholder.com/300x300.png?text=DS",
                         family_relationship: "Padre"
                     }
