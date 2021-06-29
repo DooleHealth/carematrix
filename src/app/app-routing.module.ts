@@ -159,16 +159,16 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules,  initialNavigation: 'enabled',
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled'}),
+    // RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules,  initialNavigation: 'enabled',
+    // scrollPositionRestoration: 'enabled',
+    // anchorScrolling: 'enabled'}),
 
-    // RouterModule.forRoot(routes, {
-    //   // This value is required for server-side rendering to work.
-    //   initialNavigation: 'enabled',
-    //   scrollPositionRestoration: 'enabled',
-    //   anchorScrolling: 'enabled'
-    // }),
+    RouterModule.forRoot(routes, {
+      // This value is required for server-side rendering to work.
+      initialNavigation: 'enabled',
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled'
+    }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule
   ],
