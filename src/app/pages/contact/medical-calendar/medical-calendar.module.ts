@@ -13,6 +13,8 @@ import { registerLocaleData } from '@angular/common';
 import { NgCalendarModule } from 'ionic2-calendar';
 import localeDe from '@angular/common/locales/de';
 import { TranslateModule } from '@ngx-translate/core';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 registerLocaleData(localeDe);
 
 @NgModule({
@@ -23,7 +25,8 @@ registerLocaleData(localeDe);
     ComponentsModule,
     MedicalCalendarPageRoutingModule,
     TranslateModule,
-    NgCalendarModule
+    NgCalendarModule,
+    NgxPaginationModule
   ],
   declarations: [MedicalCalendarPage],
   providers: [

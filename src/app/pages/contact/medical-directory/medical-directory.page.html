@@ -14,18 +14,31 @@
     <ion-text class="txtTitle2">Tus profesionales habituales</ion-text>
   </ion-row>
   <ion-list>
-    <ion-card class="cardProfile">
+    <ion-card class="cardProfile" *ngFor="let s of staff">
       <ion-card-content>
-        <ion-item lines="none"  routerLink="bookings">
-          <img src="assets/images/avatar_masculino.png" class="img-wrapper-doctors">
-          <div class="txtPaddingLeft">
-            <ion-label>Jesús Fernández</ion-label>
-            <ion-label class="textMediumLeft">
-              Medicina General
-            </ion-label>
-          </div>
-          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-item lines="none"  routerLink="bookings" [state]="{staff: s}">
+          <ion-thumbnail slot="start">
+            <app-aspect-ratio [ratio]="{w:1, h:1}">
+              <app-image-shell
+          animation="spinner"
+          [src]="s.image"
+          [alt]="'Sample Image'"
+          class="img-wrapper-doctors"
+        ></app-image-shell>
+            </app-aspect-ratio>
+          </ion-thumbnail>
+          
+          <ion-label>
+            <h2 class="user-name">
+              <app-text-shell class="user-name" [data]="s.name" animation="bouncing"></app-text-shell>
+            </h2>
+            <h3 class="user-lastname">
+              <app-text-shell class="user-name" [data]="s.name" animation="bouncing"></app-text-shell>
+            </h3>
+          </ion-label>
         </ion-item>
+          
+           
       </ion-card-content>
     </ion-card>
   </ion-list>

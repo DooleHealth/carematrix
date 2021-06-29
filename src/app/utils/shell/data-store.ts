@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 
 export class ShellModel {
   isShell = false;
+  
 }
 
 export class DataStore<T> {

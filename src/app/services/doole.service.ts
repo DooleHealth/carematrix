@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
 import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 
 
 @Injectable({
@@ -27,7 +28,7 @@ export class DooleService {
     private platform: Platform,
     public router: Router,
     public alertController: AlertController) { }
-
+    public selectedDate: Date;
 
   uploadFile(image: string, id?:string){
 
@@ -65,7 +66,6 @@ export class DooleService {
     })
     
   }
-  
 
   uploadMessageImage(idMessageHeader, idUserTo, message, fileUrl, id_usuari_amiq){
 
@@ -86,7 +86,6 @@ export class DooleService {
       }
     }
     console.log("options: ", options);
-
     
     const fileTransfer: FileTransferObject = this.transfer.create();
 
@@ -252,7 +251,6 @@ export class DooleService {
     );
   }
 
-
   postAPIpasswordRecovery(params: Object) : Observable<any>{
     let path = 'user/password_recovery'
     const endpoint = this.api.getEndpoint(path);
@@ -262,7 +260,25 @@ export class DooleService {
         return res;
       })
     );
-  } 
+  }
+
+  getAPIStaffSlots(params : {id: number, date: string}){
+    
+    let path = `staff/${params.id}/availability`;
+    let endpoint: string;
+    if(params.date !== ""){
+      endpoint = this.api.getEndpointWithParameters(path, (qs: QueryStringParameters) => qs.push('date', params.date));
+    }else{
+      endpoint = this.api.getEndpoint(path);
+    }
+
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIStaffSlots(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
 
   getAPIgoals(): Observable<any>{
     let path = 'user/element/goals'
@@ -885,7 +901,7 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
     return this.http.get(endpoint).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
-        return res;
+        return res.allowed;
       })
     );
   }
