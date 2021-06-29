@@ -43,30 +43,30 @@
       },
       "intro":{
         "title1": "Benvingut a",
-        "slider1_text1": "Todo en uno",
-        "slider1_text2": "Toda tu información médica en una sola app",
-        "slider1_text3": "Contacta con tu médico",
-        "slider1_text4": "Habla con tu especialista directamente o solicita una consulta presencial",
+        "slider1_text1": "Tot en un",
+        "slider1_text2": "Tota la teva informació mèdica en una sola app",
+        "slider1_text3": "Contacta amb el teu metge",
+        "slider1_text4": "Parla amb el teu especialista directament o sol·licita una consulta presencial",
         "slider1_text5": "Salud y deporte",
-        "slider1_text6": "Conecta tus aplicaciones de salud para ver tu evolución",
+        "slider1_text6": "Connecta les teves aplicacions de salut per veure la teva evolució",
 
         "title2": "Agenda",
-        "slider2_text1": "La agenda de Doole Health te permite incluirtodos tus citas y recordatorios médicos. ¡No podrás vivir sin ella!",
+        "slider2_text1": "L'agenda de Doodle Health et permet incloure tots els teus cites i recordatoris mèdics. No podràs viure sense ella!",
 
         "title3": "Contacta",
-        "slider3_text1": "Habla con tu médico y especialista a través de videollamada o chat y solicita una cita presencial ¡Nunca fué tan rápido y cómodo!",
+        "slider3_text1": "Parla amb el teu metge i especialista a través de videotrucada o xat i sol·licita una cita presencial Mai va ser tan ràpid i còmode!",
 
-        "title4": "Seguimiento",
-        "slider4_text1": "Revisa resultados clínicos, contesta formularios o comprueba la evolución de tus constantes. ¡Ahora podrás revisarlos siempre que quieras!",
+        "title4": "Seguiment",
+        "slider4_text1": "Revisa resultats clínics, contesta formularis o comprova l'evolució dels teus constants. Ara podràs revisar-los sempre que vulguis!",
 
-        "title5": "Mi Diario",
-        "slider5_text1": "En un vistazo revisa tu dieta, medicación, juegos e información de salud del día. ¡Cuidar de tu salud nunca había sido tan fácil!",
+        "title5": "El meu Diari",
+        "slider5_text1": "En un cop d'ull revisa la teva dieta, medicació, jocs i informació de salut del dia. 'Tenir cura de la teva salut mai havia estat tan fàcil!",
 
-        "title6": "Novedades y Consejos",
-        "slider6_text1": "Dispón de las últimas novedades sanitarias y consejos por parte de equipo médico ¡Mantente actualizado en todo momento!",
+        "title6": "Novetats i Consells",
+        "slider6_text1": "Disposa de les últimes novetats sanitàries i consells per part d'equip mèdic Estigues actualitzat en tot moment!",
 
-        "title7": "Mi Perfil",
-        "slider7_text1": "Configura tus datos y tus preferencias de notificación para poder estar siempre informado. ¡Disfruta tu experiencia en Doole Health!"
+        "title7": "El meu perfil",
+        "slider7_text1": "Configura les teves dades i les teves preferències de notificació per poder estar sempre informat. Gaudeix la teva experiència en Doole Health!"
       },
       "home": {
         "goals_title": "El teu objectiu",
