@@ -61,7 +61,7 @@ export class ReportProblemPage implements OnInit {
 
   }
 
-  async addImage(source: CameraSource) {
+/*   async addImage(source: CameraSource) {
     const image = await Camera.getPhoto({
       quality: 60,
       allowEditing: false,
@@ -82,14 +82,16 @@ export class ReportProblemPage implements OnInit {
       })
 
     }
-  } 
+  }  */
 
-/*    async addImage(source: CameraSource) {
+   async addImage(source: CameraSource) {
     const image = await Camera.getPhoto({
       quality: 60,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source
+    }).catch((error:any)=>{
+      console.log(error);
     });
 
     if(image){
@@ -104,7 +106,7 @@ export class ReportProblemPage implements OnInit {
     }else{
       console.log("no image");
     }
-  }  */
+  } 
 
   async selectImageSource(){
     // Only allow file selection inside a browser
@@ -130,14 +132,9 @@ export class ReportProblemPage implements OnInit {
     
     var base64result = result as string;
     //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
-    this.images.push(base64result)
+   // this.images.push(base64result)
     this.patient_files.push({ name: file.name, file: base64result, type: file.type })
         this.numFile = this.patient_files.length;
-    this.form.patchValue({
-      images: result
-    });
-    
-
   }
 
   openFile(file){
@@ -174,23 +171,20 @@ export class ReportProblemPage implements OnInit {
       let description = this.form.get('description').value
       this.form.get('description').setValue(description);
 
-/*       this.imagesTemp.forEach(item => {
-        this.images.push(item.file);   
-      }); */
-
-      this.patient_files.forEach(item => {
+      this.imagesTemp.forEach(item => {
         this.images.push(item.file);   
       });
+
+/*       this.patient_files.forEach(item => {
+        this.images.push(item.file);   
+      }); */
       this.form.get('images').setValue(this.images);
   
       console.log("data:", this.images);
-      this.dooleService.postAPIReportProblem( this.form.value
-        /* this.images[0] */
-        ).subscribe(
+      this.dooleService.postAPIReportProblem( this.form.value).subscribe(
           async (data) => {
             console.log("data:", data);
-
-            if(data.success)
+            if(data)
             this.presentAlert(this.translate.instant("report_problem.alert_successful_response"));
             
           },
@@ -269,7 +263,7 @@ export class ReportProblemPage implements OnInit {
       await alert.present();
     }
 
-    async saveFile(data){
+/*     async saveFile(data){
       const loading = await this.loadingController.create();
       await loading.present();
       this.dooleService.uploadFile(data).then( res =>{
@@ -285,7 +279,7 @@ export class ReportProblemPage implements OnInit {
       }).finally(() => {
         loading.dismiss();
       })
-    }
+    } */
 
     async savePicture(fileUri){
       console.log("[ReportProblemPage] savePicture() fileUri: ",fileUri);

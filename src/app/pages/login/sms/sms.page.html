@@ -14,15 +14,11 @@
       <ion-text>{{ 'sms.text1' | translate}}</ion-text>
       <ion-col>
         <div style="padding-top: 15%;">
-          <ion-item-divider>  
-            <span>+34 </span>          
-            <ion-input type="tel-country-code" (ionInput)="isSubmitted = false" [formControl]="telephone" maxlength="9"  required></ion-input>
-            <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.telephone.hasError('required')">
-              {{ 'sms.error_required' | translate}}
-            </ion-label>
-            <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.telephone.hasError('minlength')">
-              {{ 'sms.error_min_lenght' | translate}}
-            </ion-label>
+          <ion-item-divider>          
+            <ion-input type="tel-country-code" (ionInput)="isSubmitted = false" [formControl]="email" maxlength="50"  required></ion-input>
+            <ion-note class="error ion-padding" color="danger" *ngIf="isSubmitted && this.email.invalid">
+              {{ 'sms.error_invalid_email' | translate}}
+            </ion-note>
           </ion-item-divider>
           <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" (click)="goVerification()">
             {{ 'sms.next_button' | translate}}

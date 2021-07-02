@@ -144,12 +144,16 @@ export class LandingPage implements OnInit {
   }
 
 
-  sendPassword(username){
+  sendUsername(username){
     console.log('[LandingPage] passwordRecovery()');
-    this.dooleService.postAPIpasswordRecovery(username) .subscribe(
+    let user = {username: username}
+    this.dooleService.postAPIpasswordRecovery(user) .subscribe(
       async (res: any) =>{
-        //console.log('[InitialPage] passwordRecovery()', await res);
-
+        console.log('[InitialPage] passwordRecovery()', await res);
+        if(res.message){
+          let message = this.translate.instant('landing.message_email_sent')
+          this.dooleService.presentAlert(message)
+        }
        },(err) => { 
           console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
@@ -179,7 +183,7 @@ export class LandingPage implements OnInit {
             text: this.translate.instant("alert.button_send"),
             handler: (data) => {
               console.log('[LandingPage] AlertConfirm Okay', data.username );
-              this.sendPassword(data.username)
+              this.sendUsername(data.username)
             }
           }
         ]

@@ -103,11 +103,12 @@
     <!-- Medication-->
 
 
-    <div *ngSwitchCase="'medication'">
-      <ion-list *ngIf="items.length > 0; else noData">
-        <!-- ESTE ES EL FILTRO QUE DEBEMOS ACTIVAR COMO UN TÍTULO (mañana/tarde/noche) -->
-        <!-- <ion-label>{{'diary.field_drug' | translate}} {{ selectDayPeriod(item.item.date_intake) }}</ion-label> -->
-        <ion-card *ngFor="let item of items" class="cardProfilePaddingBottom" (click)="expandItem(item)">
+<div *ngSwitchCase="'medication'">
+  <ion-list *ngIf="listDrug.length > 0; else noData">
+    <ion-list *ngFor="let list of this.listDrug">
+        <ion-label class="txtTitle" color="primary">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
+
+      <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" (click)="expandItem(item)">
           <ion-item *ngIf="item.expanded" lines="none">
             <ion-col size="2">
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
@@ -153,6 +154,7 @@
     
       </ion-card>
     </ion-list>
+  </ion-list>
   </div>
 
 

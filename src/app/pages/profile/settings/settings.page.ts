@@ -22,12 +22,41 @@ export class SettingsPage implements OnInit {
   constructor(
     private dooleService: DooleService) { }
   ngOnInit() {
+    this.getNotificationConfiguration()
+  }
+
+  getNotificationConfiguration(){
+    this.dooleService.getAPInotificationConfigurations().subscribe(
+      async (res: any) =>{
+       console.log('[SettingsPage] sendConfigution()', await res);
+       if(res){
+        this.getConfigurationParams(res)
+       }
+       },(err) => { 
+          console.log('p[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+  }
+
+  getConfigurationParams(params: any){
+    this.authentication = (params?.authenticationNotificaton== "1")? true:false
+    this.faceId = (params?.faceIdNotificaton== "1")? true:false
+    this.communications = (params?.communicationsNotificaton== "1")? true:false
+    this.appointment = (params?.appointmentNotificaton== "1")? true:false
+    this.diets = (params?.dietsNotificaton== "1")? true:false
+    this.medication = (params?.drugIntakeNotificationMail == "1")? true:false
+    this.goals = (params?.goalsNotificaton== "1")? true:false
+    this.advices = (params?.advicesNotificaton== "1")? true:false
+    this.offers = (params?.offersNotificaton== "1")? true:false
+    this.form = (params?.formNotificaton== "1")? true:false
+    this.messages = (params?.messagesNotificaton== "1")? true:false
+
   }
 
   changeAuthentication(){
     console.log(`[SettingsPage] changeAuthentication(${this.authentication})`);
     let params = {
-      name: 'authentication',
+      name: 'authenticationNotificaton',
       value: this.authentication
     }
     this.sendConfigution(params)
@@ -36,7 +65,7 @@ export class SettingsPage implements OnInit {
   changeFaceId(){
     console.log(`[SettingsPage] changeFaceId(${this.faceId})`);
     let params = {
-      name: 'faceId',
+      name: 'faceIdNotificaton',
       value: this.faceId
     }
     this.sendConfigution(params)
@@ -45,7 +74,7 @@ export class SettingsPage implements OnInit {
   changeCommunications(){
     console.log(`[SettingsPage] changeCommunications(${this.communications})`);
     let params = {
-      name: 'communications',
+      name: 'communicationsNotificaton',
       value: this.communications
     }
     this.sendConfigution(params)
@@ -54,7 +83,7 @@ export class SettingsPage implements OnInit {
   changeAppointment(){
     console.log(`[SettingsPage] changeAppointment(${this.appointment})`);
     let params = {
-      name: 'appointment',
+      name: 'appointmentNotificaton',
       value: this.appointment
     }
     this.sendConfigution(params)
@@ -63,7 +92,7 @@ export class SettingsPage implements OnInit {
   changeDiets(){
     console.log(`[SettingsPage] changeDiets(${this.diets})`);
     let params = {
-      name: 'diets',
+      name: 'dietsNotificaton',
       value: this.diets
     }
     this.sendConfigution(params)
@@ -72,7 +101,7 @@ export class SettingsPage implements OnInit {
   changeMedication(){
     console.log(`[SettingsPage] changeMedication(${this.medication})`);
     let params = {
-      name: 'medication',
+      name: 'drugIntakeNotificationMail',
       value: this.medication
     }
     //let params2 = {drugIntakeNotificationMail: 1}
@@ -82,7 +111,7 @@ export class SettingsPage implements OnInit {
   changeAdvices(){
     console.log(`[SettingsPage] changeAdvices(${this.advices})`);
     let params = {
-      name: 'advices',
+      name: 'advicesNotificaton',
       value: this.advices
     }
     this.sendConfigution(params)
@@ -91,7 +120,7 @@ export class SettingsPage implements OnInit {
   changeOffers(){
     console.log(`[SettingsPage] changeOffers(${this.offers})`);
     let params = {
-      name: 'offers',
+      name: 'offersNotificaton',
       value: this.offers
     }
     this.sendConfigution(params)
@@ -100,7 +129,7 @@ export class SettingsPage implements OnInit {
   changeGoals(){
     console.log(`[SettingsPage] changeGoals(${this.goals})`);
     let params = {
-      name: 'goals',
+      name: 'goalsNotificaton',
       value: this.goals
     }
     this.sendConfigution(params)
@@ -109,7 +138,7 @@ export class SettingsPage implements OnInit {
   changeForm(){
     console.log(`[SettingsPage] changeForm(${this.form})`);
     let params = {
-      name: 'form',
+      name: 'formNotificaton',
       value: this.form
     }
     this.sendConfigution(params)
@@ -118,7 +147,7 @@ export class SettingsPage implements OnInit {
   changeMessages(){
     console.log(`[SettingsPage] changeMessages(${this.messages})`);
     let params = {
-      name: 'messages',
+      name: 'messagesNotificaton',
       value: this.messages
     }
     this.sendConfigution(params)

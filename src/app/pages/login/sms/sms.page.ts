@@ -13,9 +13,8 @@ const { Storage } = Plugins;
   styleUrls: ['./sms.page.scss'],
 })
 export class SmsPage implements OnInit {
-  COUNTRY_CODE = "+34"
   isSubmitted= false
-  telephone = new FormControl('', [Validators.required, Validators.minLength(9)]);
+  email = new FormControl('', [Validators.required, Validators.minLength(9), Validators.email,]);
   constructor(
     public router: Router,    
     private translate: TranslateService,
@@ -28,18 +27,17 @@ export class SmsPage implements OnInit {
   }
 
   goVerification(){
-    console.log('[LegalPage] goVerification()', this.telephone.value);
+    console.log('[LegalPage] goVerification()', this.email.value);
     this.isSubmitted = true
-    if(!this.telephone.invalid){
+    if(!this.email.invalid){
       this.presentAlertConfirm()
     }
   }
 
   async presentAlertConfirm() {
-    const telephoneTemp =  this.COUNTRY_CODE + this.telephone.value
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      header: this.COUNTRY_CODE +" "+  this.telephone.value,
+      header: this.email.value,
       message: this.translate.instant("sms.alert_message"),
       buttons: [
         {
@@ -53,7 +51,7 @@ export class SmsPage implements OnInit {
           text: this.translate.instant("sms.ok_button"),
           handler: () => {
             console.log('Confirm Okay');
-            this.sendTelephone(telephoneTemp);
+            this.sendEmail(this.email.value);
           }
         }
       ]
@@ -63,19 +61,18 @@ export class SmsPage implements OnInit {
   }
 
 
-  sendTelephone(telephone){
-    this.dooleService.postAPIsmsVerification(telephone).subscribe(
+  sendEmail(email){
+    this.dooleService.postAPIemailVerification(email).subscribe(
       async (res: any) =>{
-        console.log('[LegalPage] sendTelephone()', await res);
+        console.log('[LegalPage] sendEmail()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          let value= this.COUNTRY_CODE + this.telephone.value
-          this.nav.navigateForward("verification", { state: {phone: value} });
+          this.nav.navigateForward("verification", { state: {email: this.email.value} });
         }else{
-          console.log('[LegalPage] sendTelephone() Unsuccessful response', await res);
+          console.log('[LegalPage] sendEmail() Unsuccessful response', await res);
         }
        },(err) => { 
-          console.log('[LegalPage] sendTelephone() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[LegalPage] sendEmail() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }

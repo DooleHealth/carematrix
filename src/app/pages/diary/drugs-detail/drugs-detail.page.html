@@ -32,31 +32,22 @@
         <ion-note *ngIf="this.isSubmittedDosis && this.form.get('dose').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
       <ion-item>
+        <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}
+        </ion-label>
+        <ion-input formControlName="alias" type="text" placeholder="{{ 'medication.placeholder_alias' | translate}}" ></ion-input>
+      </ion-item >
+      <ion-item>
         <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_take_time' | translate}}</ion-label>
         <ion-datetime (ionChange)="inputDate(); this.isSubmittedTimes = false"  formControlName="time" displayFormat="H:mm" placeholder="+" minuteValues="0,15,30,45" >
         </ion-datetime>
         <ion-note *ngIf="this.isSubmittedTimes && this.times==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
-      <ion-item  *ngFor="let time of times">
-        <ion-chip slot="end">
-          <ion-label class="txtTitleGoals">{{time}}</ion-label>
-          <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
-        </ion-chip>
-      </ion-item>
-<!--       <ng-container 
-        *ngFor="let item of this.times | paginate: { itemsPerPage: 10, currentPage: page };let i = index"
-      >
-        <ion-chip>
-          <ion-label>{{time}} </ion-label>
-          <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
-        </ion-chip>
-      </ng-container> -->
-
-      <ion-item lines="none">
-        <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}
-        </ion-label>
-        <ion-input formControlName="alias" type="text" placeholder="{{ 'medication.placeholder_alias' | translate}}" ></ion-input>
-      </ion-item >
+        <ng-container *ngFor="let time of this.times;let i = index">
+          <ion-chip>
+            <ion-label class="txtTitleGoals">{{time}} </ion-label>
+            <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
+          </ion-chip>
+        </ng-container>
       <!-- <ion-button  expand="block" color="primary" >Guardar este medicamento</ion-button><br>
        <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> 
       <ion-button expand="block" color="danger" >Eliminar este medicamento</ion-button> -->

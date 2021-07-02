@@ -91,6 +91,7 @@ export class AuthenticationService {
         if(res.token){
           console.log("[AuthService] setting token: ", res);
           Storage.set({key: TOKEN_KEY, value: res.token})
+          this.setAuthToken(res.token)
         }
          
         if(res.firebaseToken){

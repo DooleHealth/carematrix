@@ -10,7 +10,10 @@ export interface ItemDiary {
   expanded?: boolean;
   item?: any;
 }
-
+export interface ListDrugByDate {
+  date?: string;
+  itemDrugs?: ItemDiary[];
+}
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.page.html',
@@ -19,6 +22,7 @@ export interface ItemDiary {
 
 export class DiaryPage implements OnInit {
   public items: ItemDiary[] = [];
+  listDrug:  ListDrugByDate[] = []
   diets = []
   groupedElements: any = [];
   date = Date.now()
@@ -101,6 +105,7 @@ export class DiaryPage implements OnInit {
   async getDrugIntakeList(){
     console.log('[DiaryPage] getDetailDiet()');
     this.items = []
+    this.listDrug = []
     this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
@@ -109,8 +114,10 @@ export class DiaryPage implements OnInit {
     this.dooleService.postAPIdrugIntakeByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDetailDiet()', await res);
-        if(res.drugIntakes)
-        this.addItems(res.drugIntakes)
+        if(res.drugIntakes){
+          this.addItems(res.drugIntakes)
+          this.groupDiagnosticsByDate(this.items)
+        }
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
@@ -119,6 +126,19 @@ export class DiaryPage implements OnInit {
           this.isLoading = false
           throw err; 
       });
+  }
+
+  groupDiagnosticsByDate(drugs){
+    drugs.forEach( (drug, index) =>{
+      let date = this.selectDayPeriod(drug.item.date_intake)
+      if(index == 0 || date !== this.selectDayPeriod(drugs[index-1].item.date_intake)){
+        let list = drugs.filter( event => 
+          (this.selectDayPeriod(event.item.date_intake) === date)
+        )
+        this.listDrug.push({date: date, itemDrugs: list}) 
+      } 
+    })
+    console.log('[DiaryPage] groupDiagnosticsByDate()', this.listDrug);
   }
 
   changeTake(id,taked){
@@ -308,25 +328,25 @@ export class DiaryPage implements OnInit {
 
   selectDayPeriod(time){
     let hour = new Date(time).getHours()
-    if(hour <= 6  || hour < 12){
+    if(hour >= 6  && hour < 12){
       return this.translate.instant('diary.morning')
     }
     if(hour == 12){
       return this.translate.instant('diary.noon')
     }
-    if(hour >= 13 || hour < 20){
+    if(hour >= 13 && hour < 20){
       return this.translate.instant('diary.aftenoon')
     }
-    if(hour >= 20 || hour < 24){
+    if(hour >= 20 && hour < 24){
       return this.translate.instant('diary.night')
     }
-    if(hour == 24){
+    if(hour == 24 || hour == 0){
       return this.translate.instant('diary.midnight')
     }
-    if(hour > 0 || hour < 6){
+    if(hour >0 && hour < 6){
       return this.translate.instant('diary.dawning')
     }
-    return this.translate.instant('diary.all_day')
+    return  this.translate.instant('diary.all_day')
   }
 }
 
