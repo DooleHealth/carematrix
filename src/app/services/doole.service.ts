@@ -252,7 +252,7 @@ export class DooleService {
   }
 
   postAPIpasswordRecovery(params: Object) : Observable<any>{
-    let path = 'user/password_recovery'
+    let path = 'patient/forgot'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -303,7 +303,7 @@ export class DooleService {
   }
 
   getAPIuserProfile(): Observable<any>{
-    let path = 'user/profiles'
+    let path = 'user/profile'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -325,10 +325,20 @@ export class DooleService {
     );
   }
 
+  getAPInotificationConfigurations(): Observable<any>{
+    let path = 'user/configuration'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPInotificationConfigurations(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
   postAPIConfiguration(params: Object): Observable<any>{
     let path = 'user/configuration';
-    let paramsNotification = this.getConfigurationParams(params)
-    const endpoint = this.api.getEndpoint(paramsNotification);
+    const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIConfiguration(${path}) res: `, res);
@@ -336,31 +346,6 @@ export class DooleService {
 
       })
     );
-  }
-
-  getConfigurationParams(params: any){
-    switch(params.name){
-      case 'authentication':
-        return {authenticationNotificaton: params.value}
-      case 'faceId':
-        return {faceIdNotificaton: params.value}
-      case 'communications':
-          return {communicationsNotificaton: params.value}
-      case 'appointment':
-        return {appointmentNotificaton: params.value}
-      case 'medication':
-        return {drugIntakeNotificationMail: params.value} as Object
-      case 'advices':
-        return {advicesNotificaton: params.value}
-      case 'offers':
-        return {offersNotificaton: params.value}
-      case 'goals':
-        return {goalsNotificaton: params.value}
-      case 'form':
-        return {formNotificaton: params.value}
-      case 'messages':
-        return {messagesNotificaton: params.value}
-    }
   }
 
   getAPIFaqs(): Observable<any>{
@@ -397,24 +382,25 @@ export class DooleService {
     );
   }
 
-  postAPIsmsVerification(params: Object): Observable<any>{
-    let path = 'user/smsVerification'; 
+  postAPIemailVerification(params: Object): Observable<any>{
+    let path = 'user/email_verification'; 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        console.log(`[DooleService] postAPIemailVerification(${path}) res: `, res);
         return res;
 
       })
     );
   }
 
-  postAPIsmsConfirmation(params: Object): Observable<any>{
-    let path = 'user/smsConfirmation'; 
+  postAPIcodeVerification(params: Object): Observable<any>{
+    let path = 'user/code_verification'; 
+    //let path = 'user/codeVerification'; 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIReportProblem(${path}) res: `, res);
+        console.log(`[DooleService] postAPIcodeVerification(${path}) res: `, res);
         return res;
 
       })
@@ -698,7 +684,7 @@ export class DooleService {
   }
 
   getAPIcategory(): Observable<any>{
-    let path = 'user/element/category';  
+    let path = 'user/element_category';  
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

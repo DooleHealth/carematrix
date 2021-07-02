@@ -13,8 +13,7 @@ const { Storage } = Plugins;
   styleUrls: ['./verification.page.scss'],
 })
 export class VerificationPage implements OnInit {
-  KEY_TELEPHONE_STORAGE = 'telephone';
-  phone = ''
+  email = ''
   isSubmitted= false
   code = new FormControl('', [Validators.required, Validators.minLength(4)]);
   constructor(
@@ -26,8 +25,8 @@ export class VerificationPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.phone = history.state.phone;
-    console.log('[VerificationPage] ngOnInit()', this.phone);
+    this.email = history.state.email;
+    console.log('[VerificationPage] ngOnInit()', this.email);
   }
 
 
@@ -40,7 +39,7 @@ export class VerificationPage implements OnInit {
   }
 
   checkCode(code){
-    this.dooleService.postAPIsmsConfirmation(code).subscribe(
+    this.dooleService.postAPIcodeVerification(code).subscribe(
       async (res: any) =>{
         console.log('[VerificationPage] checkCode()', await res);
         let  isSuccess = res.success 
@@ -57,14 +56,14 @@ export class VerificationPage implements OnInit {
   }
 
 
-  sendTelephone(telephone){
-    console.log('[VerificationPage] sendTelephone()',telephone );
-    this.dooleService.postAPIsmsVerification(telephone).subscribe(
+  sendEmail(email){
+    console.log('[VerificationPage] sendEmail()',email );
+    this.dooleService.postAPIemailVerification(email).subscribe(
       async (res: any) =>{
-        console.log('[LegalPage] sendTelephone()', await res);
+        console.log('[LegalPage] sendEmail()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          let messagge = this.translate.instant("verification.send_telephone_alert_message")
+          let messagge = this.translate.instant("verification.send_email_alert_message")
           await  this.dooleService.presentAlert(messagge)
         }
        },(err) => { 
@@ -75,7 +74,7 @@ export class VerificationPage implements OnInit {
 
   async getVerificationCode(){
     console.log('[VerificationPage] getVerificationCode()' );
-    this.sendTelephone(this.phone)
+    this.sendEmail(this.email)
   }
 
   checkConditionLegal(){

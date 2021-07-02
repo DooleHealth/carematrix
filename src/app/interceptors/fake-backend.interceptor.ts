@@ -26,7 +26,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
 /*                 case url.includes('login') && method === 'POST':
                     return authenticate(); */
-                case url.includes('/user/password_recovery') && method === 'POST':
+                case url.includes('/user/recovery_password') && method === 'POST':
                     return passwordRecovery();
                 case url.endsWith('/user/informationUser') && method === 'GET':
                     return informationUser();
@@ -36,16 +36,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return confirmLegal();
 /*                 case url.endsWith('/user/element/goals') && method === 'GET':
                     return goalsUser(); */
-                case url.endsWith('/user/profiles') && method === 'GET':
-                    return userProfile();
+                /* case url.endsWith('/user/profiles') && method === 'GET':
+                    return userProfile(); */
                 case url.endsWith('user/changePassword') && method === 'POST':
                     return changePassword();
-                case url.endsWith('user/smsVerification') && method === 'POST':
+                case url.endsWith('user/email_verification') && method === 'POST':
                     return smsVerification();
-                case url.endsWith('user/smsConfirmation') && method === 'POST':
+                case url.endsWith('user/code_verification') && method === 'POST':
                     return smsConfirmation();
-                case url.endsWith('user/familyUnit') && method === 'GET':
-                    return familyUnit();
+/*                 case url.endsWith('user/familyUnit') && method === 'GET':
+                    return familyUnit(); */
                 case url.endsWith('user/health_cards') && method === 'GET':
                     return getAPIhealthCards();
                 case url.endsWith('user/health_cards') && method === 'POST':
@@ -68,7 +68,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIdocumentsTracking();
                 case url.endsWith('user/tracking/forms') && method === 'GET':
                     return getAPIformsTracking();
-                case url.endsWith('user/element/category') && method === 'GET':
+                case url.endsWith('user/element_category') && method === 'GET':
                     return getAPIcategoryElements();
                 default:
                     // pass through any requests not handled above 

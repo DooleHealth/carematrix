@@ -10,7 +10,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./personal.page.scss'],
 })
 export class PersonalPage implements OnInit {
-  userProfile: UserProfile;
+  userProfile = {};
   constructor(private dooleService: DooleService,
     private router: Router,
     public translate: TranslateService,) { }
@@ -22,14 +22,31 @@ export class PersonalPage implements OnInit {
   getPersonalInformation(){
     this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
-        this.userProfile = res as UserProfile;
-        console.log('[PersonalPage] getPersonalInformation()', await this.userProfile);
+        console.log('[PersonalPage] getPersonalInformation()', res);
+        this.userProfile = res //as UserProfile;
+    //console.log('[PersonalPage] getPersonalInformation()', await this.userProfile);
 
 
        },(err) => { 
           console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
+  }
+
+  getGender(opt){
+    let res = ''
+    switch (opt) {
+      case 0:
+        res = this.translate.instant('personal.feminine')
+        break
+      case 1:
+        res = this.translate.instant('personal.male')
+        break
+      default:
+        res = this.translate.instant('personal.non-binary')
+        break
+    }
+    return res
   }
 
 }

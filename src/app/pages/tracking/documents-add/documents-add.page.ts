@@ -235,8 +235,6 @@ export class DocumentsAddPage implements OnInit {
   }
 
   async savePicture(fileUri){
-    //const loading = await this.loadingController.create();
-    //await loading.present();
     var filename=new Date().getTime();
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);
@@ -245,13 +243,10 @@ export class DocumentsAddPage implements OnInit {
         //this.mediaFiles.push(data);
         this.mediaTemp.push(data);
         console.log(" this.mediafiles.: ", this.mediaFiles);
-        //loading.dismiss();
       }).catch(err => {
         console.log("Error uploadFile: ", err);
-        //loading.dismiss();
       }).finally(() => {
         //this.processing = false;
-        //loading.dismiss();
       })
      
     });

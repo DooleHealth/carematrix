@@ -23,6 +23,7 @@ export class GamesDetailPage implements OnInit {
   ngOnInit() {
     //this.id = history.state.id;
     this.game = history.state.game;
+    console.log('[GamesDetailPage] ngOnInit()', this.game);
     if(this.game)
     this.getGameData()
   }
