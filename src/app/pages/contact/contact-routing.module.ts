@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'specialist-finder',
     loadChildren: () => import('./specialist-finder/specialist-finder.module').then( m => m.SpecialistFinderPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   }
 ];
 

@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div *ngFor="let post of this.chat">
+     
+      <div *ngIf="!post.recipients">
+        <ion-item lines="none" >
+          <ion-thumbnail slot="start">
+            <app-aspect-ratio [ratio]="{w:1, h:1}">
+              <app-image-shell
+                animation="spinner"
+                [src]="null"
+                [alt]="'Sample Image'"
+                class="img-wrapper-doctors"
+              ></app-image-shell>
+            </app-aspect-ratio>
+          </ion-thumbnail>
+
+          <ion-label>
+            <h2 class="user-name">
+              <app-text-shell
+                class="user-name"
+                [data]="null"
+                animation="bouncing"
+              ></app-text-shell>
+            </h2>
+          </ion-label>
+        </ion-item>
+      </div>
+      
+      <div *ngIf="post?.recipients?.length > 0">
+          
+      <div *ngFor="let item of post?.recipients; let i = index">
+       
+        <ion-item  *ngIf="item.id != this.authService?.user.idUser" lines="none" routerLink="conversation" [state]="{staff:item, chat: post.message?.message_header_id }" >
+          <ion-thumbnail slot="start">
+            <app-aspect-ratio [ratio]="{w:1, h:1}">
+              <app-image-shell
+                animation="spinner"
+                [src]="item?.image"
+                [alt]="'Sample Image'"
+                class="img-wrapper-doctors"
+              ></app-image-shell>
+            </app-aspect-ratio>
+          </ion-thumbnail>
+
+          <ion-label>
+            <h2 class="user-name">
+              <app-text-shell
+                class="user-name"
+                [data]="item?.name"
+                animation="bouncing"
+              ></app-text-shell>
+            </h2>
+          </ion-label>
+        </ion-item>
+      </div>
+      </div>
+      
+   
+    </div>
+  </ion-list>
+</ion-content>

@@ -52,7 +52,7 @@ export class AuthenticationService {
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     @Inject(PLATFORM_ID) private platformId: object) { 
-      
+      this.setUser("14303");
   }
 
   getAuthToken() {
@@ -77,21 +77,22 @@ export class AuthenticationService {
     localStorage.setItem(TOKEN_KEY, token);
   }
   
-  login(credentials: {username, password, credencial}): Observable<any> {
+  login(credentials: {username, password}): Observable<any> {
 
     const endpoint = this.api.getEndpoint('patient/login');
 
+    console.log('credentials: ', credentials);
     return this.http.post(endpoint, credentials).pipe(
       map((res: any) => {
        
+        console.log("[AuthService] login(): ", res);
+
         if(!res.success){
           this.throwError(res);
         }
         // save user's token
-        if(res.token){
-          console.log("[AuthService] setting token: ", res);
-          Storage.set({key: TOKEN_KEY, value: res.token})
-        }
+        if(res.token)
+          this.setAuthToken(res.token);
          
         if(res.firebaseToken){
           this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
@@ -109,7 +110,6 @@ export class AuthenticationService {
         return res;
 
       }),
-      
       tap(_ => {
         this.isAuthenticated.next(true);
       }),

@@ -114,7 +114,6 @@ export function createTranslateLoader(http: HttpClient) {
     Calendar,
     FingerprintAIO,
     Network,
-    fakeBackendProvider,
     {
       provide: APP_INITIALIZER,
       useFactory: (platformId: object, response: any) => {

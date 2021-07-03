@@ -199,7 +199,7 @@
     
         <ion-list>
           <ion-card class="cardProfile">
-            <ion-item lines="none">
+            <ion-item lines="none" routerLink="chat">
               <div class="verticalLine"></div>
               <ion-grid>
                 <ion-row>
@@ -222,7 +222,7 @@
               </ion-grid>
             </ion-item>
           </ion-card>
-          <ion-card class="cardProfile">
+          <ion-card class="cardProfile" routerLink="medical-directory" [state]="{isChat:true}">
             <ion-item lines="none">
               <div class="verticalLine"></div>
               <ion-grid>

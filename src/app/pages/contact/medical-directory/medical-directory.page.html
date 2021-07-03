@@ -16,7 +16,7 @@
   <ion-list>
     <ion-card class="cardProfile" *ngFor="let s of staff">
       <ion-card-content>
-        <ion-item lines="none"  routerLink="bookings" [state]="{staff: s}">
+        <ion-item lines="none" (click)="this.redirect(s)" >
           <ion-thumbnail slot="start">
             <app-aspect-ratio [ratio]="{w:1, h:1}">
               <app-image-shell

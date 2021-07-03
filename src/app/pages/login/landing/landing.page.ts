@@ -84,6 +84,7 @@ export class LandingPage implements OnInit {
       const currentUrl = this.location.path();
       this.redirectLoader = loader;
       this.redirectLoader.present();
+      console.log('[LandingPage] doDooleAppLogin()', this.loginForm.value);
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
         console.log('[LandingPage] doDooleAppLogin()', res);
         if(res.success){
@@ -91,7 +92,7 @@ export class LandingPage implements OnInit {
         }
         this.dismissLoading();
       }, async (error) => { 
-       console.log('doDooleAppLogin() ERROR', await error);
+       console.log('doDooleAppLogin() ERROR', await error?.message);
        this.dismissLoading();
        throw error;
      });
