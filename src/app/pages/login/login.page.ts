@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
       }
     }, async (error) => { 
      console.log('doDooleAppLogin() ERROR', await error?.message);
-     
+     this.modalCtrl.dismiss({error:error});
      throw error;
    });
   }
