@@ -8,7 +8,8 @@
         "button_registre": "Crear Usuario",
         "user": "Usuario",
         "header_message_password_recovery": "Ingresa tu Usuario",
-        "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña"
+        "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
+        "message_email_sent":"El correo ha sido enviado"
       },
       "legal": {
         "header": "Condiciones de uso",
@@ -22,12 +23,13 @@
         "title":"Empezamos por tu número de teléfono",
         "text1": "Recibirás un SMS con un código de verificación. ¡Porque tu privacidad es lo más importante!",
         "text2": "Tu número únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
-        "alert_message": "¿Es el número correcto?",
+        "alert_message": "¿Es el correo correcto?",
         "ok_button": "Si",
         "ko_button": "Editar",
         "next_button":"Continuar",
         "error_required": "Error: Campo requerido",
-        "error_min_lenght": "Error: Debe ser 9 digitos"
+        "error_min_lenght": "Error: Debe ser 9 digitos",
+        "error_invalid_email": "Ingresa un correo válido"
       },
       "verification":{
         "header": "Verificación de Identidad",
@@ -35,7 +37,7 @@
         "text1": "Te hemos enviado un SMS con un código para verificar tu número teléfonico y poder continuar. Si no ha recibido ningún mensaje pulse ",
         "text2": "aquí",
         "alert_message": "El código no es válido",
-        "send_telephone_alert_message": "El código de verificación se ha enviado de nuevo",
+        "send_email_alert_message": "El código de verificación se ha enviado de nuevo",
         "next_button":"Continuar",
         "error_required": "Error: Campo requerido",
         "error_min_lenght": "Error: Debe ser 4 digitos"
@@ -132,7 +134,11 @@
         "height": "Altura",
         "blood_group": "Grupo Sanguíneo",
         "diagnostics":"Diagnóstico",
-        "allergies": "Alergias"
+        "allergies": "Alergias",
+
+        "male":"Masculino",
+        "feminine": "Femenino",
+        "non-binary":"No binario"
       },
       "alert": {
         "button_ok": "Ok", 

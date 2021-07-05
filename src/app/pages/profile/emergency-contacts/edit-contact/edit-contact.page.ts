@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { ListRelationshipPage } from '../list-relationship/list-relationship.page';
 
 @Component({
   selector: 'app-edit-contact',
@@ -17,19 +18,22 @@ export class EditContactPage implements OnInit {
   isSubmittedRelationship = false;
   isNewContact= true;
   formContact: FormGroup;
+  socialRelationType:any
   contact
   constructor(  
     private formBuilder: FormBuilder,
     private dooleService: DooleService,
     public router: Router,
+    private modalController: ModalController,
     private alertController: AlertController,
     private translate: TranslateService) { }
 
   ngOnInit() {
     this.formContact = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      telephone: ['', [Validators.required]],
-      family_relationship: ['', [Validators.required]],
+      full_name: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      socialRelationName: ['', [Validators.required]],
+      created_at: ['', [Validators.required]],
     })
     this.getContact()
   }
@@ -56,8 +60,8 @@ export class EditContactPage implements OnInit {
   }
 
   showContact(){
-    this.formContact.get('telephone').setValue(this.contact.telephone)
-    this.formContact.get('name').setValue(this.contact.name)
+    this.formContact.get('phone').setValue(this.contact.telephone)
+    this.formContact.get('full_name').setValue(this.contact.name)
     this.formContact.get('family_relationship').setValue(this.contact.family_relationship)
   }
 
@@ -79,6 +83,8 @@ export class EditContactPage implements OnInit {
 
   saveContact(){
     console.log('[EditContactPage] saveContact()' , this.formContact.value); 
+    let date = new Date().toISOString()
+    this.formContact.get('created_at').setValue(date)
       this.dooleService.postAPIemergencyContact(this.formContact.value).subscribe(
         async (res: any) =>{
           console.log('[EditContactPage] saveContact()', await res);
@@ -168,6 +174,22 @@ export class EditContactPage implements OnInit {
     this.isSubmittedName = isSubmitted
     this.isSubmittedTelephone = isSubmitted;
     this.isSubmittedRelationship = isSubmitted;
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: ListRelationshipPage,
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null && dataReturned.data !== undefined) {
+        this.socialRelationType = dataReturned.data;
+        if(this.socialRelationType)
+        this.formContact.get('socialRelationName').setValue(this.socialRelationType?.name)
+      }
+    });
+
+    return await modal.present();
   }
 
 

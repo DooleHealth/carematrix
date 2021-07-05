@@ -93,7 +93,7 @@ export class AuthenticationService {
         // save user's token
         if(res.token)
           this.setAuthToken(res.token);
-         
+
         if(res.firebaseToken){
           this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if(!this.platform.is('mobileweb') && !this.platform.is('desktop')){

@@ -11,7 +11,7 @@
 
   <ion-list *ngIf="game">
     <ion-card class="cardProfile">
-      <img *ngIf="game.image !== null"  [src]='game.image?.temporaryUrl'/>
+      <img *ngIf="game.file !== null"  [src]='game.file?.temporaryUrl'/>
       <ion-item lines="none">
         <div>
           <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >

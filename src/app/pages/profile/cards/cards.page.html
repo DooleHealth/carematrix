@@ -10,16 +10,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="listCard.length > 0; else noData">
-  <ion-list *ngFor="let card of listCard">
-    <ion-card class="cardProfile" routerLink="detailCard" [state]="{card:card}">
+<ion-content>
+  <ion-list *ngIf="listCard.length > 0; else noData">
+    <ion-card *ngFor="let card of listCard" class="cardProfile" routerLink="detailCard" [state]="{id:card.id}">
       <ion-card-content>
         <ion-item lines="none">
-            <img src="assets/images/tarjeta.png">
+            <img [src]="(card.thumbnail !== null)? 'card.thumbnail':'assets/images/tarjeta.png'">
           <ion-label class="txtPaddingLeft" >
             <h3>{{ card.name}}</h3>
             <div>
-              <p>{{ card.affiliation_number}}</p>
+              <p>{{ card.card_number}}</p>
               <p *ngIf="card.expiration_date !== null && card.expiration_date !== undefined"> 
                 {{ card.expiration_date | date: 'MM/yyyy'}}</p>
             </div>
@@ -29,7 +29,7 @@
     </ion-card-content>
   </ion-card>
   </ion-list>
+  <ng-template #noData>
+    <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+  </ng-template>
 </ion-content>
-<ng-template #noData>
-  <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
-</ng-template>

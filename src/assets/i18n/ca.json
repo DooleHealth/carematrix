@@ -9,7 +9,8 @@
         "button_registre": "Crear Usuari",
         "user": "Usuari",
         "header_message_password_recovery": "Ingressa el teu Usuari",
-        "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya."
+        "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
+        "message_email_sent":"El correu ha estat enviat"
       },    
       "legal": {
         "header": "Condicions d'ús",
@@ -23,12 +24,13 @@
         "title":"Comencem per el teu número de telèfon",
         "text1": "Rebràs un SMS amb un codi de verificació. Perquè la teva privacitat és el més important!",
         "text2": "El teu número únicament serà utilitzat per a situacions urgents o d'emergència, però mai serà compartit amb altres empreses o tercers.",
-        "alert_message": "És el nombre correcte?",
+        "alert_message": "És el correu correcte?",
         "ok_button": "Si",
         "ko_button": "Edita",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
-        "error_min_lenght": "Error: Ha de ser 9 digits"
+        "error_min_lenght": "Error: Ha de ser 9 digits",
+        "error_invalid_email": "Ingressa un correu vàlid"
       },
       "verification":{
         "header": "Verificació d'Identitat",
@@ -36,7 +38,7 @@
         "text1": "T'hem enviat un SMS amb un codi per verificar el teu número telefònic i poder continuar. Si no ha rebut cap missatge premi ",
         "text2": "aquí",
         "alert_message": "El codi no és vàlid",
-        "send_telephone_alert_message": "El codi de verificació s'ha enviat de nou",
+        "send_email_alert_message": "El codi de verificació s'ha enviat de nou",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"
@@ -133,7 +135,12 @@
         "height": "Alçada",
         "blood_group": "Grup Sanguini",
         "diagnostics":"Diagnòstic",
-        "allergies": "Al·lèrgies"
+        "allergies": "Al·lèrgies",
+
+        "male":"Home",
+        "feminine": "Femení",
+        "non-binary":"No binari"
+
       },
       "alert": {
         "button_ok": "D'acord",

@@ -8,23 +8,28 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./faqs.page.scss'],
 })
 export class FaqsPage implements OnInit {
-  listFaqs: any;
+  faq: any;
+  isLoading = false
   constructor(
     private dooleService: DooleService,
   ) { }
 
   ngOnInit() {
-    this.listFaqs = '<div class="demo"><b>This is my Legal HTML.</b></div>';
-    //this.getFaqs()
+    //this.faq = '<div class="demo"><b>This is my FAQ HTML.</b></div>';
+    this.getFaqs()
   }
 
 
   getFaqs(){
+    this.isLoading = true
     this.dooleService.getAPIFaqs().subscribe(
       async (res: any) =>{
         console.log('[FaqsPage] getFaqs()', await res);
-        this.listFaqs = res
+        if(res.success)
+        this.faq = res.faq
+        this.isLoading = false
        },(err) => { 
+        this.isLoading = false
           console.log('[FaqsPage] getFaqs() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });

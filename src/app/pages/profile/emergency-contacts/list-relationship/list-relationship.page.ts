@@ -17,19 +17,19 @@ export class ListRelationshipPage implements OnInit {
 
   ngOnInit() {
     this.listRelationshipBackup = this.listRelationship
-    //this.getListRelationship()
+    //this.getListSocialRelationType()
     this.getEmergencyContact()
   }
 
   getEmergencyContact(){
     this.contact = history.state.contact;
-    console.log('[ListRelationshipPage] getHealthCard()' ,  this.contact); 
-    if( this.contact ){
+    console.log('[ListRelationshipPage] getEmergencyContact()' ,  this.contact); 
+    if(this.contact){
       let newContact = {
-        name: this.contact.displayName,
-        telephone: this.contact.phoneNumbers[0].number,
+        full_name: this.contact.displayName,
+        phone: this.contact.phoneNumbers[0].number,
         thumbnail: (this.contact.photoThumbnail !== undefined)? this.contact.photoThumbnail:null,
-        family_relationship: ''
+        social_relation_type: {}
       }
       this.emergencyContact = newContact
       this.emergencyContact.thumbnail
@@ -37,14 +37,16 @@ export class ListRelationshipPage implements OnInit {
 
   }
 
-  getListRelationship(){
-    this.dooleService.getAPIfamilyRelationship().subscribe(
+  getListSocialRelationType(){
+    this.dooleService.getAPISocialRelationType().subscribe(
       async (res: any) =>{
-        console.log('[ListRelationshipPage] getListRelationship()', await res);
-        this.listRelationship = res
-        this.listRelationshipBackup = this.listRelationship
+        console.log('[ListRelationshipPage] getListSocialRelationType()', await res);
+        if(res.success){
+          this.listRelationship = res.socialRelationTypes
+          this.listRelationshipBackup = this.listRelationship
+        }
        },(err) => { 
-          console.log('[ListRelationshipPage] getListRelationship() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[ListRelationshipPage] getListSocialRelationType() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
@@ -67,7 +69,7 @@ export class ListRelationshipPage implements OnInit {
 
   getDataContact(relationship){
     console.log(`[ListRelationshipPage] getDataContact(${relationship})`);
-    this.emergencyContact.family_relationship = relationship
+    this.emergencyContact.socialRelationType = relationship
   }
 
 }

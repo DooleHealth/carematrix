@@ -30,19 +30,19 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'detail_contact.username' | translate}}</ion-label>
-        <ion-input formControlName="name" placeholder="" slot="end" (ionInput)="isSubmittedName = false" maxlength="200" required></ion-input>
-        <ion-label *ngIf="this.isSubmittedName && this.formContact.get('name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
+        <ion-input formControlName="full_name" placeholder="" slot="end" (ionInput)="isSubmittedName = false" maxlength="200" required></ion-input>
+        <ion-label *ngIf="this.isSubmittedName && this.formContact.get('full_name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-input formControlName="telephone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
-        <ion-label *ngIf="this.isSubmittedTelephone && this.formContact.get('telephone').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
+        <ion-input formControlName="phone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
+        <ion-label *ngIf="this.isSubmittedTelephone && this.formContact.get('phone').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item lines="none"  (click)="openModal()">
         <ion-label>{{ 'detail_contact.family_relationship' | translate}}</ion-label>
-        <ion-input formControlName="family_relationship" placeholder="" slot="end" (ionInput)="isSubmittedRelationship = false" maxlength="100" required></ion-input>
+        <ion-input formControlName="socialRelationName" placeholder="" slot="end" (ionInput)="isSubmittedRelationship = false" maxlength="100" required></ion-input>
         <ion-label *ngIf="this.isSubmittedRelationship && this.formContact.get('family_relationship').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
