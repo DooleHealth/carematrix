@@ -418,7 +418,8 @@
           "field_alias": "Alias",
           "placeholder_chosse":"Selecciona",
           "placeholder_dose":"Nº de dosis",
-          "placeholder_alias":"Nombre alternativo"
+          "placeholder_alias":"Nombre alternativo",
+          "placeholder_search":"Busca por nombre o código"
       },
       "button":{
         "detail": "Detalle",

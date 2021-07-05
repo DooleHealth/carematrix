@@ -358,7 +358,8 @@
         "field_alias": "Àlias",
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosi",
-        "placeholder_alias":"Nom alternatiu"
+        "placeholder_alias":"Nom alternatiu",
+        "placeholder_search":"Cerca per nom o codi"
       },
       "tracking":{
         "header": "Seguiment",

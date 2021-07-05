@@ -10,10 +10,16 @@
     color:#7f8c8d;
  }
 */
+ion-searchbar{
+  --ion-background-color: white !important;
+}
 ion-card{
   border-radius: 10px;
   overflow: hidden;
 }
+ion-segment-button {
+  font-size: smaller;
+  }
 .whiteBackground {
   --ion-background-color: white !important;
 }
