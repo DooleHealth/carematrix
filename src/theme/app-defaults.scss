@@ -10,6 +10,10 @@ ion-icon {
     color:#7f8c8d;
 }
 
+ion-card{
+  border-radius: 10px;
+  overflow: hidden;
+}
 .whiteBackground {
   --ion-background-color: white !important;
 }
@@ -71,6 +75,7 @@ text-align: center;
   --ion-background-color: white!important;
   font-size: 14px;
   font-weight: 400;
+ 
 }
 .cardProfilePadding{
   --ion-background-color: white!important;
@@ -117,7 +122,8 @@ text-align: center;
 
 .txtTitleGoals2{
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
+ 
 }
 .txtTitleGoals3{
   font-size: 14px;
@@ -133,6 +139,11 @@ text-align: center;
   font-size: 12px;
   font-weight: 400;
   padding-top: 5%;
+  text-align: justify;
+}
+.txtTitleGoalsLittle3{
+  font-size: 12px;
+  font-weight: 400;
   text-align: justify;
   
 }
@@ -189,8 +200,16 @@ padding-left: 5%;
 }
 .alingLeft{
 text-align: left !important;
-padding-left: 8%;
 }
+.alingRight{
+  text-align: right  !important;
+padding-right: 10%;
+  }
+.alingLeftTop{
+  text-align: left !important;
+  padding-left: 3%;
+  margin-top: 3%;
+  }
 .txtSubtitle{
   font-size: 14px;
   font-weight: 600; 
@@ -217,6 +236,10 @@ background-size:cover; margin: -10px;
 background-position: center;
 }
 
+.noMargin{
+margin-bottom: -5%;
+--background: #ffffff!important;
+}
 
 .white{
   --background: #ffffff!important;
