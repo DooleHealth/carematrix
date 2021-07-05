@@ -6,14 +6,20 @@
 
  /* Global styles of the components*/
 
-ion-icon {
+/* ion-icon {
     color:#7f8c8d;
+ }
+*/
+ion-searchbar{
+  --ion-background-color: white !important;
 }
-
 ion-card{
   border-radius: 10px;
   overflow: hidden;
 }
+ion-segment-button {
+  font-size: smaller;
+  }
 .whiteBackground {
   --ion-background-color: white !important;
 }
@@ -265,6 +271,15 @@ margin-bottom: -5%;
   display: block;
   margin-left: 0%;
  
+}
+
+.iconNoData {
+  zoom: 4;
+  display: block;
+  margin: auto;
+  padding-top: 30%;
+  color: #7F8C8D;
+  ;
 }
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 

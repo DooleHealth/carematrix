@@ -4,6 +4,7 @@
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>{{'diary.header_diary' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
+      <!-- <ion-icon class="primaryIcon" slot="icon-only"  name="cart-outline"></ion-icon> -->
       <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="drug-add"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'health'">
@@ -20,7 +21,7 @@
   [(ngModel)]="segment" 
   scrollable>
     <ion-segment-button value="diets">
-      <ion-label>{{'diary.field_diet' | translate}}</ion-label>
+      <ion-label >{{'diary.field_diet' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="medication">
       <ion-label>{{'diary.field_drug' | translate}}</ion-label>
@@ -66,7 +67,7 @@
     <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
       <ion-item *ngIf="item.expanded" lines="none">
         <ion-col size="2">
-          <ion-img *ngIf="item.item.image" [src]='item.item.image.thumbnailTemporaryUrl' style="margin-right: 5px;">
+          <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
           </ion-img>
         </ion-col>
         <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
@@ -89,9 +90,9 @@
             <ion-label>{{'diary.description' | translate}}</ion-label>
            <!--  <p class="txtTitleTrackingLittle">resultado</p> -->
           </ion-item>
-          <ion-item lines="none">
-            <p class="txtTitleTrackingLittle" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.detail' | translate}}</p>
-          </ion-item>
+         
+            <ion-button  size="small" color="transparent" class="buttonLink" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.detail' | translate}}</ion-button>&nbsp;
+        
         </app-expandable>
   
     </ion-card>
@@ -106,7 +107,7 @@
 <div *ngSwitchCase="'medication'">
   <ion-list *ngIf="listDrug.length > 0; else noData">
     <ion-list *ngFor="let list of this.listDrug">
-        <ion-label class="txtTitle" color="primary">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
+        <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
 
       <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" (click)="expandItem(item)">
           <ion-item *ngIf="item.expanded" lines="none">
@@ -169,14 +170,14 @@
             <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
             </ion-img>
           </div>
-          <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{item.item.name}}</ion-label>
+          <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{item.item.title}}</ion-label>
           <div>
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </div>
         </ion-item>
         <ion-card-content [innerHtml]="item.item?.description">
         </ion-card-content>
-        <ion-button size="small" color="transparent" class="buttonLink" routerLink="games-detail" [state]="{game: item.item}">{{ 'button.go_detail' | translate }}</ion-button>&nbsp;
+        <ion-button size="small" color="transparent" class="buttonLink" routerLink="games-detail" [state]="{game: item.item}">{{'button.detail' | translate}}</ion-button>&nbsp;
       </ion-card>
     </ion-list>
   </div> 
@@ -184,15 +185,20 @@
 <div  *ngSwitchCase="'health'">
   <div *ngIf="groupedElements.length > 0; else noData">
   <ion-list  *ngFor="let group of this.groupedElements">
-    <ion-label color="primary">{{group.group  }}</ion-label>
+    <ion-label class="txtTitle">{{group.group  }}</ion-label>
     <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
       <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
-        <div class="verticalLineRed"></div>
+        <div *ngIf="group.group=='Actividad Física'" class="verticalLineRed"></div>
+        <div *ngIf="group.group=='Bioquímica'"  class="verticalLine"></div>
+        <div *ngIf="group.group=='Constantes'"  class="verticalLinePurple"></div>
         <ion-grid>
           <ion-row>
             <ion-col size="2">
-              <ion-img style="align-items: left;" src='assets/icons/VectorConsumo.svg' style="margin-right: 5px;">
-              </ion-img>
+              <ion-icon *ngIf="group.group=='Actividad Física'"  style="align-items: left;margin-right: 5px;zoom: 2; color: #E74C3C;" name="walk-outline"></ion-icon>
+              <ion-icon *ngIf="group.group=='Bioquímica'"  style="align-items: left;margin-right: 5px;zoom: 2;color: #2ECC71;" name="water-outline"></ion-icon>
+              <ion-icon *ngIf="group.group=='Constantes'"  style="align-items: left;margin-right: 5px;zoom: 2;color: #9B59B6;" name="stats-chart-outline"></ion-icon>
+              <!-- <ion-img  *ngIf="element.name=='Peso'"  style="align-items: left;margin-right: 5px;" src='assets/icons/VectorConsumo.svg' >
+              </ion-img> -->
             </ion-col>
             <ion-col size="8">
               <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
@@ -217,7 +223,20 @@
   </div>
 
   <ng-template #noData>
-    <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="heart"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
   </ng-template>
 </ion-content>
 <ion-footer>
