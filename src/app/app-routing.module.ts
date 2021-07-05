@@ -149,6 +149,10 @@ const routes: Routes = [
     path: 'payment',
     loadChildren: () => import('./pages/contact/payment/payment.module').then( m => m.PaymentPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
  
 
 

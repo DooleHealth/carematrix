@@ -1,0 +1,30 @@
+{
+  "appId": "com.doole.app",
+  "appName": "DooleHealth App",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "ios": {
+    "minVersion": "12"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 5000,
+      "androidScaleType": "CENTER_CROP"
+    },
+    "CapacitorFirebaseAuth": {
+      "providers": [
+        "google.com"
+      ],
+      "languageCode": "es",
+      "nativeAuth": false,
+      "properties": {},
+      "permissions": {
+        "google": [
+          "profile"
+        ]
+      }
+    }
+  },
+  "cordova": {}
+}
