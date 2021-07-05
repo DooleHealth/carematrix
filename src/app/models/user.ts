@@ -115,10 +115,10 @@ export interface HealthCard {
 
 export interface EmergencyContact {
     id?: number,
-    name?: string,
-    initials?: string,
-    telephone?: string,
+    full_name?: string,
+    email?: string,
+    phone?: string,
     thumbnail?: string,
-    expedition_date?: string,
-    family_relationship?: string,
+    created_at?: string,
+    socialRelationType?: string,
 }

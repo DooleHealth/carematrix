@@ -349,7 +349,7 @@ export class DooleService {
   }
 
   getAPIFaqs(): Observable<any>{
-    let path = 'user/faqs'
+    let path = 'center/faq'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -407,8 +407,20 @@ export class DooleService {
     );
   }
 
+
+  getAPIhealthCardTypes(): Observable<any>{
+    let path = 'center/healthCardTypes';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhealthCardTypes(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIhealthCards(): Observable<any>{
-    let path = 'user/health_cards';
+    let path = 'user/healthcards';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -418,8 +430,19 @@ export class DooleService {
     );
   }
 
+  getAPIhealthCardId(id): Observable<any>{
+    let path = `user/healthcard/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIhealthCard(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   postAPIhealthCards(params: Object): Observable<any>{
-    let path = 'user/health_cards';
+    let path = 'user/healthcard';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -431,7 +454,7 @@ export class DooleService {
   }
 
   putAPIhealthCard(params: HealthCard): Observable<any>{
-    let path = `user/health_cards/${params.id}`;
+    let path = `user/healthcard/${params.id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.put(endpoint, params).pipe(
       map((res: any) => {
@@ -443,7 +466,7 @@ export class DooleService {
   }
 
   deleteAPIhealthCard(params: HealthCard): Observable<any>{
-    let path = `user/health_cards/${params.id}`;
+    let path = `user/healthcard/${params.id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
@@ -454,12 +477,12 @@ export class DooleService {
     );
   }
 
-  getAPIfamilyRelationship(): Observable<any>{
-    let path = 'user/relationship';
+  getAPISocialRelationType(): Observable<any>{
+    let path = 'center/socialRelationType';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIemergencyContact(${path}) res: `, res);
+        console.log(`[DooleService] getAPISocialRelationType(${path}) res: `, res);
         return res;
       })
     );
