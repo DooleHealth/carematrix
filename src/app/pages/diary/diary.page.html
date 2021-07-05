@@ -66,7 +66,7 @@
     <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
       <ion-item *ngIf="item.expanded" lines="none">
         <ion-col size="2">
-          <ion-img *ngIf="item.item.image" [src]='item.item.image.thumbnailTemporaryUrl' style="margin-right: 5px;">
+          <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
           </ion-img>
         </ion-col>
         <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
@@ -90,7 +90,7 @@
            <!--  <p class="txtTitleTrackingLittle">resultado</p> -->
           </ion-item>
           <ion-item lines="none">
-            <p class="txtTitleTrackingLittle" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.detail' | translate}}</p>
+            <p class="textBlue" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.detail' | translate}}</p>
           </ion-item>
         </app-expandable>
   
@@ -106,7 +106,7 @@
 <div *ngSwitchCase="'medication'">
   <ion-list *ngIf="listDrug.length > 0; else noData">
     <ion-list *ngFor="let list of this.listDrug">
-        <ion-label class="txtTitle" color="primary">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
+        <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
 
       <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" (click)="expandItem(item)">
           <ion-item *ngIf="item.expanded" lines="none">
@@ -169,7 +169,7 @@
             <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
             </ion-img>
           </div>
-          <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{item.item.name}}</ion-label>
+          <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{item.item.title}}</ion-label>
           <div>
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </div>
