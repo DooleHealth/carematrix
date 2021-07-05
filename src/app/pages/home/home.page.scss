@@ -2,6 +2,18 @@
     width: 30px;
 }
 
+.txtTitleHome{
+    font-size: 18px;
+    font-weight: 700;
+    margin: 4%;
+    text-align: left;
+  }
+  .txtSubTitleHome{
+    font-size: 14px;
+    font-weight: 500;
+    margin: 4%;
+    text-align: left;
+  }
 ion-img{
     height: 50px;
     width: 50px;
@@ -65,6 +77,10 @@ ion-img{
     --background:#82F038;
     --buffer-background:#faeacc;
     --progress-background:#F39C12;
-   
+    border-radius: 20px;
+    min-height: 15px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+
     
 }
