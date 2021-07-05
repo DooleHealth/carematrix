@@ -48,6 +48,10 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="Capture">
+    <param name="ios-package" value="CDVCapture"/>
+  </feature>
+
   <feature name="NetworkStatus">
     <param name="ios-package" value="CDVConnection"/>
   </feature>

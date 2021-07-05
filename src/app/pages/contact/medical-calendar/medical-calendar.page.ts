@@ -112,19 +112,22 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   getSlots(date:string=""){
     this.routeResolveData = null;
+    this.eventSource = [];
     const promiseObservable = this.dooleService.getAPIStaffSlots({id:this.staffId, date: date });
     if(promiseObservable){
       promiseObservable.subscribe(
         res =>{
           const dataObservable = res;
-          console.log('[MedicalCalendarPage] getSlots()', res);
+        
           if(dataObservable){
-          
+            console.log('[MedicalCalendarPage] getSlots()', res);
               if(dataObservable.slots.length > 0)
                 this.addScheduleToCalendar(dataObservable.slots)
                 
               this.routeResolveData = dataObservable;
             
+          }else{
+            console.log('[MedicalCalendarPage] getSlots() !', res);
           }
          
          },(err) => { 

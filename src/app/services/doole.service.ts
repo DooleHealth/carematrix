@@ -3,15 +3,16 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { ApiEndpointsService } from './api-endpoints.service';
 import { Events } from './events.service';
 import { HttpService } from './http.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AlertController, Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { Capacitor } from '@capacitor/core';
-import { map } from 'rxjs/operators';
+import { delay, filter, map } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
 import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
+import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
 
 
 @Injectable({
@@ -146,6 +147,7 @@ export class DooleService {
     
     console.log("downloadFile", url,destination,'path,destination', path,destination);
     return new Observable((observer) => {
+      console.log("before CheckFile", this.file);
       this.file.checkFile(path,destination).then(res =>{
         console.log("*res*", res);
         if(res){
@@ -157,7 +159,7 @@ export class DooleService {
           return observer.next(result);
         }
         },error =>{
-            //console.log("not exists");
+            console.log("not exists");
             fileTransfer.onProgress(event => {                                //descarreguem
               if (event.lengthComputable) {
                 //console.log(event.loaded / event.total);
@@ -925,6 +927,38 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
       })
     );
   }
+
+  /** get games with query by parameter date  */
+getAPIUserMessages(): Observable<ShellChatModel[]>{
+
+  let path = 'message/user';  
+  const endpoint = this.api.getEndpoint(path);
+  return this.http.get(endpoint).pipe(
+    map((res: any) => {
+      
+      console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+      return res.messages as ShellChatModel[];
+    })
+  );
+}
+// get the company details, a subset of the user data
+getUserSubsetData(): Observable<ShellChatModel> {
+  let path = 'message/user';  
+  const endpoint = this.api.getEndpoint(path);
+  
+  const dataObservable = this.http.get(endpoint);
+
+  return dataObservable.pipe(
+    map((jsonResponse) => {
+      const filteredData: ShellChatModel = {
+        ...jsonResponse.messages
+      };
+      return filteredData;
+    })
+  );
+}
+
+
 
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);

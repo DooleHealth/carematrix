@@ -15,7 +15,7 @@ import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
 export class BookingsPage implements OnInit {
 
   staff = history.state.staff;
-  staffId = 14482;
+  staffId = this.staff?.id
   selectedDate: string;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   files: Array<{ name: string, file: string, type: string }> = [];
@@ -99,12 +99,8 @@ export class BookingsPage implements OnInit {
         if(result.data['date']){
           this.selectedDate = result.data['date']; 
           this.form.get('date').setValue(this.transformDate(this.selectedDate))
-          console.log("here:  ",this.transformDate(this.selectedDate));
-          console.log("selectedDate", this.selectedDate);
+          console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }
-      
-      
-       
     });
 
     await modal.present();

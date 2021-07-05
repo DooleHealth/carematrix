@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      
+      <app-aspect-ratio [ratio]="{w:1, h:1}">
+        <img [src]="this.staff?.image">
+      </app-aspect-ratio>
+    </ion-thumbnail>
+
+    <ion-label>
+      <h3 class="user-name">
+        <app-text-shell
+          class="user-name"
+          [data]="this.staff?.name"
+          animation="bouncing"
+        ></app-text-shell>
+      </h3>
+      
+    </ion-label>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen #content>
+ 
+    <div>
+      <ion-list no-lines>
+        <ion-item *ngFor="let message of this.messagesList">
+          <chat-bubble [chatMessage]="message[0]"></chat-bubble>
+        </ion-item>
+        <ion-item *ngFor="let message of this.messageUploadList">
+          <chat-bubble [chatMessage]="message"></chat-bubble>
+        </ion-item>
+      </ion-list>
+    </div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-item no-lines class="toolbarText">
+      <ion-buttons>
+        <ion-button (click)="selectImageSource()">
+          <ion-icon icon-start name="add-outline"></ion-icon>
+          <input
+            type="file"
+            #fileInput
+            (change)="uploadFileFromBrowser($event)"
+            hidden="true"
+            accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword"
+          />
+        </ion-button>
+      </ion-buttons>
+      <div item-content>
+        <elastic-textarea #txtChat >
+          <ion-input lineHeight="20" maxExpand="5" style="width:100%"></ion-input>
+        </elastic-textarea>
+      </div>
+      <ion-buttons>
+        <ion-button (click)="this.addImage()">
+          <ion-icon name="camera-outline"></ion-icon>
+        </ion-button>
+        <ion-button icon-end (click)="this.addAudio()">
+          <ion-icon name="mic-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
