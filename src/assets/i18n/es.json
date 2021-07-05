@@ -376,7 +376,7 @@
           "field_measure": "Medida",
           "field_units": "Unidades"
       },
-      "no_data": "No hay datos para mostrar",
+      "no_data": "En este momento no hay datos para mostrar",
       "diary":{
         "header_diary": "Mi diario",
           "field_diet": "Dieta",

@@ -409,7 +409,7 @@
         "field_measure": "mesura",
         "field_units": "Unitats"
       },
-      "no_data": "No hi ha dades per mostrar",
+      "no_data": "En aquest moment no hi ha dades per a mostrar",
       "diary":{
         "header_diary": "El meu diari",
           "field_diet": "Dieta",
