@@ -8,8 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="this.listFaqs !== undefined">
-    <div [innerHtml]="this.listFaqs"></div>
+  <div *ngIf="(this.faq !== undefined && this.faq !== null ); else noData">
+    <div [innerHtml]="this.faq"></div>
   </div>
-
+  <ng-template #noData>
+    <ion-label *ngIf="!this.isLoading"> {{ "no_data"| translate}} </ion-label>
+  </ng-template>
 </ion-content>
