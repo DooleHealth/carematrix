@@ -52,7 +52,7 @@ export class AuthenticationService {
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     @Inject(PLATFORM_ID) private platformId: object) { 
-      
+
   }
 
   getAuthToken() {
