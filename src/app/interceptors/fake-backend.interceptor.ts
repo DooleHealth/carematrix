@@ -46,14 +46,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return smsConfirmation();
 /*                 case url.endsWith('user/familyUnit') && method === 'GET':
                     return familyUnit(); */
-                case url.endsWith('user/health_cards') && method === 'GET':
+/*                 case url.endsWith('user/health_cards') && method === 'GET':
                     return getAPIhealthCards();
                 case url.endsWith('user/health_cards') && method === 'POST':
                     return postAPIhealthCards();
                 case url.includes('user/health_cards') && method === 'PUT':
                     return putAPIhealthCard();
                 case url.includes('user/health_cards') && method === 'DELETE':
-                    return deleteAPIhealthCards();
+                    return deleteAPIhealthCards(); */
                 case url.endsWith('user/emergency_contact') && method === 'GET':
                     return emergencyContact();
                 case url.endsWith('user/emergency_contact') && method === 'POST':

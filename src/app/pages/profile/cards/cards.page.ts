@@ -11,7 +11,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./cards.page.scss'],
 })
 export class CardsPage implements OnInit {
-  listCard: HealthCard[] =[];
+  listCard=[];
   isLoading = false
   constructor(
     public router: Router,
@@ -26,6 +26,7 @@ export class CardsPage implements OnInit {
 
   ionViewDidEnter(){
     console.log('[CardsPage] ionViewDidEnter()');
+    this.getHealthCards()
   }
 
   getHealthCards(){
@@ -33,19 +34,14 @@ export class CardsPage implements OnInit {
     this.dooleService.getAPIhealthCards().subscribe(
       async (res: any) =>{
         console.log('[CardsPage] getHealthCards()', await res);
-        this.listCard = res as HealthCard[]
+        if(res.success)
+        this.listCard = res.healthcards
         this.isLoading = false
        },(err) => { 
           console.log('[CardsPage] getHealthCards() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
           throw err; 
       });
-  }
-
-  getDetailCard(card){
-    console.log('[CardsPage] getDetailCard()', card.name);
-    //this.router.navigateByUrl('cards/detailCard')
-    this.router.navigate(['cards/detailCard', {id: card.id}]);
   }
 
 }
