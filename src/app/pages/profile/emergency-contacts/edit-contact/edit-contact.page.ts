@@ -30,6 +30,7 @@ export class EditContactPage implements OnInit {
 
   ngOnInit() {
     this.formContact = this.formBuilder.group({
+      id: [''],
       full_name: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       socialRelationName: ['', [Validators.required]],
@@ -39,10 +40,16 @@ export class EditContactPage implements OnInit {
     this.getContact()
   }
 
+  ionViewDidEnter(){
+    console.log('[EditContactPage] ionViewDidEnter()');
+    this.socialRelationType = history.state.socialRelationType;
+    this.showDetailSocialRelationType()
+  }
+
   getContact(){
     let oldContact = history.state.contact;
     let newContact = history.state.newContact;
-    this.socialRelationType = history.state.socialRelationType;
+    
     if(newContact){
       this.contact = newContact
     }else if(oldContact){
@@ -55,6 +62,8 @@ export class EditContactPage implements OnInit {
   }
 
   showDetailContact(){
+    if(this.contact?.id)
+    this.formContact.get('id').setValue(this.contact.id)
     if(this.contact?.phone)
     this.formContact.get('phone').setValue(this.contact.phone)
     if(this.contact?.full_name)
@@ -152,7 +161,7 @@ export class EditContactPage implements OnInit {
           text: this.translate.instant("alert.button_ok"),
           handler: () => {
             console.log('[EditContactPage] AlertConfirm Okay');
-            this.serviceDeleteContact();
+            this.deleteContact();
           }
         }
       ]
@@ -161,17 +170,14 @@ export class EditContactPage implements OnInit {
     await alert.present();
   }
 
-  serviceDeleteContact(){
+  deleteContact(){
     console.log('[EditContactPage] serviceDeleteContact()', this.contact.id);
     this.dooleService.deleteAPIemergencyContact( this.contact.id).subscribe(
       async (res: any) =>{
         console.log('[EditContactPage] serviceDeleteContact()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          let messagge = this.translate.instant('edit_contact.alert_message_delete_contact')
-          let header = this.translate.instant('alert.header_info')
-           this.dooleService.showAlertAndReturn(header, messagge, false, '/cards' )
-          
+          this.alertMessageDeleteContact()
         }else{
           console.log('[EditContactPage] serviceDeleteContact() Unsuccessful response', await res);
         }
@@ -180,6 +186,12 @@ export class EditContactPage implements OnInit {
            this.dooleService.presentAlert(err.messagge)
           throw err; 
       });
+  }
+
+  alertMessageDeleteContact(){
+    let messagge = this.translate.instant('edit_contact.alert_message_delete_contact')
+    let header = this.translate.instant('alert.header_info')
+     this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts' )
   }
 
 

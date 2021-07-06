@@ -87,7 +87,8 @@ export class LandingPage implements OnInit {
       this.authService.login(this.loginForm.value).subscribe(async (res) => {
         console.log('[LandingPage] doDooleAppLogin()', res);
         if(res.success){
-        this.checkConditionLegal();
+        //this.checkConditionLegal();
+        this.redirectPage(true)
         }
         this.dismissLoading();
       }, async (error) => { 

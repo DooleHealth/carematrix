@@ -8,15 +8,13 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./list-relationship.page.scss'],
 })
 export class ListRelationshipPage implements OnInit {
-  listRelationship = ['Madre', 'Padre', 'Padres', 'Hermano/a', 'Hijo/a', 'Amigo/a', 'Cónyugue',
-  'Pareja', 'Compañero de piso', 'Cuidador', 'Tutor', 'Médico', 'Otros']
+  listRelationship = []
   contact : any;
   emergencyContact : EmergencyContact = {}
   listRelationshipBackup = []
   constructor(private dooleService: DooleService,) { }
 
   ngOnInit() {
-    //this.listRelationshipBackup = this.listRelationship
     this.getListSocialRelationType()
     this.getEmergencyContact()
   }
