@@ -36,3 +36,6 @@ ios/capacitor-cordova-ios-plugins
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+*.xml
+android/.idea/misc.xml
+*.json

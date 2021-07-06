@@ -29,13 +29,13 @@ export class LandingPage implements OnInit {
     public loadingController: LoadingController,
     public location: Location,
     public alertController: AlertController,
- 
+
     public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController
   ) {
     this.loginForm = new FormGroup({
-      username: new FormControl('', 
+      username: new FormControl('',
       Validators.compose([
         Validators.required
       ])),
@@ -51,7 +51,7 @@ export class LandingPage implements OnInit {
 
 
   async dismissLoading() {
-   
+
     if (this.redirectLoader) {
       console.log("dismissLoading");
       this.redirectLoader.dismiss();
@@ -72,7 +72,7 @@ export class LandingPage implements OnInit {
       .then((result) => {
 
         if(result.data['error']){
-         
+            alert(result.data['error'])
         }
     });
 
@@ -82,12 +82,12 @@ export class LandingPage implements OnInit {
 
 
   async openLoginModal() {
-   
+
   }
 
   private async saveInLocalStorage(data: any){
     /**
-     * On iOS this plugin  Storage will use UserDefaults and on Android SharedPreferences. 
+     * On iOS this plugin  Storage will use UserDefaults and on Android SharedPreferences.
      * Stored data is cleared if the app is uninstalled.
      */
     await Storage.set({
@@ -107,9 +107,9 @@ export class LandingPage implements OnInit {
           let message = this.translate.instant('landing.message_email_sent')
           this.dooleService.presentAlert(message)
         }
-       },(err) => { 
-          console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -146,5 +146,5 @@ export class LandingPage implements OnInit {
   }
 
 
- 
+
 }

@@ -30,39 +30,59 @@ export class EditContactPage implements OnInit {
 
   ngOnInit() {
     this.formContact = this.formBuilder.group({
+      id: [''],
       full_name: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       socialRelationName: ['', [Validators.required]],
-      created_at: ['', [Validators.required]],
+      social_relation_type_id: [''],
+      created_at: [''],
     })
     this.getContact()
+  }
+
+  ionViewDidEnter(){
+    console.log('[EditContactPage] ionViewDidEnter()');
+    this.socialRelationType = history.state.socialRelationType;
+    this.showDetailSocialRelationType()
   }
 
   getContact(){
     let oldContact = history.state.contact;
     let newContact = history.state.newContact;
+    
     if(newContact){
       this.contact = newContact
     }else if(oldContact){
       this.contact = oldContact
       this.isNewContact = false
     }
-    this.showContact()   
+    this.showDetailContact()   
     console.log('[EditContactPage] getContact()' , JSON.stringify(this.contact) ); 
-    this.userImg()
 
   }
 
-  userImg(){
-    if(this.contact !== undefined && this.contact.thumbnail !== undefined && this.contact.thumbnail !== null 
-      && this.contact.thumbnail !== '')
-      this.userImage = this.contact.thumbnail;
+  showDetailContact(){
+    if(this.contact?.id)
+    this.formContact.get('id').setValue(this.contact.id)
+    if(this.contact?.phone)
+    this.formContact.get('phone').setValue(this.contact.phone)
+    if(this.contact?.full_name)
+    this.formContact.get('full_name').setValue(this.contact.full_name)
+    this.showDetailSocialRelationType()
   }
 
-  showContact(){
-    this.formContact.get('phone').setValue(this.contact.telephone)
-    this.formContact.get('full_name').setValue(this.contact.name)
-    this.formContact.get('family_relationship').setValue(this.contact.family_relationship)
+  showDetailSocialRelationType(){
+    if(this.socialRelationType !== undefined){
+      if(this.socialRelationType.name)
+      this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
+      if(this.socialRelationType.id)
+      this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
+    }else if(this.contact !== undefined){
+      if(this.contact?.socialRelationName)
+      this.formContact.get('socialRelationName').setValue(this.contact.socialRelationName)
+      if(this.contact?.social_relation_type_id)
+      this.formContact.get('social_relation_type_id').setValue(this.contact.social_relation_type_id)
+    }
   }
 
   sumittedContact(){
@@ -75,10 +95,10 @@ export class EditContactPage implements OnInit {
     }
   }
 
-  delete(contact){
-    console.log('[EditContactPage] delete()' ,  contact); 
+  delete(){
+    console.log('[EditContactPage] delete()'); 
     if(this.contact === undefined || this.contact === null ) return
-    this.presentAlertConfirm()
+    this.presentAlertDeleteConfirm()
   }
 
   saveContact(){
@@ -123,10 +143,11 @@ export class EditContactPage implements OnInit {
         });
   }
 
-  async presentAlertConfirm() {
+  async presentAlertDeleteConfirm() {
+    console.log('[EditContactPage] presentAlertConfirm()');
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      header: this.translate.instant(this.contact.name),
+      header: this.translate.instant(this.contact.full_name),
       message: this.translate.instant("edit_contact.alert_message_confirmation_delete"),
       buttons: [
         {
@@ -140,7 +161,7 @@ export class EditContactPage implements OnInit {
           text: this.translate.instant("alert.button_ok"),
           handler: () => {
             console.log('[EditContactPage] AlertConfirm Okay');
-            this.serviceDeleteContact();
+            this.deleteContact();
           }
         }
       ]
@@ -149,16 +170,14 @@ export class EditContactPage implements OnInit {
     await alert.present();
   }
 
-  serviceDeleteContact(){
+  deleteContact(){
+    console.log('[EditContactPage] serviceDeleteContact()', this.contact.id);
     this.dooleService.deleteAPIemergencyContact( this.contact.id).subscribe(
       async (res: any) =>{
         console.log('[EditContactPage] serviceDeleteContact()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          let messagge = this.translate.instant('edit_contact.alert_message_delete_contact')
-          let header = this.translate.instant('alert.header_info')
-           this.dooleService.showAlertAndReturn(header, messagge, false, '/cards' )
-          
+          this.alertMessageDeleteContact()
         }else{
           console.log('[EditContactPage] serviceDeleteContact() Unsuccessful response', await res);
         }
@@ -167,6 +186,12 @@ export class EditContactPage implements OnInit {
            this.dooleService.presentAlert(err.messagge)
           throw err; 
       });
+  }
+
+  alertMessageDeleteContact(){
+    let messagge = this.translate.instant('edit_contact.alert_message_delete_contact')
+    let header = this.translate.instant('alert.header_info')
+     this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts' )
   }
 
 

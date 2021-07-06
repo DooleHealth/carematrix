@@ -8,16 +8,14 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./list-relationship.page.scss'],
 })
 export class ListRelationshipPage implements OnInit {
-  listRelationship = ['Madre', 'Padre', 'Padres', 'Hermano/a', 'Hijo/a', 'Amigo/a', 'Cónyugue',
-  'Pareja', 'Compañero de piso', 'Cuidador', 'Tutor', 'Médico', 'Otros']
+  listRelationship = []
   contact : any;
-  emergencyContact : EmergencyContact
+  emergencyContact : EmergencyContact = {}
   listRelationshipBackup = []
   constructor(private dooleService: DooleService,) { }
 
   ngOnInit() {
-    this.listRelationshipBackup = this.listRelationship
-    //this.getListSocialRelationType()
+    this.getListSocialRelationType()
     this.getEmergencyContact()
   }
 
@@ -26,13 +24,12 @@ export class ListRelationshipPage implements OnInit {
     console.log('[ListRelationshipPage] getEmergencyContact()' ,  this.contact); 
     if(this.contact){
       let newContact = {
-        full_name: this.contact.displayName,
-        phone: this.contact.phoneNumbers[0].number,
-        thumbnail: (this.contact.photoThumbnail !== undefined)? this.contact.photoThumbnail:null,
+        full_name: this.contact?.displayName,
+        phone: this.contact?.phoneNumbers[0]?.number,
+        files: (this.contact.photoThumbnail !== undefined)? this.contact.photoThumbnail:null,
         social_relation_type: {}
       }
       this.emergencyContact = newContact
-      this.emergencyContact.thumbnail
     }
 
   }
@@ -69,7 +66,7 @@ export class ListRelationshipPage implements OnInit {
 
   getDataContact(relationship){
     console.log(`[ListRelationshipPage] getDataContact(${relationship})`);
-    this.emergencyContact.socialRelationType = relationship
+    //this.emergencyContact.socialRelationType = relationship
   }
 
 }

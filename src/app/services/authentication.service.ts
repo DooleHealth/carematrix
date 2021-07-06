@@ -45,13 +45,13 @@ export class AuthenticationService {
   public devicePlatform: string;
   public dietsAndAdvices: [];
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
-  constructor(private http: HttpService,  
-    private api: ApiEndpointsService, 
-    private constants: Constants,  
+  constructor(private http: HttpService,
+    private api: ApiEndpointsService,
+    private constants: Constants,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
     public router: Router,
-    @Inject(PLATFORM_ID) private platformId: object) { 
+    @Inject(PLATFORM_ID) private platformId: object) {
       this.setUser("14303");
   }
 
@@ -72,11 +72,11 @@ export class AuthenticationService {
       this.isAuthenticated.next(false);
     }
   }
-  
+
   setAuthToken(token){
     localStorage.setItem(TOKEN_KEY, token);
   }
-  
+
   login(credentials: {username, password}): Observable<any> {
 
     const endpoint = this.api.getEndpoint('patient/login');
@@ -84,11 +84,12 @@ export class AuthenticationService {
     console.log('credentials: ', credentials);
     return this.http.post(endpoint, credentials).pipe(
       map((res: any) => {
-       
+
         console.log("[AuthService] login(): ", res);
 
         if(!res.success){
-          this.throwError(res);
+          return res
+          //this.throwError(res);
         }
         // save user's token
         if(res.token)
@@ -99,7 +100,7 @@ export class AuthenticationService {
             if(!this.platform.is('mobileweb') && !this.platform.is('desktop')){
               this.registerDevice();
             }
-            
+
           }, (error) => {
             console.log(error);
           });
@@ -137,7 +138,7 @@ export class AuthenticationService {
 
   getShowIntroLocalstorage() : Promise<any>{
     return Storage.get({key: 'showIntro'}).then((val) => {
-      return Boolean(val.value) 
+      return Boolean(val.value)
     });
   }
 
@@ -152,9 +153,9 @@ export class AuthenticationService {
     console.log('logout');
     this.isAuthenticated.next(false);
     Storage.remove({key: 'user'}).then((val) => { });
-    return Storage.remove({key: TOKEN_KEY});    
+    return Storage.remove({key: TOKEN_KEY});
   }
-  
+
   get(endpt): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(
@@ -167,7 +168,7 @@ export class AuthenticationService {
 
   post(endpt, items): Observable<any>{
     const endpoint = this.api.getDooleEndpoint(endpt);
-   
+
     return this.http.post(endpoint, items).pipe(
         map((res: any) => {
           return res;
@@ -176,9 +177,10 @@ export class AuthenticationService {
   }
 
   throwError(error: any) {
+
     if(error instanceof HttpErrorResponse)
       throw new HttpErrorResponse(error);
-    else 
+    else
       throw new Error(error);
   }
 
@@ -206,7 +208,7 @@ export class AuthenticationService {
       let showIntro = Boolean(data.value)
       console.log(`[AuthService] showIntro()`, showIntro);
       return showIntro;
-    
+
     })
 
   }
