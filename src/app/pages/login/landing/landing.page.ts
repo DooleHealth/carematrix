@@ -72,7 +72,7 @@ export class LandingPage implements OnInit {
       .then((result) => {
 
         if(result.data['error']){
-
+            alert(result.data['error'])
         }
     });
 

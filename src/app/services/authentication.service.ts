@@ -88,7 +88,8 @@ export class AuthenticationService {
         console.log("[AuthService] login(): ", res);
 
         if(!res.success){
-          this.throwError(res);
+          return res
+          //this.throwError(res);
         }
         // save user's token
         if(res.token)
@@ -176,6 +177,7 @@ export class AuthenticationService {
   }
 
   throwError(error: any) {
+
     if(error instanceof HttpErrorResponse)
       throw new HttpErrorResponse(error);
     else
