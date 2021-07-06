@@ -71,10 +71,10 @@
     </ion-row>
     <!-- Advices --> 
     <ion-row>
-      <ion-item lines="none" routerLink="/advices">
-        <ion-text class="txtTitle"> {{ 'home.advices_title' | translate}}</ion-text>
-        <ion-button slot="end" fill="clear" size="small" class="bottonTitle" (click)="actionSeeAllAdvices()">{{ 'home.see_all_button' | translate}}</ion-button>
-      </ion-item>
+     
+        <ion-text class="txtTitle" style="white-space: nowrap;"> {{ 'home.advices_title' | translate}}</ion-text>
+        <ion-item lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-item>
+    
     </ion-row>
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
