@@ -29,10 +29,10 @@
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
-                    <ion-row>
-                      <ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
-                    </ion-row>
+                    <ion-row ><ion-slide>&nbsp;</ion-slide>
+                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
                       <p class="txtTitleGoalsLittle3">{{slide.description}}</p>
+                    </ion-row>
                   </ion-grid>
                  </ion-slide>
               </ion-slides>
@@ -178,7 +178,7 @@
             <ion-card-content>
                 <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
                   <ion-slide *ngFor="let slide of this.activity">
-                    <p>{{slide.name}}</p>             
+                    <h3>{{slide.name}}</h3>             
                     </ion-slide>
                 </ion-slides>
               </ion-card-content>

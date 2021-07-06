@@ -61,7 +61,8 @@ td {
 .blanco{
   background-color: white!important;
   min-width: 400px;
-}
+padding-left: 0px!important;
+  }
 
   .dayHeaders{
     background-color: red !important;
@@ -97,6 +98,7 @@ td {
 .rowPadding2{
   background-color: rgb(255, 255, 255)!important;
   padding-bottom: 50%;
+ 
 }
 
 .verticalLine {
@@ -129,4 +131,13 @@ ion-img{
 ion-segment {
   margin: 10px 0;
   background: #ffffff;
+}
+/*remove item native padding*/
+ion-list {
+ 
+ion-item {
+--padding-start: 0px;
+--inner-padding-end: 0px;
+}
+ 
 }
