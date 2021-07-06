@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -45,7 +45,8 @@ export class HomePage implements OnInit {
    infoDrugs: UserInformation
   constructor(
     public router:Router,
-    private dooleService: DooleService
+    private dooleService: DooleService,
+    private modalCtrl: ModalController
   ) { }
 
   async ngOnInit() { 
@@ -74,6 +75,7 @@ export class HomePage implements OnInit {
         this.activity.push({name:'456 Cal'})
         this.slideDietChange()
         this.slideDrugChange()
+
        },(err) => { 
           console.log('[HomePage] getUserInformation() ERROR(' + err.code + '): ' + err.message); 
           throw err; 

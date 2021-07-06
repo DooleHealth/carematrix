@@ -15,11 +15,11 @@
      <!-- Move back one screen of the slides -->
     <ion-col size="1.5">
       <ion-button fill="clear" (click)="back()">
-        <ion-icon name="chevron-back-outline" slot="icon-only" color="primary" ></ion-icon>
+        <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
       </ion-button>
     </ion-col>
  
-    <ion-col size="5" class="textBlue">
+    <ion-col size="5" class="textBlueCentered">
       <h2>{{ viewTitle }}</h2>
     </ion-col>
     <ion-col size="1.5">
@@ -69,10 +69,11 @@
     </ng-template>
 
     <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{selectedDate.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-text></ion-row>
-      <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
+      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{selectedDate.date | date: 'EEEE, d MMMM' | uppercase}}</ion-text></ion-row>
+      <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false" >
         <ion-item class="rowPadding2">
-          <ion-list>
+          <ion-spinner></ion-spinner>
+          <ion-list >
             <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="reminder" [state]="{id: event.id}">
 
               <div [ngStyle]="{'background-color': (event?.color)? event?.color: 'red'  }" class="verticalLine"></div>
@@ -93,8 +94,7 @@
                     {{event?.endTime|date: 'HH:mm'}}h </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date: ['EEEE, d
-                    MMMM']}}</ion-col>
+                  <ion-col *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date: 'EEEE, d MMMM'}}</ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>

@@ -45,6 +45,7 @@ import localeEs from '@angular/common/locales/es';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@ionic-native/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
+import { HttpRequestInterceptor } from "./interceptors/loading.interceptor";
 
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);

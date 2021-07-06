@@ -166,7 +166,7 @@
         "subtitle_diets": "Dietes",
         "subtitle_medication": "Medicació",
         "subtitle_goals": "Objectius i Reptes",
-        "subtitle_advices": "Concejos i Novetats",
+        "subtitle_advices": "Consells i Novetats",
         "subtitle_offers": "Promocions",
         "subtitle_form": "Formularis",
         "subtitle_messages": "Missatges",
@@ -358,7 +358,8 @@
         "field_alias": "Àlias",
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosi",
-        "placeholder_alias":"Nom alternatiu"
+        "placeholder_alias":"Nom alternatiu",
+        "placeholder_search":"Cerca per nom o codi"
       },
       "tracking":{
         "header": "Seguiment",
@@ -409,7 +410,7 @@
         "field_measure": "mesura",
         "field_units": "Unitats"
       },
-      "no_data": "No hi ha dades per mostrar",
+      "no_data": "En aquest moment no hi ha dades per a mostrar",
       "diary":{
         "header_diary": "El meu diari",
           "field_diet": "Dieta",
@@ -419,7 +420,7 @@
           "description": "Descriptió",
           "dose": "Dosi",
           "morning": "demà",
-          "noon": "mig dia",
+          "noon": "migdia",
           "aftenoon": "tard",
           "night": "nit",
           "midnight": "mitjanit",

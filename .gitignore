@@ -28,7 +28,11 @@ plugins/
 plugins/android.json
 plugins/ios.json
 $RECYCLE.BIN/
-
+ios/App/public/
+android/app/build/
+android/.idea
+android/.gradle
+ios/capacitor-cordova-ios-plugins
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate

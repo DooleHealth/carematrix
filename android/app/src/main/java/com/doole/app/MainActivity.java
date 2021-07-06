@@ -1,10 +1,10 @@
 package com.doole.app;
-import ch.byrds.capacitor.contacts.Contacts;
+
 import android.os.Bundle;
 
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
-
+import ch.byrds.capacitor.contacts.Contacts;
 import java.util.ArrayList;
 
 public class MainActivity extends BridgeActivity {

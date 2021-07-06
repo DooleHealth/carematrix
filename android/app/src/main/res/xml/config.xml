@@ -51,6 +51,10 @@
     <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
   </feature>
 
+  <feature name="Capture">
+    <param name="android-package" value="org.apache.cordova.mediacapture.Capture"/>
+  </feature>
+
   <feature name="NetworkStatus">
     <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager"/>
   </feature>

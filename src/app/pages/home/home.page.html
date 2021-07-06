@@ -1,8 +1,8 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="10" style="text-align: left;">
-        <ion-text class="txtTitleBig" *ngIf="this.userDoole as User">Hola, {{this.userDoole.first_name}} {{ this.userDoole.last_name}}</ion-text>
+      <ion-col size="10" class="alingLeftTop">
+        <ion-text class="txtTitleBig" *ngIf="this.userDoole as User">Hola, {{this.userDoole.first_name}}</ion-text>
       </ion-col>
       <ion-col size="2">
      
@@ -19,7 +19,7 @@
            <!-- Goals  --> 
     <ion-row >
         <ion-card class="vertical-card" routerLink="/profile/goals">  
-            <ion-item lines="none" class="white">
+            <ion-item lines="none" class="noMargin">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text >
               <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
@@ -29,10 +29,10 @@
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
-                    <ion-row>
-                      <ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
+                    <ion-row ><ion-slide>&nbsp;</ion-slide>
+                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
+                      <p class="txtTitleGoalsLittle3">{{slide.description}}</p>
                     </ion-row>
-                      <p class="txtTitleGoalsLittle">{{slide.description}}</p>
                   </ion-grid>
                  </ion-slide>
               </ion-slides>
@@ -53,19 +53,17 @@
             </ion-item>
     
             <ion-card-content>
-              <ion-grid>
                 <ion-row>
-                  <ion-col size="2">
-                    <ion-img  src="assets/icons/agenda2.svg"></ion-img>
+                  <ion-col size="3" >
+                    <ion-img src="assets/icons/agenda2.svg"></ion-img>
                   </ion-col>
-                  <ion-col size="10" class="alingLeft">
+                  <ion-col size="9" class="alingLeft">
                     <p>{{slide.doctor}}</p>
                     <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm'  }}</ion-text>
                     <ion-button size="small" fill="clear" (click)="actionDetailAppointment(slide)">
                       {{ 'home.detail_button' | translate}}</ion-button>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
             </ion-card-content>
           </ion-card>
         </ion-slide>    
@@ -84,8 +82,8 @@
           <ion-card class="cardProfilePaddingBottom">
             <ion-icon name="close"  class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon> 
             <img class="sliderImage"  [src]="slide.image"><br><br>
-            <ion-card-title class="txtTitle">{{slide.name}}</ion-card-title>
-            <ion-card-subtitle>{{slide.description}}</ion-card-subtitle>
+            <ion-card-title class="txtTitleHome">{{slide.name}}</ion-card-title>
+            <ion-card-subtitle class="txtSubTitleHome">{{slide.description}}</ion-card-subtitle>
             <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button>
           </ion-card>
         </ion-slide> 
@@ -98,7 +96,7 @@
     <!-- Diets -->
     <ion-row>
       <ion-card class="vertical-card" routerLink="/diary">       
-          <ion-item lines="none" class="white">
+          <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start" *ngIf="infoDiet as UserInformation">{{infoDiet?.title}}</ion-text>
             <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
@@ -118,7 +116,7 @@
     <!-- Drugs -->
     <ion-row>
       <ion-card class="vertical-card" routerLink="/diary">       
-          <ion-item lines="none" class="white">
+          <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
@@ -145,7 +143,7 @@
     <!-- Games -->
     <ion-row>
       <ion-card class="vertical-card" routerLink="/diary">       
-          <ion-item lines="none" class="white">
+          <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
             <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
@@ -171,7 +169,7 @@
         <!-- Physical Activity -->
         <ion-row>
           <ion-card class="vertical-card" routerLink="/diary" >       
-              <ion-item lines="none" class="white">
+              <ion-item lines="none" class="noMargin">
                 <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
                 <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
                 <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
@@ -180,7 +178,7 @@
             <ion-card-content>
                 <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
                   <ion-slide *ngFor="let slide of this.activity">
-                    <p>{{slide.name}}</p>             
+                    <h3>{{slide.name}}</h3>             
                     </ion-slide>
                 </ion-slides>
               </ion-card-content>
@@ -189,7 +187,6 @@
     
   </ion-grid>
 </ion-content>
-
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

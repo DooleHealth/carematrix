@@ -6,10 +6,20 @@
 
  /* Global styles of the components*/
 
-ion-icon {
+/* ion-icon {
     color:#7f8c8d;
+ }
+*/
+ion-searchbar{
+  --ion-background-color: white !important;
 }
-
+ion-card{
+  border-radius: 10px;
+  overflow: hidden;
+}
+ion-segment-button {
+  font-size: smaller;
+  }
 .whiteBackground {
   --ion-background-color: white !important;
 }
@@ -71,6 +81,7 @@ text-align: center;
   --ion-background-color: white!important;
   font-size: 14px;
   font-weight: 400;
+ 
 }
 .cardProfilePadding{
   --ion-background-color: white!important;
@@ -117,7 +128,8 @@ text-align: center;
 
 .txtTitleGoals2{
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
+ 
 }
 .txtTitleGoals3{
   font-size: 14px;
@@ -134,6 +146,12 @@ text-align: center;
   font-weight: 400;
   padding-top: 5%;
   text-align: justify;
+}
+.txtTitleGoalsLittle3{
+  font-size: 12px;
+  font-weight: 400;
+  text-align: justify;
+  margin: 3%;
   
 }
 .txtTitleGoalsGreenBig{
@@ -187,10 +205,24 @@ padding-left: 5%;
   font-weight: 400;
   text-align: left;
 }
+.textBlueCentered {
+  color: #3498DB;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+}
 .alingLeft{
 text-align: left !important;
-padding-left: 8%;
 }
+.alingRight{
+  text-align: right  !important;
+padding-right: 10%;
+  }
+.alingLeftTop{
+  text-align: left !important;
+  padding-left: 3%;
+  margin-top: 3%;
+  }
 .txtSubtitle{
   font-size: 14px;
   font-weight: 600; 
@@ -217,6 +249,10 @@ background-size:cover; margin: -10px;
 background-position: center;
 }
 
+.noMargin{
+margin-bottom: -5%;
+--background: #ffffff!important;
+}
 
 .white{
   --background: #ffffff!important;
@@ -242,6 +278,15 @@ background-position: center;
   display: block;
   margin-left: 0%;
  
+}
+
+.iconNoData {
+  zoom: 4;
+  display: block;
+  margin: auto;
+  padding-top: 30%;
+  color: #7F8C8D;
+  ;
 }
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 

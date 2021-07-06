@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LoginPage } from '../login.page';
 const { Storage } = Plugins;
 
 
@@ -27,14 +28,14 @@ export class LandingPage implements OnInit {
     private translate: TranslateService,
     public loadingController: LoadingController,
     public location: Location,
-    private authService: AuthenticationService,
     public alertController: AlertController,
-    private ngZone: NgZone,
+
     public languageService: LanguageService,
-    private dooleService: DooleService
+    private dooleService: DooleService,
+    private modalCtrl: ModalController
   ) {
     this.loginForm = new FormGroup({
-      username: new FormControl('', 
+      username: new FormControl('',
       Validators.compose([
         Validators.required
       ])),
@@ -50,7 +51,7 @@ export class LandingPage implements OnInit {
 
 
   async dismissLoading() {
-   
+
     if (this.redirectLoader) {
       console.log("dismissLoading");
       this.redirectLoader.dismiss();
@@ -61,81 +62,32 @@ export class LandingPage implements OnInit {
     this.submitError = null;
   }
 
-    // Once the auth provider finished the authentication flow, and the auth redirect completes,
-  // hide the loader and redirect the user to the profile page
-  redirectLoggedUserToHomePage() {
-    console.log('[LandingPage] redirectLoggedUserToHomePage()');
-    //this.dismissLoading();
-    // As we are calling the Angular router navigation inside a subscribe method, the navigation will be triggered outside Angular zone.
-    // That's why we need to wrap the router navigation call inside an ngZone wrapper
-    this.ngZone.run(() => {      
-      this.router.navigate(['home']);
+  async doDooleAppLogin() : Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: LoginPage,
+      componentProps: { credentials: this.loginForm.value },
     });
-  }
 
-  doDooleAppLogin() : void {
-    let text = this.translate.instant('landing.login');
-    this.loadingController.create({
-      spinner: 'lines',
-      message: text,
-      cssClass: 'custom-loading',
-      backdropDismiss:false
-    }).then((loader) => {
-      const currentUrl = this.location.path();
-      this.redirectLoader = loader;
-      this.redirectLoader.present();
-      this.authService.login(this.loginForm.value).subscribe(async (res) => {
-        console.log('[LandingPage] doDooleAppLogin()', res);
-        if(res.success){
-        //this.checkConditionLegal();
-        this.redirectPage(true)
+    modal.onDidDismiss()
+      .then((result) => {
+
+        if(result.data['error']){
+
         }
-        this.dismissLoading();
-      }, async (error) => { 
-       console.log('doDooleAppLogin() ERROR', await error);
-       this.dismissLoading();
-       throw error;
-     });
     });
-   
+
+    await modal.present();
   }
 
-  checkConditionLegal(){
-    this.dooleService.getAPILegalInformation().subscribe(
-      async (res: any) =>{
-        console.log('[LandingPage] checkConditionLegal()', await res);
-         //if(res.accepted_last)
-         this.redirectPage(res.accepted_last)
 
-       },(err) => { 
-          console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      });
-     
-  }
 
-  redirectPage(condicion){
-    if(!condicion)
-      this.router.navigate(['/legal']);
-    else{
-      this.showIntro()
-    }      
-  }
+  async openLoginModal() {
 
-  showIntro(){
-    this.authService.getShowIntroLocalstorage().then((showIntro) =>{
-      console.log(`[LegalPage] getStorage() localStorage`,showIntro);
-      if(showIntro){
-        this.redirectLoggedUserToHomePage();
-      }else{
-        this.router.navigate(['/intro']);
-      }
-    })
   }
 
   private async saveInLocalStorage(data: any){
     /**
-     * On iOS this plugin  Storage will use UserDefaults and on Android SharedPreferences. 
+     * On iOS this plugin  Storage will use UserDefaults and on Android SharedPreferences.
      * Stored data is cleared if the app is uninstalled.
      */
     await Storage.set({
@@ -155,9 +107,9 @@ export class LandingPage implements OnInit {
           let message = this.translate.instant('landing.message_email_sent')
           this.dooleService.presentAlert(message)
         }
-       },(err) => { 
-          console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -194,5 +146,5 @@ export class LandingPage implements OnInit {
   }
 
 
- 
+
 }
