@@ -95,7 +95,9 @@ export class HttpService {
 
   setHttpOptions(options){
     const httpOptions = {
-      headers: new HttpHeaders()
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
     };
 
     return httpOptions;

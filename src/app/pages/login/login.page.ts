@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials).subscribe(async (res) => {
       console.log('[LandingPage] doDooleAppLogin()', res);
       if(res.success){
-      this.checkConditionLegal();
+        this.checkConditionLegal();
       }
     }, async (error) => { 
      console.log('doDooleAppLogin() ERROR', await error?.message);
@@ -34,8 +34,8 @@ export class LoginPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LandingPage] checkConditionLegal()', await res);
-         //if(res.accepted_last)
-         this.redirectPage(res.accepted_last)
+         if(res.accepted_last)
+          this.redirectPage(res.accepted_last)
 
 
        },(err) => { 
