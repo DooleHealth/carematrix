@@ -49,24 +49,26 @@ export class EditContactPage implements OnInit {
       this.contact = oldContact
       this.isNewContact = false
     }
-    this.showContact()   
+    this.showDetailContact()   
     console.log('[EditContactPage] getContact()' , JSON.stringify(this.contact) ); 
 
   }
 
-  showContact(){
+  showDetailContact(){
     if(this.contact?.phone)
     this.formContact.get('phone').setValue(this.contact.phone)
     if(this.contact?.full_name)
     this.formContact.get('full_name').setValue(this.contact.full_name)
-/*     if(this.socialRelationType && this.socialRelationType.name !== undefined){
+    this.showDetailSocialRelationType()
+  }
+
+  showDetailSocialRelationType(){
+    if(this.socialRelationType !== undefined){
+      if(this.socialRelationType.name)
       this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
+      if(this.socialRelationType.id)
       this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
-    } */
-    if(this.isNewContact && this.socialRelationType !== undefined){
-      this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
-      this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
-    }else{
+    }else if(this.contact !== undefined){
       if(this.contact?.socialRelationName)
       this.formContact.get('socialRelationName').setValue(this.contact.socialRelationName)
       if(this.contact?.social_relation_type_id)
