@@ -22,7 +22,7 @@
             <ion-item lines="none" class="noMargin">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text >
-              <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+              <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
             </ion-item>
 
           <ion-card-content>
@@ -100,7 +100,7 @@
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start" *ngIf="infoDiet as UserInformation">{{infoDiet?.title}}</ion-text>
             <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
-            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -120,7 +120,7 @@
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
-            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -146,7 +146,7 @@
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
-            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -172,13 +172,13 @@
               <ion-item lines="none" class="noMargin">
                 <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
                 <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
-                <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+                <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
               </ion-item>
     
             <ion-card-content>
                 <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
                   <ion-slide *ngFor="let slide of this.activity">
-                    <h3>{{slide.name}}</h3>             
+                    <h1>{{slide.name}}</h1>             
                     </ion-slide>
                 </ion-slides>
               </ion-card-content>
