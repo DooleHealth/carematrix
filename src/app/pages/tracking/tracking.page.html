@@ -37,7 +37,7 @@
     <div *ngSwitchCase="'documents'">
       <div *ngIf="this.listDiagnostic.length > 0; else noData">
       <ion-list *ngFor="let list of this.listDiagnostic">
-        <ion-label color="primary">{{list.date | date: ['EEEE, d MMMM YYYY'] | uppercase}}</ion-label>
+        <ion-label class="txtTitle">{{list.date | date: ['EEEE, d MMMM YYYY']}}</ion-label>
   
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
           <ion-card class="cardProfile">
@@ -120,7 +120,7 @@
 <div  *ngSwitchCase="'graphics'">
   <div *ngIf="groupedElements.length > 0; else noData">
     <ion-list *ngFor="let group of this.groupedElements">
-      <ion-label color="primary">{{group.group  }}</ion-label>
+      <ion-label class="txtTitle">{{group.group  }}</ion-label>
       <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
         <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
           <div class="verticalLineRed"></div>

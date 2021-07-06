@@ -3,9 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button text="{{ 'agenda.header_agenda' | translate }}"></ion-back-button>
     </ion-buttons>
-    <ion-title >{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' | translate)}}</ion-title>  <!-- event.type -->
-    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end"  routerLink="/reminder-add" [state]="{event: reminder}">
-       {{ 'button.edit' | translate }}
+    <ion-title>{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
+      translate)}}</ion-title> <!-- event.type -->
+    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" routerLink="/reminder-add"
+      [state]="{event: reminder}">
+      {{ 'button.edit' | translate }}
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -21,14 +23,12 @@
     </ion-grid>
     <ion-list>
       <ion-row>
-        <ion-text  class="txtTitle">{{reminder?.title}}</ion-text>
+        <ion-text class="txtTitle">{{reminder?.title}}</ion-text>
       </ion-row>
-      <ion-item routerLink="doctor" 
-              [state]="{doctor: staff}" 
-              *ngFor="let staff of reminder.staff; let i = index" 
-              [lines]="(i == reminder?.staff.length-1)? 'full': 'none'">
+      <ion-item routerLink="doctor" [state]="{doctor: staff}" *ngFor="let staff of reminder.staff; let i = index"
+        [lines]="(i == reminder?.staff.length-1)? 'full': 'none'">
         <ion-label>{{(i == 0)? ('reminder.field_doctor' | translate): ''}}</ion-label>
-        <ion-text class="textMedium"  >{{staff.name}}</ion-text>
+        <ion-text class="textMedium">{{staff.name}}</ion-text>
         <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
       <ion-item>
@@ -52,28 +52,9 @@
         <ion-label>{{'reminder.field_duration' | translate}}</ion-label>
         <ion-text class="textMedium">{{this.duration}}</ion-text>
       </ion-item>
-<!--       <ion-item>
-        <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>
-        <ion-label class="textMedium"></ion-label>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>{{'reminder.field_finish_repetition' | translate}}</ion-label>
-        <ion-label class="textMedium"></ion-label>
-      </ion-item> -->
     </ion-list>
   </div>
-  <!-- <ion-card class="cardProfile">
-    <ion-list>
-      <ion-item>
-        <ion-label>{{'reminder.field_notice' | translate}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label lines="none">{{'reminder.field_show_as' | translate}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-      </ion-item>
-    </ion-list>
-  </ion-card> -->
+
   <ion-card *ngIf="reminder?.origin === 0" class="cardProfile">
     <ion-item>
       <ion-label>{{'reminder.field_comments_doctor' | translate}}</ion-label>
@@ -82,6 +63,5 @@
       <ion-textarea placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
     </ion-item>
   </ion-card>
-<!--   <ion-button fill="clear" expand="full" color="danger">
-    Eliminar</ion-button> -->
+
 </ion-content>
