@@ -22,7 +22,7 @@
             <ion-item lines="none" class="noMargin">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text >
-              <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+              <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
             </ion-item>
 
           <ion-card-content>
@@ -31,7 +31,7 @@
                   <ion-grid>
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
                       <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
-                      <p class="txtTitleGoalsLittle3">{{slide.description}}</p>
+                      <p class="txtContactLittle">{{slide.description}}</p>
                     </ion-row>
                   </ion-grid>
                  </ion-slide>
@@ -71,10 +71,10 @@
     </ion-row>
     <!-- Advices --> 
     <ion-row>
-      <ion-item lines="none" routerLink="/advices">
-        <ion-text class="txtTitle"> {{ 'home.advices_title' | translate}}</ion-text>
-        <ion-button slot="end" fill="clear" size="small" class="bottonTitle" (click)="actionSeeAllAdvices()">{{ 'home.see_all_button' | translate}}</ion-button>
-      </ion-item>
+     
+        <ion-text class="txtTitle" style="white-space: nowrap;"> {{ 'home.advices_title' | translate}}</ion-text>
+        <ion-item lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-item>
+    
     </ion-row>
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
@@ -95,12 +95,12 @@
     </ion-row>
     <!-- Diets -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/diary">       
+      <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start" *ngIf="infoDiet as UserInformation">{{infoDiet?.title}}</ion-text>
             <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
-            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -115,12 +115,12 @@
 
     <!-- Drugs -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/diary">       
+      <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
-            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -142,11 +142,11 @@
 
     <!-- Games -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/diary">       
+      <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
-            <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -168,17 +168,17 @@
 
         <!-- Physical Activity -->
         <ion-row>
-          <ion-card class="vertical-card" routerLink="/diary" >       
+          <ion-card class="vertical-card" routerLink="/journal" >       
               <ion-item lines="none" class="noMargin">
                 <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
                 <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
-                <ion-icon  slot="end" name="chevron-forward-outline"></ion-icon>
+                <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
               </ion-item>
     
             <ion-card-content>
                 <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
                   <ion-slide *ngFor="let slide of this.activity">
-                    <h3>{{slide.name}}</h3>             
+                    <h1>{{slide.name}}</h1>             
                     </ion-slide>
                 </ion-slides>
               </ion-card-content>
