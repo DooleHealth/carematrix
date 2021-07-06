@@ -13,9 +13,9 @@
   (ionInput)="filterList($event)" >
 </ion-searchbar>
 <ion-list *ngFor="let relationship of listRelationship">
-  <ion-item (click)="getDataContact(relationship)" class="ion-activatable ripple-parent" routerLink="../edit-contact" [state]="{newContact:emergencyContact}">
+  <ion-item (click)="getDataContact(relationship)" class="ion-activatable ripple-parent" routerLink="../edit-contact" [state]="{newContact: emergencyContact, socialRelationType:relationship}">
     <ion-label class="txtPaddingLeft" >
-      {{relationship}}
+      {{relationship.name}}
     </ion-label>
     <ion-ripple-effect></ion-ripple-effect>
   </ion-item>

@@ -16,6 +16,11 @@ export class EmergencyContactsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewDidEnter(){
+    console.log('[EmergencyContactsPage] ionViewDidEnter()');
     this.getListContact()
   }
 
@@ -25,7 +30,8 @@ export class EmergencyContactsPage implements OnInit {
     this.dooleService.getAPIemergencyContact().subscribe(
       async (res: any) =>{
         console.log('[EmergencyContactsPage] getListContact()', await res);
-        this.listContact = res
+        if(res.success)
+        this.listContact = res.emergencyContact
         this.isLoading = false
        },(err) => { 
           console.log('[EmergencyContactsPage] getListContact() ERROR(' + err.code + '): ' + err.message); 

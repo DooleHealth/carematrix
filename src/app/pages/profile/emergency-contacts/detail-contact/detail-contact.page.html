@@ -15,13 +15,13 @@
 <ion-content fullscreen>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" *ngIf="this.userImage!== undefined">
-        <ion-img [src]="this.userImage" class="img-wrapper"></ion-img>
+      <ion-col size="12">
+        <ion-img [src]="(contact?.temporaryUrl !== undefined)? contact?.temporaryUrl: 'assets/icons/user_icon.svg'" class="img-wrapper"></ion-img>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col *ngIf='this.contact !== undefined'>
-        <h3 style="text-align: center;"> {{this.contact.name}}</h3>
+        <h3 style="text-align: center;"> {{this.contact.full_name}}</h3>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -30,14 +30,14 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.telephone}}</ion-label>
+        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.phone}}</ion-label>
         <ion-button slot="end" fill="clear" size="small" [href]="ref_telephone">
           <ion-icon slot="end" name="call-outline"></ion-icon>
         </ion-button>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'detail_contact.family_relationship' | translate}}</ion-label>
-        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.family_relationship}}</ion-label>
+        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.socialRelationName}}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
     </ion-list>

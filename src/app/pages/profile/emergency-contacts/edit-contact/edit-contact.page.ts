@@ -33,7 +33,8 @@ export class EditContactPage implements OnInit {
       full_name: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       socialRelationName: ['', [Validators.required]],
-      created_at: ['', [Validators.required]],
+      social_relation_type_id: [''],
+      created_at: [''],
     })
     this.getContact()
   }
@@ -41,6 +42,7 @@ export class EditContactPage implements OnInit {
   getContact(){
     let oldContact = history.state.contact;
     let newContact = history.state.newContact;
+    this.socialRelationType = history.state.socialRelationType;
     if(newContact){
       this.contact = newContact
     }else if(oldContact){
@@ -49,20 +51,25 @@ export class EditContactPage implements OnInit {
     }
     this.showContact()   
     console.log('[EditContactPage] getContact()' , JSON.stringify(this.contact) ); 
-    this.userImg()
 
-  }
-
-  userImg(){
-    if(this.contact !== undefined && this.contact.thumbnail !== undefined && this.contact.thumbnail !== null 
-      && this.contact.thumbnail !== '')
-      this.userImage = this.contact.thumbnail;
   }
 
   showContact(){
-    this.formContact.get('phone').setValue(this.contact.telephone)
-    this.formContact.get('full_name').setValue(this.contact.name)
-    this.formContact.get('family_relationship').setValue(this.contact.family_relationship)
+    if(this.contact?.phone)
+    this.formContact.get('phone').setValue(this.contact.phone)
+    if(this.contact?.full_name)
+    this.formContact.get('full_name').setValue(this.contact.full_name)
+    if(this.socialRelationType){
+      this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
+      this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
+    }
+    if(this.isNewContact){
+      this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
+      this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
+    }else{
+      this.formContact.get('socialRelationName').setValue(this.contact.socialRelationName)
+      this.formContact.get('social_relation_type_id').setValue(this.contact.social_relation_type_id)
+    }
   }
 
   sumittedContact(){
