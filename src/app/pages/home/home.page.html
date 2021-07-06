@@ -95,7 +95,7 @@
     </ion-row>
     <!-- Diets -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/diary">       
+      <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start" *ngIf="infoDiet as UserInformation">{{infoDiet?.title}}</ion-text>
@@ -115,7 +115,7 @@
 
     <!-- Drugs -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/diary">       
+      <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
@@ -142,7 +142,7 @@
 
     <!-- Games -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/diary">       
+      <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
@@ -168,7 +168,7 @@
 
         <!-- Physical Activity -->
         <ion-row>
-          <ion-card class="vertical-card" routerLink="/diary" >       
+          <ion-card class="vertical-card" routerLink="/journal" >       
               <ion-item lines="none" class="noMargin">
                 <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
                 <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
