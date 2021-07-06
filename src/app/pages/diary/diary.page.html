@@ -188,13 +188,13 @@
     <ion-label class="txtTitle">{{group.group  }}</ion-label>
     <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
       <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
-        <div *ngIf="group.group=='Actividad Física'" class="verticalLineRed"></div>
+        <div *ngIf="group.group=='Actividad Física ' || group.group=='Actividad' " class="verticalLineRed"></div>
         <div *ngIf="group.group=='Bioquímica'"  class="verticalLine"></div>
         <div *ngIf="group.group=='Constantes'"  class="verticalLinePurple"></div>
         <ion-grid>
           <ion-row>
             <ion-col size="2">
-              <ion-icon *ngIf="group.group=='Actividad Física'"  style="align-items: left;margin-right: 5px;zoom: 2; color: #E74C3C;" name="walk-outline"></ion-icon>
+              <ion-icon *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' "  style="align-items: left;margin-right: 5px;zoom: 2; color: #E74C3C;" name="walk-outline"></ion-icon>
               <ion-icon *ngIf="group.group=='Bioquímica'"  style="align-items: left;margin-right: 5px;zoom: 2;color: #2ECC71;" name="water-outline"></ion-icon>
               <ion-icon *ngIf="group.group=='Constantes'"  style="align-items: left;margin-right: 5px;zoom: 2;color: #9B59B6;" name="stats-chart-outline"></ion-icon>
               <!-- <ion-img  *ngIf="element.name=='Peso'"  style="align-items: left;margin-right: 5px;" src='assets/icons/VectorConsumo.svg' >

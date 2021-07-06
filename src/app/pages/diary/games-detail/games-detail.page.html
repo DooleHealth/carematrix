@@ -17,7 +17,7 @@
           <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
           </ion-img>
         </div>
-        <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{game.name}}</ion-label>
+        <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{game.title}}</ion-label>
         <div>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
@@ -35,7 +35,7 @@
     <ion-grid>
       <ion-item>
         <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
-        <ion-text  slot="start" class="txtTitleGoals2">{{ 'goals.goals' | translate}} de {{game?.name}}</ion-text >
+        <ion-text  slot="start" class="txtTitleGoals2">{{ 'goals.goals' | translate}} de {{game?.title}}</ion-text >
       </ion-item>
       <ion-row>
         <ion-progress-bar  class="my-buffer-progress" [value]="score/100"></ion-progress-bar>
@@ -50,8 +50,8 @@
     </ion-grid>
   </ion-card>
 
-  <section>
+  <div class="main-container ">
     <ion-button expand="block"  (click)="openGames(game)">{{'game.go_game' | translate }}</ion-button>
-  </section>
+  </div>
 
 </ion-content>
