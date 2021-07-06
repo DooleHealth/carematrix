@@ -52,6 +52,6 @@
 
 
   <section *ngIf="!this.isNewContact">
-    <ion-button expand="block" (click)="delete(this.contact)">{{ 'detail_contact.button_delete' | translate}}</ion-button>
+    <ion-button expand="block" (click)="presentAlertDeleteConfirm()">{{ 'detail_contact.button_delete' | translate}}</ion-button>
   </section>
 </ion-content>

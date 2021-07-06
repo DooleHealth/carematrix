@@ -59,15 +59,17 @@ export class EditContactPage implements OnInit {
     this.formContact.get('phone').setValue(this.contact.phone)
     if(this.contact?.full_name)
     this.formContact.get('full_name').setValue(this.contact.full_name)
-    if(this.socialRelationType){
+/*     if(this.socialRelationType && this.socialRelationType.name !== undefined){
       this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
       this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
-    }
-    if(this.isNewContact){
+    } */
+    if(this.isNewContact && this.socialRelationType !== undefined){
       this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
       this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
     }else{
+      if(this.contact?.socialRelationName)
       this.formContact.get('socialRelationName').setValue(this.contact.socialRelationName)
+      if(this.contact?.social_relation_type_id)
       this.formContact.get('social_relation_type_id').setValue(this.contact.social_relation_type_id)
     }
   }
@@ -82,10 +84,10 @@ export class EditContactPage implements OnInit {
     }
   }
 
-  delete(contact){
-    console.log('[EditContactPage] delete()' ,  contact); 
+  delete(){
+    console.log('[EditContactPage] delete()'); 
     if(this.contact === undefined || this.contact === null ) return
-    this.presentAlertConfirm()
+    this.presentAlertDeleteConfirm()
   }
 
   saveContact(){
@@ -130,10 +132,11 @@ export class EditContactPage implements OnInit {
         });
   }
 
-  async presentAlertConfirm() {
+  async presentAlertDeleteConfirm() {
+    console.log('[EditContactPage] presentAlertConfirm()');
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      header: this.translate.instant(this.contact.name),
+      header: this.translate.instant(this.contact.full_name),
       message: this.translate.instant("edit_contact.alert_message_confirmation_delete"),
       buttons: [
         {
@@ -157,6 +160,7 @@ export class EditContactPage implements OnInit {
   }
 
   serviceDeleteContact(){
+    console.log('[EditContactPage] serviceDeleteContact()', this.contact.id);
     this.dooleService.deleteAPIemergencyContact( this.contact.id).subscribe(
       async (res: any) =>{
         console.log('[EditContactPage] serviceDeleteContact()', await res);
