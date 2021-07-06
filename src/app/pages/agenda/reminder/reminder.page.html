@@ -12,7 +12,7 @@
 
 <ion-content fullscreen>
   <div class="whiteBackground">
-    <ion-grid class="paddingGrid">
+    <ion-grid class="paddingGrid2">
       <ion-row>
         <ion-col size="12">
           <ion-img class="img-wrapper"></ion-img>
@@ -29,7 +29,7 @@
               [lines]="(i == reminder?.staff.length-1)? 'full': 'none'">
         <ion-label>{{(i == 0)? ('reminder.field_doctor' | translate): ''}}</ion-label>
         <ion-text class="textMedium"  >{{staff.name}}</ion-text>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
       <ion-item>
         <ion-label> {{ 'reminder.field_notes' | translate }}</ion-label>
@@ -42,7 +42,7 @@
       <ion-item routerLink="detail" [state]="{ event: reminder}">
         <ion-label>{{ 'reminder.field_appointment' | translate }}</ion-label>
         <ion-text class="textMedium">{{reminder.title}}</ion-text>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
@@ -62,7 +62,7 @@
       </ion-item> -->
     </ion-list>
   </div>
-  <ion-card class="cardProfile">
+  <!-- <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
         <ion-label>{{'reminder.field_notice' | translate}}</ion-label>
@@ -73,7 +73,7 @@
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
     </ion-list>
-  </ion-card>
+  </ion-card> -->
   <ion-card *ngIf="reminder?.origin === 0" class="cardProfile">
     <ion-item>
       <ion-label>{{'reminder.field_comments_doctor' | translate}}</ion-label>
