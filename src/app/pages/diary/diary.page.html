@@ -42,7 +42,7 @@
         </ion-buttons>
       </ion-col>
 
-      <ion-col size="8">
+      <ion-col size="8" class="textBlueCentered">
         <ion-slides #slides >
           <ion-slide>
             <p>{{this.date | date: 'EEEE, d MMMM' | titlecase}}</p>     
@@ -79,7 +79,7 @@
           <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
           </ion-img>
         </ion-col>
-        <ion-label style="color:#E67E22;">Desayuno</ion-label>
+        <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
         <p class="txtTitleTrackingLittle">30/02/21</p>
         <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
       </ion-item>

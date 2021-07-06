@@ -14,10 +14,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar 
+  <!-- <ion-searchbar 
   [animated]="true" 
-  (ionInput)="filterList($event)" >
-</ion-searchbar>
+  (ionInput)="filterList($event)" 
+  placeholder="{{ 'Busca tu prueba' | translate}}">
+</ion-searchbar> -->
   <form (ngSubmit)="submit()" [formGroup]="form"> 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_date' | translate}}</ion-text>
