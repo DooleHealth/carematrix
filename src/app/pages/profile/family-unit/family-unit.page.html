@@ -7,10 +7,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="listFamilyUnit.length > 0; else noData">
-  <ion-list *ngFor="let family of this.listFamilyUnit">
-    <ion-card class="cardProfile" (click)="changeAccount(family)">
-      <ion-card-content>
+<ion-content >
+  <div *ngIf="listFamilyUnit.length > 0; else noData">
+  <ion-list>
+    <ion-card class="cardProfile" *ngFor="let family of this.listFamilyUnit" (click)="changeAccount(family)">
+      <ion-card-content style="padding-left: 0%;">
     <ion-item lines="none">
       <ion-avatar slot="start">
         <img [src]="family.thumbnail">
@@ -23,7 +24,8 @@
   </ion-card-content>
   </ion-card>
   </ion-list>
-</ion-content>
+</div>
+
 
 <ng-template #noData>
   <div *ngIf="!this.isLoading">
@@ -41,3 +43,4 @@
     </ion-grid>
 </div>
 </ng-template>
+</ion-content>
