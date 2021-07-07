@@ -37,10 +37,10 @@ export class PersonalPage implements OnInit {
     let res = ''
     switch (opt) {
       case 0:
-        res = this.translate.instant('personal.feminine')
+        res = this.translate.instant('personal.male')
         break
       case 1:
-        res = this.translate.instant('personal.male')
+        res = this.translate.instant('personal.feminine')
         break
       default:
         res = this.translate.instant('personal.non-binary')

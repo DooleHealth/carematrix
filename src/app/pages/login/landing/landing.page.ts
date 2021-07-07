@@ -72,7 +72,8 @@ export class LandingPage implements OnInit {
       .then((result) => {
 
         if(result.data['error']){
-            alert(result.data['error'])
+          let message = this.translate.instant('landing.message_wrong_credentials')
+          this.dooleService.presentAlert(message)
         }
     });
 

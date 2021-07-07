@@ -39,6 +39,10 @@ export class DiaryPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    //this.segmentChanged()
+  }
+  ionViewDidEnter(){
+    console.log('[DiaryPage] ionViewDidEnter()');
     this.segmentChanged()
   }
   next() {
@@ -324,6 +328,7 @@ export class DiaryPage implements OnInit {
         break;
     }
   }
+  
 
 
   selectDayPeriod(time){
