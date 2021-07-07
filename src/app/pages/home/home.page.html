@@ -106,7 +106,7 @@
         <ion-card-content>
             <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDietChange()'>
               <ion-slide *ngFor="let slide of this.diets">
-                 <p>{{slide.description}}</p>               
+                <p style="text-align: left;">{{slide.description}}</p>               
                </ion-slide>
             </ion-slides>
           </ion-card-content>
@@ -128,7 +128,7 @@
               <ion-slide *ngFor="let slide of this.drugs">
                 <ion-grid>
                   <ion-row>
-                    <p>{{slide.name}}</p>
+                    <p style="text-align: left;">{{slide.name}}</p>
                   </ion-row>
                   <ion-row>
                     <ion-button size="small" (click)="actionButtonDrugs(slide)">{{ 'home.take_button' | translate}}</ion-button>  
@@ -154,7 +154,7 @@
               <ion-slide *ngFor="let slide of this.games">
                 <ion-grid>
                   <ion-row>
-                    <p>{{slide.name}}</p>
+                    <p style="text-align: left;">{{slide.name}}</p>
                   </ion-row>
                   <ion-row>
                     <ion-button size="small" fill=clear (click)="actionButtonGames(slide)">{{ 'home.go_play_button' | translate}}</ion-button>  
@@ -178,7 +178,7 @@
             <ion-card-content>
                 <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
                   <ion-slide *ngFor="let slide of this.activity">
-                    <h1>{{slide.name}}</h1>             
+                    <h1 style="text-align: left;">{{slide.name}}</h1>             
                     </ion-slide>
                 </ion-slides>
               </ion-card-content>
