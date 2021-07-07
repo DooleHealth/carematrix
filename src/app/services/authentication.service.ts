@@ -53,6 +53,7 @@ export class AuthenticationService {
     public router: Router,
     @Inject(PLATFORM_ID) private platformId: object) {
       this.setUser("14303");
+     
   }
 
   getAuthToken() {

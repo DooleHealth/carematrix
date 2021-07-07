@@ -38,13 +38,13 @@
     </div>
 
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-item no-lines class="toolbarText">
-      <ion-buttons>
+<ion-footer >
+ 
+    <ion-item no-lines>
+      <ion-buttons >
         <ion-button (click)="selectImageSource()">
           <ion-icon icon-start name="add-outline"></ion-icon>
-          <input
+          <input 
             type="file"
             #fileInput
             (change)="uploadFileFromBrowser($event)"
@@ -53,19 +53,23 @@
           />
         </ion-button>
       </ion-buttons>
-      <div item-content>
-        <elastic-textarea #txtChat >
+      <div item-content >
+        <elastic-textarea #txtChat placeholder="{{ 'conversation.placeholder' | translate}}">
           <ion-input lineHeight="20" maxExpand="5" style="width:100%"></ion-input>
         </elastic-textarea>
       </div>
-      <ion-buttons>
+      <ion-buttons >
         <ion-button (click)="this.addImage()">
           <ion-icon name="camera-outline"></ion-icon>
         </ion-button>
         <ion-button icon-end (click)="this.addAudio()">
           <ion-icon name="mic-outline"></ion-icon>
         </ion-button>
+        <ion-button icon-end (click)="send()">
+          <ion-icon name="send"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-item>
-  </ion-toolbar>
+  
 </ion-footer>
+

@@ -23,8 +23,8 @@ $chat: (
 $chat-bubble: (
   background-left: #F5F5F5,
   font-left:black,
-  font-right:white,
-  background-right: map-get($colors, primary)
+  font-right:black,
+  background-right: #bae4cc,
 );
 
 
