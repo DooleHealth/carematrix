@@ -11,7 +11,7 @@
   <form (ngSubmit)="submit()" [formGroup]="form">
     <ion-list>
       <ion-card class="cardProfile">
-        <ion-card-content>
+        <ion-card-content style="padding-left: 1%;">
           <ion-item lines="none">
             <img [src]="this.staff?.image" class="img-wrapper-doctors" />
             <div class="txtPaddingLeft">
@@ -49,7 +49,7 @@
   
     <ion-card class="cardProfile">
       <ion-list>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label class="txtTitleGoals">Tipo de cita</ion-label>
           <ion-label class="textMedium">Primera Consulta</ion-label>
           <ion-icon
@@ -57,7 +57,7 @@
             slot="end"
             size="small"
           ></ion-icon>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label>Motivo de la cita</ion-label>
           <ion-textarea class="textMedium" placeholder="..."  formControlName="title"></ion-textarea>
