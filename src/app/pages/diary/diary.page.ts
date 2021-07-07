@@ -328,19 +328,7 @@ export class DiaryPage implements OnInit {
         break;
     }
   }
-
-  changeColorDrugName(state:number): string{
-    switch (Number(state)) {
-      case 0:
-        return '#2ECC71'
-      case 1:
-        return '#EB445A' //'#cf3c4f'
-      case 2:
-        return '#3498DB'
-      default:
-        return '#2ECC71'
-    }
-  }
+  
 
 
   selectDayPeriod(time){
