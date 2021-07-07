@@ -39,6 +39,10 @@ export class DiaryPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    //this.segmentChanged()
+  }
+  ionViewDidEnter(){
+    console.log('[DiaryPage] ionViewDidEnter()');
     this.segmentChanged()
   }
   next() {
@@ -322,6 +326,19 @@ export class DiaryPage implements OnInit {
       default:
         //this.getDiagnosticTestsList()
         break;
+    }
+  }
+
+  changeColorDrugName(state:number): string{
+    switch (Number(state)) {
+      case 0:
+        return '#2ECC71'
+      case 1:
+        return '#EB445A' //'#cf3c4f'
+      case 2:
+        return '#3498DB'
+      default:
+        return '#2ECC71'
     }
   }
 

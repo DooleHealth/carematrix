@@ -115,16 +115,16 @@
               <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">{{ (item.item.alias !== null)? item.item.alias: item.item.name }} </ion-label>
+            <ion-label [ngStyle]="{'color': changeColorDrugName(item.item.forgotten)}">{{ (item.item.alias !== null)? item.item.alias: item.item.name }} </ion-label>
             <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
           <ion-item *ngIf="!item.expanded" lines="none">
             <ion-col size="2">
-              <ion-img src='assets/icons/Pill.svg' style="margin-right: 5px;">
+              <ion-img src='assets/icons/Pill.svg'  style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#2ECC71;">{{ (item.item.alias !== null)? item.item.alias: item.item.name }}</ion-label>
+            <ion-label [ngStyle]="{'color': changeColorDrugName(item.item.forgotten)}">{{ (item.item.alias !== null)? item.item.alias: item.item.name }}</ion-label>
             <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
             <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
           </ion-item>
