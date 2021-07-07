@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LandingPage] checkConditionLegal()', await res);
-         if(res.accepted_last)
+         if(res.success)
           this.redirectPage(res.accepted_last)
 
 
