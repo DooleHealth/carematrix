@@ -3,7 +3,9 @@
     
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>{{ 'novedades y consejos' | translate}}</ion-title>
-  
+      <ion-buttons slot="start">
+        <ion-back-button text=""></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
