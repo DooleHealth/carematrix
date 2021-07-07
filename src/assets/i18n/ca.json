@@ -442,5 +442,8 @@
         "taked": "Presa",
         "forgotten": "Oblidada",
         "continue": "Continuar"
+      },
+      "conversation":{
+        "placeholder":"Escriu un missatge"
       }
 }
