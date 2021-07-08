@@ -101,6 +101,7 @@ export class DocumentsAddPage implements OnInit {
       this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
       async (data) => {
         console.log("data:", data);
+        if(data)
         this.showAlert()
         loading.dismiss();
       },

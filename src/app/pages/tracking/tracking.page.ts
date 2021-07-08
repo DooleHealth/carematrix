@@ -148,10 +148,6 @@ export class TrackingPage implements OnInit {
       toolbar: 'yes'
     };
 
-    await this.auth.getUserLocalstorage().then(value =>{
-      this.auth.user = value
-    })
-
     console.log('[TrackingPage] openForm()',  this.auth.user);
 
     if(this.auth !==undefined || this.auth.user !== undefined){

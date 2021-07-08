@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
+import { AuthenticationService } from './authentication.service';
 
 
 @Injectable({
@@ -21,6 +22,7 @@ import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages
 export class DooleService {
  
   constructor(
+    private authService: AuthenticationService,
     private transfer: FileTransfer, 
     private file : File, 
     private http: HttpService,  
@@ -231,6 +233,12 @@ export class DooleService {
     await alert.present();
   }
 
+  getFamilyUnitID():HttpParams{
+    let httpParams = new HttpParams();
+    let user = this.authService.user 
+     return httpParams = (user.familyUnit)? httpParams.append('user', user.familyUnit): httpParams
+  }
+
   getAPILegalInformation(): Observable<any>{
     let path = 'user/legalTerm/lastAccepted';
     const endpoint = this.api.getEndpoint(path);
@@ -306,6 +314,7 @@ export class DooleService {
 
   getAPIuserProfile(): Observable<any>{
     let path = 'user/profile'
+    //let httpParams = this.getFamilyUnitID()
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -317,6 +326,7 @@ export class DooleService {
 
   postAPIChangePassword(params: Object): Observable<any>{
     let path = 'user/changePassword';
+    let httpParams = this.getFamilyUnitID()
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -526,6 +536,7 @@ export class DooleService {
 
   putAPIemergencyContact(id: any, params: Object): Observable<any>{
     let path = `user/EmergencyContact/${id}`;
+    console.log('[DooleService] putAPIemergencyContact()' , params); 
     const endpoint = this.api.getEndpoint(path);
     return this.http.put(endpoint, params).pipe(
       map((res: any) => {

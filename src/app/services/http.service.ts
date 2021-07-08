@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams, HttpBackend } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class HttpService {
   constructor(
     private http: HttpClient,
     private httpBackend: HttpBackend,
+    private authService: AuthenticationService,
   ) {
     this.httpWithoutInterceptor = new HttpClient(httpBackend);
   }
@@ -21,21 +23,27 @@ export class HttpService {
   }
   
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    let user = this.authService.user 
+    params = (user.familyUnit)? params.append('user', user.familyUnit): params
     return this.http.get(`${path}`, { params })
       .pipe(catchError(this.formatErrors));
   }
 
-  put(path: string, body: Object = {}): Observable<any> {
+  put(path: string, body: Object = {}, options: Object = {}): Observable<any> {
+    let httpOptions = this.setHttpOptions(options);
     return this.http.put(
       `${path}`,
-      JSON.stringify(body)
+      JSON.stringify(body),
+      httpOptions
     ).pipe(catchError(this.formatErrors));
   }
 
   post(path: string, body: Object = {}, options: Object = {}): Observable<any> {
-    
+    let user = this.authService.user 
+    if(user.familyUnit !== null)
+    body['user'] = user.familyUnit;
+
     let httpOptions = this.setHttpOptions(options);
-    
     console.log("url: ", path);
     console.log("body: ", body);
    
@@ -96,7 +104,7 @@ export class HttpService {
   setHttpOptions(options){
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/x-www-form-urlencoded'
       })
     };
 

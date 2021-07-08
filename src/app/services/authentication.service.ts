@@ -3,9 +3,9 @@ import { Plugins } from '@capacitor/core';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { ApiEndpointsService } from '../services/api-endpoints.service';
-import { HttpService } from '../services/http.service';
+//import { HttpService } from '../services/http.service';
 import { Constants } from '../config/constants';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Platform } from '@ionic/angular';
 import {AngularFireAuth} from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
@@ -21,9 +21,10 @@ export class User{
   secret: string;
   roles : any = [];
   familyUnit : string;
-  constructor(idUser:string, secret:string){
+  constructor(idUser:string, secret:string, familyUnit:string){
     this.idUser = idUser
     this.secret = secret
+    this.familyUnit = familyUnit
   };
 
 }
@@ -45,14 +46,14 @@ export class AuthenticationService {
   public devicePlatform: string;
   public dietsAndAdvices: [];
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
-  constructor(private http: HttpService,
+  constructor(private http: HttpClient,
     private api: ApiEndpointsService,
     private constants: Constants,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     @Inject(PLATFORM_ID) private platformId: object) {
-      this.setUser("14303");
+      this.setUser();
   }
 
   getAuthToken() {
@@ -105,7 +106,7 @@ export class AuthenticationService {
             console.log(error);
           });
         }
-        this.user = new User(res.idUser, credentials.password);
+        this.user = new User(res.idUser, credentials.password, null);
         this.setUserLocalstorage(this.user)
         // user's data
         return res;
@@ -117,10 +118,11 @@ export class AuthenticationService {
     );
   }
 
-  setUser(idUser: string, secret?: string ){
-    this.user = new User(idUser,secret);
-    console.log("user: ", this.user );
-    this.setUserLocalstorage(this.user)
+  setUser(){
+    this.getUserLocalstorage().then(user =>{
+      if(user)
+      this.user = user
+    })
   }
 
   setUserLocalstorage(user){
@@ -134,6 +136,15 @@ export class AuthenticationService {
     return Storage.get({key: 'user'}).then((val) => {
       return JSON.parse(val.value);
     });
+  }
+
+  public async setUserFamilyId(id){
+    await this.getUserLocalstorage().then(value =>{
+      this.user = value
+      this.user.familyUnit=id;
+      this.setUserLocalstorage(this.user)
+    })
+    console.log(`[AuthenticationService] setUserFamilyId(${id})`,this.user);
   }
 
   getShowIntroLocalstorage() : Promise<any>{

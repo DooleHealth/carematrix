@@ -100,7 +100,7 @@ export class ElementsAddPage implements OnInit {
     console.log(`[ElementsAddPage] showAlert()`);
     const alert = await this.alertController.create({
       header: this.translate.instant('alert.header_info'),
-      message: this.translate.instant('add_health_card.alert_message_add_card'),
+      message: this.translate.instant('element.alert_message_add_element'),
       backdropDismiss: false,
       buttons: [
         {
