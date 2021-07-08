@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button text="Cancelar" ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'emergency_contact.contact' | translate}}</ion-title>
+    <ion-title>{{ 'emergency_contact.header_relationship' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content fullscreen class="whiteBackground">
   <ion-searchbar 
   [animated]="true" 
   (ionInput)="filterList($event)" >
