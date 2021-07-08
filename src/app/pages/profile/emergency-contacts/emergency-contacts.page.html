@@ -14,18 +14,23 @@
   <div *ngIf="listContact.length > 0; else noData"> 
   <ion-list *ngFor="let contact of this.listContact">
     <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}">
-      <ion-card-content>
+      <ion-card-content style="padding: 2%;">
     <ion-item lines="none">
       <ion-avatar slot="start">
         <img [src]="contact.temporaryUrl">
       </ion-avatar>
-      <ion-label >
-        <h3>{{contact.full_name}}</h3>
-        <ion-item lines="none">
-          <ion-text><p>{{contact.socialRelationName}}</p></ion-text>
-          <ion-text slot="end"><p>{{contact.phone}}</p></ion-text>
-        </ion-item>
-      </ion-label>
+      <ion-grid>
+     <ion-row><ion-col size="6">
+        <p>{{contact.full_name}}</p>
+      </ion-col>
+        <ion-col size="6" class="textMediumLeft">
+        <p>{{contact.phone}}</p>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col class="textMediumLeft"><p>{{contact.socialRelationName}}</p></ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-card-content>
   </ion-card>
