@@ -12,7 +12,7 @@
   </ion-grid>
 
   <ion-grid>
-    <ion-row >
+    <ion-row class="paddingTop">
       <ion-text class="txtTitle">{{ 'home.goals_title' | translate}}</ion-text>
     </ion-row>
     <!-- Goals  --> 
@@ -38,8 +38,11 @@
             </ion-card-content>
         </ion-card>
     </ion-row>
-    <!-- Reminders --> 
-    <ion-row>
+
+          <!-- Reminders --> 
+    <ion-row class="paddingTop">
+
+
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
      <!-- Agendas --> 
@@ -69,8 +72,12 @@
         </ion-slide>    
       </ion-slides>
     </ion-row>
+
+    <!-- Advices --> 
+    <ion-row class="paddingTop">
+
     <!-- News and Advices --> 
-    <ion-row>
+
      
         <ion-text class="txtTitle" style="white-space: nowrap;"> {{ 'home.advices_title' | translate}}</ion-text>
         <ion-item lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-item>
@@ -93,12 +100,14 @@
       </ion-slides>
     </ion-row>
 
-    <!-- Today -->
-    <ion-row>
+
+    <ion-row class="paddingTop">
+
+
       <ion-text class="txtTitle">{{ 'home.today_title' | translate}}</ion-text>
     </ion-row>
     <!-- Diets -->
-    <ion-row>
+    <ion-row >
       <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
