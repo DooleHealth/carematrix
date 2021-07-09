@@ -24,7 +24,7 @@ export class HttpService {
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     let user = this.authService.user
-    params = (user.familyUnit) ? params.append('user', user.familyUnit) : params
+    params = (user?.familyUnit) ? params.append('user', user?.familyUnit) : params
     return this.http.get(`${path}`, { params })
       .pipe(catchError(this.formatErrors));
   }
@@ -43,7 +43,7 @@ export class HttpService {
 
   post(path: string, body: Object = {}, options: Object = {}): Observable<any> {
     let user = this.authService.user
-    if (user.familyUnit !== null)
+    if (user?.familyUnit !== null)
       body['user'] = user.familyUnit;
 
     let httpOptions = this.setHttpOptions(options);

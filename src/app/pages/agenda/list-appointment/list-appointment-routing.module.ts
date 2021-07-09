@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ListAppointmentPage
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('../agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
   }
 ];
 

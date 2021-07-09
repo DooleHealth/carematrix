@@ -26,13 +26,9 @@
               [state]="{doctor: staff}" 
               *ngFor="let staff of event?.staff; let i = index" 
               [lines]="(i == event?.staff.length-1)? 'full': 'none'">
-        <ion-label>{{(i == 0)? ('appointment.online' | translate): ''}}</ion-label>
+        <ion-label>{{ 'appointment.field_specially' | translate}}</ion-label>
         <ion-text class="textMedium"  >{{staff?.name}}</ion-text>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ 'appointment.field_specially' | translate}}</ion-label>
-        <ion-label class="textMedium">Digestivo</ion-label>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
@@ -51,11 +47,12 @@
         <ion-label>{{ 'appointment.field_appointment_type' | translate}}</ion-label>
         <ion-label class="textMedium">{{event?.agendaType?.name}}</ion-label>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item lines="none" *ngIf="event?.instructions !== undefined && event?.instructions.length > 0">
         <ion-label>{{ 'appointment.field_instructions' | translate}}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label text-wrap class="textMediumLeft"> ir en ayunas, haber tomado medicación, enema</ion-label>
+      <ion-item *ngFor="let instruction of event?.instructions" (click)="actionIntrucction( instruction)">
+        <ion-label text-wrap class="textMediumLeft">{{instruction.title}}</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'appointment.field_information' | translate}}</ion-label>
@@ -67,6 +64,17 @@
       </ion-item>
     </ion-list>
   </div>
+
+  <ion-row class="files-row">
+    <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of event?.files">
+      <app-aspect-ratio [ratio]="{w: 1, h: 1}">
+        <app-image-shell class="file-picture" [src]="m.name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl" (click)="openFile(m)"></app-image-shell>
+      </app-aspect-ratio>
+      <span class="file-name">
+      </span>
+    </ion-col>
+  </ion-row>
+
   <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="deleteReminder()">
     {{ 'appointment.button_delete' | translate}}</ion-button>
 </ion-content>

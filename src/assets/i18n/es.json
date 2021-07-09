@@ -124,6 +124,10 @@
         "subtitle_information": "Información",
         "subtitle_advices": "Consejos"
       },
+      "activity_goal":{
+        "definition": "Definición",
+        "normal_value": "Valores Normales:"
+      },
       "personal": {
         "button_back": "Inicio",
         "header": "Tus Datos",
@@ -312,7 +316,7 @@
         "field_date": "Fecha",
         "field_doctor": "Médico",
         "field_center": "Centro",
-        "field_specially": "Especialidad",
+        "field_specially": "Profesional",
         "field_appointment_type": "Tipo de cita",
         "field_instructions": "Instrucciones",
         "field_information": "Información",

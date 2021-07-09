@@ -511,7 +511,7 @@ export class DooleService {
   }
 
   getAPIemergencyContactID(id: any): Observable<any> {
-    let path = `user/EmergencyContacts/${id}`;
+    let path = `user/EmergencyContact/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -709,6 +709,17 @@ export class DooleService {
 
   getAPIgraphicsElement(id: Object, query): Observable<any> {
     let path = 'user/element/' + id + '?' + query;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIelementID(id: Object): Observable<any> {
+    let path = `user/element/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

@@ -125,6 +125,10 @@
         "subtitle_information": "Informació",
         "subtitle_advices": "Consells"
       },
+      "activity_goal":{
+        "definition": "Definició",
+        "normal_value": "Valors Normals:"
+      },
       "personal": {
         "button_back": "Inici",
         "header": "Les teves dades",
@@ -312,7 +316,7 @@
         "field_date": "Data",
         "field_doctor": "Metge",
         "field_center": "Centre",
-        "field_specially": "Especialitat",
+        "field_specially": "Professional",
         "field_appointment_type": "Tipus de cita",
         "field_instructions": "Instruccions",
         "field_information": "Informació",
