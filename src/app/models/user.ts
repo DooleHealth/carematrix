@@ -91,6 +91,7 @@ export interface UserProfile{
     height: string,
     blood_group: string,
     diagnostics: [string,string],
+    temporaryUrl:string,
     allergies: [],
 }
 
