@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-grid>
+  <ion-grid class="paddingGrid">
     <ion-row>
       <ion-col size="12">
         <ion-img [src]="(contact?.temporaryUrl !== undefined)? contact?.temporaryUrl: 'assets/icons/user_icon.svg'" class="img-wrapper"></ion-img>
@@ -29,16 +29,14 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.phone}}</ion-label>
-        <ion-button slot="end" fill="clear" size="small" [href]="ref_telephone">
-          <ion-icon slot="end" name="call-outline"></ion-icon>
-        </ion-button>
+        <ion-label class="txtTitleGoals">{{ 'detail_contact.telephone' | translate}}</ion-label>
+        <ion-label class="textMedium" slot="end" [href]="ref_telephone" *ngIf='this.contact !== undefined'>{{this.contact.phone}}</ion-label>
+       
       </ion-item>
       <ion-item lines="none">
-        <ion-label>{{ 'detail_contact.family_relationship' | translate}}</ion-label>
-        <ion-label slot="end" *ngIf='this.contact !== undefined'>{{this.contact.socialRelationName}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-label class="txtTitleGoals">{{ 'detail_contact.family_relationship' | translate}}</ion-label>
+        <ion-label class="textMedium" slot="end" *ngIf='this.contact !== undefined'>{{this.contact.socialRelationName}}</ion-label>
+     
       </ion-item>
     </ion-list>
   </ion-card>

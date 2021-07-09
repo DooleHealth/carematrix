@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-grid>
+  <ion-grid class="paddingGrid">
     <ion-row>
       <ion-col size="12">
         <ion-img [src]="(contact !== undefined && contact?.temporaryUrl !== undefined)? contact?.temporaryUrl: userImage" class="img-wrapper"></ion-img>
@@ -29,22 +29,22 @@
     <form [formGroup]="formContact" (ngSubmit)="addCard()">
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'detail_contact.username' | translate}}</ion-label>
-        <ion-input formControlName="full_name" placeholder="" slot="end" (ionInput)="isSubmittedName = false" maxlength="200" required></ion-input>
-        <ion-label *ngIf="this.isSubmittedName && this.formContact.get('full_name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-label  class="txtTitleGoals">{{ 'detail_contact.username' | translate}}</ion-label>
+        <ion-input class="textMedium" formControlName="full_name" placeholder="" slot="end" (ionInput)="isSubmittedName = false" maxlength="200" required></ion-input>
+        <ion-label class="textMedium" *ngIf="this.isSubmittedName && this.formContact.get('full_name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
+    
       </ion-item>
       <ion-item>
-        <ion-label>{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-input formControlName="phone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
-        <ion-label *ngIf="this.isSubmittedTelephone && this.formContact.get('phone').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-label class="txtTitleGoals">{{ 'detail_contact.telephone' | translate}}</ion-label>
+        <ion-input class="textMedium" formControlName="phone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
+        <ion-label class="textMedium" *ngIf="this.isSubmittedTelephone && this.formContact.get('phone').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
+ 
       </ion-item>
       <ion-item lines="none"  routerLink="../list-relationship">
-        <ion-label>{{ 'detail_contact.family_relationship' | translate}}</ion-label>
-        <ion-input formControlName="socialRelationName" placeholder="" slot="end" (ionInput)="isSubmittedRelationship = false" maxlength="100" required></ion-input>
-        <ion-label *ngIf="this.isSubmittedRelationship && this.formContact.get('socialRelationName').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-label class="txtTitleGoals">{{ 'detail_contact.family_relationship' | translate}}</ion-label>
+        <ion-input class="textMedium" formControlName="socialRelationName" placeholder="" slot="end" (ionInput)="isSubmittedRelationship = false" maxlength="100" required></ion-input>
+        <ion-label class="textMedium" *ngIf="this.isSubmittedRelationship && this.formContact.get('socialRelationName').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
+   
       </ion-item>
     </ion-list>
   </form>
@@ -52,6 +52,6 @@
 
 
   <section *ngIf="!this.isNewContact">
-    <ion-button expand="block" (click)="presentAlertDeleteConfirm()">{{ 'detail_contact.button_delete' | translate}}</ion-button>
+    <ion-button class="deleteButton" expand="block" (click)="presentAlertDeleteConfirm()">{{ 'detail_contact.button_delete' | translate}}</ion-button>
   </section>
 </ion-content>

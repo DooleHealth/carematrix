@@ -84,7 +84,8 @@
         "detail_button": "Detalles",
         "register_button": "Inscribirme",
         "take_button": "Tomar",
-        "go_play_button": "Ir a juego"
+        "go_play_button": "Ir a juego",
+        "diet": "Dietes"
       },
       "profile":{
         "title_profile": "Mi Perfil",
@@ -437,6 +438,9 @@
         "taked": "Tomada",
         "forgotten": "Olvidada",
         "continue": "Continuar"
+      },
+      "conversation":{
+        "placeholder":"Escribe un mensaje"
       }
       
 

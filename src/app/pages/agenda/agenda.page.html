@@ -46,6 +46,7 @@
     [currentDate]="calendar.currentDate"
     (onTitleChanged)="onViewTitleChanged($event)"
     (onEventSelected)="onEventSelected($event)"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)"
     startHour="6"
     endHour="20"
     step="30"
@@ -72,7 +73,7 @@
       <ion-row class="rowPadding"><ion-text class="event-detail-title">{{selectedDate.date | date: 'EEEE, d MMMM' | uppercase}}</ion-text></ion-row>
       <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false" >
         <ion-item class="rowPadding2">
-          <ion-spinner></ion-spinner>
+          
           <ion-list >
             <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="detail" [state]="{id: event.id}">
 
@@ -99,7 +100,8 @@
               </ion-grid>
             </ion-item>
           </ion-list>
-          <ion-item lines="none" *ngIf="selectedDate?.events.length==0">
+          <ion-spinner *ngIf="this.isLoading"></ion-spinner>
+          <ion-item lines="none" *ngIf="!this.isLoading && selectedDate?.events.length==0">
             <div class="no-events-label">{{'agenda.no_events' | translate}}</div>
           </ion-item>
         </ion-item>

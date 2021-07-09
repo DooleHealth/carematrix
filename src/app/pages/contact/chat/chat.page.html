@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen class="whiteBackground">
   <ion-list>
     <div *ngFor="let post of this.chat">
      
@@ -40,7 +40,7 @@
           
       <div *ngFor="let item of post?.recipients; let i = index">
        
-        <ion-item  *ngIf="item.id != this.authService?.user.idUser" lines="none" routerLink="conversation" [state]="{staff:item, chat: post.message?.message_header_id }" >
+        <ion-item  *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation" [state]="{staff:item, chat: post.message?.message_header_id }" >
           <ion-thumbnail slot="start">
             <app-aspect-ratio [ratio]="{w:1, h:1}">
               <app-image-shell
