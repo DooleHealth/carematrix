@@ -41,7 +41,7 @@
       <ion-list *ngFor="let list of this.listDiagnostic">
         <div class="dot"></div>
        <div class="verticalLine2">
-        <ion-label class="txtTitleGray">{{list.date | date: ['EEEE, d MMMM YYYY']}}</ion-label>
+        <ion-label class="txtTitleGray">{{list.date | date: 'EEEE'  | titlecase}}, {{list.date | date: 'd MMMM YYYY'}}</ion-label>
   
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
           <ion-card class="cardProfile">

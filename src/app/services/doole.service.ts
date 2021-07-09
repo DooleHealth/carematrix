@@ -13,38 +13,40 @@ import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
+import { AuthenticationService } from './authentication.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DooleService {
- 
+
   constructor(
-    private transfer: FileTransfer, 
-    private file : File, 
-    private http: HttpService,  
-    private api: ApiEndpointsService, 
-    public events: Events, 
+    private authService: AuthenticationService,
+    private transfer: FileTransfer,
+    private file: File,
+    private http: HttpService,
+    private api: ApiEndpointsService,
+    public events: Events,
     private platform: Platform,
     public router: Router,
     public alertController: AlertController) { }
-    public selectedDate: Date;
+  public selectedDate: Date;
 
-  uploadFile(image: string, id?:string){
+  uploadFile(image: string, id?: string) {
 
     console.log("uploading ", image);
     const token = localStorage.getItem('token');
     let options: FileUploadOptions = {
       fileKey: 'file',
       fileName: 'name.jpg',
-  
+
       headers: {
-        'Authorization' : 'Bearer ' + token,
-        'Accept' : 'application/json',
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json',
       },
       params: {
-        id:id
+        id: id
       }
     }
 
@@ -52,140 +54,139 @@ export class DooleService {
     // Add files for new or saved diagnostics. 
     // uses diagnostic/media when diagnostic is new 
     //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
-    const endpoint = this.api.getEndpoint('media/upload/temp') ;
+    const endpoint = this.api.getEndpoint('media/upload/temp');
     console.log("* uploadFile endpoint", endpoint);
-    
-    return new Promise(function(resolve,reject) {
-      fileTransfer.upload(image,endpoint,options).then(data =>
-      {
-          console.log(data);
-          resolve(JSON.parse(data.response));
-      },(err) => {
-          console.log(err);
-          reject(err);
+
+    return new Promise(function (resolve, reject) {
+      fileTransfer.upload(image, endpoint, options).then(data => {
+        console.log(data);
+        resolve(JSON.parse(data.response));
+      }, (err) => {
+        console.log(err);
+        reject(err);
       })
     })
-    
+
   }
 
-  uploadMessageImage(idMessageHeader, idUserTo, message, fileUrl, id_usuari_amiq){
+  uploadMessageImage(idMessageHeader, idUserTo, message, fileUrl, id_usuari_amiq) {
 
     const token = localStorage.getItem('token');
-  
+
     let options: FileUploadOptions = {
       fileKey: 'file',
       fileName: 'name.pdf', //TODO: 'name.jpg'
       headers: {
-        'Authorization' : 'Bearer ' + token,
-        'Accept' : 'application/json',
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json',
       },
-      params:{
-        idUser : id_usuari_amiq,
+      params: {
+        idUser: id_usuari_amiq,
         secret: token,
-        value : "",
-        id : idMessageHeader
+        value: "",
+        id: idMessageHeader
       }
     }
     console.log("options: ", options);
-    
+
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     fileTransfer.onProgress((progressEvent) => {
       if (progressEvent.lengthComputable) {
         var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-        this.events.publish("uploadMessageImage",{fileUrl,perc});
+        this.events.publish("uploadMessageImage", { fileUrl, perc });
       } else {
         console.log("progressEvent - ", progressEvent);
       }
     });
 
     const endpoint = this.api.getDooleEndpoint('message');
-  
-    return new Promise(function(resolve,reject) {
+
+    return new Promise(function (resolve, reject) {
       fileTransfer.upload(fileUrl, endpoint, options)
-      .then(data => {
-        console.log("success fileTransfer.upload", JSON.parse(data.response));
-        resolve(JSON.parse(data.response));
-      }, (err) => {
-       console.log("** error ** fileTransfer.upload: ", err);
-        reject( fileTransfer.upload);
-      })
+        .then(data => {
+          console.log("success fileTransfer.upload", JSON.parse(data.response));
+          resolve(JSON.parse(data.response));
+        }, (err) => {
+          console.log("** error ** fileTransfer.upload: ", err);
+          reject(fileTransfer.upload);
+        })
     })
-    
+
   }
 
   b64toBlob(b64Data, contentType = '', sliceSize = 512) {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
-  
+
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
       const slice = byteCharacters.slice(offset, offset + sliceSize);
-  
+
       const byteNumbers = new Array(slice.length);
       for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
-  
+
       const byteArray = new Uint8Array(byteNumbers);
       byteArrays.push(byteArray);
     }
-  
+
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
 
-  downloadFile(url,destination) : Observable<any>{
-    var result : any = [];
+  downloadFile(url, destination): Observable<any> {
+    var result: any = [];
     const fileTransfer: FileTransferObject = this.transfer.create();
     var path = null;
 
-    if(this.platform.is('ios')){
+    if (this.platform.is('ios')) {
       path = this.file.documentsDirectory;
-    }else{
+    } else {
       path = this.file.dataDirectory;
     }
-    
-    console.log("downloadFile", url,destination,'path,destination', path,destination);
+
+    console.log("downloadFile", url, destination, 'path,destination', path, destination);
     return new Observable((observer) => {
       console.log("before CheckFile", this.file);
-      this.file.checkFile(path,destination).then(res =>{
+      this.file.checkFile(path, destination).then(res => {
         console.log("*res*", res);
-        if(res){
+        if (res) {
           console.log("exists", res);
-          result["success"]=true;
-          result["downloaded"]=true;
-          result["file"]=path + destination;//normalizeURL(this.file.cacheDirectory + destination);
-          result["fileNormalized"]=Capacitor.convertFileSrc(path + destination);
+          result["success"] = true;
+          result["downloaded"] = true;
+          result["file"] = path + destination;//normalizeURL(this.file.cacheDirectory + destination);
+          result["fileNormalized"] = Capacitor.convertFileSrc(path + destination);
           return observer.next(result);
         }
-        },error =>{
-            console.log("not exists");
-            fileTransfer.onProgress(event => {                                //descarreguem
-              if (event.lengthComputable) {
-                //console.log(event.loaded / event.total);
-                result["status"]="downloading";
-                result["downloaded"]=false;
-                result["percent"]=Math.round((event.loaded / event.total)*100);
-                return observer.next(result);
-              }
-            });
-
-            return fileTransfer.download(url, path + destination).then((entry) => {
-              console.log('*download:* '+url+" "+ entry.toURL());
-              result["success"]=true;
-              result["downloaded"]=true;
-              result["file"]=entry.toURL();//normalizeURL(this.file.cacheDirectory + destination);
-              result["fileNormalized"]=Capacitor.convertFileSrc(path + destination);
-              return observer.next(result);
-            }, (error) => {
-              console.log(error);
-              result["success"]=false;
-              result["downloaded"]=false;
-              console.log("error download "+url);
-              console.log(result);
-              return observer.next(result);
-            })
+      }, error => {
+        console.log("not exists");
+        fileTransfer.onProgress(event => {                                //descarreguem
+          if (event.lengthComputable) {
+            //console.log(event.loaded / event.total);
+            result["status"] = "downloading";
+            result["downloaded"] = false;
+            result["percent"] = Math.round((event.loaded / event.total) * 100);
+            return observer.next(result);
+          }
         });
+
+        return fileTransfer.download(url, path + destination).then((entry) => {
+          console.log('*download:* ' + url + " " + entry.toURL());
+          result["success"] = true;
+          result["downloaded"] = true;
+          result["file"] = entry.toURL();//normalizeURL(this.file.cacheDirectory + destination);
+          result["fileNormalized"] = Capacitor.convertFileSrc(path + destination);
+          return observer.next(result);
+        }, (error) => {
+          console.log(error);
+          result["success"] = false;
+          result["downloaded"] = false;
+          console.log("error download " + url);
+          console.log(result);
+          return observer.next(result);
+        })
+      });
     });
   }
 
@@ -202,7 +203,7 @@ export class DooleService {
 
   async showAlertAndReturn(header: string, message: string, isDismiss?: boolean, route?: string) {
     console.log(`[DooleService] showAlertAndReturn()`);
-    let dismiss = (isDismiss !== undefined)? isDismiss: false
+    let dismiss = (isDismiss !== undefined) ? isDismiss : false
     const alert = await this.alertController.create({
       header: header,
       message: message,
@@ -212,8 +213,8 @@ export class DooleService {
           text: 'OK',
           handler: (blah) => {
             console.log('Confirm OK: blah');
-            if(route !== undefined && route !== null )
-            this.router.navigateByUrl(route);
+            if (route !== undefined && route !== null)
+              this.router.navigateByUrl(route);
           }
         }
       ]
@@ -221,8 +222,8 @@ export class DooleService {
     await alert.present();
   }
 
-  async presentAlert(message, button?:string) {
-    let buttonName = (button !== undefined)? button: 'Ok' 
+  async presentAlert(message, button?: string) {
+    let buttonName = (button !== undefined) ? button : 'Ok'
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
       message: message,
@@ -231,7 +232,13 @@ export class DooleService {
     await alert.present();
   }
 
-  getAPILegalInformation(): Observable<any>{
+  getFamilyUnitID(): HttpParams {
+    let httpParams = new HttpParams();
+    let user = this.authService.user
+    return httpParams = (user.familyUnit) ? httpParams.append('user', user.familyUnit) : httpParams
+  }
+
+  getAPILegalInformation(): Observable<any> {
     let path = 'user/legalTerm/lastAccepted';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -241,7 +248,7 @@ export class DooleService {
       })
     )
   }
-  postAPILegalConfirmation(params: Object): Observable<any>{
+  postAPILegalConfirmation(params: Object): Observable<any> {
     let path = 'user/legalTerm/lastAccepted';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -253,7 +260,7 @@ export class DooleService {
     );
   }
 
-  postAPIpasswordRecovery(params: Object) : Observable<any>{
+  postAPIpasswordRecovery(params: Object): Observable<any> {
     let path = 'patient/forgot'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -264,13 +271,13 @@ export class DooleService {
     );
   }
 
-  getAPIStaffSlots(params : {id: number, date: string}){
-    
+  getAPIStaffSlots(params: { id: number, date: string }) {
+
     let path = `staff/${params.id}/availability`;
     let endpoint: string;
-    if(params.date !== ""){
+    if (params.date !== "") {
       endpoint = this.api.getEndpointWithParameters(path, (qs: QueryStringParameters) => qs.push('date', params.date));
-    }else{
+    } else {
       endpoint = this.api.getEndpoint(path);
     }
 
@@ -282,7 +289,7 @@ export class DooleService {
     )
   }
 
-  getAPIgoals(): Observable<any>{
+  getAPIgoals(): Observable<any> {
     let path = 'user/element/goals'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -293,7 +300,7 @@ export class DooleService {
     )
   }
 
-  getAPIinformationUser(): Observable<any>{
+  getAPIinformationUser(): Observable<any> {
     let path = 'user/informationUser'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -304,8 +311,9 @@ export class DooleService {
     )
   }
 
-  getAPIuserProfile(): Observable<any>{
+  getAPIuserProfile(): Observable<any> {
     let path = 'user/profile'
+    //let httpParams = this.getFamilyUnitID()
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -315,8 +323,9 @@ export class DooleService {
     )
   }
 
-  postAPIChangePassword(params: Object): Observable<any>{
+  postAPIChangePassword(params: Object): Observable<any> {
     let path = 'user/changePassword';
+    let httpParams = this.getFamilyUnitID()
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -327,7 +336,7 @@ export class DooleService {
     );
   }
 
-  getAPInotificationConfigurations(): Observable<any>{
+  getAPInotificationConfigurations(): Observable<any> {
     let path = 'user/configuration'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -338,7 +347,7 @@ export class DooleService {
     )
   }
 
-  postAPIConfiguration(params: Object): Observable<any>{
+  postAPIConfiguration(params: Object): Observable<any> {
     let path = 'user/configuration';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -350,7 +359,7 @@ export class DooleService {
     );
   }
 
-  getAPIFaqs(): Observable<any>{
+  getAPIFaqs(): Observable<any> {
     let path = 'center/faq'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -361,7 +370,7 @@ export class DooleService {
     )
   }
 
-  getAPIFamilyUnit(): Observable<any>{
+  getAPIFamilyUnit(): Observable<any> {
     let path = 'user/familyUnit';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -372,7 +381,7 @@ export class DooleService {
     );
   }
 
-  postAPIReportProblem(params: Object): Observable<any>{
+  postAPIReportProblem(params: Object): Observable<any> {
     let path = 'user/reportProblem'; // 'media/upload/temp' 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -384,8 +393,8 @@ export class DooleService {
     );
   }
 
-  postAPIemailVerification(params: Object): Observable<any>{
-    let path = 'user/email_verification'; 
+  postAPIemailVerification(params: Object): Observable<any> {
+    let path = 'user/email_verification';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -396,8 +405,8 @@ export class DooleService {
     );
   }
 
-  postAPIcodeVerification(params: Object): Observable<any>{
-    let path = 'user/code_verification'; 
+  postAPIcodeVerification(params: Object): Observable<any> {
+    let path = 'user/code_verification';
     //let path = 'user/codeVerification'; 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -410,7 +419,7 @@ export class DooleService {
   }
 
 
-  getAPIhealthCardTypes(): Observable<any>{
+  getAPIhealthCardTypes(): Observable<any> {
     let path = 'center/healthCardTypes';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -421,7 +430,7 @@ export class DooleService {
     );
   }
 
-  getAPIhealthCards(): Observable<any>{
+  getAPIhealthCards(): Observable<any> {
     let path = 'user/healthcards';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -432,7 +441,7 @@ export class DooleService {
     );
   }
 
-  getAPIhealthCardId(id): Observable<any>{
+  getAPIhealthCardId(id): Observable<any> {
     let path = `user/healthcard/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -443,7 +452,7 @@ export class DooleService {
     );
   }
 
-  postAPIhealthCards(params: Object): Observable<any>{
+  postAPIhealthCards(params: Object): Observable<any> {
     let path = 'user/healthcard';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -455,7 +464,7 @@ export class DooleService {
     );
   }
 
-  putAPIhealthCard(params: HealthCard): Observable<any>{
+  putAPIhealthCard(params: HealthCard): Observable<any> {
     let path = `user/healthcard/${params.id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.put(endpoint, params).pipe(
@@ -467,19 +476,19 @@ export class DooleService {
     );
   }
 
-  deleteAPIhealthCard(params: HealthCard): Observable<any>{
+  deleteAPIhealthCard(params: HealthCard): Observable<any> {
     let path = `user/healthcard/${params.id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res) );
+        console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res));
         return res;
 
       })
     );
   }
 
-  getAPISocialRelationType(): Observable<any>{
+  getAPISocialRelationType(): Observable<any> {
     let path = 'center/socialRelationType';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -490,7 +499,7 @@ export class DooleService {
     );
   }
 
-  getAPIemergencyContact(): Observable<any>{
+  getAPIemergencyContact(): Observable<any> {
     let path = 'user/EmergencyContacts';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -501,8 +510,8 @@ export class DooleService {
     );
   }
 
-  getAPIemergencyContactID(id: any): Observable<any>{
-    let path = `user/EmergencyContacts/${id}`;
+  getAPIemergencyContactID(id: any): Observable<any> {
+    let path = `user/EmergencyContact/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -512,7 +521,7 @@ export class DooleService {
     );
   }
 
-  postAPIemergencyContact(params: Object): Observable<any>{
+  postAPIemergencyContact(params: Object): Observable<any> {
     let path = 'user/EmergencyContact';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -524,10 +533,11 @@ export class DooleService {
     );
   }
 
-  putAPIemergencyContact(id: any, params: Object): Observable<any>{
+  putAPIemergencyContact(id: any, params: Object): Observable<any> {
     let path = `user/EmergencyContact/${id}`;
+    console.log('[DooleService] putAPIemergencyContact()', params);
     const endpoint = this.api.getEndpoint(path);
-    return this.http.put(endpoint, params).pipe(
+    return this.http.put(endpoint, params, {}).pipe(
       map((res: any) => {
         console.log(`[DooleService] putAPIemergencyContact(${path}) res: `, res);
         return res;
@@ -536,12 +546,12 @@ export class DooleService {
     );
   }
 
-  deleteAPIemergencyContact(id: any): Observable<any>{
+  deleteAPIemergencyContact(id: any): Observable<any> {
     let path = `user/EmergencyContact/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPIemergencyContact(${path}) res: ${res}`, JSON.stringify(res) );
+        console.log(`[DooleService] deleteAPIemergencyContact(${path}) res: ${res}`, JSON.stringify(res));
         return res;
 
       })
@@ -549,7 +559,7 @@ export class DooleService {
   }
 
 
-  getAPIaboutUs(): Observable<any>{
+  getAPIaboutUs(): Observable<any> {
     let path = 'user/about_us';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -560,7 +570,7 @@ export class DooleService {
     );
   }
 
-  getAPIappointmentAgenda(): Observable<any>{
+  getAPIappointmentAgenda(): Observable<any> {
     let path = 'user/appointment';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -571,7 +581,7 @@ export class DooleService {
     );
   }
 
-  postAPIappointmentAgenda(params: Object): Observable<any>{
+  postAPIappointmentAgenda(params: Object): Observable<any> {
     let path = 'user/appointment';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -582,9 +592,9 @@ export class DooleService {
       })
     );
   }
-  
+
   //documents-Tracking
-  getAPIdiagnosticTests(): Observable<any>{
+  getAPIdiagnosticTests(): Observable<any> {
     let path = 'user/diagnosticTests';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -595,7 +605,7 @@ export class DooleService {
     );
   }
 
-  getAPIdiagnosticTestTypesAvailable(): Observable<any>{
+  getAPIdiagnosticTestTypesAvailable(): Observable<any> {
     let path = 'diagnosticTestTypes/available';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -606,8 +616,8 @@ export class DooleService {
     );
   }
 
-  getAPIdiagnosticTestID(id: Object): Observable<any>{
-    let path = 'user/diagnosticTest/'+id;
+  getAPIdiagnosticTestID(id: Object): Observable<any> {
+    let path = 'user/diagnosticTest/' + id;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -617,7 +627,7 @@ export class DooleService {
     );
   }
 
-  postAPIdiagnosticTest(params: Object): Observable<any>{
+  postAPIdiagnosticTest(params: Object): Observable<any> {
     let path = 'user/diagnosticTests/';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -629,15 +639,15 @@ export class DooleService {
     );
   }
 
-  getAPIfilteredDiagnosticTest(params: any): Observable<any>{
+  getAPIfilteredDiagnosticTest(params: any): Observable<any> {
     let path = 'user/diagnosticTests';
     const endpoint = this.api.getEndpoint(path);
     let httpParams = new HttpParams();
     // Begin assigning parameters
-    if(params !== undefined){
-      httpParams = (params.start_date)? httpParams.append('from_date', params.start_date): httpParams
-      httpParams = (params.end_date)? httpParams.append('to_date', params.end_date): httpParams
-      if(params.diagnosticTestTypes){
+    if (params !== undefined) {
+      httpParams = (params.start_date) ? httpParams.append('from_date', params.start_date) : httpParams
+      httpParams = (params.end_date) ? httpParams.append('to_date', params.end_date) : httpParams
+      if (params.diagnosticTestTypes) {
         params.diagnosticTestTypes.forEach(element => {
           httpParams = httpParams.append('diagnostic_test_type_id[]', element)
         });
@@ -652,7 +662,7 @@ export class DooleService {
     );
   }
   //forms-Tracking
-  getAPIformLists(): Observable<any>{
+  getAPIformLists(): Observable<any> {
     let path = 'forms/user';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -662,10 +672,10 @@ export class DooleService {
       })
     );
   }
-//graphics-Tracking
+  //graphics-Tracking
 
-  getAPIelementsList(): Observable<any>{  
-    let path =  'user/elementsList/v2'  /* 'user/elementsList'  */
+  getAPIelementsList(): Observable<any> {
+    let path = 'user/elementsList/v2'  /* 'user/elementsList'  */
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -674,9 +684,9 @@ export class DooleService {
       })
     );
   }
-/** get elements with query by parameter date  */
-  getAPIelementsListByDate(params: Object): Observable<any>{  
-    let path =  'user/elementsList/v2'  /* 'user/elementsList'  */
+  /** get elements with query by parameter date  */
+  getAPIelementsListByDate(params: Object): Observable<any> {
+    let path = 'user/elementsList/v2'  /* 'user/elementsList'  */
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -686,8 +696,8 @@ export class DooleService {
     );
   }
 
-  postAPIaddElement(id, params: Object): Observable<any>{
-    let path = 'user/element/' + id + '/value/add'  
+  postAPIaddElement(id, params: Object): Observable<any> {
+    let path = 'user/element/' + id + '/value/add'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -697,8 +707,8 @@ export class DooleService {
     );
   }
 
-  getAPIgraphicsElement(id: Object, query): Observable<any>{
-    let path = 'user/element/'+id +'?'+query;  
+  getAPIgraphicsElement(id: Object, query): Observable<any> {
+    let path = 'user/element/' + id + '?' + query;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -708,8 +718,19 @@ export class DooleService {
     );
   }
 
-  getAPIcategory(): Observable<any>{
-    let path = 'user/element_category';  
+  getAPIelementID(id: Object): Observable<any> {
+    let path = `user/element/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIcategory(): Observable<any> {
+    let path = 'user/element_category';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -718,9 +739,9 @@ export class DooleService {
       })
     );
   }
-/** get diets with query by parameter date  */
-  getAPIlistDietsByDate(params: Object): Observable<any>{
-    let path = 'user/diets';   
+  /** get diets with query by parameter date  */
+  getAPIlistDietsByDate(params: Object): Observable<any> {
+    let path = 'user/diets';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -730,8 +751,8 @@ export class DooleService {
     );
   }
   /** get advices  **/
-  getAPIlistAdvices(): Observable<any>{
-    let path = 'user/advices';  
+  getAPIlistAdvices(): Observable<any> {
+    let path = 'user/advices';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -742,8 +763,8 @@ export class DooleService {
   }
 
 
-  getAPIdetailDiets(id: any): Observable<any>{
-    let path = `diet/${id}`;   
+  getAPIdetailDiets(id: any): Observable<any> {
+    let path = `diet/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -753,12 +774,12 @@ export class DooleService {
     );
   }
 
-  getAPIdrugsList(query: any): Observable<any>{
-    let path = `drugIntake/list`;  
+  getAPIdrugsList(query: any): Observable<any> {
+    let path = `drugIntake/list`;
     let httpParams = new HttpParams();
-    httpParams = (query)? httpParams.append('search', query): httpParams
+    httpParams = (query) ? httpParams.append('search', query) : httpParams
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint,httpParams).pipe(
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIdrugsList(${path}) res: `, res);
         return res;
@@ -767,7 +788,7 @@ export class DooleService {
   }
 
 
-  postAPIdrugIntakeByDate(params: Object): Observable<any>{
+  postAPIdrugIntakeByDate(params: Object): Observable<any> {
     let path = 'user/drugIntake/date';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -779,7 +800,7 @@ export class DooleService {
     );
   }
 
-  postAPIdrugIntake(params: Object): Observable<any>{
+  postAPIdrugIntake(params: Object): Observable<any> {
     let path = 'user/drugIntake';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -791,7 +812,7 @@ export class DooleService {
     );
   }
 
-  postAPIchangeStatedrugIntake(id: Object, state: Object): Observable<any>{
+  postAPIchangeStatedrugIntake(id: Object, state: Object): Observable<any> {
     let path = `user/drugIntake/${id}/set/${state}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint).pipe(
@@ -803,7 +824,7 @@ export class DooleService {
     );
   }
 
-  putAPIdrugIntake(id: any, params: Object): Observable<any>{
+  putAPIdrugIntake(id: any, params: Object): Observable<any> {
     let path = `user/drugIntake/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.put(endpoint, params).pipe(
@@ -815,44 +836,44 @@ export class DooleService {
     );
   }
 
-  deleteAPIdrugIntake(id: Object): Observable<any>{
+  deleteAPIdrugIntake(id: Object): Observable<any> {
     let path = `user/drugIntake/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPIdrugIntake(${path}) res: ${res}`, JSON.stringify(res) );
+        console.log(`[DooleService] deleteAPIdrugIntake(${path}) res: ${res}`, JSON.stringify(res));
         return res;
 
       })
     );
   }
 
-getAPIgames(params?: Object): Observable<any>{
-  let path = 'user/games';   
-  const endpoint = this.api.getEndpoint(path);
-  return this.http.get(endpoint).pipe(
-    map((res: any) => {
-      console.log(`[DooleService] getAPIgames(${path}) res: `, res);
-      return res;
-    })
-  );
-}
-/** get games with query by parameter date  */
-getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
-  let path = 'user/gamePlays/scheduled';  
-  let httpParams = new HttpParams();
-  httpParams = (from_date)? httpParams.append('from_date', from_date): httpParams 
-  httpParams = (to_date)? httpParams.append('to_date', to_date): httpParams 
-  const endpoint = this.api.getEndpoint(path);
-  return this.http.get(endpoint, httpParams).pipe(
-    map((res: any) => {
-      console.log(`[DooleService] getAPIgames(${path}) res: `, res);
-      return res;
-    })
-  );
-}
-  getAPIgameId(id): Observable<any>{
-    let path = `user/game/${id}`;   
+  getAPIgames(params: Object): Observable<any> {
+    let path = 'user/games';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  /** get games with query by parameter date  */
+  getAPIgamesByDate(from_date: any, to_date: any): Observable<any> {
+    let path = 'user/gamePlays/scheduled';
+    let httpParams = new HttpParams();
+    httpParams = (from_date) ? httpParams.append('from_date', from_date) : httpParams
+    httpParams = (to_date) ? httpParams.append('to_date', to_date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  getAPIgameId(id): Observable<any> {
+    let path = `user/game/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -862,7 +883,7 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
     );
   }
 
-  getAPIagenda(): Observable<any>{
+  getAPIagenda(): Observable<any> {
     let path = 'user/agenda';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -872,7 +893,7 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
       })
     );
   }
-  getAPIagendaID(id): Observable<any>{
+  getAPIagendaID(id): Observable<any> {
     let path = `user/agenda/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -883,8 +904,8 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
     );
   }
 
-  postAPIaddAgenda(params: Object): Observable<any>{
-    let path = 'user/agenda/'  
+  postAPIaddAgenda(params: Object): Observable<any> {
+    let path = 'user/agenda/'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -894,9 +915,9 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
     );
   }
 
-  deleteAPIaddAgenda(id: Object): Observable<any>{
-    let params = {agenda: id}
-    let path = 'user/agenda/delete'  
+  deleteAPIaddAgenda(id: Object): Observable<any> {
+    let params = { agenda: id }
+    let path = 'user/agenda/delete'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -906,7 +927,7 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
     );
   }
 
-  getAPIallowedContacts(): Observable<any>{
+  getAPIallowedContacts(): Observable<any> {
     let path = `user/allowedContacts`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -917,7 +938,7 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
     );
   }
 
-  getAPIstaffId(id): Observable<any>{
+  getAPIstaffId(id): Observable<any> {
     let path = `user/staff/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -929,52 +950,52 @@ getAPIgamesByDate(from_date: any, to_date: any): Observable<any>{
   }
 
   /** get games with query by parameter date  */
-getAPIUserMessages(): Observable<ShellChatModel[]>{
+  getAPIUserMessages(): Observable<ShellChatModel[]> {
 
-  let path = 'message/user';  
-  const endpoint = this.api.getEndpoint(path);
-  return this.http.get(endpoint).pipe(
-    map((res: any) => {
-      
-      console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
-      return res.messages as ShellChatModel[];
-    })
-  );
-}
-// get the company details, a subset of the user data
-getUserSubsetData(): Observable<ShellChatModel> {
-  let path = 'message/user';  
-  const endpoint = this.api.getEndpoint(path);
-  
-  const dataObservable = this.http.get(endpoint);
-
-  return dataObservable.pipe(
-    map((jsonResponse) => {
-      const filteredData: ShellChatModel = {
-        ...jsonResponse.messages
-      };
-      return filteredData;
-    })
-  );
-}
-
-
-
-  get(endpt): Observable<any>{
-    const endpoint = this.api.getDooleEndpoint(endpt);
+    let path = 'message/user';
+    const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
-        map((res: any) => {
-          return res;
-        })
+      map((res: any) => {
+
+        console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+        return res.messages as ShellChatModel[];
+      })
+    );
+  }
+  // get the company details, a subset of the user data
+  getUserSubsetData(): Observable<ShellChatModel> {
+    let path = 'message/user';
+    const endpoint = this.api.getEndpoint(path);
+
+    const dataObservable = this.http.get(endpoint);
+
+    return dataObservable.pipe(
+      map((jsonResponse) => {
+        const filteredData: ShellChatModel = {
+          ...jsonResponse.messages
+        };
+        return filteredData;
+      })
     );
   }
 
-  post(endpt, items): Observable<any>{
+
+
+  get(endpt): Observable<any> {
+    const endpoint = this.api.getDooleEndpoint(endpt);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  post(endpt, items): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.post(endpoint, items).pipe(
-        map((res: any) => {
-          return res;
-        })
+      map((res: any) => {
+        return res;
+      })
     );
   }
 

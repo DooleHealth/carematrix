@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'reminder-add',
     loadChildren: () => import('./reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
   }
 
 ];

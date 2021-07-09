@@ -11,6 +11,8 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class ActivityGoalPage implements OnInit {
   private id;
+  normalValue
+  description
   graphics = []
   header = []
   values = []
@@ -35,12 +37,11 @@ export class ActivityGoalPage implements OnInit {
     this.id = history.state.id;
     this.header = history.state.header;
     console.log('[ActivityGoalPage] ngOnInit()', this.id);
-    //this.getGraphics()
     //this.loadData('1m');
   }
 
   ionViewDidEnter() {
-   // this.getData()
+   if(this.id)
    this.loadData('1d');
   }
 
@@ -56,6 +57,7 @@ export class ActivityGoalPage implements OnInit {
     this.dooleService.getAPIgraphicsElement(this.id, dict).subscribe(async json=>{
       console.log('[ActivityGoalPage] loadData()', await json); 
       this.title = json.name;
+      this.description = json?.description
       this.units = json.units;
       this.values = json.values;
       this.goals = json.goals;
@@ -111,6 +113,8 @@ export class ActivityGoalPage implements OnInit {
 
         r["color"]=color;
         this.ranges.push(r);
+        if(range.rangeType === "success")
+        this.normalValue = range.conditionString
       });
 
       this.graphValues=vArray;

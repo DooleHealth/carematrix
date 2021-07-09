@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FamilyUnit } from 'src/app/models/user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -12,10 +14,13 @@ import { DooleService } from 'src/app/services/doole.service';
 export class FamilyUnitPage implements OnInit {
   listFamilyUnit:FamilyUnit[] = [];
   isLoading = false
+  user
   constructor(
     private dooleService: DooleService,
+    private authService: AuthenticationService,
     private alertController: AlertController,
-    private translate: TranslateService) { }
+    public router: Router,
+    private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
     this.getFamilyUnitData()
@@ -58,12 +63,26 @@ export class FamilyUnitPage implements OnInit {
           handler: () => {
             console.log('Confirm Okay');
             console.log('[FamilyUnitPage] presentAlertConfirm() Cuenta de:', family.name);
+            this.changeUser(family)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  changeUser(user?){
+    console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
+    this.authService.setUserFamilyId(user? user.id: null);
+    this.router.navigateByUrl('home');
+  }
+
+
+  returnUser(){
+    console.log('[FamilyUnitPage] returnUser()');
+    this.authService.setUserFamilyId(null);
+    this.router.navigateByUrl('home');
   }
 
 

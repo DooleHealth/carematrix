@@ -7,7 +7,7 @@
         "button_signin": "Iniciar sesión",
         "button_registre": "Crear Usuario",
         "user": "Usuario",
-        "header_message_password_recovery": "Ingresa tu Usuario",
+        "header_message_password_recovery": "Ingresa tu usuario",
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
         "message_wrong_credentials": "El usuario o la contraseñas no son correctas"
@@ -22,8 +22,8 @@
       "sms":{
         "header": "Verificación de Identidad",
         "title":"Empezamos por tu número de teléfono",
-        "text1": "Recibirás un SMS con un código de verificación. ¡Porque tu privacidad es lo más importante!",
-        "text2": "Tu número únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
+        "text1": "Recibirás un correo con un código de verificación. ¡Porque tu privacidad es lo más importante!",
+        "text2": "Tu correo únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
         "alert_message": "¿Es el correo correcto?",
         "ok_button": "Si",
         "ko_button": "Editar",
@@ -35,13 +35,13 @@
       "verification":{
         "header": "Verificación de Identidad",
         "title":"Confirma tu código de verificación",
-        "text1": "Te hemos enviado un SMS con un código para verificar tu número teléfonico y poder continuar. Si no ha recibido ningún mensaje pulse ",
+        "text1": "Te hemos enviado un correo con un código para verificar tu cuenta de usuario y poder continuar. Si no ha recibido ningún correo pulse ",
         "text2": "aquí",
         "alert_message": "El código no es válido",
         "send_email_alert_message": "El código de verificación se ha enviado de nuevo",
         "next_button":"Continuar",
         "error_required": "Error: Campo requerido",
-        "error_min_lenght": "Error: Debe ser 4 digitos"
+        "error_min_lenght": "Error: Debe ser 4 dígitos"
       },
       "intro":{
         "title1": "Bienvenido a",
@@ -65,7 +65,7 @@
         "slider5_text1": "En un vistazo revisa tu dieta, medicación, juegos e información de salud del día. ¡Cuidar de tu salud nunca había sido tan fácil!",
 
         "title6": "Novedades y Consejos",
-        "slider6_text1": "Dispón de las últimas novedades sanitarias y consejos por parte de equipo médico ¡Mantente actualizado en todo momento!",
+        "slider6_text1": "Dispón de las últimas novedades sanitarias y consejos por parte del equipo médico ¡Mantente actualizado en todo momento!",
 
         "title7": "Mi Perfil",
         "slider7_text1": "Configura tus datos y tus preferencias de notificación para poder estar siempre informado. ¡Disfruta tu experiencia en Doole Health!"
@@ -124,6 +124,10 @@
         "description_reward": "Alcanza tu objetivo y suma Healthies:",
         "subtitle_information": "Información",
         "subtitle_advices": "Consejos"
+      },
+      "activity_goal":{
+        "definition": "Definición",
+        "normal_value": "Valores Normales:"
       },
       "personal": {
         "button_back": "Inicio",
@@ -219,12 +223,7 @@
         "expedition_date": "Fecha de Expedición",
         "Optional": "Opcional",
         "error_required": "Requerido",
-        "button_return": "Inicio",
-        "modality_type":{
-          "text0": "Mutua Seguros",
-          "text1": "Sanidad Pública",
-          "text2": "Sanidad Privada"
-        }
+        "button_return": "Inicio"
       },
       "add_health_card":{
         "header_add_card": "Agregar Tarjeta Sanitaria",
@@ -286,9 +285,9 @@
         "days": ["L", "M", "X", "J", "V", "S", "D"]
       },
       "reminder":{
-        "personal_reminder": "Recordatorio Personal",
-        "medical_reminder": "Recordatorio Médico",
-        "header_add_reminder":"Añadir Recordatorio",
+        "personal_reminder": "Agenda Personal",
+        "medical_reminder": "Agenda Médica",
+        "header_add_reminder":"Añadir Agenda",
         "field_doctor": "Médico",
         "field_notes": "Notas",
         "field_type": "Tipo",
@@ -318,7 +317,7 @@
         "field_date": "Fecha",
         "field_doctor": "Médico",
         "field_center": "Centro",
-        "field_specially": "Especialidad",
+        "field_specially": "Profesional",
         "field_appointment_type": "Tipo de cita",
         "field_instructions": "Instrucciones",
         "field_information": "Información",
@@ -376,7 +375,9 @@
           "field_category": "Categoría",
           "field_data": "Dato",
           "field_measure": "Medida",
-          "field_units": "Unidades"
+          "field_units": "Unidades",
+          "alert_message_add_element": "Los datos ha sido añadido correctamente"
+
       },
       "no_data": "En este momento no hay datos para mostrar",
       "diary":{
@@ -385,7 +386,7 @@
           "field_drug": "Medicación",
           "field_game": "Juegos",
           "field_health": "Salud",
-          "description": "Descriptión",
+          "description": "Descripción",
           "dose": "Dosi",
           "morning": "mañana",
           "noon": "mediodía",
