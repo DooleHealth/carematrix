@@ -2,26 +2,25 @@
   <ion-grid>
     <ion-row>
       <ion-col size="10" class="alingLeftTop">
-        <ion-text class="txtTitleBig" *ngIf="this.userDoole as User">Hola, {{this.userDoole.first_name}}</ion-text>
+        <ion-text class="txtTitleBig">Hola, {{this.authService?.user.name}}</ion-text>
       </ion-col>
       <ion-col size="2">
      
-    <ion-img class="imgProfile" [src]="this.userImage" routerLink="/profile" [state]="{user:this.userDoole}"></ion-img>
+    <ion-img class="img-wrapper" [src]="this.authService?.user.image" routerLink="/profile" [state]="{user:this.authService?.user}"></ion-img>
       </ion-col>
     </ion-row>
-    
   </ion-grid>
 
   <ion-grid>
     <ion-row >
       <ion-text class="txtTitle">{{ 'home.goals_title' | translate}}</ion-text>
     </ion-row>
-           <!-- Goals  --> 
+    <!-- Goals  --> 
     <ion-row >
         <ion-card class="vertical-card" routerLink="/profile/goals">  
             <ion-item lines="none" class="noMargin">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
-              <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text >
+              <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
               <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
             </ion-item>
 
@@ -39,10 +38,11 @@
             </ion-card-content>
         </ion-card>
     </ion-row>
-          <!-- Reminders --> 
+    <!-- Reminders --> 
     <ion-row>
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
+     <!-- Agendas --> 
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.appointment">
@@ -69,19 +69,22 @@
         </ion-slide>    
       </ion-slides>
     </ion-row>
-    <!-- Advices --> 
+    <!-- News and Advices --> 
     <ion-row>
      
         <ion-text class="txtTitle" style="white-space: nowrap;"> {{ 'home.advices_title' | translate}}</ion-text>
         <ion-item lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-item>
     
     </ion-row>
+  
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices">
           <ion-card class="cardProfilePaddingBottom">
             <ion-icon name="close"  class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon> 
-            <img class="sliderImage"  [src]="slide.image"><br><br>
+           
+            <img class="sliderImage"  [src]="slide.image?.temporaryUrl">  <br><br>
+           
             <ion-card-title class="txtTitleHome">{{slide.name}}</ion-card-title>
             <ion-card-subtitle class="txtSubTitleHome">{{slide.description}}</ion-card-subtitle>
             <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button>
@@ -90,6 +93,7 @@
       </ion-slides>
     </ion-row>
 
+    <!-- Today -->
     <ion-row>
       <ion-text class="txtTitle">{{ 'home.today_title' | translate}}</ion-text>
     </ion-row>
@@ -98,7 +102,7 @@
       <ion-card class="vertical-card" routerLink="/journal">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
-            <ion-text style="color:'#E67E22';" slot="start" *ngIf="infoDiet as UserInformation">{{infoDiet?.title}}</ion-text>
+            <ion-text style="color:'#E67E22';" slot="start">{{ 'home.diet' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
             <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
@@ -112,7 +116,6 @@
           </ion-card-content>
       </ion-card>
     </ion-row>
-
     <!-- Drugs -->
     <ion-row>
       <ion-card class="vertical-card" routerLink="/journal">       
@@ -139,7 +142,6 @@
           </ion-card-content>
       </ion-card>
     </ion-row>
-
     <!-- Games -->
     <ion-row>
       <ion-card class="vertical-card" routerLink="/journal">       
@@ -165,25 +167,24 @@
           </ion-card-content>
       </ion-card>
     </ion-row>
+    <!-- Physical Activity -->
+    <ion-row>
+      <ion-card class="vertical-card" routerLink="/journal" >       
+          <ion-item lines="none" class="noMargin">
+            <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
+            <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
+            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+          </ion-item>
 
-        <!-- Physical Activity -->
-        <ion-row>
-          <ion-card class="vertical-card" routerLink="/journal" >       
-              <ion-item lines="none" class="noMargin">
-                <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
-                <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
-                <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-              </ion-item>
-    
-            <ion-card-content>
-                <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
-                  <ion-slide *ngFor="let slide of this.activity">
-                    <h1 style="text-align: left;">{{slide.name}}</h1>             
-                    </ion-slide>
-                </ion-slides>
-              </ion-card-content>
-          </ion-card>
-        </ion-row>
+        <ion-card-content>
+            <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
+              <ion-slide *ngFor="let slide of this.activity">
+                <h1 style="text-align: left;">{{slide.name}}</h1>             
+                </ion-slide>
+            </ion-slides>
+          </ion-card-content>
+      </ion-card>
+    </ion-row>
     
   </ion-grid>
 </ion-content>

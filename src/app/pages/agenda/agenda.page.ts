@@ -16,6 +16,7 @@ export class AgendaPage implements OnInit {
   viewTitle: string;
   months = this.translate.instant('agenda.month')
   days = this.translate.instant('agenda.days')
+  isLoading:boolean;
   calendar = {
     mode: 'month',
     currentDate: new Date(),
@@ -45,7 +46,7 @@ export class AgendaPage implements OnInit {
     private alertCtrl: AlertController,
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService, 
-    private languageService: LanguageService,
+    public languageService: LanguageService,
     private dooleService: DooleService,
   ) {}
 
@@ -58,17 +59,23 @@ export class AgendaPage implements OnInit {
   }
 
   getAgenda(){
+    this.isLoading = true;
     this.dooleService.getAPIagenda().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getAgenda()', await res);
+        this.isLoading = false;
         if(res.agenda)
-        this.addScheduleToCalendar(res.agenda)
+          this.addScheduleToCalendar(res.agenda)
        },(err) => { 
           console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
 
+  
+  onCurrentDateChanged(event:Date) {
+   this.getAgenda();
+  }
 
   transformDate(date) {
     let auxDate = `${date.year}-${date.month}-${date.day} ${date.end_time}`

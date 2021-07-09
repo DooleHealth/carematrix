@@ -12,49 +12,47 @@
     <ion-grid class="paddingGrid">
       <ion-row>
         <ion-col size="12">
-          <ion-img *ngIf='this.userProfile as UserProfile'
-            [src]="this.userProfile.temporaryUrl"
-            class="img-wrapper"
-          ></ion-img>
+          <ion-img *ngIf="this.userProfile as UserProfile"
+            [src]="this.userProfile?.temporaryUrl" class="img-wrapper"></ion-img>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-list *ngIf='this.userProfile as UserProfile'>
-      <ion-item *ngIf="this.userProfile.first_name !== undefined && this.userProfile.first_name  !== null">
+    <ion-list *ngIf="this.userProfile as UserProfile">
+      <ion-item >
         <ion-label>{{ 'personal.first_name' | translate}}</ion-label>
-        <ion-label class="textMedium">{{this.userProfile.first_name}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile?.first_name}}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.last_name !== undefined && this.userProfile.last_name  !== null">
+      <ion-item>
         <ion-label>{{ 'personal.last_name' | translate}}</ion-label>
-        <ion-label class="textMedium">{{this.userProfile.last_name}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile?.last_name}}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.birthdate_european !== undefined && this.userProfile.birthdate_european !== null">
+      <ion-item>
         <ion-label>{{ 'personal.birthdate' | translate}}</ion-label>
-        <ion-label class="textMedium">{{this.userProfile.birthdate_european}}</ion-label>
+        <ion-label class="textMedium">{{this.userProfile?.birthdate_european}}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.gender !== undefined && this.userProfile.gender !== null">
+      <ion-item>
         <ion-label>{{ 'personal.gender' | translate}}</ion-label>
-        <ion-label class="textMedium">{{ getGender(this.userProfile.gender)  }}</ion-label>
+        <ion-label class="textMedium">{{ getGender(this.userProfile?.gender)  }}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.height !== undefined && this.userProfile.height !== null"> 
+      <ion-item> 
         <ion-label>{{ 'personal.height' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.userProfile.height}}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.weight !== undefined && this.userProfile.weight !== null">
+      <ion-item>
         <ion-label>{{ 'personal.weight' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.userProfile.weight }}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.blood_group !== undefined && this.userProfile.blood_group !== null">
+      <ion-item>
         <ion-label>{{ 'personal.blood_group' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.userProfile.blood_group }}</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.userProfile.diagnostics !== undefined && this.userProfile.diagnostics !== null">
+      <ion-item>
         <ion-label>{{ 'personal.diagnostics' | translate}}</ion-label>
         <div *ngFor="let diagnostic of this.userProfile.diagnostics " >
           <ion-label class="textMedium">{{diagnostic}}&nbsp;</ion-label>
         </div>         
       </ion-item>
-      <ion-item lines="none" *ngIf="this.userProfile.allergies !== undefined && this.userProfile.allergies !== null">
+      <ion-item lines="none">
         <ion-label>{{ 'personal.allergies' | translate}}</ion-label>
         <div *ngFor="let allergy of this.userProfile.allergies" >
           <ion-label class="textMedium">{{allergy}}&nbsp;</ion-label>
