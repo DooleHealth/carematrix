@@ -69,19 +69,18 @@ export class HomePage implements OnInit {
     })
 
     this.dooleService.getAPIlistAdvices().subscribe((res)=>{
-      console.log(res);
       this.advices = res.advices;
     })
 
-    // this.dooleService.getAPIlistDietsByDate({}).subscribe((res)=>{
-    //   this.diets = res;
-    //   this.slideDietChange()
-    // })
+    this.dooleService.getAPIlistDietsByDate({}).subscribe((res)=>{
+      this.diets = res.diets;
+      this.slideDietChange()
+    })
 
-    // this.dooleService.getAPIdrugsList({}).subscribe((res)=>{
-    //   this.drugs = res;
-    //   this.slideDrugChange()
-    // })
+    this.dooleService.getAPIdrugsList({}).subscribe((res)=>{
+      this.drugs = res;
+      this.slideDrugChange()
+    })
 
     
     this.activity.push({name:'456 Cal'})
