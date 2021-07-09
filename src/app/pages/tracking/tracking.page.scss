@@ -15,11 +15,23 @@
     height:85%;
     background:#E74C3C;
     margin-left:2%;
-  }
-/*  .verticalLine2 {
-   border-left: 2px solid  #3498DB,;
+     }
+ .verticalLine2 {
+   border-left: 2px solid  #7F8C8D;
    margin-left: 5%;
-  }*/
+   z-index: 1;
+}
+.dot{
+  margin-left: -10px;   
+  position: absolute;
+  top: 6px;
+  left: 20px;
+  background: #7F8C8D;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  z-index: 10;
+}
   ion-img{
  
     height: 30px;
