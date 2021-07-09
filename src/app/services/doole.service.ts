@@ -848,7 +848,7 @@ export class DooleService {
     );
   }
 
-  getAPIgames(params: Object): Observable<any> {
+  getAPIgames(): Observable<any> {
     let path = 'user/games';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
