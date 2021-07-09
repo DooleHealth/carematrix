@@ -326,7 +326,8 @@
         "face_to_face": "Presencial",
         "button_delete": "Eliminar Cita",
         "message_deleted_appointment":"Se ha eliminado la cita con éxito",
-        "confirmation_delete_appointment":"¿Estás seguro de eliminar la cita?"
+        "confirmation_delete_appointment":"¿Estás seguro de eliminar la cita?",
+        "no_files":"No existen archivos"
       },
       "doctor":{
         "header_doctor": "Detall Médico",

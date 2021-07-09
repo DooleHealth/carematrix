@@ -326,7 +326,8 @@
         "face_to_face": "Presencial",
         "button_delete": "Eliminar Cita",
         "message_deleted_appointment":"S'ha eliminat la cita amb èxit",
-        "confirmation_delete_appointment":"Estàs segur d'eliminar la cita?"
+        "confirmation_delete_appointment":"Estàs segur d'eliminar la cita?",
+        "no_files":"No hi ha arxius"
       },
       "doctor":{
         "header_doctor": "Detall Metge",
