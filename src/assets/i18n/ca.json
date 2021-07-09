@@ -85,7 +85,8 @@
         "detail_button": "Detalls",
         "register_button": "Inscriure",
         "take_button": "Prendre",
-        "go_play_button": "Anar a joc"
+        "go_play_button": "Anar a joc",
+        "diet": "Dietes"
       },
       "profile":{
         "title_profile": "El meu perfil",

@@ -10,7 +10,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./personal.page.scss'],
 })
 export class PersonalPage implements OnInit {
-  userProfile = {};
+  userProfile: UserProfile;
   constructor(private dooleService: DooleService,
     private router: Router,
     public translate: TranslateService,) { }
@@ -23,10 +23,7 @@ export class PersonalPage implements OnInit {
     this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
         console.log('[PersonalPage] getPersonalInformation()', res);
-        this.userProfile = res //as UserProfile;
-    //console.log('[PersonalPage] getPersonalInformation()', await this.userProfile);
-
-
+        this.userProfile = res as UserProfile;
        },(err) => { 
           console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message); 
           throw err; 

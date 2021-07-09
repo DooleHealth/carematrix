@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 export interface UserInformation {
@@ -22,7 +23,7 @@ export class HomePage implements OnInit {
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
   advices: Advice[] =[]
-  userImage:string = 'assets/icons/user_icon.svg'
+
    sliderConfig = {
     initialSlide: 0,
     slidesPerView: 1,
@@ -46,40 +47,64 @@ export class HomePage implements OnInit {
   constructor(
     public router:Router,
     private dooleService: DooleService,
-    private modalCtrl: ModalController
+    public authService: AuthenticationService
   ) { }
 
   async ngOnInit() { 
-    await this.getUserInformation()
+    this.getUserInformation()
     
-  }
-  userImg(){
-    if( this.userDoole !== undefined && this.userDoole.image !== undefined 
-      && this.userDoole.image !== '')
-      this.userImage = this.userDoole.image;
   }
 
   getUserInformation(){
-    this.dooleService.getAPIinformationUser().subscribe(
-      async (res: any) =>{
-        //console.log('[HomePage] getUserInformation()', await res);
-        this.userDoole = res as User
-        this.userImg()
-        this.goals = this.userDoole.goals
-        this.appointment = this.userDoole.agendas
-        this.advices = this.userDoole.advices
-        this.diets = this.userDoole.diets
-        this.drugs = this.userDoole.drugs
-        this.games = this.userDoole.games
-        //this.activity = this.userDoole.physical
-        this.activity.push({name:'456 Cal'})
-        this.slideDietChange()
-        this.slideDrugChange()
+    this.dooleService.getAPIgames().subscribe((res)=>{
+      this.games = res.games;
+    });
 
-       },(err) => { 
-          console.log('[HomePage] getUserInformation() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      });
+    this.dooleService.getAPIgoals().subscribe((res)=>{
+      this.goals = res.goals;
+    });
+    
+    this.dooleService.getAPIappointmentAgenda().subscribe((res)=>{
+      this.appointment = res;
+    })
+
+    this.dooleService.getAPIlistAdvices().subscribe((res)=>{
+      this.advices = res.advices;
+    })
+
+    this.dooleService.getAPIlistDietsByDate({}).subscribe((res)=>{
+      this.diets = res.diets;
+      this.slideDietChange()
+    })
+
+    this.dooleService.getAPIdrugsList({}).subscribe((res)=>{
+      this.drugs = res;
+      this.slideDrugChange()
+    })
+
+    
+    this.activity.push({name:'456 Cal'})
+
+    //this.activity = this.userDoole.physica
+    // this.dooleService.getAPIinformationUser().subscribe(
+    //   async (res: any) =>{
+    //     //console.log('[HomePage] getUserInformation()', await res);
+    //     this.userDoole = res as User
+    //     this.goals = this.userDoole.goals
+    //     this.appointment = this.userDoole.agendas
+    //     this.advices = this.userDoole.advices
+    //     this.diets = this.userDoole.diets
+    //     this.drugs = this.userDoole.drugs
+    //     this.games = this.userDoole.games
+    //     //this.activity = this.userDoole.physical
+    //     this.activity.push({name:'456 Cal'})
+    //     this.slideDietChange()
+    //     this.slideDrugChange()
+
+    //    },(err) => { 
+    //       console.log('[HomePage] getUserInformation() ERROR(' + err.code + '): ' + err.message); 
+    //       throw err; 
+    //   });
   }
 
   actionSeeAllAdvices(){
@@ -124,8 +149,8 @@ export class HomePage implements OnInit {
       console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
       this.infoDiet = {
-        title: slider.name,
-        hour: slider.hour
+        title: slider?.name,
+        hour: slider?.hour
       }
     });
   }
@@ -135,8 +160,8 @@ export class HomePage implements OnInit {
       console.log('[HomePage] slideDrugChange()', index);
       let slider = this.drugs[index]
       this.infoDrugs = {
-        title: slider.name,
-        hour: slider.hour_intake
+        title: slider?.name,
+        hour: slider?.hour_intake
       }
     });
   }

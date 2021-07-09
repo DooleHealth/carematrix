@@ -21,9 +21,12 @@ export class User{
   secret: string;
   roles : any = [];
   familyUnit : string;
-  constructor(idUser:string, secret:string){
+  name:string;
+  constructor(idUser:string, secret:string, name:string, image:string){
     this.idUser = idUser
     this.secret = secret
+    this.name = name
+    this.image = image
   };
 
 }
@@ -52,7 +55,8 @@ export class AuthenticationService {
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     @Inject(PLATFORM_ID) private platformId: object) {
-      this.setUser("14303");
+      if(!this.user)
+        this.setUser("14303",null,'Valarezo, David','https://via.placeholder.com/300x300.png?text=VD' );
      
   }
 
@@ -106,7 +110,7 @@ export class AuthenticationService {
             console.log(error);
           });
         }
-        this.user = new User(res.idUser, credentials.password);
+        this.user = new User(res.idUser, credentials.password, res.name, res.temporary_url);
         this.setUserLocalstorage(this.user)
         // user's data
         return res;
@@ -118,8 +122,8 @@ export class AuthenticationService {
     );
   }
 
-  setUser(idUser: string, secret?: string ){
-    this.user = new User(idUser,secret);
+  setUser(idUser: string, secret?: string, name?:string, image?:string ){
+    this.user = new User(idUser,secret, name, image);
     console.log("user: ", this.user );
     this.setUserLocalstorage(this.user)
   }

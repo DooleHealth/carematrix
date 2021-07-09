@@ -62,8 +62,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateEmergencyContact();
                 case url.endsWith('user/appointment') && method === 'GET':
                     return appointmentAgenda();
-                case url.endsWith('user/appointment') && method === 'POST':
-                    return appointmentAgenda();
+                // case url.endsWith('user/appointment') && method === 'POST':
+                //     return appointmentAgenda();
                 case url.endsWith('user/tracking/documents') && method === 'GET':
                     return getAPIdocumentsTracking();
                 case url.endsWith('user/tracking/forms') && method === 'GET':
