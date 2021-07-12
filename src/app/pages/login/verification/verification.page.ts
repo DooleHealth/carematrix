@@ -66,7 +66,7 @@ export class VerificationPage implements OnInit {
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           let messagge = this.translate.instant("verification.send_email_alert_message")
-          this.dooleService.presentAlert(messagge)
+          this.dooleService.presentAlert(messagge +' '+ err.message)
           throw err; 
       });
   }

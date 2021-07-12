@@ -29,11 +29,31 @@ export class LegalPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LegalPage] getAPILegalInformation()', await res);
-        this.legal = res.legalTerm
+        if(res.success){
+          this.legal = res.legalTerm
+          if(this.legal === undefined || this.legal === null ){
+            let message = "No existe terminos legales asignados para este usuario"
+            this.dooleService.presentAlert(message, )
+          }
+        }
+        else{
+          let message = "Error al obtener los terminos legales"
+          this.dooleService.presentAlert( message)
+        }
+
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
+  }
+
+  async showAlertgetLegal(success){
+    let messagge = '' 
+    if(success)
+      messagge = this.translate.instant("legal.send_email_alert_message")
+    else
+      messagge = this.translate.instant("legal.error_conditions_label")
+    await  this.dooleService.presentAlert(messagge)
   }
 
   acceptLegalConditions(){
@@ -42,8 +62,8 @@ export class LegalPage implements OnInit {
     async (res: any) =>{
       console.log('[LegalPage] sendLegalConformation()', await res);
       if(res.success){
-        this.showIntro()
-        //this.router.navigate(['/sms']);
+        this.router.navigate(['/sms']);
+        //this.showIntro()
       }
       //else this.dooleService.presentAlert("Server response is false ")
      },(err) => { 
