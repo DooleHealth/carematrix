@@ -1,6 +1,6 @@
 
 import { ViewContainerRef, Component, ElementRef, AfterViewInit, ViewChild, ComponentFactoryResolver, OnInit } from '@angular/core';
-import * as OT from '@opentok/client';
+//import * as OT from '@opentok/client';
 import { SubscriberComponent } from '../subscriber/subscriber.component';
 import { OpentokService } from '../../services/opentok.service';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { File } from '@ionic-native/file/ngx';
 import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { Chooser } from '@ionic-native/chooser/ngx';
 const { Camera } = Plugins;
-//declare let OT: any;
+declare let OT: any;
 
 @Component({
   selector: 'app-video',
@@ -106,16 +106,16 @@ ngAfterViewInit() {
         this.session.subscribe(event.stream, 'subscriber', subscriberOptions);     
         this.onStreamCreated(event.stream, this.session);
         this.isLoading = true;
-        //OT.updateViews();
+        OT.updateViews();
       },
       streamDestroyed: (event) => {
         console.log(`Stream ${event.stream.name} ended because ${event.reason}`);
-        //OT.updateViews();
+        OT.updateViews();
       },
       sessionConnected: event => {
         this.session.publish(this.publisher);
         this.isLoading = true;
-        //OT.updateViews();
+        OT.updateViews();
       },
       connectionCreated: (event) => {
         if (event.connection.connectionId != this.session.connection.connectionId) {
