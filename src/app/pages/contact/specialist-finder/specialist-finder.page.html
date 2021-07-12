@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Cancelar" icon=""></ion-back-button>
+      <ion-back-button text="{{'button.cancel' | translate}}" icon=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Reservar</ion-title>
+    <ion-title>{{'specialist_finder.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,13 +26,13 @@
       </ion-item> -->
         <ion-item>
           <div >
-            <ion-label>Especialidad</ion-label>
+            <ion-label>{{'specialist_finder.field_specially' | translate}}</ion-label>
           </div>
           <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
         </ion-item>
         <ion-item lines="none">
           <div>
-            <ion-label>Profesional</ion-label>
+            <ion-label>{{'specialist_finder.field_professional' | translate}}</ion-label>
           </div>
           <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
         </ion-item>
@@ -57,7 +57,7 @@
   <ion-card class="cardProfile">
    
       <ion-item lines="none" (click)="this.openCalendarModal()">
-        <ion-label>Fecha</ion-label>
+        <ion-label>{{'specialist_finder.field_date' | translate}}</ion-label>
         <ion-input class="textMedium" [value]="this.selectedDate"></ion-input>
         <ion-icon
         name="chevron-forward-outline"
@@ -76,14 +76,13 @@
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item> -->
       <ion-item>
-        <ion-label>Motivo de la cita</ion-label>
+        <ion-label>{{'specialist_finder.reason_appointment' | translate}}</ion-label>
         <ion-textarea class="textMedium" placeholder="..." ></ion-textarea>
       </ion-item>
       <ion-item lines="none">
-        Documentos adjuntos
+        {{'specialist_finder.attachments' | translate}}
       </ion-item>
-      <ion-item lines="none" class="textMediumLeft">Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor
-        diagnóstico
+      <ion-item lines="none" class="textMediumLeft">{{'specialist_finder.text_attachments' | translate}}
       </ion-item>
 
       <ion-button slot="start" fill="clear"  (click)="this.selectImageSource()">{{'report_problem.button_add_file' | translate }}
@@ -117,7 +116,7 @@
   </ion-card>
   <div class="buttonContainer">
   <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" >
-  Confirmar Videollamada
+    {{'specialist_finder.button_videocall' | translate}}
   </ion-button>
   </div>
 </ion-content>

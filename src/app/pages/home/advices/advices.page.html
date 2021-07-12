@@ -2,7 +2,7 @@
   <!-- <ion-toolbar> -->
     
     <ion-toolbar [ngSwitch]="segment">
-      <ion-title>{{ 'novedades y consejos' | translate}}</ion-title>
+      <ion-title>{{ 'advices.header' | translate}}</ion-title>
       <ion-buttons slot="start">
         <ion-back-button text=""></ion-back-button>
       </ion-buttons>
@@ -17,10 +17,10 @@
   [(ngModel)]="segment" 
   scrollable>
     <ion-segment-button value="news">
-      <ion-label>{{ 'NOVEDADES' | translate}}</ion-label>
+      <ion-label>{{ 'advices.tag_news' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="advices">
-      <ion-label>{{ 'CONSEJOS' | translate}}</ion-label>
+      <ion-label>{{ 'advices.tag_advices' | translate}}</ion-label>
     </ion-segment-button>
 
   </ion-segment>

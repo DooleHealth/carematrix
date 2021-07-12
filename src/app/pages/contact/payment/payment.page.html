@@ -1,16 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Método de pago</ion-title>
+    <ion-title>{{'payment.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <br>
-  <ion-text class="txtTitle2">Resumen de pago</ion-text>
+  <ion-text class="txtTitle2">{{'payment.payment_summary' | translate}}</ion-text>
   <ion-card class="cardProfilePadding">
     <ion-list>
       <ion-item lines="none">
-        <ion-label class="txtTitleGoals">Cita Presencial</ion-label>
+        <ion-label class="txtTitleGoals">{{'payment.field_appointment' | translate}}</ion-label>
         <ion-label class="textMedium">50€</ion-label>
       </ion-item>
 
@@ -20,11 +20,11 @@
           18 nov. 2020, 15:00</ion-text>
       </ion-item>
       <ion-item lines="none">
-        <ion-label class="txtTitleGoals">Subtotal</ion-label>
+        <ion-label class="txtTitleGoals">{{'payment.field_subtotal' | translate}}</ion-label>
         <ion-label class="textMedium">50€</ion-label>
       </ion-item>
       <ion-item lines="none">
-        <ion-label class="txtTitleGoals">Gastos</ion-label>
+        <ion-label class="txtTitleGoals">{{'payment.field_expenses' | translate}}</ion-label>
         <ion-label class="textMedium">5€</ion-label>
       </ion-item>
       <ion-item>
@@ -32,7 +32,7 @@
         <ion-label class="textMedium">10'5€</ion-label>
       </ion-item>
       <ion-item lines="none">
-        <ion-label class="txtTitleGoals">Total</ion-label>
+        <ion-label class="txtTitleGoals">{{'payment.field_total' | translate}}</ion-label>
         <ion-label class="textMedium">65'5€</ion-label>
       </ion-item>
     </ion-list>
@@ -41,7 +41,7 @@
   <ion-card class="cardProfile" routerLink="detailCard" >
     
       <ion-item>
-        <ion-label class="txtTitleGoals">Modalidad</ion-label>
+        <ion-label class="txtTitleGoals">{{'payment.modality' | translate}}</ion-label>
         <ion-label class="txtTitleTrackingLittle">Trajeta de crédito</ion-label>
       </ion-item>
       <ion-item lines="none">
@@ -58,7 +58,7 @@
 </ion-card>
 <div class="buttonContainer">
   <ion-button type="button" color="primary" expand="block" style="margin-top:5%;">
-    Confirmar Pago
+    {{'payment.button_payment' | translate}}
   </ion-button>
 </div>
 </ion-content>

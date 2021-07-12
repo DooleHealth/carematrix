@@ -30,13 +30,13 @@
         <ion-text class="textMedium"  >{{staff?.name}}</ion-text>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item [lines]="(event?.site !== null)? 'none': 'full' ">
         <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
       </ion-item>
 <!--       <ion-item>
         <ion-label text-wrap class="textMediumLeft">Centro Asociado Santa Marina</ion-label>
       </ion-item> -->
-      <ion-item>
+      <ion-item *ngIf="event?.site">
 <!--         <iframe
           src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11969.313337812735!2d2.1941609!3d41.4103908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1623755939112!5m2!1ses!2ses"
           width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
@@ -60,7 +60,7 @@
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
-        <ion-label class="textMedium"></ion-label>
+        <ion-label  class="textMedium">{{ (event?.files.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
       </ion-item>
     </ion-list>
   </div>

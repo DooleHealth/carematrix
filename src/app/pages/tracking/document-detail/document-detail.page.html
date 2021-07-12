@@ -29,13 +29,13 @@
   </ion-card>
   <ion-card class="cardProfile">
     <ion-list>
-      <ion-item *ngIf="diagnosticTest.description !== null">
+      <ion-item>
         <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
-        <ion-label class="textMedium">{{diagnosticTest.description}}</ion-label>
+        <ion-label class="textMedium">{{diagnosticTest?.description}}</ion-label>
       </ion-item>
-      <ion-item *ngIf="diagnosticTest.diagnostic !== null" >
+      <ion-item >
         <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
-        <ion-label class="textMedium">{{diagnosticTest.diagnostic}}</ion-label>
+        <ion-label class="textMedium">{{diagnosticTest?.diagnostic}}</ion-label>
       </ion-item>
       <ion-item *ngIf="diagnosticTest?.center_id">
         <ion-label>{{ 'documents_add.field_center' | translate}}</ion-label>

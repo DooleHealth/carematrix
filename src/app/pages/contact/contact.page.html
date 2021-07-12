@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar [ngSwitch]="segment">
-      <ion-title>Contacta</ion-title>
+      <ion-title>{{ 'contact.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -9,13 +9,13 @@
 
 <ion-segment [(ngModel)]="segment" scrollable>
   <ion-segment-button value="video">
-    <ion-label>Videoconsulta</ion-label>
+    <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
   </ion-segment-button>
   <ion-segment-button value="appointment">
-    <ion-label>Cita Presencial</ion-label>
+    <ion-label>{{ 'contact.tap_appointment' | translate}}</ion-label>
   </ion-segment-button>
   <ion-segment-button value="chat">
-    <ion-label>Chat</ion-label>
+    <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
   </ion-segment-button>
 </ion-segment>
 
@@ -32,13 +32,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <h3 style="text-align: center;">Videoconsulta</h3>
+            <h3 style="text-align: center;">{{ 'contact.tap_video' | translate}}</h3>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <p class="txtContactLittle">Habla directamente con tu profesional habitualo un especialista desde donde tú
-              quieras.Te atenderán en el horario seleccionado</p>
+            <p class="txtContactLittle">{{ 'contact.text_video' | translate}}</p>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -54,17 +53,16 @@
                   </ion-img>
                 </ion-col>
                 <ion-col size="10">
-                  <ion-card-title class="txtTitleGoals">Profesional Habitual</ion-card-title>
+                  <ion-card-title class="txtTitleGoals">{{ 'contact.regular_professional' | translate}}</ion-card-title>
                   <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
                 </ion-col>
               </ion-row>
               <ion-col size="12">
-                <ion-card-title class="txtTitleTrackingLittle">Reserva una cita con tu médico o profesional de siempre
-                  para realizar la videoconsulta</ion-card-title>
+                <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_regular_professional' | translate}}</ion-card-title>
               </ion-col>
               <ion-col size="12">
                 <ion-card-title class="textBlue" routerLink="">
-                  Continuar</ion-card-title>
+                  {{ 'button.continue' | translate}}</ion-card-title>
               </ion-col>
             </ion-grid>
           </ion-item>
@@ -79,17 +77,16 @@
                   </ion-img>
                 </ion-col>
                 <ion-col size="8">
-                  <ion-card-title class="txtTitleGoals">Otros especialistas</ion-card-title>
+                  <ion-card-title class="txtTitleGoals">{{ 'contact.other_specialists' | translate}}</ion-card-title>
                   <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
                 </ion-col>
               </ion-row>
               <ion-col size="12">
-                <ion-card-title class="txtTitleTrackingLittle">Reserva una cita con un especialista para realizar la
-                  videoconsulta</ion-card-title>
+                <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_other_specialists' | translate}}</ion-card-title>
               </ion-col>
               <ion-col size="12">
                 <ion-card-title class="textBlue" routerLink="">
-                  Continuar</ion-card-title>
+                  {{ 'button.continue' | translate}}</ion-card-title>
               </ion-col>
             </ion-grid>
           </ion-item>
@@ -109,12 +106,12 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h3 style="text-align: center;">Cita Presencial</h3>
+        <h3 style="text-align: center;">{{ 'contact.tap_appointment' | translate}}</h3>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <p class="txtContactLittle">Reserva una cita presencial con tu  profesional habitual o un especialista cuando lo necesites.Te atenderán en el horario seleccionado</p>
+        <p class="txtContactLittle">{{ 'contact.text_appointment_in_person' | translate}}</p>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -130,16 +127,16 @@
               </ion-img>
             </ion-col>
             <ion-col size="8">
-              <ion-card-title class="txtTitleGoals">Profesional Habitual</ion-card-title>
+              <ion-card-title class="txtTitleGoals">{{ 'contact.regular_professional' | translate}}</ion-card-title>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-col>
           </ion-row>
           <ion-col size="12">
-            <ion-card-title class="txtTitleTrackingLittle">Reserva tu cita presencial con el médico de siempre</ion-card-title>
+            <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_appointment_regular_professional' | translate}}</ion-card-title>
           </ion-col>
           <ion-col size="12">
             <ion-card-title class="textBlue" routerLink="">
-              Continuar</ion-card-title>
+              {{ 'button.continue' | translate}}</ion-card-title>
           </ion-col>
         </ion-grid>
       </ion-item>
@@ -154,16 +151,16 @@
               </ion-img>
             </ion-col>
             <ion-col size="8">
-              <ion-card-title class="txtTitleGoals">Otros especialistas</ion-card-title>
+              <ion-card-title class="txtTitleGoals">{{ 'contact.other_specialists' | translate}}</ion-card-title>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-col>
           </ion-row>
           <ion-col size="12">
-            <ion-card-title class="txtTitleTrackingLittle">Reserva tu cita presencial con otro especialista</ion-card-title>
+            <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_appointment_other_specialists' | translate}}</ion-card-title>
           </ion-col>
           <ion-col size="12">
             <ion-card-title class="textBlue" routerLink="">
-              Continuar</ion-card-title>
+              {{ 'button.continue' | translate}}</ion-card-title>
           </ion-col>
         </ion-grid>
       </ion-item>
@@ -186,13 +183,12 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <h3 style="text-align: center;">Chat</h3>
+              <h3 style="text-align: center;">{{ 'contact.tap_appointment' | translate}}</h3>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <p class="txtContactLittle">Ahora puedes hablar a través del chatcon tu médico habitual o un especialista.
-                Te atenderán lo antes posible.</p>
+              <p class="txtContactLittle">{{ 'contact.text_chat' | translate}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -208,16 +204,16 @@
                     </ion-img>
                   </ion-col>
                   <ion-col size="8">
-                    <ion-card-title class="txtTitleGoals">Conversaciones recientes</ion-card-title>
+                    <ion-card-title class="txtTitleGoals">{{ 'contact.recent_conversations' | translate}}</ion-card-title>
                     <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
                   </ion-col>
                 </ion-row>
                 <ion-col size="12">
-                  <ion-card-title class="txtTitleTrackingLittle">Accede a tus últimas conversaciones con tus profesionales habituales</ion-card-title>
+                  <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_recent_conversations' | translate}}</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" routerLink="">
-                    Continuar</ion-card-title>
+                    {{ 'button.continue' | translate}}</ion-card-title>
                 </ion-col>
               </ion-grid>
             </ion-item>
@@ -232,16 +228,16 @@
                     </ion-img>
                   </ion-col>
                   <ion-col size="8">
-                    <ion-card-title class="txtTitleGoals">Nueva conversación</ion-card-title>
+                    <ion-card-title class="txtTitleGoals">{{ 'contact.new_conversation' | translate}}</ion-card-title>
                     <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
                   </ion-col>
                 </ion-row>
                 <ion-col size="12">
-                  <ion-card-title class="txtTitleTrackingLittle">Abre una nueva conversación con tus profesionales habituales</ion-card-title>
+                  <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_new_conversation' | translate}}</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" routerLink="">
-                    Continuar</ion-card-title>
+                    {{ 'button.continue' | translate}}</ion-card-title>
                 </ion-col>
               </ion-grid>
             </ion-item>
