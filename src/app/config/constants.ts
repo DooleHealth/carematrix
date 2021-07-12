@@ -16,5 +16,5 @@ export class Constants {
 
     // public readonly API_ENDPOINT: string = 'https://mgc.doole.io/api/mgc';
     // public readonly API_DOOLE_ENDPOINT: string = 'https://mgc.doole.io/api';
-    // public readonly DOOLE_ENDPOINT: string = 'https://mgc.doole.io';
+    // public readonly DOOLE_ENDPOINT: string = 'https://mgc.doole.io'; 
 }
