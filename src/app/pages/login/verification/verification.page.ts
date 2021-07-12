@@ -44,8 +44,8 @@ export class VerificationPage implements OnInit {
         console.log('[VerificationPage] checkCode()', await res);
         let  isSuccess = res.success 
         if(isSuccess){
-          this.checkConditionLegal()
-          //this.router.navigateByUrl("intro")
+          //this.checkConditionLegal()
+          this.redirectPage(true)
         }else{
           this.dooleService.presentAlert(this.translate.instant("verification.alert_message"))
         }
@@ -62,14 +62,22 @@ export class VerificationPage implements OnInit {
       async (res: any) =>{
         console.log('[LegalPage] sendEmail()', await res);
         let  isSuccess = res.success 
-        if(isSuccess){
-          let messagge = this.translate.instant("verification.send_email_alert_message")
-          await  this.dooleService.presentAlert(messagge)
-        }
+        this.showAlertSendEmail(isSuccess)
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          let messagge = this.translate.instant("verification.send_email_alert_message")
+          this.dooleService.presentAlert(messagge)
           throw err; 
       });
+  }
+
+  async showAlertSendEmail(success){
+    let messagge = '' 
+    if(success)
+      messagge = this.translate.instant("verification.send_email_alert_message")
+    else
+      messagge = this.translate.instant("verification.send_email_alert_message")
+    await  this.dooleService.presentAlert(messagge)
   }
 
   async getVerificationCode(){

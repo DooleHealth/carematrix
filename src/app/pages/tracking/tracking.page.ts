@@ -30,7 +30,6 @@ export class TrackingPage implements OnInit {
   segment = 'documents'
   active_color= '#2ECC71'
   inactive_color= '#7F8C8D'
-  color
   filter: Filter;
   constructor(
     private dooleService: DooleService,
@@ -121,8 +120,8 @@ export class TrackingPage implements OnInit {
         let list = diagnosticTests.filter( event => 
           (event.date_european == date)
         )
-        this.color = (index == 0)? this.active_color: this.inactive_color
-        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: this.color}) 
+        let color = (index == 0)? this.active_color: this.inactive_color
+        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color}) 
       } 
     })
     console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);

@@ -191,7 +191,7 @@
   <ion-checkbox color="primary" [(ngModel)]="this.isChecked" style="margin-right: 5px;"></ion-checkbox>
   <ion-label>{{ 'legal.acept_conditions_label' | translate}}</ion-label>
 </ion-item>
-  <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="acceptLegalConditions()" [disabled]="!this.isChecked">
+  <ion-button type="button" color="primary" expand="block" class="enter-btn" routerLink="sms" [disabled]="!this.isChecked">
     {{ 'legal.next_button' | translate}}
 </ion-button>
   </div>

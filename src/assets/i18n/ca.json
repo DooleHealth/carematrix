@@ -22,7 +22,7 @@
       },
       "sms":{
         "header": "Verificació d'Identitat",
-        "title":"Comencem per el teu número de telèfon",
+        "title":"Comencem per el teu correu electrònic",
         "text1": "Rebràs un correu amb un codi de verificació. Perquè la teva privacitat és el més important!",
         "text2": "El teu correu únicament serà utilitzat per a situacions urgents o d'emergència, però mai serà compartit amb altres empreses o tercers.",
         "alert_message": "És el correu correcte?",
@@ -40,6 +40,7 @@
         "text2": "aquí",
         "alert_message": "El codi no és vàlid",
         "send_email_alert_message": "El codi de verificació s'ha enviat de nou",
+        "error_send_email_alert_message": "Hi ha hagut un error a l'enviar el codi de verificació",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"

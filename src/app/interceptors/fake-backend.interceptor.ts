@@ -39,11 +39,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 /* case url.endsWith('/user/profiles') && method === 'GET':
                     return userProfile(); */
 /*                 case url.endsWith('user/changePassword') && method === 'POST':
-                    return changePassword();
+                    return changePassword();*/
                 case url.endsWith('user/email_verification') && method === 'POST':
                     return smsVerification();
                 case url.endsWith('user/code_verification') && method === 'POST':
-                    return smsConfirmation(); */
+                    return smsConfirmation(); 
 /*                 case url.endsWith('user/familyUnit') && method === 'GET':
                     return familyUnit(); */
 /*                 case url.endsWith('user/health_cards') && method === 'GET':

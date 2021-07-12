@@ -21,8 +21,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials).subscribe(async (res) => {
       console.log('[LandingPage] doDooleAppLogin()', res);
       if(res.success){
-        //this.checkConditionLegal();
-        this.showIntro()
+        this.checkConditionLegal();
       }else{
         this.modalCtrl.dismiss({error: 'Credenciales Inválidas'});
       }
