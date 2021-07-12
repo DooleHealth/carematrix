@@ -90,12 +90,12 @@ export class VerificationPage implements OnInit {
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
-        console.log('[LandingPage] checkConditionLegal()', await res);
+        console.log('[VerificationPage] checkConditionLegal()', await res);
          //if(res.accepted_last)
          this.redirectPage(res.accepted_last)
 
        },(err) => { 
-          console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[VerificationPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
      

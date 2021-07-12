@@ -33,18 +33,25 @@ export class LegalPage implements OnInit {
           this.legal = res.legalTerm
           if(this.legal === undefined || this.legal === null ){
             let message = "No existe terminos legales asignados para este usuario"
-            this.dooleService.presentAlert(message, )
+            this.showAlert(message)
           }
         }
         else{
           let message = "Error al obtener los terminos legales"
-          this.dooleService.presentAlert( message)
+          this.showAlert(message, 'error')
         }
 
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          let message = "Error al obtener los terminos legales "+ err.message
+          this.showAlert(message, 'error')
           throw err; 
       });
+  }
+
+  showAlert(message, type?){
+    let header = (type == 'error')? this.translate.instant('alert.header_error'): this.translate.instant('alert.header_info')
+    this.dooleService.showAlertAndReturn(header,message,false, 'landing')
   }
 
   async showAlertgetLegal(success){
@@ -65,7 +72,7 @@ export class LegalPage implements OnInit {
         this.router.navigate(['/sms']);
         //this.showIntro()
       }
-      //else this.dooleService.presentAlert("Server response is false ")
+      else this.dooleService.presentAlert("No se pudo actualizar las condiciones legales")
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
         this.dooleService.presentAlert(err.message)
