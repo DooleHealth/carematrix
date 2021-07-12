@@ -17,11 +17,13 @@
         "ok_button": "Acepto",
         "ko_button": "No acepto",
         "next_button":"Continuar",
-        "acept_conditions_label": "He leído y acepto las condiciones"
+        "acept_conditions_label": "He leído y acepto las condiciones",
+        "no_conditions_label": "No existe terminos legales asignados para este usuario",
+        "error_conditions_label": "Error al obtener los terminos legales"
       },
       "sms":{
         "header": "Verificación de Identidad",
-        "title":"Empezamos por tu número de teléfono",
+        "title":"Empezamos por tu correo electrónico",
         "text1": "Recibirás un correo con un código de verificación. ¡Porque tu privacidad es lo más importante!",
         "text2": "Tu correo únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
         "alert_message": "¿Es el correo correcto?",
@@ -39,6 +41,7 @@
         "text2": "aquí",
         "alert_message": "El código no es válido",
         "send_email_alert_message": "El código de verificación se ha enviado de nuevo",
+        "error_send_email_alert_message": "Ha ocurrido un error al enviar el código de verificación",
         "next_button":"Continuar",
         "error_required": "Error: Campo requerido",
         "error_min_lenght": "Error: Debe ser 4 dígitos"
