@@ -162,7 +162,8 @@ export class AppComponent implements OnInit {
 
   setLanguage() {
     // this language will be used as a fallback when a translation isn't found in the current language
-    this.translate.setDefaultLang('ca');
+    //this.translate.setDefaultLang('ca');
+    this.translate.setDefaultLang('es');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     let userLanguage = localStorage.getItem('language') ? localStorage.getItem('language') : this.languageService.getCurrent();

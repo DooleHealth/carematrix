@@ -6,6 +6,7 @@ import { DooleService } from 'src/app/services/doole.service';
 export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
+  color?: string
 }
 export interface Filter {
   start_date?: string,
@@ -27,6 +28,9 @@ export class TrackingPage implements OnInit {
   elementValues: any = [];
   isLoading = false
   segment = 'documents'
+  active_color= '#2ECC71'
+  inactive_color= '#7F8C8D'
+  color
   filter: Filter;
   constructor(
     private dooleService: DooleService,
@@ -40,6 +44,7 @@ export class TrackingPage implements OnInit {
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
     this.segmentChanged()
+    this.fireEvent(null, 0)
   }
 
   ionViewDidEnter(){
@@ -116,7 +121,8 @@ export class TrackingPage implements OnInit {
         let list = diagnosticTests.filter( event => 
           (event.date_european == date)
         )
-        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list}) 
+        this.color = (index == 0)? this.active_color: this.inactive_color
+        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: this.color}) 
       } 
     })
     console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);
@@ -238,5 +244,15 @@ export class TrackingPage implements OnInit {
         break;
     }
   }
+
+  fireEvent(e, i){
+    this.listDiagnostic.forEach( (diagnostic, index) =>{
+      if(index == i)
+      diagnostic.color = this.active_color
+      else
+      diagnostic.color = this.inactive_color
+      console.log(i, index);
+    })
+}
 
 }

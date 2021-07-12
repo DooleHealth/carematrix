@@ -442,6 +442,70 @@
       },
       "conversation":{
         "placeholder":"Escribe un mensaje"
+      },
+      "advices":{
+        "header":"Novedades y Consejos",
+        "tag_news": "Novedades",
+        "tag_advices": "Consejos"
+      },
+      "contact":{
+        "header": "Contacta",
+        "tap_video": "Videoconsulta",
+        "tap_appointment": "Cita Presencial",
+        "tap_chat": "Chat",
+        "text_video": "Habla directamente con tu profesional habitual o un especialista desde donde tú quieras.Te atenderán en el horario seleccionado",
+        "regular_professional": "Profesional Habitual",
+        "text_regular_professional": "Reserva una cita con tu médico o profesional de siempre para realizar la videoconsulta",
+        "other_specialists":"Otros especialistas",
+        "text_other_specialists":"Reserva una cita con un especialista para realizar la videoconsulta",
+        "text_appointment_in_person":"Reserva una cita presencial con tu  profesional habitual o un especialista cuando lo necesites.Te atenderán en el horario seleccionado",
+        "text_appointment_regular_professional":"Reserva tu cita presencial con el médico de siempre",
+        "text_appointment_other_specialists":"Reserva tu cita presencial con otro especialista",
+        "text_chat": "Ahora puedes hablar a través del chatcon tu médico habitual o un especialista. Te atenderán lo antes posible.",
+        "recent_conversations":"Conversaciones recientes",
+        "text_recent_conversations":"Accede a tus últimas conversaciones con tus profesionales habituales",
+        "new_conversation":"Nueva conversación",
+        "text_new_conversation":"Abre una nueva conversación con tus profesionales habituales"
+      },      
+      "medical_directory":{
+        "header":"Reservar",
+        "your_professionals":"Tus profesionales habituales"
+      }, 
+      "medical_calendar":{
+        "header":"Seleccionar Fecha",
+        "no_slot_available":"No hay slots disponibles para este día"
+      },     
+      "specialist_finder":{
+        "header":"Reservar",
+        "field_date": "Fecha",
+        "field_professional": "Profesional",
+        "field_specially": "Especialidad",
+        "reason_appointment": "Motivo de la cita",
+        "attachments": "Documentos Adjuntos",
+        "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
+        "button_videocall": "Confirmar Videollamada"
+      },
+      "bookings":{
+        "header":"Reservar",
+        "field_date": "Fecha",
+        "reason_appointment": "Motivo de la cita",
+        "attachments": "Documentos Adjuntos",
+        "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
+        "button_videocall": "Confirmar Videollamada"
+      },      
+      "chat":{
+        "header":"Chat"
+      },
+      "payment":{
+        "header":"Método de pago",
+        "payment_summary":"Resumen de pago",
+        "field_appointment":"Cita Presencial",
+        "field_subtotal":"Subtotal",
+        "field_total":"Total",
+        "field_expenses":"Gastos",
+        "field_taxes": "IVA",
+        "modality": "Modalidad",
+        "button_payment": "Confirmar Pago"
       }
       
 

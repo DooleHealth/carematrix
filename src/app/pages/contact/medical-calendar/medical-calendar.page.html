@@ -5,7 +5,7 @@
       <ion-icon name="close-circle" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-title>Seleccionar Fecha</ion-title>
+  <ion-title>{{'medical_calendar.header' | translate}}</ion-title>
   <ion-buttons slot="end">
     <ion-button (click)="save()">
       <ion-icon name="checkmark" slot="icon-only"></ion-icon>
@@ -71,7 +71,7 @@
       </ng-container>
       <div *ngIf="routeResolveData">
         <ion-item lines="none" *ngIf="this.eventSource.length==0 else slots">
-          <div class="no-events-label">No hay slots disponibles para este día</div>
+          <div class="no-events-label">{{'medical_calendar.no_slot_available' | translate}}</div>
         </ion-item>
     
         <ng-template #slots>

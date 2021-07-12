@@ -390,7 +390,7 @@
         "field_specially": "Especialitat",
         "field_prfesional": "Professional",
         "field_profesional": "Metge",
-        "attachments": "documents Adjunts",
+        "attachments": "Documents Adjunts",
         "button_add_files": "Afegir arxius",
         "button_add_result": "Afegir Resultat",
         "button_cancel": "Cancel",
@@ -447,5 +447,69 @@
       },
       "conversation":{
         "placeholder":"Escriu un missatge"
+      },
+      "advices":{
+        "header":"Novetats i Consells",
+        "tag_news": "Novetats",
+        "tag_advices": "Consells"
+      },
+      "contact":{
+        "header": "Contacta",
+        "tap_video": "Videoconsulta",
+        "tap_appointment": "Cita Presencial",
+        "tap_chat": "Chat",
+        "text_video": "Parla directament amb el teu professional habitual o un especialista des d'on tu quieras.Te atendran en l'horari seleccionat",
+        "regular_professional": "Professional Habitual",
+        "text_regular_professional": "Reserva una cita amb el teu metge o professional de sempre per realitzar la videoconsulta",
+        "other_specialists":"Altres especialistes",
+        "text_other_specialists":"Reserva una cita amb un especialista per fer la videoconsulta",
+        "text_appointment_in_person":"Reserva una cita presencial amb el teu professional habitual o un especialista quan ho necesites.Te atendran en l'horari seleccionat",
+        "text_appointment_regular_professional":"Reserva la teva cita presencial amb el metge de sempre",
+        "text_appointment_other_specialists":"Reserva la teva cita presencial amb un altre especialista",
+        "text_chat": "Ara pots parlar a través del chatcon teu metge habitual o un especialista. Et atendran el més aviat possible.",
+        "recent_conversations":"Converses recents",
+        "text_recent_conversations":"Accedeix als teus últimes converses amb els teus professionals habituals",
+        "new_conversation":"Nova conversa",
+        "text_new_conversation":"Obre una nova conversa amb els professionals habituals"
+      },
+      "medical_directory":{
+        "header":"Reservar",
+        "your_professionals":"Els teus professionals habituals"
+      },
+      "medical_calendar":{
+        "header":"Seleccionar Data",
+        "no_slot_available":"No hi ha slots disponibles per a aquest dia"
+      }, 
+      "specialist_finder":{
+        "header":"Reservar",
+        "field_date": "Data",
+        "field_professional": "Professional",
+        "field_specially": "Especialitat",
+        "reason_appointment": "Motiu de la cita",
+        "attachments": "Documents Adjunts",
+        "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
+        "button_videocall": "Confirma Videotrucada"
+      }, 
+      "bookings":{
+        "header":"Reservar",
+        "field_date": "Data",
+        "reason_appointment": "Motiu de la cita",
+        "attachments": "Documents Adjunts",
+        "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
+        "button_videocall": "Confirma Videotrucada"
+      },
+      "chat":{
+        "header":"Chat"
+      },
+      "payment":{
+        "header":"Mètode de pagament",
+        "payment_summary":"Resum de pagament",
+        "field_appointment":"Cita Presencial",
+        "field_subtotal":"Subtotal",
+        "field_total":"Total",
+        "field_expenses":"Despeses",
+        "field_taxes": "IVA",
+        "modality": "Modalitat",
+        "button_payment": "Confirmar Pagament"
       }
 }
