@@ -62,7 +62,8 @@ export class SmsPage implements OnInit {
 
 
   sendEmail(email){
-    this.dooleService.postAPIemailVerification(email).subscribe(
+    let user_email ={email: email}
+    this.dooleService.postAPIemailVerification(user_email).subscribe(
       async (res: any) =>{
         console.log('[LegalPage] sendEmail()', await res);
         let  isSuccess = res.success 
