@@ -39,7 +39,8 @@ export class VerificationPage implements OnInit {
   }
 
   checkCode(code){
-    this.dooleService.postAPIcodeVerification(code).subscribe(
+    let verification_code = {code : code}
+    this.dooleService.postAPIcodeVerification(verification_code).subscribe(
       async (res: any) =>{
         console.log('[VerificationPage] checkCode()', await res);
         let  isSuccess = res.success 
@@ -57,8 +58,9 @@ export class VerificationPage implements OnInit {
 
 
   sendEmail(email){
-    console.log('[VerificationPage] sendEmail()',email );
-    this.dooleService.postAPIemailVerification(email).subscribe(
+    let send_email ={email: email}
+    console.log('[VerificationPage] sendEmail()',send_email );
+    this.dooleService.postAPIemailVerification(send_email).subscribe(
       async (res: any) =>{
         console.log('[LegalPage] sendEmail()', await res);
         let  isSuccess = res.success 
