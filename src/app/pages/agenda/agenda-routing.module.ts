@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'reminder-add',
     loadChildren: () => import('./reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
+  },
+  {
+    path: 'videocall',
+    loadChildren: () => import('./videocall/videocall.module').then( m => m.VideocallPageModule)
   }
 
 ];

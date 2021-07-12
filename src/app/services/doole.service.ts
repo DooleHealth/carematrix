@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
+import { StringifyOptions } from 'querystring';
 
 
 @Injectable({
@@ -293,6 +294,17 @@ export class DooleService {
     )
   }
 
+  getAPIvideocall(id:string): Observable<any>{
+    let path = 'user/agenda/'+id+'/videocallSession'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIvideocall(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
   getAPIinformationUser(): Observable<any>{
     let path = 'user/informationUser'
     const endpoint = this.api.getEndpoint(path);
@@ -561,7 +573,7 @@ export class DooleService {
   }
 
   getAPIappointmentAgenda(): Observable<any>{
-    let path = 'user/appointment';
+    let path = 'user/agenda';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { VideoComponent } from 'src/app/components/video/video.component';
 import { DooleService } from 'src/app/services/doole.service';
+import { OpentokService } from 'src/app/services/opentok.service';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -10,16 +12,38 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class AgendaDetailPage implements OnInit {
   event: any = {}
+  tokboxSession: any;
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
     public alertController: AlertController,
+    private opentokService: OpentokService,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
-    this.event = history.state.event;
     console.log('[AgendaDetailPage] ngOnInit()', this.event);
+    this.event = history.state?.event;
+    this.event.online = 1;
+    if(this.event?.online){
+      this.dooleService.getAPIvideocall(this.event?.id).subscribe(
+        async (data) => {
+          
+          this.tokboxSession = await data;
+          console.log("* tokbox session:", data);
+          this.opentokService.token$ = this.tokboxSession.token;
+          this.opentokService.sessionId$ = this.tokboxSession.sessionId;
+          this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
+          
+        },
+        (error) => {
+          // Called when error
+          console.log("error: ", error);
+          throw error;
+        });
+    }
+  
   }
 
   async deleteReminder(){
@@ -72,6 +96,20 @@ export class AgendaDetailPage implements OnInit {
     //let message = this.translate.instant('documents_add.alert_message')
     let header = this.translate.instant('alert.header_info')
     this.dooleService.showAlertAndReturn(header,message,false, '/agenda')
+  }
+
+  async startDooleVideocall(){
+
+    const modal = await this.modalCtrl.create({
+      component: VideoComponent,
+      componentProps: { },
+    });
+
+    modal.onDidDismiss().then((result) => {
+    });
+
+    await modal.present();
+
   }
 
 }

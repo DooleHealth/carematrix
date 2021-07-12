@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides, ModalController } from '@ionic/angular';
+import { catchError } from 'rxjs/operators';
+import { VideoComponent } from 'src/app/components/video/video.component';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { OpentokService } from 'src/app/services/opentok.service';
 
 export interface UserInformation {
   title?: string;
@@ -47,7 +50,8 @@ export class HomePage implements OnInit {
   constructor(
     public router:Router,
     private dooleService: DooleService,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+ 
   ) { }
 
   async ngOnInit() { 
@@ -65,8 +69,9 @@ export class HomePage implements OnInit {
     });
     
     this.dooleService.getAPIappointmentAgenda().subscribe((res)=>{
-      this.appointment = res;
-    })
+      console.log(res);
+      this.appointment = res.agenda;
+    });
 
     this.dooleService.getAPIlistAdvices().subscribe((res)=>{
       this.advices = res.advices;
@@ -82,7 +87,7 @@ export class HomePage implements OnInit {
       this.slideDrugChange()
     })
 
-    
+
     this.activity.push({name:'456 Cal'})
 
     //this.activity = this.userDoole.physica
@@ -179,6 +184,5 @@ export class HomePage implements OnInit {
     });
   }
 
-
-
+ 
 }
