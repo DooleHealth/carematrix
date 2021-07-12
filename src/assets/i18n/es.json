@@ -18,8 +18,9 @@
         "ko_button": "No acepto",
         "next_button":"Continuar",
         "acept_conditions_label": "He leído y acepto las condiciones",
-        "no_conditions_label": "No existe terminos legales asignados para este usuario",
-        "error_conditions_label": "Error al obtener los terminos legales"
+        "no_get_conditions_label": "No existe terminos legales asignados para este usuario",
+        "error_conditions_label": "Error al obtener los terminos legales",
+        "error_post_conditions_label": "No se pudo actualizar las condiciones legales"
       },
       "sms":{
         "header": "Verificación de Identidad",
@@ -231,12 +232,17 @@
       "add_health_card":{
         "header_add_card": "Agregar Tarjeta Sanitaria",
         "alert_message_add_card": "La tarjeta ha sido añadida correctamente",
-        "button_add": "Agregar"
+        "button_add": "Agregar",
+        "error_alert_message_add_card": "Error: la tarjeta no ha podido ser añadida"
       },
       "edit_health_card":{
         "header_edit_card": "Editar Tarjeta Sanitaria",
         "alert_message_edit_card": "La tarjeta ha sido editada correctamente",
-        "button_edit": "Editar"
+        "button_edit": "Editar",
+        "error_alert_message_edit_card": "Error: la tarjeta no ha podido ser editada"
+      },
+      "delete_health_card":{
+        "error_alert_message_delete_card": "Error: la tarjeta no ha podido ser eliminada"
       },
       "detail_health_card":{
         "header_detail_card": "Detalle Tarjeta Sanitaria",
@@ -279,7 +285,11 @@
         "alert_message_new_contact":"Se ha creado un nuevo contacto",
         "alert_message_delete_contact":"El contacto ha sido eliminado",
         "alert_message_update_contact":"El contacto ha sido actualizado",
-        "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?"
+        "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?",
+
+        "error_alert_message_new_contact":"Error: el contacto no ha podido ser añadido",
+        "error_alert_message_delete_contact":"Error: el contacto no ha podido ser eliminado",
+        "error_alert_message_update_contact":"Error: el contacto no ha podido ser actualizado"
       },
       "agenda":{
         "header_agenda": "Agenda",

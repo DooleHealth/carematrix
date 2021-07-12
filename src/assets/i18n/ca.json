@@ -18,7 +18,10 @@
         "ok_button": "Les accepto",
         "ko_button": "No les accepto",
         "next_button":"Continuar",
-        "acept_conditions_label": "He llegit i accepto les condicions"
+        "acept_conditions_label": "He llegit i accepto les condicions",
+        "no_get_conditions_label": "No hi ha termes legals assignats per a aquest usuari",
+        "error_conditions_label": "Error a l'obtenir els termes legals",
+        "error_post_conditions_label": "No s'ha pogut actualitzar les condicions legals"
       },
       "sms":{
         "header": "Verificació d'Identitat",
@@ -229,12 +232,17 @@
       "add_health_card":{
         "header_add_card": "Afegir Targeta Sanitària",
         "alert_message_add_card": "La targeta s'ha afegit correctament",
-        "button_add": "Afegir"
+        "button_add": "Afegir",
+        "error_alert_message_add_card": "Error: la targeta no ha pogut ser afegida"
       },
       "edit_health_card":{
         "header_edit_card": "Edita Targeta Sanitària",
         "alert_message_edit_card": "La targeta ha estat editada correctament",
-        "button_edit": "Edita"
+        "button_edit": "Edita",
+        "error_alert_message_edit_card": "Error: la targeta no ha pogut ser editada"
+      },
+      "delete_health_card":{
+        "error_alert_message_delete_card": "Error: la targeta no ha pogut ser eliminada"
       },
       "detail_health_card":{
         "header_detail_card": "Detall targeta sanitària",
