@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Cancelar" icon=""></ion-back-button>
+      <ion-back-button text="{{'button.cancel' | translate}}" icon=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Reservar</ion-title>
+    <ion-title>{{'bookings.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -32,7 +32,7 @@
     <ion-card class="cardProfile">
       <ion-list>
         <ion-item lines="none" (click)="this.openCalendarModal()">
-          <ion-label>Fecha</ion-label>
+          <ion-label>{{'bookings.field_date' | translate}}</ion-label>
           <ion-input class="textMedium" formControlName="date"
           ></ion-input>
   
@@ -59,13 +59,12 @@
           ></ion-icon>
         </ion-item> -->
         <ion-item>
-          <ion-label>Motivo de la cita</ion-label>
+          <ion-label>{{'bookings.reason_appointment' | translate}}</ion-label>
           <ion-textarea class="textMedium" placeholder="..."  formControlName="title"></ion-textarea>
         </ion-item>
-        <ion-item lines="none"> Documentos adjuntos </ion-item>
+        <ion-item lines="none"> {{'bookings.attachments' | translate}}</ion-item>
         <ion-item lines="none" class="textMediumLeft"
-          >Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor
-          diagnóstico
+          >{{'bookings.text_attachments' | translate}}
         </ion-item>
   
         <ion-button slot="start" fill="clear" (click)="selectImageSource()"
@@ -107,7 +106,7 @@
         style="margin-top: 5%"
         (click)="this.addAgenda()"
       >
-        Confirmar Videollamada
+      {{'bookings.button_videocall' | translate}}
       </ion-button>
     </div>
   </form>

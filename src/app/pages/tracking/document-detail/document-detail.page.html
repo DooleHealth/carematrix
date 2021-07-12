@@ -29,23 +29,23 @@
   </ion-card>
   <ion-card class="cardProfile">
     <ion-list>
-      <ion-item *ngIf="diagnosticTest.description !== null">
-        <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
-        <ion-label class="textMedium">{{diagnosticTest.description}}</ion-label>
-      </ion-item>
-      <ion-item *ngIf="diagnosticTest.diagnostic !== null" >
-        <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
-        <ion-label class="textMedium">{{diagnosticTest.diagnostic}}</ion-label>
-      </ion-item>
       <ion-item>
+        <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
+        <ion-label class="textMedium">{{diagnosticTest?.description}}</ion-label>
+      </ion-item>
+      <ion-item >
+        <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
+        <ion-label class="textMedium">{{diagnosticTest?.diagnostic}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="diagnosticTest?.center_id">
         <ion-label>{{ 'documents_add.field_center' | translate}}</ion-label>
         <ion-label class="textMedium">{{'diagnosticTestType.center_id'}}</ion-label>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="diagnosticTest?.specialty_id">
         <ion-label>{{ 'documents_add.field_specially' | translate}}</ion-label>
         <ion-label class="textMedium">{{'diagnosticTest.specialty_id'}}</ion-label>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item lines="none" *ngIf="diagnosticTest?.idDoctor">
         <ion-label>{{ 'documents_add.field_prfesional' | translate}}</ion-label>
         <ion-label class="textMedium">{{'diagnosticTest.idDoctor'}}</ion-label>
       </ion-item>

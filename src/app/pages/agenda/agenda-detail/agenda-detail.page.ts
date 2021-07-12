@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { VideoComponent } from 'src/app/components/video/video.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
-import { OpentokService } from 'src/app/services/opentok.service';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -12,38 +13,35 @@ import { OpentokService } from 'src/app/services/opentok.service';
 })
 export class AgendaDetailPage implements OnInit {
   event: any = {}
-  tokboxSession: any;
+  id
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
     public alertController: AlertController,
-    private opentokService: OpentokService,
-    private modalCtrl: ModalController
+    public nav: NavController,
+    private iab: InAppBrowser, 
+    private auth: AuthenticationService,
   ) { }
 
   ngOnInit() {
+    this.event = history.state.event;
+    this.id = history.state.id
+    if(this.id)
+    this.getDetailAgenda()
     console.log('[AgendaDetailPage] ngOnInit()', this.event);
-    this.event = history.state?.event;
-    this.event.online = 1;
-    if(this.event?.online){
-      this.dooleService.getAPIvideocall(this.event?.id).subscribe(
-        async (data) => {
-          
-          this.tokboxSession = await data;
-          console.log("* tokbox session:", data);
-          this.opentokService.token$ = this.tokboxSession.token;
-          this.opentokService.sessionId$ = this.tokboxSession.sessionId;
-          this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
-          
-        },
-        (error) => {
-          // Called when error
-          console.log("error: ", error);
-          throw error;
-        });
-    }
-  
+  }
+
+  getDetailAgenda(){ 
+    this.dooleService.getAPIagendaID(this.id).subscribe(
+      async (res: any) =>{
+        console.log('[AgendaDetailPage] getDetailAgenda()', await res);
+        if(res.agenda)
+        this.event = res.agenda
+       },(err) => { 
+          console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
   }
 
   async deleteReminder(){
@@ -93,23 +91,77 @@ export class AgendaDetailPage implements OnInit {
   }
 
   showAlert(message){
-    //let message = this.translate.instant('documents_add.alert_message')
     let header = this.translate.instant('alert.header_info')
     this.dooleService.showAlertAndReturn(header,message,false, '/agenda')
   }
 
-  async startDooleVideocall(){
 
-    const modal = await this.modalCtrl.create({
-      component: VideoComponent,
-      componentProps: { },
-    });
+  actionIntrucction( instruction){
+    //instruction.reminderable_type = null
+    console.log('[AgendaPage] actionIntrucction()',  instruction);
+    let id
+    switch (instruction.reminderable_type) {
+      case "App\\Element":
+        id = instruction.reminderable_id
+        console.log('[AgendaPage] actionIntrucction()',  id);
+        this.nav.navigateForward("elements-add", { state: {id:id} });
+        break;
+      case  "App\\Advice":
+        id = instruction.reminderable_id
+        console.log('[AgendaPage] actionIntrucction()',  id);
+        this.nav.navigateForward("advices", { state: {id:id} });
+        break;
+      case  "App\\Diet":
+        id = instruction.reminderable_id
+        console.log('[AgendaPage] actionIntrucction()',  id);
+        this.nav.navigateForward("/diets-detail", { state: {id:id} });
+        break;
+      case  "App\\Form":
+        id = instruction.reminderable_id
+        this.openForm(id)
+        break;
+    
+      default:
+        id = 42
+        console.log('[AgendaPage] actionIntrucction()',  id);
+        this.openForm(id)
+        break;
+    }
+  }
 
-    modal.onDidDismiss().then((result) => {
-    });
+  async openForm(id){
+    const options: InAppBrowserOptions = {
+      location: 'no',
+      toolbar: 'yes'
+    };
 
-    await modal.present();
+    console.log('[TrackingPage] openForm()',  this.auth.user);
 
+    if(this.auth !==undefined || this.auth.user !== undefined){
+      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+id+'" method="post" enctype="multipart/form-data">' +
+        '<input type="hidden" name="idForm" value="'+id+'">' +
+        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
+        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
+        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
+      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+      var browserRef = this.iab.create(
+        pageContentUrl,
+        "_blank",
+        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+      );
+    }else{
+      var browserRef = this.iab.create(
+        /* form.temporaryUrl */null,
+        "_blank",
+        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+      );
+    }
+
+  }
+
+  openFile(media){
+    console.log("media", media);
+    window.open(media.temporaryUrl, "");
   }
 
 }

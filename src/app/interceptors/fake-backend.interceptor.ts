@@ -26,24 +26,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
 /*                 case url.includes('login') && method === 'POST':
                     return authenticate(); */
-                case url.includes('/user/recovery_password') && method === 'POST':
-                    return passwordRecovery();
+/*                 case url.includes('/user/recovery_password') && method === 'POST':
+                    return passwordRecovery(); */
                 case url.endsWith('/user/informationUser') && method === 'GET':
                     return informationUser();
-                case url.endsWith('/user/legal') && method === 'GET':
+/*                 case url.endsWith('/user/legal') && method === 'GET':
                     return legalInformation();
                 case url.endsWith('user/legal') && method === 'POST':
-                    return confirmLegal();
+                    return confirmLegal(); */
 /*                 case url.endsWith('/user/element/goals') && method === 'GET':
                     return goalsUser(); */
                 /* case url.endsWith('/user/profiles') && method === 'GET':
                     return userProfile(); */
-                case url.endsWith('user/changePassword') && method === 'POST':
+/*                 case url.endsWith('user/changePassword') && method === 'POST':
                     return changePassword();
                 case url.endsWith('user/email_verification') && method === 'POST':
                     return smsVerification();
                 case url.endsWith('user/code_verification') && method === 'POST':
-                    return smsConfirmation();
+                    return smsConfirmation(); */
 /*                 case url.endsWith('user/familyUnit') && method === 'GET':
                     return familyUnit(); */
 /*                 case url.endsWith('user/health_cards') && method === 'GET':

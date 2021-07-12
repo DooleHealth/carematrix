@@ -12,15 +12,15 @@ import { ListRelationshipPage } from '../list-relationship/list-relationship.pag
   styleUrls: ['./edit-contact.page.scss'],
 })
 export class EditContactPage implements OnInit {
-  userImage:string = 'assets/icons/user_icon.svg';
+  userImage: string = 'assets/icons/user_icon.svg';
   isSubmittedName = false;
   isSubmittedTelephone = false;
   isSubmittedRelationship = false;
-  isNewContact= true;
+  isNewContact = true;
   formContact: FormGroup;
-  socialRelationType:any
+  socialRelationType: any
   contact
-  constructor(  
+  constructor(
     private formBuilder: FormBuilder,
     private dooleService: DooleService,
     public router: Router,
@@ -40,107 +40,107 @@ export class EditContactPage implements OnInit {
     this.getContact()
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     console.log('[EditContactPage] ionViewDidEnter()');
     this.socialRelationType = history.state.socialRelationType;
     this.showDetailSocialRelationType()
   }
 
-  getContact(){
+  getContact() {
     let oldContact = history.state.contact;
     let newContact = history.state.newContact;
-    
-    if(newContact){
+
+    if (newContact) {
       this.contact = newContact
-    }else if(oldContact){
+    } else if (oldContact) {
       this.contact = oldContact
       this.isNewContact = false
     }
-    this.showDetailContact()   
-    console.log('[EditContactPage] getContact()' , JSON.stringify(this.contact) ); 
+    this.showDetailContact()
+    console.log('[EditContactPage] getContact()', JSON.stringify(this.contact));
 
   }
 
-  showDetailContact(){
-    if(this.contact?.id)
-    this.formContact.get('id').setValue(this.contact.id)
-    if(this.contact?.phone)
-    this.formContact.get('phone').setValue(this.contact.phone)
-    if(this.contact?.full_name)
-    this.formContact.get('full_name').setValue(this.contact.full_name)
+  showDetailContact() {
+    if (this.contact?.id)
+      this.formContact.get('id').setValue(this.contact.id)
+    if (this.contact?.phone)
+      this.formContact.get('phone').setValue(this.contact.phone)
+    if (this.contact?.full_name)
+      this.formContact.get('full_name').setValue(this.contact.full_name)
     this.showDetailSocialRelationType()
   }
 
-  showDetailSocialRelationType(){
-    if(this.socialRelationType !== undefined){
-      if(this.socialRelationType.name)
-      this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
-      if(this.socialRelationType.id)
-      this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
-    }else if(this.contact !== undefined){
-      if(this.contact?.socialRelationName)
-      this.formContact.get('socialRelationName').setValue(this.contact.socialRelationName)
-      if(this.contact?.social_relation_type_id)
-      this.formContact.get('social_relation_type_id').setValue(this.contact.social_relation_type_id)
+  showDetailSocialRelationType() {
+    if (this.socialRelationType !== undefined) {
+      if (this.socialRelationType.name)
+        this.formContact.get('socialRelationName').setValue(this.socialRelationType.name)
+      if (this.socialRelationType.id)
+        this.formContact.get('social_relation_type_id').setValue(this.socialRelationType.id)
+    } else if (this.contact !== undefined) {
+      if (this.contact?.socialRelationName)
+        this.formContact.get('socialRelationName').setValue(this.contact.socialRelationName)
+      if (this.contact?.social_relation_type_id)
+        this.formContact.get('social_relation_type_id').setValue(this.contact.social_relation_type_id)
     }
   }
 
-  sumittedContact(){
-    console.log('[EditContactPage] editContact()' ,  this.contact); 
+  sumittedContact() {
+    console.log('[EditContactPage] editContact()', this.contact);
     this.isSubmittedFields(true)
-    if(this.formContact.valid){
-      if(this.isNewContact)
+    if (this.formContact.valid) {
+      if (this.isNewContact)
         this.saveContact()
       else this.updateContact()
     }
   }
 
-  delete(){
-    console.log('[EditContactPage] delete()'); 
-    if(this.contact === undefined || this.contact === null ) return
+  delete() {
+    console.log('[EditContactPage] delete()');
+    if (this.contact === undefined || this.contact === null) return
     this.presentAlertDeleteConfirm()
   }
 
-  saveContact(){
-    console.log('[EditContactPage] saveContact()' , this.formContact.value); 
+  saveContact() {
+    console.log('[EditContactPage] saveContact()', this.formContact.value);
     let date = new Date().toISOString()
     this.formContact.get('created_at').setValue(date)
-      this.dooleService.postAPIemergencyContact(this.formContact.value).subscribe(
-        async (res: any) =>{
-          console.log('[EditContactPage] saveContact()', await res);
-          let  isSuccess = res.success 
-          if(isSuccess){
-            let messagge = this.translate.instant('edit_contact.alert_message_new_contact')
-            let header = this.translate.instant('alert.header_info')
-            this.dooleService.showAlertAndReturn(header,messagge, false, '/profile/emergency-contacts')
-          }else{
-            console.log('[EditContactPage] saveContact() Unsuccessful response', await res);
-          }
-         },(err) => { 
-            console.log('[EditContactPage] saveContact() ERROR(' + err.code + '): ' + err.message); 
-             this.dooleService.presentAlert(err.messagge)
-            throw err; 
-        });
+    this.dooleService.postAPIemergencyContact(this.formContact.value).subscribe(
+      async (res: any) => {
+        console.log('[EditContactPage] saveContact()', await res);
+        let isSuccess = res.success
+        if (isSuccess) {
+          let messagge = this.translate.instant('edit_contact.alert_message_new_contact')
+          let header = this.translate.instant('alert.header_info')
+          this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts')
+        } else {
+          console.log('[EditContactPage] saveContact() Unsuccessful response', await res);
+        }
+      }, (err) => {
+        console.log('[EditContactPage] saveContact() ERROR(' + err.code + '): ' + err.message);
+        this.dooleService.presentAlert(err.messagge)
+        throw err;
+      });
   }
 
-  updateContact(){
-    console.log('[EditContactPage] updateContact()' , this.formContact.value); 
-      this.dooleService.putAPIemergencyContact(this.contact.id ,this.formContact.value).subscribe(
-        async (res: any) =>{
-          console.log('[EditContactPage] updateContact()', await res);
-          let  isSuccess = res.success 
-          if(isSuccess){
-            let messagge = this.translate.instant('edit_contact.alert_message_update_contact')
-            let header = this.translate.instant('alert.header_info')
-            this.dooleService.showAlertAndReturn(header,messagge, false, '/profile/emergency-contacts')
-          }else{
-            console.log('[EditContactPage] updateContact() Unsuccessful response', await res);
-          }
-         },(err) => { 
-            console.log('[EditContactPage] updateContact() ERROR(' + err.code + '): ' + err.message); 
-             this.dooleService.presentAlert(err.messagge)
-            throw err; 
-        });
+  updateContact() {
+    console.log('[EditContactPage] updateContact()', this.formContact.value);
+    this.dooleService.putAPIemergencyContact(this.contact.id, this.formContact.value).subscribe(
+      async (res: any) => {
+        console.log('[EditContactPage] updateContact()', await res);
+        let isSuccess = res.success
+        if (isSuccess) {
+          let messagge = this.translate.instant('edit_contact.alert_message_update_contact')
+          let header = this.translate.instant('alert.header_info')
+          this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts')
+        } else {
+          console.log('[EditContactPage] updateContact() Unsuccessful response', await res);
+        }
+      }, (err) => {
+        console.log('[EditContactPage] updateContact() ERROR(' + err.code + '): ' + err.message);
+        this.dooleService.presentAlert(err.messagge)
+        throw err;
+      });
   }
 
   async presentAlertDeleteConfirm() {
@@ -170,32 +170,32 @@ export class EditContactPage implements OnInit {
     await alert.present();
   }
 
-  deleteContact(){
+  deleteContact() {
     console.log('[EditContactPage] serviceDeleteContact()', this.contact.id);
-    this.dooleService.deleteAPIemergencyContact( this.contact.id).subscribe(
-      async (res: any) =>{
+    this.dooleService.deleteAPIemergencyContact(this.contact.id).subscribe(
+      async (res: any) => {
         console.log('[EditContactPage] serviceDeleteContact()', await res);
-        let  isSuccess = res.success 
-        if(isSuccess){
+        let isSuccess = res.success
+        if (isSuccess) {
           this.alertMessageDeleteContact()
-        }else{
+        } else {
           console.log('[EditContactPage] serviceDeleteContact() Unsuccessful response', await res);
         }
-       },(err) => { 
-          console.log('[EditContactPage] serviceDeleteContact() ERROR(' + err.code + '): ' + err.message); 
-           this.dooleService.presentAlert(err.messagge)
-          throw err; 
+      }, (err) => {
+        console.log('[EditContactPage] serviceDeleteContact() ERROR(' + err.code + '): ' + err.message);
+        this.dooleService.presentAlert(err.messagge)
+        throw err;
       });
   }
 
-  alertMessageDeleteContact(){
+  alertMessageDeleteContact() {
     let messagge = this.translate.instant('edit_contact.alert_message_delete_contact')
     let header = this.translate.instant('alert.header_info')
-     this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts' )
+    this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts')
   }
 
 
-  isSubmittedFields(isSubmitted){
+  isSubmittedFields(isSubmitted) {
     this.isSubmittedName = isSubmitted
     this.isSubmittedTelephone = isSubmitted;
     this.isSubmittedRelationship = isSubmitted;
@@ -209,8 +209,8 @@ export class EditContactPage implements OnInit {
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null && dataReturned.data !== undefined) {
         this.socialRelationType = dataReturned.data;
-        if(this.socialRelationType)
-        this.formContact.get('socialRelationName').setValue(this.socialRelationType?.name)
+        if (this.socialRelationType)
+          this.formContact.get('socialRelationName').setValue(this.socialRelationType?.name)
       }
     });
 

@@ -8,7 +8,7 @@
         "button_signin": "Inici de sessió",
         "button_registre": "Crear Usuari",
         "user": "Usuari",
-        "header_message_password_recovery": "Ingressa el teu Usuari",
+        "header_message_password_recovery": "Ingressa el teu usuari",
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
         "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes"
@@ -23,8 +23,8 @@
       "sms":{
         "header": "Verificació d'Identitat",
         "title":"Comencem per el teu número de telèfon",
-        "text1": "Rebràs un SMS amb un codi de verificació. Perquè la teva privacitat és el més important!",
-        "text2": "El teu número únicament serà utilitzat per a situacions urgents o d'emergència, però mai serà compartit amb altres empreses o tercers.",
+        "text1": "Rebràs un correu amb un codi de verificació. Perquè la teva privacitat és el més important!",
+        "text2": "El teu correu únicament serà utilitzat per a situacions urgents o d'emergència, però mai serà compartit amb altres empreses o tercers.",
         "alert_message": "És el correu correcte?",
         "ok_button": "Si",
         "ko_button": "Edita",
@@ -36,7 +36,7 @@
       "verification":{
         "header": "Verificació d'Identitat",
         "title":"Confirma la teva codi de verificació",
-        "text1": "T'hem enviat un SMS amb un codi per verificar el teu número telefònic i poder continuar. Si no ha rebut cap missatge premi ",
+        "text1": "T'hem enviat un correu amb un codi per verificar el teu compte d'usuari i poder continuar. Si no ha rebut cap correu premi ",
         "text2": "aquí",
         "alert_message": "El codi no és vàlid",
         "send_email_alert_message": "El codi de verificació s'ha enviat de nou",
@@ -125,6 +125,10 @@
         "description_reward": "Aconsegueix el teu objectiu i suma Healthies:",
         "subtitle_information": "Informació",
         "subtitle_advices": "Consells"
+      },
+      "activity_goal":{
+        "definition": "Definició",
+        "normal_value": "Valors Normals:"
       },
       "personal": {
         "button_back": "Inici",
@@ -219,12 +223,7 @@
         "expedition_date": "Data d'Expedició",
         "Optional": "Opcional",
         "error_required": "Requerit",
-        "button_return": "Inici",
-        "modality_type":{
-          "text0": "Mútua Assegurances",
-          "text1": "Sanitat Pública",
-          "text2": "Sanitat Privada"
-        }
+        "button_return": "Inici"
       },
       "add_health_card":{
         "header_add_card": "Afegir Targeta Sanitària",
@@ -286,9 +285,9 @@
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"]
       },
       "reminder":{
-        "personal_reminder": "Recordatori Personal",
-        "medical_reminder": "Recordatori Metge",
-        "header_add_reminder":"Afegir Recordatori",
+        "personal_reminder": "Agenda Personal",
+        "medical_reminder": "Agenda Metge",
+        "header_add_reminder":"Afegir Agenda",
         "field_doctor": "Metge",
         "field_notes": "Notes",
         "field_type": "Tipus",
@@ -318,7 +317,7 @@
         "field_date": "Data",
         "field_doctor": "Metge",
         "field_center": "Centre",
-        "field_specially": "Especialitat",
+        "field_specially": "Professional",
         "field_appointment_type": "Tipus de cita",
         "field_instructions": "Instruccions",
         "field_information": "Informació",
@@ -327,7 +326,8 @@
         "face_to_face": "Presencial",
         "button_delete": "Eliminar Cita",
         "message_deleted_appointment":"S'ha eliminat la cita amb èxit",
-        "confirmation_delete_appointment":"Estàs segur d'eliminar la cita?"
+        "confirmation_delete_appointment":"Estàs segur d'eliminar la cita?",
+        "no_files":"No hi ha arxius"
       },
       "doctor":{
         "header_doctor": "Detall Metge",
@@ -390,7 +390,7 @@
         "field_specially": "Especialitat",
         "field_prfesional": "Professional",
         "field_profesional": "Metge",
-        "attachments": "documents Adjunts",
+        "attachments": "Documents Adjunts",
         "button_add_files": "Afegir arxius",
         "button_add_result": "Afegir Resultat",
         "button_cancel": "Cancel",
@@ -410,7 +410,8 @@
         "field_category": "Categoria",
         "field_data": "Dada",
         "field_measure": "mesura",
-        "field_units": "Unitats"
+        "field_units": "Unitats",
+        "alert_message_add_element": "Les dades ha estat afegit correctament"
       },
       "no_data": "En aquest moment no hi ha dades per a mostrar",
       "diary":{
@@ -419,7 +420,7 @@
           "field_drug": "Medicació",
           "field_game": "Jocs",
           "field_health": "Salut",
-          "description": "Descriptió",
+          "description": "Descripció",
           "dose": "Dosi",
           "morning": "demà",
           "noon": "migdia",
@@ -446,5 +447,69 @@
       },
       "conversation":{
         "placeholder":"Escriu un missatge"
+      },
+      "advices":{
+        "header":"Novetats i Consells",
+        "tag_news": "Novetats",
+        "tag_advices": "Consells"
+      },
+      "contact":{
+        "header": "Contacta",
+        "tap_video": "Videoconsulta",
+        "tap_appointment": "Cita Presencial",
+        "tap_chat": "Chat",
+        "text_video": "Parla directament amb el teu professional habitual o un especialista des d'on tu quieras.Te atendran en l'horari seleccionat",
+        "regular_professional": "Professional Habitual",
+        "text_regular_professional": "Reserva una cita amb el teu metge o professional de sempre per realitzar la videoconsulta",
+        "other_specialists":"Altres especialistes",
+        "text_other_specialists":"Reserva una cita amb un especialista per fer la videoconsulta",
+        "text_appointment_in_person":"Reserva una cita presencial amb el teu professional habitual o un especialista quan ho necesites.Te atendran en l'horari seleccionat",
+        "text_appointment_regular_professional":"Reserva la teva cita presencial amb el metge de sempre",
+        "text_appointment_other_specialists":"Reserva la teva cita presencial amb un altre especialista",
+        "text_chat": "Ara pots parlar a través del chatcon teu metge habitual o un especialista. Et atendran el més aviat possible.",
+        "recent_conversations":"Converses recents",
+        "text_recent_conversations":"Accedeix als teus últimes converses amb els teus professionals habituals",
+        "new_conversation":"Nova conversa",
+        "text_new_conversation":"Obre una nova conversa amb els professionals habituals"
+      },
+      "medical_directory":{
+        "header":"Reservar",
+        "your_professionals":"Els teus professionals habituals"
+      },
+      "medical_calendar":{
+        "header":"Seleccionar Data",
+        "no_slot_available":"No hi ha slots disponibles per a aquest dia"
+      }, 
+      "specialist_finder":{
+        "header":"Reservar",
+        "field_date": "Data",
+        "field_professional": "Professional",
+        "field_specially": "Especialitat",
+        "reason_appointment": "Motiu de la cita",
+        "attachments": "Documents Adjunts",
+        "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
+        "button_videocall": "Confirma Videotrucada"
+      }, 
+      "bookings":{
+        "header":"Reservar",
+        "field_date": "Data",
+        "reason_appointment": "Motiu de la cita",
+        "attachments": "Documents Adjunts",
+        "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
+        "button_videocall": "Confirma Videotrucada"
+      },
+      "chat":{
+        "header":"Chat"
+      },
+      "payment":{
+        "header":"Mètode de pagament",
+        "payment_summary":"Resum de pagament",
+        "field_appointment":"Cita Presencial",
+        "field_subtotal":"Subtotal",
+        "field_total":"Total",
+        "field_expenses":"Despeses",
+        "field_taxes": "IVA",
+        "modality": "Modalitat",
+        "button_payment": "Confirmar Pagament"
       }
 }

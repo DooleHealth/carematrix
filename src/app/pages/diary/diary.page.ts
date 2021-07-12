@@ -162,29 +162,6 @@ export class DiaryPage implements OnInit {
   });
   }
 
-  async getGameList(){
-    console.log('[DiaryPage] getGameList()');
-    this.items = []
-    this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
-    let formattedDate = this.transformDate(this.date)
-    let date = {date: formattedDate}
-    this.dooleService.getAPIgames(date).subscribe(
-      async (res: any) =>{
-        console.log('[DiaryPage] getGameList()', await res);
-         if(res.games)
-       this.addItems(res.games)
-        loading.dismiss();
-        this.isLoading = false
-       },(err) => { 
-          console.log('[DiaryPage] getGameList() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
-          this.isLoading = false
-          throw err; 
-      });
-  }
-
   async getGameListByDate(){
     console.log('[DiaryPage] getGameList()');
     this.items = []

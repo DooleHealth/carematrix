@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'videocall',
     loadChildren: () => import('./videocall/videocall.module').then( m => m.VideocallPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
   }
 
 ];

@@ -60,13 +60,15 @@
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
   </div>
   <ion-card class="cardProfilePadding">
-    <ion-card-title class="txtTitleGoals">Definición</ion-card-title><br>
-    <div>El azúcar en la sangre, también llamada “glucosa”,es el azúcar principal que se encuentra en su sangre. Esta proviene de los alimentos que usted consume yes repartida a todas las células de su cuerpo para ser usada como energía.</div>
-    <ion-item-divider></ion-item-divider>
-   <ion-col>Valores normales</ion-col><ion-col> 140 mg/dl</ion-col>
+    <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
+    <div *ngIf="description">{{description}}</div>
+    <!-- <ion-item-divider></ion-item-divider> -->
+    <div *ngIf="this.normalValue">
+      <ion-col >{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{this.normalValue}} {{this.units}}</ion-col>
+    </div>
   </ion-card>
 
-  <div class="main-container">
+<!--   <div class="main-container">
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_advices' | translate}}</ion-text>
   </div>
   <ion-card class="cardProfilePadding">
@@ -75,7 +77,6 @@
       </ion-col>
       <ion-col size="8"><ion-card-title class="txtTitleGoals3">Controla tus niveles de glucosa</ion-card-title><p class="txtTitleGoals3">Descubre los mejores alimentos para mejorar tus niveles de glucosa </p></ion-col>
     </ion-row>
-    
-   
-  </ion-card>
+  </ion-card> -->
+  
 </ion-content>

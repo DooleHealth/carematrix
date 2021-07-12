@@ -25,7 +25,7 @@ export class DoctorsPage implements OnInit {
     this.dooleService.getAPIallowedContacts().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getAllowedContacts()', await res);
-        if(res.allowed){
+        if(res?.allowed){
           this.allowed = res.allowed
           this.isAllowedDoctor()
         }
@@ -40,5 +40,7 @@ export class DoctorsPage implements OnInit {
     let contact = this.allowed.find(user => user.id == this.doctor.id)
     if(contact) this.isAllowed = true
   }
+
+
 
 }

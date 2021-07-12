@@ -32,12 +32,16 @@
   </ion-segment>
 
   <!-- Documents -->
-
-  <div class="verticalLine2" [ngSwitch]="segment">
+ 
+  <div [ngSwitch]="segment">
+    
     <div *ngSwitchCase="'documents'">
+      
       <div *ngIf="this.listDiagnostic.length > 0; else noData">
-      <ion-list *ngFor="let list of this.listDiagnostic">
-        <ion-label class="txtTitle">{{list.date | date: ['EEEE, d MMMM YYYY']}}</ion-label>
+      <ion-list *ngFor="let list of this.listDiagnostic; let i = index" (mouseover)="fireEvent($event,i)"  (mouseup)="fireEvent($event,i)">
+        <div class="dot" ></div>
+       <div class="verticalLine2" [ngStyle]="{'color': list.color}">
+        <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{list.date | date: 'EEEE'  | titlecase}}, {{list.date | date: 'd MMMM YYYY'}}</ion-label>
   
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
           <ion-card class="cardProfile">
@@ -53,12 +57,12 @@
                     <ion-card-title class="txtTitleGoals">{{doc.diagnostic_test_type?.name}}</ion-card-title>
                   </ion-col>
                   <ion-col size="4">
-                    <ion-card-title class="txtTitleTrackingLittle" >{{doc.data | date: 'dd MMM y'}}</ion-card-title>
+                    <ion-card-title class="txtTitleTrackingDate" >{{doc.data | date: 'dd MMM y'}}</ion-card-title>
                   </ion-col>
                 </ion-row>
     
                 <ion-col size="12">
-                  <ion-card-title class="txtTitleGoals">{{doc.title}}
+                  <ion-card-title class="txtTracking">{{doc.title}}
                   </ion-card-title>
                 </ion-col>
                 <ion-col size="12">
@@ -66,13 +70,13 @@
                   <ion-card-title class="txtTitleTrackingLittle">{{doc.description}}</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
-                  <ion-card-title class="textBlue" routerLink="/document-detail" [state]="{id: doc.id}">
-                    {{ 'documents.button_detail' | translate}}</ion-card-title>
+                  <ion-card-title class="textBlue" >
+                    <p routerLink="/document-detail" [state]="{id: doc.id}">{{ 'documents.button_detail' | translate}}</p></ion-card-title>
                 </ion-col>
               </ion-grid>
             </ion-item>
           </ion-card>
-        </ion-list> 
+        </ion-list> </div>
       </ion-list>
     </div>
   </div>
@@ -98,7 +102,7 @@
             </ion-col> -->
           </ion-row>
           <ion-col size="12" *ngIf="event.description != '' ">
-            <ion-card-title class="txtTitleTrackingLittle" [innerHtml]="event.description">
+            <ion-card-title class="txtTracking" [innerHtml]="event.description">
             </ion-card-title>
           </ion-col>
 <!--           <ion-col size="12">
@@ -123,7 +127,7 @@
       <ion-label class="txtTitle">{{group.group  }}</ion-label>
       <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
         <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
-          <div *ngIf="group.group=='Actividad Física ' || group.group=='Actividad' " class="verticalLineRed"></div>
+          <div *ngIf="group.group=='Actividad Física' || group.group=='Actividad' " class="verticalLineRed"></div>
           <div *ngIf="group.group=='Bioquímica'"  class="verticalLine"></div>
           <div *ngIf="group.group=='Constantes'"  class="verticalLinePurple"></div>
           <ion-grid>
@@ -154,6 +158,7 @@
   </div>
 </div>
 </div>
+
 <ng-template #noData>
   <div *ngIf="!this.isLoading">
     <ion-grid>

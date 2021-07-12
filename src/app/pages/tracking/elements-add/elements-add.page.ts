@@ -43,6 +43,10 @@ export class ElementsAddPage implements OnInit {
       date: [''],
 
     });
+
+  }
+  ionViewDidEnter(){
+    console.log('[ElementsAddPage] ionViewDidEnter()');
     this.getIdElement()
   }
 
@@ -60,10 +64,7 @@ export class ElementsAddPage implements OnInit {
     this.units = history.state.units
     console.log('[ElementsAddPage] getIdElement()', this.id);
     if(this.id){
-      this.isNewValueElement = true
-      this.form.get('data').setValue(this.nameElement)
-      this.form.get('category').setValue(this.nameElement)
-      this.element = {id: this.id, name: this.nameElement, units: this.units}
+      this.getElement()
     }else{
       this.getCategoryElementList()
     }
@@ -100,7 +101,7 @@ export class ElementsAddPage implements OnInit {
     console.log(`[ElementsAddPage] showAlert()`);
     const alert = await this.alertController.create({
       header: this.translate.instant('alert.header_info'),
-      message: this.translate.instant('add_health_card.alert_message_add_card'),
+      message: this.translate.instant('element.alert_message_add_element'),
       backdropDismiss: false,
       buttons: [
         {
@@ -120,12 +121,32 @@ export class ElementsAddPage implements OnInit {
     this.dooleService.getAPIcategory().subscribe(
       async (res: any) =>{
          this.groupElements = []
-        console.log('[TrackingPage] getCategoryElementList()', await res);
+        console.log('[ElementsAddPage] getCategoryElementList()', await res);
         this.groupElements = res
         loading.dismiss();
        },async (err) => { 
-          console.log('[TrackingPage] getCategoryElementList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[ElementsAddPage] getCategoryElementList() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
+          throw err; 
+      });
+  }
+
+  async getElement(){
+/*     const loading = await this.loadingController.create();
+    await loading.present(); */
+    this.dooleService.getAPIelementID(this.id).subscribe(
+      async (res: any) =>{
+        console.log('[ElementsAddPage] getElement()', await res);
+        this.isNewValueElement = true
+        this.nameElement = res.name;
+        this.units = res.units
+        this.element = {id: this.id, name: this.nameElement, units: this.units}
+        this.form.get('data').setValue(this.nameElement)
+        this.form.get('category').setValue(this.nameElement)
+        //loading.dismiss();
+       },async (err) => { 
+          console.log('[ElementsAddPage] getElement() ERROR(' + err.code + '): ' + err.message); 
+          //loading.dismiss();
           throw err; 
       });
   }
