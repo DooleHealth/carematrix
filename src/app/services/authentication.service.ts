@@ -21,10 +21,12 @@ export class User{
   secret: string;
   roles : any = [];
   familyUnit : string;
-  constructor(idUser:string, secret:string, familyUnit:string){
+  name:string;
+  constructor(idUser:string, secret:string, name:string, image:string){
     this.idUser = idUser
     this.secret = secret
-    this.familyUnit = familyUnit
+    this.name = name
+    this.image = image
   };
 
 }
@@ -106,7 +108,7 @@ export class AuthenticationService {
             console.log(error);
           });
         }
-        this.user = new User(res.idUser, credentials.password, null);
+        this.user = new User(res.idUser, credentials.password, res.name, res.temporary_url);
         this.setUserLocalstorage(this.user)
         // user's data
         return res;
@@ -119,10 +121,15 @@ export class AuthenticationService {
   }
 
   setUser(){
-    this.getUserLocalstorage().then(user =>{
-      if(user)
-      this.user = user
-    })
+
+    if(!this.user){
+      this.getUserLocalstorage().then(user =>{
+        console.log("[AuthenticationService] setUser()", user);
+        if(user)
+        this.user = user
+      })
+    }
+    
   }
 
   setUserLocalstorage(user){
@@ -130,6 +137,7 @@ export class AuthenticationService {
       key: 'user',
       value: JSON.stringify(user)
     });
+
   }
 
   getUserLocalstorage() : Promise<User>{

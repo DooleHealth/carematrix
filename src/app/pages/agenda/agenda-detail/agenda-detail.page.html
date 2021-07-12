@@ -28,7 +28,7 @@
       <ion-item routerLink="doctor" 
               [state]="{doctor: staff}" 
               *ngFor="let staff of event?.staff; let i = index" 
-              [lines]="(i == event?.staff.length-1)? 'full': 'none'">
+              [lines]="(i == event?.staff?.length-1)? 'full': 'none'">
         <ion-label>{{ 'appointment.field_specially' | translate}}</ion-label>
         <ion-text class="textMedium"  >{{staff?.name}}</ion-text>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
@@ -63,7 +63,7 @@
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
-        <ion-label  class="textMedium">{{ (event?.files.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
+        <ion-label  class="textMedium">{{ (event?.files?.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
       </ion-item>
     </ion-list>
   </div>
