@@ -20,6 +20,7 @@ import { RouterModule} from "@angular/router";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { ExpandableComponent } from './expandable/expandable.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { VideoComponent } from './video/video.component';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import { TabsComponent } from './tabs/tabs.component';
     FileUploadComponent,
     ExpandableComponent,
     TabsComponent,
+    VideoComponent
   ],
   exports: [
     ShellModule,

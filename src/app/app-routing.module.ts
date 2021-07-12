@@ -8,6 +8,7 @@ import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.serv
 
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './guards/auth.guard';
+import { VideoComponent } from './components/video/video.component';
 
 const routes: Routes = [
   {
@@ -153,6 +154,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
+  { path: 'video', component: VideoComponent },
  
 
 

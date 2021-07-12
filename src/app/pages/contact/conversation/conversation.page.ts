@@ -61,7 +61,7 @@ export class ConversationPage implements OnInit {
               public events: Events,
               public doole: DooleService,
               public file: File, private translate : TranslateService,
-              private chooser: Chooser,
+              private chooser: Chooser,       
               public platform: Platform,
               private mediaCapture: MediaCapture,
               private media: Media,
@@ -244,7 +244,6 @@ export class ConversationPage implements OnInit {
     await actionSheet.present();    
     
   }
-
 
   // Used for browser direct file upload
   async uploadFileFromBrowser(event: EventTarget) {

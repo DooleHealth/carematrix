@@ -41,7 +41,7 @@
       </ion-item>
       <ion-item routerLink="detail" [state]="{ event: reminder}">
         <ion-label>{{ 'reminder.field_appointment' | translate }}</ion-label>
-        <ion-text class="textMedium">{{reminder.title}}</ion-text>
+        <ion-text class="textMedium">{{reminder?.title}}</ion-text>
         <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
       <ion-item>

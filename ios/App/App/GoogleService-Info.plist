@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1094231160196-qhbm857rkpo8on35fi8l7e5hbd0qmka0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1094231160196-qhbm857rkpo8on35fi8l7e5hbd0qmka0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1094231160196-af5d2h3gkkiffnc9n08kbto4ket4b662.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBX7o0NH1V_Pst5AskHrx6t47Ywyuxpdfg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1094231160196</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.doole.mgc</string>
+	<key>PROJECT_ID</key>
+	<string>mgc-doole</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mgc-doole.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1094231160196:ios:8068b8dbbb0f4afabed9d1</string>
+	<key>DATABASE_URL</key>
+	<string>https://mgc-doole.firebaseio.com</string>
+</dict>
+</plist>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { VideoComponent } from 'src/app/components/video/video.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { OpentokService } from 'src/app/services/opentok.service';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -13,7 +15,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class AgendaDetailPage implements OnInit {
   event: any = {}
-  id
+  tokboxSession: any;
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -22,26 +24,54 @@ export class AgendaDetailPage implements OnInit {
     public nav: NavController,
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
+    private opentokService: OpentokService,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
     this.event = history.state.event;
-    this.id = history.state.id
-    if(this.id)
-    this.getDetailAgenda()
+    
+    if(this.event?.online)
+      this.getVideocallToken();
+
     console.log('[AgendaDetailPage] ngOnInit()', this.event);
   }
 
+  // TODO: remove (agenda detail in state.event)
   getDetailAgenda(){ 
-    this.dooleService.getAPIagendaID(this.id).subscribe(
+    this.dooleService.getAPIagendaID(this.event?.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
+
         if(res.agenda)
-        this.event = res.agenda
+          this.event = res.agenda
+       
+        if(this.event?.online)
+          this.getVideocallToken();
+
        },(err) => { 
           console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
+  }
+
+  getVideocallToken(){
+    this.dooleService.getAPIvideocall(this.event?.id).subscribe(
+      async (data) => {
+        
+        this.tokboxSession = await data;
+        this.opentokService.token$ = this.tokboxSession.token;
+        this.opentokService.sessionId$ = this.tokboxSession.sessionId;
+        this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
+        console.log("this.tokboxSession: ", this.tokboxSession);
+        
+      },
+      (error) => {
+        // Called when error
+        console.log("error: ", error);
+        throw error;
+      });
+    
   }
 
   async deleteReminder(){
@@ -162,6 +192,20 @@ export class AgendaDetailPage implements OnInit {
   openFile(media){
     console.log("media", media);
     window.open(media.temporaryUrl, "");
+  }
+
+  async startDooleVideocall(){
+
+    const modal = await this.modalCtrl.create({
+      component: VideoComponent,
+      componentProps: { },
+    });
+
+    modal.onDidDismiss().then((result) => {
+    });
+
+    await modal.present();
+
   }
 
 }

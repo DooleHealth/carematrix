@@ -1,0 +1,70 @@
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-button (click)="close()">
+      <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content>
+  <ng-container *ngIf="!this.isLoading">
+    <div class="holder">
+      <div class="preloader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light" (click)="this.addImage()">
+        <ion-icon name="images"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="document" (click)="this.addFile()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="camera-reverse-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <input
+    type="file"
+    #fileInput
+    (change)="uploadFileFromBrowser($event)"
+    hidden="true"
+    accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword"
+  />
+  <div id="container">
+    <div *ngFor="let file of this.files">
+      <div id="left"></div>
+      <div id="middle">
+        <p class="titule">{{ file.name }}</p>
+      </div>
+      <div id="right">
+        <ion-icon name="close-circle" color="primary"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="publishingDiv img-wrapper-patient"
+    [ngClass]="{ publishing: publishing }"
+    #publisherDiv
+  ></div>
+  <div>
+    <ng-template #subscriberHost></ng-template>
+  </div>
+</ion-content>
