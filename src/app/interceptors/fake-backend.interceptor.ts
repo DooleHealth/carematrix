@@ -30,8 +30,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return passwordRecovery(); */
                 case url.endsWith('/user/informationUser') && method === 'GET':
                     return informationUser();
-                case url.endsWith('user/legalTerm/lastAccepted') && method === 'GET':
-                    return legalInformation();
+                // case url.endsWith('user/legalTerm/lastAccepted') && method === 'GET':
+                //     return legalInformation();
                 case url.endsWith('user/legalTerm/lastAccepted') && method === 'POST':
                     return confirmLegal();
 /*                 case url.endsWith('/user/element/goals') && method === 'GET':
