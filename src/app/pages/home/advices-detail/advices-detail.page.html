@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{advice.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <ion-card class="cardProfilePadding">
+      <ion-card-header>
+          <img *ngIf="advice.image" [src]="advice.image.temporaryUrl">
+          <div *ngIf="advice.image == null" class="card-title" text-wrap>{{advice.name}}</div>
+      </ion-card-header>
+      <ion-card-content>
+        {{advice.descripcio}}
+      </ion-card-content>
+    
+
+   <div *ngIf="advice.description" padding>
+        <span [innerHTML]="advice.description"></span>
+    </div>
+  </ion-card>
+  <div *ngIf="link" #frame style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+    <iframe [src]="link" class="iframe" scrolling="yes" ></iframe>
+  </div>
+
+  <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+    <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
+  </div>
+ 
+</ion-content>
+
