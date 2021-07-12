@@ -5,7 +5,6 @@
         <ion-text class="txtTitleBig">Hola, {{this.authService?.user.name}}</ion-text>
       </ion-col>
       <ion-col size="2">
-     
     <ion-img class="img-wrapper" [src]="this.authService?.user.image" routerLink="/profile" [state]="{user:this.authService?.user}"></ion-img>
       </ion-col>
     </ion-row>
@@ -63,7 +62,7 @@
                   <ion-col size="9" class="alingLeft">
                     <p>{{slide.doctor}}</p>
                     <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm'  }}</ion-text>
-                    <ion-button size="small" fill="clear" (click)="actionDetailAppointment(slide)">
+                    <ion-button size="small" fill="clear" routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
                       {{ 'home.detail_button' | translate}}</ion-button>
                   </ion-col>
                 </ion-row>
