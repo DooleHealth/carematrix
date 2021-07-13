@@ -398,8 +398,10 @@
         "button_ok": "OK",
         "alert_message": "El document s'ha afegit correctament",
         "select": "Seleccionar",
-        "camera": "Cambra",
-        "file": "Arxius"
+        "camera": "Càmera",
+        "file": "Arxius",
+        "pictures":"Imatges"
+       
       },
       "documents_filter":{
         "header": "Filtre",
@@ -497,7 +499,8 @@
         "reason_appointment": "Motiu de la cita",
         "attachments": "Documents Adjunts",
         "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
-        "button_videocall": "Confirma Videotrucada"
+        "button_videocall": "Confirma Videotrucada",
+        "button_videocall_charge": "Confirma Videotrucada amb pagament"
       },
       "chat":{
         "header":"Chat"

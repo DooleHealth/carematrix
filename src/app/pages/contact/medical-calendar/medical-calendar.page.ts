@@ -16,7 +16,6 @@ export class slot {
   created_at: Date
   deleted_at: Date
   from_date: Date
-  id: number
   to_date:Date
   updated_at: Date
   user_availability_id: number
@@ -40,7 +39,7 @@ export class ShowcaseShellModel extends ShellModel {
   providers:[DatePipe]
 })
 export class MedicalCalendarPage implements OnInit, AfterViewInit {
-  @Input()id: string;
+  @Input()id: number;
   eventSource = [];
   tagDefaultColor: Array<string>;
   event: any
@@ -51,7 +50,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   timeSlots : Array<any> = [];
   page: number = 1;
   isToday:boolean;
-  staffId:number = 14482;
+  staffId:number = history.state.id;
   isOnline:boolean = true;
   agendaType: string = "7";
   place: string = "";
@@ -113,7 +112,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   getSlots(date:string=""){
     this.routeResolveData = null;
     this.eventSource = [];
-    const promiseObservable = this.dooleService.getAPIStaffSlots({id:this.staffId, date: date });
+    const promiseObservable = this.dooleService.getAPIStaffSlots({id:this.id, date: date });
     if(promiseObservable){
       promiseObservable.subscribe(
         res =>{
