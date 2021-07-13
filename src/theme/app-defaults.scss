@@ -304,6 +304,18 @@ margin-bottom: -5%;
     margin: auto;
     margin-top: 3%;
 }
+.img-wrapper3{
+  background-size: 100% auto;
+  background-color: #27AE60;
+  border-radius: 50% !important;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+  object-fit: cover;
+
+}
 .img-wrapper-doctors{
   background-size: 100% auto;
   border-radius: 50% !important;
