@@ -39,8 +39,8 @@
       
       <div *ngIf="this.listDiagnostic.length > 0; else noData">
       <ion-list *ngFor="let list of this.listDiagnostic; let i = index" (mouseover)="fireEvent($event,i)"  (click)="fireEvent($event,i)">
-        <div class="dot" ></div>
-       <div class="verticalLine2" [ngStyle]="{'color': list.color}">
+        <div class="dot" [ngStyle]="{'background': list.color}"></div>
+       <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}">
         <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{list.date | date: 'EEEE'  | titlecase}}, {{list.date | date: 'd MMMM YYYY'}}</ion-label>
   
         <ion-list *ngFor="let doc of list.diagnosticTests"> 

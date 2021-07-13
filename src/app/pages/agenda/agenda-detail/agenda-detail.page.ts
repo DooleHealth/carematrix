@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +17,7 @@ import { OpentokService } from 'src/app/services/opentok.service';
 export class AgendaDetailPage implements OnInit {
   event: any = {}
   tokboxSession: any;
+  disabled : string;
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -29,6 +31,7 @@ export class AgendaDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.disabled = Capacitor.isNative? 'disabled': '';
     this.event = history.state.event;
     
     if(this.event?.id)

@@ -18,7 +18,7 @@
         <ion-label>{{ 'appointment.field_modality' | translate}}</ion-label>
         <ion-label class="textMedium">{{(this.event?.online == 1)? ('appointment.online' | translate) : ('appointment.face_to_face' | translate)}}</ion-label>
         &nbsp;
-        <ion-icon *ngIf="this.event?.online == 1 && this.tokboxSession" name="videocam" (click)="this.startDooleVideocall()"></ion-icon>
+        <ion-icon *ngIf="this.event?.online == 1 && this.tokboxSession" (disabled)="this.disabled" name="videocam" (click)="this.startDooleVideocall()"></ion-icon>
        
       </ion-item>
       <ion-item>

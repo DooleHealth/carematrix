@@ -118,10 +118,13 @@ export class AddHealthCardPage implements OnInit {
             this.dooleService.showAlertAndReturn(header,messagge,false, '/profile/cards')
           }else{
             console.log('[AddHealthCardPage] addCard() Unsuccessful response', await res);
+            let messagge = this.translate.instant('add_health_card.error_alert_message_add_card')
+            this.dooleService.presentAlert(messagge)
           }
          },(err) => { 
             console.log('[AddHealthCardPage] addCard() ERROR(' + err.code + '): ' + err.message); 
-             this.dooleService.presentAlert(err.messagge)
+            let messagge = this.translate.instant('add_health_card.error_alert_message_add_card') + ', '+ err.message
+             this.dooleService.presentAlert(messagge)
             throw err; 
         });
     }
@@ -146,10 +149,13 @@ export class AddHealthCardPage implements OnInit {
             this.dooleService.showAlertAndReturn(header,message,false, '/profile/cards')
           }else{
             console.log('[AddHealthCardPage] editCard() Unsuccessful response', await res);
+            let messagge = this.translate.instant('edit_health_card.error_alert_message_edit_card')
+            this.dooleService.presentAlert(messagge)
           }
          },(err) => { 
             console.log('[AddHealthCardPage] editCard() ERROR(' + err.code + '): ' + err.message); 
-             this.dooleService.presentAlert(err.messagge)
+            let messagge = this.translate.instant('edit_health_card.error_alert_message_edit_card')+', '+ err.message
+             this.dooleService.presentAlert(messagge)
             throw err; 
         });
     }
@@ -220,14 +226,16 @@ export class AddHealthCardPage implements OnInit {
         if(isSuccess){
           let messagge = this.translate.instant('detail_health_card.alert_message_delete_card')
           let header = this.translate.instant('alert.header_info')
-           this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/cards' )
-          
+           this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/cards' )         
         }else{
           console.log('[DetailHealthCardPage] serviceDeleteHealthCard() Unsuccessful response', await res);
+          let messagge = this.translate.instant('delete_health_card.error_alert_message_delete_card')
+          this.dooleService.presentAlert(messagge)
         }
        },(err) => { 
           console.log('[DetailHealthCardPage] serviceDeleteHealthCard() ERROR(' + err.code + '): ' + err.message); 
-           this.dooleService.presentAlert(err.messagge)
+          let messagge = this.translate.instant('delete_health_card.error_alert_message_delete_card')+', '+err.message
+          this.dooleService.presentAlert(messagge)
           throw err; 
       });
   }
