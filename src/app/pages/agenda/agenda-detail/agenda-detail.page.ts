@@ -31,8 +31,8 @@ export class AgendaDetailPage implements OnInit {
   ngOnInit() {
     this.event = history.state.event;
     
-    if(this.event?.online)
-      this.getVideocallToken();
+    if(this.event?.id)
+      this.getDetailAgenda();
 
     console.log('[AgendaDetailPage] ngOnInit()', this.event);
   }

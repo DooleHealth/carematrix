@@ -155,6 +155,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   { path: 'video', component: VideoComponent },
+  {
+    path: 'advices-detail',
+    loadChildren: () => import('./pages/home/advices-detail/advices-detail.module').then( m => m.AdvicesDetailPageModule)
+  },
  
 
 

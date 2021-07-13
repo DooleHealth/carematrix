@@ -4,15 +4,16 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 
+
 @Component({
-  selector: 'app-diets-detail',
-  templateUrl: './diets-detail.page.html',
-  styleUrls: ['./diets-detail.page.scss'],
+  selector: 'app-advices-detail',
+  templateUrl: './advices-detail.page.html',
+  styleUrls: ['./advices-detail.page.scss'],
 })
-export class DietsDetailPage implements OnInit {
+export class AdvicesDetailPage implements OnInit {
   id : any;
   loading : any;
-  diet : any = [];
+  advice : any = [];
   link : any = null;
   linkpdf : any = null;
   constructor(
@@ -23,33 +24,31 @@ export class DietsDetailPage implements OnInit {
     private dooleService: DooleService,
     public sanitizer: DomSanitizer) {
   }
-
   ngOnInit() {
     this.id = history.state.id;
     if(this.id)
-    this.getDetailDiet();
-
+    this.getDetailAdvices();
   }
 
-  async getDetailDiet(){
-    console.log('[DiaryPage] getDetailDiet()');
+  async getDetailAdvices(){
+    console.log('[DiaryPage] getDetailAdvices()');
     const loading = await this.loadingController.create();
     await loading.present();
-    this.dooleService.getAPIdetailDiets( this.id).subscribe(
+    this.dooleService.getAPIdetailAdvices( this.id).subscribe(
       async (json: any) =>{
-        console.log('[DiaryPage] getDetailDiet()', await json);
+        console.log('[DiaryPage] getDetailAdvices()', await json);
 
-        this.diet=json.diet;
-        if(this.diet.description){
-          this.diet.description=this.diet.description.replace('"//www.','"https://www.');
-          this.diet.description=this.sanitizer.bypassSecurityTrustHtml(this.diet.description);
+        this.advice=json.advice;
+        if(this.advice.description){
+          this.advice.description=this.advice.description.replace('"//www.','"https://www.');
+          this.advice.description=this.sanitizer.bypassSecurityTrustHtml(this.advice.description);
         }
         
-        if((this.diet.url!='') && (this.diet.url!=null)){
-          this.link=this.sanitizer.bypassSecurityTrustResourceUrl(this.diet.url);
+        if((this.advice.url!='') && (this.advice.url!=null)){
+          this.link=this.sanitizer.bypassSecurityTrustResourceUrl(this.advice.url);
         }
   
-        this.diet.media.forEach(element => {
+        this.advice.media.forEach(element => {
           if(element.mime_type=="application/pdf"){
             element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
             this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
@@ -58,9 +57,10 @@ export class DietsDetailPage implements OnInit {
 
         loading.dismiss();
        },(err) => { 
-          console.log('[DiaryPage] getDetailDiet() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[DiaryPage] getDetailAdvices() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
           throw err; 
       });
   }
 }
+
