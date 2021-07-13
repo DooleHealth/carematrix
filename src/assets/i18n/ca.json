@@ -48,13 +48,20 @@
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"
       },
+      "tab":{
+        "home": "Inici",
+        "agenda": "Agenda",
+        "contact": "Contacte",
+        "tracking": "Seguiment",
+        "journal": "El meu diari"
+      },
       "intro":{
         "title1": "Benvingut a",
         "slider1_text1": "Tot en un",
         "slider1_text2": "Tota la teva informació mèdica en una sola app",
         "slider1_text3": "Contacta amb el teu metge",
         "slider1_text4": "Parla amb el teu especialista directament o sol·licita una consulta presencial",
-        "slider1_text5": "Salud y deporte",
+        "slider1_text5": "Salut i esport",
         "slider1_text6": "Connecta les teves aplicacions de salut per veure la teva evolució",
 
         "title2": "Agenda",

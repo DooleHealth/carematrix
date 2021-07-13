@@ -47,6 +47,13 @@
         "error_required": "Error: Campo requerido",
         "error_min_lenght": "Error: Debe ser 4 dígitos"
       },
+      "tab":{
+        "home": "Inicio",
+        "agenda": "Agenda",
+        "contact": "Contacto",
+        "tracking": "Seguimiento",
+        "journal": "Mi diario"
+      },
       "intro":{
         "title1": "Bienvenido a",
         "slider1_text1": "Todo en uno",

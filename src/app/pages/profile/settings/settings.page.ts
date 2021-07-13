@@ -8,17 +8,17 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-  authentication = true
-  faceId = true
-  communications = true
-  appointment = true
-  diets = true
-  medication = true
-  goals = true
-  advices = true
-  offers = true
-  form = true
-  messages = true
+  authentication = false
+  faceId = false
+  communications = false
+  appointment = false
+  diets = false
+  medication = false
+  goals = false
+  advices = false
+  offers = false
+  form = false
+  messages = false
   constructor(
     private dooleService: DooleService) { }
   ngOnInit() {
