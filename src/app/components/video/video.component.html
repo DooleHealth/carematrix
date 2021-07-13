@@ -6,7 +6,7 @@
   </ion-buttons>
 </ion-toolbar>
 <ion-content>
-  <ng-container *ngIf="!this.isLoading">
+  <!-- <ng-container *ngIf="!this.isLoading">
     <div class="holder">
       <div class="preloader">
         <div></div>
@@ -21,7 +21,7 @@
         <div></div>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="light">
@@ -60,7 +60,7 @@
   </div>
 
   <div
-    class="publishingDiv img-wrapper-patient"
+    class="publishingDiv"
     [ngClass]="{ publishing: publishing }"
     #publisherDiv
   ></div>

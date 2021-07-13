@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1094231160196-qhbm857rkpo8on35fi8l7e5hbd0qmka0.apps.googleusercontent.com</string>
+	<string>344383195320-c4rsp8enq54f6rhd1p4u05v5988ian41.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1094231160196-qhbm857rkpo8on35fi8l7e5hbd0qmka0</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>1094231160196-af5d2h3gkkiffnc9n08kbto4ket4b662.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.344383195320-c4rsp8enq54f6rhd1p4u05v5988ian41</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBX7o0NH1V_Pst5AskHrx6t47Ywyuxpdfg</string>
+	<string>AIzaSyDdweP0RL0JLiTzua5Ym-WS1-bpcAJOhWU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1094231160196</string>
+	<string>344383195320</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.doole.mgc</string>
+	<string>com.doole.doole</string>
 	<key>PROJECT_ID</key>
-	<string>mgc-doole</string>
+	<string>covid-39b96</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mgc-doole.appspot.com</string>
+	<string>covid-39b96.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1094231160196:ios:8068b8dbbb0f4afabed9d1</string>
+	<string>1:344383195320:ios:2c5893deb91555ed13cc4d</string>
 	<key>DATABASE_URL</key>
-	<string>https://mgc-doole.firebaseio.com</string>
+	<string>https://covid-39b96.firebaseio.com</string>
 </dict>
 </plist>
