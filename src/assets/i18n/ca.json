@@ -18,7 +18,10 @@
         "ok_button": "Les accepto",
         "ko_button": "No les accepto",
         "next_button":"Continuar",
-        "acept_conditions_label": "He llegit i accepto les condicions"
+        "acept_conditions_label": "He llegit i accepto les condicions",
+        "no_get_conditions_label": "No hi ha termes legals assignats per a aquest usuari",
+        "error_conditions_label": "Error a l'obtenir els termes legals",
+        "error_post_conditions_label": "No s'ha pogut actualitzar les condicions legals"
       },
       "sms":{
         "header": "Verificació d'Identitat",
@@ -45,13 +48,20 @@
         "error_required": "Error: Camp requerit",
         "error_min_lenght": "Error: Ha de ser 4 digits"
       },
+      "tab":{
+        "home": "Inici",
+        "agenda": "Agenda",
+        "contact": "Contacte",
+        "tracking": "Seguiment",
+        "journal": "El meu diari"
+      },
       "intro":{
         "title1": "Benvingut a",
         "slider1_text1": "Tot en un",
         "slider1_text2": "Tota la teva informació mèdica en una sola app",
         "slider1_text3": "Contacta amb el teu metge",
         "slider1_text4": "Parla amb el teu especialista directament o sol·licita una consulta presencial",
-        "slider1_text5": "Salud y deporte",
+        "slider1_text5": "Salut i esport",
         "slider1_text6": "Connecta les teves aplicacions de salut per veure la teva evolució",
 
         "title2": "Agenda",
@@ -229,12 +239,17 @@
       "add_health_card":{
         "header_add_card": "Afegir Targeta Sanitària",
         "alert_message_add_card": "La targeta s'ha afegit correctament",
-        "button_add": "Afegir"
+        "button_add": "Afegir",
+        "error_alert_message_add_card": "Error: la targeta no ha pogut ser afegida"
       },
       "edit_health_card":{
         "header_edit_card": "Edita Targeta Sanitària",
         "alert_message_edit_card": "La targeta ha estat editada correctament",
-        "button_edit": "Edita"
+        "button_edit": "Edita",
+        "error_alert_message_edit_card": "Error: la targeta no ha pogut ser editada"
+      },
+      "delete_health_card":{
+        "error_alert_message_delete_card": "Error: la targeta no ha pogut ser eliminada"
       },
       "detail_health_card":{
         "header_detail_card": "Detall targeta sanitària",

@@ -28,7 +28,7 @@ export class TrackingPage implements OnInit {
   elementValues: any = [];
   isLoading = false
   segment = 'documents'
-  active_color= '#2ECC71'
+  active_color= '#3498DB'
   inactive_color= '#7F8C8D'
   filter: Filter;
   constructor(
@@ -250,7 +250,7 @@ export class TrackingPage implements OnInit {
       diagnostic.color = this.active_color
       else
       diagnostic.color = this.inactive_color
-      console.log(i, index);
+      //console.log(i, index);
     })
 }
 

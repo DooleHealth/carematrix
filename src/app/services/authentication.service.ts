@@ -110,7 +110,7 @@ export class AuthenticationService {
         }
         this.user = new User(res.idUser, credentials.password, res.name, res.temporary_url);
         this.setUserLocalstorage(this.user)
-        // user's data
+
         return res;
 
       }),
@@ -121,7 +121,6 @@ export class AuthenticationService {
   }
 
   setUser(){
-
     if(!this.user){
       this.getUserLocalstorage().then(user =>{
         console.log("[AuthenticationService] setUser()", user);
@@ -168,10 +167,10 @@ export class AuthenticationService {
    });
  }
 
-  logout(): Promise<void> {
+  async logout(): Promise<void> {
     console.log('logout');
     this.isAuthenticated.next(false);
-    Storage.remove({key: 'user'}).then((val) => { });
+    await Storage.remove({key: 'user'}).then((val) => { });
     return Storage.remove({key: TOKEN_KEY});
   }
 

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,17 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class LoginPage implements OnInit {
   @Input()credentials: {username, password};
-  constructor( private authService: AuthenticationService, private dooleService: DooleService, private router: Router, private ngZone: NgZone,  private modalCtrl: ModalController) { }
+  constructor( 
+    private authService: AuthenticationService, 
+    private dooleService: DooleService, 
+    private router: Router, 
+    private ngZone: NgZone, 
+    public languageService: LanguageService, 
+    private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.loginUser();
+    this.setLenguageLocalstorage('ca') //'ca'
   }
 
   loginUser(){
@@ -30,6 +38,11 @@ export class LoginPage implements OnInit {
      this.modalCtrl.dismiss({error:error});
      throw error;
    });
+  }
+
+  setLenguageLocalstorage(language){
+    this.languageService.changeLanguage(language);
+    localStorage.setItem('language', language);
   }
 
   checkConditionLegal(){

@@ -2,23 +2,23 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/home']">
       <ion-icon class="eee" name="home"></ion-icon>
-      <ion-label>Inicio</ion-label>
+      <ion-label>{{ this.home}}</ion-label>
     </ion-tab-button>
     <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/agenda']">
       <ion-icon name="calendar"></ion-icon>
-      <ion-label>Agenda</ion-label>
+      <ion-label>{{ this.agenda}}</ion-label>
     </ion-tab-button>
     <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/contact']">
       <ion-icon name="chatbubble"></ion-icon>
-      <ion-label>Contacto</ion-label>
+      <ion-label>{{ this.contact}}</ion-label>
     </ion-tab-button>
     <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/tracking']">
       <ion-icon name="newspaper"></ion-icon>
-      <ion-label>Seguimiento</ion-label>
+      <ion-label>{{ this.tracking}}</ion-label>
     </ion-tab-button>
     <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/journal']">
       <ion-icon name="heart"></ion-icon>
-      <ion-label>Mi diario</ion-label>
+      <ion-label>{{ this.journal}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
