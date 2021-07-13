@@ -18,14 +18,16 @@ export class User{
   image: any;
   idPatient: string;
   idUser: string;
+  first_name: string;
   secret: string;
   roles : any = [];
   familyUnit : string;
   name:string;
-  constructor(idUser:string, secret:string, name:string, image:string){
+  constructor(idUser:string, secret:string, name:string,first_name:string, image:string){
     this.idUser = idUser
     this.secret = secret
     this.name = name
+    this.first_name = first_name
     this.image = image
   };
 
@@ -108,7 +110,7 @@ export class AuthenticationService {
             console.log(error);
           });
         }
-        this.user = new User(res.idUser, credentials.password, res.name, res.temporary_url);
+        this.user = new User(res.idUser, credentials.password, res.name, res.first_name,res.temporary_url);
         this.setUserLocalstorage(this.user)
         // user's data
         return res;
