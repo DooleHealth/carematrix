@@ -49,11 +49,12 @@ constructor(
   public file: File,
 ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    
     this.apiKey = this.opentokService.apiKey$;
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
-
+    //await window.OT.getUserMedia();
   }
 
 publish() {
@@ -80,22 +81,30 @@ onStreamCreated(stream, session) {
 
 close() {
   
-  this.publisher.publishVideo(false);
+  //this.publisher.publishVideo(false);
   this.modalCtrl.dismiss({date:null});
 }
 
-ngAfterViewInit() {
+
+ngAfterViewInit(): void {
 
   if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
 
-    this.session = OT.initSession(this.opentokService.apiKey$, this.opentokService.sessionId$);
+    this.session = OT.initSession(this.apiKey, this.sessionId);
     var publisherOptions = { 
       height: "100%",
       width: "100%"}
-    this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, publisherOptions, (error) => {
-      if (error) {
-        alert(error);
-        return;
+    this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, publisherOptions, (err) => {
+      if (err) {
+        if (err.name === 'OT_USER_MEDIA_ACCESS_DENIED') {
+          // Access denied can also be handled by the accessDenied event
+          alert('Please allow access to the Camera and Microphone and try publishing again.');
+        } else {
+          alert('Failed to get access to your camera or microphone. Please check that your webcam'
+            + ' is connected and not being used by another application and try again.');
+        }
+        this.publisher.destroy();
+        this.publisher = null;
       }
     });
 
@@ -104,7 +113,6 @@ ngAfterViewInit() {
         var subscriberOptions = {fitMode: "contain", insertMode: 'append'};
         this.session.subscribe(event.stream, 'subscriber', subscriberOptions);     
         this.onStreamCreated(event.stream, this.session);
-        this.isLoading = true;
         //OT.updateViews();
       },
       streamDestroyed: (event) => {
@@ -113,15 +121,14 @@ ngAfterViewInit() {
       },
       sessionConnected: event => {
         this.session.publish(this.publisher);
-        this.isLoading = true;
         //OT.updateViews();
       },
       connectionCreated: (event) => {
-        if (event.connection.connectionId != this.session.connection.connectionId) {
-         alert("Se ha conectado un usuario");
-         
-        } else {
-        }
+        //if (event.connection.connectionId != this.session.connection.connectionId) {
+        //  this.showMessage("Se ha conectado un usuario");
+        //  this.infoStr = "";
+        //} else {
+        //}
       },
     });
 
@@ -138,7 +145,7 @@ ngAfterViewInit() {
 
     });
 
-    this.session.connect(this.opentokService.token$, (error: any) => {
+    this.session.connect(this.token, (error: any) => {
       if (error) {
         alert(`There was an error connecting to the session ${error}`);
       }
@@ -155,21 +162,20 @@ ngAfterViewInit() {
       width: "100%",
       insertMode: 'append'
     });
-    this.session = OT.initSession(this.opentokService.apiKey$, this.opentokService.sessionId$);
+    this.session = OT.initSession(this.apiKey, this.sessionId);
     
-    this.session.connect(this.opentokService.token$, (err) => {
+    this.session.connect(this.token, (err) => {
       if (err) {
         console.log(err);
       }
       else {
         console.log("connected");
-        this.publishing = true;
         this.session.publish(this.publisher, (err) => {
           if (err) {
             console.log(err)
           }
           else {
-           
+            this.publishing = true;
           }
         });
         let that = this;
@@ -180,8 +186,6 @@ ngAfterViewInit() {
     })
    
   }
-  
-  
 }
 
 async uploadFileFromBrowser(event: EventTarget) {
@@ -250,7 +254,7 @@ async addFile(){
 }
 
 async addImage() {
-  let source = CameraSource.Photos;
+  let source = CameraSource.Camera;
   const image = await Camera.getPhoto({
     quality: 60,
     allowEditing: false,

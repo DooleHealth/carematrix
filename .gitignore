@@ -39,3 +39,6 @@ UserInterfaceState.xcuserstate
 *.xml
 android/.idea/misc.xml
 *.json
+android/.idea/misc.xml
+android/.DS_Store
+android/.idea/compiler.xml
