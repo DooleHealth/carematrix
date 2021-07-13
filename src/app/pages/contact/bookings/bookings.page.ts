@@ -36,6 +36,8 @@ export class BookingsPage implements OnInit {
       date: ['', [Validators.required]],
       duration: [this.duration],
       indications: [],
+      files:[],
+      online:[history.state.isOnline]
     });
   }
 
@@ -53,6 +55,9 @@ export class BookingsPage implements OnInit {
 
     console.log(`[AgendaAddPage] addAgenda()` );
 
+    this.form.patchValue({
+        files: this.files
+    });
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);
@@ -70,10 +75,17 @@ export class BookingsPage implements OnInit {
         loading.dismiss();
       };
   }
+  isSubmittedFields(isSubmitted){
+    this.isSubmittedPlace = isSubmitted
+    this.isSubmittedTitle = isSubmitted;
+    this.isSubmittedDuration= isSubmitted;
+    this.isSubmittedStartDate= isSubmitted;
+  }
+
 
   async submit() {
-    console.log('[ReminderAddPage] submit()', this.form.value );
-    //this.isSubmittedFields(true);
+    console.log('[BookingsAddPage] submit()', this.form.value );
+    this.isSubmittedFields(true);
     if(this.form.invalid)
       return 
    
@@ -107,45 +119,61 @@ export class BookingsPage implements OnInit {
   }
 
   async selectImageSource() {
-    const buttons = [
-      {
-        text: this.translate.instant('Cámara'),
-        icon: 'camera',
-        handler: () => {
-          this.addImage(CameraSource.Camera);
+
+    let buttons = [];
+
+    if(!Capacitor.isNative){
+      buttons = [
+        {
+          text: this.translate.instant('documents_add.camera'),
+          icon: 'camera',
+          handler: () => {
+            this.addImage(CameraSource.Camera);
+          }
+        },
+        {
+          text: this.translate.instant('documents_add.file'),
+          icon: 'attach',
+          handler: () => {
+            this.fileInput.nativeElement.click();
+          }
+        }]
+    }else{
+      buttons = [
+        {
+          text: this.translate.instant('documents_add.camera'),
+          icon: 'camera',
+          handler: () => {
+            this.addImage(CameraSource.Camera);
+          }
+        },
+        {
+          text: this.translate.instant('documents_add.pictures'),
+          icon: 'image',
+          handler: () => {
+            this.addImage(CameraSource.Photos);
+          }
+        },
+        {
+          text: this.translate.instant('documents_add.file'),
+          icon: 'document',
+          handler: () => {
+            this.addFile();
+          }
         }
-      },
-      {
-        text: this.translate.instant('videocall.pictures'),
-        icon: 'image',
-        handler: () => {
-          this.addImage(CameraSource.Photos);
-        }
-      },
-      {
-        text: this.translate.instant('videocall.choose-file'),
-        icon: 'document',
-        handler: () => {
-          this.addFile();
-        }
-      }
-    ];
+      ];
+    }
+    
 
     // Only allow file selection inside a browser
     
     // if (Capacitor.getPlatform() == 'web') {
-      buttons.push({
-        text: 'Choose a File',
-        icon: 'attach',
-        handler: () => {
-          this.fileInput.nativeElement.click();
-        }
-      });
+    
     //}
-
     const actionSheet = await this.actionSheetCtrl.create({
       buttons
     });
+    
     await actionSheet.present();
   }
   addFile() {

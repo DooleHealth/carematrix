@@ -44,7 +44,7 @@
 
       <ion-list>
         <ion-card class="cardProfile">
-          <ion-item lines="none" routerLink="medical-directory">
+          <ion-item lines="none" routerLink="medical-directory" [state]="{isOnline:true}">
             <div class="verticalLine"></div>
             <ion-grid>
               <ion-row>
@@ -61,7 +61,7 @@
                 <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_regular_professional' | translate}}</ion-card-title>
               </ion-col>
               <ion-col size="12">
-                <ion-card-title class="textBlue" routerLink="">
+                <ion-card-title class="textBlue">
                   {{ 'button.continue' | translate}}</ion-card-title>
               </ion-col>
             </ion-grid>
@@ -85,7 +85,7 @@
                 <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_other_specialists' | translate}}</ion-card-title>
               </ion-col>
               <ion-col size="12">
-                <ion-card-title class="textBlue" routerLink="">
+                <ion-card-title class="textBlue">
                   {{ 'button.continue' | translate}}</ion-card-title>
               </ion-col>
             </ion-grid>
@@ -118,7 +118,7 @@
 
   <ion-list>
     <ion-card class="cardProfile">
-      <ion-item lines="none" routerLink="medical-directory">
+      <ion-item lines="none" routerLink="medical-directory" [state]="{isOnline:false}">
         <div class="verticalLine"></div>
         <ion-grid>
           <ion-row>
@@ -135,7 +135,7 @@
             <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_appointment_regular_professional' | translate}}</ion-card-title>
           </ion-col>
           <ion-col size="12">
-            <ion-card-title class="textBlue" routerLink="">
+            <ion-card-title class="textBlue">
               {{ 'button.continue' | translate}}</ion-card-title>
           </ion-col>
         </ion-grid>
@@ -159,7 +159,7 @@
             <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_appointment_other_specialists' | translate}}</ion-card-title>
           </ion-col>
           <ion-col size="12">
-            <ion-card-title class="textBlue" routerLink="">
+            <ion-card-title class="textBlue">
               {{ 'button.continue' | translate}}</ion-card-title>
           </ion-col>
         </ion-grid>
@@ -212,7 +212,7 @@
                   <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_recent_conversations' | translate}}</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
-                  <ion-card-title class="textBlue" routerLink="">
+                  <ion-card-title class="textBlue">
                     {{ 'button.continue' | translate}}</ion-card-title>
                 </ion-col>
               </ion-grid>
@@ -236,7 +236,7 @@
                   <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_new_conversation' | translate}}</ion-card-title>
                 </ion-col>
                 <ion-col size="12">
-                  <ion-card-title class="textBlue" routerLink="">
+                  <ion-card-title class="textBlue">
                     {{ 'button.continue' | translate}}</ion-card-title>
                 </ion-col>
               </ion-grid>

@@ -64,7 +64,7 @@ isChat:boolean;
       if(this.isChat){
         this.router.navigate(['/contact/chat/conversation'],{state:{staff:staff, chat:staff.message_header_id}})
       }else{
-        this.router.navigate(['bookings'], {state:{staff:staff}});
+        this.router.navigate(['bookings'], {state:{staff:staff, isOnline:history.state.isOnline}});
       }
     }
 

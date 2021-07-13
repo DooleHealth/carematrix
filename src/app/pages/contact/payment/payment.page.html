@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="{{'button.cancel' | translate}}" icon=""></ion-back-button>
+    </ion-buttons>
     <ion-title>{{'payment.header' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -38,7 +41,7 @@
     </ion-list>
   </ion-card>
 
-  <ion-card class="cardProfile" routerLink="detailCard" >
+  <ion-card class="cardProfile" routerLink="/profile/cards/detailCard" >
     
       <ion-item>
         <ion-label class="txtTitleGoals">{{'payment.modality' | translate}}</ion-label>

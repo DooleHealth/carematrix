@@ -9,9 +9,17 @@ const routes: Routes = [
     component: BookingsPage
   },
   {
-  path: 'medical-calendar',
-  loadChildren: () => import('../medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
-}
+    path: 'medical-calendar',
+    loadChildren: () => import('../medical-calendar/medical-calendar.module').then(m => m.MedicalCalendarPageModule)
+  },
+  {
+    path: 'payment',
+    loadChildren: () => import('../payment/payment.module').then(m => m.PaymentPageModule)
+  },
+  {
+    path: 'detailCard',
+    loadChildren: () => import('../../profile/cards/detail-health-card/detail-health-card.module').then( m => m.DetailHealthCardPageModule)
+  }
 
 ];
 
@@ -19,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BookingsPageRoutingModule {}
+export class BookingsPageRoutingModule { }

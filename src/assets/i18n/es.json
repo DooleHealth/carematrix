@@ -385,11 +385,11 @@
         "button_add_result": "Añadir Resultado",
         "button_cancel": "Cancelar",
         "button_ok": "OK",
-
         "alert_message": "El documento ha sido añadido correctamente",
         "select": "Seleccionar",
         "camera": "Cámara",
-        "file": "Archivos"
+        "file": "Archivos",
+        "pictures":"Imatges"
       },
       "element":{
         "elements_add": "Añadir Dato",
@@ -511,7 +511,8 @@
         "reason_appointment": "Motivo de la cita",
         "attachments": "Documentos Adjuntos",
         "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-        "button_videocall": "Confirmar Videollamada"
+        "button_videocall": "Confirmar Videollamada",
+        "button_videocall_charge": "Confirmar videollamada con pago"
       },      
       "chat":{
         "header":"Chat"
