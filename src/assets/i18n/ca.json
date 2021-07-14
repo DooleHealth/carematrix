@@ -442,7 +442,7 @@
         "elements_add": "Afegir Dada",
         "field_category": "Categoria",
         "field_data": "Dada",
-        "field_measure": "mesura",
+        "field_measure": "Valor",
         "field_units": "Unitats",
         "alert_message_add_element": "Les dades ha estat afegit correctament",
         "error_alert_message_add_element": "Hi ha hagut un error a l'afegir el valor"

@@ -406,7 +406,7 @@
         "elements_add": "Añadir Dato",
           "field_category": "Categoría",
           "field_data": "Dato",
-          "field_measure": "Medida",
+          "field_measure": "Valor",
           "field_units": "Unidades",
           "alert_message_add_element": "Los datos ha sido añadido correctamente",
           "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor"
