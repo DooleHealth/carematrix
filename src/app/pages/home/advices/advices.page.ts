@@ -69,6 +69,7 @@ export class AdvicesPage implements OnInit {
         this.isLoading = false
        },(err) => { 
           console.log('[AdvicePage] getDietList() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
           throw err; 

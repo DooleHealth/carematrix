@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,10 +19,14 @@ export class SettingsPage implements OnInit {
   offers = false
   form = false
   messages = false
+  language
   constructor(
-    private dooleService: DooleService) { }
+    private dooleService: DooleService,
+    public languageService: LanguageService, 
+    ) { }
   ngOnInit() {
     this.getNotificationConfiguration()
+    this.getLocalLanguages()
   }
 
   getNotificationConfiguration(){
@@ -33,7 +37,7 @@ export class SettingsPage implements OnInit {
         this.getConfigurationParams(res)
        }
        },(err) => { 
-          console.log('p[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
@@ -165,9 +169,19 @@ export class SettingsPage implements OnInit {
           console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
         }
        },(err) => { 
-          console.log('p[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
+  }
+
+  changeLanguages(){
+    console.log('[SettingsPage] changeLanguages()', this.language);
+    this.languageService.setLenguageLocalstorage(this.language)
+  }
+
+  getLocalLanguages(){
+    this.language = this.languageService.getCurrent()
+    console.log('[SettingsPage] getLocalLanguages()', this.language);
   }
 
 }

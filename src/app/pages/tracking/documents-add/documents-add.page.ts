@@ -103,11 +103,16 @@ export class DocumentsAddPage implements OnInit {
         console.log("data:", data);
         if(data)
         this.showAlert()
+        else{
+          let message = this.translate.instant('documents_add.error_alert_message')
+          alert(message)
+        }
         loading.dismiss();
       },
       (error) => {
         // Called when error
         loading.dismiss();
+        alert( 'ERROR(' + error.code + '): ' + error.message)
         console.log("error: ", error);
         throw new HttpErrorResponse(error);
       },

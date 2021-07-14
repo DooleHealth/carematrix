@@ -100,6 +100,7 @@ export class DiaryPage implements OnInit {
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
           throw err; 
@@ -126,6 +127,7 @@ export class DiaryPage implements OnInit {
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDetailDiet() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
           throw err; 
@@ -158,6 +160,7 @@ export class DiaryPage implements OnInit {
       this.getDrugIntakeList()
     },(err) => { 
       console.log('[DiaryPage] changeTake() ERROR(' + err.code + '): ' + err.message); 
+      alert( 'ERROR(' + err.code + '): ' + err.message)
       throw err; 
   });
   }
@@ -183,6 +186,7 @@ export class DiaryPage implements OnInit {
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getGameList() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
           throw err; 
@@ -260,6 +264,7 @@ export class DiaryPage implements OnInit {
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
           throw err; 

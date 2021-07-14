@@ -952,12 +952,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 {
                     group: 'Constantes',
                     elements: [
-                        {id: 58, name: 'Altura', units: 'm'},
+                        {id: 32, name: 'Temperatura', units: 'ºC'},
                         {id: 71, name: 'Peso', units: 'Kg'},
+                        {id: 58, name: 'Altura', units: 'm'},
                         {id: 39, name: 'Ritmo cardiaco', units: 'LPM'},
                         {id: 61, name: 'Electrocardiograma', units: 'mm/seg'},
                         {id: 4, name: 'Saturación de oxígeno', units: '%'},
-                        {id: 1, name: 'Temperatura', units: 'ºC'},
                         {id: 33, name: 'Presión arterial', units: 'mmHg'}
                     ]
                 }

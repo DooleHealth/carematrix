@@ -99,8 +99,12 @@ export class DrugsDetailPage implements OnInit {
       if(json.message){
         let message = this.translate.instant('medication.message_add_medication')
         this.showAlert(message)
+      }else{
+        let message = this.translate.instant('medication.error_message_add_medication')
+        alert(message)
       }
     },err => {
+      alert(`Error: ${err.code }, Message: ${err.message}`)
       console.log('[DrugsDetailPage] saveDrug() ERROR(' + err.code + '): ' + err.message); 
       throw err; 
     });
@@ -122,8 +126,12 @@ export class DrugsDetailPage implements OnInit {
       if(json.message){
         let message = this.translate.instant('medication.message_edit_medication')
         this.showAlert(message)
+      }else{
+        let message = this.translate.instant('medication.error_message_edit_medication')
+        alert(message)
       }
     },err => {
+      alert(`Error: ${err.code }, Message: ${err.message}`)
       console.log('[DrugsDetailPage] updateDrug() ERROR(' + err.code + '): ' + err.message); 
       throw err; 
     });
@@ -211,9 +219,14 @@ export class DrugsDetailPage implements OnInit {
 
         let message = this.translate.instant('medication.message_deleted_medication')
         this.showAlert(message)
+/*         else{
+          let message = this.translate.instant('medication.error_message_deleted_medication')
+          alert(message)
+        } */
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
+        alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[DrugsDetailPage] deleteDrug() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {

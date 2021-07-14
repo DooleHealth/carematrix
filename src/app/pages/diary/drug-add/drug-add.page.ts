@@ -37,6 +37,7 @@ export class DrugAddPage implements OnInit {
         this.drugs = res.drugs;
        },(err) => { 
           console.log('[DrugAddPage] getDrugsList() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
          // loading.dismiss();
           throw err; 
       });

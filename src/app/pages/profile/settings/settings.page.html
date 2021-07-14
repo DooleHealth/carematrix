@@ -27,6 +27,21 @@
        
           </ion-list>
     </ion-card>
+
+    <ion-text class="txtTitle2">{{ 'setting.title_languages' | translate}}</ion-text>
+    <ion-card class="cardProfile">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label>{{ 'setting.subtitle_languages'| translate}}</ion-label>
+              <ion-select [(ngModel)]="language" (ionChange)="changeLanguages()" interface="action-sheet"  okText="{{ 'button.ok' | translate}}" cancelText="{{ 'button.cancel' | translate}}" placeholder="{{'add_health_card.placeholder_select' | translate}}">
+                <ion-select-option value="ca">{{'setting.lenguage_ca' | translate}}</ion-select-option>
+                <ion-select-option value="es">{{'setting.lenguage_es' | translate}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+       
+          </ion-list>
+    </ion-card>
+
     <ion-text class="txtTitle">{{ 'setting.title_notification' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>

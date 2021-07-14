@@ -124,7 +124,7 @@
 <div  *ngSwitchCase="'graphics'">
   <div *ngIf="groupedElements.length > 0; else noData">
     <ion-list *ngFor="let group of this.groupedElements">
-      <ion-label class="txtTitle">{{group.group  }}</ion-label>
+      <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group  }}</ion-label>
       <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
         <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
           <div *ngIf="group.group=='Actividad Física' || group.group=='Actividad' " class="verticalLineRed"></div>
