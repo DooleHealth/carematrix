@@ -15,6 +15,13 @@ export class DietsDetailPage implements OnInit {
   diet : any = [];
   link : any = null;
   linkpdf : any = null;
+  linkpdf2 : any = null;
+  linkPdfDescription : any = null;
+  linkPdfTitle : any = null;
+  video : any = null;
+  videoDescription: any = null;
+  videoTitle: any = null;
+  thumbnail : any = null;
   constructor(
     private iab: InAppBrowser, 
     public loadingController: LoadingController, 
@@ -53,9 +60,20 @@ export class DietsDetailPage implements OnInit {
           if(element.mime_type=="application/pdf"){
             element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
             this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
+            this.linkpdf2=this.sanitizer.bypassSecurityTrustResourceUrl(element.temporaryUrl);
+            this.thumbnail=(element.thumbnailTemporaryUrl);
+            this.linkPdfDescription=(element.description);
+            this.linkPdfTitle=(element.name);
           }
         });
-
+        this.diet.media.forEach(element => {
+          if(element.mime_type=="video/webm"){
+            this.video=(element.temporaryUrl);
+            this.videoDescription=(element.description);
+            this.videoTitle=(element.name);
+          }
+        });
+    
         loading.dismiss();
        },(err) => { 
           console.log('[DiaryPage] getDetailDiet() ERROR(' + err.code + '): ' + err.message); 
@@ -63,4 +81,20 @@ export class DietsDetailPage implements OnInit {
           throw err; 
       });
   }
+  openFile(media){
+    console.log("media", this.diet.media);
+    // console.log("video", this.video);
+    console.log("miniatura", this.thumbnail);
+    console.log("advices", this.linkpdf2.changingThisBreaksApplicationSecurity);
+    window.open(this.linkpdf2.changingThisBreaksApplicationSecurity, "");
+  
+  }
+
+  openVideo(media){
+    console.log("media", this.diet.media);
+    console.log("video", this.video);
+ 
+    window.open(this.video, "");
+  }
+
 }
