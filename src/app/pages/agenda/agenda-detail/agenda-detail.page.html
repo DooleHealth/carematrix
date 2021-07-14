@@ -4,9 +4,7 @@
       <ion-back-button text=" "></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'appointment.header_appointment' | translate}}</ion-title>
-    <ion-buttons slot="end" >
-      <ion-icon (click)="share()" class="primaryIcon" slot="icon-only" name="share"></ion-icon>
-    </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 
@@ -64,9 +62,15 @@
         <ion-label>{{ 'appointment.field_information' | translate}}</ion-label>
         <ion-textarea class="textMedium" [innerHtml]="event?.description"></ion-textarea>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item >
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
         <ion-label  class="textMedium">{{ (event?.files?.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-button size="large" expand="full"  color="primary" (click)="share()"><ion-icon name="share"></ion-icon></ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button size="large" expand="full"  (click)="addCalendar(this.event)"><ion-icon name="calendar-clear-outline"></ion-icon></ion-button>
       </ion-item>
     </ion-list>
   </div>
