@@ -16,6 +16,7 @@ export interface User {
 
 export interface Diet {
     name?: string,
+    first_name?: string,
     id?: number,
     hour?: string,
     image?: string,

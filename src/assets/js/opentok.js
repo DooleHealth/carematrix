@@ -1,3 +1,4 @@
+
 window.OT = {
   checkSystemRequirements: function() {
     return 1;
@@ -3212,10 +3213,8 @@ OTHelpers.observeNodeOrChildNodeRemoval = function(element, onChange) {
 /*
  * getComputedStyle from 
  * https://github.com/jonathantneal/Polyfills-for-IE8/blob/master/getComputedStyle.js
-
 // tb_require('../helpers.js')
 // tb_require('./dom.js')
-
 /*jshint strict: false, eqnull: true, browser:true, smarttabs:true*/
 
 (function(window, OTHelpers, undefined) {

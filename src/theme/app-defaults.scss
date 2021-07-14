@@ -278,7 +278,7 @@ padding-right: 10%;
   --box-shadow:none; 
 }
 .imgCard{
-background-image: url(https://img.mobiscroll.com/demos/card_5.png); 
+// background-image: url(https://img.mobiscroll.com/demos/card_5.png); 
 background-repeat: no-repeat;
 background-size:cover; margin: -10px;
 background-position: center;
@@ -303,6 +303,18 @@ margin-bottom: -5%;
     display: block;
     margin: auto;
     margin-top: 3%;
+}
+.img-wrapper3{
+  background-size: 100% auto;
+  background-color: #27AE60;
+  border-radius: 50% !important;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+  object-fit: cover;
+
 }
 .img-wrapper-doctors{
   background-size: 100% auto;
