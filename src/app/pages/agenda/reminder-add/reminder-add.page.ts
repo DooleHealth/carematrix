@@ -83,14 +83,20 @@ export class ReminderAddPage implements OnInit {
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);
-        let message = this.translate.instant('reminder.message_added_reminder')
-        if(!this.isNewEvent)
-        message = this.translate.instant('reminder.message_updated_reminder')
-        this.showAlert(message)
+        if(res.success){
+          let message = this.translate.instant('reminder.message_added_reminder')
+          if(!this.isNewEvent)
+          message = this.translate.instant('reminder.message_updated_reminder')
+          this.showAlert(message)
+        }else{
+          let message = this.translate.instant('reminder.error_message_added_reminder')
+          alert(message)
+        }
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
           console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
@@ -105,6 +111,7 @@ export class ReminderAddPage implements OnInit {
         this.addAgenda()
        },(err) => { 
           console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
@@ -135,13 +142,18 @@ export class ReminderAddPage implements OnInit {
     this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
-
-        let message = this.translate.instant('reminder.message_deleted_reminder')
-        this.showAlert(message)
+        if(res.success){
+          let message = this.translate.instant('reminder.message_deleted_reminder')
+          this.showAlert(message)
+        }else{
+          let message = this.translate.instant("reminder.error_message_delete_reminder")
+          alert(message)
+        }
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
           console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)

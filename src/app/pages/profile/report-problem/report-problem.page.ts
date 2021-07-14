@@ -186,7 +186,8 @@ export class ReportProblemPage implements OnInit {
             console.log("data:", data);
             if(data)
             this.presentAlert(this.translate.instant("report_problem.alert_successful_response"));
-            
+            else
+            this.presentAlert(this.translate.instant("report_problem.alert_no_successful_response"));
           },
           (error) => {
             // Called when error

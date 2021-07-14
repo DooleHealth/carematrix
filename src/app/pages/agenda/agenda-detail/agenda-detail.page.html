@@ -4,6 +4,9 @@
       <ion-back-button text=" "></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'appointment.header_appointment' | translate}}</ion-title>
+    <ion-buttons slot="end" >
+      <ion-icon (click)="share()" class="primaryIcon" slot="icon-only" name="share"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

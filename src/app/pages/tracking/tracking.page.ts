@@ -51,10 +51,6 @@ export class TrackingPage implements OnInit {
     this.segmentChanged()
   }
 
-  ionViewWillEnter(){
-    console.log('[TrackingPage] ionViewWillEnter()');
-  }
-
   getDiagnosticTestsList(){
     this.filter = history.state.filter;
     console.log('[TrackingPage] getDiagnosticTestsList()' ,  this.filter);
@@ -82,6 +78,7 @@ export class TrackingPage implements OnInit {
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
+          alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
           this.isLoading = false
@@ -105,6 +102,7 @@ export class TrackingPage implements OnInit {
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
+          alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
           this.isLoading = false
@@ -140,6 +138,7 @@ export class TrackingPage implements OnInit {
         loading.dismiss();
         this.isLoading = false
        },async (err) => { 
+          alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
           this.isLoading = false
@@ -152,9 +151,7 @@ export class TrackingPage implements OnInit {
       location: 'no',
       toolbar: 'yes'
     };
-
     console.log('[TrackingPage] openForm()',  this.auth.user);
-
     if(this.auth !==undefined || this.auth.user !== undefined){
       var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+form.id+'" method="post" enctype="multipart/form-data">' +
         '<input type="hidden" name="idForm" value="'+form.id+'">' +
@@ -186,11 +183,9 @@ export class TrackingPage implements OnInit {
     this.dooleService.getAPIelementsList().subscribe(
       async (data: any) =>{
         console.log('[TrackingPage] getElementsList()', await data); 
-
         if(data.eg){
           // Iterate elements in the tree searching for element groups
           this.treeIterate(data.eg, '');
-
           // Order grouped elements by Name
           this.groupedElements.sort(function(a,b){
             return a.group.localeCompare(b.group);
@@ -201,6 +196,7 @@ export class TrackingPage implements OnInit {
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
+          alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
           this.isLoading = false
@@ -212,15 +208,12 @@ export class TrackingPage implements OnInit {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {
         if (typeof obj[property] == "object") {
-
           this.treeIterate(obj[property], stack + '.' + property);
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
             this.groupedElements.push(obj);
-
           }
-
         }
       }
     }
@@ -250,7 +243,6 @@ export class TrackingPage implements OnInit {
       diagnostic.color = this.active_color
       else
       diagnostic.color = this.inactive_color
-      //console.log(i, index);
     })
 }
 

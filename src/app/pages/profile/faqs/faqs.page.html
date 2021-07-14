@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="this.faq !== undefined; else noData" [innerHtml]="this.faq"></div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
       <ion-grid>

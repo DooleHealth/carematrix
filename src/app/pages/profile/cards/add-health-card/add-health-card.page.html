@@ -22,7 +22,7 @@
     <ion-list>
       <ion-item lines="none">
         <ion-label>{{ 'health_card.modality' | translate}}</ion-label>
-        <ion-select interface="action-sheet" placeholder="Selecciona uno" [compareWith]="compareFn" value="formHealthCard.get('health_card_type_id').value" formControlName="health_card_type_id" required>
+        <ion-select interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}" [compareWith]="compareFn" value="formHealthCard.get('health_card_type_id').value" formControlName="health_card_type_id" required>
           <ion-select-option *ngFor="let card of healthCardTypes" [value]="card?.id">{{card?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -38,7 +38,7 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'health_card.affiliation_number' | translate}}</ion-label>
-        <ion-input formControlName="card_number" placeholder="" (ionFocus)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
+        <ion-input formControlName="card_number" placeholder="" slot="end" (ionFocus)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
         <ion-note *ngIf="this.isSubmittedAffiliationNumber && this.formHealthCard.get('card_number').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>

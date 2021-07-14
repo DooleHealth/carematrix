@@ -22,13 +22,13 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.loginUser();
-    this.setLenguageLocalstorage('ca') //'ca'
   }
 
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
       console.log('[LandingPage] doDooleAppLogin()', res);
       if(res.success){
+        this.languageService.setLenguageLocalstorage('ca') //'ca'
         this.checkConditionLegal();
       }else{
         this.modalCtrl.dismiss({error: 'Credenciales Inválidas'});
@@ -40,10 +40,6 @@ export class LoginPage implements OnInit {
    });
   }
 
-  setLenguageLocalstorage(language){
-    this.languageService.changeLanguage(language);
-    localStorage.setItem('language', language);
-  }
 
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(

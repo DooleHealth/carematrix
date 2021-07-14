@@ -30,6 +30,7 @@ export class FaqsPage implements OnInit {
         this.isLoading = false
        },(err) => { 
         this.isLoading = false
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           console.log('[FaqsPage] getFaqs() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });

@@ -17,7 +17,6 @@
         "header": "Condicions d'ús",
         "ok_button": "Les accepto",
         "ko_button": "No les accepto",
-        "next_button":"Continuar",
         "acept_conditions_label": "He llegit i accepto les condicions",
         "no_get_conditions_label": "No hi ha termes legals assignats per a aquest usuari",
         "error_conditions_label": "Error a l'obtenir els termes legals",
@@ -176,6 +175,8 @@
         "button_profile": "Perfil",
         "title_security": "Seguretat",
         "title_notification": "Notificació",
+        "title_languages": "Idiomes",
+        "subtitle_languages": "Idioma de l'usuari",
         "subtitle_authentication": "Autenticació de doble factor",
         "subtitle_face_id": "Face ID/Petjada",
         "subtitle_communications":"Comunicats mèdics",
@@ -187,6 +188,8 @@
         "subtitle_offers": "Promocions",
         "subtitle_form": "Formularis",
         "subtitle_messages": "Missatges",
+        "lenguage_ca": "Català",
+        "lenguage_es": "Espanyol",
         "password":{
           "password": "Contrasenya",
           "title_change_password": "Canviar Contrasenya",
@@ -240,7 +243,8 @@
         "header_add_card": "Afegir Targeta Sanitària",
         "alert_message_add_card": "La targeta s'ha afegit correctament",
         "button_add": "Afegir",
-        "error_alert_message_add_card": "Error: la targeta no ha pogut ser afegida"
+        "error_alert_message_add_card": "Error: la targeta no ha pogut ser afegida",
+        "placeholder_select":"Selecciona un"
       },
       "edit_health_card":{
         "header_edit_card": "Edita Targeta Sanitària",
@@ -298,7 +302,9 @@
         "header_agenda": "Agenda",
         "no_events": "No hi ha esdeveniments",
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
-        "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"]
+        "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"],
+
+        "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada"
       },
       "reminder":{
         "personal_reminder": "Agenda Personal",
@@ -325,11 +331,16 @@
         "message_edited_reminder":"S'ha editat el recordatori amb èxit",
         "message_updated_reminder":"S'ha actualitzat el recordatori amb èxit",
         "message_deleted_reminder":"S'ha eliminat el recordatori amb èxit",
-        "confirmation_delete_reminder":"Estàs segur d'eliminar el recordatori personal?"
+        "confirmation_delete_reminder":"Estàs segur d'eliminar el recordatori personal?",
+
+        "error_message_added_reminder":"Hi ha hagut un error a l'desar les dades",
+        "error_message_delete_reminder":"Hi ha hagut un error a l'eliminar el recordatori"
       },
       "appointment":{
         "header_appointment": "Detall cita",
+        "field_title": "Títol",
         "field_modality": "Modalitat",
+        "field_description": "Descripció",
         "field_date": "Data",
         "field_doctor": "Metge",
         "field_center": "Centre",
@@ -343,7 +354,8 @@
         "button_delete": "Eliminar Cita",
         "message_deleted_appointment":"S'ha eliminat la cita amb èxit",
         "confirmation_delete_appointment":"Estàs segur d'eliminar la cita?",
-        "no_files":"No hi ha arxius"
+        "no_files":"No hi ha arxius",
+        "error_message_delete_appointment":"Hi ha hagut un error a l'eliminar la cita"
       },
       "doctor":{
         "header_doctor": "Detall Metge",
@@ -368,6 +380,10 @@
         "message_error_treatment_date":"La data d'inici de l'tractament ha de ser menor a la data final",
         "confirmation_delete_medication":"Estàs segur d'eliminar la medicació?",
         "message_deleted_medication":"S'ha eliminat el medicament amb èxit",
+
+        "error_message_add_medication":"Hi ha hagut un error a l'afegir el medicament",
+        "error_message_edit_medication":"Hi ha hagut un error a l'editar el medicament",
+        "error_message_deleted_medication":"Hi ha hagut un error a l'eliminar el medicament",
 
         "field_from_date": "Data d'inici de l'tractament",
         "field_to_date": "Data fi de l'tractament",
@@ -409,9 +425,8 @@
         "attachments": "Documents Adjunts",
         "button_add_files": "Afegir arxius",
         "button_add_result": "Afegir Resultat",
-        "button_cancel": "Cancel",
-        "button_ok": "OK",
-        "alert_message": "El document s'ha afegit correctament",
+        "alert_message": "La documentació mèdica ha estat afegit correctament",
+        "error_alert_message": "Hi ha hagut un error a l'afegir un nou document mèdic",
         "select": "Seleccionar",
         "camera": "Càmera",
         "file": "Arxius",
@@ -429,7 +444,8 @@
         "field_data": "Dada",
         "field_measure": "mesura",
         "field_units": "Unitats",
-        "alert_message_add_element": "Les dades ha estat afegit correctament"
+        "alert_message_add_element": "Les dades ha estat afegit correctament",
+        "error_alert_message_add_element": "Hi ha hagut un error a l'afegir el valor"
       },
       "no_data": "En aquest moment no hi ha dades per a mostrar",
       "diary":{
@@ -461,7 +477,9 @@
         "take": "Prendre",
         "taked": "Presa",
         "forgotten": "Oblidada",
-        "continue": "Continuar"
+        "continue": "Continuar",
+        "send": "Enviar",
+        "perfil":"Perfil"
       },
       "conversation":{
         "placeholder":"Escriu un missatge"

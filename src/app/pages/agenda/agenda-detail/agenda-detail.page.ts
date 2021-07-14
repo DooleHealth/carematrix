@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { VideoComponent } from 'src/app/components/video/video.component';
@@ -27,7 +28,8 @@ export class AgendaDetailPage implements OnInit {
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
     private opentokService: OpentokService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private socialSharing: SocialSharing
   ) { }
 
   ngOnInit() {
@@ -45,7 +47,6 @@ export class AgendaDetailPage implements OnInit {
     this.dooleService.getAPIagendaID(this.event?.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
-
         if(res.agenda)
           this.event = res.agenda
        
@@ -54,6 +55,7 @@ export class AgendaDetailPage implements OnInit {
 
        },(err) => { 
           console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       });
   }
@@ -61,16 +63,20 @@ export class AgendaDetailPage implements OnInit {
   getVideocallToken(){
     this.dooleService.getAPIvideocall(this.event?.id).subscribe(
       async (data) => {
-        
-        this.tokboxSession = await data;
-        this.opentokService.token$ = this.tokboxSession.token;
-        this.opentokService.sessionId$ = this.tokboxSession.sessionId;
-        this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
-        console.log("this.tokboxSession: ", this.tokboxSession);
-        
+        if(data.result){
+          this.tokboxSession = await data;
+          this.opentokService.token$ = this.tokboxSession.token;
+          this.opentokService.sessionId$ = this.tokboxSession.sessionId;
+          this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
+          console.log("this.tokboxSession: ", this.tokboxSession);
+        }else{
+          let message = this.translate.instant('agenda.error_alert_message_get_token')
+          alert(message)
+        }       
       },
       (error) => {
         // Called when error
+        alert( 'ERROR(' + error.code + '): ' + error.message)
         console.log("error: ", error);
         throw error;
       });
@@ -83,13 +89,18 @@ export class AgendaDetailPage implements OnInit {
     this.dooleService.deleteAPIaddAgenda(this.event.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
-
-        let message = this.translate.instant("appointment.message_deleted_appointment")
-        this.showAlert(message)
+        if(res.success){
+          let message = this.translate.instant("appointment.message_deleted_appointment")
+          this.showAlert(message)
+        }else{
+          let message = this.translate.instant("appointment.error_message_delete_appointment")
+          alert(message)
+        }
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
           console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
@@ -209,6 +220,15 @@ export class AgendaDetailPage implements OnInit {
 
     await modal.present();
 
+  }
+
+  share(){
+    let header = `${this.translate.instant('appointment.header_appointment')} \n`
+    let title = (this.event?.title)? `${this.translate.instant('appointment.field_title')}: ${this.event?.title}\n`:''
+    let date = (this.event?.start_date)? `${this.translate.instant('appointment.field_date')}: ${this.event?.start_date}\n`:''
+    let description = (this.event?.description)? `${this.translate.instant('appointment.description')}: ${this.event?.description}\n`:''
+    var msg = `${header} ${title} ${date} ${description}`;
+    this.socialSharing.share(msg, null, null, null);
   }
 
 }

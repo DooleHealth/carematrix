@@ -153,7 +153,7 @@
               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
               </ion-button>&nbsp;
 
-              <ion-button size="small" color="transparent" class="buttonLink" 
+              <ion-button *ngIf="item.item.origin == 1" size="small" color="transparent" class="buttonLink" 
                 routerLink="drugs-detail" [state]="{id: item.item.id, drug:item.item}"
               >{{ 'detail_contact.button_edit' | translate }}</ion-button>&nbsp;
             </div>
@@ -192,7 +192,7 @@
 <div  *ngSwitchCase="'health'">
   <div *ngIf="groupedElements.length > 0; else noData">
   <ion-list  *ngFor="let group of this.groupedElements">
-    <ion-label class="txtTitle">{{group.group  }}</ion-label>
+    <ion-label *ngIf="group.elements.length > 0"  class="txtTitle">{{group.group  }}</ion-label>
     <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
       <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
         <div *ngIf="group.group=='Actividad Física ' || group.group=='Actividad' " class="verticalLineRed"></div>

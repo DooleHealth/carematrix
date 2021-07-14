@@ -47,12 +47,13 @@ export class AgendaPage implements OnInit {
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService, 
     public languageService: LanguageService,
-    private dooleService: DooleService,
+    private dooleService: DooleService
   ) {}
 
   ngOnInit() {
     this.getAgenda()
   }
+
   ionViewDidEnter(){
     console.log('[AgendaPage] ionViewDidEnter()');
     this.getAgenda()
@@ -68,11 +69,11 @@ export class AgendaPage implements OnInit {
           this.addScheduleToCalendar(res.agenda)
        },(err) => { 
           console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       });
   }
 
-  
   onCurrentDateChanged(event:Date) {
    this.getAgenda();
   }
@@ -100,7 +101,6 @@ export class AgendaPage implements OnInit {
           allDay: isAllDay,
           type: e.agenda_type.name,
           color: e.agenda_type.color,
-
           site: e.site,
           staff: e.staff,
           agenda_type: e.agenda_type
@@ -110,12 +110,8 @@ export class AgendaPage implements OnInit {
       this.eventSource = events;
   }
 
-  setLocale(){
-    return this.languageService.getCurrent();
-  }
-
   // Change current month/week/day
-   next() {
+  next() {
     this.myCal.slideNext();
   }
   
@@ -126,14 +122,11 @@ export class AgendaPage implements OnInit {
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
     console.log("title", title);
-    //this.viewTitle = title;
     const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
     this.viewTitle = datePipe.transform(this.myCal.currentDate, 'MMM yyyy');
-
   }
 
   async onEventSelected(event){
     this.event = event
   }
-
 }

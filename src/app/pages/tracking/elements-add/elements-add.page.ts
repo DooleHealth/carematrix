@@ -84,10 +84,18 @@ export class ElementsAddPage implements OnInit {
     this.dooleService.postAPIaddElement( this.element.id ,postData).subscribe(
         async (data) => {
           console.log("[ElementsAddPage] addElement()",data);
-            this.showAlert()
+          if(data.message === "Success")
+          this.showAlert()
+          else {
+            let message = this.translate.instant('element.error_alert_message_add_element')
+            alert(message)
+          }
         },
         (error) => {
           // Called when error
+          let message = this.translate.instant('element.error_alert_message_add_element') 
+            + ` .Error: ${error.code}, message: ${error.message}`
+          alert(message)
           console.log("error: ", error);
           throw new HttpErrorResponse(error);
         },
@@ -125,6 +133,7 @@ export class ElementsAddPage implements OnInit {
         this.groupElements = res
         loading.dismiss();
        },async (err) => { 
+          alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[ElementsAddPage] getCategoryElementList() ERROR(' + err.code + '): ' + err.message); 
           loading.dismiss();
           throw err; 
@@ -145,6 +154,7 @@ export class ElementsAddPage implements OnInit {
         this.form.get('category').setValue(this.nameElement)
         //loading.dismiss();
        },async (err) => { 
+          alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[ElementsAddPage] getElement() ERROR(' + err.code + '): ' + err.message); 
           //loading.dismiss();
           throw err; 
