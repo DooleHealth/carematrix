@@ -39,10 +39,12 @@ export class DiaryPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.segmentChanged()
+
   }
   ionViewDidEnter(){
     console.log('[DiaryPage] ionViewDidEnter()');
+    let state = history.state.segment;
+    if(state) this.segment = state
     this.segmentChanged()
   }
   next() {
@@ -108,25 +110,25 @@ export class DiaryPage implements OnInit {
   }
 
   async getDrugIntakeList(){
-    console.log('[DiaryPage] getDetailDiet()');
+    console.log('[DiaryPage] getDrugIntakeList()');
     this.items = []
-    this.listDrug = []
     this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
-    this.dooleService.postAPIdrugIntakeByDate(date).subscribe(
+    this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
       async (res: any) =>{
-        console.log('[DiaryPage] getDetailDiet()', await res);
+        console.log('[DiaryPage] getDrugIntakeList()', await res);
         if(res.drugIntakes){
+          this.listDrug = []
           this.addItems(res.drugIntakes)
           this.groupDiagnosticsByDate(this.items)
         }
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
-          console.log('[DiaryPage] getDetailDiet() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[DiaryPage] getDrugIntakeList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
@@ -166,7 +168,7 @@ export class DiaryPage implements OnInit {
   }
 
   async getGameListByDate(){
-    console.log('[DiaryPage] getGameList()');
+    console.log('[DiaryPage] getGameListByDate()');
     this.items = []
     this.isLoading = true
     const loading = await this.loadingController.create();
@@ -174,7 +176,7 @@ export class DiaryPage implements OnInit {
     let date = this.transformDate(this.date)
     this.dooleService.getAPIgamesByDate(date, date).subscribe(
       async (res: any) =>{
-        console.log('[DiaryPage] getGameList()', await res);
+        console.log('[DiaryPage] getGameListByDate()', await res);
          if(res.gamePlays){
           let games = []
           res.gamePlays.forEach(element => {
@@ -185,7 +187,7 @@ export class DiaryPage implements OnInit {
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
-          console.log('[DiaryPage] getGameList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[DiaryPage] getGameListByDate() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
@@ -243,15 +245,14 @@ export class DiaryPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
     this.items = []
-    this.groupedElements = [];
     this.isLoading = true
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
     this.dooleService.getAPIelementsListByDate(date).subscribe(
       async (data: any) =>{
         console.log('[DiaryPage] getElementsList()', await data); 
-
         if(data.eg){
+          this.groupedElements = [];
           // Iterate elements in the tree searching for element groups
           this.treeIterate(data.eg, '');
           // Order grouped elements by Name
@@ -290,7 +291,7 @@ export class DiaryPage implements OnInit {
   }
 
   segmentChanged(){
-    console.log(this.segment);
+    console.log('[DiaryPage] segmentChanged()', this.segment); 
     switch (this.segment) {
       case 'diets':
         this.getDietList()

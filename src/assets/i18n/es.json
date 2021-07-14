@@ -146,6 +146,7 @@
         "last_name": "Apellido",
         "birthdate": "Fecha de Nacimiento",
         "gender": "Género",
+        "language": "Idioma",
         "weight":"Peso",
         "height": "Altura",
         "blood_group": "Grupo Sanguíneo",

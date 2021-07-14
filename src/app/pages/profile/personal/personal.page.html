@@ -34,6 +34,10 @@
         <ion-label>{{ 'personal.gender' | translate}}</ion-label>
         <ion-label class="textMedium">{{ getGender(this.userProfile?.gender)  }}</ion-label>
       </ion-item>
+      <ion-item>
+        <ion-label>{{ 'personal.language' | translate}}</ion-label>
+        <ion-label class="textMedium">{{ this.userProfile?.language.name }}</ion-label>
+      </ion-item>
       <ion-item> 
         <ion-label>{{ 'personal.height' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.userProfile.height}}</ion-label>

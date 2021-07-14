@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides, ModalController } from '@ionic/angular';
@@ -11,6 +12,10 @@ import { OpentokService } from 'src/app/services/opentok.service';
 export interface UserInformation {
   title?: string;
   hour?: string;
+}
+export interface ItemDiary {
+  expanded?: boolean;
+  item?: any;
 }
 @Component({
   selector: 'app-home',
@@ -26,7 +31,7 @@ export class HomePage implements OnInit {
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
   advices: Advice[] =[]
-
+  items: ItemDiary[] = [];
    sliderConfig = {
     initialSlide: 0,
     slidesPerView: 1,
@@ -51,7 +56,7 @@ export class HomePage implements OnInit {
     public router:Router,
     private dooleService: DooleService,
     public authService: AuthenticationService,
- 
+    private datePipe: DatePipe,
   ) { }
 
   async ngOnInit() { 
@@ -59,7 +64,33 @@ export class HomePage implements OnInit {
     
   }
 
-  getUserInformation(){
+  expandItem(item): void {
+    if (item.expanded) {
+      item.expanded = false;
+    } else {
+      this.items.map(listItem => {
+        if (item == listItem) {
+          listItem.expanded = !listItem.expanded;
+        } else {
+          listItem.expanded = false;
+        }
+        return listItem;
+      });
+    }
+  }
+
+  addItems(list){
+    this.items = []
+    list.forEach(element => {
+      this.items.push({expanded: false, item: element })
+    });
+    console.log('[HomePage] addItems()', this.items);
+  }
+
+  async getUserInformation(){
+    let formattedDate = this.transformDate(Date.now())
+    let date = {date: formattedDate}
+
     this.dooleService.getAPIgames().subscribe((res)=>{
       this.games = res.games;
     });
@@ -82,8 +113,9 @@ export class HomePage implements OnInit {
       this.slideDietChange()
     })
 
-    this.dooleService.getAPIdrugsList({}).subscribe((res)=>{
-      this.drugs = res;
+    this.dooleService.getAPIdrugIntakeByDate(date).subscribe((res)=>{
+      this.drugs = res.drugIntakes;
+      this.addItems(res.drugIntakes)
       this.slideDrugChange()
     })
 
@@ -110,6 +142,10 @@ export class HomePage implements OnInit {
     //       console.log('[HomePage] getUserInformation() ERROR(' + err.code + '): ' + err.message); 
     //       throw err; 
     //   });
+  }
+
+  transformDate(date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
   actionSeeAllAdvices(){

@@ -147,6 +147,7 @@
         "last_name": "Cognom",
         "birthdate": "Data de Naixement",
         "gender": "Gènere",
+        "language": "Idioma",
         "weight":"Pes",
         "height": "Alçada",
         "blood_group": "Grup Sanguini",

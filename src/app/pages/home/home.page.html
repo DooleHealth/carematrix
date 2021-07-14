@@ -28,8 +28,8 @@
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
-                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.steps as Number" [value]="slide.steps"></ion-progress-bar>
-                      <p class="txtContactLittle">{{slide.description}}</p>
+                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"></ion-progress-bar>
+                      <p class="txtContactLittle">{{'goals.goals' | translate}} {{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
                     </ion-row>
                   </ion-grid>
                  </ion-slide>
@@ -85,7 +85,7 @@
   
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
-        <ion-slide *ngFor="let slide of this.advices">
+        <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">
           <ion-card class="cardProfilePaddingBottom">
             <ion-icon name="close"  class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon> 
            
@@ -93,7 +93,7 @@
            
             <ion-card-title class="txtTitleHome">{{slide.name}}</ion-card-title>
             <ion-card-subtitle class="txtSubTitleHome">{{slide.description}}</ion-card-subtitle>
-            <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button>
+            <!-- <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button> -->
           </ion-card>
         </ion-slide> 
       </ion-slides>
@@ -107,7 +107,7 @@
     </ion-row>
     <!-- Diets -->
     <ion-row >
-      <ion-card class="vertical-card" routerLink="/journal">       
+      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'diets'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start">{{ 'home.diet' | translate}}</ion-text>
@@ -118,7 +118,7 @@
         <ion-card-content>
             <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDietChange()'>
               <ion-slide *ngFor="let slide of this.diets">
-                <p style="text-align: left;">{{slide.name}}</p>               
+                <p style="text-align: left;">- {{slide.name}}</p>               
                </ion-slide>
             </ion-slides>
           </ion-card-content>
@@ -126,7 +126,7 @@
     </ion-row>
     <!-- Drugs -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/journal">       
+      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'medication'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
@@ -152,7 +152,7 @@
     </ion-row>
     <!-- Games -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/journal">       
+      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'games'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
@@ -177,7 +177,7 @@
     </ion-row>
     <!-- Physical Activity -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/journal" >       
+      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'health'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
             <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
