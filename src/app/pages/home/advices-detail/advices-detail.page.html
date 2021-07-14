@@ -8,29 +8,46 @@
 </ion-header>
 
 <ion-content>
+  
 
-
-    <ion-card class="cardProfilePadding">
-      <ion-card-header>
-          <img *ngIf="advice.image" [src]="advice.image.temporaryUrl">
-          <div *ngIf="advice.image == null" class="card-title" text-wrap>{{advice.name}}</div>
-      </ion-card-header>
-      <ion-card-content>
-        {{advice.descripcio}}
-      </ion-card-content>
+  <ion-card class="cardProfile" >
+    <img *ngIf="advice.image" [src]="advice.image.temporaryUrl">
+    <ion-item lines="none" >
     
+      <ion-label style="color:#141414"> {{advice.name}}</ion-label>
+   
+    </ion-item>
+    <ion-item lines="none" *ngIf="advice.description" padding>
+      <span [innerHTML]="advice.description"></span>
+    </ion-item>
 
-   <div *ngIf="advice.description" padding>
-        <span [innerHTML]="advice.description"></span>
-    </div>
   </ion-card>
+
+
   <div *ngIf="link" #frame style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
     <iframe [src]="link" class="iframe" scrolling="yes" ></iframe>
   </div>
-
-  <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+  
+  <!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
     <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
+  </div> -->
+  <div class="main-container" *ngIf="linkpdf2 || video">
+    <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
   </div>
- 
+  <ion-card class="cardProfilePadding" *ngIf="video">
+    <ion-row>
+      <ion-col size="4" class="imgCardMedia">
+      </ion-col>
+      <ion-col size="8"><ion-card-title class="txtTitleGoals3">{{videoTitle}}</ion-card-title><p class="txtTitleGoals3"> {{videoDescription}}</p></ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card class="cardProfilePadding" *ngIf="linkpdf2">
+    <ion-row>
+      <ion-col size="4" class="imgCardPdf">
+      </ion-col>
+      <ion-col size="8"><ion-card-title class="txtTitleGoals3">{{linkPdfTitle}}</ion-card-title><p class="txtTitleGoals3"> {{linkPdfDescription}}</p></ion-col>
+    </ion-row>
+  </ion-card>
+
 </ion-content>
 
