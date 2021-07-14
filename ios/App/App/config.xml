@@ -10,6 +10,10 @@
     <param name="ios-package" value="PhotoViewer"/>
   </feature>
 
+  <feature name="Badge">
+    <param name="ios-package" value="APPBadge"/>
+  </feature>
+
   <feature name="Calendar">
     <param name="ios-package" value="Calendar"/>
   </feature>

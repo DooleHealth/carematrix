@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
-import { AlertController, MenuController, ModalController, NavController, Platform } from '@ionic/angular';
-
+import { AlertController, MenuController, Platform, ToastController } from '@ionic/angular';
+import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.service';
@@ -15,7 +15,6 @@ import { Network } from '@ionic-native/network/ngx';
 import { throwError } from 'rxjs';
  
 const { PushNotifications } = Plugins;
-const { BiometricAuth } = Plugins;
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -47,8 +46,8 @@ export class AppComponent implements OnInit {
     public alertController: AlertController,
     public platform: Platform,
     private storageService: StorageService,
-    private modalCtrl: ModalController,
-    private navCtrl: NavController,
+    private badge: Badge,
+    public toastCtrl: ToastController,
     private network: Network,
   ) {
 
@@ -104,9 +103,56 @@ export class AppComponent implements OnInit {
         // Method called when tapping on a notification
         PushNotifications.addListener('pushNotificationActionPerformed',
           (notification: PushNotificationActionPerformed) => {
-            const action = notification.notification.data.data.action;
-            const id = notification.notification.data.data.id;
-            this.router.navigate(['/app/home/wellbeing/metgetutor/messageslist/messagedetail', { 'id': id }]);
+
+            console.log('Received a notification', notification);
+            this.badge.increase(1);
+            
+            const action = notification.notification.data.action;
+            const id = notification.notification.data.id;
+            const msg = notification.notification.data?.message;
+      
+            //If the app is running when the push received
+            if (notification.notification.data?.foreground) {
+              console.log("foreground");
+              if(action=="MESSAGE"){
+                this.showMessage("Has recibido un mensaje");
+              }
+              if(action=="FORM"){
+                this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
+              }
+      
+              if(action=="DRUGINTAKE"){
+                this.showMessage("Hora de tomarte la medicación");
+                this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}});
+              }
+      
+              if(action=="VIDEOCALL"){
+                this.showMessage("Videollamada de tu médico");
+                this.router.navigate(['AgendaDetailPage'],{state: {id: id, action : "open"}});
+              }
+      
+            }else{
+            //If the app is closed and started by clicking on the push notification
+              if(action=="MESSAGE"){
+                this.badge.decrease(1);
+                this.router.navigate(['MessagesDetailPage'],{state: {id: id, action : "open"}});
+              }
+      
+              if(action=="FORM"){
+                this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
+              }
+      
+              if(action=="DRUGINTAKE"){
+                this.showMessage("Hora de tomarte la medicación");
+                this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}}); 
+              }
+      
+              if(action=="VIDEOCALL"){
+                this.showMessage("Videollamada de tu médico");
+                this.router.navigate(['VideocallPage'],{state: {id: id, action : "open"}});
+              }
+      
+            }
           }
         );
         
@@ -150,6 +196,15 @@ export class AppComponent implements OnInit {
 
     });
   
+  }
+
+  async showMessage(text){
+    let toast = await this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    await toast.present();
   }
 
   listenConnection(): void {
