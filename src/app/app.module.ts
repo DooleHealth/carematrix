@@ -46,6 +46,7 @@ import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.inte
 import { Network } from "@ionic-native/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
 import { HttpRequestInterceptor } from "./interceptors/loading.interceptor";
+import { Badge } from "@ionic-native/badge/ngx";
 
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
@@ -107,6 +108,7 @@ export function createTranslateLoader(http: HttpClient) {
     LanguageService,
     FileTransfer,
     File,
+    Badge,
     DocumentViewer,
     PhotoViewer,
     Health,
