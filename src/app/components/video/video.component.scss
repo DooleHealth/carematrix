@@ -1,24 +1,23 @@
 .publishingDiv {
-    height: 150px !important;
-    width: 150px !important;
-    border-radius:60%;
-    left: 0;
-    bottom: 0;
-    position: fixed;
-    z-index: 1;
-  }
-  .img-wrapper-patient{
-    background-size: 100% auto;
-    border-radius: 50% !important;
-    overflow: hidden;
-    max-height: 150px;
-    max-width: 150px;
-    display: block;
-    margin-left: 0%;
-   
-  }
+  height: 150px !important;
+  width: 150px !important;
+  border-radius: 60%;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 1;
+}
+.img-wrapper-patient {
+  background-size: 100% auto;
+  border-radius: 50% !important;
+  overflow: hidden;
+  max-height: 150px;
+  max-width: 150px;
+  display: block;
+  margin-left: 0%;
+}
 
-  $count: 10;
+$count: 10;
 $time: 2; //in seconds
 $size: 100;
 $color: #ffffff;
@@ -31,7 +30,7 @@ $color: #ffffff;
   right: 0px;
   width: 100%;
   height: 100%;
-  background-color: #2D2F48;
+  background-color: #109db0;
 }
 
 .preloader {
@@ -46,10 +45,10 @@ $color: #ffffff;
 }
 @keyframes rotatePreloader {
   0% {
-  transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
+    transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
   }
   100% {
-  transform: translateX(-50%) translateY(-50%) rotateZ(-360deg);
+    transform: translateX(-50%) translateY(-50%) rotateZ(-360deg);
   }
 }
 .preloader div {

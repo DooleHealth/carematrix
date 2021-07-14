@@ -32,7 +32,7 @@ export class VideoComponent implements  AfterViewInit, OnInit {
   token: string;
   sessionId: string;
   durationStr: string;
-  isLoading:boolean;
+  isWaiting:boolean = true;
   private image : string = '';
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   files: Array<{ name: string, file: string, type: string }> = [];
@@ -64,6 +64,7 @@ publish() {
     }
     else {
       this.publishing = true;
+      
     }
   });
 }
@@ -71,17 +72,21 @@ publish() {
 onStreamCreated(stream, session) {
 
   console.log('onStreamCreated');
+  
   const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SubscriberComponent);
   const viewContainerRef = this.subscriberHost;
   const componentRef = viewContainerRef.createComponent(componentFactory);
   (<SubscriberComponent>componentRef.instance).stream = stream;
   (<SubscriberComponent>componentRef.instance).session = this.session;
   (<SubscriberComponent>componentRef.instance).subscribe();
+  this.isWaiting = !this.isWaiting;
 }
 
 close() {
   
-  //this.publisher.publishVideo(false);
+  if(this.session)
+    this.session.disconnect();
+
   this.modalCtrl.dismiss({date:null});
 }
 
@@ -111,7 +116,7 @@ ngAfterViewInit(): void {
     this.session.on({
       streamCreated: (event) => {
         var subscriberOptions = {fitMode: "contain", insertMode: 'append'};
-        this.session.subscribe(event.stream, 'subscriber', subscriberOptions);     
+        //this.session.subscribe(event.stream, 'subscriber', subscriberOptions);     
         this.onStreamCreated(event.stream, this.session);
         //OT.updateViews();
       },
@@ -121,6 +126,7 @@ ngAfterViewInit(): void {
       },
       sessionConnected: event => {
         this.session.publish(this.publisher);
+       
         //OT.updateViews();
       },
       connectionCreated: (event) => {
@@ -254,7 +260,7 @@ async addFile(){
 }
 
 async addImage() {
-  let source = CameraSource.Camera;
+  let source = CameraSource.Photos;
   const image = await Camera.getPhoto({
     quality: 60,
     allowEditing: false,
