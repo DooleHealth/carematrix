@@ -16,15 +16,15 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'element.field_category' | translate}}</ion-label>
-        <ion-select interface="action-sheet" (ionChange)="selectedCategory()" formControlName="category" placeholder="Selecciona uno">
+        <ion-select interface="action-sheet" (ionChange)="selectedCategory()" formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
           <ion-select-option *ngFor="let group of groupElements" [value]="group.group">{{group.group}}</ion-select-option>
         </ion-select>
       </ion-item>
 
-      <ion-item lines="none" *ngIf="this.group.elements || isNewValueElement">
+      <ion-item lines="none" *ngIf="this.group?.elements || isNewValueElement">
         <ion-label>{{ 'element.field_data' | translate}}</ion-label>
-        <ion-select interface="action-sheet" (ionChange)="selectedElement()" formControlName="data" placeholder="Selecciona uno">
-          <ion-select-option *ngFor="let e of group.elements" [value]="e.name">{{e.name}}</ion-select-option>
+        <ion-select interface="action-sheet" (ionChange)="selectedElement()" formControlName="data" placeholder="{{ 'placeholder_select' | translate}}">
+          <ion-select-option *ngFor="let e of group?.elements" [value]="e.name">{{e.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

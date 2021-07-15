@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSlides, ModalController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
@@ -27,6 +27,7 @@ export class HomePage implements OnInit {
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
   advices: Advice[] =[]
+  date
   currentIndexDrug = 0
    sliderConfig = {
     slidesPerView: 1,
@@ -49,23 +50,23 @@ export class HomePage implements OnInit {
    infoDrugs: UserInformation
   constructor(
     public router:Router,
+    public platform: Platform,
     private dooleService: DooleService,
     public authService: AuthenticationService,
     private datePipe: DatePipe,
   ) { }
 
   async ngOnInit() { 
-    this.getUserInformation()  
+    this.date =  this.transformDate(Date.now())
+    //this.getUserInformation()  
   }
 
   ionViewDidEnter(){
     console.log('[HomePage] ionViewDidEnter()');
+    this.getUserInformation() 
   }
 
   async getUserInformation(){
-    let formattedDate = this.transformDate(Date.now())
-    let date = {date: formattedDate}
-
     this.dooleService.getAPIgames().subscribe((res)=>{
       this.games = res.games;
     });
@@ -88,13 +89,7 @@ export class HomePage implements OnInit {
       this.slideDietChange()
     })
 
-    this.dooleService.getAPIdrugIntakeByDate(date).subscribe((res)=>{
-      this.drugs = res.drugIntakes;
-      this.filterDrugsByStatus()
-      this.searchIndexDrug()
-      this.slideDrugChange()
-      this.sliderDrug.slideTo(this.currentIndexDrug)
-    })
+    this.getDrugIntake()
 
     this.activity.push({name:'456 Cal'})
 
@@ -120,7 +115,15 @@ export class HomePage implements OnInit {
     //   });
   }
 
-  
+  getDrugIntake(){
+    this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
+      this.drugs = res.drugIntakes;
+      this.filterDrugsByStatus()
+      this.searchIndexDrug()
+      this.slideDrugChange()
+      this.sliderDrug.slideTo(this.currentIndexDrug)
+    })
+  }
 
   transformDate(date) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -207,7 +210,8 @@ export class HomePage implements OnInit {
     });
     this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
       console.log('[HomePage] changeTake()',  json);
-      this.getUserInformation()
+      //this.getUserInformation()
+      this.getDrugIntake()
     },(err) => { 
       console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
       alert( 'ERROR(' + err.code + '): ' + err.message)
@@ -221,12 +225,16 @@ export class HomePage implements OnInit {
 
   searchIndexDrug(){
     let drug = this.drugs.find(element => 
-      ((new Date(element.date_intake).getHours() ) >= (new Date().getHours() ))
+      ((this.hourToMinutes(element.hour_intake)) >= (new Date().getHours()*60 + new Date().getMinutes()))
       )
     let index = this.drugs.indexOf(drug);
       console.log('[HomePage] searchIndexDrug()', drug, index);
       this.currentIndexDrug = (index > -1)? index: 0
   }
 
+  hourToMinutes(hour){
+    let minutes = hour.split(':')
+    return (Number(minutes[0]))*60 + (Number(minutes[1]))
+  }
  
 }
