@@ -143,10 +143,10 @@ export class DiaryPage implements OnInit {
 
   groupDiagnosticsByDate(drugs){
     drugs.forEach( (drug, index) =>{
-      let date = this.selectDayPeriod(drug.item.date_intake)
-      if(index == 0 || date !== this.selectDayPeriod(drugs[index-1].item.date_intake)){
+      let date = this.selectDayPeriod(drug.item.hour_intake)
+      if(index == 0 || date !== this.selectDayPeriod(drugs[index-1].item.hour_intake)){
         let list = drugs.filter( event => 
-          (this.selectDayPeriod(event.item.date_intake) === date)
+          (this.selectDayPeriod(event.item.hour_intake) === date)
         )
         this.listDrug.push({date: date, itemDrugs: list}) 
       } 
@@ -330,7 +330,8 @@ export class DiaryPage implements OnInit {
 
 
   selectDayPeriod(time){
-    let hour = new Date(time).getHours()
+    let h =  time.split(':')  //new Date(time).getHours()
+    let hour = Number(h[0])
     if(hour >= 6  && hour < 12){
       return this.translate.instant('diary.morning')
     }

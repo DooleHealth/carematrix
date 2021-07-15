@@ -83,13 +83,23 @@ export class AgendaPage implements OnInit {
     return new Date(auxDate)
   }
 
+  formatDate(d){
+    let date = new Date(d[0]);
+    let time = d[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    console.log("date: ", date);
+    console.log("time", time);
+    return date;
+  }
+
   addScheduleToCalendar(appointments: any[]){
     var events = [];
     appointments.forEach((e) =>{
       let isAllDay = false
       if(e.start_date_iso8601 !== undefined && e.end_date !== undefined ){
         var startTime = new Date(e.start_date_iso8601)
-        var endTime = this.transformDate(e)
+        var endTime = this.transformDate(e.end_date)
       }else{
         isAllDay = true
       }
