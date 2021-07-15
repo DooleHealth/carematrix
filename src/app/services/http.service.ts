@@ -44,7 +44,7 @@ export class HttpService {
   post(path: string, body: Object = {}, options: Object = {}): Observable<any> {
     let user = this.authService.user
     if (user?.familyUnit !== null)
-      body['user'] = user.familyUnit;
+      body['user'] = user?.familyUnit;
 
     let httpOptions = this.setHttpOptions(options);
     console.log("url: ", path);
