@@ -21,6 +21,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { ExpandableComponent } from './expandable/expandable.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { VideoComponent } from './video/video.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { VideoComponent } from './video/video.component';
         FormsModule,
         ShellModule,
         IonicModule,
-        RouterModule
+        RouterModule,
+        TranslateModule,
     ],
   declarations: [
     CheckboxWrapperComponent,

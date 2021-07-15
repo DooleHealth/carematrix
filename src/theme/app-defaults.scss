@@ -104,6 +104,14 @@ text-align: center;
   font-size: 14px;
   font-weight: 400;
   padding-bottom: 3%;
+
+}
+.cardProfilePaddingBottomMinHeight{
+  --ion-background-color: white!important;
+  font-size: 14px;
+  font-weight: 400;
+  padding-bottom: 3%;
+  min-height: 300px;
 }
 /*Custom Text*/
 
@@ -124,6 +132,7 @@ text-align: center;
   font-weight: 700;
   margin-left: 5%;
   padding-top: 10%;
+  padding-bottom: 5%;
 }
 
 .txtTitleNoMargin{

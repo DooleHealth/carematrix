@@ -2,7 +2,9 @@ ion-tab-button{
     --background-focused: #3498DB;
     --color-selected: #3498DB;
     background-color: #FAFAFA;
-
+    --padding-bottom: 12%;
+ 
+    
     &::before {
         background-color: transparent;
         display: block;
@@ -16,3 +18,4 @@ ion-tab-button{
         background-color: var(--ion-color-primary);
       }
     }
+  

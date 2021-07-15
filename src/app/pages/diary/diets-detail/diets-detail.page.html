@@ -8,26 +8,48 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="cardProfilePadding">
-      <ion-card-header>
-          <img *ngIf="diet.image" [src]="diet.image.temporaryUrl">
+  <ion-card class="cardProfile">
+     
+        <img *ngIf="diet.image" [src]="diet.image.temporaryUrl">
+          <!-- <img *ngIf="diet.image" [src]="diet.image.temporaryUrl"> -->
           <div *ngIf="diet.image == null" class="card-title" text-wrap>{{diet.name}}</div>
-      </ion-card-header>
-      <ion-card-content>
-        {{diet.descripcio}}
-      </ion-card-content>
     
+          <ion-item lines="none" *ngIf="diet.description" padding>
+            <span [innerHTML]="diet.description"></span>
+          </ion-item>
 
-    <div *ngIf="diet.description" padding>
-        <span [innerHTML]="diet.description"></span>
-    </div>
   </ion-card>
     <div *ngIf="link" #frame style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
       <iframe [src]="link" class="iframe" scrolling="yes" ></iframe>
     </div>
 
-    <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+    <!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
       <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
-    </div>
+    </div> -->
  
-</ion-content>
+  
+    <div class="main-container" *ngIf="linkpdf2 || video">
+      <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
+    </div>
+    <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo(m)">
+      <ion-row>
+        <ion-col size="4" class="imgCardMedia">
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-title class="txtTitleGoals3">{{videoTitle}}</ion-card-title>
+          <p class="txtTitleGoals3"> {{videoDescription}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-card class="cardProfilePadding" *ngIf="linkpdf2"  (click)="openFile(m)">
+      <ion-row>
+        <ion-col size="4" class="imgCardPdf">
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-title class="txtTitleGoals3">{{linkPdfTitle}}</ion-card-title>
+          <p class="txtTitleGoals3"> {{linkPdfDescription}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  
+  </ion-content>
