@@ -79,8 +79,11 @@ export class AgendaPage implements OnInit {
   }
 
   transformDate(date) {
-    let auxDate = `${date.year}-${date.month}-${date.day} ${date.end_time}`
-    return new Date(auxDate)
+    let auxDate = `${date.year}-${date.month}-${date.day}`
+    let d = new Date(auxDate);
+    d.setHours(date.end_time.substring(0,2));
+    d.setMinutes(date.end_time.substring(3,5));
+    return d
   }
 
   formatDate(d){
@@ -99,7 +102,7 @@ export class AgendaPage implements OnInit {
       let isAllDay = false
       if(e.start_date_iso8601 !== undefined && e.end_date !== undefined ){
         var startTime = new Date(e.start_date_iso8601)
-        var endTime = this.transformDate(e.end_date)
+        var endTime = this.transformDate(e)
       }else{
         isAllDay = true
       }
