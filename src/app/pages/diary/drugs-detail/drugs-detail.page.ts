@@ -49,6 +49,7 @@ export class DrugsDetailPage implements OnInit {
     if(id){
       console.log('[DrugsDetailPage] ngOnInit()',this.drug);
       this.showDetailsDrug()
+      this.getMedicationPlan()
       this.isEditDrug = true
     }
   }
@@ -213,16 +214,17 @@ export class DrugsDetailPage implements OnInit {
   async deleteDrug(){
     const loading = await this.loadingController.create();
     await loading.present();
-    this.dooleService.deleteAPIdrugIntake(this.drug.id).subscribe(
+    this.dooleService.deleteAPImedicationPlan(this.drug.medication_plan_id).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] deleteDrug()', await res);
-
-        let message = this.translate.instant('medication.message_deleted_medication')
-        this.showAlert(message)
-/*         else{
+        if(res.success){
+          let message = this.translate.instant('medication.message_deleted_medication')
+          this.showAlert(message)
+        }
+        else{
           let message = this.translate.instant('medication.error_message_deleted_medication')
           alert(message)
-        } */
+        }
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
@@ -233,6 +235,31 @@ export class DrugsDetailPage implements OnInit {
         // Called when operation is complete (both success and error)
         loading.dismiss();
       };
+  }
+
+  async getMedicationPlan(){
+    console.log('[DiaryPage] getMedicationPlan()');
+    this.dooleService.getAPImedicationPlan(this.drug.medication_plan_id).subscribe(
+      async (res: any) =>{
+        console.log('[DiaryPage] getMedicationPlan()', await res);
+        if(res.success){
+          let medicationPlan = res.medicationPlan
+          let from_date = medicationPlan.from_date
+          this.form.get('from_date').setValue(this.transformDate(from_date))     
+          let to_date = medicationPlan.to_date
+          this.form.get('to_date').setValue(this.transformDate(to_date))
+
+          let plan = medicationPlan.medication_plan_times
+          plan.forEach(element => {            
+            let hour = element.time.split(':')
+            this.times.push(`${hour[0]}:${hour[1]}`)
+          });
+        }
+       },(err) => { 
+          console.log('[DiaryPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
+          throw err; 
+      });
   }
 
 }

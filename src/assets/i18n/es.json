@@ -240,6 +240,7 @@
         "error_required": "Requerido",
         "button_return": "Inicio"
       },
+      "placeholder_select":"Selecciona uno",
       "add_health_card":{
         "header_add_card": "Agregar Tarjeta Sanitaria",
         "alert_message_add_card": "La tarjeta ha sido añadida correctamente",
@@ -445,7 +446,7 @@
           "message_add_medication":"Se ha añadido un nuevo medicamento",
           "message_edit_medication":"Se ha editado el medicamento con éxito",
           "message_error_treatment_date":"La fecha de inicio del tratamiento debe ser menor a la fecha final",
-          "confirmation_delete_medication":"¿Estás seguro de eliminar la medicación?",
+          "confirmation_delete_medication":"¿Estás seguro de eliminar el plan de medicación?",
           "message_deleted_medication":"Se ha eliminado el medicamento con éxito",
 
           "error_message_add_medication":"Ha ocurrido un error al añadir el medicamento",

@@ -240,6 +240,7 @@
         "error_required": "Requerit",
         "button_return": "Inici"
       },
+      "placeholder_select":"Selecciona un",
       "add_health_card":{
         "header_add_card": "Afegir Targeta Sanitària",
         "alert_message_add_card": "La targeta s'ha afegit correctament",
@@ -380,7 +381,7 @@
         "message_add_medication":"S'ha afegit un nou medicament",
         "message_edit_medication":"S'ha editat el medicament amb èxit",
         "message_error_treatment_date":"La data d'inici de l'tractament ha de ser menor a la data final",
-        "confirmation_delete_medication":"Estàs segur d'eliminar la medicació?",
+        "confirmation_delete_medication":"Estàs segur d'eliminar el pla de medicació?",
         "message_deleted_medication":"S'ha eliminat el medicament amb èxit",
 
         "error_message_add_medication":"Hi ha hagut un error a l'afegir el medicament",

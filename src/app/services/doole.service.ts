@@ -857,14 +857,24 @@ export class DooleService {
     );
   }
 
-  deleteAPIdrugIntake(id: Object): Observable<any> {
-    let path = `user/drugIntake/${id}`;
+  deleteAPImedicationPlan(id: Object): Observable<any> {
+    let path = `user/medicationPlan/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPIdrugIntake(${path}) res: ${res}`, JSON.stringify(res));
+        console.log(`[DooleService] deleteAPImedicationPlan(${path}) res: ${res}`, JSON.stringify(res));
         return res;
+      })
+    );
+  }
 
+  getAPImedicationPlan(id): Observable<any> {
+    let path = `user/medicationPlan/${id}`
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
+        return res;
       })
     );
   }
