@@ -96,6 +96,7 @@ export class AgendaPage implements OnInit {
         events.push({
           id: e.id, 
           title: e.title,
+          origin: e.origin,
           startTime: startTime,
           endTime: endTime,
           allDay: isAllDay,

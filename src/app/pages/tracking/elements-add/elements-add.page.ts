@@ -66,7 +66,8 @@ export class ElementsAddPage implements OnInit {
     if(this.id){
       this.getElement()
     }else{
-      this.getCategoryElementList()
+      //this.getCategoryElementList()
+      this.getElementsList()
     }
   }
 
@@ -138,6 +139,50 @@ export class ElementsAddPage implements OnInit {
           loading.dismiss();
           throw err; 
       });
+  }
+
+  async getElementsList(){
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.dooleService.getAPIelementsList().subscribe(
+      async (data: any) =>{
+        console.log('[DiaryPage] getElementsList()', await data); 
+        if(data.eg){
+          this.groupElements = []
+          // Iterate elements in the tree searching for element groups
+          this.treeIterate(data.eg, '');
+          this.filterCategoryWithElement()
+        }
+        loading.dismiss();
+       },(err) => { 
+          console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
+          loading.dismiss();
+          throw err; 
+      });
+  }
+
+  treeIterate(obj, stack) {
+    for (var property in obj) {
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+
+          this.treeIterate(obj[property], stack + '.' + property);
+        } else {
+          if(property=="group"){
+            obj['is_child'] = stack.includes('childs');
+            this.groupElements.push(obj);
+
+          }
+
+        }
+      }
+    }
+  }
+
+  filterCategoryWithElement(){
+    this.groupElements = this.groupElements.filter( group => group.elements.length > 0)
   }
 
   async getElement(){
