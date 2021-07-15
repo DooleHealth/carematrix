@@ -1,21 +1,21 @@
 
-
 <ion-header>
-  <ion-toolbar class="toolbarPadding" color="primary">
-  <ion-buttons slot="start">
-    <ion-button (click)="close()">
-      <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  <ion-title>{{'medical_calendar.header' | translate}}</ion-title>
-  <ion-buttons slot="end">
-    <ion-button (click)="save()">
-      <ion-icon name="checkmark" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{'medical_calendar.header' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
+ 
 <ion-content> 
    <ion-row>
      <!-- Move back one screen of the slides -->
