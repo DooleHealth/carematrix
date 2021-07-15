@@ -31,7 +31,7 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'news'"> 
       <ion-list *ngIf="items.length > 0; else noData">   
-        <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
+        <ion-card routerLink="diets-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
           <img *ngIf="item.item.image !== null"[src]='item.item.image.temporaryUrl'/>
           <ion-item lines="none" >
           
@@ -41,9 +41,9 @@
             </div>
           </ion-item>
   
-          <ion-item lines="none">
+          <!-- <ion-item lines="none">
             <ion-button  size="small" color="transparent" class="buttonLink" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.go_detail' | translate}}</ion-button>&nbsp;
-          </ion-item>
+          </ion-item> -->
      
         </ion-card>
       </ion-list>
@@ -51,7 +51,7 @@
     <!-- Advices -->
 <div *ngSwitchCase="'advices'"> 
   <ion-list *ngIf="items.length > 0; else noData">   
-    <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile" >
+    <ion-card routerLink="advices-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
       <img *ngIf="item.item.image !== null"[src]='item.item.image.temporaryUrl'/>
       <ion-item lines="none" >
       
@@ -61,10 +61,10 @@
         </div>
       </ion-item>
 
-      <ion-item lines="none">
+      <!-- <ion-item lines="none">
         <ion-button  size="small" color="transparent" class="buttonLink" routerLink="advices-detail" [state]="{id: item.item.id}">{{'button.go_detail' | translate}}</ion-button>&nbsp;
       </ion-item>
- 
+  -->
     </ion-card>
   </ion-list>
   </div> 

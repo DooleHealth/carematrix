@@ -4,7 +4,10 @@
       <ion-back-button text=" "></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'appointment.header_appointment' | translate}}</ion-title>
-    
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
+      <ion-button color="primary"  (click)="addCalendar(this.event)"><ion-icon name="calendar-outline"></ion-icon></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +22,7 @@
         <ion-label>{{ 'appointment.field_modality' | translate}}</ion-label>
         <ion-label class="textMedium">{{(this.event?.online == 1)? ('appointment.online' | translate) : ('appointment.face_to_face' | translate)}}</ion-label>
         &nbsp;
-        <ion-icon *ngIf="this.event?.online == 1 && this.tokboxSession" (disabled)="this.disabled" name="videocam" (click)="this.startDooleVideocall()"></ion-icon>
+        <ion-icon *ngIf="this.event?.online == 1 && this.tokboxSession" (disabled)="this.disabled" name="videocam-outline"  color="primary" (click)="this.startDooleVideocall()"></ion-icon>
        
       </ion-item>
       <ion-item>
@@ -66,12 +69,12 @@
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
         <ion-label  class="textMedium">{{ (event?.files?.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
         <ion-button size="large" expand="full"  color="primary" (click)="share()"><ion-icon name="share"></ion-icon></ion-button>
       </ion-item>
       <ion-item>
         <ion-button size="large" expand="full"  (click)="addCalendar(this.event)"><ion-icon name="calendar-clear-outline"></ion-icon></ion-button>
-      </ion-item>
+      </ion-item> -->
     </ion-list>
   </div>
 

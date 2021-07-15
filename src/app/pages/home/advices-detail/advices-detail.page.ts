@@ -67,7 +67,7 @@ export class AdvicesDetailPage implements OnInit {
           }
         });
         this.advice.media.forEach(element => {
-          if(element.mime_type=="video/webm"){
+          if(element.mime_type=="video/mp4"){
             this.video=(element.temporaryUrl);
             this.videoThumbnail=(element.thumbnailTemporaryUrl);
             this.videoDescription=(element.description);
