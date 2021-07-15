@@ -146,6 +146,7 @@
         "last_name": "Apellido",
         "birthdate": "Fecha de Nacimiento",
         "gender": "Género",
+        "language": "Idioma",
         "weight":"Peso",
         "height": "Altura",
         "blood_group": "Grupo Sanguíneo",
@@ -188,7 +189,7 @@
         "subtitle_form": "Formularios",
         "subtitle_messages": "Mensajes",
         "lenguage_ca": "Catalán",
-        "lenguage_es": "Español",
+        "lenguage_es": "Castellano",
         "password":{
           "password": "Contrasenya",
           "title_change_password": "Cambiar Contraseña",

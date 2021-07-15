@@ -809,12 +809,12 @@ export class DooleService {
   }
 
 
-  postAPIdrugIntakeByDate(params: Object): Observable<any> {
+  getAPIdrugIntakeByDate(params: Object): Observable<any> {
     let path = 'user/drugIntake/date';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIdrugIntakeByDate(${path}) res: `, res);
+        console.log(`[DooleService] getAPIdrugIntakeByDate(${path}) res: `, res);
         return res;
 
       })
