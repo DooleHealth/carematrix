@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { MedicalCalendarPageModule } from '../medical-calendar/medical-calendar.module';
+import { Chooser } from '@ionic-native/chooser/ngx';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { MedicalCalendarPageModule } from '../medical-calendar/medical-calendar.
    
   ],
   declarations: [BookingsPage],
-  providers: [ DatePipe]
+  providers:[Chooser,DatePipe]
  
 })
 export class BookingsPageModule {}

@@ -336,7 +336,7 @@
         "message_updated_reminder":"Se ha actualizado el recordatorio con éxito",
         "message_deleted_reminder":"Se ha eliminado el recordatorio con éxito",
         "confirmation_delete_reminder":"¿Estás seguro de eliminar el recordatorio personal?",
-
+        "message_added_appointment":"Se ha añadido una nueva cita",
         "error_message_added_reminder":"Ha ocurrido un error al guardar los datos",
         "error_message_delete_reminder":"Ha ocurrido un error al eliminar el recordatorio"
       },

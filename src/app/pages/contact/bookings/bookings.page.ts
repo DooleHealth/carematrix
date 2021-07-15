@@ -1,12 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CameraSource, Capacitor } from '@capacitor/core';
+import { CameraSource, Capacitor, Plugins, CameraResultType, } from '@capacitor/core';
 import { ActionSheetController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
-
+import { Chooser } from '@ionic-native/chooser/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Router } from '@angular/router';
+const { Camera } = Plugins;
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.page.html',
@@ -27,7 +30,9 @@ export class BookingsPage implements OnInit {
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
-  constructor(public dooleService:DooleService, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController) { }
+  constructor(public dooleService:DooleService, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
+    public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
+    public file: File, private router: Router) { }
   ngOnInit() {
    
     this.form = this.fb.group({
@@ -61,7 +66,7 @@ export class BookingsPage implements OnInit {
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);
-        let message = this.translate.instant('reminder.message_added_reminder')
+        let message = this.translate.instant('reminder.message_added_appointment')
         if(!this.isNewEvent)
         message = this.translate.instant('reminder.message_updated_reminder')
         this.showAlert(message)
@@ -110,7 +115,7 @@ export class BookingsPage implements OnInit {
 
         if(result.data['date']){
           this.selectedDate = result.data['date']; 
-          this.form.get('date').setValue(this.transformDate(this.selectedDate))
+          this.form.patchValue({date: this.transformDate(this.selectedDate)})
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }
     });
@@ -163,24 +168,43 @@ export class BookingsPage implements OnInit {
         }
       ];
     }
-    
-
-    // Only allow file selection inside a browser
-    
-    // if (Capacitor.getPlatform() == 'web') {
-    
-    //}
+  
     const actionSheet = await this.actionSheetCtrl.create({
       buttons
     });
     
     await actionSheet.present();
   }
-  addFile() {
-    throw new Error('Method not implemented.');
+  async addFile() {
+    this.chooser.getFile().then(async file => {
+   
+      if(file){
+        var filename=new Date().getTime(); 
+        this.saveBase64(file.dataURI, filename.toString(), file.mediaType).then(res => {
+          this.uploadFile(res);
+        });
+      }
+    }).catch((error: any) => {
+      console.error(error)});
   }
-  addImage(Camera: CameraSource) {
-    throw new Error('Method not implemented.');
+  async addImage(source) {
+   
+    const photo = await Camera.getPhoto({
+    quality: 60,
+    allowEditing: false,
+    resultType: CameraResultType.DataUrl,
+    source
+  });
+
+  if(photo){
+    var filename = new Date().getTime();
+    let file = Capacitor.convertFileSrc(photo.dataUrl);
+    this.saveBase64(file ,filename.toString(), photo.format).then(res => {
+      this.uploadFile(res);
+    });
+  }else{
+    console.log("no photo");
+  }
   }
   openFile(file) {
     throw new Error('Method not implemented.');
@@ -193,11 +217,53 @@ export class BookingsPage implements OnInit {
     });
   }
 
+  public saveBase64(base64:string, name:string, mediaType:string):Promise<string>{
+    console.log("file base64: ", base64);
+    return new Promise((resolve, reject)=>{
+      var realData = base64.split(",")[1]
+      let blob=this.b64toBlob(realData, mediaType) //TODO:  'image/jpeg'
+  
+      this.file.writeFile(this.file.cacheDirectory, name, blob)
+      .then(()=>{
+        console.log("** writeFile", this.file.cacheDirectory+name);
+        resolve(this.file.cacheDirectory+name);
+      })
+      .catch((err)=>{
+        console.log('error writing blob', err);
+        reject(err);
+      })
+    })
+  }
+  
+  b64toBlob(b64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+  
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+  
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+  
+        var byteArray = new Uint8Array(byteNumbers);
+  
+        byteArrays.push(byteArray);
+    }
+  
+  var blob = new Blob(byteArrays, {type: contentType});
+  
+  return blob;
+  }
+  
 
   async uploadFileFromBrowser(event: EventTarget) {
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
-    const file: File = target.files[0];
+    const file: any = target.files[0];
     const toBase64 = file => new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -210,5 +276,28 @@ export class BookingsPage implements OnInit {
     //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
     this.files.push({ name: file.name, file: base64result.split(',')[1], type: file.type })
 
+  }
+
+  uploadFile(fileUri: string){
+ 
+    this.dooleService.uploadFile(fileUri).then(data =>{
+      console.log("[VideoComponent] uploadMessageImage", data);
+     
+    }, (err) =>{
+     
+      throw err;
+    });
+    
+  }
+
+  async payment(){
+    console.log(`[AgendaAddPage] payment()` );
+
+    this.form.patchValue({
+        files: this.files
+    });
+
+    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff}});
+    
   }
 }
