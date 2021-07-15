@@ -12,7 +12,9 @@
      
         <img *ngIf="diet.image" [src]="diet.image.temporaryUrl">
           <!-- <img *ngIf="diet.image" [src]="diet.image.temporaryUrl"> -->
-          <div *ngIf="diet.image == null" class="card-title" text-wrap>{{diet.name}}</div>
+          <ion-item lines="none">
+            <ion-label style="color:#141414"> {{diet.name}}</ion-label>
+          </ion-item>
     
           <ion-item lines="none" *ngIf="diet.description" padding>
             <span [innerHTML]="diet.description"></span>
