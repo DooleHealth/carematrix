@@ -67,7 +67,7 @@ export class DietsDetailPage implements OnInit {
           }
         });
         this.diet.media.forEach(element => {
-          if(element.mime_type=="video/webm"){
+          if(element.mime_type=="video/mp4"){
             this.video=(element.temporaryUrl);
             this.videoDescription=(element.description);
             this.videoTitle=(element.name);
