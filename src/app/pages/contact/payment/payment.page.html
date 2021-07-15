@@ -13,14 +13,15 @@
   <ion-card class="cardProfilePadding">
     <ion-list>
       <ion-item lines="none">
-        <ion-label class="txtTitleGoals">{{'payment.field_appointment' | translate}}</ion-label>
+        <ion-label class="txtTitleGoals">{{ this.add | translate }}</ion-label>
         <ion-label class="textMedium">50€</ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-text class="textMediumLeft">Dra. Margarita del Bosque Pérez
-          Hospital Gregorio Marañón
-          18 nov. 2020, 15:00</ion-text>
+        <ion-text class="textMediumLeft">{{this.staff?.name}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-text class="textMediumLeft">{{ this.agenda?.date}}</ion-text>
       </ion-item>
       <ion-item lines="none">
         <ion-label class="txtTitleGoals">{{'payment.field_subtotal' | translate}}</ion-label>
@@ -45,7 +46,7 @@
     
       <ion-item>
         <ion-label class="txtTitleGoals">{{'payment.modality' | translate}}</ion-label>
-        <ion-label class="txtTitleTrackingLittle">Trajeta de crédito</ion-label>
+        <ion-label class="txtTitleTrackingLittle">Tarjeta de crédito</ion-label>
       </ion-item>
       <ion-item lines="none">
           <img src="assets/images/tarjeta.png">
@@ -60,7 +61,7 @@
 
 </ion-card>
 <div class="buttonContainer">
-  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" (click)="this.addAgenda()">
     {{'payment.button_payment' | translate}}
   </ion-button>
 </div>

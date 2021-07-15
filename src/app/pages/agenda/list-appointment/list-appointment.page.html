@@ -45,6 +45,7 @@
     <ion-list *ngFor="let events of this.dayEvents">
       <ion-row class="rowPadding"><ion-text class="event-detail-title">{{events.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-text></ion-row>
       <ion-list *ngFor="let e of events.events; let i = index"lines="full" class="blanco" >
+
         <ion-item  routerLink="detail" [state]="{id: e.id}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" > 
           <div [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"  class="verticalLine"></div>
           <ion-grid>  

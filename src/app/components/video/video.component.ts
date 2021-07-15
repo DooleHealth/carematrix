@@ -323,13 +323,13 @@ return blob;
 
 uploadFile(fileUri: string){
  
-  // this.dooleService.uploadFile(fileUri, this.id).then(data =>{
-  //   console.log("[VideoComponent] uploadMessageImage", data);
+  this.dooleService.uploadFile(fileUri).then(data =>{
+    console.log("[VideoComponent] uploadMessageImage", data);
    
-  // }, (err) =>{
+  }, (err) =>{
    
-  //   throw err;
-  // });
+    throw err;
+  });
   
 }
   

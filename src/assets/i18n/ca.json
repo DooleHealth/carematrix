@@ -147,6 +147,7 @@
         "last_name": "Cognom",
         "birthdate": "Data de Naixement",
         "gender": "Gènere",
+        "language": "Idioma",
         "weight":"Pes",
         "height": "Alçada",
         "blood_group": "Grup Sanguini",
@@ -189,7 +190,7 @@
         "subtitle_form": "Formularis",
         "subtitle_messages": "Missatges",
         "lenguage_ca": "Català",
-        "lenguage_es": "Espanyol",
+        "lenguage_es": "Castellà",
         "password":{
           "password": "Contrasenya",
           "title_change_password": "Canviar Contrasenya",
@@ -332,6 +333,7 @@
         "message_updated_reminder":"S'ha actualitzat el recordatori amb èxit",
         "message_deleted_reminder":"S'ha eliminat el recordatori amb èxit",
         "confirmation_delete_reminder":"Estàs segur d'eliminar el recordatori personal?",
+        "message_added_appointment":"S'ha afegit una nova cita",
 
         "error_message_added_reminder":"Hi ha hagut un error a l'desar les dades",
         "error_message_delete_reminder":"Hi ha hagut un error a l'eliminar el recordatori"
@@ -456,7 +458,7 @@
           "field_health": "Salut",
           "description": "Descripció",
           "dose": "Dosi",
-          "morning": "demà",
+          "morning": "matí",
           "noon": "migdia",
           "aftenoon": "tard",
           "night": "nit",

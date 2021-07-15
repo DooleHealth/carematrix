@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides, ModalController } from '@ionic/angular';
@@ -26,9 +27,8 @@ export class HomePage implements OnInit {
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
   advices: Advice[] =[]
-
+  currentIndexDrug = 0
    sliderConfig = {
-    initialSlide: 0,
     slidesPerView: 1,
     direction: 'vertical',
     centeredSlides: false,
@@ -51,15 +51,21 @@ export class HomePage implements OnInit {
     public router:Router,
     private dooleService: DooleService,
     public authService: AuthenticationService,
- 
+    private datePipe: DatePipe,
   ) { }
 
   async ngOnInit() { 
-    this.getUserInformation()
-    
+    this.getUserInformation()  
   }
 
-  getUserInformation(){
+  ionViewDidEnter(){
+    console.log('[HomePage] ionViewDidEnter()');
+  }
+
+  async getUserInformation(){
+    let formattedDate = this.transformDate(Date.now())
+    let date = {date: formattedDate}
+
     this.dooleService.getAPIgames().subscribe((res)=>{
       this.games = res.games;
     });
@@ -82,11 +88,13 @@ export class HomePage implements OnInit {
       this.slideDietChange()
     })
 
-    this.dooleService.getAPIdrugsList({}).subscribe((res)=>{
-      this.drugs = res;
+    this.dooleService.getAPIdrugIntakeByDate(date).subscribe((res)=>{
+      this.drugs = res.drugIntakes;
+      this.filterDrugsByStatus()
+      this.searchIndexDrug()
       this.slideDrugChange()
+      this.sliderDrug.slideTo(this.currentIndexDrug)
     })
-
 
     this.activity.push({name:'456 Cal'})
 
@@ -110,6 +118,12 @@ export class HomePage implements OnInit {
     //       console.log('[HomePage] getUserInformation() ERROR(' + err.code + '): ' + err.message); 
     //       throw err; 
     //   });
+  }
+
+  
+
+  transformDate(date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
   actionSeeAllAdvices(){
@@ -182,6 +196,36 @@ export class HomePage implements OnInit {
       console.log('[HomePage] slideActivityChange()', index);
       let slider = this.drugs[index]
     });
+  }
+
+  changeTake(id,taked){  
+    taked=(taked=="0") ? "1" : "0";
+    var dict = [];
+    dict.push({
+        key:   "date",
+        value: ""
+    });
+    this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
+      console.log('[HomePage] changeTake()',  json);
+      this.getUserInformation()
+    },(err) => { 
+      console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
+      alert( 'ERROR(' + err.code + '): ' + err.message)
+      throw err; 
+    });
+  }
+
+  filterDrugsByStatus(){
+    this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+  }
+
+  searchIndexDrug(){
+    let drug = this.drugs.find(element => 
+      ((new Date(element.date_intake).getHours() ) >= (new Date().getHours() ))
+      )
+    let index = this.drugs.indexOf(drug);
+      console.log('[HomePage] searchIndexDrug()', drug, index);
+      this.currentIndexDrug = (index > -1)? index: 0
   }
 
  
