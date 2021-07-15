@@ -100,7 +100,7 @@
               </ion-grid>
             </ion-item>
           </ion-list>
-          <ion-spinner *ngIf="this.isLoading"></ion-spinner>
+          <ion-spinner *ngIf="this.isLoading" style="margin-left: 5%;"></ion-spinner>
             <div *ngIf="!this.isLoading && selectedDate?.events.length==0">
               <ion-grid>
                 <ion-row>
