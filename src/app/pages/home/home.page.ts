@@ -13,10 +13,6 @@ export interface UserInformation {
   title?: string;
   hour?: string;
 }
-export interface ItemDiary {
-  expanded?: boolean;
-  item?: any;
-}
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -31,9 +27,8 @@ export class HomePage implements OnInit {
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
   advices: Advice[] =[]
-  items: ItemDiary[] = [];
+  currentIndexDrug = 0
    sliderConfig = {
-    initialSlide: 0,
     slidesPerView: 1,
     direction: 'vertical',
     centeredSlides: false,
@@ -60,31 +55,11 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() { 
-    this.getUserInformation()
-    
+    this.getUserInformation()  
   }
 
-  expandItem(item): void {
-    if (item.expanded) {
-      item.expanded = false;
-    } else {
-      this.items.map(listItem => {
-        if (item == listItem) {
-          listItem.expanded = !listItem.expanded;
-        } else {
-          listItem.expanded = false;
-        }
-        return listItem;
-      });
-    }
-  }
-
-  addItems(list){
-    this.items = []
-    list.forEach(element => {
-      this.items.push({expanded: false, item: element })
-    });
-    console.log('[HomePage] addItems()', this.items);
+  ionViewDidEnter(){
+    console.log('[HomePage] ionViewDidEnter()');
   }
 
   async getUserInformation(){
@@ -115,10 +90,11 @@ export class HomePage implements OnInit {
 
     this.dooleService.getAPIdrugIntakeByDate(date).subscribe((res)=>{
       this.drugs = res.drugIntakes;
-      this.addItems(res.drugIntakes)
+      this.filterDrugsByStatus()
+      this.searchIndexDrug()
       this.slideDrugChange()
+      this.sliderDrug.slideTo(this.currentIndexDrug)
     })
-
 
     this.activity.push({name:'456 Cal'})
 
@@ -217,6 +193,37 @@ export class HomePage implements OnInit {
     this.sliderPhysical.getActiveIndex().then(index => {      
       console.log('[HomePage] slideActivityChange()', index);
       let slider = this.drugs[index]
+    });
+  }
+
+  changeTake(id,taked){  
+    taked=(taked=="0") ? "1" : "0";
+    var dict = [];
+    dict.push({
+        key:   "date",
+        value: ""
+    });
+    this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
+      console.log('[HomePage] changeTake()',  json);
+      this.getUserInformation()
+    },(err) => { 
+      console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
+      alert( 'ERROR(' + err.code + '): ' + err.message)
+      throw err; 
+    });
+  }
+
+  filterDrugsByStatus(){
+    this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+  }
+
+  searchIndexDrug(){
+    this.drugs.forEach((element, index) => {
+      if((new Date(element.date_intake).getMilliseconds) >= (new Date().getMilliseconds)){
+        console.log('[HomePage] searchIndexDrug() index',  index);
+         this.currentIndexDrug = index
+         return
+      }
     });
   }
 

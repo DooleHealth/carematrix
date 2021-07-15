@@ -144,12 +144,12 @@
             </ion-item>
             <div class="main-container3">
 
-              <ion-button *ngIf="item.item.forgotten == 2"  size="small" color="primary" 
+              <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay"  size="small" color="primary" 
               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
-              <ion-button *ngIf="item.item.forgotten == 1"  size="small" color="danger" 
+              <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay"  size="small" color="danger" 
               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
               </ion-button>
-              <ion-button *ngIf="item.item.forgotten == 0"  size="small" color="success" 
+              <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay"  size="small" color="success" 
               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
               </ion-button>&nbsp;
 

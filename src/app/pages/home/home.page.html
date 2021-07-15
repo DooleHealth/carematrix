@@ -126,8 +126,8 @@
     </ion-row>
     <!-- Drugs -->
     <ion-row>
-      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'medication'}">       
-          <ion-item lines="none" class="noMargin">
+      <ion-card class="vertical-card">       
+          <ion-item lines="none" class="noMargin" routerLink="/journal" [state]="{segment: 'medication'}">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
@@ -136,13 +136,20 @@
 
         <ion-card-content>
             <ion-slides #sliderDrug pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDrugChange()'>
-              <ion-slide *ngFor="let slide of this.drugs">
+              <ion-slide *ngFor="let slide of this.drugs" >
                 <ion-grid>
-                  <ion-row>
-                    <p style="text-align: left;">{{slide.name}}</p>
+                  <ion-row routerLink="/journal" [state]="{segment: 'medication'}">
+                    <p style="text-align: left;">{{(slide.alias !== null)? slide.alias: (slide.name.substring(25,-1) + '...') }}</p>
                   </ion-row>
                   <ion-row>
-                    <ion-button size="small" (click)="actionButtonDrugs(slide)">{{ 'home.take_button' | translate}}</ion-button>  
+                    <ion-button *ngIf="slide.forgotten == 2"  size="small" color="primary" 
+                    (click)="changeTake(slide.id, slide.state)">{{ 'button.take' | translate }}</ion-button>
+                    <ion-button *ngIf="slide.forgotten == 1"  size="small" color="danger" 
+                    (click)="changeTake(slide.id, slide.state)">{{ 'button.forgotten' | translate }}<ion-icon style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
+                    </ion-button>
+                    <ion-button *ngIf="slide.forgotten == 0"  size="small" color="success" 
+                    (click)="changeTake(slide.id, slide.state)">{{ 'button.taked' | translate }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
+                    </ion-button>&nbsp;
                   </ion-row>
                 </ion-grid>             
                 </ion-slide>

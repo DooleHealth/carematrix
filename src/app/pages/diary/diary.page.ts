@@ -28,6 +28,7 @@ export class DiaryPage implements OnInit {
   date = Date.now()
   segment = 'diets'
   isLoading = false
+  isFutureDay = false
   @ViewChild('slides') slides: IonSlides;
   constructor(
     private dooleService: DooleService,
@@ -50,12 +51,14 @@ export class DiaryPage implements OnInit {
   next() {
     let nextDay =  new Date(this.date).getDate() + 1
     this.date = new Date(this.date ).setDate(nextDay)
+    this.isFutureDay = (Date.now() < this.date)? true:false
     this.segmentChanged()
   }
 
   prev() {
     let lastDay =  new Date(this.date).getDate() - 1
     this.date = new Date(this.date ).setDate(lastDay)
+    this.isFutureDay = (Date.now() < (new Date(this.date).getMilliseconds() ) )? true:false
     this.segmentChanged()
   }
   expandItem(item): void {
@@ -120,9 +123,11 @@ export class DiaryPage implements OnInit {
     this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDrugIntakeList()', await res);
-        if(res.drugIntakes){
+        let list = res.drugIntakes
+        if(list){
           this.listDrug = []
-          this.addItems(res.drugIntakes)
+          list = this.sortDate(list)
+          this.addItems(list)
           this.groupDiagnosticsByDate(this.items)
         }
         loading.dismiss();
@@ -147,6 +152,16 @@ export class DiaryPage implements OnInit {
       } 
     })
     console.log('[DiaryPage] groupDiagnosticsByDate()', this.listDrug);
+  }
+
+  sortDate(drugs){
+    return drugs.sort( function (a, b) {
+      if (a.hour_intake > b.hour_intake) 
+        return 1;
+      if (a.hour_intake < b.hour_intake)
+        return -1;
+      return 0;
+    })
   }
 
   changeTake(id,taked){
