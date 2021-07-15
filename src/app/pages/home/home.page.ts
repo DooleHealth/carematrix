@@ -120,6 +120,8 @@ export class HomePage implements OnInit {
     //   });
   }
 
+  
+
   transformDate(date) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
@@ -218,13 +220,12 @@ export class HomePage implements OnInit {
   }
 
   searchIndexDrug(){
-    this.drugs.forEach((element, index) => {
-      if((new Date(element.date_intake).getMilliseconds) >= (new Date().getMilliseconds)){
-        console.log('[HomePage] searchIndexDrug() index',  index);
-         this.currentIndexDrug = index
-         return
-      }
-    });
+    let drug = this.drugs.find(element => 
+      ((new Date(element.date_intake).getHours() ) >= (new Date().getHours() ))
+      )
+    let index = this.drugs.indexOf(drug);
+      console.log('[HomePage] searchIndexDrug()', drug, index);
+      this.currentIndexDrug = (index > -1)? index: 0
   }
 
  
