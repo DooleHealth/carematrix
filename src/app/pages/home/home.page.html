@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-grid>
+  <ion-grid style="padding-top: 50px;">
     <ion-row>
       <ion-col size="8" class="alingLeftTop">
         <ion-text class="txtTitleBig">Hola, {{this.authService?.user?.first_name}}</ion-text>
@@ -85,8 +85,9 @@
   
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
-        <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">
-          <ion-card class="cardProfilePaddingBottom">
+        <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}>
+          <ion-card class="cardProfilePaddingBottomMinHeight">
+
             <ion-icon name="close"  class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon> 
            
             <img class="sliderImage"  [src]="slide.image?.temporaryUrl">  <br><br>

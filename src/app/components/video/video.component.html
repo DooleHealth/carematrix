@@ -1,13 +1,13 @@
-<ion-toolbar color="primary">
-  <ion-buttons slot="start">
-    <ion-button (click)="close()">
-      <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
-<ion-content>
-  <!-- <ng-container *ngIf="!this.isLoading">
-    <div class="holder">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=" " (click)="this.close()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'contact.tap_video' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header><ion-content>
+  <ng-container >
+    <div class="holder" *ngIf="this.isWaiting">
       <div class="preloader">
         <div></div>
         <div></div>
@@ -21,13 +21,17 @@
         <div></div>
       </div>
     </div>
-  </ng-container> -->
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="light">
+  </ng-container>
+  <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button *ngIf="!this.isWaiting" color="danger" (click)="this.close()" >
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button  color="light">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
+    <ion-fab-list>
       <ion-fab-button color="light" (click)="this.addImage()">
         <ion-icon name="images"></ion-icon>
       </ion-fab-button>
@@ -60,7 +64,7 @@
   </div>
 
   <div
-    class="publishingDiv"
+    class="publishingDiv img-wrapper-patient"
     [ngClass]="{ publishing: publishing }"
     #publisherDiv
   ></div>

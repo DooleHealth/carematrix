@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
+import { Calendar } from '@ionic-native/calendar/ngx';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
@@ -8,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 
 @Component({
@@ -29,7 +31,10 @@ export class AgendaDetailPage implements OnInit {
     private auth: AuthenticationService,
     private opentokService: OpentokService,
     private modalCtrl: ModalController,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private calendar: Calendar,
+    public alertCtrl: AlertController,
+    public notification: NotificationService
   ) { }
 
   ngOnInit() {
@@ -229,6 +234,39 @@ export class AgendaDetailPage implements OnInit {
     let description = (this.event?.description)? `${this.translate.instant('appointment.description')}: ${this.event?.description}\n`:''
     var msg = `${header} ${title} ${date} ${description}`;
     this.socialSharing.share(msg, null, null, null);
+  }
+
+  addCalendar(agenda){
+
+    var startDate = new Date(agenda.start_date_iso8601);
+    var endDate = new Date(agenda.start_date_iso8601);
+ 
+    this.calendar.createEventInteractively(agenda.title,agenda.site,"",startDate,endDate).then(
+      async (msg) => {
+        console.log("msg: ", msg);
+        let txt = this.translate.instant('reminder.message_added_reminder');
+        this.notification.showSuccess(txt);
+      },
+      (err) => { console.log(err); }
+    )
+
+    //funciona en ios, no en android:
+    /*this.calendar.createEvent(this.agenda.title,this.agenda.lugar,"",startDate,endDate).then(
+      (msg) => {
+        let alert = this.alertCtrl.create({
+          title: 'Agenda',
+          subTitle: 'Añadido correctamente',
+          buttons: [{
+            text: 'Ok',
+            handler: data => {
+              this.navCtrl.pop();
+            }
+          }]
+        });
+        alert.present();
+       },
+      (err) => { console.log(err); }
+    )*/
   }
 
 }

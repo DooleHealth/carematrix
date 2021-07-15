@@ -946,7 +946,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     group: 'Bioquímica',
                     elements: [
                         {id: 3, name: 'Glucosa', units: 'mg/dl'},
-                        {id: 63, name: 'Colestero', units: 'mg/dl'},
+                        {id: 63, name: 'Colesterol', units: 'mg/dl'},
                     ]
                 },
                 {
