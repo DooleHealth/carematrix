@@ -57,11 +57,12 @@ export class HomePage implements OnInit {
 
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
-    this.getUserInformation()  
+    //this.getUserInformation()  
   }
 
   ionViewDidEnter(){
     console.log('[HomePage] ionViewDidEnter()');
+    this.getUserInformation() 
   }
 
   async getUserInformation(){
