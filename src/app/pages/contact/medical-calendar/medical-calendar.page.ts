@@ -148,25 +148,38 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
       });
   }
 
+ 
   addScheduleToCalendar(appointments: any[]){
     var events = [];
-    appointments.forEach((e) =>{
-      let isAllDay = false
-      if(e.from_date !== undefined && e.to_date !== undefined ){
-        var startTime = new Date(e.from_date)
-        var endTime = new Date(e.to_date)
-      }else{
-        isAllDay = true
-      }
-        events.push({
-          title: 'Day - ' + startTime.toDateString(),
-          startTime: startTime,
-          endTime: endTime,
-          allDay: isAllDay
-        });
-      })
+    this.eventSource = [];
+    appointments.forEach((e) =>{ 
+
+    var from_date = this.formatDate(e.from_date.split(" "));
+    var to_date = this.formatDate(e.to_date.split(" "));
+    let isAllDay = false
+      
+    events.push({
+      title: 'Day - ' + from_date.toDateString(),
+      startTime:  from_date,
+      endTime: to_date,
+      allDay: isAllDay
+    });
+  })
       console.log('[HomePage] addScheduleToCalendar()',events )
       this.eventSource = events;
+  }
+
+  formatDate(d){
+   
+    let date = new Date(d[0]);
+    let time = d[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+
+    console.log("date: ", date);
+    console.log("time", time);
+    
+    return date;
   }
 
   setLocale(){
@@ -224,7 +237,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            console.log('Confirm Cancel:');
           }
         }, {
           text: this.translate.instant("sms.ok_button"),

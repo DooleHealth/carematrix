@@ -1,5 +1,7 @@
 
-<ion-toolbar class="toolbarPadding" color="primary">
+
+<ion-header>
+  <ion-toolbar class="toolbarPadding" color="primary">
   <ion-buttons slot="start">
     <ion-button (click)="close()">
       <ion-icon name="close-circle" slot="icon-only"></ion-icon>
@@ -12,7 +14,8 @@
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
- 
+</ion-header>
+
 <ion-content> 
    <ion-row>
      <!-- Move back one screen of the slides -->
@@ -63,43 +66,46 @@
       
       <ion-row class="rowPadding"><ion-text class="event-detail-title">{{selectedDate.date | date: 'EEEE, d MMMM' | uppercase}}</ion-text></ion-row>
 
-      <ng-container *ngIf="!routeResolveData">
-        <div style="padding: 20px 40px; text-align: center;">
-          <ion-spinner></ion-spinner>
-         
-        </div>
-      </ng-container>
-      <div *ngIf="routeResolveData">
-        <ion-item lines="none" *ngIf="this.eventSource.length==0 else slots">
-          <div class="no-events-label">{{'medical_calendar.no_slot_available' | translate}}</div>
-        </ion-item>
-    
-        <ng-template #slots>
-        <ng-container 
-        *ngFor="let item of this.timeSlots | paginate: { itemsPerPage: 30, currentPage: page };let i = index"
-      >
-      
-        <ion-chip
-          (click)="changeTagColor(i, item.startTime )"
-          [color]="tagDefaultColor[i]"
-        >
-          <ion-label>{{ item.startTime | date:'HH:mm' }} </ion-label>
-        </ion-chip>
-      </ng-container>
-    </ng-template>
-      <div *ngIf="this.timeSlots.length > 0">
-        <ion-row style="margin-top: -4%; margin-left: 2%; margin-right: 2%">
-          <div class="clearfix">
-            <ion-col size="12" style="text-align: left">
-              <pagination-controls
-                (pageChange)="page = $event"
-               
-              ></pagination-controls>
-            </ion-col>
+      <ion-row>
+        <ng-container *ngIf="!routeResolveData">
+          <div style="padding: 20px 40px; text-align: center;">
+            <ion-spinner></ion-spinner>
+           
           </div>
-        </ion-row>
-      </div>
-      </div>
+        </ng-container>
+        <div *ngIf="routeResolveData">
+          <ion-item lines="none" *ngIf="this.eventSource.length==0 else slots">
+            <div class="no-events-label">{{'medical_calendar.no_slot_available' | translate}}</div>
+          </ion-item>
+      
+          <ng-template #slots>
+          <ng-container 
+          *ngFor="let item of this.eventSource | paginate: { itemsPerPage: 30, currentPage: page };let i = index"
+        >
+        
+          <ion-chip
+            (click)="changeTagColor(i, item.startTime )"
+            [color]="tagDefaultColor[i]"
+          >
+            <ion-label>{{ item.startTime | date:'HH:mm' }} </ion-label>
+          </ion-chip>
+        </ng-container>
+      </ng-template>
+        <div *ngIf="this.timeSlots.length > 0">
+          <ion-row style="margin-top: -4%; margin-left: 2%; margin-right: 2%">
+            <div class="clearfix">
+              <ion-col size="12" style="text-align: left">
+                <pagination-controls
+                  (pageChange)="page = $event"
+                 
+                ></pagination-controls>
+              </ion-col>
+            </div>
+          </ion-row>
+        </div>
+        </div>
+      </ion-row>
+     
   </ng-template>
  
   
