@@ -63,7 +63,7 @@
         {{view.dates[row*7+col].label}}
         <div class="indicator-container">
           <div class="event-indicator" 
-          [ngStyle]="{'background-color': (e?.color)? e?.color: 'red'  }"
+          [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"
           *ngFor="let e of view.dates[row*7+col].events"></div>
         </div>
       </div>
@@ -77,11 +77,11 @@
           <ion-list >
             <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="reminder/detail" [state]="{ event: event}" >
 
-              <div [ngStyle]="{'background-color': (event?.color)? event?.color: 'red'  }" class="verticalLine"></div>
+              <div [ngStyle]="{'background-color': (event?.color)? event?.color: '#F1C40F'  }" class="verticalLine"></div>
               <ion-grid>
                 <ion-row>
                   <ion-col size="1">
-                    <ion-icon style="align-items: left" [ngStyle]="{'color': (event?.color)? event?.color: 'red'  }" name="calendar"></ion-icon>
+                    <ion-icon style="align-items: left" [ngStyle]="{'color': (event?.color)? event?.color: '#F1C40F'  }" name="calendar"></ion-icon>
                   </ion-col>
                   <ion-col size="10">
                     <ion-label class="event-detail2" text-wrap>{{event.type}}</ion-label>
