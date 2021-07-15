@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSlides, ModalController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
@@ -50,6 +50,7 @@ export class HomePage implements OnInit {
    infoDrugs: UserInformation
   constructor(
     public router:Router,
+    public platform: Platform,
     private dooleService: DooleService,
     public authService: AuthenticationService,
     private datePipe: DatePipe,

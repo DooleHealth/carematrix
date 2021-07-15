@@ -83,17 +83,8 @@ export class AgendaPage implements OnInit {
     let d = new Date(auxDate);
     d.setHours(date.end_time.substring(0,2));
     d.setMinutes(date.end_time.substring(3,5));
-    return d
-  }
-
-  formatDate(d){
-    let date = new Date(d[0]);
-    let time = d[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    console.log("date: ", date);
-    console.log("time", time);
-    return date;
+    
+    return d;
   }
 
   addScheduleToCalendar(appointments: any[]){
@@ -103,6 +94,7 @@ export class AgendaPage implements OnInit {
       if(e.start_date_iso8601 !== undefined && e.end_date !== undefined ){
         var startTime = new Date(e.start_date_iso8601)
         var endTime = this.transformDate(e)
+
       }else{
         isAllDay = true
       }
@@ -120,7 +112,7 @@ export class AgendaPage implements OnInit {
           agenda_type: e.agenda_type
         });
       })
-      console.log('[AgendaPage] addScheduleToCalendar()',events )
+     
       this.eventSource = events;
   }
 
@@ -135,7 +127,6 @@ export class AgendaPage implements OnInit {
   
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
-    console.log("title", title);
     const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
     this.viewTitle = datePipe.transform(this.myCal.currentDate, 'MMM yyyy');
   }
