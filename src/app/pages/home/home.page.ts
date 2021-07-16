@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
 import { VideoComponent } from 'src/app/components/video/video.component';
@@ -26,8 +27,10 @@ export class HomePage implements OnInit {
   games: Game[] =[]
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
+  showGoogleFit = false;
   advices: Advice[] =[]
   date
+  loading:boolean = true;
   currentIndexDrug = 0
    sliderConfig = {
     slidesPerView: 1,
@@ -54,18 +57,43 @@ export class HomePage implements OnInit {
     private dooleService: DooleService,
     public authService: AuthenticationService,
     private datePipe: DatePipe,
+    private health: Health,
   ) { }
 
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
+    this.checkHealthAccess();
     //this.getUserInformation()  
   }
 
-  ionViewDidEnter(){
+  async ionViewDidEnter(){
     console.log('[HomePage] ionViewDidEnter()');
-    this.getUserInformation() 
+    await this.getUserInformation()
+    setTimeout(() => {
+      // Close modal
+     this.loading = false;
+  }, 500);
+    
   }
 
+  checkHealthAccess(){
+    if (this.platform.is('cordova')) {
+      this.health.isAvailable()
+          .then((available: boolean) => {
+            console.log(available);
+            this.showGoogleFit = !available;
+            this.health.requestAuthorization([
+              'distance', 'steps', 'heart_rate', 'activity', 'weight'  //read and write permissions
+            ])
+                .then(res => {
+                  console.log(res);
+                  this.syncData(30);
+                })
+                .catch(e => console.log(e));
+          })
+          .catch(e => console.log(e));
+    }
+  }
   async getUserInformation(){
     this.dooleService.getAPIgames().subscribe((res)=>{
       this.games = res.games;
@@ -93,27 +121,85 @@ export class HomePage implements OnInit {
 
     this.activity.push({name:'456 Cal'})
 
-    //this.activity = this.userDoole.physica
-    // this.dooleService.getAPIinformationUser().subscribe(
-    //   async (res: any) =>{
-    //     //console.log('[HomePage] getUserInformation()', await res);
-    //     this.userDoole = res as User
-    //     this.goals = this.userDoole.goals
-    //     this.appointment = this.userDoole.agendas
-    //     this.advices = this.userDoole.advices
-    //     this.diets = this.userDoole.diets
-    //     this.drugs = this.userDoole.drugs
-    //     this.games = this.userDoole.games
-    //     //this.activity = this.userDoole.physical
-    //     this.activity.push({name:'456 Cal'})
-    //     this.slideDietChange()
-    //     this.slideDrugChange()
-
-    //    },(err) => { 
-    //       console.log('[HomePage] getUserInformation() ERROR(' + err.code + '): ' + err.message); 
-    //       throw err; 
-    //   });
   }
+
+  
+  syncData(days){
+
+    this.health.queryAggregated({
+      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
+      endDate: new Date(), // now
+      dataType: 'steps',
+      bucket: 'day'
+    }).then(data => {
+      this.postHealth('steps', data);
+    });
+
+    this.health.queryAggregated({
+      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
+      endDate: new Date(), // now
+      dataType: 'distance',
+      bucket: 'day'
+    }).then(data => {
+      this.postHealth('distance', data);
+
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.health.query({
+      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
+      endDate: new Date(), // now
+      dataType: 'heart_rate',
+    }).then(data => {
+      this.postHealth('heart_rate', data);
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.health.query({
+      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
+      endDate: new Date(), // now
+      dataType: 'weight',
+    }).then(data => {
+      this.postHealth('weight', data);
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.health.query({
+      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
+      endDate: new Date(), // now
+      dataType: 'temperature',
+    }).then(data => {
+      this.postHealth('temperature', data);
+    }).catch(error => {
+      console.log(error);
+    });
+
+  }
+
+    //envia post amb dades de salut a api
+    postHealth(type, data){
+      const postData = {
+        type: type,
+        vals: JSON.stringify(data),
+      };
+      this.authService.post('user/element/sync', postData).subscribe(
+          async (data) => {
+            console.log("postHealth: ", data);
+           },
+         
+          (error) => {
+            // Called when error
+            console.log('error: ', error);
+            throw error;
+          },
+          () => {
+            // Called when operation is complete (both success and error)
+            // loading.dismiss();
+          });
+    }
 
   getDrugIntake(){
     this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{

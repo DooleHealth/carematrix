@@ -139,6 +139,11 @@
         "definition": "Definición",
         "normal_value": "Valores Normales:"
       },
+      "activity":{
+        "cal":"Cal",
+        "km":"Km",
+        "steps":"Pasos"
+      },
       "personal": {
         "button_back": "Inicio",
         "header": "Tus Datos",

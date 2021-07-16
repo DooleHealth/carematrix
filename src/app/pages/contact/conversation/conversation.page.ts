@@ -207,14 +207,7 @@ export class ConversationPage implements OnInit {
 
     const buttons = [
       {
-        text: this.translate.instant ('Cámara'),
-        icon: 'camera',
-        handler: () => {
-          this.addImage();
-        }
-      },
-      {
-        text: this.translate.instant('authorization.file.choose'),
+        text: this.translate.instant('documents_add.file'),
         icon: 'document',
         handler: () => {
           this.addFile();
@@ -238,7 +231,7 @@ export class ConversationPage implements OnInit {
     }
 
     const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Select Image Source',
+      header: this.translate.instant('documents_add.select'),
       buttons
     });
     await actionSheet.present();    
