@@ -140,6 +140,11 @@
         "definition": "Definició",
         "normal_value": "Valors Normals:"
       },
+      "activity":{
+        "cal":"Cal",
+        "km":"Km",
+        "steps":"Passos"
+      },
       "personal": {
         "button_back": "Inici",
         "header": "Les teves dades",
