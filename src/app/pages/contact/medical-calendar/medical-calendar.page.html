@@ -74,9 +74,21 @@
           </div>
         </ng-container>
         <div *ngIf="routeResolveData">
-          <ion-item lines="none" *ngIf="this.eventSource.length==0 else slots">
+<!--           <ion-item lines="none" *ngIf="this.eventSource.length==0 else slots">
             <div class="no-events-label">{{'medical_calendar.no_slot_available' | translate}}</div>
-          </ion-item>
+          </ion-item> -->
+          <div *ngIf="this.eventSource.length==0 else slots">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2" class="iconNoDataRow">
+                 <ion-icon color="black" name="calendar-clear-outline"></ion-icon>
+                </ion-col>
+                <ion-col size="10">
+                  <p class="textMedium"> {{'agenda.no_events' | translate}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        </div>
       
           <ng-template #slots>
           <ng-container 
