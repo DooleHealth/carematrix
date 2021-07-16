@@ -22,7 +22,7 @@
 
   <ion-grid>
     <ion-row class="paddingTop">
-      <ion-text class="txtTitle">{{ 'home.goals_title' | translate}}</ion-text>
+      <ion-text class="txtTitle">{{ 'home.goals_title' | translate | titlecase}}</ion-text>
     </ion-row>
     <!-- Goals  --> 
     <ion-row >
@@ -39,7 +39,7 @@
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
-                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"></ion-progress-bar>
+                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
                       <p class="txtContactLittle">{{'goals.goals' | translate}} {{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
                     </ion-row>
                   </ion-grid>
@@ -65,16 +65,16 @@
                 <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon> 
             </ion-item>
     
-            <ion-card-content>
+            <ion-card-content routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
                 <ion-row>
                   <ion-col size="3" >
                     <ion-img src="assets/icons/agenda2.svg"></ion-img>
                   </ion-col>
                   <ion-col size="9" class="alingLeft">
                     <p>{{slide.doctor}}</p>
-                    <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm'  }}</ion-text>
-                    <ion-button size="small" fill="clear" routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
-                      {{ 'home.detail_button' | translate}}</ion-button>
+                    <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm' | titlecase }}</ion-text>
+                    <ion-button size="small" fill="clear">
+                      {{ 'home.detail_button' | translate }}</ion-button>
                   </ion-col>
                 </ion-row>
             </ion-card-content>
@@ -90,7 +90,7 @@
 
      
         <ion-text class="txtTitle" style="white-space: nowrap;"> {{ 'home.advices_title' | translate}}</ion-text>
-        <ion-item lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-item>
+        <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-text>
     
     </ion-row>
   
@@ -115,7 +115,7 @@
     <ion-row class="paddingTop">
 
 
-      <ion-text class="txtTitle">{{ 'home.today_title' | translate}}</ion-text>
+      <ion-text class="txtTitle">{{ 'home.today_title' | translate | titlecase}}</ion-text>
     </ion-row>
     <!-- Diets -->
     <ion-row >

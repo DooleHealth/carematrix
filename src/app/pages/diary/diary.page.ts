@@ -26,8 +26,8 @@ export class DiaryPage implements OnInit {
   diets = []
   groupedElements: any = [];
   date = Date.now()
-  segment = 'diets'
-  isLoading = false
+  segment = history.state?.segment ? history.state.segment : 'diets';
+  isLoading:boolean = true
   isFutureDay = false
   @ViewChild('slides') slides: IonSlides;
   constructor(
@@ -43,8 +43,9 @@ export class DiaryPage implements OnInit {
 
   }
   ionViewDidEnter(){
+    this.items = []
     console.log('[DiaryPage] ionViewDidEnter()');
-    let state = history.state.segment;
+    let state = history.state?.segment;
     if(state) this.segment = state
     this.segmentChanged()
   }
@@ -85,39 +86,44 @@ export class DiaryPage implements OnInit {
     list.forEach(element => {
       this.items.push({expanded: false, item: element })
     });
-    console.log('[DiaryPage] addItems()', this.items);
+    console.log('[DiaryPage] addItems()', this.items.length);
   }
 
   async getDietList(){
+    this.isLoading = true;
     console.log('[DiaryPage] getDietList()');
     this.items = []
-    this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
+    
+   
+    // const loading = await this.loadingController.create();
+    // await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
     this.dooleService.getAPIlistDietsByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDietList()', await res);
         if(res.diets)
-        this.addItems(res.diets)
-        loading.dismiss();
-        this.isLoading = false
+          this.addItems(res.diets)
+        //loading.dismiss();
+       
        },(err) => { 
           console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
-          this.isLoading = false
+          //loading.dismiss();
+          //this.isLoading = false
           throw err; 
+      }, ()=>{
+        this.isLoading = false
       });
   }
 
   async getDrugIntakeList(){
+    this.isLoading = true
     console.log('[DiaryPage] getDrugIntakeList()');
     this.items = []
-    this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
+   
+    // const loading = await this.loadingController.create();
+    // await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
     this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
@@ -130,14 +136,16 @@ export class DiaryPage implements OnInit {
           this.addItems(list)
           this.groupDiagnosticsByDate(this.items)
         }
-        loading.dismiss();
+        //loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDrugIntakeList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
+          //loading.dismiss();
           this.isLoading = false
           throw err; 
+      }, ()=>{
+        this.isLoading = false
       });
   }
 
@@ -186,8 +194,8 @@ export class DiaryPage implements OnInit {
     console.log('[DiaryPage] getGameListByDate()');
     this.items = []
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
+    // const loading = await this.loadingController.create();
+    // await loading.present();
     let date = this.transformDate(this.date)
     this.dooleService.getAPIgamesByDate(date, date).subscribe(
       async (res: any) =>{
@@ -199,14 +207,16 @@ export class DiaryPage implements OnInit {
           });
           this.addItems(games)
          }
-        loading.dismiss();
+        //loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getGameListByDate() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
+          //loading.dismiss();
           this.isLoading = false
           throw err; 
+      }, ()=>{
+        this.isLoading = false
       });
   }
 
@@ -257,8 +267,8 @@ export class DiaryPage implements OnInit {
   }
 
   async getElementsList(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    // const loading = await this.loadingController.create();
+    // await loading.present();
     this.items = []
     this.isLoading = true
     let formattedDate = this.transformDate(this.date)
@@ -276,14 +286,16 @@ export class DiaryPage implements OnInit {
           })
           this.addItems(this.groupedElements);
         }
-        loading.dismiss();
+        //loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
+          //loading.dismiss();
           this.isLoading = false
           throw err; 
+      }, ()=>{
+        this.isLoading = false
       });
   }
 
@@ -305,21 +317,22 @@ export class DiaryPage implements OnInit {
     }
   }
 
-  segmentChanged(){
+  async segmentChanged(){
     console.log('[DiaryPage] segmentChanged()', this.segment); 
+    this.items = []
     switch (this.segment) {
       case 'diets':
-        this.getDietList()
+        await this.getDietList()
         break;
       case 'medication':
-        this.getDrugIntakeList()
+        await this.getDrugIntakeList()
         break;
       case 'games':
         //this.getGameList()
-        this.getGameListByDate()
+        await this.getGameListByDate()
         break;
       case 'health':
-        this.getElementsList()
+        await this.getElementsList()
         break;
       default:
         //this.getDiagnosticTestsList()
