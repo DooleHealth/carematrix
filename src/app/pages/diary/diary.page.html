@@ -148,8 +148,8 @@
    
        
           <app-expandable expandHeight="200px" [expanded]="item.expanded">
-            <ion-item lines="none">
-              <p class="txtTitleTrackingLittle">{{item.item.name}} (Dosi: {{item.item.dose}})
+            <ion-item lines="none" >
+              <p class="txtTitleTrackingDate">{{item.item.name}} (Dosi: {{item.item.dose}})
               </p>
             </ion-item>
             <div class="main-container3">
@@ -211,7 +211,7 @@
     <ion-label *ngIf="group.elements.length > 0"  class="txtTitle">{{group.group  }}</ion-label>
     <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
       <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
-        <div *ngIf="group.group=='Actividad Física ' || group.group=='Actividad' " class="verticalLineRed"></div>
+        <div *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' "  class="verticalLineRed"></div>
         <div *ngIf="group.group=='Bioquímica'"  class="verticalLine"></div>
         <div *ngIf="group.group=='Constantes'"  class="verticalLinePurple"></div>
         <ion-grid>
