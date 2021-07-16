@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IEvent } from 'ionic2-calendar/calendar';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 export interface DayEvent {
   date?: string;
@@ -18,8 +20,10 @@ export class ListAppointmentPage implements OnInit {
   dayEvents: DayEvent[] =[]
   month = 0;
   viewTitle = Date.now()
+  title = ''
   constructor(
-    private dooleService: DooleService
+    private dooleService: DooleService,
+    public languageService: LanguageService,
   ) { }
 
   ngOnInit() {
@@ -32,10 +36,21 @@ export class ListAppointmentPage implements OnInit {
     }
   }
 
+  ionViewDidEnter(){
+    console.log('[ListAppointmentPage] ionViewDidEnter()');
+    this.onViewTitleChanged(new Date())
+  }
+
   transformDate(date) {
     let auxDate = `${date.year}-${date.month}-${date.day} ${date.end_time}`
     return new Date(auxDate)
   }
+
+    // Selected date reange and hence title changed
+    onViewTitleChanged(date: Date){
+      const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
+      this.title = datePipe.transform(date, 'MMM yyyy');
+    }
 
   addScheduleToCalendar(appointments: any[]){
     var events = [];
@@ -93,6 +108,7 @@ export class ListAppointmentPage implements OnInit {
     var date = new Date();
     let month = date.getMonth() + this.month
     this.viewTitle = date.setMonth(month);
+    this.onViewTitleChanged(date)
     console.log('[ListAppointmentPage] filteMonth()', this.viewTitle);
     this.eventMonth = this.listAppointment.filter( event => 
       new Date(event.startTime).getMonth() === month

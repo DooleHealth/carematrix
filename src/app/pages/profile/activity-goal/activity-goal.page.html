@@ -35,7 +35,7 @@
     </ion-segment>
     <div class="main-container2">
   <ion-row *ngIf="this.values && this.values.length > 0"><ion-col size="2" class="txtTitleGoalsGreenBig">{{values[values.length-1].value}}</ion-col><ion-col size="2" class="txtTitleGoalsLittle2">{{units}}</ion-col></ion-row>
-  <ion-row *ngIf="this.values &&  this.values.length > 0"><ion-col size="4" class="txtTitleGoalsLittle">{{values[values.length-1].date_value | date: 'dd/MM/y'}}</ion-col></ion-row>
+  <ion-row *ngIf="this.values &&  this.values.length > 0"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatDate(values[values.length-1].date_value) | date: 'dd/MM/y'}}</ion-col></ion-row>
  </div>
 
 <div id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>

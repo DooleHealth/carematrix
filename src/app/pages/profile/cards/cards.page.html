@@ -21,7 +21,7 @@
             <div>
               <p>{{ card.card_number}}</p>
               <p *ngIf="card.expiration_date !== null && card.expiration_date !== undefined"> 
-                {{ card.expiration_date | date: 'MM/yyyy'}}</p>
+                {{ this.formatDate(card.expiration_date) | date: 'MM/yyyy'}}</p>
             </div>
             
           </ion-label>
