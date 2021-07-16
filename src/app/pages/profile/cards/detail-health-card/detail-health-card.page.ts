@@ -37,5 +37,13 @@ export class DetailHealthCardPage implements OnInit {
       });
   }
 
+  formatDate(d){
+    let date = new Date(d.split(' ')[0]);
+    let time = d[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date;
+  }
+
 
 }

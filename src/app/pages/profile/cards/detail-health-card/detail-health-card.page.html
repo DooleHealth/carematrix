@@ -42,7 +42,7 @@
       </ion-item>
       <ion-item *ngIf="this.card.expiration_date !== undefined && this.card.expiration_date !== null">
         <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
-        <ion-label class="textMedium">{{this.card?.expiration_date | date: 'MM/yyyy'}}</ion-label>
+        <ion-label class="textMedium">{{this.formatDate(card?.expiration_date) | date: 'MM/yyyy'}}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item *ngIf="this.card.expedition_date !== undefined && this.card.expedition_date !== null" lines="none">

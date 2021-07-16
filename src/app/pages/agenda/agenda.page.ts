@@ -83,7 +83,7 @@ export class AgendaPage implements OnInit {
     let d = new Date(auxDate);
     d.setHours(date.end_time.substring(0,2));
     d.setMinutes(date.end_time.substring(3,5));
-
+    
     return d;
   }
 
