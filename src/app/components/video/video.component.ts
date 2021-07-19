@@ -130,11 +130,11 @@ ngAfterViewInit(): void {
         //OT.updateViews();
       },
       connectionCreated: (event) => {
-        //if (event.connection.connectionId != this.session.connection.connectionId) {
+        // if (event.connection.connectionId != this.session.connection.connectionId) {
         //  this.showMessage("Se ha conectado un usuario");
         //  this.infoStr = "";
-        //} else {
-        //}
+        // } else {
+        // }
       },
     });
 

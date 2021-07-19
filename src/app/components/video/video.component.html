@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button text=" " (click)="this.close()"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ 'contact.tap_video' | translate}}</ion-title>
-  </ion-toolbar>
-</ion-header><ion-content>
+<ion-content fullscreen>
   <ng-container >
     <div class="holder" *ngIf="this.isWaiting">
       <div class="preloader">
@@ -23,7 +16,7 @@
     </div>
   </ng-container>
   <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button *ngIf="!this.isWaiting" color="danger" (click)="this.close()" >
+    <ion-fab-button color="danger" (click)="this.close()" >
       <ion-icon name="call-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
