@@ -66,11 +66,15 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
           formatMonthViewDay: function(date:Date) {
               return date.getDate().toString();
           },
-          /*           
+                    
           formatMonthViewDayHeader: function(date:Date) {
-            let days = ["L", "M", "X", "J", "V", "S", "D"]
-            return this.days[date.getDay()] 
-          }, */
+            let days = [ "D","L", "M", "X", "J", "V", "S"]
+            if(this.locale === 'ca'){
+              days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
+            }
+            let num = date.getDay()
+            return days[num] 
+          },
           /* 
            formatMonthViewTitle: function(date:Date) {
               return date.getMonth().toString();
@@ -198,10 +202,25 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
     console.log("title", title);
-    //this.viewTitle = title;
-    const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
-    this.viewTitle = datePipe.transform(this.myCal.currentDate, 'MMM yyyy');
+    this.viewTitle = this.formatMonths();
 
+  }
+
+  formatMonths(){
+    let language = this.setLocale()
+    const datePipe: DatePipe = new DatePipe(language);
+    let month = datePipe.transform(this.myCal.currentDate, 'MMM');
+    if(language === 'ca'){
+      month = datePipe.transform(this.myCal.currentDate, 'MMM').split(' ')[1]
+      if(month == undefined)
+      month = datePipe.transform(this.myCal.currentDate, 'MMM').split('’')[1]
+    }
+    return month.split('.')[0] + ' ' + this.myCal.currentDate.getFullYear()
+  }
+
+  formatSelectedDate(date){
+    const datePipe: DatePipe = new DatePipe(this.setLocale());
+    return datePipe.transform(date, 'EEEE, d MMMM');
   }
 
   async onEventSelected(event){

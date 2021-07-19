@@ -10,39 +10,36 @@
 </ion-header>
 
 <ion-content>
-  <ion-row>
-    <!-- Move back one screen of the slides -->
-   <ion-col size="1.5">
-     <ion-button fill="clear" (click)="back()">
-       <ion-icon name="chevron-back-outline" slot="icon-only" color="primary" ></ion-icon>
-     </ion-button>
-   </ion-col>
-   <ion-col size="5" class="textBlueCentered">
-    <h2>{{ title | titlecase }}</h2>
-  </ion-col>
-    <!-- Move forward one screen of the slides -->
-   <ion-col size="1.5">
-    <ion-button fill="clear" (click)="next()">
-      <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
-    </ion-button>
-  </ion-col>
-  
-   <ion-col size="1.5">
-     <ion-button fill="clear" routerLink="../">
-       <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
-     </ion-button>
-   </ion-col>  
-   <ion-col size="1.5">
-     <ion-button fill="clear" routerLink="/reminder-add">
-       <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
-     </ion-button>
-   </ion-col>
-   
-  
- </ion-row>
+   <!-- Move back one screen of the slides --> 
+   <ion-row class="textBlueCentered1">
+    <ion-col size="8.6">
+      <ion-row class="textBlueCentered1">
+        <ion-button fill="clear" (click)="back()">
+          <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
+        </ion-button>
+        <h3>
+          {{ viewTitle | titlecase }}
+        </h3>
+        <ion-button fill="clear" (click)="next()">
+          <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+        </ion-button>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="1.4">
+      <ion-button fill="clear" routerLink="../">
+        <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>  
+    <ion-col size="1.4">
+      <ion-button fill="clear" routerLink="/reminder-add">
+        <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 
     <ion-list *ngFor="let events of this.dayEvents">
-      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{events.date | date: ['EEEE, d MMMM'] | uppercase}}</ion-text></ion-row>
+      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(events.date) | uppercase}}</ion-text></ion-row>
       <ion-list *ngFor="let e of events.events; let i = index"lines="full" class="blanco" >
 
         <ion-item  routerLink="detail" [state]="{event: e, id: e.id}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" > 
