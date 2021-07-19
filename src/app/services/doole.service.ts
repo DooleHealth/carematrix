@@ -548,7 +548,7 @@ export class DooleService {
     let path = `user/EmergencyContact/${id}`;
     console.log('[DooleService] putAPIemergencyContact()', params);
     const endpoint = this.api.getEndpoint(path);
-    return this.http.put(endpoint, params, {}).pipe(
+    return this.http.put(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] putAPIemergencyContact(${path}) res: `, res);
         return res;

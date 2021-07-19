@@ -1,44 +1,54 @@
 
 <ion-header>
   <ion-toolbar>
-<!--     <ion-buttons slot="start">
-      <ion-back-button ></ion-back-button>
-    </ion-buttons> -->
-    <ion-title>
-      {{'agenda.header_agenda' | translate}}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
- 
-<ion-content> 
-   <ion-row>
-     <!-- Move back one screen of the slides -->
-    <ion-col size="1.5">
+    <ion-buttons slot="start">
       <ion-button fill="clear" (click)="back()">
         <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
       </ion-button>
-    </ion-col>
- 
-    <ion-col size="5" class="textBlueCentered">
-      <h2>{{ viewTitle | titlecase }}</h2>
-    </ion-col>
-    <ion-col size="1.5">
+      <h3 class="textBlueCentered1">
+        {{ viewTitle | titlecase }}
+      </h3>
       <ion-button fill="clear" (click)="next()">
         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
+    </ion-buttons>
+    <ion-button slot="end" fill="clear" routerLink="list-appointment" [state]="{calendar:eventSource}">
+      <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill="clear" routerLink="reminder-add">
+      <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <!-- Move back one screen of the slides --> 
+<!--    <ion-row class="textBlueCentered1">
+    <ion-col size="8.6">
+      <ion-row class="textBlueCentered1">
+        <ion-button fill="clear" (click)="back()">
+          <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
+        </ion-button>
+        <h3>
+          {{ viewTitle | titlecase }}
+        </h3>
+        <ion-button fill="clear" (click)="next()">
+          <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+        </ion-button>
+      </ion-row>
     </ion-col>
-    <ion-col size="1.5">
+
+    <ion-col size="1.4">
       <ion-button fill="clear" routerLink="list-appointment" [state]="{calendar:eventSource}">
         <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
       </ion-button>
     </ion-col>  
-    <ion-col size="1.5">
+    <ion-col size="1.4">
       <ion-button fill="clear" routerLink="reminder-add">
         <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
       </ion-button>
     </ion-col>
-
-  </ion-row>
+  </ion-row> -->
  
   <calendar
     [eventSource]="eventSource"
@@ -70,7 +80,7 @@
     </ng-template>
 
     <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{selectedDate.date | date: 'EEEE, d MMMM' | uppercase}}</ion-text></ion-row>
+      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text></ion-row>
       <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false" >
         <ion-item class="rowPadding2">
           

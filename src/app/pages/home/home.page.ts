@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
+import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -48,6 +49,7 @@ export class HomePage implements OnInit {
    @ViewChild('sliderDrug') sliderDrug: IonSlides;
    @ViewChild('sliderGames') sliderGames: IonSlides;
    @ViewChild('sliderPhysical') sliderPhysical: IonSlides;
+   @ViewChild('tabs') tabs: TabsComponent;
 
    infoDiet: UserInformation
    infoDrugs: UserInformation
@@ -68,12 +70,12 @@ export class HomePage implements OnInit {
 
   async ionViewDidEnter(){
     console.log('[HomePage] ionViewDidEnter()');
+    this.tabs.translateTab()
     await this.getUserInformation()
     setTimeout(() => {
       // Close modal
      this.loading = false;
-  }, 500);
-    
+    }, 500);
   }
 
   checkHealthAccess(){
@@ -321,6 +323,15 @@ export class HomePage implements OnInit {
   hourToMinutes(hour){
     let minutes = hour.split(':')
     return (Number(minutes[0]))*60 + (Number(minutes[1]))
+  }
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
   }
  
 }

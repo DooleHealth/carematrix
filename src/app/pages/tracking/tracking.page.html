@@ -41,7 +41,7 @@
       <ion-list *ngFor="let list of this.listDiagnostic; let i = index" (mouseover)="fireEvent($event,i)"  (click)="fireEvent($event,i)">
         <!-- <div class="dot" [ngStyle]="{'background': list.color}"></div>
        <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}"> -->
-        <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{list.date | date: 'EEEE'  | titlecase}}, {{list.date | date: 'd MMMM YYYY'}}</ion-label>
+        <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{ formatSelectedDate(list.date, 'EEEE, d MMMM YYYY')}}</ion-label>
   
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
           <ion-card class="cardProfile">
@@ -57,7 +57,7 @@
                     <ion-card-title class="txtTitleGoals">{{doc.diagnostic_test_type?.name}}</ion-card-title>
                   </ion-col>
                   <ion-col size="4">
-                    <ion-card-title class="txtTitleTrackingDate" >{{doc.data | date: 'dd MMM y'}}</ion-card-title>
+                    <ion-card-title class="txtTitleTrackingDate" >{{formatSelectedDate(doc.data, 'dd MMM y')}}</ion-card-title>
                   </ion-col>
                 </ion-row>
     

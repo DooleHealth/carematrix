@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
@@ -38,6 +40,7 @@ export class TrackingPage implements OnInit {
     public navCtrl:NavController,
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
+    public languageService: LanguageService
   ) { }
 
   ngOnInit() {
@@ -59,6 +62,13 @@ export class TrackingPage implements OnInit {
     }else{
       this.getDiagnosticTests();
     }
+  }
+
+  formatSelectedDate(date , format){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    let day = datePipe.transform(date, format);
+    return day[0].toUpperCase() + day.slice(1);
   }
 
   async getFilteredDiagnosticTests(){

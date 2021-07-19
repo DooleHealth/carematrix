@@ -17,7 +17,7 @@
 
  
 <ion-content> 
-   <ion-row>
+   <ion-row class="textBlueCentered1">
      <!-- Move back one screen of the slides -->
     <ion-col size="2">
       <ion-button fill="clear" (click)="back()">
@@ -64,7 +64,7 @@
 
     <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
       
-      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{selectedDate.date | date: 'EEEE, d MMMM' | uppercase}}</ion-text></ion-row>
+      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text></ion-row>
 
       <ion-row>
         <ng-container *ngIf="!routeResolveData">

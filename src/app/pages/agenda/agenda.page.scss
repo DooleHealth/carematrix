@@ -28,7 +28,7 @@ td {
 
 
 .dayWeek{
-
+  font-size: 14px;
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -48,6 +48,14 @@ td {
   }
   .monthview-eventdetail-timecolumn{
     color: #7f8c8d!important;
+  }
+
+  .monthview-day-header{
+    color: #e70f0f!important;
+  }
+
+  .formatMonthViewDayHeader{
+    color: #e70f0f!important;
   }
  
   .monthview-selected  {

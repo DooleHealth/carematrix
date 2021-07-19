@@ -19,11 +19,10 @@ export class ListAppointmentPage implements OnInit {
   eventMonth = [];
   dayEvents: DayEvent[] =[]
   month = 0;
-  viewTitle = Date.now()
-  title = ''
+  viewTitle = ''
   constructor(
     private dooleService: DooleService,
-    public languageService: LanguageService,
+    private languageService: LanguageService,
   ) { }
 
   ngOnInit() {
@@ -46,11 +45,21 @@ export class ListAppointmentPage implements OnInit {
     return new Date(auxDate)
   }
 
-    // Selected date reange and hence title changed
-    onViewTitleChanged(date: Date){
-      const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
-      this.title = datePipe.transform(date, 'MMM yyyy');
+  // Selected date reange and hence title changed
+  onViewTitleChanged(date: Date){
+    this.viewTitle = this.formatMonths(date)
+  }
+
+  formatMonths(date: Date){
+    const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
+    let month = datePipe.transform(date, 'MMM');
+    if(this.languageService.getCurrent() === 'ca'){
+      month = datePipe.transform(date , 'MMM').split(' ')[1]
+      if(month == undefined)
+      month = datePipe.transform(date , 'MMM').split('’')[1]
     }
+    return month.split('.')[0] + ' ' + date.getFullYear()
+  }
 
   addScheduleToCalendar(appointments: any[]){
     var events = [];
@@ -107,9 +116,8 @@ export class ListAppointmentPage implements OnInit {
     this.dayEvents = []
     var date = new Date();
     let month = date.getMonth() + this.month
-    this.viewTitle = date.setMonth(month);
+    date.setMonth(month);
     this.onViewTitleChanged(date)
-    console.log('[ListAppointmentPage] filteMonth()', this.viewTitle);
     this.eventMonth = this.listAppointment.filter( event => 
       new Date(event.startTime).getMonth() === month
       )
@@ -139,6 +147,12 @@ export class ListAppointmentPage implements OnInit {
       } 
     })
     console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
+  }
+
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM');
   }
 
   back(){
