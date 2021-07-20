@@ -37,7 +37,7 @@ export class ActivityGoalPage implements OnInit {
   ngOnInit() {
     this.id = history.state.id;
     this.header = history.state.header;
-    console.log('[ActivityGoalPage] ngOnInit()', this.id);
+    console.log('[ActivityGoalPage] ngOnInit()', this.id); 
     //this.loadData('1m');
   }
 

@@ -12,6 +12,12 @@ const routes: Routes = [
     path: 'conversation',
     loadChildren: () => import('../conversation/conversation.module').then( m => m.ConversationPageModule)
   }
+  ,
+  {
+    path: 'medical-directory',
+    loadChildren: () => import('../medical-directory/medical-directory.module').then( m => m.MedicalDirectoryPageModule)
+  }
+  
 ];
 
 @NgModule({
