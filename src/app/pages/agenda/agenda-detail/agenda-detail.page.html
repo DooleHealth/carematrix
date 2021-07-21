@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{ 'appointment.header_appointment' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" routerLink="/agenda/reminder-add"><ion-icon name="alarm-outline"></ion-icon></ion-button>
+      <ion-button color="primary" routerLink="/agenda/reminder-add" [state]="{agenda_id: this.event?.id}" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
       <ion-button color="primary"  (click)="addCalendar(this.event)"><ion-icon name="calendar-outline"></ion-icon></ion-button>
     </ion-buttons>

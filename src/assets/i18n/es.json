@@ -321,6 +321,7 @@
         "header": "Recodatorio",
         "personal_reminder": "Recordatorio Personal",
         "medical_reminder": "Recordatorio Médica",
+        "activity_reminder": "Recordatorio de Actividad",
         "header_add_reminder":"Añadir Recordatorio",
         "field_doctor": "Médico",
         "field_notes": "Notas",

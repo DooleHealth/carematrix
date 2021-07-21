@@ -37,6 +37,7 @@ export class ReminderAddPage implements OnInit {
     this.form = this.fb.group({
       type: [],
       agenda_id: [],
+      element_id: [],
       title: [''],
       start_date: ['', [Validators.required]],
       end_date: ['', [Validators.required]],
@@ -58,8 +59,14 @@ export class ReminderAddPage implements OnInit {
       if(this.event.start_date) this.form.get('start_date').setValue(this.event.start_date)
       if(this.event.end_date) this.form.get('end_date').setValue( this.event.end_date )
     }
-    this.agenda_id = history.state.agenda_id;
-    if(this.agenda_id) this.form.get('agenda_id').setValue(this.agenda_id)
+    let agenda_id = history.state.agenda_id;
+    if(agenda_id) this.form.get('agenda_id').setValue(agenda_id)
+    let element_id = history.state.element_id;
+    if(element_id) this.form.get('element_id').setValue(element_id)
+    if(this.isNewEvent){
+      let message = (agenda_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
+      this.form.get('title').setValue(message)
+    }
   }
 
   isSubmittedFields(isSubmitted){
