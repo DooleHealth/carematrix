@@ -42,22 +42,21 @@
 
           <!-- Reminders --> 
     <ion-row class="paddingTopNoMarginBottom">
-
-
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
+
      <!-- Agendas --> 
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
             <div class="txtTitleGoalsLittle" *ngIf="!this.appointment" >{{ 'no_data' | translate}}</div>
-            <ion-item class="white">
+            <ion-item class="cardHeader">
                 <ion-card-subtitle>{{slide.title | uppercase }}</ion-card-subtitle>
-                <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon> 
+                <!-- <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon>  -->
             </ion-item>
     
-            <ion-card-content routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
+            <ion-card-content class="strechCardContent" routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
                 <ion-row>
                   <ion-col size="3" >
                     <ion-img src="assets/icons/agenda2.svg"></ion-img>
