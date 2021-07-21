@@ -348,14 +348,15 @@
         "confirmation_delete_reminder":"¿Estás seguro de eliminar el recordatorio personal?",
         "error_message_added_reminder":"Ha ocurrido un error al guardar los datos",
         "error_message_delete_reminder":"Ha ocurrido un error al eliminar el recordatorio",
+        "wwek_day": "Días de la semana",
         "day":{
-          "monday": "Lunes",
-          "tuesday": "Martes",
-          "wednesday": "Miercoles",
-          "thursday": "Jueves",
-          "friday": "Viernes",
-          "saturday": "Sábado",
-          "sunday": "Domingo"
+          "day1": "Lunes",
+          "day2": "Martes",
+          "day3": "Miercoles",
+          "day4": "Jueves",
+          "day5": "Viernes",
+          "day6": "Sábado",
+          "day7": "Domingo"
         }
       },
       "appointment":{
