@@ -40,7 +40,7 @@ export class TrackingPage implements OnInit {
     public navCtrl:NavController,
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
-    public languageService: LanguageService
+    private languageService: LanguageService
   ) { }
 
   ngOnInit() {

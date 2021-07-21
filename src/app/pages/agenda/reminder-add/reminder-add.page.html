@@ -53,15 +53,11 @@
       </ion-item>
       <ion-item lines="none">
         <ion-label lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
-        <ion-select multiple="true" cancelText="{{'button.cancel' | translate}}" formControlName="days"  okText="{{'button.ok' | translate}}">
-          <ion-select-option value="allDays" selected >Todos los dias</ion-select-option>
-          <ion-select-option value="day1">{{'reminder.day.monday' | translate}}</ion-select-option>
-          <ion-select-option value="day2">{{'reminder.day.tuesday' | translate}}</ion-select-option>
-          <ion-select-option value="day3">{{'reminder.day.wednesday' | translate}}</ion-select-option>
-          <ion-select-option value="day4">{{'reminder.day.thursday' | translate}}</ion-select-option>
-          <ion-select-option value="day5">{{'reminder.day.friday' | translate}}</ion-select-option>
-          <ion-select-option value="day6">{{'reminder.day.saturday' | translate}}</ion-select-option>
-          <ion-select-option value="day7">{{'reminder.day.sunday' | translate}}</ion-select-option>
+        <ion-select interface="action-sheet" (ionChange)="selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+          <ion-select-option value="0">{{'Una vez' | translate}}</ion-select-option>
+          <ion-select-option value="1">{{'Diario' | translate}}</ion-select-option>
+          <ion-select-option value="2">{{'Lun a Vie' | translate}}</ion-select-option>
+          <ion-select-option value="3">{{'Personalizado' | translate}}</ion-select-option>
         </ion-select>
         <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>

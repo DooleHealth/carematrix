@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { settings } from 'cluster';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -43,6 +44,7 @@ export class ReminderAddPage implements OnInit {
       end_date: ['', [Validators.required]],
       description: [],
       days: [this.days],
+      frequency: ['1'],
     });
     this.getReminder()
   }
@@ -205,4 +207,45 @@ export class ReminderAddPage implements OnInit {
 
     await alert.present();
   }
+
+  selectedFrequency(){
+    let fq = Number(this.form.get('frequency').value)
+    console.log('[AddHealthCardPage] selectedFrequency()', fq);
+    switch (fq) {
+      case 0:
+        let index = new Date().getDay()
+        this.settingDay([index -1])
+        this.form.get('frequency').setValue('day');
+        break;
+      case 1:
+        let dialy = [0,1,2,3,4,5,6]
+        this.settingDay(dialy)
+        this.form.get('frequency').setValue('daily');
+        break;
+      case 2:
+        let five = [0,1,2,3,4]
+        this.settingDay(five)
+        this.form.get('frequency').setValue('mom_fri');
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  settingDay(index){
+    this.days.forEach((day, i) =>{
+      day['day'+(i +1)] = false
+     // console.log('[AddHealthCardPage] selectedFrequency() day', index);
+    })
+    if(index.length > 0)
+    index.forEach(i => {
+      let day = this.days[i]
+      day['day'+(i +1)] = true
+    });
+    console.log('[AddHealthCardPage] selectedFrequency() day', this.days);
+  
+  }
 }
+
+
