@@ -96,6 +96,8 @@ export class DrugsDetailPage implements OnInit {
 
     let to_date = this.form.get('to_date').value
     this.form.get('to_date').setValue(this.transformDate(to_date))
+
+    this.form.get('frequency').setValue('daily')
     
     //console.log('[DrugsDetailPage] saveDrug()', this.form.value);
     this.dooleService.postAPIdrugIntake(this.form.value).subscribe(async json=>{
@@ -123,7 +125,10 @@ export class DrugsDetailPage implements OnInit {
 
     let to_date = this.form.get('to_date').value
     this.form.get('to_date').setValue(this.transformDate(to_date))
-    
+
+    this.form.get('frequency').setValue('daily')
+
+  
     //console.log('[DrugsDetailPage] updateDrug()', this.form.value);
     this.dooleService.putAPIdrugIntake(this.drug.id ,this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
