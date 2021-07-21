@@ -22,7 +22,7 @@ ion-img{
 .vertical-card{
     background-color: white!important;
     width: 100%;
-    max-height: 200px;
+    max-height: 115px;
     ion-img{
         height: 18px;
         width: 18px;
@@ -39,10 +39,15 @@ ion-img{
         }
     }
 }
+.cardHeader{
+  --background: #ffffff!important;
+  max-height: 31px;
 
+}
 .customCardAppointment{
     background-color: white;
     width: 100%;
+    height: 123px;
 }
 
 .customCardAdvices {
@@ -80,4 +85,22 @@ ion-img{
     border-radius: 20px;
     min-height: 17px;
     
+}
+
+
+/*IOS STYLES*/
+
+.ios .narRow{
+  margin-top: -20px;
+}
+.md .paddingTopNoMarginBottom{
+  padding-top: 6%;
+
+}
+.ios .paddingTopNoMarginBottom{
+padding-top: 3%;
+margin-bottom: -3%;
+}
+.ios .iosHeader{
+  padding-top: 50px;
 }
