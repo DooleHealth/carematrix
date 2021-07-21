@@ -317,6 +317,7 @@
         "header": "Recodatori",
         "personal_reminder": "Recordatori Personal",
         "medical_reminder": "Recordatori Metge",
+        "activity_reminder": "Recordatori d'Activitat",
         "header_add_reminder":"Afegir Recordatori",
         "field_doctor": "Metge",
         "field_notes": "Notes",
