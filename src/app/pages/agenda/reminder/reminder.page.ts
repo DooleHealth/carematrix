@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,10 +14,12 @@ export class ReminderPage implements OnInit {
   id:any
   event = []
   reminder = {}
-  duration = 0
+  frequency = ''
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
+    private languageService: LanguageService,
+    private translate : TranslateService,
   ) { }
 
   ngOnInit() {
@@ -32,12 +35,12 @@ export class ReminderPage implements OnInit {
   async getReminderData(){
     const loading = await this.loadingController.create();
     await loading.present();
-    this.dooleService.getAPIagendaID(this.id).subscribe(
+    this.dooleService.getAPIreminderID(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderPage] getReminderData()', await res);
-        if (res.agenda) {
-          this.reminder = res.agenda
-          this.duration = this.trasnforHourToMinutes(res.agenda.end_time) - this.trasnforHourToMinutes(res.agenda.start_time)
+        if (res.reminder) {
+          this.reminder = res.reminder
+          this.selectedFrequency(res.reminder?.frequency)
         }
 
         loading.dismiss();
@@ -51,10 +54,35 @@ export class ReminderPage implements OnInit {
       };
   }
 
-  trasnforHourToMinutes(time): any{
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
+    //return day[0].toUpperCase() + day.slice(1);
+  }
+
+  selectedFrequency(frequency){
+    switch (frequency) {
+      case 'day':
+        this.frequency = this.translate.instant('Un día');
+        break;
+      case 'daily':
+        this.frequency = this.translate.instant('Diario');
+        break;
+      case 'mom_fri':
+        this.frequency = this.translate.instant('Lun a Vie');
+        break;
+
+      default:
+        this.frequency = this.translate.instant('Diario');
+        break;
+    }
+  }
+
+/*   trasnforHourToMinutes(time): any{
         let hour = time.split(':');
         return (Number(hour[0]))*60 + (Number(hour[1]))
-  }
+  } */
 
   
 

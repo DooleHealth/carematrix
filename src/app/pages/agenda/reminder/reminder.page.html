@@ -46,11 +46,11 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
-        <ion-text class="textMedium">{{reminder.start_date_iso8601 | date: 'EEEE, d MMMM yyyy, HH:mm'}}</ion-text>
+        <ion-text class="textMedium">{{ formatSelectedDate(reminder?.start_date) }}</ion-text>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>{{'reminder.field_duration' | translate}}</ion-label>
-        <ion-text class="textMedium">{{this.duration}}</ion-text>
+        <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>
+        <ion-text class="textMedium">{{this.frequency}}</ion-text>
       </ion-item>
     </ion-list>
   </div>

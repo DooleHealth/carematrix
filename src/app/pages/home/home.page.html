@@ -25,7 +25,7 @@
             </ion-item>
             
           <ion-card-content>
-            <div class="txtTitleGoalsLittle" *ngIf="!this.goals" >{{ 'no_data' | translate}}</div>
+            <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals == 0 " >{{ 'no_data' | translate}}</div>
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
@@ -86,7 +86,7 @@
     </ion-row>
   
     <ion-row>
-      <div class="txtTitleGoalsLittle" *ngIf="!this.advices" >{{ 'no_data' | translate}}</div>
+      
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">
           <ion-card class="cardProfilePaddingBottomMinHeight">
@@ -120,7 +120,7 @@
           </ion-item>
 
         <ion-card-content>
-          <div class="txtTitleGoalsLittle" *ngIf="!this.diets" >{{ 'no_data' | translate}}</div>
+          <div class="txtTitleGoalsLittle" *ngIf="!this.diets|| this.diets == 0 " >{{ 'no_data' | translate}}</div>
             <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDietChange()'>
               <ion-slide *ngFor="let slide of this.diets">
                 <ion-grid>
@@ -178,7 +178,7 @@
           </ion-item>
 
         <ion-card-content>
-          <div class="txtTitleGoalsLittle" *ngIf="!this.games" >{{ 'no_data' | translate}}</div>
+          <div class="txtTitleGoalsLittle" *ngIf="!this.games|| this.games == 0 " >{{ 'no_data' | translate}}</div>
             <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideGamesChange()'>
               <ion-slide *ngFor="let slide of this.games">
                 <ion-grid>
