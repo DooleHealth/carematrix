@@ -23,7 +23,8 @@ export class FamilyUnitPage implements OnInit {
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
-    this.getFamilyUnitData()
+    this.getFamilyUnitData();
+    console.log(this.user)
   }
 
   getFamilyUnitData(){
