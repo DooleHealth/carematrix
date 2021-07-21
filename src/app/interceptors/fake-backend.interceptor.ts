@@ -70,6 +70,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIformsTracking();
                 case url.endsWith('user/element_category') && method === 'GET':
                     return getAPIcategoryElements();
+                /***
+                 * Reminders
+                 */
+                case url.endsWith('user/reminder') && method === 'GET':
+                    return getAPIreminders();
+                case url.endsWith('user/reminder/') && method === 'POST':
+                    return postAPIaddReminder();
+                case url.includes('user/reminder/id') && method === 'GET':
+                    return getAPIreminderID();
+
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -964,6 +974,148 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             ])
         }
 
+        function postAPIaddReminder(){
+            return ok({
+                success: true,
+                idUser: 15183,
+                status: 200,
+                message: "OK.",
+                data: null
+            })
+        }
+
+        function getAPIreminderID(){
+            return ok({
+                reminder: {
+                    id: 659,
+                    user_id: 15591,
+                    origin: 0,
+                    title: "Tomar la tensión arterial",
+                    description: "Repetir la toma cuando:- Máxima por encima de 140 mmHg",
+                    start_date: "2021-06-07 18:00:00",
+                    end_date: "2021-09-07 18:00:00",
+                    all_day: true,
+                    reminderType: {
+                        id: 43,
+                        name: "Recordatorio Médico",
+                        color: null
+                    },
+                    frequency: true ,
+                    day1:true,
+                    day2:true,
+                    day3:true,
+                    day4:true,
+                    day5:true,
+                    day6:false,
+                    day7:false,
+                    alert: "5 minutos antes",
+                    finish_repeat: "Nunca",
+                    show_as: null,
+                    agenda:{
+                        id: 567,
+                        title: "Cita relacionada Colonoscopia",
+                        agenda_type: {
+                            id: 62,
+                            name: "Añadida por el usuario",
+                            model_type: "App\\Visit",
+                            description: "",
+                            color: null
+                        }
+                    },
+                    goal:null
+                }
+            })
+        }
+
+
+        function getAPIreminders(){
+            return ok({
+                reminders: [
+                    {
+                        id: 659,
+                        user_id: 15591,
+                        origin: 1,
+                        title: "Tomar la tensión arterial",
+                        description: "Repetir la toma cuando:- Máxima por encima de 140 mmHg",
+                        start_date: "2021-07-27 18:00:00",
+                        end_date: "2021-09-07 18:00:00",
+                        all_day: true,
+                        reminderType: {
+                            id: 43,
+                            name: "Recordatorio Médico",
+                            color: null
+                        },
+                        frequency: true ,
+                        day1:true,
+                        day2:true,
+                        day3:true,
+                        day4:true,
+                        day5:true,
+                        day6:false,
+                        day7:false,
+                        alert: "5 minutos antes",
+                        finish_repeat: "Nunca",
+                        show_as: null,
+                        agenda:{
+                            id: 567,
+                            title: "Cita relacionada Colonoscopia",
+                            agenda_type: {
+                                id: 62,
+                                name: "Añadida por el usuario",
+                                model_type: "App\\Visit",
+                                description: "",
+                                color: null
+                            }
+                        },
+                        goal:null
+                    },
+                    {
+                        id: 660,
+                        user_id: 15591,
+                        origin: 1,
+                        title: "Realizar 4000 pasos diarios",
+                        description:"Caminar mínimo 30 minutos diarios",
+                        start_date: "2021-07-27 18:00:00",
+                        end_date: "2021-09-07 18:00:00",
+                        all_day: true,
+                        reminderType: {
+                            id: 43,
+                            name: "Recordatorio Actividad",
+                            color: null
+                        },
+                        frequency: true ,
+                        day1:true,
+                        day2:true,
+                        day3:true,
+                        day4:true,
+                        day5:true,
+                        day6:false,
+                        day7:false,
+                        alert: "5 minutos antes",
+                        finish_repeat: "Nunca",
+                        show_as: null,
+                        agenda:{
+                            id: 567,
+                            title: "Cita relacionada Colonoscopia",
+                            agenda_type: {
+                                id: 62,
+                                name: "Añadida por el usuario",
+                                model_type: "App\\Visit",
+                                description: "",
+                                color: null
+                            }
+                        },
+                        goal:{
+                            id: 567,
+                            title: "Paso 4000 diarios"
+                        }
+                    }
+                ]
+            })
+        }
+
+        
+    
     }
 }
 

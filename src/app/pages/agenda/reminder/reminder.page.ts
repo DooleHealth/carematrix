@@ -32,12 +32,12 @@ export class ReminderPage implements OnInit {
   async getReminderData(){
     const loading = await this.loadingController.create();
     await loading.present();
-    this.dooleService.getAPIagendaID(this.id).subscribe(
+    this.dooleService.getAPIreminderID(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderPage] getReminderData()', await res);
-        if (res.agenda) {
-          this.reminder = res.agenda
-          this.duration = this.trasnforHourToMinutes(res.agenda.end_time) - this.trasnforHourToMinutes(res.agenda.start_time)
+        if (res.reminder) {
+          this.reminder = res.reminder
+          //this.duration = this.trasnforHourToMinutes(res.agenda.end_time) - this.trasnforHourToMinutes(res.agenda.start_time)
         }
 
         loading.dismiss();

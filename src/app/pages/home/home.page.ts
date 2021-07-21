@@ -307,6 +307,7 @@ export class HomePage implements OnInit {
   }
 
   filterDrugsByStatus(){
+    if(this.drugs !== undefined && this.drugs?.length > 0)
     this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
   }
 

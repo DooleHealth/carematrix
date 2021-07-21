@@ -318,9 +318,10 @@
         "error_alert_message_get_token":"Error al obtener el token de videollamada"
       },
       "reminder":{
-        "personal_reminder": "Agenda Personal",
-        "medical_reminder": "Agenda Médica",
-        "header_add_reminder":"Añadir Agenda",
+        "header": "Recodatorio",
+        "personal_reminder": "Recordatorio Personal",
+        "medical_reminder": "Recordatorio Médica",
+        "header_add_reminder":"Añadir Recordatorio",
         "field_doctor": "Médico",
         "field_notes": "Notas",
         "field_type": "Tipo",
@@ -329,6 +330,7 @@
         "field_all_day": "Todo el día",
         "field_appointment": "Cita relacionada",
         "field_start": "Empieza",
+        "field_end": "Termina",
         "field_duration": "Duración",
         "field_repeat": "Repetir",
         "field_finish_repetition": "Terminar repetición",
@@ -343,9 +345,17 @@
         "message_updated_reminder":"Se ha actualizado el recordatorio con éxito",
         "message_deleted_reminder":"Se ha eliminado el recordatorio con éxito",
         "confirmation_delete_reminder":"¿Estás seguro de eliminar el recordatorio personal?",
-        "message_added_appointment":"Se ha añadido una nueva cita",
         "error_message_added_reminder":"Ha ocurrido un error al guardar los datos",
-        "error_message_delete_reminder":"Ha ocurrido un error al eliminar el recordatorio"
+        "error_message_delete_reminder":"Ha ocurrido un error al eliminar el recordatorio",
+        "day":{
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miercoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado",
+          "sunday": "Domingo"
+        }
       },
       "appointment":{
         "header_appointment": "Detalle cita",
@@ -366,7 +376,12 @@
         "message_deleted_appointment":"Se ha eliminado la cita con éxito",
         "confirmation_delete_appointment":"¿Estás seguro de eliminar la cita?",
         "no_files":"No existen archivos",
-        "error_message_delete_appointment":"Ha ocurrido un error al eliminar la cita"
+        "error_message_delete_appointment":"Ha ocurrido un error al eliminar la cita",
+        "message_added_appointment":"Se ha añadido una nueva cita",
+        "message_updated_appointment":"Se ha actualizado la cita con éxito",
+        "error_message_added_appointment":"Ha ocurrido un error al guardar los datos",
+        "edit_appointment": "Editar cita",
+        "add_appointment": "Añadir cita"
       },
       "doctor":{
         "header_doctor": "Detall Médico",
@@ -472,6 +487,7 @@
         "detail": "Detalle",
         "fill": "Rellenar",
         "cancel": "Cancelar",
+        "accept": "Aceptar",
         "edit": "Editar",
         "ok": "OK",
         "add": "Añadir",

@@ -32,7 +32,7 @@
       </ion-button>
     </ion-col>  
     <ion-col size="1.4">
-      <ion-button fill="clear" routerLink="/reminder-add">
+      <ion-button fill="clear" routerLink="../agenda-edit">
         <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
       </ion-button>
     </ion-col>
@@ -42,7 +42,7 @@
       <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(events.date) | uppercase}}</ion-text></ion-row>
       <ion-list *ngFor="let e of events.events; let i = index"lines="full" class="blanco" >
 
-        <ion-item  routerLink="detail" [state]="{event: e, id: e.id}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" > 
+        <ion-item [routerLink]="(e?.is_reminder)? '../reminder':'detail'" [state]="{event: e, id: e.id}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" > 
           <div [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"  class="verticalLine"></div>
           <ion-grid>  
             <ion-row>

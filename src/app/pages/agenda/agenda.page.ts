@@ -12,6 +12,8 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class AgendaPage implements OnInit {
   eventSource = [];
+  appointment = [];
+  reminders = [];
   event: any
   viewTitle: string;
   months = this.translate.instant('agenda.month')
@@ -55,10 +57,10 @@ export class AgendaPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAgenda()
+
   }
 
-  ionViewDidEnter(){
+ async ionViewDidEnter(){
     console.log('[AgendaPage] ionViewDidEnter()');
     this.getAgenda()
   }
@@ -69,8 +71,10 @@ export class AgendaPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaPage] getAgenda()', await res);
         this.isLoading = false;
-        if(res.agenda)
+        if(res.agenda){    
           this.addScheduleToCalendar(res.agenda)
+          this.getReminders()
+        }
        },(err) => { 
           console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
@@ -78,8 +82,22 @@ export class AgendaPage implements OnInit {
       });
   }
 
+  getReminders(){
+    this.dooleService.getAPIreminders().subscribe(
+      async (res: any) =>{
+        console.log('[AgendaPage] getReminders()', await res);
+        if(res.reminders)
+          this.addReminderToCalendar(res.reminders)
+          this.eventSource = [].concat(this.appointment, this.reminders)
+       },(err) => { 
+          console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
+          throw err; 
+      });
+  }
+
   onCurrentDateChanged(event:Date) {
-   this.getAgenda();
+    this.getAgenda();
   }
 
   transformDate(date) {
@@ -87,37 +105,77 @@ export class AgendaPage implements OnInit {
     let d = new Date(auxDate);
     d.setHours(date.end_time.substring(0,2));
     d.setMinutes(date.end_time.substring(3,5));
-    
     return d;
+  }
+
+  formatDate(d){
+    var auxdate = d.split(' ')
+    let date = new Date(auxdate[0]);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    /* console.log("date: ", date);
+    console.log("time", time); */
+    return date;
   }
 
   addScheduleToCalendar(appointments: any[]){
     var events = [];
     appointments.forEach((e) =>{
       let isAllDay = false
-      if(e.start_date_iso8601 !== undefined && e.end_date !== undefined ){
-        var startTime = new Date(e.start_date_iso8601)
+      if(e.start_date !== undefined && e.end_date !== undefined ){
+        var startTime =   new Date(e.start_date_iso8601)
         var endTime = this.transformDate(e)
+      }else{
+        isAllDay = true
+      }
+        events.push({
+          id: e.id, 
+          title:  e.title,
+          origin: e.origin,
+          startTime: startTime,
+          endTime: endTime,
+          allDay: isAllDay,
+          type: e.agenda_type?.name,
+          color: e.agenda_type?.color,
+          site: e.site,
+          staff: e.staff,
+          agenda_type: e.agenda_type
+        });
+      })
+      this.appointment = []
+      this.appointment = events ;
+  }
+
+  addReminderToCalendar(reminders: any[]){
+    var events = [];
+    reminders.forEach((e) =>{
+      let isAllDay = false
+      if(e.start_date !== undefined && e.end_date !== undefined ){
+        var startTime =   this.formatDate(e.start_date)
+        var endTime =  this.formatDate(e.end_date)
 
       }else{
         isAllDay = true
       }
         events.push({
           id: e.id, 
-          title: e.title,
+          title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
           origin: e.origin,
           startTime: startTime,
-          endTime: endTime,
+          endTime: startTime,
           allDay: isAllDay,
-          type: e.agenda_type.name,
-          color: e.agenda_type.color,
+          type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
+          color: e.agenda_type?.color,
           site: e.site,
           staff: e.staff,
-          agenda_type: e.agenda_type
+          agenda_type: e.agenda_type,
+          is_reminder: true
         });
       })
-     
-      this.eventSource = events;
+      this.reminders = [];
+      this.reminders = events;
+      //console.log('[AgendaPage] addReminderToCalendar() all:',  this.eventSource );
   }
 
   // Change current month/week/day
