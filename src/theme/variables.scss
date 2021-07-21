@@ -21,7 +21,7 @@ $chat: (
 );
 
 $chat-bubble: (
-  background-left: #F6F6F6,
+  background-left: #F5F5F5,
   font-left:black,
   font-right:black,
   background-right: #bae4cc,
@@ -32,9 +32,8 @@ $chat-bubble: (
   
   /** font-family **/
   --ion-font-family: 'Roboto-Regular'!important;
-  --ion-text-color: #2C3E50;
   /** background **/
-  --ion-background-color:#F6F6F6;
+  --ion-background-color:#E5E5E5;
   --line-height: 21px !important;
   /** primary **/
   --ion-color-primary: #3498DB;

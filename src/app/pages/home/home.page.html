@@ -1,5 +1,15 @@
 <ion-content>
-  <ion-grid class="iosHeader">
+  <ion-grid *ngIf="platform.is('ios')" style="padding-top: 50px;">
+    <ion-row>
+      <ion-col size="8" class="alingLeftTop">
+        <ion-text class="txtTitleBig">Hola, {{this.authService?.user?.first_name}}</ion-text>
+      </ion-col>
+      <ion-col size="4">
+    <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile" [state]="{user:this.authService?.user}"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="platform.is('android')" style="padding-top: 5px;">
     <ion-row>
       <ion-col size="8" class="alingLeftTop">
         <ion-text class="txtTitleBig">Hola, {{this.authService?.user?.first_name}}</ion-text>
@@ -11,11 +21,11 @@
   </ion-grid>
 
   <ion-grid>
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row class="paddingTop">
       <ion-text class="txtTitle">{{ 'home.goals_title' | translate | titlecase}}</ion-text>
     </ion-row>
     <!-- Goals  --> 
-    <ion-row>
+    <ion-row >
         <ion-card class="vertical-card" routerLink="/profile/goals">  
             <ion-item lines="none" class="noMargin">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
@@ -41,22 +51,23 @@
     </ion-row>
 
           <!-- Reminders --> 
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row class="paddingTop">
+
+
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
-
      <!-- Agendas --> 
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
-            <div class="txtTitleGoalsLittle" *ngIf="!this.appointment" >{{ 'no_data' | translate}}</div>
-            <ion-item class="cardHeader">
+            <div class="txtTitleGoalsLittle" *ngIf="!this.appointment || this.appointment == 0 " >{{ 'no_data' | translate}}</div>
+            <ion-item class="white">
                 <ion-card-subtitle>{{slide.title | uppercase }}</ion-card-subtitle>
-                <!-- <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon>  -->
+                <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon> 
             </ion-item>
     
-            <ion-card-content class="strechCardContent" routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
+            <ion-card-content routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
                 <ion-row>
                   <ion-col size="3" >
                     <ion-img src="assets/icons/agenda2.svg"></ion-img>
@@ -75,7 +86,7 @@
     </ion-row>
 
     <!-- Advices --> 
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row class="paddingTop">
 
     <!-- News and Advices --> 
 
@@ -96,7 +107,7 @@
             <img class="sliderImage"  [src]="slide.image?.temporaryUrl">  <br><br>
            
             <ion-card-title class="txtTitleHome">{{slide.name}}</ion-card-title>
-            <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}</ion-card-subtitle>
+            <ion-card-subtitle class="txtSubTitleHome">{{slide.description}}</ion-card-subtitle>
             <!-- <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button> -->
           </ion-card>
         </ion-slide> 
@@ -104,7 +115,7 @@
     </ion-row>
 
 
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row class="paddingTop">
 
 
       <ion-text class="txtTitle">{{ 'home.today_title' | translate | titlecase}}</ion-text>
@@ -134,7 +145,7 @@
       </ion-card>
     </ion-row>
     <!-- Drugs -->
-    <ion-row class="narRow">
+    <ion-row>
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin" routerLink="/journal" [state]="{segment: 'medication'}">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
@@ -169,7 +180,7 @@
       </ion-card>
     </ion-row>
     <!-- Games -->
-    <ion-row class="narRow">
+    <ion-row>
       <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'games'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
@@ -195,7 +206,7 @@
       </ion-card>
     </ion-row>
     <!-- Physical Activity -->
-    <ion-row class="narRow">
+    <ion-row>
       <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'health'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>

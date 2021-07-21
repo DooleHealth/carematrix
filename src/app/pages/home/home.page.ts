@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
    sliderConfigHorizontal = {
     initialSlide: 0,
     slidesPerView: 1.1,
-    spaceBetween: 0,
+    spaceBetween: 4,
     centeredSlides: false,
    };
    @ViewChild('sliderGoals') sliderGoals: IonSlides;
