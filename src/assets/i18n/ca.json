@@ -353,6 +353,12 @@
           "day5": "Divendres",
           "day6": "Dissabte",
           "day7": "Diumenge"
+        },
+        "frequency":{
+          "daily":"Diari",
+          "day":"Un dia",
+          "week": "Dll a Dv",
+          "custom": "Personalitzat"
         }
       },
       "appointment":{

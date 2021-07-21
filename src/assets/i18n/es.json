@@ -357,6 +357,12 @@
           "day5": "Viernes",
           "day6": "Sábado",
           "day7": "Domingo"
+        },
+        "frequency":{
+          "daily":"Diario",
+          "day":"Un día",
+          "week": "Lun a Vie",
+          "custom": "Personalizado"
         }
       },
       "appointment":{

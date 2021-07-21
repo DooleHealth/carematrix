@@ -54,10 +54,10 @@
       <ion-item lines="none">
         <ion-label lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
         <ion-select interface="action-sheet" (ionFocus)="isChangedSelect($event)" (ionChange)="selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
-          <ion-select-option value="0">{{'Una vez' | translate}}</ion-select-option>
-          <ion-select-option value="1">{{'Diario' | translate}}</ion-select-option>
-          <ion-select-option value="2">{{'Lun a Vie' | translate}}</ion-select-option>
-          <ion-select-option value="3">{{'Personalizado' | translate}}</ion-select-option>
+          <ion-select-option value="0">{{'reminder.frequency.day' | translate}}</ion-select-option>
+          <ion-select-option value="1">{{'reminder.frequency.daily' | translate}}</ion-select-option>
+          <ion-select-option value="2">{{'reminder.frequency.week'| translate}}</ion-select-option>
+          <ion-select-option value="3">{{'reminder.frequency.custom' | translate}}</ion-select-option>
         </ion-select>
         <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
