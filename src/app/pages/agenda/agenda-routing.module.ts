@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: 'detail',
     loadChildren: () => import('./agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
+  },
+  {
+    path: 'agenda-edit',
+    loadChildren: () => import('./agenda-edit/agenda-edit.module').then( m => m.AgendaEditPageModule)
   }
 
 ];

@@ -1009,8 +1009,51 @@ export class DooleService {
       })
     );
   }
+/** Reminders */
+  getAPIreminders(): Observable<any> {
+    let path = 'user/reminder';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
+  getAPIreminderID(id): Observable<any> {
+    let path = `user/reminder/id`; //${id}
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIreminderID(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
+  postAPIaddReminder(params: Object): Observable<any> {
+    let path = 'user/reminder/'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIaddReminder(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  deleteAPIReminder(params: HealthCard): Observable<any> {
+    let path = `user/healthcard/${params.id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+
+      })
+    );
+  }
 
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);

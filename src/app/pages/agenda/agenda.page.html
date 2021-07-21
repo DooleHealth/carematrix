@@ -15,7 +15,7 @@
     <ion-button slot="end" fill="clear" routerLink="list-appointment" [state]="{calendar:eventSource}">
       <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill="clear" routerLink="reminder-add">
+    <ion-button slot="end" fill="clear" routerLink="agenda-edit">
       <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -85,7 +85,7 @@
         <ion-item class="rowPadding2">
           
           <ion-list >
-            <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" routerLink="reminder/detail" [state]="{ event: event}" >
+            <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco" *ngFor="let event of selectedDate?.events; let i = index" [routerLink]="(event?.is_reminder)? 'reminder':'detail'" [state]="{id:event.id, event: event}" >
 
               <div [ngStyle]="{'background-color': (event?.color)? event?.color: '#F1C40F'  }" class="verticalLine"></div>
               <ion-grid>

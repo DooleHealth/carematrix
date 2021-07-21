@@ -32,7 +32,7 @@ export class LanguageService {
     return lang == 'es'?'cs':lang;
   }
 
-  setLenguageLocalstorage(language){
+  public setLenguageLocalstorage(language){
     this.changeLanguage(language);
     localStorage.setItem('language', language);
   }
