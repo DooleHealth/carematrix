@@ -21,6 +21,7 @@ export class ReminderAddPage implements OnInit {
   id:any
   event:any
   agenda_id
+  frequency
   isNewEvent = true
   constructor(
     private fb: FormBuilder,
@@ -95,6 +96,8 @@ export class ReminderAddPage implements OnInit {
 
     let end_date = this.form.get('end_date').value 
     this.form.get('end_date').setValue(this.transformDate(end_date));
+
+    this.form.get('frequency').setValue(this.frequency);
     console.log(`[AgendaAddPage] addReminder()`,this.form.value );
 
     this.dooleService.postAPIaddReminder(this.form.value).subscribe(
@@ -207,29 +210,43 @@ export class ReminderAddPage implements OnInit {
     await alert.present();
   }
 
-  selectedFrequency(){
+  selectedFrequency(event){
     let fq = Number(this.form.get('frequency').value)
     console.log('[AddHealthCardPage] selectedFrequency()', fq);
     switch (fq) {
       case 0:
         let index = new Date().getDay()
         this.settingDay([index -1])
-        this.form.get('frequency').setValue('day');
+        this.frequency = 'day'
+        //this.form.get('frequency').setValue('day');
         break;
       case 1:
         let dialy = [0,1,2,3,4,5,6]
         this.settingDay(dialy)
-        this.form.get('frequency').setValue('daily');
+        this.frequency = 'daily'
+        //this.form.get('frequency').setValue('daily');
         break;
       case 2:
         let five = [0,1,2,3,4]
         this.settingDay(five)
-        this.form.get('frequency').setValue('mom_fri');
+        this.frequency = 'mom_fri'
+        //this.form.get('frequency').setValue('mom_fri');
+        break;
+      case 3:
+        this.showDays()
+        //this.form.get('frequency').setValue('custom');
         break;
 
       default:
         break;
     }
+  }
+
+  isChangedSelect(event){
+    let fq = Number(this.form.get('frequency').value)
+    console.log('[AddHealthCardPage] isChangedSelect()', fq, event);
+/*     if(fq !==3 )
+    this.form.get('frequency').setValue(fq); */
   }
 
   settingDay(index){
@@ -242,8 +259,50 @@ export class ReminderAddPage implements OnInit {
       let day = this.days[i]
       day['day'+(i +1)] = true
     });
-    console.log('[AddHealthCardPage] selectedFrequency() day', this.days);
+    console.log('[AddHealthCardPage] settingDay() day', this.days);
   
+  }
+
+
+  async showDays() {
+    let alert = this.alertController.create({
+      header: this.translate.instant("reminder.wwek_day"),
+      inputs: this.addDaysToAlert(),
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'ok',
+          handler: data => {
+            console.log('Ok clicked', data);
+            this.settingDay(data)
+            this.frequency = 'custom'
+          }
+        }
+      ]
+    });
+    (await alert).present();
+  }
+
+  addDaysToAlert(){
+    let days_week = []
+    this.days.forEach((day, i)=>{
+      days_week.push(
+        {
+          type: 'checkbox',
+          label: this.translate.instant('reminder.day.day'+(i+1)),
+          value: i,
+          checked: day['day'+(i +1)]
+
+        }
+      )
+    })
+    return days_week
   }
 }
 

@@ -264,7 +264,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  slideDrugChange(){	   
+  slideDrugChange(){	
+    //if(this.drugs !== undefined && this.drugs?.length > 0)
 		this.sliderDrug.getActiveIndex().then(index => {      
       console.log('[HomePage] slideDrugChange()', index);
       let slider = this.drugs[index]
@@ -312,12 +313,16 @@ export class HomePage implements OnInit {
   }
 
   searchIndexDrug(){
-    let drug = this.drugs.find(element => 
-      ((this.hourToMinutes(element.hour_intake)) >= (new Date().getHours()*60 + new Date().getMinutes()))
-      )
-    let index = this.drugs.indexOf(drug);
-      console.log('[HomePage] searchIndexDrug()', drug, index);
-      this.currentIndexDrug = (index > -1)? index: 0
+    if(this.drugs !== undefined && this.drugs?.length > 0){
+      let drug = this.drugs?.find(element => 
+        ((this.hourToMinutes(element.hour_intake)) >= (new Date().getHours()*60 + new Date().getMinutes()))
+        )
+      let index = this.drugs.indexOf(drug);
+        //console.log('[HomePage] searchIndexDrug()', drug, index);
+        this.currentIndexDrug = (index > -1)? index: 0
+    }else{
+      this.currentIndexDrug = 0
+    }
   }
 
   hourToMinutes(hour){
