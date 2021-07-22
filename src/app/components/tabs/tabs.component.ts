@@ -35,7 +35,7 @@ export class TabsComponent implements OnInit {
   }
   ngOnInit() {
     this.translateTab();
-    this.getFamilyUnitData(); 
+    // this.getFamilyUnitData(); 
   }
 
   translateTab(){
@@ -68,57 +68,57 @@ export class TabsComponent implements OnInit {
 
 // borrar después de esta linea para abajo
 
-  getFamilyUnitData(){
-    this.isLoading = true
-    this.dooleService.getAPIFamilyUnit().subscribe(
-      async (res: any) =>{
-        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
-        this.listFamilyUnit = res
-        this.isLoading = false
-       },(err) => { 
-          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
-          this.isLoading = false
-          throw err; 
-      });
-  }
+  // getFamilyUnitData(){
+  //   this.isLoading = true
+  //   this.dooleService.getAPIFamilyUnit().subscribe(
+  //     async (res: any) =>{
+  //       console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+  //       this.listFamilyUnit = res
+  //       this.isLoading = false
+  //      },(err) => { 
+  //         console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+  //         this.isLoading = false
+  //         throw err; 
+  //     });
+  // }
 
-  changeAccount(family){
-    console.log('[FamilyUnitPage] changeAccount()', family.name);
-    this.presentAlertConfirm(family)
-  }
+  // changeAccount(family){
+  //   console.log('[FamilyUnitPage] changeAccount()', family.name);
+  //   this.presentAlertConfirm(family)
+  // }
 
-  async presentAlertConfirm(family) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
-      header: family.name,
-      message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
-      buttons: [
-        {
-          text: this.translate.instant("alert.button_cancel"),
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: this.translate.instant("alert.button_change"),
-          handler: () => {
-            console.log('Confirm Okay');
-            console.log('[FamilyUnitPage] presentAlertConfirm() Cuenta de:', family.name);
-            this.changeUser(family)
-          }
-        }
-      ]
-    });
+  // async presentAlertConfirm(family) {
+  //   const alert = await this.alertController.create({
+  //     cssClass: 'my-alert-class',
+  //     header: family.name,
+  //     message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
+  //     buttons: [
+  //       {
+  //         text: this.translate.instant("alert.button_cancel"),
+  //         role: 'cancel',
+  //         cssClass: 'secondary',
+  //         handler: (blah) => {
+  //           console.log('Confirm Cancel: blah');
+  //         }
+  //       }, {
+  //         text: this.translate.instant("alert.button_change"),
+  //         handler: () => {
+  //           console.log('Confirm Okay');
+  //           console.log('[FamilyUnitPage] presentAlertConfirm() Cuenta de:', family.name);
+  //           this.changeUser(family)
+  //         }
+  //       }
+  //     ]
+  //   });
 
-    await alert.present();
-  }
+  //   await alert.present();
+  // }
 
-  changeUser(user?){
-    console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
-    this.authService.setUserFamilyId(user? user.id: null);
-    this.router.navigateByUrl('home');
-  }
+  // changeUser(user?){
+  //   console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
+  //   this.authService.setUserFamilyId(user? user.id: null);
+  //   this.router.navigateByUrl('home');
+  // }
 
 
 
