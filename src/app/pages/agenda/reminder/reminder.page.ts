@@ -64,6 +64,7 @@ export class ReminderPage implements OnInit {
   }
 
   formatSelectedDate(date){
+    //date = this.formatDate(date)
     let language = this.languageService.getCurrent()
     const datePipe: DatePipe = new DatePipe(language);
     return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
@@ -149,6 +150,15 @@ export class ReminderPage implements OnInit {
         let hour = time.split(':');
         return (Number(hour[0]))*60 + (Number(hour[1]))
   } */
+
+  formatDate(d){
+    var auxdate = d.split(' ')
+    let date = new Date(auxdate[0]);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date;
+  }
 
   
 

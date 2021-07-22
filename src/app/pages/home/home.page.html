@@ -25,7 +25,7 @@
             </ion-item>
             
           <ion-card-content>
-            <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals == 0 " >{{ 'no_data' | translate}}</div>
+            <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length == 0 " >{{ 'no_data' | translate}}</div>
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid>
@@ -110,12 +110,12 @@
     </ion-row>
     <!-- Diets -->
     <ion-row >
-      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'diets'}">       
+      <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start">{{ 'home.diet' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
-            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+            <ion-icon routerLink="/journal" [state]="{segment: 'diets'}"  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -123,7 +123,7 @@
             <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDietChange()'>
               <ion-slide *ngFor="let slide of this.diets">
                 <ion-grid>
-                  <ion-row>
+                  <ion-row routerLink="/journal/diets-detail" [state]="{id: slide.id}">
                 <p style="text-align: left;">{{slide.name}}</p>    
               </ion-row>
                 </ion-grid>           
@@ -144,7 +144,7 @@
 
         <ion-card-content>
          
-          <div class="txtTitleGoalsLittle" *ngIf="!this.drugs" >{{ 'no_data' | translate}}</div>
+          <div class="txtTitleGoalsLittle" *ngIf="!this.drugs || this.drugs.length == 0" >{{ 'no_data' | translate}}</div>
             <ion-slides #sliderDrug pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDrugChange()'>
               <ion-slide *ngFor="let slide of this.drugs" >
                 <ion-grid>
@@ -173,16 +173,17 @@
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
+            <ion-text slot="end" *ngIf="infoGames">{{infoGames?.hour}}</ion-text>
             <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
-          <div class="txtTitleGoalsLittle" *ngIf="!this.games|| this.games == 0 " >{{ 'no_data' | translate}}</div>
+          <div class="txtTitleGoalsLittle" *ngIf="!this.games|| this.games.length == 0 " >{{ 'no_data' | translate}}</div>
             <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideGamesChange()'>
               <ion-slide *ngFor="let slide of this.games">
                 <ion-grid>
                   <ion-row>
-                    <p style="text-align: left;">{{slide.name}}</p>
+                    <p style="text-align: left;">{{slide.game.title}}</p>
                   </ion-row>
                   <ion-row>
                     <ion-button size="small" fill=clear (click)="actionButtonGames(slide)">{{ 'home.go_play_button' | translate}}</ion-button>  

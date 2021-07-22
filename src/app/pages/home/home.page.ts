@@ -21,11 +21,12 @@ export interface UserInformation {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  WAIT_TIME = 10 //10 minutes 
   userDoole : User
   goals: Goal[] =[]
   diets: Diet[] =[]
   drugs: Drug[] =[]
-  games: Game[] =[]
+  games =[]
   activity: PhysicalActivity[] =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
@@ -33,6 +34,7 @@ export class HomePage implements OnInit {
   date
   loading:boolean = true;
   currentIndexDrug = 0
+  currentIndexGame = 0
    sliderConfig = {
     slidesPerView: 1,
     direction: 'vertical',
@@ -53,6 +55,7 @@ export class HomePage implements OnInit {
 
    infoDiet: UserInformation
    infoDrugs: UserInformation
+   infoGames: UserInformation
   constructor(
     public router:Router,
     public platform: Platform,
@@ -96,8 +99,13 @@ export class HomePage implements OnInit {
     }
   }
   async getUserInformation(){
-    this.dooleService.getAPIgames().subscribe((res)=>{
-      this.games = res.games;
+    this.dooleService.getAPIgamesByDate(this.date ,this.date ).subscribe((res)=>{
+      if(res.gamePlays){
+        this.games = res.gamePlays//this.sortDate(res.gamePlays)
+        console.log('Async operation has ended games' ,this.games);
+        this.slideGamesChange()
+        this.sliderGames.slideTo(this.currentIndexDrug)
+      }
     });
 
     this.dooleService.getAPIgoals().subscribe((res)=>{
@@ -253,7 +261,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  slideDietChange(){	   
+  slideDietChange(){	  
+    if(this.diets !== undefined && this.diets?.length > 0) 
 		this.sliderDiet.getActiveIndex().then(index => {      
       console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
@@ -265,7 +274,7 @@ export class HomePage implements OnInit {
   }
 
   slideDrugChange(){	
-    //if(this.drugs !== undefined && this.drugs?.length > 0)
+    if(this.drugs !== undefined && this.drugs?.length > 0)
 		this.sliderDrug.getActiveIndex().then(index => {      
       console.log('[HomePage] slideDrugChange()', index);
       let slider = this.drugs[index]
@@ -279,13 +288,18 @@ export class HomePage implements OnInit {
   slideGamesChange(){
     this.sliderGames.getActiveIndex().then(index => {      
       console.log('[HomePage] slideGamesChange()', index);
-      let slider = this.drugs[index]
+      let slider = this.games[index]
+      let hour = slider?.scheduled_date.split(' ')[1]
+      this.infoGames = {
+        title: slider?.name,
+        hour: hour.split(':')[0] + ':' + hour.split(':')[1]
+      }
     });
   }
   slideActivityChange(){
     this.sliderPhysical.getActiveIndex().then(index => {      
       console.log('[HomePage] slideActivityChange()', index);
-      let slider = this.drugs[index]
+      let slider = this.activity[index]
     });
   }
 
@@ -298,7 +312,6 @@ export class HomePage implements OnInit {
     });
     this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
       console.log('[HomePage] changeTake()',  json);
-      //this.getUserInformation()
       this.getDrugIntake()
     },(err) => { 
       console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
@@ -315,13 +328,24 @@ export class HomePage implements OnInit {
   searchIndexDrug(){
     if(this.drugs !== undefined && this.drugs?.length > 0){
       let drug = this.drugs?.find(element => 
-        ((this.hourToMinutes(element.hour_intake)) >= (new Date().getHours()*60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element.hour_intake) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
         )
       let index = this.drugs.indexOf(drug);
         //console.log('[HomePage] searchIndexDrug()', drug, index);
         this.currentIndexDrug = (index > -1)? index: 0
+    }
+  }
+
+  searchIndexDGame(){
+    if(this.games !== undefined && this.games?.length > 0){
+      let game = this.games?.find(element => 
+        ((this.hourToMinutes(element.scheduled_date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
+        )
+      let index = this.games.indexOf(game);
+        //console.log('[HomePage] searchIndexDrug()', drug, index);
+        this.currentIndexDrug = (index > -1)? index: 0
     }else{
-      this.currentIndexDrug = 0
+      this.currentIndexGame = 0
     }
   }
 
@@ -337,6 +361,26 @@ export class HomePage implements OnInit {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+  }
+
+  formatDate(d){
+    var auxdate = d.split(' ')
+    let date = new Date(auxdate[0]);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date;
+  }
+
+  sortDate(games){
+    console.log('Async operation has ended' ,games);
+    return games.sort( function (a, b) {
+      if (this.hourToMinutes(a.scheduled_date.split(' ')[1])> this.hourToMinutes(b.scheduled_date.split(' ')[1])) 
+        return 1;
+      if (this.hourToMinutes(a.scheduled_date.split(' ')[1])< this.hourToMinutes(b.scheduled_date.split(' ')[1]))
+        return -1;
+      return 0;
+    })
   }
  
 }
