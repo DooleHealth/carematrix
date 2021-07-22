@@ -68,7 +68,6 @@ export class ReminderPage implements OnInit {
     let language = this.languageService.getCurrent()
     const datePipe: DatePipe = new DatePipe(language);
     return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
-    //return day[0].toUpperCase() + day.slice(1);
   }
 
   selectedFrequency(frequency){
@@ -152,6 +151,8 @@ export class ReminderPage implements OnInit {
   } */
 
   formatDate(d){
+    if(d === undefined || d === null)
+    return
     var auxdate = d.split(' ')
     let date = new Date(auxdate[0]);
     let time = auxdate[1];
