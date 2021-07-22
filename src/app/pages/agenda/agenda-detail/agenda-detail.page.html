@@ -14,7 +14,12 @@
 
 <ion-content fullscreen class="whiteBackground">
   <div class="whiteBackground">
-  
+    <!-- floating action buttom -->
+    <ion-fab  *ngIf="this.event?.online == 1 && this.tokboxSession"  vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="this.startDooleVideocall()">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <ion-list>
       <ion-row>
         <ion-text class="txtTitle2">{{this.event?.title}}</ion-text>
