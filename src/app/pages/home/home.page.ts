@@ -396,7 +396,20 @@ export class HomePage implements OnInit {
       }
       else
         browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
-    //}
+    }
+    
+    sortDate(games){
+      console.log('Async operation has ended' ,games);
+      return games.sort( function (a, b) {
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
+          return 1;
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
+          return -1;
+        return 0;
+      })
+  
+    }
+   
 
 /*     if(item.type=="form") {
       const options: InAppBrowserOptions = {
@@ -417,16 +430,5 @@ export class HomePage implements OnInit {
       );
     } */
 
-  sortDate(games){
-    console.log('Async operation has ended' ,games);
-    return games.sort( function (a, b) {
-      if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
-        return 1;
-      if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
-        return -1;
-      return 0;
-    })
-
-  }
  
 }

@@ -111,9 +111,9 @@ export class AuthenticationService {
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
-        if (res?.familyUnit.length > 0) {
-          this.setFamilyUnitLocalstorage(res.familyUnit);
-        }
+        // if (res?.familyUnit.length > 0) {
+        //   this.setFamilyUnitLocalstorage(res.familyUnit);
+        // }
 
         return res;
 
@@ -165,7 +165,9 @@ export class AuthenticationService {
   }
 
   public async setFamilyUnit(user) {
-    this.user = new User(user.id, '', user.first_name, user.name, user.thumbnail);
+    let s: string = user['name'];
+    let fullname = s.split(',');
+    this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
     this.user.familyUnit = user.id;
     Storage.set({
       key: user.id,
@@ -183,9 +185,11 @@ export class AuthenticationService {
 
   public async setUserFamilyId(id) {
 
-    await this.getUserLocalstorage().then(member => {
+    await this.getUserLocalstorage().then(user => {
       console.log(`[AuthenticationService] MEMEBER(${id})`, this.user);
-      this.user = new User(member['idUser'], '', member['name'], member['name'], member['image']);
+      let s: string = user['name'];
+      let fullname = s.split(',');
+      this.user = new User(user['idUser'], '', fullname[0].replace(',',''), fullname[1], user['image']);
       this.user.familyUnit = id;
       this.setUserLocalstorage(this.user)
     })
