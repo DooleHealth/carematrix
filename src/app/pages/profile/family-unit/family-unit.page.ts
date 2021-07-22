@@ -75,10 +75,9 @@ export class FamilyUnitPage implements OnInit {
 
   changeUser(user?){
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
-    this.authService.setUserFamilyId(user? user.id: null);
+    this.authService.setFamilyUnit(user);
     this.router.navigateByUrl('home');
   }
-
 
   returnUser(){
     console.log('[FamilyUnitPage] returnUser()');

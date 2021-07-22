@@ -100,6 +100,7 @@
       "profile":{
         "title_profile": "Mi Perfil",
         "button_go_init": "Inicio",
+        "button_go_back":"Volver a mi perfil",
         "information": {
           "title_information": "Información",
           "data": "Tus Datos",
