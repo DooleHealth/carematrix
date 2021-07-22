@@ -71,7 +71,7 @@ export class HomePage implements OnInit {
   }
 
   async ionViewDidEnter(){
-    console.log('[HomePage] ionViewDidEnter()');
+    console.log('[HomePage] ionViewDidEnter()', this.authService?.user);
     this.tabs.translateTab()
     await this.getUserInformation()
     setTimeout(() => {
@@ -274,27 +274,36 @@ export class HomePage implements OnInit {
   }
 
   slideDrugChange(){	
-    if(this.drugs !== undefined && this.drugs?.length > 0)
-		this.sliderDrug.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideDrugChange()', index);
-      let slider = this.drugs[index]
-      this.infoDrugs = {
-        title: slider?.name,
-        hour: slider?.hour_intake
-      }
-    });
+    if(this.drugs !== undefined && this.drugs?.length > 0){
+      this.sliderDrug.getActiveIndex().then(index => {      
+        console.log('[HomePage] slideDrugChange()', index);
+        let slider = this.drugs[index]
+        this.infoDrugs = {
+          title: slider?.name,
+          hour: slider?.hour_intake
+        }
+      });
+    }else{
+      this.infoDrugs = null;
+    }
+	
   }
 
   slideGamesChange(){
-    this.sliderGames.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideGamesChange()', index);
-      let slider = this.games[index]
-      let hour = slider?.scheduled_date.split(' ')[1]
-      this.infoGames = {
-        title: slider?.name,
-        hour: hour.split(':')[0] + ':' + hour.split(':')[1]
-      }
-    });
+    if(this.games !== undefined && this.games?.length > 0){
+      this.sliderGames.getActiveIndex().then(index => {      
+        console.log('[HomePage] slideGamesChange()', index);
+        let slider = this.games[index]
+        let hour = slider?.scheduled_date?.split(' ')[1]
+        this.infoGames = {
+          title: slider?.name,
+          hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
+        }
+      });
+    }else{
+      this.infoGames = null;
+    }
+   
   }
   slideActivityChange(){
     this.sliderPhysical.getActiveIndex().then(index => {      
@@ -375,9 +384,9 @@ export class HomePage implements OnInit {
   sortDate(games){
     console.log('Async operation has ended' ,games);
     return games.sort( function (a, b) {
-      if (this.hourToMinutes(a.scheduled_date.split(' ')[1])> this.hourToMinutes(b.scheduled_date.split(' ')[1])) 
+      if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
         return 1;
-      if (this.hourToMinutes(a.scheduled_date.split(' ')[1])< this.hourToMinutes(b.scheduled_date.split(' ')[1]))
+      if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
         return -1;
       return 0;
     })
