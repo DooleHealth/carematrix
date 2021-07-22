@@ -51,6 +51,16 @@
       <!-- <ion-button  expand="block" color="primary" >Guardar este medicamento</ion-button><br>
        <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> 
       <ion-button expand="block" color="danger" >Eliminar este medicamento</ion-button> -->
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals" lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
+        <ion-select class="txtTitleGoals" interface="action-sheet" (ionChange)="selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+          <ion-select-option class="txtTitleGoals" value="0">{{'reminder.frequency.day' | translate}}</ion-select-option>
+          <ion-select-option class="txtTitleGoals" value="1">{{'reminder.frequency.daily' | translate}}</ion-select-option>
+          <ion-select-option class="txtTitleGoals" value="2">{{'reminder.frequency.week'| translate}}</ion-select-option>
+          <ion-select-option class="txtTitleGoals" value="3">{{'reminder.frequency.custom' | translate}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+      </ion-item>
     </form>
     
  
