@@ -52,9 +52,10 @@
     </ion-list>
   </ion-card>
 
-  <div *ngIf="groupedElements.length > 0">
-    <ion-text class="txtTitle">{{ 'documents.subtitle_detail' | translate}}</ion-text>
+ 
+    <!-- <ion-text class="txtTitle">{{ 'documents.subtitle_detail' | translate}}</ion-text> -->
     <ion-card (click)="expandItem(item)" *ngFor="let item of items" class="cardProfile">
+      <div *ngIf="item.elements.elements.length > 0 ">
       <ion-item *ngIf="item.expanded" lines="none">
         <ion-label>{{item.elements.group}}</ion-label>
         <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
@@ -63,8 +64,8 @@
         <ion-label>{{item.elements.group}}</ion-label>
         <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-  <!-- expandible accordion -->
-     
+      
+     <!-- ACORDION -->
         <app-expandable expandHeight="100px" [expanded]="item.expanded">
           <ion-list *ngFor="let e of item.elements.elements">
             <ion-item>
@@ -74,8 +75,9 @@
             </ion-item>
           </ion-list>
         </app-expandable>
+      </div>
     </ion-card>
-  </div>
+
 
       <ion-text *ngIf="this.mediaFiles && this.mediaFiles.length > 0" class="txtTitle">{{ 'documents_add.attachments' | translate}}</ion-text>
       <ion-row class="files-row">

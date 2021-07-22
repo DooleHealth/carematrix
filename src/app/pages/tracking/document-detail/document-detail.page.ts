@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
@@ -20,7 +21,7 @@ export class DocumentDetailPage implements OnInit {
   groupedElements: any = [];
   elementValues: any = [];
   mediaFiles: any;
-
+  
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -64,6 +65,7 @@ export class DocumentDetailPage implements OnInit {
     this.dooleService.getAPIdiagnosticTestID(this.id).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);
+        console.log('se lee?', this.groupedElements);
         this.diagnosticTest = res.diagnosticTest
         this.diagnosticTestType = res.diagnosticTestType
         if (res.diagnosticTest.media) {
