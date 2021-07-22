@@ -10,6 +10,7 @@ import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from '
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
 export interface UserInformation {
   title?: string;
@@ -63,6 +64,8 @@ export class HomePage implements OnInit {
     public authService: AuthenticationService,
     private datePipe: DatePipe,
     private health: Health,
+    private iab: InAppBrowser,
+    private auth: AuthenticationService,
   ) { }
 
   async ngOnInit() { 
@@ -99,14 +102,6 @@ export class HomePage implements OnInit {
     }
   }
   async getUserInformation(){
-    this.dooleService.getAPIgamesByDate(this.date ,this.date ).subscribe((res)=>{
-      if(res.gamePlays){
-        this.games = res.gamePlays//this.sortDate(res.gamePlays)
-        console.log('Async operation has ended games' ,this.games);
-        this.slideGamesChange()
-        this.sliderGames.slideTo(this.currentIndexDrug)
-      }
-    });
 
     this.dooleService.getAPIgoals().subscribe((res)=>{
       this.goals = res.goals;
@@ -128,8 +123,34 @@ export class HomePage implements OnInit {
 
     this.getDrugIntake()
 
+    this.getGames()
+
     this.activity.push({name:'456 Cal'})
 
+  }
+
+  getGames(){
+    this.dooleService.getAPIgamesByDate(this.date ,this.date ).subscribe((res)=>{
+      if(res.gamePlays){
+        this.games = res.gamePlays
+        this.games.sort(function(a,b){
+          return a.scheduled_date.localeCompare(b.scheduled_date);
+        })
+        this.searchIndexDGame()
+        this.slideGamesChange()
+        this.sliderGames.slideTo(this.currentIndexDrug)
+      }
+    });
+  }
+
+  getDrugIntake(){
+    this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
+      this.drugs = res.drugIntakes;
+      this.filterDrugsByStatus()
+      this.searchIndexDrug()
+      this.slideDrugChange()
+      this.sliderDrug.slideTo(this.currentIndexDrug)
+    })
   }
 
   
@@ -210,16 +231,6 @@ export class HomePage implements OnInit {
           });
     }
 
-  getDrugIntake(){
-    this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
-      this.drugs = res.drugIntakes;
-      this.filterDrugsByStatus()
-      this.searchIndexDrug()
-      this.slideDrugChange()
-      this.sliderDrug.slideTo(this.currentIndexDrug)
-    })
-  }
-
   transformDate(date) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
@@ -247,10 +258,6 @@ export class HomePage implements OnInit {
   }
 
   actionButtonDrugs(slide){
-    console.log('[HomePage] actionButtonDrugs()', slide.name);
-  }
-
-  actionButtonGames(slide){
     console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
@@ -290,21 +297,18 @@ export class HomePage implements OnInit {
   }
 
   slideGamesChange(){
-    if(this.games !== undefined && this.games?.length > 0){
-      this.sliderGames.getActiveIndex().then(index => {      
-        console.log('[HomePage] slideGamesChange()', index);
-        let slider = this.games[index]
-        let hour = slider?.scheduled_date?.split(' ')[1]
-        this.infoGames = {
-          title: slider?.name,
-          hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
-        }
-      });
-    }else{
-      this.infoGames = null;
-    }
-   
+    if(this.games !== undefined && this.games?.length > 0)
+    this.sliderGames.getActiveIndex().then(index => {      
+      console.log('[HomePage] slideGamesChange()', index);
+      let slider = this.games[index]
+      let hour = slider?.scheduled_date.split(' ')[1]
+      this.infoGames = {
+        title: slider?.name,
+        hour: hour.split(':')[0] + ':' + hour.split(':')[1]
+      }
+    });
   }
+
   slideActivityChange(){
     this.sliderPhysical.getActiveIndex().then(index => {      
       console.log('[HomePage] slideActivityChange()', index);
@@ -351,10 +355,7 @@ export class HomePage implements OnInit {
         ((this.hourToMinutes(element.scheduled_date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
         )
       let index = this.games.indexOf(game);
-        //console.log('[HomePage] searchIndexDrug()', drug, index);
-        this.currentIndexDrug = (index > -1)? index: 0
-    }else{
-      this.currentIndexGame = 0
+      this.currentIndexDrug = (index > -1)? index: 0
     }
   }
 
@@ -372,14 +373,49 @@ export class HomePage implements OnInit {
     }, 2000);
   }
 
-  formatDate(d){
-    var auxdate = d.split(' ')
-    let date = new Date(auxdate[0]);
-    let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    return date;
-  }
+  async actionButtonGames(item){
+    var browser : any;
+    //if(item.type=="html5"){
+      const iosoption: InAppBrowserOptions = {
+        zoom: 'no',
+        location:'yes',
+        toolbar:'yes',
+        clearcache: 'yes',
+        clearsessioncache: 'yes',
+        disallowoverscroll: 'yes',
+        enableViewportScale: 'yes'
+      }
+
+      await this.auth.getUserLocalstorage().then(value =>{
+        this.auth.user = value
+      })
+      
+      if(item.url.startsWith("http")){
+        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
+        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+      }
+      else
+        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+    //}
+
+/*     if(item.type=="form") {
+      const options: InAppBrowserOptions = {
+        location: 'no',
+        toolbar: 'yes'
+      };
+
+      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+item.form_id+'" method="post" enctype="multipart/form-data">' +
+        '<input type="hidden" name="idForm" value="'+item.form_id+'">' +
+        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
+        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
+        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
+      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+      var browserRef = this.iab.create(
+        pageContentUrl,
+        "_blank",
+        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+      );
+    } */
 
   sortDate(games){
     console.log('Async operation has ended' ,games);
@@ -390,6 +426,7 @@ export class HomePage implements OnInit {
         return -1;
       return 0;
     })
+
   }
  
 }
