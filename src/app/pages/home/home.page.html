@@ -16,8 +16,8 @@
     </ion-row>
     <!-- Goals  --> 
     <ion-row >
-        <ion-card class="vertical-card" routerLink="/profile/goals">  
-            <ion-item lines="none" class="noMargin">
+        <ion-card class="vertical-card">  
+            <ion-item lines="none" class="noMargin" routerLink="/profile/goals">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
               <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
@@ -28,7 +28,7 @@
             <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length == 0 " >{{ 'no_data' | translate}}</div>
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
-                  <ion-grid>
+                  <ion-grid routerLink="/activity-goal" [state]="{ id: slide.element_id}">
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
                       <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
                       <p class="txtContactLittle">{{'goals.goals' | translate}} {{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
@@ -169,8 +169,8 @@
     </ion-row>
     <!-- Games -->
     <ion-row class="narRow">
-      <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'games'}">       
-          <ion-item lines="none" class="noMargin">
+      <ion-card class="vertical-card">       
+          <ion-item lines="none" class="noMargin"  routerLink="/journal" [state]="{segment: 'games'}">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoGames">{{infoGames?.hour}}</ion-text>
@@ -186,7 +186,7 @@
                     <p style="text-align: left;">{{slide.game.title}}</p>
                   </ion-row>
                   <ion-row>
-                    <ion-button size="small" fill=clear (click)="actionButtonGames(slide)">{{ 'home.go_play_button' | translate}}</ion-button>  
+                    <ion-button size="small" fill=clear (click)="actionButtonGames(slide.game)">{{ 'home.go_play_button' | translate}}</ion-button>  
                   </ion-row>
                 </ion-grid>             
                 </ion-slide>

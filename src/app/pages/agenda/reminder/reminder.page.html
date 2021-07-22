@@ -46,7 +46,7 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
-        <ion-text class="textMedium">{{ formatSelectedDate(reminder?.start_date) }}</ion-text>
+        <ion-text class="textMedium">{{ formatDate(reminder?.start_date) | date:  'EEEE, d MMMM yyyy, HH:mm'}}</ion-text>
       </ion-item>
       <ion-item lines="none" (click)="showDays()">
         <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>

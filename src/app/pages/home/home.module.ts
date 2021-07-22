@@ -10,6 +10,7 @@ import { HomePage } from './home.page';
 
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     HomePageRoutingModule
   ],
-  providers: [DatePipe] ,
+  providers: [DatePipe, InAppBrowser] ,
   declarations: [HomePage,
     ]
 })
