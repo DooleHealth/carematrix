@@ -65,7 +65,6 @@ export class DocumentDetailPage implements OnInit {
     this.dooleService.getAPIdiagnosticTestID(this.id).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);
-        console.log('se lee?', this.groupedElements);
         this.diagnosticTest = res.diagnosticTest
         this.diagnosticTestType = res.diagnosticTestType
         if (res.diagnosticTest.media) {
