@@ -18,6 +18,8 @@
   .user-name > app-text-shell {
     --text-shell-line-height: 17px;
     max-width: 120px;
+    font-weight: 500;
+  
     &.text-loaded {
       max-width: inherit;
     }
@@ -29,4 +31,7 @@
     &.text-loaded {
       max-width: inherit;
     }
+  }
+  .strech{
+    max-height: 5px;
   }
