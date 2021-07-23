@@ -49,7 +49,7 @@
       <ion-col size="8" class="textBlueCentered">
         <ion-slides #slides >
           <ion-slide>
-            <p>{{this.date | date: 'EEEE, d MMMM' | titlecase}}</p>     
+            <p>{{ formatSelectedDate(date) | titlecase}}</p>     
           </ion-slide>
         </ion-slides>
       </ion-col >
