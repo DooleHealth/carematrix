@@ -71,7 +71,7 @@ export class LandingPage implements OnInit {
     modal.onDidDismiss()
       .then((result) => {
 
-        if(result.data['error']){
+        if(result?.data['error']){
           let message = this.translate.instant('landing.message_wrong_credentials')
           this.dooleService.presentAlert(message)
         }

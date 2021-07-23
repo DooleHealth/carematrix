@@ -101,6 +101,7 @@
       "profile":{
         "title_profile": "El meu perfil",
         "button_go_init": "Inici",
+        "button_go_back":"Tornar al meu perfil",
         "information": {
           "title_information": "Informació",
           "data": "Les teves Dades",

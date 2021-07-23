@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
@@ -20,7 +21,7 @@ export class DocumentDetailPage implements OnInit {
   groupedElements: any = [];
   elementValues: any = [];
   mediaFiles: any;
-
+  
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,

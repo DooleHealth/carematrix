@@ -43,14 +43,9 @@
     </ion-grid>
 </div>
 </ng-template>
-<!-- esto es una prueba, borrar despues esto de aquí abajo -->
+
 <section *ngIf="this.user?.familyUnit !== null">
-  <ion-button expand="block"  (click)="changeUser()" >{{'volver a mi perfil' | translate }}</ion-button>
+  <ion-button expand="block"  (click)="returnUser()" >{{'profile.button_go_back' | translate | uppercase  }}</ion-button>
 </section>  
-<div  *ngIf="this.user !== null" style="background: green;"> no null, OR UNDEFINED
-</div>
-<div *ngIf="this.user === null"  style="background: red;">NULL
-</div>
-<div *ngIf="this.user == this.idUser"  style="background: rebeccapurple;"> El usuario es Magnum
-</div>
+
 </ion-content>

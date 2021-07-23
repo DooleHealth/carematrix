@@ -5,23 +5,24 @@
         <ion-text class="txtTitleBig">Hola, {{this.authService?.user?.first_name}}</ion-text>
       </ion-col>
       <ion-col size="4">
-    <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile" [state]="{user:this.authService?.user}"></ion-img>
+        <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile"
+          [state]="{user:this.authService?.user}"></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
   <ion-grid>
     <ion-row class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'home.goals_title' | translate | titlecase}}</ion-text>
     </ion-row>
+
     <!-- Goals  --> 
     <ion-row >
         <ion-card class="vertical-card">  
             <ion-item lines="none" class="noMargin" routerLink="/profile/goals">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
-              <!-- <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon> -->
-              
+              <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>            
             </ion-item>
             
           <ion-card-content>
@@ -38,133 +39,147 @@
               </ion-slides>
             </ion-card-content>
         </ion-card>
+
     </ion-row>
 
-          <!-- Reminders --> 
-          <ion-row class="paddingTopNoMarginBottom">
+    <!-- Reminders -->
+    <ion-row class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
-     <!-- Agendas --> 
+    <!-- Agendas -->
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
-            <div class="txtTitleGoalsLittle" *ngIf="!this.appointment || this.appointment == 0 " >{{ 'no_data' | translate}}</div>
+            <div class="txtTitleGoalsLittle" *ngIf="!this.appointment || this.appointment.length == 0 ">
+              {{ 'no_data' | translate}}
+            </div>
             <ion-item class="cardHeader">
-                <ion-card-subtitle>{{slide.title | uppercase }}</ion-card-subtitle>
-                <!-- <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon>  -->
+              <ion-card-subtitle>{{slide.title | uppercase }}</ion-card-subtitle>
+              <!-- <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon>  -->
             </ion-item>
-    
+
             <ion-card-content class="strechCardContent" routerLink="/agenda/reminder/detail" [state]="{ event: slide}">
-                <ion-row>
-                  <ion-col size="3" >
-                    <ion-img src="assets/icons/agenda2.svg"></ion-img>
-                  </ion-col>
-                  <ion-col size="9" class="alingLeft">
-                    <p>{{slide.doctor}}</p>
-                    <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm' | titlecase }}</ion-text>
-                    <ion-button size="small" fill="clear">
-                      {{ 'home.detail_button' | translate }}</ion-button>
-                  </ion-col>
-                </ion-row>
+              <ion-row>
+                <ion-col size="3">
+                  <ion-img src="assets/icons/agenda2.svg"></ion-img>
+                </ion-col>
+                <ion-col size="9" class="alingLeft">
+                  <p>{{slide.doctor}}</p>
+                  <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm' |
+                    titlecase }}</ion-text>
+                  <ion-button size="small" fill="clear">
+                    {{ 'home.detail_button' | translate }}</ion-button>
+                </ion-col>
+              </ion-row>
             </ion-card-content>
           </ion-card>
-        </ion-slide>    
+        </ion-slide>
       </ion-slides>
     </ion-row>
 
-    <!-- Advices --> 
+    <!-- Advices -->
     <ion-row class="paddingTopNoMarginBottom">
+      <!-- News and Advices -->
 
-    <!-- News and Advices --> 
-
-     
-        <ion-text class="txtTitle" style="white-space: nowrap;"> {{ 'home.advices_title' | translate}}</ion-text>
-        <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}</ion-text>
-    
+      <ion-text class="txtTitle" style="white-space: nowrap">
+        {{ 'home.advices_title' | translate}}</ion-text>
+      <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}
+      </ion-text>
     </ion-row>
-  
+
     <ion-row>
-      
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">
           <ion-card class="cardProfilePaddingBottomMinHeight">
+            <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
 
-            <ion-icon name="close"  class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon> 
-           
-            <img class="sliderImage"  [src]="slide.image?.temporaryUrl">  <br><br>
-           
+            <img class="sliderImage" [src]="slide.image?.temporaryUrl" />
+            <br /><br />
+
             <ion-card-title class="txtTitleHome">{{slide.name}}</ion-card-title>
-            <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
+            </ion-card-subtitle>
             <!-- <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button> -->
           </ion-card>
-        </ion-slide> 
+        </ion-slide>
       </ion-slides>
     </ion-row>
 
-
     <ion-row class="paddingTopNoMarginBottom">
-
-
       <ion-text class="txtTitle">{{ 'home.today_title' | translate | titlecase}}</ion-text>
     </ion-row>
     <!-- Diets -->
+
     <ion-row >
       <ion-card class="vertical-card">       
-          <ion-item lines="none" class="noMargin">
+          <ion-item lines="none" class="noMargin" routerLink="/journal" [state]="{segment: 'diets'}">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
             <ion-text style="color:'#E67E22';" slot="start">{{ 'home.diet' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
-            <ion-icon routerLink="/journal" [state]="{segment: 'diets'}"  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
+
         <ion-card-content>
-          <div class="txtTitleGoalsLittle" *ngIf="!this.diets|| this.diets == 0 " >{{ 'no_data' | translate}}</div>
-            <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDietChange()'>
-              <ion-slide *ngFor="let slide of this.diets">
-                <ion-grid>
-                  <ion-row routerLink="/journal/diets-detail" [state]="{id: slide.id}">
-                <p style="text-align: left;">{{slide.name}}</p>    
-              </ion-row>
-                </ion-grid>           
-               </ion-slide>
-            </ion-slides>
-          </ion-card-content>
+          <div class="txtTitleGoalsLittle" *ngIf="!this.diets|| this.diets.length == 0 ">
+            {{ 'no_data' | translate}}
+          </div>
+          <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides"
+            (ionSlideDidChange)="slideDietChange()">
+            <ion-slide *ngFor="let slide of this.diets">
+              <ion-grid>
+                <ion-row routerLink="/journal/diets-detail" [state]="{id: slide.id}">
+                  <p style="text-align: left">{{slide.name}}</p>
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+          </ion-slides>
+        </ion-card-content>
       </ion-card>
     </ion-row>
     <!-- Drugs -->
     <ion-row class="narRow">
+
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin" routerLink="/journal" [state]="{segment: 'medication'}">
             <ion-img slot="start" src='assets/icons/medication.svg'></ion-img>
             <ion-text style="color:'#2ECC71';" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
-            <!-- <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon> -->
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
+
         <ion-card-content>
-         
-          <div class="txtTitleGoalsLittle" *ngIf="!this.drugs || this.drugs.length == 0" >{{ 'no_data' | translate}}</div>
-            <ion-slides #sliderDrug pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideDrugChange()'>
-              <ion-slide *ngFor="let slide of this.drugs" >
-                <ion-grid>
-                  <ion-row routerLink="/journal" [state]="{segment: 'medication'}">
-                    <p style="text-align: left;">{{(slide.alias !== null)? slide.alias: (slide.name.substring(25,-1) + '...') }}</p>
-                  </ion-row>
-                  <ion-row>
-                    <ion-button *ngIf="slide.forgotten == 2"  size="small" color="primary" 
+          <div class="txtTitleGoalsLittle" *ngIf="!this.drugs || this.drugs.length == 0">
+            {{ 'no_data' | translate}}
+          </div>
+          <ion-slides #sliderDrug pager="true" [options]="sliderConfig" class="slides"
+            (ionSlideDidChange)="slideDrugChange()">
+            <ion-slide *ngFor="let slide of this.drugs">
+              <ion-grid>
+                <ion-row routerLink="/journal" [state]="{segment: 'medication'}">
+                  <p style="text-align: left">
+                    {{(slide.alias !== null)? slide.alias:
+                    (slide.name.substring(25,-1) + '...') }}
+                  </p>
+                </ion-row>
+                <ion-row>
+                  <ion-button *ngIf="slide.forgotten == 2" size="small" color="primary"
                     (click)="changeTake(slide.id, slide.state)">{{ 'button.take' | translate }}</ion-button>
-                    <ion-button *ngIf="slide.forgotten == 1"  size="small" color="danger" 
-                    (click)="changeTake(slide.id, slide.state)">{{ 'button.forgotten' | translate }}<ion-icon style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
-                    </ion-button>
-                    <ion-button *ngIf="slide.forgotten == 0"  size="small" color="success" 
-                    (click)="changeTake(slide.id, slide.state)">{{ 'button.taked' | translate }}<ion-icon style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
-                    </ion-button>&nbsp;
-                  </ion-row>
-                </ion-grid>             
-                </ion-slide>
-            </ion-slides>
-          </ion-card-content>
+                  <ion-button *ngIf="slide.forgotten == 1" size="small" color="danger"
+                    (click)="changeTake(slide.id, slide.state)">{{ 'button.forgotten' | translate }}<ion-icon
+                      style="margin-left: 5px" name="close-outline" color="light"></ion-icon>
+                  </ion-button>
+                  <ion-button *ngIf="slide.forgotten == 0" size="small" color="success"
+                    (click)="changeTake(slide.id, slide.state)">{{ 'button.taked' | translate }}<ion-icon
+                      style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
+                  </ion-button>&nbsp;
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+          </ion-slides>
+        </ion-card-content>
       </ion-card>
     </ion-row>
     <!-- Games -->
@@ -174,7 +189,7 @@
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoGames">{{infoGames?.hour}}</ion-text>
-            <!-- <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon> -->
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
@@ -196,43 +211,36 @@
     </ion-row>
     <!-- Physical Activity -->
     <ion-row class="narRow">
+
       <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'health'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
             <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
-            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
-          <ion-slides #sliderPhysical pager="false" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideActivityChange()'>
+          <ion-slides #sliderPhysical pager="false" [options]="sliderConfig" class="slides"
+            (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
-              
-             
-                <ion-col><h1 style="font-weight: bold;">
-                  {{ '456' }}
-                </h1>
-                
-                 {{ 'activity.cal' | translate}}
-                </ion-col>
-                <ion-col><h1 style="font-weight: bold;">
-                  {{ '4.20' }}
-                </h1>
-                 
-                  {{ 'activity.km' | translate}}
-                </ion-col>
-                <ion-col>
-                  <h1 style="font-weight: bold;">
-                    {{ '7.000' }}
-                  </h1>
-                  
-                  {{ 'activity.steps' | translate}}
-                </ion-col>
-             
+              <ion-col>
+                <h1 style="font-weight: bold">{{ '456' }}</h1>
 
-               
-              </ion-slide>
+                {{ 'activity.cal' | translate}}
+              </ion-col>
+              <ion-col>
+                <h1 style="font-weight: bold">{{ '4.20' }}</h1>
+
+                {{ 'activity.km' | translate}}
+              </ion-col>
+              <ion-col>
+                <h1 style="font-weight: bold">{{ '7.000' }}</h1>
+
+                {{ 'activity.steps' | translate}}
+              </ion-col>
+            </ion-slide>
           </ion-slides>
-          </ion-card-content>
+        </ion-card-content>
       </ion-card>
     </ion-row>
   </ion-grid>

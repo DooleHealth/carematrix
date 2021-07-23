@@ -8,12 +8,14 @@ import { ListAppointmentPageRoutingModule } from './list-appointment-routing.mod
 
 import { ListAppointmentPage } from './list-appointment.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     TranslateModule,
     ListAppointmentPageRoutingModule
   ],

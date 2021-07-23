@@ -59,7 +59,7 @@ export class LoginPage implements OnInit {
   redirectPage(condicion){
     if(!condicion){
       this.router.navigate(['/legal']);
-      this.modalCtrl.dismiss({date:null});
+      this.modalCtrl.dismiss({error:null});
     } else{
       this.showIntro()
     }      
@@ -71,8 +71,10 @@ export class LoginPage implements OnInit {
       if(showIntro){
         this.redirectLoggedUserToHomePage();
       }else{
-        this.router.navigate(['/intro']);
-        this.modalCtrl.dismiss({date:null});
+        this.router.navigate(['/intro']).then(()=>{
+          this.modalCtrl.dismiss({error:null});
+        });
+        
       }
     })
   }

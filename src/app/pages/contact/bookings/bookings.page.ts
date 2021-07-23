@@ -78,7 +78,7 @@ export class BookingsPage implements OnInit {
       }) ,() => {
         // Called when operation is complete (both success and error)
         loading.dismiss();
-      };
+      };     
   }
   isSubmittedFields(isSubmitted){
     this.isSubmittedPlace = isSubmitted
@@ -101,7 +101,7 @@ export class BookingsPage implements OnInit {
   showAlert(message){
     //let message = this.translate.instant('documents_add.alert_message')
     let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,message,false, '/contact')
+    this.dooleService.showAlertAndReturn(header,message,false, '/agenda/list-appointment')
   }
 
   async openCalendarModal() {

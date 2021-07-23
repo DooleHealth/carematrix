@@ -74,7 +74,7 @@ export class HomePage implements OnInit {
   }
 
   async ionViewDidEnter(){
-    console.log('[HomePage] ionViewDidEnter()');
+    console.log('[HomePage] ionViewDidEnter()', this.authService?.user);
     this.tabs.translateTab()
     await this.getUserInformation()
     setTimeout(() => {
@@ -281,15 +281,19 @@ export class HomePage implements OnInit {
   }
 
   slideDrugChange(){	
-    if(this.drugs !== undefined && this.drugs?.length > 0)
-		this.sliderDrug.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideDrugChange()', index);
-      let slider = this.drugs[index]
-      this.infoDrugs = {
-        title: slider?.name,
-        hour: slider?.hour_intake
-      }
-    });
+    if(this.drugs !== undefined && this.drugs?.length > 0){
+      this.sliderDrug.getActiveIndex().then(index => {      
+        console.log('[HomePage] slideDrugChange()', index);
+        let slider = this.drugs[index]
+        this.infoDrugs = {
+          title: slider?.name,
+          hour: slider?.hour_intake
+        }
+      });
+    }else{
+      this.infoDrugs = null;
+    }
+	
   }
 
   slideGamesChange(){
@@ -304,6 +308,7 @@ export class HomePage implements OnInit {
       }
     });
   }
+
   slideActivityChange(){
     this.sliderPhysical.getActiveIndex().then(index => {      
       console.log('[HomePage] slideActivityChange()', index);
@@ -391,7 +396,20 @@ export class HomePage implements OnInit {
       }
       else
         browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
-    //}
+    }
+    
+    sortDate(games){
+      console.log('Async operation has ended' ,games);
+      return games.sort( function (a, b) {
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
+          return 1;
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
+          return -1;
+        return 0;
+      })
+  
+    }
+   
 
 /*     if(item.type=="form") {
       const options: InAppBrowserOptions = {
@@ -412,6 +430,5 @@ export class HomePage implements OnInit {
       );
     } */
 
-  }
  
 }
