@@ -14,6 +14,7 @@ export interface ItemDiary {
 export interface ListDrugByDate {
   date?: string;
   itemDrugs?: ItemDiary[];
+ 
 }
 @Component({
   selector: 'app-diary',
@@ -373,5 +374,6 @@ export class DiaryPage implements OnInit {
     }
     return  this.translate.instant('diary.all_day')
   }
+
 }
 
