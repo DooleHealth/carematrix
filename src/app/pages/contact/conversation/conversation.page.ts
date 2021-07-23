@@ -110,7 +110,7 @@ export class ConversationPage implements OnInit {
     // this._zone.run(() => {
       setTimeout(() => {
         if (this.content.scrollToBottom) {
-          this.content.scrollToBottom(600);
+          this.content.scrollToBottom(300);
       }
   }, 1000);
     // });
