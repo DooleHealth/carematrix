@@ -20,7 +20,7 @@
             <ion-item lines="none" class="noMargin" routerLink="/profile/goals">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
-              <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+              <!-- <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon> -->
               
             </ion-item>
             
@@ -174,7 +174,7 @@
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
             <ion-text style="color:'#9B59B6';" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
             <ion-text slot="end" *ngIf="infoGames">{{infoGames?.hour}}</ion-text>
-            <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+            <!-- <ion-icon  slot="end" size="small" name="chevron-forward-outline"></ion-icon> -->
           </ion-item>
 
         <ion-card-content>

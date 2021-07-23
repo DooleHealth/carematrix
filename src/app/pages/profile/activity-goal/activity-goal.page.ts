@@ -47,15 +47,16 @@ export class ActivityGoalPage implements OnInit {
   }
 
   async loadData(interval) {
+    console.log('[ActivityGoalPage] loadData()', interval); 
     const loading = await this.loadingController.create();
     await loading.present();
 
     let vArray = [];
     let dArray = [];
 
-    var dict = [];
-    dict.push({ key: "interval", value: interval });
-    this.dooleService.getAPIgraphicsElement(this.id, dict).subscribe(async json => {
+/*     var dict = [];
+    dict.push({ key: "interval", value: interval }); */
+    this.dooleService.getAPIgraphicsElement(this.id, interval).subscribe(async json => {
       console.log('[ActivityGoalPage] loadData()', await json);
       this.title = json.name;
       this.description = json?.description

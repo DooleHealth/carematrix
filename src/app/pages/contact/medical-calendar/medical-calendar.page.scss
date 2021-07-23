@@ -21,11 +21,16 @@ body{
   :host ::ng-deep {
   
     table,
-  th,
+    th{
+      background-color: #F6F6F6;
+      border: 0px !important;
+      border-bottom:  0.5px solid #BDC3C7  !important;//  rgb(143, 143, 143) 
+      color: #7F8C8D
+    };
   td {
     padding: 10px;
     border: 0px !important;
-    border-bottom:  1px solid rgb(143, 143, 143) !important;
+    border-bottom:  0.7px solid #BDC3C7  !important;
     max-height: 60px!important;
    
   }
@@ -40,6 +45,10 @@ body{
     width: 35px;
     height: 35px;
     border-radius: 50%;
+  }
+
+  .monthview-disabled{
+    color: #BDC3C7 !important;
   }
       .monthview-container {
           background-color: #F0F0F0 !important;
@@ -143,5 +152,9 @@ body{
   ion-segment {
     margin: 10px 0;
     background: #ffffff;
+  }
+
+  .header-change-month{
+    background-color: #F6F6F6;
   }
   

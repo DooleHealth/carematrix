@@ -206,14 +206,19 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   }
 
+  markDisabled = (date: Date) => {
+    var current = new Date();
+    return date < current;
+};
+
   formatMonths(){
     let language = this.setLocale()
     const datePipe: DatePipe = new DatePipe(language);
-    let month = datePipe.transform(this.myCal.currentDate, 'MMM');
+    let month = datePipe.transform(this.myCal.currentDate, 'MMMM');
     if(language === 'ca'){
-      month = datePipe.transform(this.myCal.currentDate, 'MMM').split(' ')[1]
+      month = datePipe.transform(this.myCal.currentDate, 'MMMM').split(' ')[1]
       if(month == undefined)
-      month = datePipe.transform(this.myCal.currentDate, 'MMM').split('’')[1]
+      month = datePipe.transform(this.myCal.currentDate, 'MMMM').split('’')[1]
     }
     return month.split('.')[0] + ' ' + this.myCal.currentDate.getFullYear()
   }

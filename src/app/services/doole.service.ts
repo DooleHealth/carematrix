@@ -719,9 +719,11 @@ export class DooleService {
   }
 
   getAPIgraphicsElement(id: Object, query): Observable<any> {
-    let path = 'user/element/' + id + '?' + query;
+    let path = 'user/element/' + id;
+    let httpParams = new HttpParams();
+    httpParams = (query) ? httpParams.append('interval', query) : httpParams
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
         return res;

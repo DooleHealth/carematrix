@@ -17,7 +17,7 @@
 
  
 <ion-content> 
-   <ion-row class="textBlueCentered1">
+   <ion-row class="textBlueCentered1, header-change-month">
      <!-- Move back one screen of the slides -->
     <ion-col size="2">
       <ion-button fill="clear" (click)="back()">
@@ -52,6 +52,8 @@
   [locale]="this.languageService.getCurrent()"
   [dateFormatter]="calendar.dateFormatter"
   (onTimeSelected)="onTimeSelected($event)"
+  [markDisabled]="markDisabled"
+  startingDayMonth="1"
 >
 </calendar>
 
