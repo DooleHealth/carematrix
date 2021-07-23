@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage'; // This line added manually.
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { IonContent } from '@ionic/angular';
 
 const { Camera } = Plugins;
 @Component({
@@ -23,7 +24,7 @@ const { Camera } = Plugins;
   styleUrls: ['./conversation.page.scss'],
 })
 export class ConversationPage implements OnInit {
-  @ViewChild('content') content: any;
+  @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   public name: string = this.staff?.name;
@@ -89,7 +90,8 @@ export class ConversationPage implements OnInit {
       } 
 
     });
-  
+    
+    this.scrollToBottom();
   }
 
   private findUser(id){
@@ -105,11 +107,13 @@ export class ConversationPage implements OnInit {
 
   scrollToBottom() {
     //console.log("scroll");
-    this._zone.run(() => {
+    // this._zone.run(() => {
       setTimeout(() => {
-        this.content.scrollToBottom(300);
-      });
-    });
+        if (this.content.scrollToBottom) {
+          this.content.scrollToBottom(600);
+      }
+  }, 1000);
+    // });
   }
 
   async observeMessages(){
