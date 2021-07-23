@@ -1,14 +1,31 @@
 <ion-header>
-  <!-- <ion-toolbar> -->
-    
-    <ion-toolbar [ngSwitch]="segment">
-      <ion-buttons slot="start">
-      <ion-back-button text=" "></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{'diary.header_diary' | translate | titlecase }}</ion-title>
+  <ion-toolbar [ngSwitch]="segment">
+    <ion-row>
+      <ion-col size="2">
+        <ion-buttons>
+          <ion-button type="submit" float-left ion-button color="primary" (click)="prev()">
+            <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+
+      <ion-col size="8" class="textBlueCenteredTop">
+        <ion-slides #slides>
+          <ion-slide>
+            <p>{{ formatSelectedDate(date) | titlecase}}</p>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+      <ion-col size="2">
+        <ion-buttons>
+          <ion-button type="submit" float-right ion-button color="primary" (click)="next()">
+            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <!-- <ion-icon class="primaryIcon" slot="icon-only"  name="cart-outline"></ion-icon> -->
       <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="drug-add"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'health'">
@@ -16,6 +33,8 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 <ion-content>
 
 <!-- SegmentBar -->
@@ -39,7 +58,7 @@
   </ion-segment>
 
      <!-- Slides-->
-    <ion-row>
+    <!-- <ion-row>
       <ion-col size="2">
         <ion-buttons >
           <ion-button type="submit" float-left ion-button  color="primary" class="btnPrev" (click)="prev()"><ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon></ion-button>
@@ -58,14 +77,13 @@
           <ion-button type="submit" float-right ion-button color="primary" class="btnNext" (click)="next()"><ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   
 <!-- segment -->
     <div class="verticalLine2" [ngSwitch]="segment">
 
     <!-- Diets-->
-
-
+    
 <div *ngSwitchCase="'diets'">
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
