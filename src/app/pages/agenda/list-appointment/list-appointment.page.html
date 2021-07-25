@@ -12,10 +12,10 @@
         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-button slot="end" fill="clear" routerLink="/agenda" [state]="{calendar:eventSource}">
+    <ion-button slot="end" fill="clear" routerLink="/agenda" [state]="{calendar:listAppointment}">
       <ion-icon slot="icon-only" name="list-circle" color="primary"></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill="clear" routerLink="agenda-edit">
+    <ion-button slot="end" fill="clear"  (click)="addAgenda()">
       <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -44,7 +44,7 @@
               <ion-col class="event-detail">{{ 'appointment.field_specially' | translate }}: {{doctor.name}}</ion-col>
             </ion-row>
             <ion-row>
-              <ion-col style="color: #7f8c8d;" >{{e?.startTime |date: ['HH:mm'] }} - {{e?.endTime |date: ['HH:mm'] }}h </ion-col>
+              <ion-col style="color: #7f8c8d;" >{{e?.startTime |date:'HH:mm' }} - {{e?.endTime |date:'HH:mm' }}h </ion-col>
             </ion-row>
           </ion-grid>
         </ion-item>

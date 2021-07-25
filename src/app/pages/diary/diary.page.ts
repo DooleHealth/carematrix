@@ -317,7 +317,7 @@ export class DiaryPage implements OnInit {
     }
   }
 
-  async segmentChanged(){
+  async segmentChanged($event?){
     console.log('[DiaryPage] segmentChanged()', this.segment); 
     this.items = []
     switch (this.segment) {

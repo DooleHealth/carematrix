@@ -21,7 +21,7 @@ export class NotificationService {
       // The second parameter is the text in the button. 
       // In the third, we send in the css class for the snack bar.
       const config = new MatSnackBarConfig();
-      config.panelClass = ['snackbar-container', 'success'];
+      config.panelClass =  ['custom-class'];
       config.verticalPosition = 'bottom';
       config.horizontalPosition = 'center';
       config.duration = 3000;
