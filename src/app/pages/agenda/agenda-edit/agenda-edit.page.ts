@@ -1,16 +1,19 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
-
+import { Location } from '@angular/common';
+import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'app-agenda-edit',
   templateUrl: './agenda-edit.page.html',
   styleUrls: ['./agenda-edit.page.scss'],
 })
 export class AgendaEditPage implements OnInit {
+  @Input()event: any;
   form: FormGroup;
   dateMax:any;
   isSubmittedPlace = false;
@@ -18,7 +21,7 @@ export class AgendaEditPage implements OnInit {
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
   id:any
-  event:any
+  isSaving: boolean = false;
   isNewEvent = true
   constructor(
     private fb: FormBuilder,
@@ -27,9 +30,12 @@ export class AgendaEditPage implements OnInit {
     private translate : TranslateService,
     public datepipe: DatePipe,
     public alertController: AlertController,
+    private modalCtrl: ModalController,
+    private notification: NotificationService
   ) { }
 
   ngOnInit() {
+    console.log('event', this.event);
     let year = (new Date(Date.now()).getFullYear()) + 1
     this.dateMax =  year
     this.form = this.fb.group({
@@ -45,7 +51,6 @@ export class AgendaEditPage implements OnInit {
   }
 
   getAppointment(){
-    this.event = history.state.event;
     if(this.event){
       this.isNewEvent = false
       this.id = this.event.id;
@@ -92,24 +97,25 @@ export class AgendaEditPage implements OnInit {
   }
 
   async editAgenda(){
+    this.isSaving = !this.isSaving;
     this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
-        this.addAgenda()
+        await this.addAgenda();
+        // this.modalCtrl.dismiss({error:null});
+        this.isSaving = !this.isSaving
        },(err) => { 
           console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-
+       
       };
   }
 
   async addAgenda1(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+ 
     let date = this.form.get('date').value 
     this.form.get('date').setValue(this.transformDate(date));
     console.log(`[AgendaAddPage] addAgenda()`,this.form.value );
@@ -124,48 +130,47 @@ export class AgendaEditPage implements OnInit {
           let message = this.translate.instant('reminder.error_message_added_reminder')
           alert(message)
         }
-        loading.dismiss();
+       
        },(err) => { 
-        loading.dismiss();
+        
           console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        
       };
   }
 
 /**Eliminar esta función cuando ya esté la nueva api que me permita actualizar agenda */
   async addAgenda(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+   
+    this.isSaving = !this.isSaving;
     let date = this.form.get('date').value 
     this.form.get('date').setValue(this.transformDate(date));
     console.log(`[AgendaAddPage] addAgenda()`,this.form.value );
-
+    
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);
         if(res.success){
-          let message = this.translate.instant('appointment.message_added_appointment')
-          if(!this.isNewEvent)
-          message = this.translate.instant('appointment.message_updated_reminder')
-          this.showAlert(message)
+          let message = this.isNewEvent ? this.translate.instant('appointment.message_added_appointment') : this.translate.instant('appointment.message_updated_appointment')
+          this.notification.showSuccess(message);
+
+          this.modalCtrl.dismiss({error:null, action:'add'});
+          this.isSaving = !this.isSaving
         }else{
           let message = this.translate.instant('appointment.error_message_added_reminder')
           alert(message)
         }
-        loading.dismiss();
        },(err) => { 
-        loading.dismiss();
           console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
+       
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        
       };
   }
 
@@ -174,5 +179,8 @@ export class AgendaEditPage implements OnInit {
     this.dooleService.showAlertAndReturn(header,message,false, '/agenda')
   }
 
-
+  close() {
+    this.modalCtrl.dismiss({error:null});
+  }
+  
 }

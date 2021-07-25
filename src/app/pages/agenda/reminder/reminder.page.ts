@@ -22,6 +22,7 @@ export class ReminderPage implements OnInit {
     private languageService: LanguageService,
     private translate : TranslateService,
     public alertController: AlertController,
+
   ) { }
 
   ngOnInit() {

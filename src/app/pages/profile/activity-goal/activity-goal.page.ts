@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import * as HighCharts from 'highcharts';
 import { DooleService } from 'src/app/services/doole.service';
+import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 
 
 @Component({
@@ -32,6 +34,8 @@ export class ActivityGoalPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private loadingController: LoadingController,
+    private modalCtrl: ModalController,
+
   ) { }
 
   ngOnInit() {
@@ -245,6 +249,25 @@ export class ActivityGoalPage implements OnInit {
     now.setFullYear(this.max.getFullYear() - 1);
     this.min = now;
     //alert(this.min.toDateString() + ' - ' + this.max.toDateString());
+  }
+
+  async addReminder(){
+    const modal = await this.modalCtrl.create({
+      component: ReminderAddPage,
+      componentProps: { typeId: this.id, type: 'element', isNewReminder:true },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+
+        if(result?.data['error']){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }
+    });
+
+    await modal.present();
+   
   }
 
 }

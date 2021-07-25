@@ -15,8 +15,7 @@ const routes: Routes = [
   {
     path: 'reminder',
     loadChildren: () => import('./reminder/reminder.module').then( m => m.ReminderPageModule)
-  }
-  ,
+  },
   {
     path: 'reminder-add',
     loadChildren: () => import('./reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
@@ -32,8 +31,11 @@ const routes: Routes = [
   {
     path: 'agenda-edit',
     loadChildren: () => import('./agenda-edit/agenda-edit.module').then( m => m.AgendaEditPageModule)
+  },
+  {
+    path: 'agenda-detail',
+    loadChildren: () => import('./agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
   }
-
 ];
 
 @NgModule({

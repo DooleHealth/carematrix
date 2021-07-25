@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{header}}</ion-title>
     <ion-buttons slot="end" >
-      <ion-button color="primary" routerLink="/agenda/reminder-add" [state]="{element_id: id}" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
+      <ion-button color="primary" (click)="this.addReminder()" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
       <ion-icon slot="icon-only" name="add" color="primary"
       routerLink="/elements-add" [state]="{id: id, name:header, units:units}"
       ></ion-icon>

@@ -1,50 +1,63 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-reminder-add',
   templateUrl: './reminder-add.page.html',
   styleUrls: ['./reminder-add.page.scss'],
+  providers:[DatePipe, TranslateService]
 })
 export class ReminderAddPage implements OnInit {
+  @Input()typeId: string;
+  @Input()type: string;
+  @Input()isNewReminder: boolean;
   days = [{day1:true}, {day2:true}, {day3:true}, {day4:true}, {day5:true}, {day6:true}, {day7:true}]
   form: FormGroup;
   dateMax:any;
+  time:Date;
   isSubmittedPlace = false;
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
-  id:any
-  event:any
-  agenda_id
-  frequency
-  isNewEvent = true
+  id:any;
+  event:any;
+  agenda_id;
+  frequency;
+  isNewEvent: boolean;
+
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
     private dooleService: DooleService,
-    private translate : TranslateService,
+    private translate: TranslateService,
     public datepipe: DatePipe,
     public alertController: AlertController,
-  ) { }
+    private modalCtrl: ModalController,
+    private notification: NotificationService
+  ) { 
+    this.translate.use('es');
+  }
 
   ngOnInit() {
+   
+   
     let year = (new Date(Date.now()).getFullYear()) + 1
     this.dateMax =  year
     this.form = this.fb.group({
-      type: [],
-      agenda_id: [],
-      element_id: [],
+      type: [this.type],
+      id: [this.typeId],
       title: [''],
       start_date: ['', [Validators.required]],
+      time: ['', [Validators.required]],
       end_date: ['', [Validators.required]],
       description: [],
       days: [this.days],
-      frequency: ['1'],
+      frequency: [],
     });
     this.getReminder()
   }
@@ -97,7 +110,13 @@ export class ReminderAddPage implements OnInit {
     let end_date = this.form.get('end_date').value 
     this.form.get('end_date').setValue(this.transformDate(end_date));
 
-    this.form.get('frequency').setValue(this.frequency);
+    this.time = new Date(this.form.get('time').value);
+    let t = this.time.getHours() + ':' + this.time.getMinutes();
+    this.form.get('time').setValue(t);
+
+    this.form.get('type').setValue(this.type);
+    this.form.get('id').setValue(this.typeId);
+
     console.log(`[AgendaAddPage] addReminder()`,this.form.value );
 
     this.dooleService.postAPIaddReminder(this.form.value).subscribe(
@@ -105,7 +124,8 @@ export class ReminderAddPage implements OnInit {
         console.log('[ReminderAddPage] addReminder()', await res);
         if(res.success){
           let message = this.translate.instant('reminder.message_added_reminder')
-          this.showAlert(message)
+          this.modalCtrl.dismiss({error:null});
+          this.notification.showSuccess(message);
         }else{
           let message = this.translate.instant('reminder.error_message_added_reminder')
           alert(message)
@@ -195,12 +215,12 @@ export class ReminderAddPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('[AddHealthCardPage] AlertConfirm Cancel');
+            console.log('[ReminderAddPage] AlertConfirm Cancel');
           }
         }, {
           text: this.translate.instant("alert.button_ok"),
           handler: () => {
-            console.log('[AddHealthCardPage] AlertConfirm Okay');
+            console.log('[ReminderAddPage] AlertConfirm Okay');
             this.deleteReminder()
           }
         }
@@ -211,25 +231,27 @@ export class ReminderAddPage implements OnInit {
   }
 
   selectedFrequency(event){
-    let fq = Number(this.form.get('frequency').value)
-    console.log('[AddHealthCardPage] selectedFrequency()', fq);
+    let fq = this.form.get('frequency').value;
+    console.log('[ReminderAddPage] selectedFrequency()', fq);
+    console.log('[ReminderAddPage] selectedFrequency()', event);
+    
     switch (fq) {
       case 0:
         let index = new Date().getDay()
         this.settingDay([index -1])
-        this.frequency = 'day'
+        //this.frequency = 'day'
         //this.form.get('frequency').setValue('day');
         break;
       case 1:
         let dialy = [0,1,2,3,4,5,6]
         this.settingDay(dialy)
-        this.frequency = 'daily'
+        //this.frequency = 'daily'
         //this.form.get('frequency').setValue('daily');
         break;
       case 2:
         let five = [0,1,2,3,4]
         this.settingDay(five)
-        this.frequency = 'mom_fri'
+        //this.frequency = 'mom_fri'
         //this.form.get('frequency').setValue('mom_fri');
         break;
       case 3:
@@ -243,7 +265,7 @@ export class ReminderAddPage implements OnInit {
   }
 
   isChangedSelect(event){
-    let fq = Number(this.form.get('frequency').value)
+    let fq = this.form.get('frequency').value
     console.log('[AddHealthCardPage] isChangedSelect()', fq, event);
 /*     if(fq !==3 )
     this.form.get('frequency').setValue(fq); */
@@ -304,6 +326,12 @@ export class ReminderAddPage implements OnInit {
     })
     return days_week
   }
+
+
+  close() {
+    this.modalCtrl.dismiss({date:null});
+  }
+
 }
 
 

@@ -333,6 +333,7 @@
         "field_repeat": "Repetir",
         "field_finish_repetition": "Acabar repetició",
         "field_notice": "Avisar",
+        "field_time": "Hora",
         "field_show_as": "Mostrar com",
         "field_comments_doctor": "Comentaris per al metge",
         "placeholder_comments":"Entrada més informació aquí...",
@@ -358,8 +359,15 @@
         "frequency":{
           "daily":"Diari",
           "day":"Un dia",
+          "custom": "Personalitzat",
           "week": "Dll a Dv",
-          "custom": "Personalitzat"
+          "week1": "1 setmana",
+          "week2": "2 setmanes",
+          "week3": "3 setmanes",
+          "month1": "1 mes",
+          "month2": "2 mesos",
+          "month3": "3 mesos"
+          
         }
       },
       "appointment":{

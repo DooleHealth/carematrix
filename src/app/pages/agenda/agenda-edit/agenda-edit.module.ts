@@ -15,9 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    ReactiveFormsModule,
     AgendaEditPageRoutingModule
-  ],
-  declarations: [AgendaEditPage]
+  ]
 })
 export class AgendaEditPageModule {}

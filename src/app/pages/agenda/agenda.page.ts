@@ -5,6 +5,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { AgendaEditPage } from './agenda-edit/agenda-edit.page';
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.page.html',
@@ -49,11 +50,11 @@ export class AgendaPage implements OnInit {
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
-    private alertCtrl: AlertController,
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService, 
-    private languageService: LanguageService,
-    private dooleService: DooleService
+    public languageService: LanguageService,
+    private dooleService: DooleService,
+    private modalCtrl: ModalController,
   ) {}
 
   ngOnInit() {
@@ -70,14 +71,13 @@ export class AgendaPage implements OnInit {
 };
   getAgenda(){
     this.isLoading = true;
-    this.dooleService.getAPIagenda().subscribe(
+    return this.dooleService.getAPIagenda().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getAgenda()', await res);
-        this.isLoading = false;
         if(res.agenda){    
           this.addScheduleToCalendar(res.agenda)
-          this.getReminders()
         }
+        this.getReminders()
        },(err) => { 
           console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
@@ -86,16 +86,18 @@ export class AgendaPage implements OnInit {
   }
 
   getReminders(){
-    this.dooleService.getAPIreminders().subscribe(
+    return this.dooleService.getAPIreminders().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getReminders()', await res);
         if(res.reminders)
           this.addReminderToCalendar(res.reminders)
-          this.eventSource = [].concat(this.appointment, this.reminders)
+        this.eventSource = [].concat(this.appointment, this.reminders)
        },(err) => { 
           console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
+      },()=>{
+        this.isLoading = false;
       });
   }
 
@@ -219,5 +221,29 @@ export class AgendaPage implements OnInit {
 
   async onEventSelected(event){
     this.event = event
+  }
+
+  async addAgenda(){
+    const modal = await this.modalCtrl.create({
+      component:  AgendaEditPage,
+      componentProps: { },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addAgenda()', result);
+       
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'add'){
+          this.getAgenda();
+          
+        }
+    });
+
+    await modal.present();
+   
+   
   }
 }

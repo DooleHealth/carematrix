@@ -9,6 +9,9 @@ import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.serv
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './guards/auth.guard';
 import { VideoComponent } from './components/video/video.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { ReminderAddPage } from './pages/agenda/reminder-add/reminder-add.page';
+import { ReminderAddPageModule } from './pages/agenda/reminder-add/reminder-add.module';
 
 const routes: Routes = [
   {
@@ -67,10 +70,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/settings/password/password.module').then( m => m.PasswordPageModule)
   },
   {
-    path: 'agenda',
-    loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
-  },
-  {
     path: 'tracking',
     loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
   },
@@ -103,14 +102,6 @@ const routes: Routes = [
    loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   },
   {
-    path: 'reminder',
-    loadChildren: () => import('./pages/agenda/reminder/reminder.module').then( m => m.ReminderPageModule)
-  },
-  {
-    path: 'reminder-add',
-    loadChildren: () => import('./pages/agenda/reminder-add/reminder-add.module').then( m => m.ReminderAddPageModule)
-  },
-  {
     path: 'elements-add',
     loadChildren: () => import('./pages/tracking/elements-add/elements-add.module').then( m => m.ElementsAddPageModule)
   },
@@ -122,10 +113,7 @@ const routes: Routes = [
     path: 'doctors',
     loadChildren: () => import('./pages/contact/doctors/doctors.module').then( m => m.DoctorsPageModule)
   },
-  {
-    path: 'agenda-detail',
-    loadChildren: () => import('./pages/agenda/agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
-  },
+  
   {
     path: 'medical-directory',
     loadChildren: () => import('./pages/contact/medical-directory/medical-directory.module').then( m => m.MedicalDirectoryPageModule)
@@ -164,7 +152,6 @@ const routes: Routes = [
     // RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules,  initialNavigation: 'enabled',
     // scrollPositionRestoration: 'enabled',
     // anchorScrolling: 'enabled'}),
-
     RouterModule.forRoot(routes, {
       // This value is required for server-side rendering to work.
       initialNavigation: 'enabled',
@@ -175,6 +162,8 @@ const routes: Routes = [
     AngularFireAuthModule
   ],
   exports: [RouterModule],
-  providers: [FirebaseAuthService, AuthenticationService]
+  providers: [FirebaseAuthService, AuthenticationService],
+ 
+
 })
 export class AppRoutingModule {}
