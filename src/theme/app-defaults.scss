@@ -191,7 +191,15 @@ ion-back-button {
   font-weight: 400;
   color: #7f8c8d;
 }
-.txtTitleTrackingLittle {
+.txtTitleChatDate{
+  font-size: 12px;
+  font-weight: 400;
+  color: #7f8c8d;
+  text-align: right;
+  margin-top: -3px;
+  
+}
+.txtTitleTrackingLittle{
   font-size: 12px;
   font-weight: 400;
   color: #7f8c8d;
@@ -250,12 +258,18 @@ ion-back-button {
   text-align: center;
   align-items: center;
 }
-.alingLeft {
-  text-align: left !important;
-}
 .alingRight {
   text-align: right !important;
   padding-right: 10%;
+}
+.textBlueCenteredTop{
+  color: #3498DB;
+  text-align: center;
+  align-items: center;
+  margin-top: -10px;
+}
+.alingLeft{
+text-align: left !important;
 }
 .alingLeftTop {
   text-align: left !important;

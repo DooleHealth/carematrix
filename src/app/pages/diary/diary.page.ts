@@ -6,6 +6,7 @@ import { IonSlides, LoadingController} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -13,6 +14,7 @@ export interface ItemDiary {
 export interface ListDrugByDate {
   date?: string;
   itemDrugs?: ItemDiary[];
+ 
 }
 @Component({
   selector: 'app-diary',
@@ -36,7 +38,8 @@ export class DiaryPage implements OnInit {
     private datePipe: DatePipe,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit() {
@@ -79,6 +82,12 @@ export class DiaryPage implements OnInit {
 
   transformDate(date) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
+
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM');
   }
 
   addItems(list){
@@ -365,5 +374,6 @@ export class DiaryPage implements OnInit {
     }
     return  this.translate.instant('diary.all_day')
   }
+
 }
 

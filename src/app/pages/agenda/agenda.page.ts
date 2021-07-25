@@ -58,7 +58,6 @@ export class AgendaPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
   }
 
  async ionViewDidEnter(){
@@ -66,6 +65,10 @@ export class AgendaPage implements OnInit {
     this.getAgenda()
   }
 
+  markDisabled = (date: Date) => {
+    //return date.getDay() == 0 || date.getDay() == 6;
+    return 0
+};
   getAgenda(){
     this.isLoading = true;
     return this.dooleService.getAPIagenda().subscribe(

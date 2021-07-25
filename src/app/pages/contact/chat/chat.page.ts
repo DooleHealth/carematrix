@@ -1,7 +1,10 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit,Inject, LOCALE_ID } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
+import { DatePipe, formatDate } from '@angular/common';
+import { LanguageService } from 'src/app/services/language.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -34,7 +37,7 @@ export class ShellMessageModel extends ShellModel {
 
 export class ShellChatModel extends ShellModel {
   messages: ShellMessageModel[];
-
+ 
   constructor() {
     super();
   }
@@ -55,12 +58,18 @@ export class ChatPage implements OnInit {
   dataStore: DataStore<Array<ShellChatModel>>;
   data: Array<ShellChatModel> & ShellModel;
   routeResolveData: ShellChatModel[];
+  myDate: String = new Date().toISOString();
 
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
 
-  constructor(private dooleService:DooleService, public authService: AuthenticationService) { }
+  constructor(
+  private dooleService:DooleService, 
+  public authService: AuthenticationService, 
+  @Inject(LOCALE_ID) private locale: string,
+  private translate: TranslateService, 
+  private languageService: LanguageService,) { }
 
   ngOnInit() {
 
@@ -77,6 +86,8 @@ export class ChatPage implements OnInit {
       console.log('[ChatPage] getAPIUserMessages()', res);
       this.chat = res;
       this.data = res;
+      console.log(this.data);
+      console.log(this.myDate);
     },
     (err) => { 
       console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message); 
