@@ -24,7 +24,7 @@ export class ActivityGoalPage implements OnInit {
   goals = [];
   ranges = [];
   valuesChart: any;
-  //loading: any;
+  isLoading = true;
   graphValues: any;
   graphDates: any;
   private title: any;
@@ -40,6 +40,7 @@ export class ActivityGoalPage implements OnInit {
     private loadingController: LoadingController,
     private languageService: LanguageService,
     private modalCtrl: ModalController,
+    private translate : TranslateService,
   ) { }
 
   ngOnInit() {
@@ -59,7 +60,7 @@ export class ActivityGoalPage implements OnInit {
     console.log('[ActivityGoalPage] loadData()', interval); 
     const loading = await this.loadingController.create();
     await loading.present();
-
+    this.isLoading = true
     let vArray = [];
     let dArray = [];
 
@@ -135,12 +136,13 @@ export class ActivityGoalPage implements OnInit {
 
       
       this.generateChart();
-    
+      this.isLoading = false
     }, error => {
-     
+      this.isLoading = false
       alert("error");
     },()=>{
       loading.dismiss();
+      this.isLoading = false
     });
   }
 
@@ -153,7 +155,7 @@ export class ActivityGoalPage implements OnInit {
 
       },
       title: {
-        text: null
+        text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
       },
       xAxis: {
         //categories: ['L', 'M', 'MX', 'J', 'V', 'S', 'D'],
@@ -303,7 +305,9 @@ export class ActivityGoalPage implements OnInit {
     let curr = new Date(this.max)
     curr.setDate(now)
     this.min = new Date(curr)
-    console.log('[ActivityGoalPage] lasWeek()', this.max.getDay());
+    if(this.min.getDate() == this.max.getDate() && this.min.getMonth() == this.max.getMonth())
+    this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM') }`
+    else
     this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM')} - ${this.formatSelectedDate(this.max, 'EEE d MMM')}`
   }
 

@@ -51,7 +51,7 @@
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30" startingDayWeek="1"
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
-    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter">
+    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter" startingDayMonth="1">
   </calendar>
   <ng-template #template let-view="view" let-row="row" let-col="col">
     <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">

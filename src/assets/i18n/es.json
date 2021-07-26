@@ -138,7 +138,8 @@
       },
       "activity_goal":{
         "definition": "Definición",
-        "normal_value": "Valores Normales:"
+        "normal_value": "Valores Normales:",
+        "no_data":"No hay datos a mostrar"
       },
       "activity":{
         "cal":"Cal",
