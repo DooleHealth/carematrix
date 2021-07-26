@@ -14,6 +14,8 @@ import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
   styleUrls: ['./activity-goal.page.scss'],
 })
 export class ActivityGoalPage implements OnInit {
+  es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
+  ca = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   private id;
   viewTitle = ''
   normalValue
@@ -54,6 +56,10 @@ export class ActivityGoalPage implements OnInit {
   ionViewDidEnter() {
     if (this.id)
       this.loadData('1d');
+  }
+
+  setLocale(){
+    return this.languageService.getCurrent();
   }
 
   async loadData(interval) {
@@ -202,6 +208,13 @@ export class ActivityGoalPage implements OnInit {
         name: this.units,
       }]
     });
+
+    HighCharts.setOptions({
+      lang: {
+         /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
+          weekdays: this.es
+      }
+  });
   }
 
   filterDate(data) {

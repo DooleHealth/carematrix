@@ -29,7 +29,7 @@
             <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length == 0 " >{{ 'no_data' | translate}}</div>
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
-                  <ion-grid routerLink="/activity-goal" [state]="{ id: slide.element_id}">
+                  <ion-grid routerLink="/activity-goal" [state]="{ id: slide.element_id, header:slide?.element?.name}">
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
                       <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
                       <p class="txtContactLittle">{{'goals.goals' | translate}} {{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
