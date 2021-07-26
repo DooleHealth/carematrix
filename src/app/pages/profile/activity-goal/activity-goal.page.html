@@ -57,7 +57,7 @@
   <ion-row *ngIf="this.values &&  this.values.length > 0"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatDate(values[0].date_value) | date: 'dd/MM/y'}}</ion-col></ion-row>
  </div>
 
-<div id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
+<div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
 
 <div *ngIf="goals !== undefined &&  goals.length >0"> 
   <div class="main-container">
@@ -97,5 +97,22 @@
       <ion-col size="8"><ion-card-title class="txtTitleGoals3">Controla tus niveles de glucosa</ion-card-title><p class="txtTitleGoals3">Descubre los mejores alimentos para mejorar tus niveles de glucosa </p></ion-col>
     </ion-row>
   </ion-card> -->
+
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="card"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+  </ng-template>
   
 </ion-content>
