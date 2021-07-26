@@ -15,7 +15,7 @@ import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 })
 export class ActivityGoalPage implements OnInit {
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
-  ca = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
+  ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
   private id;
   viewTitle = ''
   normalValue
@@ -212,7 +212,7 @@ export class ActivityGoalPage implements OnInit {
     HighCharts.setOptions({
       lang: {
          /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
-          weekdays: this.es
+          weekdays: (this.setLocale() == 'es')? this.es: this.ca
       }
   });
   }
