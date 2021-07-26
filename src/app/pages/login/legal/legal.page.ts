@@ -32,18 +32,18 @@ export class LegalPage implements OnInit {
         if(res.success){
           this.legal = res.legalTerm
           if(this.legal === undefined || this.legal === null ){
-            let message = this.translate.instant('alert.no_get_conditions_label')
+            let message = this.translate.instant('legal.no_get_conditions_label')
             this.showAlert(message)
           }
         }
         else{
-          let message = this.translate.instant('alert.error_conditions_label')
+          let message = this.translate.instant('legal.error_conditions_label')
           this.showAlert(message, 'error')
         }
 
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
-          let message = this.translate.instant('alert.error_conditions_label')+' '+ err.message
+          let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
           this.showAlert(message, 'error')
           throw err; 
       });
