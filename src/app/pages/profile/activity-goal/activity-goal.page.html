@@ -46,7 +46,7 @@
        <h3 style="text-align: center; font-size: 20px;">{{ viewTitle | titlecase }}</h3>
      </ion-col>
      <ion-col size="2" class="textBlueCentered1">
-       <ion-button fill="clear" (click)="next()" [disabled]="false">
+       <ion-button fill="clear" (click)="next()" [disabled]="disabledButton()">
          <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
        </ion-button>
      </ion-col>

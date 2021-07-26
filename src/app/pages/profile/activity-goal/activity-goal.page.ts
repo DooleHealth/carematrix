@@ -31,7 +31,7 @@ export class ActivityGoalPage implements OnInit {
   interval = '';
   min: Date = new Date();
   max: Date = new Date();
-  cur: Date = new Date();
+  curr: Date = new Date();
   segmentFilter = "1d";
   constructor(
     private dooleService: DooleService,
@@ -362,6 +362,12 @@ export class ActivityGoalPage implements OnInit {
       }
     }
     this.segmentChanged(event)
+  }
+
+  disabledButton(){
+    if(this.max >= this.curr)
+      return true
+    return false
   }
 
 }
