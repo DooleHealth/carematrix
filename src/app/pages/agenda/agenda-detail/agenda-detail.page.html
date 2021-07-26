@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" [class.isDisabled]="this.isSaving">
       <ion-back-button text=" "></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'appointment.header_appointment' | translate}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="primary" routerLink="/agenda/reminder-add" [state]="{agenda_id: this.event?.id}" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
+    <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
+      <ion-button color="primary" (click)="addReminder()" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
       <ion-button color="primary"  (click)="addCalendar(this.event)"><ion-icon name="calendar-outline"></ion-icon></ion-button>
     </ion-buttons>
@@ -27,9 +27,6 @@
       <ion-item>
         <ion-label>{{ 'appointment.field_modality' | translate}}</ion-label>
         <ion-label class="textMedium">{{(this.event?.online == 1)? ('appointment.online' | translate) : ('appointment.face_to_face' | translate)}}</ion-label>
-        &nbsp;
-        <ion-icon *ngIf="this.event?.online == 1 && this.tokboxSession" (disabled)="this.disabled" name="videocam-outline"  color="primary" (click)="this.startDooleVideocall()"></ion-icon>
-       
       </ion-item>
       <ion-item>
         <ion-label>{{ 'appointment.field_date' | translate}}</ion-label>
@@ -43,18 +40,21 @@
         <ion-text class="textMedium"  >{{staff?.name}}</ion-text>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-      <ion-item [lines]="(event?.site !== null)? 'none': 'full' ">
-        <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
-      </ion-item>
-<!--       <ion-item>
-        <ion-label text-wrap class="textMediumLeft">Centro Asociado Santa Marina</ion-label>
-      </ion-item> -->
-      <ion-item *ngIf="event?.site">
-<!--         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11969.313337812735!2d2.1941609!3d41.4103908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1623755939112!5m2!1ses!2ses"
-          width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
-          <div [innerHtml]="event?.site"></div>
-      </ion-item>
+      <div *ngIf="!this.isLoading && !this.event?.online">
+        <ion-item [lines]="(event?.site !== null)? 'none': 'full' ">
+          <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
+        </ion-item>
+  <!--       <ion-item>
+          <ion-label text-wrap class="textMediumLeft">Centro Asociado Santa Marina</ion-label>
+        </ion-item> -->
+        <ion-item>
+           <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11969.313337812735!2d2.1941609!3d41.4103908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1623755939112!5m2!1ses!2ses"
+            width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <!-- <div [innerHtml]="event?.site"></div> -->
+        </ion-item>
+      </div>
+     
 
       <ion-item>
         <ion-label>{{ 'appointment.field_appointment_type' | translate}}</ion-label>
@@ -94,12 +94,19 @@
     </ion-col>
   </ion-row>
 
-  <div class="buttonContainer">
-    <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" routerLink="/agenda/agenda-edit" 
-    [state]="{event: event}">
-      {{ 'appointment.edit_appointment' | translate}}</ion-button>
+  <div *ngIf="this.isSaving else buttons" class="spinnerCenter">
+    <ion-spinner  name="bubbles" ></ion-spinner>
+    </div>  
+  <ng-template #buttons>
+    <div class="buttonContainer">
+      <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
+        {{ 'appointment.edit_appointment' | translate}}</ion-button>
+    
+      <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+        {{ 'appointment.button_delete' | translate}}</ion-button>
+    </div>
+  </ng-template>
   
-    <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
-      {{ 'appointment.button_delete' | translate}}</ion-button>
-  </div>
+ 
+
 </ion-content>

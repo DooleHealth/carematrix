@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -10,6 +10,8 @@ import { AgendaDetailPage } from './agenda-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ReminderAddPage } from '../reminder-add/reminder-add.page';
+import { ReminderAddPageModule } from '../reminder-add/reminder-add.module';
 
 @NgModule({
   imports: [
@@ -18,9 +20,11 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     ComponentsModule,
     AgendaDetailPageRoutingModule,
+   
+    ReactiveFormsModule,
     TranslateModule,
   ],
-  providers: [ InAppBrowser],
+  providers: [InAppBrowser],
   declarations: [AgendaDetailPage]
 })
 export class AgendaDetailPageModule {}

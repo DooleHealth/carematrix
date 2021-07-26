@@ -1,132 +1,129 @@
 @font-face {
-    font-family: "Roboto-Regular";
-    src: url("/assets/fonts/Roboto-Regular.ttf");
-    color: #2C3E50;
-  }
+  font-family: "Roboto-Regular";
+  src: url("/assets/fonts/Roboto-Regular.ttf");
+  color: #2c3e50;
+}
 
- /* Global styles of the components*/
+/* Global styles of the components*/
 
 /* ion-icon {
     color:#7f8c8d;
  }
 */
-ion-header{
-  --ion-background-color: #fafafa!important;
+ion-header {
+  --ion-background-color: #fafafa !important;
 }
-ion-searchbar{
+ion-searchbar {
   --ion-background-color: white !important;
 }
-ion-card{
+ion-card {
   border-radius: 10px;
   overflow: hidden;
 }
 ion-segment-button {
   font-size: smaller;
-  }
+}
 .whiteBackground {
   --ion-background-color: white !important;
 }
 .primaryIcon {
-  color:#3498DB;
+  color: #3498db;
 }
 .paddingGrid {
   margin-top: 10%;
   margin-bottom: 10%;
 }
-.paddingTop{
+.paddingTop {
   padding-top: 5%;
 }
 ion-item-divider {
-    background-color: rgb(253, 253, 252);
-    margin-bottom: 15px;
-    padding: 3%;
-    border-radius: 10px;
-    height: 45px;
-  }
+  background-color: rgb(253, 253, 252);
+  margin-bottom: 15px;
+  padding: 3%;
+  border-radius: 10px;
+  height: 45px;
+}
 
-  ion-back-button {
-    display: block;
-    color:#3498DB;
-  }
-  
-  /* Global classes*/
+ion-back-button {
+  display: block;
+  color: #3498db;
+}
 
-  .main-container {
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top:10%;
-    margin-bottom: 5%;
-  }
-  .main-container2 {
+/* Global classes*/
+
+.main-container {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+.main-container2 {
   padding-left: 5%;
   padding-top: 5%;
   background-color: white;
-  }
-  .main-container3 {
-    padding-left: 5%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    
-    }
-  .buttonContainer{
-    margin-left: 2%;
-    margin-right: 2%;
-  }
-  .toolbarTitle{
-text-align: center;
-  }
-
-  .bold{
-      font-weight: 800;
-  }
-  .cardProfile2{
-    --ion-background-color: white!important;
-    font-size: 14px;
-    font-weight: 400;
-    min-width: 300px;
+}
+.main-container3 {
+  padding-left: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+.buttonContainer {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.toolbarTitle {
+  text-align: center;
 }
 
-.cardProfile{
-  --ion-background-color: white!important;
+.bold {
+  font-weight: 800;
+}
+.cardProfile2 {
+  --ion-background-color: white !important;
   font-size: 14px;
   font-weight: 400;
- 
+  min-width: 300px;
 }
-.cardProfilePadding{
-  --ion-background-color: white!important;
+
+.cardProfile {
+  --ion-background-color: white !important;
+  font-size: 14px;
+  font-weight: 400;
+}
+.cardProfilePadding {
+  --ion-background-color: white !important;
   font-size: 14px;
   font-weight: 400;
   padding: 3%;
 }
 
-.cardProfilePaddingBottom{
-  --ion-background-color: white!important;
+.cardProfilePaddingBottom {
+  --ion-background-color: white !important;
   font-size: 14px;
   font-weight: 400;
   padding-bottom: 3%;
-
 }
-.cardProfilePaddingBottomMinHeight{
-  --ion-background-color: white!important;
+.cardProfilePaddingBottomMinHeight {
+  --ion-background-color: white !important;
   font-size: 14px;
   font-weight: 400;
   padding-bottom: 3%;
 }
 /*Custom Text*/
 
-.txtTitle{
+.txtTitle {
   font-size: 18px;
   font-weight: 700;
   margin-left: 5%;
 }
-.txtTitleGray{
+.txtTitleGray {
   font-size: 18px;
   font-weight: 700;
   margin-left: 5%;
   color: #7f8c8d;
 }
 
-.txtTitle2{
+.txtTitle2 {
   font-size: 18px;
   font-weight: 700;
   margin-left: 5%;
@@ -134,68 +131,73 @@ text-align: center;
   padding-bottom: 5%;
 }
 
-.txtTitleNoMargin{
+.txtTitleNoMargin {
   font-size: 18px;
   font-weight: 700;
 }
-.txtTitleGoals{
+.txtTitleGoals {
   font-size: 14px;
-  font-weight: 500; 
+  font-weight: 500;
   text-align: left;
 }
-.txtTitleGoalsDarker{
+.txtTitleGoalsDarker {
   font-size: 14px;
-  font-weight: 600; 
+  font-weight: 600;
   text-align: left;
   color: #000000;
 }
 
-.txtTitleGoals2{
+.txtTitleGoals2 {
   font-size: 14px;
   font-weight: 500;
- 
 }
-.txtTitleGoals3{
+.txtTitleGoals3 {
   font-size: 14px;
-  font-weight: 500; 
+  font-weight: 500;
   padding-left: 15px;
-
 }
-.txtTitleGoalsLittle{
+.txtTitleGoalsLittle {
   font-size: 12px;
   font-weight: 400;
 }
-.txtTracking{
+.txtTracking {
   font-size: 12px;
   font-weight: 400;
   margin-top: -15px;
 }
-.txtTitleGoalsLittle2{
+.txtTitleGoalsLittle2 {
   font-size: 12px;
   font-weight: 400;
   padding-top: 5%;
   text-align: justify;
 }
-.txtTitleGoalsLittle3{
+.txtTitleGoalsLittle3 {
   font-size: 12px;
   font-weight: 400;
   text-align: justify;
   margin: 3%;
-  
 }
-.txtTitleGoalsGreenBig{
+.txtTitleGoalsGreenBig {
   font-size: 24px;
   font-weight: 700;
-  color: #2ECC71;
+  color: #2ecc71;
 }
-.txtTitleBig{
+.txtTitleBig {
   font-size: 24px;
   font-weight: 700;
 }
-.txtTitleTrackingDate{
+.txtTitleTrackingDate {
   font-size: 12px;
   font-weight: 400;
   color: #7f8c8d;
+}
+.txtTitleChatDate{
+  font-size: 12px;
+  font-weight: 400;
+  color: #7f8c8d;
+  text-align: right;
+  margin-top: -3px;
+  
 }
 .txtTitleTrackingLittle{
   font-size: 12px;
@@ -203,7 +205,7 @@ text-align: center;
   color: #7f8c8d;
   margin-top: -15px;
 }
-.txtContactLittle{
+.txtContactLittle {
   font-size: 12px;
   font-weight: 400;
   color: #7f8c8d;
@@ -212,113 +214,118 @@ text-align: center;
   padding-left: 3%;
   padding-right: 3%;
 }
-.txtPaddingLeft{
-padding-left: 5%;
+.txtPaddingLeft {
+  padding-left: 5%;
 }
 .textMedium {
   text-align: right;
   color: #7f8c8d;
- 
 }
 .textMediumLeft {
   text-align: left;
-  color: #7f8c8d!important;
+  color: #7f8c8d !important;
 }
 
 .textMediumGreen {
   text-align: right;
-  color: #27AE60;
+  color: #27ae60;
 }
 .textMediumGreen {
   text-align: right;
-  color: #27AE60;
+  color: #27ae60;
 }
 .textBlue {
-  color: #3498DB;
+  color: #3498db;
   font-size: 12px;
   font-weight: 400;
   text-align: left;
 }
 .textBluePadding {
-  color: #3498DB;
+  color: #3498db;
   font-size: 12px;
   font-weight: 400;
   text-align: left;
   padding-left: 10%;
- 
 }
 .textBlueCentered {
-  color: #3498DB;
+  color: #3498db;
   font-size: 12px;
   font-weight: 400;
   text-align: center;
 }
-.textBlueCentered1{
+.textBlueCentered1 {
+  color: #3498db;
+  text-align: center;
+  align-items: center;
+}
+.alingRight {
+  text-align: right !important;
+  padding-right: 10%;
+}
+.textBlueCenteredTop{
   color: #3498DB;
   text-align: center;
   align-items: center;
+  margin-top: -10px;
 }
 .alingLeft{
 text-align: left !important;
 }
-.alingRight{
-  text-align: right  !important;
-padding-right: 10%;
-  }
-.alingLeftTop{
+.alingLeftTop {
   text-align: left !important;
   padding-left: 3%;
   margin-top: 3%;
-  }
-.txtSubtitle{
+}
+.txtSubtitle {
   font-size: 14px;
-  font-weight: 600; 
+  font-weight: 600;
 }
 
 /*Custom Buttons*/
 
-.deleteButton{
+.deleteButton {
   color: red !important;
   --background: #ffffff;
 }
-.buttonLink{
-  color: #3498DB;
-  --box-shadow:none; 
+.buttonLink {
+  color: #3498db;
+  --box-shadow: none;
 }
-.buttonClose{
+.buttonClose {
   color: red;
-  --box-shadow:none; 
+  --box-shadow: none;
 }
-.imgCard{
-// background-image: url(https://img.mobiscroll.com/demos/card_5.png); 
-background-repeat: no-repeat;
-background-size:cover; margin: -10px;
-background-position: center;
-}
-
-.noMargin{
-margin-bottom: -5%;
---background: #ffffff!important;
+.imgCard {
+  // background-image: url(https://img.mobiscroll.com/demos/card_5.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: -10px;
+  background-position: center;
 }
 
-.white{
-  --background: #ffffff!important;
+.noMargin {
+  margin-bottom: -5%;
+  --background: #ffffff !important;
 }
 
-  /* IMAGES */
-.img-wrapper{
-    background-size: 100% auto;
-    border-radius: 50% !important;
-    overflow: hidden;
-    max-height: 100px;
-    max-width: 100px;
-    display: block;
-    margin: auto;
-    margin-top: 3%;
+.white {
+  --background: #ffffff !important;
 }
-.img-wrapper3{
+
+/* IMAGES */
+.img-wrapper {
+  background-size: 100% auto;
+  border-radius: 50% !important;
+  overflow: hidden;
+  max-height: 100px;
+  max-width: 100px;
+  display: block;
+  margin: auto;
+  margin-top: 3%;
+}
+.img-wrapper3 {
   background-size: 80% auto;
-  background-color: #3498DB;
+  background-color: #3498db;
   border-radius: 50% !important;
   overflow: hidden;
   max-width: 80%;
@@ -326,9 +333,8 @@ margin-bottom: -5%;
   display: block;
   margin: auto;
   object-fit: cover;
-
 }
-.img-wrapper-doctors{
+.img-wrapper-doctors {
   background-size: 100% auto;
   border-radius: 50% !important;
   overflow: hidden;
@@ -336,7 +342,6 @@ margin-bottom: -5%;
   max-width: 70px;
   display: block;
   margin-left: 0%;
- 
 }
 
 .iconNoData {
@@ -344,24 +349,34 @@ margin-bottom: -5%;
   display: block;
   margin: auto;
   padding-top: 30%;
-  color: #7F8C8D;
-  ;
+  color: #7f8c8d;
 }
 .iconNoDataRow {
-  zoom: 2; 
+  zoom: 2;
   padding-top: 6%;
-  color: #7F8C8D;
+  color: #7f8c8d;
 }
 /*MEDIA QUERIES IPHONE 5 PORTRAIT*/
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px)
-and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) and (orientation:portrait)
-{
-  .cardProfile2{
-    --ion-background-color: white!important;
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) and (orientation: portrait) {
+  .cardProfile2 {
+    --ion-background-color: white !important;
     font-size: 14px;
     font-weight: 400;
     min-width: 250px;
+  }
 }
 
+/* Notfication classes */
+.success {
+  background-color: #3498db;
+}
+.spinnerCenter {
+  margin: 20px 40px; 
+  text-align: center;
+}
+
+.custom-class {
+  color:#DFF2BF; 
+  background-color: #4F8A10;
 }

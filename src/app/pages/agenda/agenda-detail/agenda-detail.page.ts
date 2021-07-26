@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
@@ -11,6 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { OpentokService } from 'src/app/services/opentok.service';
+import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
+import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -21,10 +24,12 @@ export class AgendaDetailPage implements OnInit {
   event: any = {}
   tokboxSession: any;
   disabled : string;
+  isSaving: boolean;
+  isLoading: boolean = true;
   constructor(
-    private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
+    public datepipe: DatePipe, 
     public alertController: AlertController,
     public nav: NavController,
     private iab: InAppBrowser, 
@@ -49,6 +54,7 @@ export class AgendaDetailPage implements OnInit {
 
   // TODO: remove (agenda detail in state.event)
   getDetailAgenda(){ 
+    this.isLoading = true;
     this.dooleService.getAPIagendaID(this.event?.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
@@ -62,6 +68,8 @@ export class AgendaDetailPage implements OnInit {
           console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
+      },()=>{
+        this.isLoading = false;
       });
   }
 
@@ -89,27 +97,28 @@ export class AgendaDetailPage implements OnInit {
   }
 
   async deleteReminder(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isSaving = !this.isSaving;
     this.dooleService.deleteAPIaddAgenda(this.event.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
         if(res.success){
           let message = this.translate.instant("appointment.message_deleted_appointment")
-          this.showAlert(message)
+          this.notification.showSuccess(message);
+          this.nav.navigateBack('/agenda');
+          //this.showAlert(message)
         }else{
           let message = this.translate.instant("appointment.error_message_delete_appointment")
           alert(message)
         }
-        loading.dismiss();
+
        },(err) => { 
-        loading.dismiss();
+       
           console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isSaving = !this.isSaving;
       };
   }
 
@@ -249,24 +258,40 @@ export class AgendaDetailPage implements OnInit {
       },
       (err) => { console.log(err); }
     )
+  }
 
-    //funciona en ios, no en android:
-    /*this.calendar.createEvent(this.agenda.title,this.agenda.lugar,"",startDate,endDate).then(
-      (msg) => {
-        let alert = this.alertCtrl.create({
-          title: 'Agenda',
-          subTitle: 'Añadido correctamente',
-          buttons: [{
-            text: 'Ok',
-            handler: data => {
-              this.navCtrl.pop();
-            }
-          }]
-        });
-        alert.present();
-       },
-      (err) => { console.log(err); }
-    )*/
+  async addReminder(){
+    const modal = await this.modalCtrl.create({
+      component: ReminderAddPage,
+      componentProps: { typeId: this.event?.id, type: 'element', isNewReminder:true },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+
+        if(result?.data['error']){
+         //TODO: handle error message
+        }
+    });
+    await modal.present();
+  }
+
+  async editAgenda(event){
+    const modal = await this.modalCtrl.create({
+      component: AgendaEditPage,
+      componentProps: {event: event },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+
+        if(result?.data['error']){
+         //TODO: handle error message
+        }
+    });
+
+    await modal.present();
+
   }
 
 }

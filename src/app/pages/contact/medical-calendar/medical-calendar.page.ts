@@ -86,15 +86,14 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
-    private alertCtrl: AlertController,
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService, 
     public languageService: LanguageService,
     private dooleService: DooleService,
     private alertController: AlertController,
     public datepipe: DatePipe,
-    private location: Location,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    
   ) {}
 
   ngOnInit() {

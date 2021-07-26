@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { IEvent } from 'ionic2-calendar/calendar';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
 
 export interface DayEvent {
   date?: string;
@@ -23,6 +25,7 @@ export class ListAppointmentPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private languageService: LanguageService,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -163,6 +166,23 @@ export class ListAppointmentPage implements OnInit {
   next(){
     ++this.month
     this.filterMonth()
+  }
+
+  async addAgenda(){
+    const modal = await this.modalCtrl.create({
+      component:  AgendaEditPage,
+      componentProps: { },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+
+        if(result?.data['error']){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }
+    });
+    await modal.present();
   }
 
 }

@@ -5,70 +5,65 @@
     </ion-buttons>
     <ion-title>{{ 'chat.header' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" routerLink="medical-directory" [state]="{isChat:true}"><ion-icon name="add"></ion-icon></ion-button>
+      <ion-button color="primary" routerLink="medical-directory" [state]="{isChat:true}">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen class="whiteBackground">
   <ion-list>
-    <div *ngFor="let post of this.chat">
-     
+    <div *ngFor="let post of this.data">
+
       <div *ngIf="!post.recipients">
-        <ion-item lines="none" >
+        <ion-item lines="none">
           <ion-thumbnail slot="start">
             <app-aspect-ratio [ratio]="{w:1, h:1}">
-              <app-image-shell
-                animation="spinner"
-                [src]="null"
-                [alt]="'Sample Image'"
-                class="img-wrapper-doctors"
-              ></app-image-shell>
+              <app-image-shell animation="spinner" [src]="null" [alt]="'Sample Image'" class="img-wrapper-doctors">
+              </app-image-shell>
             </app-aspect-ratio>
           </ion-thumbnail>
 
           <ion-label>
             <h2 class="user-name">
-              <app-text-shell
-                class="user-name"
-                [data]="null"
-                animation="bouncing"
-              ></app-text-shell>
+              <app-text-shell class="user-name" [data]="null" animation="bouncing"></app-text-shell>
             </h2>
           </ion-label>
         </ion-item>
       </div>
-      
       <div *ngIf="post?.recipients?.length > 0">
-          
-      <div *ngFor="let item of post?.recipients; let i = index">
-       
-        <ion-item  *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation" [state]="{staff:item, chat: post.message?.message_header_id }" >
-          <ion-thumbnail slot="start">
-            <app-aspect-ratio [ratio]="{w:1, h:1}">
-              <app-image-shell
-                animation="spinner"
-                [src]="item?.image"
-                [alt]="'Sample Image'"
-                class="img-wrapper-doctors"
-              ></app-image-shell>
-            </app-aspect-ratio>
-          </ion-thumbnail>
-
-          <ion-label>
-            <h2 class="user-name">
-              <app-text-shell
-                class="user-name"
-                [data]="item?.name"
-                animation="bouncing"
-              ></app-text-shell>
-            </h2>
-          </ion-label>
-        </ion-item>
+        <div *ngFor="let item of post?.recipients; let i = index">
+          <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation"
+            [state]="{staff:item, chat: post.message?.message_header_id }">
+            <ion-thumbnail slot="start">
+              <app-aspect-ratio [ratio]="{w:1, h:1}">
+                <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
+                  class="img-wrapper-doctors"></app-image-shell>
+              </app-aspect-ratio>
+            </ion-thumbnail>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="strech" size=8 class="user-name">
+                  <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
+                </ion-col>
+                <ion-col class="strech" size=4>
+                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) != myDate.slice(0, 10)">
+                    {{post?.message?.updated_at.slice(0, 10)}}</p>
+                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) == myDate.slice(0, 10)">
+                    {{post?.message?.updated_at.slice(11, 16)}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p class="strech txtTitleGoals">{{post?.message?.content}}</p>          
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </div>
       </div>
-      </div>
-      
-   
     </div>
+
   </ion-list>
 </ion-content>

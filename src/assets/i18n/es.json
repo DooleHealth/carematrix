@@ -337,6 +337,7 @@
         "field_repeat": "Repetir",
         "field_finish_repetition": "Terminar repetición",
         "field_notice": "Avisar",
+        "field_time": "Hora",
         "field_show_as": "Mostrar como",
         "field_comments_doctor": "Comentarios para el médico",
         "placeholder_comments":"Ingresar más información aquí...",
@@ -362,8 +363,14 @@
         "frequency":{
           "daily":"Diario",
           "day":"Un día",
+          "custom": "Personalizado",
           "week": "Lun a Vie",
-          "custom": "Personalizado"
+          "week1": "1 semana",
+          "week2": "2 semanas",
+          "week3": "3 semanas",
+          "month1": "1 mes",
+          "month2": "2 meses",
+          "month3": "3 meses"
         }
       },
       "appointment":{
