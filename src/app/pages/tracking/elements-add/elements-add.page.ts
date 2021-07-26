@@ -16,18 +16,21 @@ export class ElementsAddPage implements OnInit {
   group: any = []
   element: any
   isSubmittedData = false
+  isSubmittedCategory = false
   date: any;
   isNewValueElement = false
   id:any
   nameElement: any
   units:any
+  min
+  max
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
     private navController: NavController,
-    private alertController: AlertController
+    private alertController: AlertController,
   ) { 
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
@@ -53,9 +56,19 @@ export class ElementsAddPage implements OnInit {
   submit(){
     console.log("[ElementsAddPage] submit()");
     this.isSubmittedData = true
+    this.isSubmittedCategory = true
     if(this.form.invalid)
     return
-    this.addElement()
+    if(this.isValueCorrect(this.form.get('measure').value))
+      this.addElement()
+    else
+      this.messageInvalidValue()
+  }
+
+  messageInvalidValue(){
+    let message = this.translate.instant('element.value_invalid')
+    this.dooleService.presentAlert(`${message} ${this.min} - ${this.max} ${this.units}`)
+    this.form.get('measure').setValue('')
   }
 
   getIdElement(){
@@ -64,9 +77,9 @@ export class ElementsAddPage implements OnInit {
     this.units = history.state.units
     console.log('[ElementsAddPage] getIdElement()', this.id);
     if(this.id){
-      this.getElement()
+      this.isNewValueElement = true
+      this.getElementAvailable()
     }else{
-      //this.getCategoryElementList()
       this.getElementsList()
     }
   }
@@ -124,23 +137,6 @@ export class ElementsAddPage implements OnInit {
     await alert.present();
   }
 
-  async getCategoryElementList(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-    this.dooleService.getAPIcategory().subscribe(
-      async (res: any) =>{
-         this.groupElements = []
-        console.log('[ElementsAddPage] getCategoryElementList()', await res);
-        this.groupElements = res
-        loading.dismiss();
-       },async (err) => { 
-          alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[ElementsAddPage] getCategoryElementList() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
-          throw err; 
-      });
-  }
-
   async getElementsList(){
     const loading = await this.loadingController.create();
     await loading.present();
@@ -185,23 +181,25 @@ export class ElementsAddPage implements OnInit {
     this.groupElements = this.groupElements.filter( group => group.elements.length > 0)
   }
 
-  async getElement(){
-/*     const loading = await this.loadingController.create();
-    await loading.present(); */
-    this.dooleService.getAPIelementID(this.id).subscribe(
+  async getElementAvailable(){
+    this.dooleService.getAPIelementAvailableID(this.id).subscribe(
       async (res: any) =>{
-        console.log('[ElementsAddPage] getElement()', await res);
-        this.isNewValueElement = true
-        this.nameElement = res.name;
-        this.units = res.units
-        this.element = {id: this.id, name: this.nameElement, units: this.units}
-        this.form.get('data').setValue(this.nameElement)
-        this.form.get('category').setValue(this.nameElement)
-        //loading.dismiss();
+        console.log('[ElementsAddPage] getElementAvailable()', await res);
+        this.element = res.elements[0]
+        if(this.element){
+          this.nameElement = this.element.name;
+          this.units = this.element.units
+          this.min = this.element.min
+          this.max = this.element.max
+          //this.element = {id: this.id, name: this.nameElement, units: this.units}
+          if(this.isNewValueElement){
+            this.form.get('data').setValue(this.nameElement)
+            this.form.get('category').setValue(this.nameElement)
+          }
+        }
        },async (err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[ElementsAddPage] getElement() ERROR(' + err.code + '): ' + err.message); 
-          //loading.dismiss();
+          console.log('[ElementsAddPage] getElementAvailable() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
@@ -209,12 +207,27 @@ export class ElementsAddPage implements OnInit {
   selectedCategory(){
     let category = this.form.get('category').value
     this.group = this.groupElements.find(group =>(group.group === category))
+    //this.element = undefined
+    this.form.get('data').setValue('')
   }
 
   selectedElement(){
     let name = this.form.get('data').value
     this.element = this.group.elements.find(element =>(element.name === name))
-    this.form.get('units').setValue( this.element.units)
+    if(this.element){
+      this.form.get('units').setValue( this.element.units)
+      this.id = this.element.id
+      this.getElementAvailable()
+    }
+  }
+
+  isValueCorrect(value){
+    if(value >= this.min && value <= this.max){
+      return true
+    }
+    else{
+      return false
+    }
   }
 
 }

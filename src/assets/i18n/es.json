@@ -447,7 +447,8 @@
           "field_measure": "Valor",
           "field_units": "Unidades",
           "alert_message_add_element": "Los datos ha sido añadido correctamente",
-          "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor"
+          "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
+          "value_invalid":"El valor no es válido. Ingresa un valor de"
 
       },
       "no_data": "En este momento no hay datos para mostrar",

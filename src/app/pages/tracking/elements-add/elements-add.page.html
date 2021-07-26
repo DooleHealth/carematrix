@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
     <ion-button fill="clear" slot="end"  (click)="submit()">
-      OK
+      {{ 'button.ok' | translate}}
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -16,9 +16,10 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'element.field_category' | translate}}</ion-label>
-        <ion-select interface="action-sheet" (ionChange)="selectedCategory()" formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
+        <ion-select interface="action-sheet"  (ionChange)="selectedCategory(); isSubmittedCategory = false" formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
           <ion-select-option *ngFor="let group of groupElements" [value]="group.group">{{group.group}}</ion-select-option>
         </ion-select>
+<!--         <ion-note *ngIf="this.isSubmittedCategory && this.form.get('category').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
       </ion-item>
 
       <ion-item lines="none" *ngIf="this.group?.elements || isNewValueElement">
@@ -38,9 +39,9 @@
         <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
       </ion-item>
 
-      <ion-item lines="none">
+      <ion-item lines="none" *ngIf="this.element">
         <ion-label>{{ 'element.field_units' | translate}}</ion-label>
-        <ion-text slot="end">{{this.element.units}}</ion-text >
+        <ion-text slot="end">{{this.element?.units}}</ion-text >
       </ion-item>
     </ion-list>
   </ion-card>

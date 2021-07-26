@@ -1,15 +1,15 @@
 
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="close()">
-        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+      <ion-button  (click)="close()">
+        <ion-icon color="primary" name="chevron-back-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{'medical_calendar.header' | translate}}</ion-title>
+      <ion-title class="toolbarTitle">{{'medical_calendar.header' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="save()">
-        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      <ion-button color="primary" (click)="save()">
+        {{'button.ok' | translate}}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,22 +20,21 @@
    <ion-row class="textBlueCentered1, header-change-month">
      <!-- Move back one screen of the slides -->
     <ion-col size="2">
-      <ion-button fill="clear" (click)="back()">
+      <ion-button fill="clear" (click)="back()"  class="textBlueCentered1">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary" ></ion-icon>
       </ion-button>
     </ion-col>
- 
-    <ion-col size="8" class="textBlue">
-      <h2 style="text-align: center;">{{ viewTitle | titlecase }}</h2>
+    <ion-col size="8" class="textBlue; textBlueCentered1">
+      <h3 style="text-align: center;">{{ viewTitle | titlecase }}</h3>
     </ion-col>
-    <ion-col size="2">
+    <ion-col size="2" class="textBlueCentered1">
       <ion-button fill="clear" (click)="next()">
         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>
 
-  <calendar
+  <calendar 
   *ngIf="modalReady"
   [eventSource]="eventSource"
   [calendarMode]="calendar.mode"
@@ -68,7 +67,7 @@
       
       <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text></ion-row>
 
-      <ion-row>
+      <ion-row class="blanco">
         <ng-container *ngIf="!routeResolveData">
           <div style="padding: 20px 40px; text-align: center;">
             <ion-spinner></ion-spinner>
@@ -92,7 +91,7 @@
             </ion-grid>
         </div>
       
-          <ng-template #slots>
+          <ng-template #slots class="blanco">
           <ng-container 
           *ngFor="let item of this.eventSource | paginate: { itemsPerPage: 30, currentPage: page };let i = index"
         >
@@ -105,7 +104,7 @@
           </ion-chip>
         </ng-container>
       </ng-template>
-        <div *ngIf="this.timeSlots.length > 0">
+        <div *ngIf="this.timeSlots.length > 0" class="blanco">
           <ion-row style="margin-top: -4%; margin-left: 2%; margin-right: 2%">
             <div class="clearfix">
               <ion-col size="12" style="text-align: left">

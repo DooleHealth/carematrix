@@ -742,6 +742,17 @@ export class DooleService {
     );
   }
 
+  getAPIelementAvailableID(id: Object): Observable<any> {
+    let path = `element/available/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIelementAvailableID(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIcategory(): Observable<any> {
     let path = 'user/element_category';
     const endpoint = this.api.getEndpoint(path);
