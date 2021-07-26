@@ -562,7 +562,7 @@
         "reason_appointment": "Motivo de la cita",
         "attachments": "Documentos Adjuntos",
         "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-        "button_videocall": "Confirmar Videollamada"
+        "button_videocall": "Confirmar cita"
       },
       "bookings":{
         "header":"Reservar",
@@ -570,8 +570,8 @@
         "reason_appointment": "Motivo de la cita",
         "attachments": "Documentos Adjuntos",
         "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-        "button_videocall": "Confirmar Videollamada",
-        "button_videocall_charge": "Confirmar videollamada con pago"
+        "button_videocall": "Confirmar cita",
+        "button_videocall_charge": "Confirmar cita con pago"
       },      
       "chat":{
         "header":"Chat"
