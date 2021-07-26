@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import * as HighCharts from 'highcharts';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 
 @Component({
@@ -11,6 +13,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class ActivityGoalPage implements OnInit {
   private id;
+  viewTitle = ''
   normalValue
   description
   graphics = []
@@ -28,10 +31,12 @@ export class ActivityGoalPage implements OnInit {
   interval = '';
   min: Date = new Date();
   max: Date = new Date();
+  cur: Date = new Date();
   segmentFilter = "1d";
   constructor(
     private dooleService: DooleService,
     private loadingController: LoadingController,
+    private languageService: LanguageService,
   ) { }
 
   ngOnInit() {
@@ -39,6 +44,7 @@ export class ActivityGoalPage implements OnInit {
     this.header = history.state.header;
     console.log('[ActivityGoalPage] ngOnInit()', this.id); 
     //this.loadData('1m');
+    this.viewTitle = this.formatSelectedDate(this.min, 'EEEE, d MMMM')
   }
 
   ionViewDidEnter() {
@@ -54,8 +60,6 @@ export class ActivityGoalPage implements OnInit {
     let vArray = [];
     let dArray = [];
 
-/*     var dict = [];
-    dict.push({ key: "interval", value: interval }); */
     this.dooleService.getAPIgraphicsElement(this.id, interval).subscribe(async json => {
       console.log('[ActivityGoalPage] loadData()', await json);
       this.title = json.name;
@@ -65,6 +69,9 @@ export class ActivityGoalPage implements OnInit {
       this.goals = json.goals;
       this.graphData = [];
       var min = null, max = null;
+
+      this.values = this.filterDate(this.values)
+
       this.values.forEach(element => {
         if (min == null || min > element.value)
           min = element.value;
@@ -138,7 +145,7 @@ export class ActivityGoalPage implements OnInit {
   generateChart() {
     HighCharts.chart('container', {
       chart: {
-        type: 'column',
+        type: (this.graphData.length > 4)? 'line':'column',  //'line' 'area'
         zoomType: 'x',
 
       },
@@ -160,13 +167,20 @@ export class ActivityGoalPage implements OnInit {
         opposite: true,
         plotBands: this.ranges
       },
-      tooltip: {
+/*       tooltip: {
         valueSuffix: ' millions'
-      },
+      }, */
       plotOptions: {
-        bar: {
+/*         bar: {
           dataLabels: {
             enabled: true
+          }
+        } */
+        series: {
+          borderWidth: 1,
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}'
           }
         }
       },
@@ -178,33 +192,74 @@ export class ActivityGoalPage implements OnInit {
       },
       series: [{
         type: undefined,
+        colorByPoint: false,
         data: this.graphData,
         name: this.units,
       }]
     });
   }
 
-  filter(data) {
+  filterDate(data) {
     console.log('[ActivityGoalPage] filter()', data);
-  }
-
-  segmentChanged(event) {
-    console.log(this.segmentFilter);
     switch (this.segmentFilter) {
       case '1d': {
-        this.min = new Date();
-        //alert(this.min);
+        data = data.filter( value =>(this.formatDate(value.date_value).getDate() == this.min.getDate() && 
+        this.formatDate(value.date_value).getMonth() == this.min.getMonth() && 
+        this.formatDate(value.date_value).getFullYear() == this.min.getFullYear() ))
         break;
       }
       case '1w': {
+        data = data.filter( value =>(this.formatDate(value.date_value) >= this.min && this.formatDate(value.date_value) <= this.max ))
+        break;
+      }
+      case '1m': {
+        data = data.filter( value =>(this.formatDate(value.date_value).getMonth() == this.min.getMonth()  && 
+        this.formatDate(value.date_value).getFullYear() == this.min.getFullYear()))
+        break;
+      }
+      case '1y': {
+        data = data.filter( value =>(this.formatDate(value.date_value).getFullYear() == this.min.getFullYear() ))
+        break;
+      }
+      default: {
+        //statements; 
+        data = data.filter( value =>(this.formatDate(value.date_value) == this.min))
+        break;
+      }
+    }
+    console.log('[ActivityGoalPage] filter()', data);
+    return data
+  }
+
+  segmentChanged(event) {
+    switch (this.segmentFilter) {
+      case '1d': {
+        if(event.type === "ionChange"){
+          this.max = new Date()
+          this.max.setDate(new Date().getDate() + 1)
+        }
+        this.lastDay()
+        break;
+      }
+      case '1w': {
+        if(event.type === "ionChange")
+        this.max = new Date()
         this.lasWeek();
         break;
       }
       case '1m': {
+        if(event.type === "ionChange"){
+          this.max = new Date()
+          this.max.setMonth(new Date().getMonth() + 1)
+        }
         this.lastMonth();
         break;
       }
       case '1y': {
+        if(event.type === "ionChange"){
+          this.max = new Date()
+          this.max.setFullYear(new Date().getFullYear() + 1)
+        }
         this.fullYear();
         break;
       }
@@ -216,6 +271,13 @@ export class ActivityGoalPage implements OnInit {
     this.loadData(this.segmentFilter);
   }
 
+  setMaxDate(){
+    let now = new Date()
+    this.max.setDate(new Date().getDate() + 1)
+    this.max.setMonth(new Date().getMonth() + 1)
+    this.max.setFullYear(new Date().getFullYear() + 1)
+  }
+
   formatDate(d) {
     let date = new Date(d.split(' ')[0]);
     let time = d[1];
@@ -224,27 +286,82 @@ export class ActivityGoalPage implements OnInit {
     return date;
   }
 
-  lasWeek() {
-    let numWeeks = 1;
-    let now = new Date();
-    now.setDate(this.max.getDate() - numWeeks * 7);
+  lastDay(){
+    let now = this.max
+    now.setDate(this.max.getDate() - 1);
     this.min = now;
-    //alert(this.min.toDateString() + ' - ' + this.max.toDateString());
+    this.viewTitle = this.formatSelectedDate(this.min, 'EEEE, d MMMM')
+  }
+
+  lasWeek() {
+    let numDay = this.max.getDay()
+    if(numDay == 0) numDay = 7
+    let now = this.max.getDate() - (numDay - 1)
+    let curr = new Date(this.max)
+    curr.setDate(now)
+    this.min = new Date(curr)
+    console.log('[ActivityGoalPage] lasWeek()', this.max.getDay());
+    this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM')} - ${this.formatSelectedDate(this.max, 'EEE d MMM')}`
   }
 
   lastMonth() {
-    let now = new Date();
+    let now = this.max //new Date();
     now.setMonth(this.max.getMonth() - 1);
     this.min = now;
-    //alert(this.min.toDateString() + ' - ' + this.max.toDateString());
+    this.viewTitle = this.formatSelectedDate(this.min, 'MMMM yyyy')
   }
 
-  fullYear() {
-    
-    let now = new Date();
+  fullYear() {  
+    let now = this.max //new Date();
     now.setFullYear(this.max.getFullYear() - 1);
     this.min = now;
-    //alert(this.min.toDateString() + ' - ' + this.max.toDateString());
+    this.viewTitle = this.formatSelectedDate(this.min, 'yyyy')
+  }
+
+  formatSelectedDate(date, format){
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, format);
+  }
+
+  back(){
+    if(this.segmentFilter == '1w'){
+      let now =  new Date(this.min)
+      now.setDate(this.min.getDate() -1)
+      this.max = new Date(now)
+    }
+    this.segmentChanged(event)
+  }
+
+  next(){
+    switch (this.segmentFilter) {
+      case '1d': {
+        let nextDay =  this.max.getDate() + 2
+        this.max.setDate(nextDay)
+        break;
+      }
+      case '1w': {
+/*         let nextWeek = this.max.getDate() + 7
+        this.max.setDate(nextWeek) */
+
+        let now =  new Date(this.max)
+        now.setDate(this.max.getDate() + 7)
+        this.max = new Date(now)
+        console.log('[ActivityGoalPage] lasWeek() next()', this.max , now);
+        break;
+      }
+      case '1m': {
+        let nextMonth =  this.max.getMonth() + 2
+        this.max.setMonth(nextMonth)
+        break;
+      }
+      case '1y': {
+        let nextYear =  this.max.getFullYear() + 2
+        this.max.setFullYear(nextYear)
+        break;
+      }
+    }
+    this.segmentChanged(event)
   }
 
 }
