@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   diets: Diet[] =[]
   drugs: Drug[] =[]
   games =[]
-  activity: PhysicalActivity[] =[]
+  activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
   advices: Advice[] =[]
@@ -57,6 +57,7 @@ export class HomePage implements OnInit {
    infoDiet: UserInformation
    infoDrugs: UserInformation
    infoGames: UserInformation
+   infoActivity: UserInformation
   constructor(
     public router:Router,
     public platform: Platform,
@@ -121,12 +122,38 @@ export class HomePage implements OnInit {
       this.slideDietChange()
     })
 
+    this.dooleService.getAPIelementsListByDate({}).subscribe((res)=>{
+      if(res.eg){
+        this.treeIterate(res.eg, '');
+        this.sliderGames.slideTo(0)
+        this.slideActivityChange()
+      }
+    })
+
     this.getDrugIntake()
 
     this.getGames()
 
-    this.activity.push({name:'456 Cal'})
+    //this.activity.push({name:'456 Cal'})
 
+  }
+
+  treeIterate(obj, stack) {
+    for (var property in obj) {
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+
+          this.treeIterate(obj[property], stack + '.' + property);
+        } else {
+          if(property=="group"){
+            obj['is_child'] = stack.includes('childs');
+            this.activity.push(obj);
+
+          }
+
+        }
+      }
+    }
   }
 
   getGames(){
@@ -313,6 +340,10 @@ export class HomePage implements OnInit {
     this.sliderPhysical.getActiveIndex().then(index => {      
       console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
+      this.infoActivity = {
+        title: slider?.group
+      }
+
     });
   }
 
@@ -371,6 +402,12 @@ export class HomePage implements OnInit {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+  }
+
+  isLess(value){
+    if(value <= 3)
+      return true
+    return false
   }
 
   async actionButtonGames(item){

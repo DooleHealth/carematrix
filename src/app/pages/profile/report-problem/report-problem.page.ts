@@ -41,14 +41,14 @@ export class ReportProblemPage implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      category: ['', [Validators.required]],
+      /* category: ['', [Validators.required]], */
       description: ['', [Validators.required]],
       images:[this.images]
     });
   }
 
   isSubmittedFields(isSubmitted){
-    this.isSubmittedCategory = isSubmitted
+    //this.isSubmittedCategory = isSubmitted
     this.isSubmittedDescription = isSubmitted;
   }
 
@@ -165,8 +165,8 @@ export class ReportProblemPage implements OnInit {
       const loading = await this.loadingController.create();
       await loading.present();
   
-      let category = this.form.get('category').value; 
-      this.form.get('category').setValue(category);
+/*       let category = this.form.get('category').value; 
+      this.form.get('category').setValue(category); */
   
       let description = this.form.get('description').value
       this.form.get('description').setValue(description);
@@ -211,8 +211,7 @@ export class ReportProblemPage implements OnInit {
 
     goBacktoProfile(){
       if(this.form.valid 
-        || this.form.get('images').value.length > 0
-        || this.form.get('category').value.length > 0){
+        || this.form.get('images').value.length > 0){
         console.log("[ReportProblemPage] goBacktoProfile()", this.form.value);
         this.presentAlertConfirm();
       }else{
