@@ -322,7 +322,7 @@
       "reminder":{
         "header": "Recodatorio",
         "personal_reminder": "Recordatorio Personal",
-        "medical_reminder": "Recordatorio Médica",
+        "medical_reminder": "Recordatorio Médico",
         "activity_reminder": "Recordatorio de Actividad",
         "header_add_reminder":"Añadir Recordatorio",
         "field_doctor": "Médico",
