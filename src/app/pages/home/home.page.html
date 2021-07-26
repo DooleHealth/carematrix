@@ -215,28 +215,20 @@
       <ion-card class="vertical-card" routerLink="/journal" [state]="{segment: 'health'}">       
           <ion-item lines="none" class="noMargin">
             <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
-            <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text>
+<!--             <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text> -->
+            <ion-text style="color:'#E74C3C';" slot="start" *ngIf="infoGames">{{infoActivity?.title}}</ion-text>
             <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
         <ion-card-content>
-          <ion-slides #sliderPhysical pager="false" [options]="sliderConfig" class="slides"
+          <ion-slides #sliderPhysical pager="true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
-              <ion-col>
-                <h1 style="font-weight: bold">{{ '456' }}</h1>
-
-                {{ 'activity.cal' | translate}}
-              </ion-col>
-              <ion-col>
-                <h1 style="font-weight: bold">{{ '4.20' }}</h1>
-
-                {{ 'activity.km' | translate}}
-              </ion-col>
-              <ion-col>
-                <h1 style="font-weight: bold">{{ '7.000' }}</h1>
-
-                {{ 'activity.steps' | translate}}
+              <ion-col *ngFor="let element of slide.elements; let i = index ">
+                <div *ngIf="i <= 3">
+                  <h2   style="font-weight: bold">{{ element.value }}</h2>
+                  {{ element.units}}
+                </div>
               </ion-col>
             </ion-slide>
           </ion-slides>

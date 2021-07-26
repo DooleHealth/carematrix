@@ -14,19 +14,15 @@
   <ion-card class="cardProfile" text-wrap>
     <form (ngSubmit)="submit()" [formGroup]="form">
     <ion-list text-wrap>
-      <ion-item>
-        <ion-label>{{'report_problem.subtitle_category' | translate }}</ion-label>
-        <ion-note *ngIf="this.isSubmittedCategory && this.form.get('category').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-        <ion-input formControlName="category" (ionInput)="isSubmittedCategory = false"></ion-input>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      <ion-item lines="none">
+        <ion-label>{{'report_problem.subtitle_description' | translate }}</ion-label>
       </ion-item>
       <ion-item >
-        <ion-label>{{'report_problem.subtitle_description' | translate }}</ion-label>
         <ion-textarea (ionInput)="isSubmittedDescription = false" [placeholder]="placeholderDescription()"
         formControlName="description"
       ></ion-textarea> 
       <ion-note *ngIf="this.isSubmittedDescription && this.form.get('description').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note> 
-      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> 
+      <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>  -->
       </ion-item>
       <ion-item lines="none" text-wrap>
         <ion-label>{{'report_problem.subtitle_screenshot' | translate }}</ion-label>

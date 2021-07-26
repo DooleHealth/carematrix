@@ -227,8 +227,8 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       case '1w': {
-        console.log('[ActivityGoalPage] filter()', this.min , this.max);
-        data = data.filter( value =>(this.formatDate(value.date_value) >= this.min && this.formatDate(value.date_value) <= this.max ))
+        //console.log('[ActivityGoalPage] filter()', this.min , this.max);
+        data = data.filter( value =>(this.formatDate(value.date_value) >= this.min && this.formatDate(value.date_value) <= this.max || this.getMinWeekFilter(value.date_value)))
         break;
       }
       case '1m': {
@@ -248,6 +248,14 @@ export class ActivityGoalPage implements OnInit {
     }
     console.log('[ActivityGoalPage] filter()', data);
     return data
+  }
+
+  getMinWeekFilter(value){
+    if(this.formatDate(value).getDate() == this.min.getDate() && 
+    this.formatDate(value).getMonth() == this.min.getMonth() && 
+    this.formatDate(value).getFullYear() == this.min.getFullYear()) 
+      return true
+    return false
   }
 
   segmentChanged(event) {
@@ -365,9 +373,6 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       case '1w': {
-/*         let nextWeek = this.max.getDate() + 7
-        this.max.setDate(nextWeek) */
-
         let now =  new Date(this.max)
         now.setDate(this.max.getDate() + 7)
         this.max = new Date(now)
