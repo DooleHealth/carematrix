@@ -15,7 +15,7 @@ import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 })
 export class ActivityGoalPage implements OnInit {
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
-  ca = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
+  ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
   private id;
   viewTitle = ''
   normalValue
@@ -212,7 +212,7 @@ export class ActivityGoalPage implements OnInit {
     HighCharts.setOptions({
       lang: {
          /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
-          weekdays: this.es
+          weekdays: (this.setLocale() == 'es')? this.es: this.ca
       }
   });
   }
@@ -227,6 +227,7 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       case '1w': {
+        console.log('[ActivityGoalPage] filter()', this.min , this.max);
         data = data.filter( value =>(this.formatDate(value.date_value) >= this.min && this.formatDate(value.date_value) <= this.max ))
         break;
       }
@@ -318,8 +319,11 @@ export class ActivityGoalPage implements OnInit {
     let curr = new Date(this.max)
     curr.setDate(now)
     this.min = new Date(curr)
-    if(this.min.getDate() == this.max.getDate() && this.min.getMonth() == this.max.getMonth())
-    this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM') }`
+    console.log('[ActivityGoalPage] lasWeek() next()', this.max , this.min);
+    if(this.min.getDate() == this.max.getDate() && this.min.getMonth() == this.max.getMonth()){
+      this.min.setHours(0)
+      this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM') }`
+    }
     else
     this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM')} - ${this.formatSelectedDate(this.max, 'EEE d MMM')}`
   }

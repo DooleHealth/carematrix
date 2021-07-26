@@ -54,11 +54,11 @@ export class AgendaEditPage implements OnInit {
     if(this.event){
       this.isNewEvent = false
       this.id = this.event.id;
-      console.log('[ReminderAddPage] getAppointment()', this.event);
+      console.log('[AgendaEditPage] getAppointment()', this.event);
       if(this.event.site) this.form.get('place').setValue(this.event.site)
       if(this.event.title) this.form.get('title').setValue(this.event.title)
       if(this.event.description) this.form.get('indications').setValue(this.event.description)
-      if(this.event.start_date_iso8601) this.form.get('date').setValue(this.transformDate(this.event.start_date_iso8601))
+      if(this.event.start_date_iso8601) this.form.get('date').setValue(this.event.start_date_iso8601)
       let duration = this.trasnforHourToMinutes(this.event.end_time) - this.trasnforHourToMinutes(this.event.start_time)
       if(this.event.end_time) this.form.get('duration').setValue( duration )
       if(this.event.online !== undefined && this.event.online !== null) this.form.get('online').setValue(this.event.online )
@@ -82,11 +82,11 @@ export class AgendaEditPage implements OnInit {
   }
 
   selectedCategory(){
-    console.log('[ReminderAddPage] selectedCategory()', this.form.value );
+    console.log('[AgendaEditPage] selectedCategory()', this.form.value );
   }
 
   async submit() {
-    console.log('[ReminderAddPage] submit()', this.form.value );
+    console.log('[AgendaEditPage] submit()', this.form.value );
     this.isSubmittedFields(true);
     if(this.form.invalid)
     return 
@@ -100,12 +100,12 @@ export class AgendaEditPage implements OnInit {
     this.isSaving = !this.isSaving;
     this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] deleteReminder()', await res);
+        console.log('[AgendaEditPage] deleteReminder()', await res);
         await this.addAgenda();
         // this.modalCtrl.dismiss({error:null});
         this.isSaving = !this.isSaving
        },(err) => { 
-          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[AgendaEditPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
@@ -122,7 +122,7 @@ export class AgendaEditPage implements OnInit {
 
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] addAgenda()', await res);
+        console.log('[AgendaEditPage] addAgenda()', await res);
         if(res.success){
           let message = this.translate.instant('reminder.message_added_reminder')
           this.showAlert(message)
@@ -133,7 +133,7 @@ export class AgendaEditPage implements OnInit {
        
        },(err) => { 
         
-          console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[AgendaEditPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
@@ -152,7 +152,7 @@ export class AgendaEditPage implements OnInit {
     
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] addAgenda()', await res);
+        console.log('[AgendaEditPage] addAgenda()', await res);
         if(res.success){
           let message = this.isNewEvent ? this.translate.instant('appointment.message_added_appointment') : this.translate.instant('appointment.message_updated_appointment')
           this.notification.showSuccess(message);
@@ -164,7 +164,7 @@ export class AgendaEditPage implements OnInit {
           alert(message)
         }
        },(err) => { 
-          console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[AgendaEditPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
