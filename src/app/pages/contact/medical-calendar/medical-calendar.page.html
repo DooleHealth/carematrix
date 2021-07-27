@@ -96,7 +96,7 @@
           *ngFor="let item of this.eventSource | paginate: { itemsPerPage: 30, currentPage: page };let i = index"
         >
         
-          <ion-chip
+          <ion-chip 
             (click)="changeTagColor(i, item.startTime )"
             [color]="tagDefaultColor[i]"
           >

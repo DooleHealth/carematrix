@@ -373,6 +373,7 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       case '1w': {
+
         let now =  new Date(this.max)
         now.setDate(this.max.getDate() + 7)
         this.max = new Date(now)

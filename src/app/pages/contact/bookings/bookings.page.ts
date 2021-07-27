@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CameraSource, Capacitor, Plugins, CameraResultType, } from '@capacitor/core';
-import { ActionSheetController, LoadingController, ModalController } from '@ionic/angular';
+import { ActionSheetController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
@@ -30,7 +30,7 @@ export class BookingsPage implements OnInit {
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
-  constructor(public dooleService:DooleService, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
+  constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
     public file: File, private router: Router) { }
   ngOnInit() {
@@ -68,8 +68,9 @@ export class BookingsPage implements OnInit {
         console.log('[ReminderAddPage] addAgenda()', await res);
         let message = this.translate.instant('reminder.message_added_appointment')
         if(!this.isNewEvent)
-        message = this.translate.instant('reminder.message_updated_reminder')
-        this.showAlert(message)
+        // message = this.translate.instant('reminder.message_updated_reminder')
+        // this.showAlert(message)
+        this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
         loading.dismiss();
        },(err) => { 
         loading.dismiss();

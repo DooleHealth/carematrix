@@ -62,6 +62,10 @@ export class AgendaPage implements OnInit {
 
  async ionViewDidEnter(){
     console.log('[AgendaPage] ionViewDidEnter()');
+    let date = history.state.date;
+    if(date)
+    this.calendar.currentDate = date
+    else
     this.getAgenda()
   }
 

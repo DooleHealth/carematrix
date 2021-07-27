@@ -41,7 +41,7 @@ export class ShowcaseShellModel extends ShellModel {
 export class MedicalCalendarPage implements OnInit, AfterViewInit {
   @Input()id: number;
   eventSource = [];
-  tagDefaultColor: Array<string>;
+  tagDefaultColor: Array<string> = [];
   event: any
   viewTitle: string;
   months = this.translate.instant('agenda.month')
