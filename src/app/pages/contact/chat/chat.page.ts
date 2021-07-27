@@ -50,7 +50,7 @@ export class ShellChatModel extends ShellModel {
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
-
+  
   numMessages:number;
   chat: ShellChatModel[] & ShellModel;
   m:ShellChatModel;
@@ -95,6 +95,4 @@ export class ChatPage implements OnInit {
     });
 
      }
-  }
-
-  
+}
