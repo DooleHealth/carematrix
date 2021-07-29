@@ -17,7 +17,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items: ItemAdvice[] = [];
-  diets = []
+  news = []
   advices = []
   groupedElements: any = [];
   date = Date.now()
@@ -52,23 +52,23 @@ export class AdvicesPage implements OnInit {
     console.log('[AdvicePage] addItems()', this.items);
   }
 
-  async getDietList(){
-    console.log('[AdvicePage] getDietList()');
+  async getNewsList(){
+    console.log('[AdvicePage] getNewsList()');
     this.items = []
     this.isLoading = true
     const loading = await this.loadingController.create();
     await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
-    this.dooleService.getAPIlistDietsByDate(date).subscribe(
+    this.dooleService.getAPIlistNews().subscribe(
       async (res: any) =>{
-        console.log('[AdvicePage] getDietList()', await res);
-        if(res.diets)
-        this.addItems(res.diets)
+        console.log('[AdvicePage] getNewsList()', await res);
+        if(res.news)
+        this.addItems(res.news)
         loading.dismiss();
         this.isLoading = false
        },(err) => { 
-          console.log('[AdvicePage] getDietList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           loading.dismiss();
           this.isLoading = false
@@ -106,7 +106,7 @@ export class AdvicesPage implements OnInit {
     console.log(this.segment);
     switch (this.segment) {
       case 'news':
-        this.getDietList()
+        this.getNewsList()
         break;
       case 'advices':
         this.getAdvicesList()

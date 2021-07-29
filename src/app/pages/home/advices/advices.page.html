@@ -22,7 +22,6 @@
     <ion-segment-button value="advices">
       <ion-label>{{ 'advices.tag_advices' | translate}}</ion-label>
     </ion-segment-button>
-
   </ion-segment>
 
   <!--News -->
@@ -30,21 +29,15 @@
   </ion-searchbar>
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'news'"> 
-      <ion-list *ngIf="items.length > 0; else noData">   
-        <ion-card routerLink="diets-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
-          <img *ngIf="item.item.image !== null"[src]='item.item.image.temporaryUrl'/>
+      <ion-list *ngIf="items.length >= 0; else noData">   
+        <ion-card  *ngFor="let item of items" class="cardProfile" >
+          <img *ngIf="item.item.cover !== null"[src]='item.item.cover'/>
           <ion-item lines="none" >
-          
-            <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.name}}</ion-label>
+            <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.subject}}</ion-label>
             <div>
               <ion-icon name="chevron-forward-outline"></ion-icon>
             </div>
           </ion-item>
-  
-          <!-- <ion-item lines="none">
-            <ion-button  size="small" color="transparent" class="buttonLink" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.go_detail' | translate}}</ion-button>&nbsp;
-          </ion-item> -->
-     
         </ion-card>
       </ion-list>
     </div> 
@@ -54,23 +47,16 @@
     <ion-card routerLink="advices-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
       <img *ngIf="item.item.image !== null"[src]='item.item.image.temporaryUrl'/>
       <ion-item lines="none" >
-      
         <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.name}}</ion-label>
         <div>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </ion-item>
-
-      <!-- <ion-item lines="none">
-        <ion-button  size="small" color="transparent" class="buttonLink" routerLink="advices-detail" [state]="{id: item.item.id}">{{'button.go_detail' | translate}}</ion-button>&nbsp;
-      </ion-item>
-  -->
     </ion-card>
   </ion-list>
-  </div> 
-
-
+  </div>
 </div>
+ <!-- NO DATA MESSAGE -->
 <ng-template #noData>
   <div *ngIf="!this.isLoading">
     <ion-grid>
