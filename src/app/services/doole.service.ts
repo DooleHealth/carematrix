@@ -785,6 +785,17 @@ export class DooleService {
       })
     );
   }
+    /** get news  **/
+    getAPIlistNews(): Observable<any> {
+      let path = 'user/news';
+      const endpoint = this.api.getEndpoint(path);
+      return this.http.get(endpoint).pipe(
+        map((res: any) => {
+          console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
+          return res;
+        })
+      );
+    }
 
 
   getAPIdetailDiets(id: any): Observable<any> {
