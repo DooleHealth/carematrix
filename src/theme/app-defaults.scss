@@ -380,3 +380,33 @@ text-align: left !important;
   color:#DFF2BF; 
   background-color: #4F8A10;
 }
+
+
+.toast-custom-class {
+  opacity: 0.9;
+  --border-color:#32BEA6;
+  --border-radius:50%;
+  --border-style:solid;
+  --border-width:3px;    
+  --background: url("/assets/images/cheque.svg");
+  --height: 4em;
+  --width: 4em;
+  --start: left;
+  animation: draw 3s 1;
+  animation-direction: normal;
+  top: 35%;
+}
+
+@keyframes draw {
+  0%  {left: -1000px; opacity: 0.2}
+  25%  {left: 0px; opacity: 0.75}
+  50%  {left: 0px; opacity: 1}
+}
+
+.modal-custom-class{
+
+  .modal-wrapper {
+    height: 100%!important;
+    width:  100%!important;
+  }
+}

@@ -160,7 +160,6 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     var from_date = this.formatDate(e.from_date.split(" "));
     var to_date = this.formatDate(e.to_date.split(" "));
     let isAllDay = false
-      
     events.push({
       title: 'Day - ' + from_date.toDateString(),
       startTime:  from_date,
@@ -179,8 +178,8 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));
 
-    console.log("date: ", date);
-    console.log("time", time);
+    // console.log("date: ", date);
+    // console.log("time", time);
     
     return date;
   }
@@ -188,6 +187,11 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   setLocale(){
     return this.languageService.getCurrent();
   }
+
+  markDisabled = (date: Date) => {
+    var current = new Date();
+    return (date.getDate() < current.getDate() && date.getMonth() == current.getMonth() || date.getMonth() < current.getMonth());
+};
 
   // Change current month/week/day
    next() {
@@ -204,11 +208,6 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     this.viewTitle = this.formatMonths();
 
   }
-
-  markDisabled = (date: Date) => {
-    var current = new Date();
-    return date < current;
-};
 
   formatMonths(){
     let language = this.setLocale()
@@ -281,15 +280,13 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     console.log('Selected date: ' + date);
     this.selectedDate = date;
     this.tagDefaultColor[this.currentSelection] = "secondary";
-    this.tagDefaultColor[i] = "primary";
+    this.tagDefaultColor[i] = "dark";
     this.currentSelection = i;
-   
-   
   }
   
   onCurrentDateChanged(event:Date) {
+    console.log('[MedicalCalendarPage] onCurrentDateChanged()',event);
     this.timeSlots = [];
-   
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
@@ -300,6 +297,12 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     this.isToday ? this.getSlots(): this.getSlots(date);
 
   }
+
+  passedDate(selectedDate){
+    const date = new Date();
+
+
+}
 
   close() {
     this.modalCtrl.dismiss({date:null});

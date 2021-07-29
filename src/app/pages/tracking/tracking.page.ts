@@ -1,10 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { DocumentsAddPage } from './documents-add/documents-add.page';
+import { ElementsAddPage } from './elements-add/elements-add.page';
 export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
@@ -40,7 +43,9 @@ export class TrackingPage implements OnInit {
     public navCtrl:NavController,
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private modalCtrl: ModalController,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -254,6 +259,51 @@ export class TrackingPage implements OnInit {
       else
       diagnostic.color = this.inactive_color
     })
-}
+  }
+
+async addDocument(){
+  const modal = await this.modalCtrl.create({
+    component:  DocumentsAddPage,
+    componentProps: { },
+    cssClass: "modal-custom-class"
+  });
+
+  modal.onDidDismiss()
+    .then((result) => {
+      console.log('addDocument()', result);
+     
+      if(result?.data?.error){
+       // let message = this.translate.instant('landing.message_wrong_credentials')
+        //this.dooleService.presentAlert(message)
+      }else if(result?.data?.action == 'add'){
+        this.notification.displayToastSuccessful()
+        this.getDiagnosticTestsList()     
+      }
+    });
+
+    await modal.present();
+
+  }
+
+  async addElement(){
+    const modal = await this.modalCtrl.create({
+      component:  ElementsAddPage,
+      componentProps: { },
+    });
+  
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addElement()', result);
+       
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'add'){
+          this.notification.displayToastSuccessful()
+        }
+      });
+  
+      await modal.present(); 
+    }
 
 }

@@ -5,10 +5,10 @@
       <ion-title>{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" routerLink="/documents-filter"></ion-icon>&nbsp;
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/documents-add"></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDocument()"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'graphics'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="elements-add"></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

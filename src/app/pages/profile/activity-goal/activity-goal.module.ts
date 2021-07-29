@@ -10,6 +10,7 @@ import { ActivityGoalPage } from './activity-goal.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReminderAddPageModule } from '../../agenda/reminder-add/reminder-add.module';
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
+import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
     ActivityGoalPageRoutingModule,
     ReactiveFormsModule,
     TranslateModule,
+    ElementsAddPageModule,
   ],
   declarations: [ActivityGoalPage],
   providers:[DatePipe]

@@ -8,6 +8,7 @@ import { ReminderPageRoutingModule } from './reminder-routing.module';
 
 import { ReminderPage } from './reminder.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ReminderAddPageModule } from '../reminder-add/reminder-add.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ReminderPageRoutingModule,   
     TranslateModule,
+    ReminderAddPageModule
   ],
   declarations: [ReminderPage]
 })

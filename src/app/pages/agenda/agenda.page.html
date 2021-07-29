@@ -19,34 +19,7 @@
 </ion-header>
 
 <ion-content>
-  <!-- Move back one screen of the slides -->
-  <!--    <ion-row class="textBlueCentered1">
-    <ion-col size="8.6">
-      <ion-row class="textBlueCentered1">
-        <ion-button fill="clear" (click)="back()">
-          <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
-        </ion-button>
-        <h3>
-          {{ viewTitle | titlecase }}
-        </h3>
-        <ion-button fill="clear" (click)="next()">
-          <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
-        </ion-button>
-      </ion-row>
-    </ion-col>
-
-    <ion-col size="1.4">
-      <ion-button fill="clear" routerLink="list-appointment" [state]="{calendar:eventSource}">
-        <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
-      </ion-button>
-    </ion-col>  
-    <ion-col size="1.4">
-      <ion-button fill="clear" routerLink="reminder-add">
-        <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-
+ 
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30" startingDayWeek="1"
@@ -121,7 +94,6 @@
       </ion-item>
     </ion-list>
   </ng-template>
-
 </ion-content>
 <ion-footer>
   <ion-toolbar>

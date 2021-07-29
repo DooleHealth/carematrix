@@ -10,6 +10,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { TestTypePage } from './test-type/test-type.page';
 import { File } from '@ionic-native/file/ngx';
 import { DatePipe } from '@angular/common';
+import { NotificationService } from 'src/app/services/notification.service';
 const { Camera, Filesystem } = Plugins;
 
 @Component({
@@ -45,6 +46,8 @@ export class DocumentsAddPage implements OnInit {
     public platform: Platform,
     public datepipe: DatePipe,
     public navController: NavController,
+    private notification: NotificationService,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -102,7 +105,7 @@ export class DocumentsAddPage implements OnInit {
       async (data) => {
         console.log("data:", data);
         if(data)
-        this.showAlert()
+        this.modalCtrl.dismiss({error:null, action: 'add'});
         else{
           let message = this.translate.instant('documents_add.error_alert_message')
           alert(message)
@@ -122,10 +125,8 @@ export class DocumentsAddPage implements OnInit {
       });
   }
 
-  showAlert(){
-    let messagge = this.translate.instant('documents_add.alert_message')
-    let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,messagge,false, '/tracking')
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 
   async openModal() {

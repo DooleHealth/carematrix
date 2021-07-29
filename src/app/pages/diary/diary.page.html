@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar [ngSwitch]="segment">
-    <ion-row>
+  <ion-toolbar [ngSwitch]="segment" >
+    <ion-row class="textBlueCentered1">
       <ion-col size="2">
         <ion-buttons>
           <ion-button type="submit" float-left ion-button color="primary" (click)="prev()">
@@ -9,7 +9,7 @@
         </ion-buttons>
       </ion-col>
 
-      <ion-col size="8" class="textBlueCenteredTop">
+      <ion-col size="8" class="textBlueCentered1">
         <ion-slides #slides>
           <ion-slide>
             <p>{{ formatSelectedDate(date) | titlecase}}</p>
@@ -17,7 +17,7 @@
         </ion-slides>
       </ion-col>
       <ion-col size="2">
-        <ion-buttons>
+        <ion-buttons >
           <ion-button type="submit" float-right ion-button color="primary" (click)="next()">
             <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
           </ion-button>

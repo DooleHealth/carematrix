@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
        <ion-buttons slot="start">
-      <ion-back-button text="{{'button.cancel' | translate }}"></ion-back-button>
+      <ion-back-button (click)="close()" text="{{'button.cancel' | translate }}"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'documents_add.header' | translate }} </ion-title>
     <ion-button fill="clear" slot="end"  (click)="submit()">

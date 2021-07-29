@@ -9,6 +9,7 @@ import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 const { Camera } = Plugins;
 @Component({
   selector: 'app-bookings',
@@ -22,7 +23,7 @@ export class BookingsPage implements OnInit {
   selectedDate: string;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   files: Array<{ name: string, file: string, type: string }> = [];
-  isNewEvent = true;
+  //isNewEvent = true;
   form: FormGroup;
   dateMax:any;
   duration:string = "30";
@@ -32,7 +33,7 @@ export class BookingsPage implements OnInit {
   isSubmittedStartDate = false;
   constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
-    public file: File, private router: Router) { }
+    public file: File, private router: Router, private notification: NotificationService) { }
   ngOnInit() {
    
     this.form = this.fb.group({
@@ -65,12 +66,9 @@ export class BookingsPage implements OnInit {
     });
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] addAgenda()', await res);
-        let message = this.translate.instant('reminder.message_added_appointment')
-        if(!this.isNewEvent)
-        // message = this.translate.instant('reminder.message_updated_reminder')
-        // this.showAlert(message)
+        console.log('[ReminderAddPage] addAgenda()', await res);        
         this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+        this.notification.displayToastSuccessful()
         loading.dismiss();
        },(err) => { 
         loading.dismiss();
@@ -97,12 +95,6 @@ export class BookingsPage implements OnInit {
    
     this.addAgenda()
     
-  }
-
-  showAlert(message){
-    //let message = this.translate.instant('documents_add.alert_message')
-    let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,message,false, '/agenda/list-appointment')
   }
 
   async openCalendarModal() {

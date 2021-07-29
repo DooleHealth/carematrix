@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 
 @Component({
   selector: 'app-reminder',
@@ -22,7 +23,7 @@ export class ReminderPage implements OnInit {
     private languageService: LanguageService,
     private translate : TranslateService,
     public alertController: AlertController,
-
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -162,6 +163,28 @@ export class ReminderPage implements OnInit {
     return date;
   }
 
-  
+  async editReminder(){
+    const modal = await this.modalCtrl.create({
+      component:  ReminderAddPage,
+      componentProps: { },
+      cssClass: "modal-custom-class"
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('editReminder()', result);
+       
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'update'){
+          //let reminder  = result?.data?.reminder
+          this.getReminderData()
+        }
+    });
+
+    await modal.present();
+   
+  }
 
 }
