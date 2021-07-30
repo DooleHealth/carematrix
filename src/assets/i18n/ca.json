@@ -591,5 +591,10 @@
         "field_taxes": "IVA",
         "modality": "Modalitat",
         "button_payment": "Confirmar Pagament"
+      },
+      "info": {
+        "button":"D’acord",
+        "title":"Informació",
+        "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil"
       }
 }

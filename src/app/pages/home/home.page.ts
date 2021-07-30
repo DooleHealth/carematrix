@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, Platform } from '@ionic/angular';
@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface UserInformation {
   title?: string;
@@ -28,6 +30,7 @@ export class HomePage implements OnInit {
   diets: Diet[] =[]
   drugs: Drug[] =[]
   games =[]
+ 
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
@@ -67,6 +70,7 @@ export class HomePage implements OnInit {
     private health: Health,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
+    public translate: TranslateService, public alertController: AlertController
   ) { }
 
   async ngOnInit() { 
@@ -467,5 +471,4 @@ export class HomePage implements OnInit {
       );
     } */
 
- 
 }
