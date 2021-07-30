@@ -14,6 +14,7 @@ export class LegalPage implements OnInit {
   //KEY_LOCAL_STORAGE = 'showIntro';
   legal:any = {};
   isChecked = false;
+  isLoading = false
   constructor(
     public router: Router,    
     private translate: TranslateService,
@@ -26,6 +27,7 @@ export class LegalPage implements OnInit {
   }
 
   getLegalInformation(){
+    this.isLoading = true
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LegalPage] getAPILegalInformation()', await res);
@@ -40,9 +42,10 @@ export class LegalPage implements OnInit {
           let message = this.translate.instant('legal.error_conditions_label')
           this.showAlert(message, 'error')
         }
-
+        this.isLoading = false
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
           let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
           this.showAlert(message, 'error')
           throw err; 

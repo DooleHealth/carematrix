@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content >
+
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
   <div *ngIf="listFamilyUnit.length > 0; else noData">
   <ion-list>
     <ion-card class="cardProfile" *ngFor="let family of this.listFamilyUnit" (click)="changeAccount(family)">
