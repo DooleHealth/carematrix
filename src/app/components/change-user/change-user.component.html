@@ -1,0 +1,9 @@
+<span *ngFor="let family of this.listFamilyUnit">
+  <section *ngIf="family.id  === this.authService?.user?.idUser">
+    <ion-fab vertical="center" horizontal="start" edge slot="fixed" routerLink="/profile/family">
+      <ion-fab-button size="small" color="warning">
+        <ion-icon name="people-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </section>
+</span>
