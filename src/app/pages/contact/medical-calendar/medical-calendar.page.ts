@@ -281,7 +281,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     console.log('Selected date: ' + date);
     this.selectedDate = date;
     this.tagDefaultColor[this.currentSelection] = "secondary";
-    this.tagDefaultColor[i] = "primary";
+    this.tagDefaultColor[i] = "warning";
     this.currentSelection = i;
    
    
