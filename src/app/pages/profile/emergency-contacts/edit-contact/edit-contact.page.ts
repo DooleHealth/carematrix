@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { ListRelationshipPage } from '../list-relationship/list-relationship.page';
 
 @Component({
@@ -26,6 +27,7 @@ export class EditContactPage implements OnInit {
     public router: Router,
     private modalController: ModalController,
     private alertController: AlertController,
+    private notification: NotificationService,
     private translate: TranslateService) { }
 
   ngOnInit() {
@@ -110,10 +112,11 @@ export class EditContactPage implements OnInit {
         console.log('[EditContactPage] saveContact()', await res);
         let isSuccess = res.success
         if (isSuccess) {
-          let messagge = this.translate.instant('edit_contact.alert_message_new_contact')
-          let header = this.translate.instant('alert.header_info')
-          this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts')
+          this.router.navigate(['/profile/emergency-contacts'])
+          this.notification.displayToastSuccessful()
         } else {
+          let message = this.translate.instant('edit_contact.error_alert_message_new_contact')
+          alert(message)
           console.log('[EditContactPage] saveContact() Unsuccessful response', await res);
         }
       }, (err) => {
@@ -130,10 +133,11 @@ export class EditContactPage implements OnInit {
         console.log('[EditContactPage] updateContact()', await res);
         let isSuccess = res.success
         if (isSuccess) {
-          let messagge = this.translate.instant('edit_contact.alert_message_update_contact')
-          let header = this.translate.instant('alert.header_info')
-          this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts')
+          this.router.navigate(['/profile/emergency-contacts'])
+          this.notification.displayToastSuccessful()
         } else {
+          let message = this.translate.instant('edit_contact.error_alert_message_update_contact')
+          alert(message)
           console.log('[EditContactPage] updateContact() Unsuccessful response', await res);
         }
       }, (err) => {
@@ -177,8 +181,11 @@ export class EditContactPage implements OnInit {
         console.log('[EditContactPage] serviceDeleteContact()', await res);
         let isSuccess = res.success
         if (isSuccess) {
-          this.alertMessageDeleteContact()
+          this.router.navigate(['/profile/emergency-contacts'])
+          this.notification.displayToastSuccessful()
         } else {
+          let message = this.translate.instant('edit_contact.error_alert_message_delete_contact')
+          alert(message)
           console.log('[EditContactPage] serviceDeleteContact() Unsuccessful response', await res);
         }
       }, (err) => {
@@ -187,13 +194,6 @@ export class EditContactPage implements OnInit {
         throw err;
       });
   }
-
-  alertMessageDeleteContact() {
-    let messagge = this.translate.instant('edit_contact.alert_message_delete_contact')
-    let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header, messagge, false, '/profile/emergency-contacts')
-  }
-
 
   isSubmittedFields(isSubmitted) {
     this.isSubmittedName = isSubmitted

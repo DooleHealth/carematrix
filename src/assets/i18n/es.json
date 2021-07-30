@@ -441,6 +441,11 @@
         "file": "Archivos",
         "pictures":"Imatges"
       },
+      "documents_filter":{
+        "header": "Filtros",
+        "from": "Desde",
+        "until": "Hasta"
+      },
       "element":{
         "elements_add": "Añadir Dato",
           "field_category": "Categoría",

@@ -24,6 +24,7 @@ export class AdvicesDetailPage implements OnInit {
   videoDescription: any = null;
   videoTitle: any = null;
   thumbnail : any = null;
+  isLoading = false
   constructor(
     private iab: InAppBrowser, 
     public loadingController: LoadingController, 
@@ -40,8 +41,7 @@ export class AdvicesDetailPage implements OnInit {
 
   async getDetailAdvices(){
     console.log('[DiaryPage] getDetailAdvices()');
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.getAPIdetailAdvices( this.id).subscribe(
       async (json: any) =>{
         console.log('[DiaryPage] getDetailAdvices()', await json);
@@ -75,10 +75,10 @@ export class AdvicesDetailPage implements OnInit {
           }
         });
     
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDetailAdvices() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }

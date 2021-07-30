@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button ></ion-back-button>
+      <ion-back-button (click)="close()"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'medication.add_medication' | translate }}</ion-title>
   </ion-toolbar>
@@ -11,6 +11,6 @@
   <ion-searchbar (ionInput)="filterList($event)" placeholder="{{'medication.placeholder_search' | translate }}">
 </ion-searchbar>
 <ion-list>
-  <ion-item  class="drugList" type="text" routerLink="../drugs-detail" [state]="{drug: drug}" *ngFor="let drug of drugs">{{drug.name}}</ion-item>
+  <ion-item  class="drugList" type="text" *ngFor="let drug of drugs" (click)="addMedicamento(drug)">{{drug.name}}</ion-item>
 </ion-list>
 </ion-content>

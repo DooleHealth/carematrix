@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 
 export interface Filter {
@@ -26,13 +26,14 @@ export class DocumentsFilterPage implements OnInit {
   filter: Filter
   currentDate = new Date().toISOString()
   form: FormGroup;
+  isLoading = false
   constructor(
     private fb: FormBuilder,
     private dooleService: DooleService,
     public datepipe: DatePipe,
-    private loadingController: LoadingController,
     public router: Router,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -46,23 +47,22 @@ export class DocumentsFilterPage implements OnInit {
 
   async getDiagnosticTestType(){
     console.log("submit");
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
 
     this.dooleService.getAPIdiagnosticTestTypesAvailable().subscribe(
       async (res: any) =>{
         console.log('[DocumentsFilterPage] getDiagnosticTestType()', await res);
         this.listTestType = res.diagnosticTestTypes
         this.listTestTypeBackup = this.listTestType
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[DocumentsFilterPage] getDiagnosticTestType() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       },
       () => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       });
   }
 
@@ -105,6 +105,11 @@ export class DocumentsFilterPage implements OnInit {
   submit(){
      // this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
       console.log('[DocumentsFilterPage] submit()', this.form.value);
+      this.modalCtrl.dismiss({error:null, action: 'add', filter: this.form.value});
+  }
+
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 
   changeFormatToDate(){

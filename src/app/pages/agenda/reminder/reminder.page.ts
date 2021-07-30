@@ -17,6 +17,7 @@ export class ReminderPage implements OnInit {
   event = []
   reminder = {}
   frequency = ''
+  isLoading = false
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -37,8 +38,7 @@ export class ReminderPage implements OnInit {
 
 
   async getReminderData(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.getAPIreminderID(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderPage] getReminderData()', await res);
@@ -53,15 +53,14 @@ export class ReminderPage implements OnInit {
           this.days[5].day6 = res.reminder.day6
           this.days[5].day7 = res.reminder.day7
         }
-
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[ReminderPage] getReminderData() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 

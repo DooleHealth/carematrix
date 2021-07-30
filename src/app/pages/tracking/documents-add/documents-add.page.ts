@@ -81,11 +81,7 @@ export class DocumentsAddPage implements OnInit {
     this.isSubmittedFields(true);
     if(this.form.invalid)
     return 
-
     console.log("submit");
-    const loading = await this.loadingController.create();
-    await loading.present();
-
     let date = this.form.get('date').value;
     var current = new Date(date)
     let data_prestacio = this.transformDate(current)
@@ -110,18 +106,15 @@ export class DocumentsAddPage implements OnInit {
           let message = this.translate.instant('documents_add.error_alert_message')
           alert(message)
         }
-        loading.dismiss();
       },
       (error) => {
         // Called when error
-        loading.dismiss();
         alert( 'ERROR(' + error.code + '): ' + error.message)
         console.log("error: ", error);
         throw new HttpErrorResponse(error);
       },
       () => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
       });
   }
 

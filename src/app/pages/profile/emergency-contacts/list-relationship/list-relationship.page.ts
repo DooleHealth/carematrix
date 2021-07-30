@@ -12,6 +12,7 @@ export class ListRelationshipPage implements OnInit {
   contact : any;
   emergencyContact : EmergencyContact = {}
   listRelationshipBackup = []
+  isLoading = false
   constructor(private dooleService: DooleService,) { }
 
   ngOnInit() {
@@ -35,6 +36,7 @@ export class ListRelationshipPage implements OnInit {
   }
 
   getListSocialRelationType(){
+    this.isLoading = true
     this.dooleService.getAPISocialRelationType().subscribe(
       async (res: any) =>{
         console.log('[ListRelationshipPage] getListSocialRelationType()', await res);
@@ -42,8 +44,10 @@ export class ListRelationshipPage implements OnInit {
           this.listRelationship = res.socialRelationTypes
           this.listRelationshipBackup = this.listRelationship
         }
+        this.isLoading = false
        },(err) => { 
           console.log('[ListRelationshipPage] getListSocialRelationType() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
           throw err; 
       });
   }

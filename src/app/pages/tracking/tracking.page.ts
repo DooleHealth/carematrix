@@ -7,6 +7,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { DocumentsAddPage } from './documents-add/documents-add.page';
+import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 export interface ListDiagnosticTests {
   date?: string;
@@ -38,9 +39,6 @@ export class TrackingPage implements OnInit {
   filter: Filter;
   constructor(
     private dooleService: DooleService,
-    private loadingController: LoadingController,
-    public alertCtrl: AlertController,
-    public navCtrl:NavController,
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
     private languageService: LanguageService,
@@ -60,7 +58,7 @@ export class TrackingPage implements OnInit {
   }
 
   getDiagnosticTestsList(){
-    this.filter = history.state.filter;
+    //this.filter = history.state.filter;
     console.log('[TrackingPage] getDiagnosticTestsList()' ,  this.filter);
     if(this.filter){
       this.getFilteredDiagnosticTests()
@@ -79,8 +77,6 @@ export class TrackingPage implements OnInit {
   async getFilteredDiagnosticTests(){
     console.log('[TrackingPage] getFilteredDiagnosticTests()' ,  this.filter);
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
     this.dooleService.getAPIfilteredDiagnosticTest(this.filter).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
@@ -89,13 +85,12 @@ export class TrackingPage implements OnInit {
           this.diagnosticTests = []
           this.listDiagnostic = []
           this.groupDiagnosticsByDate(res)
+          this.filter = null
         }
-        loading.dismiss();
         this.isLoading = false
        },(err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
           this.isLoading = false
           throw err; 
       });
@@ -104,8 +99,6 @@ export class TrackingPage implements OnInit {
 
   async getDiagnosticTests(){
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
     this.dooleService.getAPIdiagnosticTests().subscribe(
       async (res: any) =>{
         this.diagnosticTests = []
@@ -114,12 +107,10 @@ export class TrackingPage implements OnInit {
         this.diagnosticTests = res.diagnosticTests
         if(this.diagnosticTests )
         this.groupDiagnosticsByDate(res)
-        loading.dismiss();
         this.isLoading = false
        },(err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
           this.isLoading = false
           throw err; 
       });
@@ -143,19 +134,15 @@ export class TrackingPage implements OnInit {
 
   async getFormList(){
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
     this.dooleService.getAPIformLists().subscribe(
       async (res: any) =>{
          this.forms = []
         console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.forms = res.forms
-        loading.dismiss();
         this.isLoading = false
        },async (err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
           this.isLoading = false
           throw err; 
       });
@@ -191,8 +178,6 @@ export class TrackingPage implements OnInit {
 
   async getElementsList(){
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
     this.groupedElements = [];
     this.elementValues = [];
     this.dooleService.getAPIelementsList().subscribe(
@@ -207,13 +192,10 @@ export class TrackingPage implements OnInit {
           })
           this.elementValues = data.elementValues;
         }
-        //console.log('[TrackingPage] getElementsList()',  this.groupedElements);
-        loading.dismiss();
         this.isLoading = false
        },(err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
           this.isLoading = false
           throw err; 
       });
@@ -270,8 +252,7 @@ async addDocument(){
 
   modal.onDidDismiss()
     .then((result) => {
-      console.log('addDocument()', result);
-     
+      console.log('addDocument()', result);     
       if(result?.data?.error){
        // let message = this.translate.instant('landing.message_wrong_credentials')
         //this.dooleService.presentAlert(message)
@@ -305,5 +286,28 @@ async addDocument(){
   
       await modal.present(); 
     }
+
+    async addFilters(){
+      const modal = await this.modalCtrl.create({
+        component:  DocumentsFilterPage,
+        componentProps: { },
+        cssClass: "modal-custom-class"
+      });
+    
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('addFilters()', result);     
+          if(result?.data?.error){
+           // let message = this.translate.instant('landing.message_wrong_credentials')
+            //this.dooleService.presentAlert(message)
+          }else if(result?.data?.action == 'add'){
+            this.filter = result?.data?.filter;
+            this.getFilteredDiagnosticTests()    
+          }
+        });
+    
+        await modal.present();
+    
+      }
 
 }

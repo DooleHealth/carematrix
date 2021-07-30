@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -12,9 +12,11 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class DrugsDetailPage implements OnInit {
   days = [{day1:false}, {day2:false}, {day3:false}, {day4:false}, {day5:false}, {day6:false}, {day7:false}]
-  drug : any
+  @Input()drug : any
+  @Input()id: any;
   form: FormGroup;
   times = []
+  isLoading = false
   isEditDrug = false
   isSubmited = false
   isSubmittedFromDate = false;
@@ -29,12 +31,12 @@ export class DrugsDetailPage implements OnInit {
     private datepipe: DatePipe,
     private translate : TranslateService,
     public alertController: AlertController,
-    private loadingController: LoadingController,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
-    this.drug = history.state.drug;
-    let id = history.state.id;
+/*     this.drug = history.state.drug;
+    let id = history.state.id; */
     this.form = this.fb.group({
       from_date: ['', [Validators.required]],
       to_date: ['', [Validators.required]],
@@ -49,7 +51,7 @@ export class DrugsDetailPage implements OnInit {
     });
     if(this.drug)
     this.form.get('drug').setValue(this.drug.id)
-    if(id){
+    if(this.id){
       console.log('[DrugsDetailPage] ngOnInit()',this.drug);
       this.showDetailsDrug()
       this.getMedicationPlan()
@@ -103,8 +105,7 @@ export class DrugsDetailPage implements OnInit {
     this.dooleService.postAPIdrugIntake(this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] saveDrug()', await json);
       if(json.message){
-        let message = this.translate.instant('medication.message_add_medication')
-        this.showAlert(message)
+        this.modalCtrl.dismiss({error:null, action: 'add'});
       }else{
         let message = this.translate.instant('medication.error_message_add_medication')
         alert(message)
@@ -128,13 +129,11 @@ export class DrugsDetailPage implements OnInit {
 
     this.form.get('frequency').setValue('daily')
 
-  
     //console.log('[DrugsDetailPage] updateDrug()', this.form.value);
     this.dooleService.putAPIdrugIntake(this.drug.id ,this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
       if(json.message){
-        let message = this.translate.instant('medication.message_edit_medication')
-        this.showAlert(message)
+        this.modalCtrl.dismiss({error:null, action: 'update'});
       }else{
         let message = this.translate.instant('medication.error_message_edit_medication')
         alert(message)
@@ -188,10 +187,10 @@ export class DrugsDetailPage implements OnInit {
 
   }
 
-  showAlert(message){
+/*   showAlert(message){
     let header = this.translate.instant('alert.header_info')
     this.dooleService.showAlertAndReturn(header,message,false, '/journal')
-  }
+  } */
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
@@ -220,28 +219,26 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async deleteDrug(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.deleteAPImedicationPlan(this.drug.medication_plan_id).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] deleteDrug()', await res);
         if(res.success){
-          let message = this.translate.instant('medication.message_deleted_medication')
-          this.showAlert(message)
+          this.modalCtrl.dismiss({error:null, action: 'update'});
         }
         else{
           let message = this.translate.instant('medication.error_message_deleted_medication')
           alert(message)
         }
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
         alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[DrugsDetailPage] deleteDrug() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 
@@ -356,6 +353,10 @@ export class DrugsDetailPage implements OnInit {
       )
     })
     return days_week
+  }
+
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 
 }

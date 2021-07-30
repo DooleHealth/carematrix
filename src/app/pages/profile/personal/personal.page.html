@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content fullscreen class="whiteBackground">
+
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
   <div>
     <ion-grid class="paddingGrid">
       <ion-row>

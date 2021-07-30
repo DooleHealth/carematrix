@@ -31,6 +31,7 @@ export class BookingsPage implements OnInit {
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
+  isLoading = false
   constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
     public file: File, private router: Router, private notification: NotificationService) { }
@@ -56,11 +57,8 @@ export class BookingsPage implements OnInit {
     return (Number(hour[0]))*60 + (Number(hour[1]))  }
 
   async addAgenda(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
     console.log(`[AgendaAddPage] addAgenda()` );
-
+    this.isLoading = true
     this.form.patchValue({
         files: this.files
     });
@@ -69,14 +67,14 @@ export class BookingsPage implements OnInit {
         console.log('[ReminderAddPage] addAgenda()', await res);        
         this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
         this.notification.displayToastSuccessful()
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };     
   }
   isSubmittedFields(isSubmitted){

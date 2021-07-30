@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  
   <div *ngIf="this.faq !== undefined; else noData" [innerHtml]="this.faq"></div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">

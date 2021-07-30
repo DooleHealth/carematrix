@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="{{'button.cancel' | translate}}"></ion-back-button>
     </ion-buttons>
     <ion-title>
       {{ isNewContact? ('edit_contact.header_add' | translate) : ('edit_contact.header' | translate) }}
     </ion-title>
   <ion-button slot="end" fill="clear" (click)="sumittedContact()">
-    {{ 'detail_contact.button_Ok' | translate}}</ion-button>
+    {{ 'button.ok' | translate}}</ion-button>
   </ion-toolbar>
 </ion-header>
 

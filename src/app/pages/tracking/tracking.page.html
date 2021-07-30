@@ -4,7 +4,7 @@
     <ion-toolbar [ngSwitch]="segment">
       <ion-title>{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
-      <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" routerLink="/documents-filter"></ion-icon>&nbsp;
+      <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" (click)="addFilters()"></ion-icon>&nbsp;
       <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDocument()"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'graphics'">
@@ -30,6 +30,10 @@
       <ion-label>{{ 'tracking.tap_graphics' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
+
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
 
   <!-- Documents -->
  

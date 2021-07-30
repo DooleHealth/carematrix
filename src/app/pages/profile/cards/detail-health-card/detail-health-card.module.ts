@@ -8,6 +8,7 @@ import { DetailHealthCardPageRoutingModule } from './detail-health-card-routing.
 
 import { DetailHealthCardPage } from './detail-health-card.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { AddHealthCardPageModule } from '../add-health-card/add-health-card.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    DetailHealthCardPageRoutingModule
+    DetailHealthCardPageRoutingModule,
+    AddHealthCardPageModule
   ],
   declarations: [DetailHealthCardPage]
 })

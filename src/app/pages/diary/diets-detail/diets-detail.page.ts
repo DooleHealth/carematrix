@@ -12,6 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
 export class DietsDetailPage implements OnInit {
   id : any;
   loading : any;
+  isLoading = false
   diet : any = [];
   link : any = null;
   linkpdf : any = null;
@@ -24,7 +25,6 @@ export class DietsDetailPage implements OnInit {
   thumbnail : any = null;
   constructor(
     private iab: InAppBrowser, 
-    public loadingController: LoadingController, 
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
@@ -40,8 +40,7 @@ export class DietsDetailPage implements OnInit {
 
   async getDetailDiet(){
     console.log('[DiaryPage] getDetailDiet()');
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.getAPIdetailDiets( this.id).subscribe(
       async (json: any) =>{
         console.log('[DiaryPage] getDetailDiet()', await json);
@@ -74,10 +73,10 @@ export class DietsDetailPage implements OnInit {
           }
         });
     
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDetailDiet() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }

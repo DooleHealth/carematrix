@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Plugins } from "@capacitor/core";
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 const  { Contacts } = Plugins;
 
 @Component({
@@ -12,7 +12,10 @@ export class ListMyContactsPage implements OnInit {
   contacts = [];
   contactsBackup = [];
   isHybrid = true;
-  constructor(public platform: Platform) { }
+  isLoading = false
+  constructor(
+    public platform: Platform,
+    ) { }
 
   ngOnInit() {
     if(!this.platform.is('hybrid')){
@@ -25,10 +28,12 @@ export class ListMyContactsPage implements OnInit {
       this.getContacts()    
   }
   async getContacts(){
+    this.isLoading = true
     Contacts.getContacts().then(result => {
       console.log(result);
       this.contacts = result.contacts;
       this.contactsBackup = this.contacts;
+      this.isLoading = false
   });
   }
 
@@ -61,6 +66,5 @@ export class ListMyContactsPage implements OnInit {
       }
     });
   }
-
 
 }

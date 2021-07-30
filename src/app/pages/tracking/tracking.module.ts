@@ -12,6 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ElementsAddPageModule } from './elements-add/elements-add.module';
 import { DocumentsAddPageModule } from './documents-add/documents-add.module';
+import { DocumentsFilterPageModule } from './documents-filter/documents-filter.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { DocumentsAddPageModule } from './documents-add/documents-add.module';
     ComponentsModule,
     TrackingPageRoutingModule,
     ElementsAddPageModule,
-    DocumentsAddPageModule
+    DocumentsAddPageModule,
+    DocumentsFilterPageModule
   ],
   providers: [ InAppBrowser],
   declarations: [TrackingPage]

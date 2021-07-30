@@ -14,6 +14,7 @@ export class PaymentPage implements OnInit {
   staff = history.state?.staff;
   add = this.agenda?.online ? 'contact.tap_video' : 'contact.tap_appointment';
   isNewEvent = true;
+  isLoading = false
   constructor(private dooleService: DooleService, private translate: TranslateService, private loadingController: LoadingController,   ) { }
 
   ngOnInit() {
@@ -21,8 +22,7 @@ export class PaymentPage implements OnInit {
   }
 
   async addAgenda(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.postAPIaddAgenda(this.agenda).subscribe(
       async (res: any) =>{
         console.log('[PaymentPage] addAgenda()', await res);
@@ -30,14 +30,14 @@ export class PaymentPage implements OnInit {
         if(!this.isNewEvent)
         message = this.translate.instant('reminder.message_updated_reminder')
         this.showAlert(message)
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[PaymentPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 

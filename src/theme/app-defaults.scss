@@ -376,6 +376,19 @@ text-align: left !important;
   text-align: center;
 }
 
+.spin {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+ion-spinner {
+  width: 28px;
+  height: 28px;
+  stroke: #444;
+    fill: #222;
+}
+
 .custom-class {
   color:#DFF2BF; 
   background-color: #4F8A10;
@@ -389,8 +402,8 @@ text-align: left !important;
   --border-style:solid;
   --border-width:3px;    
   --background: url("/assets/images/cheque.svg");
-  --height: 4em;
-  --width: 4em;
+  --height: 3.5em;
+  --width: 3.5em;
   --start: left;
   animation: draw 3s 1;
   animation-direction: normal;

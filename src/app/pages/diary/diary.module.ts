@@ -9,6 +9,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { DiaryPage } from './diary.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TranslateModule } from '@ngx-translate/core';
+import { DrugsDetailPageModule } from './drugs-detail/drugs-detail.module';
+import { DrugAddPageModule } from './drug-add/drug-add.module';
+import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
 
 @NgModule({
   imports: [
@@ -17,7 +20,10 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     TranslateModule,
-    DiaryPageRoutingModule
+    DiaryPageRoutingModule,
+    DrugsDetailPageModule,
+    DrugAddPageModule,
+    ElementsAddPageModule
   ],
   providers: [DatePipe, InAppBrowser] ,
   declarations: [DiaryPage]

@@ -56,8 +56,6 @@ export class AdvicesPage implements OnInit {
     console.log('[AdvicePage] getDietList()');
     this.items = []
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
     this.dooleService.getAPIlistDietsByDate(date).subscribe(
@@ -65,12 +63,10 @@ export class AdvicesPage implements OnInit {
         console.log('[AdvicePage] getDietList()', await res);
         if(res.diets)
         this.addItems(res.diets)
-        loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[AdvicePage] getDietList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
           this.isLoading = false
           throw err; 
       });
@@ -81,8 +77,6 @@ export class AdvicesPage implements OnInit {
     console.log('holaaa');
     this.items = []
     this.isLoading = true
-    const loading = await this.loadingController.create();
-    await loading.present();
     // let formattedDate = this.transformDate(this.date)
     // let date = {date: formattedDate}
     this.dooleService.getAPIlistAdvices().subscribe(
@@ -90,11 +84,9 @@ export class AdvicesPage implements OnInit {
         console.log('[AdvicePage] getAdvicesList()', await res);
         if(res.advices)
         this.addItems(res.advices)
-        loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message); 
-          loading.dismiss();
           this.isLoading = false
           throw err; 
       });

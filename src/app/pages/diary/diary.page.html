@@ -26,10 +26,10 @@
     </ion-row>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="drug-add"></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDrug()"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'health'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" routerLink="/elements-add"></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -182,7 +182,7 @@
               </ion-button>&nbsp;
 
               <ion-button *ngIf="item.item.origin == 1" size="small" color="transparent" class="buttonLink" 
-                routerLink="drugs-detail" [state]="{id: item.item.id, drug:item.item}"
+                (click)="this.addDrugPlan(item.item, item.item.id)"
               >{{ 'detail_contact.button_edit' | translate }}</ion-button>&nbsp;
             </div>
    

@@ -67,8 +67,6 @@ export class ActivityGoalPage implements OnInit {
 
   async loadData(interval) {
     console.log('[ActivityGoalPage] loadData()', interval); 
-    const loading = await this.loadingController.create();
-    await loading.present();
     this.isLoading = true
     let vArray = [];
     let dArray = [];
@@ -150,7 +148,6 @@ export class ActivityGoalPage implements OnInit {
       this.isLoading = false
       alert("error");
     },()=>{
-      loading.dismiss();
       this.isLoading = false
     });
   }

@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Inicio"></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'detail_health_card.header_detail_card' | translate}}</ion-title>
-    <ion-button routerLink="/profile/cards/addCard" slot="end" fill="clear" [state]="{card:card}">{{ 'edit_health_card.button_edit' | translate}}</ion-button>
+    <ion-button (click)="editCard()" slot="end" fill="clear">{{ 'edit_health_card.button_edit' | translate}}</ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
@@ -18,7 +18,10 @@
     </ion-row>
   </ion-grid>
 
-
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item lines="none" *ngIf="this.card !== undefined">

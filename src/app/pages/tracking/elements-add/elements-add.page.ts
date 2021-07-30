@@ -23,6 +23,7 @@ export class ElementsAddPage implements OnInit {
   isSubmittedCategory = false
   date: any;
   isNewValueElement = false
+  isLoading = false
   //id:any
   // nameElement: any
   // units:any
@@ -30,7 +31,6 @@ export class ElementsAddPage implements OnInit {
   max
   constructor(
     private fb: FormBuilder,
-    private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
     private navController: NavController,
@@ -91,10 +91,7 @@ export class ElementsAddPage implements OnInit {
   }
 
   async addElement() {
-
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+    this.isLoading = true
     const postData = {
       date_value: this.date,
       value: this.form.get('measure').value,
@@ -122,14 +119,12 @@ export class ElementsAddPage implements OnInit {
         },
         () => {
           // Called when operation is complete (both success and error)
-          loading.dismiss();
+          this.isLoading = false
         });
   }
 
   async getElementsList(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+    this.isLoading = true
     this.dooleService.getAPIelementsList().subscribe(
       async (data: any) =>{
         console.log('[DiaryPage] getElementsList()', await data); 
@@ -139,11 +134,11 @@ export class ElementsAddPage implements OnInit {
           this.treeIterate(data.eg, '');
           this.filterCategoryWithElement()
         }
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }

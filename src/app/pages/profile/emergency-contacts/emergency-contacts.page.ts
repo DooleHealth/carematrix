@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { ListMyContactsPage } from './list-my-contacts/list-my-contacts.page';
 
 @Component({
   selector: 'app-emergency-contacts',
@@ -12,7 +15,9 @@ export class EmergencyContactsPage implements OnInit {
   isLoading = false
   constructor(
     private dooleService: DooleService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalCtrl: ModalController,
+    private notification: NotificationService
   ) { }
 
   ngOnInit() {
