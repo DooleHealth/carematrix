@@ -586,7 +586,11 @@
         "field_taxes": "IVA",
         "modality": "Modalidad",
         "button_payment": "Confirmar Pago"
+      },
+      "info": {
+        "button": "De acuerdo",
+        "title":"Información",
+        "news":"En este apartado podrás encontrar las noticias y consejos que mejor se adaptan a tu perfil"
       }
-      
 
 }
