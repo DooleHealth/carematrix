@@ -15,6 +15,9 @@
   [animated]="true" 
   (ionInput)="filterList($event)" >
 </ion-searchbar>
+<div class="spin" *ngIf="this.isLoading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
   <div *ngIf="contacts !== undefined">
     <ion-list *ngFor="let contact of contacts">
       <ion-item *ngIf="contact !== undefined" routerLink="../list-relationship" [state]="{contact:contact}">

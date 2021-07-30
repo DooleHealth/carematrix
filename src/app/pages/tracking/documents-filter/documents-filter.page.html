@@ -1,14 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="{{ 'alert.button_cancel' | translate}}"></ion-back-button>
+      <ion-back-button (click)="close()" text="{{ 'alert.button_cancel' | translate}}"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'documents_filter.header' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary"
-       (click)="submit()"
-       routerLink="/tracking" [state]="{filter: form.value}"
-       >{{ 'alert.button_apply' | translate}}</ion-button>
+       (click)="submit()">{{ 'alert.button_apply' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,6 +17,11 @@
   (ionInput)="filterList($event)" 
   placeholder="{{ 'Busca tu prueba' | translate}}">
 </ion-searchbar> -->
+
+<div class="spin" *ngIf="this.isLoading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
+
   <form (ngSubmit)="submit()" [formGroup]="form"> 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_date' | translate}}</ion-text>

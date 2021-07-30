@@ -5,7 +5,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { CameraResultType, CameraSource, Capacitor, Plugins } from '@capacitor/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { File } from '@ionic-native/file/ngx';
@@ -27,7 +27,7 @@ export class ReportProblemPage implements OnInit {
 
   isSubmittedCategory = false;
   isSubmittedDescription = false;
-
+  isLoading = false
   constructor(
     private translate: TranslateService,
     public router: Router,
@@ -35,8 +35,8 @@ export class ReportProblemPage implements OnInit {
     private fb: FormBuilder,
     public platform: Platform,
     public file: File,
-    private loadingController: LoadingController,
     private alertController: AlertController,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -162,9 +162,7 @@ export class ReportProblemPage implements OnInit {
     // Save new diagnostic test
   async sendProblemReport(){
       console.log('[ReportProblemPage] sendProblemReport()');
-      const loading = await this.loadingController.create();
-      await loading.present();
-  
+      this.isLoading = true
 /*       let category = this.form.get('category').value; 
       this.form.get('category').setValue(category); */
   
@@ -185,19 +183,19 @@ export class ReportProblemPage implements OnInit {
           async (data) => {
             console.log("data:", data);
             if(data)
-            this.presentAlert(this.translate.instant("report_problem.alert_successful_response"));
+            this.modalCtrl.dismiss({error:null, action: 'add'});
             else
             this.presentAlert(this.translate.instant("report_problem.alert_no_successful_response"));
           },
           (error) => {
             // Called when error
-            loading.dismiss();
+            this.isLoading = false
             console.log("error: ", error);
             throw new HttpErrorResponse(error);
           },
           () => {
             // Called when operation is complete (both success and error)
-            loading.dismiss();
+            this.isLoading = false
           });
     }
 
@@ -215,7 +213,8 @@ export class ReportProblemPage implements OnInit {
         console.log("[ReportProblemPage] goBacktoProfile()", this.form.value);
         this.presentAlertConfirm();
       }else{
-          this.router.navigateByUrl('/profile')
+          //this.router.navigateByUrl('/profile')
+          this.close()
       }
     }
 
@@ -236,7 +235,8 @@ export class ReportProblemPage implements OnInit {
             text: this.translate.instant("alert.button_ok"),
             handler: () => {
               console.log('Confirm Okay');
-              this.router.navigateByUrl('/profile')
+              //this.router.navigateByUrl('/profile')
+              this.close()
             }
           }
         ]
@@ -254,7 +254,8 @@ export class ReportProblemPage implements OnInit {
           text: this.translate.instant("alert.button_ok"),
           handler: () => {
             console.log('Confirm Okay');
-            this.router.navigateByUrl('/profile');
+            //this.router.navigateByUrl('/profile');
+            this.close()
           }
         }],
         backdropDismiss: false
@@ -264,20 +265,20 @@ export class ReportProblemPage implements OnInit {
     }
 
 /*     async saveFile(data){
-      const loading = await this.loadingController.create();
-      await loading.present();
+      this.isLoading = true
       this.dooleService.uploadFile(data).then( res =>{
         let isSuccess = (res as any).success
         if(isSuccess)
         this.presentAlert(this.translate.instant("report_problem.alert_successful_response"));
         else
         this.presentAlert(this.translate.instant("report_problem.alert_no_successful_response"));
+         this.isLoading = false
       }).catch(err => {
         console.log("Error uploadFile: ", err);
-        loading.dismiss();
+         this.isLoading = false
         this.presentAlert(err);
       }).finally(() => {
-        loading.dismiss();
+         this.isLoading = false
       })
     } */
 
@@ -336,6 +337,10 @@ export class ReportProblemPage implements OnInit {
     var blob = new Blob(byteArrays, {type: contentType});
     console.log("this is bob: ", blob);
     return blob;
+    }
+
+    close() {
+      this.modalCtrl.dismiss({error:null});
     }
 
 

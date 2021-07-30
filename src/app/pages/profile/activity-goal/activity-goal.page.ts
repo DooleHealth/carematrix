@@ -5,7 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import * as HighCharts from 'highcharts';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
+import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 
 
 @Component({
@@ -43,6 +45,7 @@ export class ActivityGoalPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private translate : TranslateService,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -64,8 +67,6 @@ export class ActivityGoalPage implements OnInit {
 
   async loadData(interval) {
     console.log('[ActivityGoalPage] loadData()', interval); 
-    const loading = await this.loadingController.create();
-    await loading.present();
     this.isLoading = true
     let vArray = [];
     let dArray = [];
@@ -147,7 +148,6 @@ export class ActivityGoalPage implements OnInit {
       this.isLoading = false
       alert("error");
     },()=>{
-      loading.dismiss();
       this.isLoading = false
     });
   }
@@ -373,6 +373,7 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       case '1w': {
+
         let now =  new Date(this.max)
         now.setDate(this.max.getDate() + 7)
         this.max = new Date(now)
@@ -403,6 +404,7 @@ export class ActivityGoalPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ReminderAddPage,
       componentProps: { typeId: this.id, type: 'element', isNewReminder:true },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -417,5 +419,28 @@ export class ActivityGoalPage implements OnInit {
     await modal.present();
    
   }
+
+  async addElement(){
+    const modal = await this.modalCtrl.create({
+      component:  ElementsAddPage,
+      componentProps: { id: this.id, nameElement: this.header, units: this.units },
+      //cssClass: "modal-custom-class"
+    });
+  
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addElement()', result);
+       
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'add'){
+          this.notification.displayToastSuccessful()
+          this.loadData(this.segmentFilter);
+        }
+      });
+  
+      await modal.present(); 
+    }
 
 }

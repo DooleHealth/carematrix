@@ -11,6 +11,10 @@
 </ion-header>
 
 <ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  
   <div *ngIf="listContact.length > 0; else noData"> 
   <ion-list *ngFor="let contact of this.listContact">
     <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}">

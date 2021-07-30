@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
   <div *ngIf="this.information !== undefined">
     <div [innerHtml]="this.information"></div>
   </div>

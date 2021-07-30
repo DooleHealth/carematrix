@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { PasswordPage } from './password/password.page';
 
 @Component({
   selector: 'app-settings',
@@ -23,6 +26,8 @@ export class SettingsPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
+    private modalCtrl: ModalController,
+    private notification: NotificationService,
     ) { }
   ngOnInit() {
     this.getNotificationConfiguration()
@@ -183,5 +188,27 @@ export class SettingsPage implements OnInit {
     this.language = this.languageService.getCurrent()
     console.log('[SettingsPage] getLocalLanguages()', this.language);
   }
+
+  async changePassword(){
+    const modal = await this.modalCtrl.create({
+      component:  PasswordPage,
+      componentProps: { },
+      cssClass: "modal-custom-class"
+    });
+  
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('changePassword()', result);     
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'change'){
+          this.notification.displayToastSuccessful()
+        }
+      });
+  
+      await modal.present();
+  
+    }
 
 }

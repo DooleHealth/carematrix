@@ -65,13 +65,12 @@
 
     <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
       
-      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text></ion-row>
+      <ion-row class="rowPadding"><ion-text color="primary" class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text></ion-row>
 
       <ion-row class="blanco">
         <ng-container *ngIf="!routeResolveData">
           <div style="padding: 20px 40px; text-align: center;">
-            <ion-spinner></ion-spinner>
-           
+            <ion-spinner name="bubbles"></ion-spinner>           
           </div>
         </ng-container>
         <div *ngIf="routeResolveData">
@@ -96,7 +95,7 @@
           *ngFor="let item of this.eventSource | paginate: { itemsPerPage: 30, currentPage: page };let i = index"
         >
         
-          <ion-chip
+          <ion-chip 
             (click)="changeTagColor(i, item.startTime )"
             [color]="tagDefaultColor[i]"
           >

@@ -17,13 +17,11 @@ export class DocumentDetailPage implements OnInit {
   private id;
   diagnosticTest = [];
   diagnosticTestType = [];
-
   groupedElements: any = [];
   elementValues: any = [];
   mediaFiles: any;
-  
+  isLoading = false
   constructor(
-    private loadingController: LoadingController,
     private dooleService: DooleService,
   ) {
   }
@@ -60,8 +58,7 @@ export class DocumentDetailPage implements OnInit {
   }
 
   async getDiagnosticData(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.getAPIdiagnosticTestID(this.id).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);
@@ -80,14 +77,14 @@ export class DocumentDetailPage implements OnInit {
           this.addItems()
         }
 
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[TrackingPage] getDiagnosticData() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 
@@ -106,9 +103,6 @@ export class DocumentDetailPage implements OnInit {
 
 
 /*   async getData() {
-    const loading = await this.loadingController.create();
-    await loading.present();
-
     this.authService.get('user/diagnosticTest/' + this.id).subscribe(
       async (json) => {
 
@@ -153,7 +147,6 @@ export class DocumentDetailPage implements OnInit {
       },
       () => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
       });
   } */
 

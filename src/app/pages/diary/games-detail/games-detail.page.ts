@@ -13,10 +13,10 @@ export class GamesDetailPage implements OnInit {
   game:any ={}
   id:any
   score = 0
+  isLoading = false
   constructor(
     private iab: InAppBrowser,
     private auth: AuthenticationService,
-    private loadingController: LoadingController,
     private dooleService: DooleService,
   ) { }
 
@@ -29,23 +29,21 @@ export class GamesDetailPage implements OnInit {
   }
 
   async getGameData(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.getAPIgameId(this.game.id).subscribe(
       async (res: any) =>{
         console.log('[GamesDetailPage] getGameData()', await res);
         if (res.game) {
           this.score = res.game.score
         }
-
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[GamesDetailPage] getGameData() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 

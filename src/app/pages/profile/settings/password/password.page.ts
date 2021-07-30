@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -20,6 +20,7 @@ export class PasswordPage implements OnInit {
     private formBuilder: FormBuilder,
     private alertController: AlertController,
     public router: Router,
+    private modalCtrl: ModalController,
     private translate: TranslateService) { }
 
   ngOnInit() {
@@ -134,7 +135,7 @@ export class PasswordPage implements OnInit {
       async (res: any) =>{
        console.log('[InitialPage] postChangePassword()', await res);
        if(res.success){
-          this.presentAlert(this.translate.instant("setting.password.success_changed_password"))
+        this.modalCtrl.dismiss({error:null, action: 'change'});
        }
         else{
           this.presentAlert(this.translate.instant("setting.password.no_success_changed_password"))
@@ -150,5 +151,9 @@ export class PasswordPage implements OnInit {
     this.isSubmittedNewPassword= isSubmitted;
     this.isSubmittedRepeatedPassword= isSubmitted;
     this.isSubmittedCurrentPassword= isSubmitted;
+  }
+
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 }

@@ -12,6 +12,11 @@
   [animated]="true" 
   (ionInput)="filterList($event)" >
 </ion-searchbar>
+
+<div class="spin" *ngIf="this.isLoading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
+
 <ion-list *ngFor="let test of listTestType">
   <ion-item>
     <ion-label class="txtPaddingLeft" (click)="closeModal(test)">{{test.name}}</ion-label>

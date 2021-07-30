@@ -30,7 +30,7 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'appointment.field_date' | translate}}</ion-label>
-        <ion-text class="textMedium">{{event?.start_date_iso8601 | date: 'EEEE, d MMMM yyyy, HH:mm'}}</ion-text>
+        <ion-text class="textMedium">{{ formatSelectedDate(event?.start_date_iso8601)}}</ion-text>
       </ion-item>
       <ion-item routerLink="doctor" 
               [state]="{doctor: staff}" 

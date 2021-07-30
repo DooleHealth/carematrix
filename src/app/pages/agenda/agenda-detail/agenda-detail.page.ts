@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
@@ -39,7 +40,8 @@ export class AgendaDetailPage implements OnInit {
     private socialSharing: SocialSharing,
     private calendar: Calendar,
     public alertCtrl: AlertController,
-    public notification: NotificationService
+    public notification: NotificationService,
+    private languageService: LanguageService,
   ) { }
 
   ngOnInit() {
@@ -217,6 +219,12 @@ export class AgendaDetailPage implements OnInit {
 
   }
 
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
+  }
+
   openFile(media){
     console.log("media", media);
     window.open(media.temporaryUrl, "");
@@ -264,6 +272,7 @@ export class AgendaDetailPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ReminderAddPage,
       componentProps: { typeId: this.event?.id, type: 'element', isNewReminder:true },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -280,13 +289,24 @@ export class AgendaDetailPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AgendaEditPage,
       componentProps: {event: event },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
       .then((result) => {
 
+        if(result?.data['action'] === 'update'){
+            let event = result?.data['agenda'] 
+            console.log('[AgendaPage] editAgenda() Update',  event)
+            this.event.title = event.title
+            this.event.site = event.place
+            this.event.start_date_iso8601 = event.date
+            this.event.description = event.indications
+            this.event.online = this.event.online
+           // this.event.files = this.event.file
+         }
         if(result?.data['error']){
-         //TODO: handle error message
+        //TODO: handle error message
         }
     });
 

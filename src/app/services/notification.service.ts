@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -12,7 +12,8 @@ export class NotificationService {
     public snackBar: MatSnackBar,
     private zone: NgZone,
     public alertCtrl: AlertController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private toastController: ToastController
   ) { }
 
   showSuccess(message: string): void {
@@ -52,6 +53,26 @@ export class NotificationService {
      
       console.log("NotificationService", message);
       
+    });
+  }
+
+  //Toast
+  displayToastSuccessful() { 
+    try {
+      this.toastController.dismiss().then(() => {
+      }).catch(() => {
+      }).finally(() => {
+        console.log('Closed')
+      });
+    } catch(e) {}
+    
+    this.toastController.create({
+      position: 'middle', //'middle', 'bottom'
+      cssClass: 'toast-custom-class',
+      animated: true,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
     });
   }
 

@@ -2,11 +2,15 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { IonSlides, LoadingController} from '@ionic/angular'; 
+import { IonSlides, LoadingController, ModalController} from '@ionic/angular'; 
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
+import { DrugAddPage } from './drug-add/drug-add.page';
+import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -34,12 +38,13 @@ export class DiaryPage implements OnInit {
   @ViewChild('slides') slides: IonSlides;
   constructor(
     private dooleService: DooleService,
-    private loadingController: LoadingController,
     private datePipe: DatePipe,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
     private translate: TranslateService,
     private languageService: LanguageService,
+    private modalCtrl: ModalController,
+    private notification: NotificationService
   ) {}
 
   ngOnInit() {
@@ -102,10 +107,6 @@ export class DiaryPage implements OnInit {
     this.isLoading = true;
     console.log('[DiaryPage] getDietList()');
     this.items = []
-    
-   
-    // const loading = await this.loadingController.create();
-    // await loading.present();
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
     this.dooleService.getAPIlistDietsByDate(date).subscribe(
@@ -113,12 +114,10 @@ export class DiaryPage implements OnInit {
         console.log('[DiaryPage] getDietList()', await res);
         if(res.diets)
           this.addItems(res.diets)
-        //loading.dismiss();
-       
+        //this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          //loading.dismiss();
           //this.isLoading = false
           throw err; 
       }, ()=>{
@@ -127,12 +126,9 @@ export class DiaryPage implements OnInit {
   }
 
   async getDrugIntakeList(){
-    this.isLoading = true
     console.log('[DiaryPage] getDrugIntakeList()');
     this.items = []
-   
-    // const loading = await this.loadingController.create();
-    // await loading.present();
+    this.isLoading = true
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
     this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
@@ -145,12 +141,10 @@ export class DiaryPage implements OnInit {
           this.addItems(list)
           this.groupDiagnosticsByDate(this.items)
         }
-        //loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDrugIntakeList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          //loading.dismiss();
           this.isLoading = false
           throw err; 
       }, ()=>{
@@ -203,8 +197,6 @@ export class DiaryPage implements OnInit {
     console.log('[DiaryPage] getGameListByDate()');
     this.items = []
     this.isLoading = true
-    // const loading = await this.loadingController.create();
-    // await loading.present();
     let date = this.transformDate(this.date)
     this.dooleService.getAPIgamesByDate(date, date).subscribe(
       async (res: any) =>{
@@ -216,12 +208,10 @@ export class DiaryPage implements OnInit {
           });
           this.addItems(games)
          }
-        //loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getGameListByDate() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          //loading.dismiss();
           this.isLoading = false
           throw err; 
       }, ()=>{
@@ -276,8 +266,6 @@ export class DiaryPage implements OnInit {
   }
 
   async getElementsList(){
-    // const loading = await this.loadingController.create();
-    // await loading.present();
     this.items = []
     this.isLoading = true
     let formattedDate = this.transformDate(this.date)
@@ -295,12 +283,10 @@ export class DiaryPage implements OnInit {
           })
           this.addItems(this.groupedElements);
         }
-        //loading.dismiss();
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          //loading.dismiss();
           this.isLoading = false
           throw err; 
       }, ()=>{
@@ -337,7 +323,6 @@ export class DiaryPage implements OnInit {
         await this.getDrugIntakeList()
         break;
       case 'games':
-        //this.getGameList()
         await this.getGameListByDate()
         break;
       case 'health':
@@ -374,6 +359,73 @@ export class DiaryPage implements OnInit {
     }
     return  this.translate.instant('diary.all_day')
   }
+
+  async addDrugPlan(drug, id){
+    const modal = await this.modalCtrl.create({
+      component:  DrugsDetailPage,
+      componentProps: { drug: drug, id: id},
+      cssClass: "modal-custom-class"
+    });
+  
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addDrugPlan()', result);
+       
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action !== undefined){
+          this.notification.displayToastSuccessful()
+          this.segmentChanged()
+        }
+      });
+  
+      await modal.present(); 
+    }
+
+    async addDrug(){
+      const modal = await this.modalCtrl.create({
+        component:  DrugAddPage,
+        componentProps: { },
+        cssClass: "modal-custom-class"
+      });
+    
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('addDrug()', result);
+         
+          if(result?.data?.error){
+           // let message = this.translate.instant('landing.message_wrong_credentials')
+            //this.dooleService.presentAlert(message)
+          }else if(result?.data?.action == 'add'){
+            let drug = result?.data?.drug
+            this.addDrugPlan(drug, undefined)
+          }
+        });
+    
+        await modal.present(); 
+    }
+
+    async addElement(){
+      const modal = await this.modalCtrl.create({
+        component:  ElementsAddPage,
+        componentProps: { },
+      });
+    
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('addElement()', result);
+         
+          if(result?.data?.error){
+           // let message = this.translate.instant('landing.message_wrong_credentials')
+            //this.dooleService.presentAlert(message)
+          }else if(result?.data?.action == 'add'){
+            this.notification.displayToastSuccessful()
+          }
+        });
+    
+        await modal.present(); 
+      }
 
 }
 

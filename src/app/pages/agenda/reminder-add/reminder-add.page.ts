@@ -29,7 +29,7 @@ export class ReminderAddPage implements OnInit {
   agenda_id;
   frequency;
   isNewEvent: boolean;
-
+  isLoading = false
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
@@ -101,9 +101,7 @@ export class ReminderAddPage implements OnInit {
   } */
 
   async addReminder(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+    this.isLoading = true
     let date = this.form.get('start_date').value 
     this.form.get('start_date').setValue(this.transformDate(date));
 
@@ -123,22 +121,23 @@ export class ReminderAddPage implements OnInit {
       async (res: any) =>{
         console.log('[ReminderAddPage] addReminder()', await res);
         if(res.success){
-          let message = this.translate.instant('reminder.message_added_reminder')
-          this.modalCtrl.dismiss({error:null});
-          this.notification.showSuccess(message);
+          // let message = this.translate.instant('reminder.message_added_reminder')
+          // this.notification.showSuccess(message);
+          this.modalCtrl.dismiss({error:null, action: 'add'});
+          this.notification.displayToastSuccessful()
         }else{
           let message = this.translate.instant('reminder.error_message_added_reminder')
           alert(message)
         }
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 
@@ -147,7 +146,10 @@ export class ReminderAddPage implements OnInit {
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
         if(res.success){
-          let message = this.translate.instant('reminder.message_updated_reminder')
+          this.modalCtrl.dismiss({error:null, action: 'update', reminder: this.form.value});
+          this.notification.displayToastSuccessful()
+        }else{
+          let message = this.translate.instant('reminder.error_message_added_reminder')
           this.showAlert(message)
         }
        },(err) => { 
@@ -180,8 +182,7 @@ export class ReminderAddPage implements OnInit {
   }
 
   async deleteReminder(){
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
     this.dooleService.deleteAPIReminder(this.id).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
@@ -192,15 +193,15 @@ export class ReminderAddPage implements OnInit {
           let message = this.translate.instant("reminder.error_message_delete_reminder")
           alert(message)
         }
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };
   }
 

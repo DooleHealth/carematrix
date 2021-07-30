@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CardsPageRoutingModule } from './cards-routing.module';
 
 import { CardsPage } from './cards.page';
+import { AddHealthCardPageModule } from './add-health-card/add-health-card.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { CardsPage } from './cards.page';
     FormsModule,
     IonicModule,
     TranslateModule,
-    CardsPageRoutingModule
+    CardsPageRoutingModule,
+    AddHealthCardPageModule
   ],
   declarations: [CardsPage]
 })

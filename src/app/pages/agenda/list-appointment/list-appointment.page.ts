@@ -172,6 +172,7 @@ export class ListAppointmentPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component:  AgendaEditPage,
       componentProps: { },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()

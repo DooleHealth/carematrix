@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" routerLink="../">{{ 'health_card.button_return' | translate}}</ion-button>
+    <ion-button slot="start" fill="clear" (click)="close()">{{ 'button.cancel' | translate}}</ion-button>
     <ion-title>{{ isAddCard? ('add_health_card.header_add_card' | translate) : ('edit_health_card.header_edit_card' | translate) }}</ion-title>
     <ion-button slot="end" fill="clear" (click)="this.isAddCard? addCard(): editCard()">
       {{ isAddCard? ('add_health_card.button_add' | translate) : ('edit_health_card.button_edit' | translate) }}</ion-button>
@@ -22,7 +22,7 @@
     <ion-list>
       <ion-item lines="none">
         <ion-label>{{ 'health_card.modality' | translate}}</ion-label>
-        <ion-select interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}" [compareWith]="compareFn" value="formHealthCard.get('health_card_type_id').value" formControlName="health_card_type_id" required>
+        <ion-select interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}" [compareWith]="compareFn" [value]="formHealthCard.get('health_card_type_id').value" formControlName="health_card_type_id" required>
           <ion-select-option *ngFor="let card of healthCardTypes" [value]="card?.id">{{card?.name}}</ion-select-option>
         </ion-select>
       </ion-item>

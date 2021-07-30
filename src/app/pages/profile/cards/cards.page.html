@@ -4,13 +4,17 @@
       <ion-back-button text="{{ 'button.perfil' | translate}}" ></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'health_card.header_card' | translate}}</ion-title>
-    <ion-buttons slot="end" routerLink="addCard" >
+    <ion-buttons slot="end" (click)="addCard()" >
     <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
   </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
   <ion-list *ngIf="listCard.length > 0; else noData">
     <ion-card *ngFor="let card of listCard" class="cardProfile" routerLink="detailCard" [state]="{id:card.id}">
       <ion-card-content>

@@ -2,13 +2,14 @@ import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CameraSource, Capacitor, Plugins, CameraResultType, } from '@capacitor/core';
-import { ActionSheetController, LoadingController, ModalController } from '@ionic/angular';
+import { ActionSheetController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 const { Camera } = Plugins;
 @Component({
   selector: 'app-bookings',
@@ -22,7 +23,7 @@ export class BookingsPage implements OnInit {
   selectedDate: string;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   files: Array<{ name: string, file: string, type: string }> = [];
-  isNewEvent = true;
+  //isNewEvent = true;
   form: FormGroup;
   dateMax:any;
   duration:string = "30";
@@ -30,9 +31,10 @@ export class BookingsPage implements OnInit {
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
-  constructor(public dooleService:DooleService, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
+  isLoading = false
+  constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
-    public file: File, private router: Router) { }
+    public file: File, private router: Router, private notification: NotificationService) { }
   ngOnInit() {
    
     this.form = this.fb.group({
@@ -55,29 +57,24 @@ export class BookingsPage implements OnInit {
     return (Number(hour[0]))*60 + (Number(hour[1]))  }
 
   async addAgenda(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
     console.log(`[AgendaAddPage] addAgenda()` );
-
+    this.isLoading = true
     this.form.patchValue({
         files: this.files
     });
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] addAgenda()', await res);
-        let message = this.translate.instant('reminder.message_added_appointment')
-        if(!this.isNewEvent)
-        message = this.translate.instant('reminder.message_updated_reminder')
-        this.showAlert(message)
-        loading.dismiss();
+        console.log('[ReminderAddPage] addAgenda()', await res);        
+        this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+        this.notification.displayToastSuccessful()
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       };     
   }
   isSubmittedFields(isSubmitted){
@@ -96,12 +93,6 @@ export class BookingsPage implements OnInit {
    
     this.addAgenda()
     
-  }
-
-  showAlert(message){
-    //let message = this.translate.instant('documents_add.alert_message')
-    let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,message,false, '/agenda/list-appointment')
   }
 
   async openCalendarModal() {

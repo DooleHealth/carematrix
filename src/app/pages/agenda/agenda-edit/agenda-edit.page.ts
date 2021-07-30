@@ -103,6 +103,7 @@ export class AgendaEditPage implements OnInit {
         console.log('[AgendaEditPage] deleteReminder()', await res);
         await this.addAgenda();
         // this.modalCtrl.dismiss({error:null});
+        // this.notification.displayToastSuccessful()
         this.isSaving = !this.isSaving
        },(err) => { 
           console.log('[AgendaEditPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
@@ -124,8 +125,7 @@ export class AgendaEditPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaEditPage] addAgenda()', await res);
         if(res.success){
-          let message = this.translate.instant('reminder.message_added_reminder')
-          this.showAlert(message)
+          this.notification.displayToastSuccessful()
         }else{
           let message = this.translate.instant('reminder.error_message_added_reminder')
           alert(message)
@@ -154,11 +154,12 @@ export class AgendaEditPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaEditPage] addAgenda()', await res);
         if(res.success){
-          let message = this.isNewEvent ? this.translate.instant('appointment.message_added_appointment') : this.translate.instant('appointment.message_updated_appointment')
-          this.notification.showSuccess(message);
-
-          this.modalCtrl.dismiss({error:null, action:'add'});
+/*           let message = this.isNewEvent ? this.translate.instant('appointment.message_added_appointment') : this.translate.instant('appointment.message_updated_appointment')
+          this.notification.showSuccess(message); */
+          let action = this.isNewEvent? 'add': 'update'
+          this.modalCtrl.dismiss({error:null, action: action, agenda: this.form.value});
           this.isSaving = !this.isSaving
+          this.notification.displayToastSuccessful()
         }else{
           let message = this.translate.instant('appointment.error_message_added_reminder')
           alert(message)
@@ -172,11 +173,6 @@ export class AgendaEditPage implements OnInit {
         // Called when operation is complete (both success and error)
         
       };
-  }
-
-  showAlert(message){
-    let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,message,false, '/agenda')
   }
 
   close() {

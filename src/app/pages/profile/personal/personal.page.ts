@@ -11,6 +11,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class PersonalPage implements OnInit {
   userProfile: UserProfile;
+  isLoading = false
   constructor(private dooleService: DooleService,
     private router: Router,
     public translate: TranslateService,) { }
@@ -20,12 +21,15 @@ export class PersonalPage implements OnInit {
   }
 
   getPersonalInformation(){
+    this.isLoading = true
     this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
         console.log('[PersonalPage] getPersonalInformation()', res);
         this.userProfile = res as UserProfile;
+        this.isLoading = false
        },(err) => { 
-          console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
+          this.isLoading = false 
           throw err; 
       });
   }

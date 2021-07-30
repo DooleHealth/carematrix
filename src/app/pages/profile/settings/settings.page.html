@@ -12,7 +12,7 @@
     <ion-text class="txtTitle2">{{ 'setting.title_security' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
-            <ion-item routerLink="password"  >
+            <ion-item (click)="changePassword()" >
               <ion-label>{{ 'setting.password.title_change_password' | translate}}</ion-label>
               
             </ion-item>

@@ -9,6 +9,10 @@
 
 <ion-content>
 
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
   <ion-list *ngIf="game">
     <ion-card class="cardProfile">
       <img *ngIf="game.file !== null"  [src]='game.file?.temporaryUrl'/>

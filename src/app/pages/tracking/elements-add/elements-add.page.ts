@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-elements-add',
@@ -11,6 +12,9 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./elements-add.page.scss'],
 })
 export class ElementsAddPage implements OnInit {
+  @Input()id: any;
+  @Input()nameElement: any;
+  @Input()units: any;
   form: FormGroup;
   groupElements: any = []
   group: any = []
@@ -19,18 +23,20 @@ export class ElementsAddPage implements OnInit {
   isSubmittedCategory = false
   date: any;
   isNewValueElement = false
-  id:any
-  nameElement: any
-  units:any
+  isLoading = false
+  //id:any
+  // nameElement: any
+  // units:any
   min
   max
   constructor(
     private fb: FormBuilder,
-    private loadingController: LoadingController,
     private dooleService: DooleService,
     private translate : TranslateService,
     private navController: NavController,
     private alertController: AlertController,
+    private notification: NotificationService,
+    private modalCtrl: ModalController,
   ) { 
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
@@ -72,9 +78,9 @@ export class ElementsAddPage implements OnInit {
   }
 
   getIdElement(){
-    this.id = history.state.id;
-    this.nameElement = history.state.name;
-    this.units = history.state.units
+    // this.id = history.state.id;
+    // this.nameElement = history.state.name;
+    // this.units = history.state.units
     console.log('[ElementsAddPage] getIdElement()', this.id);
     if(this.id){
       this.isNewValueElement = true
@@ -85,10 +91,7 @@ export class ElementsAddPage implements OnInit {
   }
 
   async addElement() {
-
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+    this.isLoading = true
     const postData = {
       date_value: this.date,
       value: this.form.get('measure').value,
@@ -98,8 +101,9 @@ export class ElementsAddPage implements OnInit {
     this.dooleService.postAPIaddElement( this.element.id ,postData).subscribe(
         async (data) => {
           console.log("[ElementsAddPage] addElement()",data);
-          if(data.message === "Success")
-          this.showAlert()
+          if(data.message === "Success"){
+            this.modalCtrl.dismiss({error:null, action: 'add'});
+          }
           else {
             let message = this.translate.instant('element.error_alert_message_add_element')
             alert(message)
@@ -115,32 +119,12 @@ export class ElementsAddPage implements OnInit {
         },
         () => {
           // Called when operation is complete (both success and error)
-          loading.dismiss();
+          this.isLoading = false
         });
   }
 
-  async showAlert(){
-    console.log(`[ElementsAddPage] showAlert()`);
-    const alert = await this.alertController.create({
-      header: this.translate.instant('alert.header_info'),
-      message: this.translate.instant('element.alert_message_add_element'),
-      backdropDismiss: false,
-      buttons: [
-        {
-          text: 'OK',
-          handler: (blah) => {
-            this.navController.pop()
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
   async getElementsList(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+    this.isLoading = true
     this.dooleService.getAPIelementsList().subscribe(
       async (data: any) =>{
         console.log('[DiaryPage] getElementsList()', await data); 
@@ -150,11 +134,11 @@ export class ElementsAddPage implements OnInit {
           this.treeIterate(data.eg, '');
           this.filterCategoryWithElement()
         }
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          loading.dismiss();
+          this.isLoading = false
           throw err; 
       });
   }
@@ -191,7 +175,6 @@ export class ElementsAddPage implements OnInit {
           this.units = this.element.units
           this.min = this.element.min
           this.max = this.element.max
-          //this.element = {id: this.id, name: this.nameElement, units: this.units}
           if(this.isNewValueElement){
             this.form.get('data').setValue(this.nameElement)
             this.form.get('category').setValue(this.nameElement)
@@ -207,7 +190,6 @@ export class ElementsAddPage implements OnInit {
   selectedCategory(){
     let category = this.form.get('category').value
     this.group = this.groupElements.find(group =>(group.group === category))
-    //this.element = undefined
     this.form.get('data').setValue('')
   }
 
@@ -228,6 +210,10 @@ export class ElementsAddPage implements OnInit {
     else{
       return false
     }
+  }
+
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 
 }

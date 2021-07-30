@@ -1,6 +1,6 @@
 import { CalendarComponent } from 'ionic2-calendar';
 import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { DatePipe, formatDate } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -54,7 +54,7 @@ export class AgendaPage implements OnInit {
     private translate: TranslateService, 
     private languageService: LanguageService,
     private dooleService: DooleService,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -62,6 +62,10 @@ export class AgendaPage implements OnInit {
 
  async ionViewDidEnter(){
     console.log('[AgendaPage] ionViewDidEnter()');
+    let date = history.state.date;
+    if(date)
+      this.myCal.currentDate = this.formatDate(date) 
+    else
     this.getAgenda()
   }
 
@@ -119,8 +123,6 @@ export class AgendaPage implements OnInit {
     let time = auxdate[1];
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));
-    /* console.log("date: ", date);
-    console.log("time", time); */
     return date;
   }
 
@@ -227,6 +229,7 @@ export class AgendaPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component:  AgendaEditPage,
       componentProps: { },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -244,6 +247,6 @@ export class AgendaPage implements OnInit {
 
     await modal.present();
    
-   
   }
+
 }

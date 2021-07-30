@@ -10,10 +10,10 @@ import { DooleService } from 'src/app/services/doole.service';
 export class TestTypePage implements OnInit {
   listTestType =[]
   listTestTypeBackup = []
+  isLoading = false
   constructor(
     private modalController: ModalController,
-    private dooleService: DooleService,
-    private loadingController: LoadingController,
+    private dooleService: DooleService
   ) { }
 
   ngOnInit() {
@@ -22,23 +22,22 @@ export class TestTypePage implements OnInit {
 
   async getTestType(){
     console.log("submit");
-    const loading = await this.loadingController.create();
-    await loading.present();
+    this.isLoading = true
 
     this.dooleService.getAPIdiagnosticTestTypesAvailable().subscribe(
       async (res: any) =>{
         console.log('[TestTypePage] getTestType()', await res);
         this.listTestType = res.diagnosticTestTypes
         this.listTestTypeBackup = this.listTestType
-        loading.dismiss();
+        this.isLoading = false
        },(err) => { 
-        loading.dismiss();
+        this.isLoading = false
           console.log('[TestTypePage] getTestType() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       },
       () => {
         // Called when operation is complete (both success and error)
-        loading.dismiss();
+        this.isLoading = false
       });
   }
 

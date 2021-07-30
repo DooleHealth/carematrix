@@ -10,6 +10,9 @@
 <ion-content>
   <br>
   <ion-text class="txtTitle2">{{'payment.payment_summary' | translate}}</ion-text>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
   <ion-card class="cardProfilePadding">
     <ion-list>
       <ion-item lines="none">
