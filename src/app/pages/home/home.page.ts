@@ -6,7 +6,7 @@ import { IonSlides, ModalController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { VideoComponent } from 'src/app/components/video/video.component';
-import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice } from 'src/app/models/user';
+import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice, FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';
@@ -30,7 +30,9 @@ export class HomePage implements OnInit {
   diets: Diet[] =[]
   drugs: Drug[] =[]
   games =[]
- 
+  listFamilyUnit:FamilyUnit[] = [];
+  isLoading = false
+  userio
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
@@ -70,22 +72,26 @@ export class HomePage implements OnInit {
     private health: Health,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
-    public translate: TranslateService, public alertController: AlertController
-  ) { }
+    public translate: TranslateService, 
+    public alertController: AlertController
+  ) {}
 
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
     this.checkHealthAccess();
+ 
   }
 
+
   async ionViewDidEnter(){
-    console.log('[HomePage] ionViewDidEnter()', this.authService?.user);
+  
     this.tabs.translateTab()
     await this.getUserInformation()
     setTimeout(() => {
       // Close modal
      this.loading = false;
     }, 500);
+    
   }
 
   checkHealthAccess(){

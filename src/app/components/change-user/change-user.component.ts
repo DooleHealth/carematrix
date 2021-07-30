@@ -5,13 +5,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
-
 @Component({
-  selector: 'app-family-unit',
-  templateUrl: './family-unit.page.html',
-  styleUrls: ['./family-unit.page.scss'],
+  selector: 'app-change-user',
+  templateUrl: './change-user.component.html',
+  styleUrls: ['./change-user.component.scss'],
 })
-export class FamilyUnitPage implements OnInit {
+export class ChangeUserComponent implements OnInit {
   listFamilyUnit:FamilyUnit[] = [];
   isLoading = false
   user
@@ -89,3 +88,4 @@ export class FamilyUnitPage implements OnInit {
 
 
 }
+
