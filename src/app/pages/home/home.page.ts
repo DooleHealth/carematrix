@@ -74,7 +74,7 @@ export class HomePage implements OnInit {
     private auth: AuthenticationService,
     public translate: TranslateService, 
     public alertController: AlertController
-  ) { this.userio = this.authService.user?.familyUnit}
+  ) {}
 
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
