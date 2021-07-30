@@ -35,11 +35,11 @@ export class LandingPage implements OnInit {
     private modalCtrl: ModalController
   ) {
     this.loginForm = new FormGroup({
-      username: new FormControl('magnum',
+      username: new FormControl('',
       Validators.compose([
         Validators.required
       ])),
-      password: new FormControl('123456',
+      password: new FormControl('',
         Validators.compose([
         Validators.required])
       )

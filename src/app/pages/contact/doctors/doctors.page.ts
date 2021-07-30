@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctors',
@@ -11,7 +12,7 @@ export class DoctorsPage implements OnInit {
   allowed = []
   isAllowed = false
   constructor(
-    private dooleService: DooleService,
+    private dooleService: DooleService, private router: Router
   ) { }
 
   ngOnInit() {
@@ -42,6 +43,13 @@ export class DoctorsPage implements OnInit {
     if(contact?.id === this.doctor.id) this.isAllowed = true
   }
 
+  redirect(doctor){
 
+    if(this.doctor){
+      this.router.navigate(['/contact/chat/conversation'],{state:{staff:doctor, chat:doctor.message_header_id}})
+    }else{
+      this.router.navigate(['bookings'], {state:{staff:doctor, isOnline:history.state.isOnline}});
+    }
+  }
 
 }

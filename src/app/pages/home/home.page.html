@@ -43,11 +43,11 @@
     </ion-row>
 
     <!-- Reminders -->
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment">
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
     <!-- Agendas -->
-    <ion-row>
+    <ion-row >
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
@@ -79,15 +79,15 @@
     </ion-row>
 
     <!-- Advices -->
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.advices.length != 0">
       <!-- News and Advices -->
 
       <ion-text class="txtTitle" style="white-space: nowrap">
         {{ 'home.advices_title' | translate}}</ion-text>
+        <app-info info="{{'info.news' | translate}}"></app-info>
       <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}
       </ion-text>
     </ion-row>
-
     <ion-row>
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">

@@ -575,8 +575,8 @@
         "reason_appointment": "Motiu de la cita",
         "attachments": "Documents Adjunts",
         "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
-        "button_videocall": "Confirma Videotrucada",
-        "button_videocall_charge": "Confirma Videotrucada amb pagament"
+        "button_videocall": "Confirma Cita",
+        "button_videocall_charge": "Confirma Cita amb pagament"
       },
       "chat":{
         "header":"Chat"
@@ -591,5 +591,10 @@
         "field_taxes": "IVA",
         "modality": "Modalitat",
         "button_payment": "Confirmar Pagament"
+      },
+      "info": {
+        "button":"D’acord",
+        "title":"Informació",
+        "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil"
       }
 }

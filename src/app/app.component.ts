@@ -118,38 +118,38 @@ export class AppComponent implements OnInit {
                 this.showMessage("Has recibido un mensaje");
               }
               if(action=="FORM"){
-                this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
+                //this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
               }
       
               if(action=="DRUGINTAKE"){
                 this.showMessage("Hora de tomarte la medicación");
-                this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}});
+                //this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}});
               }
       
               if(action=="VIDEOCALL"){
                 this.showMessage("Videollamada de tu médico");
-                this.router.navigate(['AgendaDetailPage'],{state: {id: id, action : "open"}});
+                //this.router.navigate(['AgendaDetailPage'],{state: {id: id, action : "open"}});
               }
       
             }else{
             //If the app is closed and started by clicking on the push notification
               if(action=="MESSAGE"){
                 this.badge.decrease(1);
-                this.router.navigate(['MessagesDetailPage'],{state: {id: id, action : "open"}});
+                //this.router.navigate(['MessagesDetailPage'],{state: {id: id, action : "open"}});
               }
       
               if(action=="FORM"){
-                this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
+                //this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
               }
       
               if(action=="DRUGINTAKE"){
                 this.showMessage("Hora de tomarte la medicación");
-                this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}}); 
+                //this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}}); 
               }
       
               if(action=="VIDEOCALL"){
                 this.showMessage("Videollamada de tu médico");
-                this.router.navigate(['VideocallPage'],{state: {id: id, action : "open"}});
+                //this.router.navigate(['VideocallPage'],{state: {id: id, action : "open"}});
               }
       
             }

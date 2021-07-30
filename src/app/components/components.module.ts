@@ -22,6 +22,7 @@ import { ExpandableComponent } from './expandable/expandable.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { VideoComponent } from './video/video.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FileUploadComponent,
     ExpandableComponent,
     TabsComponent,
-    VideoComponent
+    VideoComponent,
+    InfoComponent
   ],
   exports: [
     ShellModule,
@@ -65,6 +67,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FileUploadComponent,
     ExpandableComponent,
     TabsComponent,
+    InfoComponent
 
   ]
 })
