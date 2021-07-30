@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, Platform } from '@ionic/angular';
@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
   diets: Diet[] =[]
   drugs: Drug[] =[]
   games =[]
- 
+  header = false;
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
@@ -70,6 +70,7 @@ export class HomePage implements OnInit {
     private health: Health,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
+    private ngZone: NgZone, 
     public translate: TranslateService, public alertController: AlertController
   ) { }
 
@@ -419,12 +420,13 @@ export class HomePage implements OnInit {
     //if(item.type=="html5"){
       const iosoption: InAppBrowserOptions = {
         zoom: 'no',
-        location:'yes',
+        location:'no',
         toolbar:'yes',
         clearcache: 'yes',
         clearsessioncache: 'yes',
         disallowoverscroll: 'yes',
-        enableViewportScale: 'yes'
+        enableViewportScale: 'yes',
+        hidden:'no',
       }
 
       await this.auth.getUserLocalstorage().then(value =>{
@@ -432,24 +434,21 @@ export class HomePage implements OnInit {
       })
       
       if(item.url.startsWith("http")){
-        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
-        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+        this.header = true
+        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;      
+        browser = this.iab.create(item.url, '_blank', iosoption);
+        browser.on('exit').subscribe(event => {
+          this.ngZone.run(() => {
+            console.log("anim complete");
+                this.header = false
+          });
+        });
       }
-      else
-        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+      else{
+        browser = this.iab.create(item.url, '_system', iosoption);
+      }        
     }
-    
-    sortDate(games){
-      console.log('Async operation has ended' ,games);
-      return games.sort( function (a, b) {
-        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
-          return 1;
-        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
-          return -1;
-        return 0;
-      })
-  
-    }
+
    
 
 /*     if(item.type=="form") {
@@ -470,5 +469,17 @@ export class HomePage implements OnInit {
         "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
       );
     } */
+
+    sortDate(games){
+      console.log('Async operation has ended' ,games);
+      return games.sort( function (a, b) {
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
+          return 1;
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
+          return -1;
+        return 0;
+      })
+  
+    }
 
 }
