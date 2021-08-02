@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:429887824166:android:1e47901a511873a4d121e7",
         "android_client_info": {
-          "package_name": "com.doole.doole"
+          "package_name": "com.doole.app"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "429887824166-o4k55sno941s67o9kkbk7sfpaefm2k87.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.doole.doole"
+                "bundle_id": "com.doole.app"
               }
             }
           ]
