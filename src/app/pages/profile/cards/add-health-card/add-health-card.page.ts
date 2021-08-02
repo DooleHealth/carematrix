@@ -33,10 +33,10 @@ export class AddHealthCardPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setFormCard()
     this.getHealthCardTypes()
     let year = (new Date(Date.now()).getFullYear()) + 20
     this.dateMax =  year
-    this.setFormCard()
   }
 
   setFormCard(){
@@ -70,7 +70,7 @@ export class AddHealthCardPage implements OnInit {
 
   showDetailCard(){
     this.formHealthCard.get('id').setValue(this.card.id)
-    this.formHealthCard.get('health_card_type_id').setValue(this.card.type.id) //
+    //this.formHealthCard.get('health_card_type_id').setValue(this.card.type.id) //
     this.formHealthCard.get('name').setValue(this.card.name)
     this.formHealthCard.get('card_number').setValue(this.card.card_number)
     this.formHealthCard.get('expiration_date').setValue(this.card.expiration_date? this.card.expiration_date:'')
