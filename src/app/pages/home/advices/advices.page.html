@@ -25,7 +25,11 @@
   </ion-segment>
 
   <!--News -->
-  <ion-searchbar>
+  
+  <ion-searchbar 
+    [animated]="true" 
+    (ionInput)="filterList($event)" 
+    placeholder="{{ 'advices.searchbar' | translate}}">
   </ion-searchbar>
 
   <div class="spin" *ngIf="this.isLoading">

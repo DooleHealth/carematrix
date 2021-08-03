@@ -530,7 +530,8 @@
       "advices":{
         "header":"Novetats i Consells",
         "tag_news": "Novetats",
-        "tag_advices": "Consells"
+        "tag_advices": "Consells",
+        "searchbar":"Cercar"
       },
       "contact":{
         "header": "Contacta",

@@ -530,7 +530,8 @@
       "advices":{
         "header":"Novedades y Consejos",
         "tag_news": "Novedades",
-        "tag_advices": "Consejos"
+        "tag_advices": "Consejos",
+        "searchbar":"Buscar"
       },
       "contact":{
         "header": "Contacta",
