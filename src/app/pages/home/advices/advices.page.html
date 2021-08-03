@@ -35,7 +35,7 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'news'"> 
       <ion-list *ngIf="items.length >= 0; else noData">   
-        <ion-card  *ngFor="let item of items" class="cardProfile" >
+        <ion-card  routerLink="/new-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
           <img *ngIf="item.item.cover !== null"[src]='item.item.cover'/>
           <ion-item lines="none" >
             <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.subject}}</ion-label>

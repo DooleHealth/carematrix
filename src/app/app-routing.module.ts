@@ -143,7 +143,10 @@ const routes: Routes = [
     path: 'advices-detail',
     loadChildren: () => import('./pages/home/advices-detail/advices-detail.module').then( m => m.AdvicesDetailPageModule)
   },
- 
+  {
+    path: 'new-detail',
+    loadChildren: () => import('./pages/home/new-detail/new-detail.module').then( m => m.NewDetailPageModule)
+  },
 
 
 ];
