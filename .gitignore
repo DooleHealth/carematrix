@@ -42,3 +42,4 @@ android/.idea/misc.xml
 android/.idea/misc.xml
 android/.DS_Store
 android/.idea/compiler.xml
+*.properties
