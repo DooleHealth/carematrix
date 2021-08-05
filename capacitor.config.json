@@ -1,6 +1,6 @@
 {
   "appId": "com.doole.doole",
-  "appName": "DooleHealth",
+  "appName": "Doole Health",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
