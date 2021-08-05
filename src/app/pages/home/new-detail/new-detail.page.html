@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{new.subject}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
+  <ion-card class="cardProfile">
+    <img *ngIf="new.cover" [src]="new.cover">
+    <ion-item lines="none">
+      <ion-label style="color:#141414; font-weight: bold;"> {{new.subject}}</ion-label>
+    </ion-item>
+    <ion-item lines="none" *ngIf="new.content" padding>
+      <span [innerHTML]="new.content"></span>
+    </ion-item>
+  </ion-card>
+
+<!--   <ion-list *ngIf="new?.files?.length > 0">
+    <ion-card class="cardProfile" *ngFor="let file of new.files">
+      <img *ngIf="file.temporaryUrl" [src]="file.temporaryUrl">
+      <ion-item lines="none" *ngIf="file.description" padding>
+        <span [innerHTML]="file.description"></span>
+      </ion-item>
+    </ion-card>
+  </ion-list> -->
+
+</ion-content>

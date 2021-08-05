@@ -797,6 +797,17 @@ export class DooleService {
       );
     }
 
+    getAPIdetailNew(id: any): Observable<any> {
+      let path = `user/new/${id}`;
+      const endpoint = this.api.getEndpoint(path);
+      return this.http.get(endpoint).pipe(
+        map((res: any) => {
+          console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
+          return res;
+        })
+      );
+    } 
+
 
   getAPIdetailDiets(id: any): Observable<any> {
     let path = `diet/${id}`;

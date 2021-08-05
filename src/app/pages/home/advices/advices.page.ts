@@ -17,6 +17,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items: ItemAdvice[] = [];
+  itemsBackup= []
   news = []
   advices = []
   groupedElements: any = [];
@@ -46,9 +47,11 @@ export class AdvicesPage implements OnInit {
 
   addItems(list){
     this.items = []
+    this.itemsBackup = []
     list.forEach(element => {
       this.items.push({expanded: false, item: element })
     });
+    this.itemsBackup = this.items
     console.log('[AdvicePage] addItems()', this.items);
   }
 
@@ -109,6 +112,36 @@ export class AdvicesPage implements OnInit {
         break;
     }
   }
+
+  async filterList(evt) {
+    console.log('[AdvicePage] filterList()');
+
+    this.items = this.itemsBackup;
+    const searchTerm = evt.srcElement.value;
+    if (!searchTerm) {
+      return;
+    }
+
+    switch (this.segment) {
+      case 'news':
+        this.items = this.items.filter(element => {
+          if (element.item.subject && searchTerm) {
+            return (element.item.subject .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+          }
+        });
+        break;
+
+      case 'advices':
+        this.items = this.items.filter(element => {
+          if (element.item.name && searchTerm) {
+            return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+          }
+        });
+        break;
+    }
+  }
+
+  
 
 }
 
