@@ -7,6 +7,8 @@
         "button_signin": "Iniciar sesión",
         "button_registre": "Crear Usuario",
         "user": "Usuario",
+        "too": "O también:",
+        "biometrics": "Autenticación biométrica",
         "header_message_password_recovery": "Ingresa tu usuario",
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
@@ -597,6 +599,12 @@
         "button": "De acuerdo",
         "title":"Información",
         "news":"En este apartado podrás encontrar las noticias y consejos que mejor se adaptan a tu perfil"
+      },
+      "face-id": {
+        "description": "Esta aplicación se bloquea para garantizar tu seguridad",
+        "title": "Control de seguridad",
+        "subtitle": "Acceso con huella digital",
+        "fallback": ""
       }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
-import { AlertController, MenuController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
@@ -13,8 +13,10 @@ import { AuthenticationService } from './services/authentication.service';
 import { StorageService } from './services/storage.service';
 import { Network } from '@ionic-native/network/ngx';
 import { throwError } from 'rxjs';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
  
 const { PushNotifications } = Plugins;
+const { BiometricAuth } = Plugins;
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -49,6 +51,9 @@ export class AppComponent implements OnInit {
     private badge: Badge,
     public toastCtrl: ToastController,
     private network: Network,
+    //private screenOrientation: ScreenOrientation,
+    private modalCtrl: ModalController,
+    private faio : FingerprintAIO
   ) {
 
   }
@@ -155,6 +160,10 @@ export class AppComponent implements OnInit {
             }
           }
         );
+
+
+        // set to landscape
+        //this.screenOrientation.lock(this.screenOrientation. ORIENTATIONS.PORTRAIT).catch((err) => { console.log('Setting screen orientation failed:', err); });
         
         // Lock phone after 2 minutes in pause
         this.lastResume = new Date;
@@ -164,15 +173,13 @@ export class AppComponent implements OnInit {
         });
 
         this.platform.resume.subscribe(async (e) => {
-             
-          if (this.router.url.includes('app')) {
-
+          if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
              // App will lock after 2 minutes
              let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
 
-            
              if (secondsPassed >= 120) {
                  // Must implement lock-screen
+                this.showFingerprintAuthDlg()
               }
           }
         });
@@ -277,6 +284,43 @@ export class AppComponent implements OnInit {
     });
     await alert.present();
 
+  }
+
+
+  public showFingerprintAuthDlg() {
+
+    this.faio.isAvailable().then((result: any) => {
+
+      this.faio.show({
+        cancelButtonTitle: this.translate.instant('button.cancel'),
+        description: this.translate.instant('face-id.description'),
+        title: this.translate.instant('face-id.title'),
+        fallbackButtonTitle: this.translate.instant('face-id.fallback'),
+        subtitle: this.translate.instant('face-id.subtitle'),
+        disableBackup: true,
+        
+      })
+        .then((result: any) => {
+          console.log(result)
+        })
+        .catch(async (error: any) => {
+          console.log(error);
+          if(error.code == -102){
+            setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+          }else{
+            // if error.code == -108 user cancel prompt
+            // if error.code == -111 too many attempts
+            await this.authService.logout();
+            this.router.navigateByUrl('/landing'); 
+          }
+        });
+
+    })
+      .catch(async (error: any) => {
+        await this.authService.logout();
+        this.router.navigateByUrl('/landing'); 
+        console.log(error)
+      });
   }
 
 
