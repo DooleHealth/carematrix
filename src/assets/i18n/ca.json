@@ -47,7 +47,8 @@
         "error_send_email_alert_message": "Hi ha hagut un error a l'enviar el codi de verificació",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
-        "error_min_lenght": "Error: Ha de ser 4 digits"
+        "error_min_lenght": "Error: Ha de ser 4 digits",
+        "error_no_numeric": "Error: Entrada només números"
       },
       "tab":{
         "home": "Inici",
@@ -605,6 +606,19 @@
         "title": "Control de seguretat",
         "subtitle": "Accés amb empremta digital",
         "fallback": ""
+      },
+      "biometrics":{
+        "activate":"Accés biomètric",
+        "auth":"Autenticació biomètrica",
+        "login": "Biometria",
+        "active":"ACTIVA-HO",
+        "dismiss":"ARA NO",
+        "text1":"L’accés biomètric et permet accedir a l’app fent servir l’empremta digital, el reconeixement facial o qualsevol sistema que hagis definit en aquest dispositiu per identificar-te amb seguretat.",
+        "text2":"Vols activar ara l’accés biomètric?",
+        "text3":"el podràs activar i desactivar posteriorment des de l’apartat de configuració de l’app.",
+        "text4":"L’accés biomètric s’ha activat correctament.",
+        "text5":"La propera vegada que executis l’app el podràs fer servir per accedir-hi.",
+        "disabled": "No s'ha pogut accedir a les dades biomètriques de el dispositiu."
       }
       
 }

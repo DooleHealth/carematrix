@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons end color="primary">
-      <ion-icon name="close-sharp" (click)="dismissLockScreen()" slot="end" size="large"></ion-icon>
+      <ion-back-button (click)="dismissLockScreen()"></ion-back-button>
+      <!-- <ion-icon color="primary" name="close-sharp" (click)="dismissLockScreen()" slot="end" size="large"></ion-icon> -->
       {{ 'biometrics.activate' | translate }}
     </ion-buttons>
   </ion-toolbar>
@@ -15,7 +16,7 @@
         <ion-icon slot="start" name="finger-print-outline"></ion-icon>
       </div>
       <br>
-      <div style="text-align: left;padding-top: 10%;">
+      <div style="text-align: left;padding-top: 10%; margin: 5%;">
         <ion-text>
           {{ 'biometrics.text1' | translate }}
           <br><br> <strong>{{ 'biometrics.text2' | translate }}</strong> {{ 'biometrics.text3' | translate }}

@@ -23,7 +23,7 @@ export class LandingPage implements OnInit {
   loginForm: FormGroup;
   submitError: string;
   redirectLoader: HTMLIonLoadingElement;
-  hasBiometricAuth: boolean = true;
+  hasBiometricAuth: boolean = false;
   showBiometricDialog: boolean = false;
   biometricAuth: any;
   constructor(
@@ -75,9 +75,9 @@ export class LandingPage implements OnInit {
 
     modal.onDidDismiss()
       .then((result) => {
-
-        if(result?.data['error']){
-          let message = this.translate.instant('landing.message_wrong_credentials')
+        let error = result?.data['error']
+        if(error){
+          let message = error
           this.dooleService.presentAlert(message)
         }
     });
