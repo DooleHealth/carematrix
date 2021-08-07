@@ -9,6 +9,8 @@ import { Plugins } from '@capacitor/core';
 import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { BiometricAuthPage } from '../biometric-auth/biometric-auth.page';
 const { Storage } = Plugins;
 
 
@@ -21,7 +23,9 @@ export class LandingPage implements OnInit {
   loginForm: FormGroup;
   submitError: string;
   redirectLoader: HTMLIonLoadingElement;
-
+  hasBiometricAuth: boolean = false;
+  showBiometricDialog: boolean = false;
+  biometricAuth: any;
   constructor(
     private router: Router,
     public route: ActivatedRoute,
@@ -32,7 +36,8 @@ export class LandingPage implements OnInit {
 
     public languageService: LanguageService,
     private dooleService: DooleService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private faio: FingerprintAIO
   ) {
     this.loginForm = new FormGroup({
       username: new FormControl('',
@@ -70,9 +75,9 @@ export class LandingPage implements OnInit {
 
     modal.onDidDismiss()
       .then((result) => {
-
-        if(result?.data['error']){
-          let message = this.translate.instant('landing.message_wrong_credentials')
+        let error = result?.data['error']
+        if(error){
+          let message = error
           this.dooleService.presentAlert(message)
         }
     });
@@ -144,6 +149,85 @@ export class LandingPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+
+  public doBiometricLogin() {
+
+    this.faio.isAvailable().then((result: any) => {
+    
+      this.faio.show({
+        cancelButtonTitle: this.translate.instant('button.cancel'),
+        title: this.translate.instant('face-id.title'),
+      })
+        .then(async (result: any) => {
+   
+          console.log("[LandingPage] doBiometricLogin()", result);
+        })
+        .catch((error: any) => {
+          console.log("show errror ", error);
+          if (error.code == -102) {
+            setTimeout(() => this.doBiometricLogin(), 500);
+          }
+        });
+    })
+      .catch((error: any) => {
+        alert(this.translate.instant('biometrics.disabled'));
+      });
+  }
+
+  async getStoredValues() {
+    this.loginForm.patchValue({
+      password: ''
+    });
+    const doole = localStorage.getItem('doole');
+    
+    if (doole) {
+      this.loginForm.patchValue({
+        username: doole
+      });
+    }
+
+   
+    const biometricsEnabled = localStorage.getItem('settings-bio');
+    const biometricToken =  localStorage.getItem('bio-auth');
+    
+    if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
+      this.hasBiometricAuth = true;
+      this.biometricAuth = biometricToken;
+    }else{
+      this.hasBiometricAuth = false;
+    }
+
+    const showDialog = localStorage.getItem('show-bio-dialog');
+
+    if(showDialog!== 'false'){
+      console.log('showDialog: ', showDialog !== 'false');
+      this.showBiometricDialog = true;
+    }else{
+      console.log('showDialog: ', showDialog !== 'false');
+      this.showBiometricDialog = false;
+    }
+      
+  }
+
+  async showBioDialog(){
+    
+    this.faio.isAvailable().then(async ()=>{
+
+      const modal = await this.modalCtrl.create({
+        component: BiometricAuthPage,
+        backdropDismiss: false,
+        componentProps: {
+          isModal: true
+        }
+      });
+      modal.present();
+    }).catch(() => {
+
+      console.log('Bio Auth not available');
+    })
+
   }
 
 

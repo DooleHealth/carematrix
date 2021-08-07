@@ -8,6 +8,8 @@
         "button_signin": "Inici de sessió",
         "button_registre": "Crear Usuari",
         "user": "Usuari",
+        "too":"O també:",
+        "biometrics":"Autenticació biomètrica",
         "header_message_password_recovery": "Ingressa el teu usuari",
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
@@ -45,7 +47,8 @@
         "error_send_email_alert_message": "Hi ha hagut un error a l'enviar el codi de verificació",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
-        "error_min_lenght": "Error: Ha de ser 4 digits"
+        "error_min_lenght": "Error: Ha de ser 4 digits",
+        "error_no_numeric": "Error: Entrada només números"
       },
       "tab":{
         "home": "Inici",
@@ -170,7 +173,7 @@
         "button_ok": "D'acord",
         "button_acept": "Acceptar",
         "button_apply": "Aplicar",
-        "button_cancel": "Cancel",
+        "button_cancel": "Cancel·lar",
         "button_change": "Canviar",
         "button_send": "Enviar",
         "header_error": "Error",
@@ -509,7 +512,7 @@
       "button":{
         "detail": "Detalls",
         "fill": "Omplir",
-        "cancel": "Cancel",
+        "cancel": "Cancel·lar",
         "accept": "Acceptar",
         "edit": "Edita",
         "ok": "OK",
@@ -597,5 +600,25 @@
         "button":"D’acord",
         "title":"Informació",
         "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil"
+      },
+      "face-id": {
+        "description": "Aquesta aplicació es bloca automàticament per garantir-ne la seguretat",
+        "title": "Control de seguretat",
+        "subtitle": "Accés amb empremta digital",
+        "fallback": ""
+      },
+      "biometrics":{
+        "activate":"Accés biomètric",
+        "auth":"Autenticació biomètrica",
+        "login": "Biometria",
+        "active":"ACTIVA-HO",
+        "dismiss":"ARA NO",
+        "text1":"L’accés biomètric et permet accedir a l’app fent servir l’empremta digital, el reconeixement facial o qualsevol sistema que hagis definit en aquest dispositiu per identificar-te amb seguretat.",
+        "text2":"Vols activar ara l’accés biomètric?",
+        "text3":"el podràs activar i desactivar posteriorment des de l’apartat de configuració de l’app.",
+        "text4":"L’accés biomètric s’ha activat correctament.",
+        "text5":"La propera vegada que executis l’app el podràs fer servir per accedir-hi.",
+        "disabled": "No s'ha pogut accedir a les dades biomètriques de el dispositiu."
       }
+      
 }

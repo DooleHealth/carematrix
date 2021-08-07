@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -18,6 +19,7 @@ export class LoginPage implements OnInit {
     private router: Router, 
     private ngZone: NgZone, 
     public languageService: LanguageService, 
+    private translate: TranslateService,
     private modalCtrl: ModalController) { }
 
   ngOnInit() {
@@ -28,10 +30,16 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials).subscribe(async (res) => {
       console.log('[LandingPage] doDooleAppLogin()', res);
       if(res.success){
-       // this.languageService.setLenguageLocalstorage('ca') //'ca'
+        //!res.twoFactor solo para pruebas  
+        if(res.twoFactor){
+          this.router.navigate(['/verification']);
+          this.modalCtrl.dismiss({error:null});
+        }
+        else
         this.checkConditionLegal();
       }else{
-        this.modalCtrl.dismiss({error: 'Credenciales Inválidas'});
+        let message = this.translate.instant('landing.message_wrong_credentials')
+        this.modalCtrl.dismiss({error: message});
       }
     }, async (error) => { 
      console.log('doDooleAppLogin() ERROR', await error?.message);
@@ -47,8 +55,8 @@ export class LoginPage implements OnInit {
         console.log('[LandingPage] checkConditionLegal()', await res);
          if(res.success)
           this.redirectPage(res.accepted_last)
-
-
+        else
+          this.modalCtrl.dismiss({error:res.message});
        },(err) => { 
           console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
           throw err; 

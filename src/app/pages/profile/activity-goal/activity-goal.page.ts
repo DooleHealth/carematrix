@@ -41,7 +41,6 @@ export class ActivityGoalPage implements OnInit {
   segmentFilter = "1d";
   constructor(
     private dooleService: DooleService,
-    private loadingController: LoadingController,
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private translate : TranslateService,

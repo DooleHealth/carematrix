@@ -416,8 +416,19 @@ export class DooleService {
     );
   }
 
+  getAPICodeByEmail(): Observable<any> {
+    let path = 'user/resendTwoFactorCode';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPICodeByEmail(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   postAPIcodeVerification(params: Object): Observable<any> {
-    let path = 'user/code_verification';
+    let path = 'user/verifyTwoFactor';
     //let path = 'user/codeVerification'; 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(

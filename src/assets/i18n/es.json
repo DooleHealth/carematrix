@@ -7,6 +7,8 @@
         "button_signin": "Iniciar sesión",
         "button_registre": "Crear Usuario",
         "user": "Usuario",
+        "too": "O también:",
+        "biometrics": "Autenticación biométrica",
         "header_message_password_recovery": "Ingresa tu usuario",
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
@@ -44,7 +46,8 @@
         "error_send_email_alert_message": "Ha ocurrido un error al enviar el código de verificación",
         "next_button":"Continuar",
         "error_required": "Error: Campo requerido",
-        "error_min_lenght": "Error: Debe ser 4 dígitos"
+        "error_min_lenght": "Error: Debe ser 6 dígitos",
+        "error_no_numeric": "Error: Ingresar sólo números"
       },
       "tab":{
         "home": "Inicio",
@@ -597,6 +600,25 @@
         "button": "De acuerdo",
         "title":"Información",
         "news":"En este apartado podrás encontrar las noticias y consejos que mejor se adaptan a tu perfil"
+      },
+      "face-id": {
+        "description": "Esta aplicación se bloquea para garantizar tu seguridad",
+        "title": "Control de seguridad",
+        "subtitle": "Acceso con huella digital",
+        "fallback": ""
+      },
+      "biometrics": {
+        "activate": "Acceso biométrico",
+        "auth": "Autenticación biométrica",
+        "login": "Biometría",
+        "active": "ACTÍVALO",
+        "dismiss": "AHORA NO",
+        "text1": "El acceso biométrico te permite acceder a la app utilizando la huella digital, el reconocimiento facial o cualquier sistema que hayas definido en este dispositivo para identificarte con seguridad.",
+        "text2": "¿Quiéres activar ahora el acceso biométrico?",
+        "text3": "Lo podrás activar y desactivar posteriormente desde el apartado de configuración de la app.",
+        "text4":"El acceso biométrico se ha activado correctamente.",
+        "text5":"Lo podrás utilizar para acceder a la app la próxima vez que la ejecutes.",
+        "disabled": "No se ha podido acceder a los datos biométricos del dispositivo."
       }
 
 }
