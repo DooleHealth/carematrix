@@ -365,8 +365,8 @@
           "day7": "Domingo"
         },
         "frequency":{
-          "daily":"Diario",
-          "day":"Un día",
+          "daily":"Diariamente",
+          "day":"Una sola vez",
           "custom": "Personalizado",
           "week": "Lun a Vie",
           "week1": "1 semana",
