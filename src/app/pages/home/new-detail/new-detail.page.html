@@ -30,5 +30,37 @@
       </ion-item>
     </ion-card>
   </ion-list> -->
+  <div *ngIf="link" #frame
+  style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+  <iframe [src]="link" class="iframe" scrolling="yes"></iframe>
+</div>
+<!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+  <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
+</div> -->
+<div class="main-container" *ngIf="linkpdf2 || video">
+  <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
+</div>
+<ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo(m)">
+  <ion-row>
+    <ion-col size="4" class="imgCardMedia">
+    </ion-col>
+    <ion-col size="8">
+      <ion-card-title class="txtTitleGoals3">{{videoTitle}}</ion-card-title>
+      <p class="txtTitleGoals3"> {{videoDescription}}</p>
+    </ion-col>
+  </ion-row>
+</ion-card>
+<ion-card class="cardProfilePadding" *ngIf="linkpdf2" 
+(click)="openFile(m)">
+  <ion-row>
+    <ion-col size="4" class="imgCardPdf">
+    </ion-col>
+    <ion-col size="8">
+      <ion-card-title class="txtTitleGoals3">{{linkPdfTitle}}</ion-card-title>
+      <p class="txtTitleGoals3"> {{linkPdfDescription}}</p>
+    </ion-col>
+  </ion-row>
+</ion-card>
 
 </ion-content>
+
