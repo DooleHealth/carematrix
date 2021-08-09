@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" (click)="goBacktoProfile()">{{'alert.button_cancel' | translate }}
-     <!--  <ion-back-button icon="" text="" ></ion-back-button> -->
+    <ion-button slot="start" fill="clear" (click)="goBacktoProfile()">
+      <ion-icon name="close"></ion-icon>
     </ion-button>
     <ion-title>{{'report_problem.title_report_problem' | translate }}</ion-title>
     <ion-button slot="end" fill="clear" (click)="submit()">

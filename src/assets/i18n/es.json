@@ -239,7 +239,7 @@
 
       },
       "health_card":{
-        "header_card": "Tus Tarjeta Sanitaria",
+        "header_card": "Tus Tarjetas Sanitarias",
 
         "modality": "Modalidad",
         "name": "Nombre",
