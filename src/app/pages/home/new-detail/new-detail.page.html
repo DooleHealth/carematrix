@@ -22,21 +22,10 @@
     </ion-item>
   </ion-card>
 
-<!--   <ion-list *ngIf="new?.files?.length > 0">
-    <ion-card class="cardProfile" *ngFor="let file of new.files">
-      <img *ngIf="file.temporaryUrl" [src]="file.temporaryUrl">
-      <ion-item lines="none" *ngIf="file.description" padding>
-        <span [innerHTML]="file.description"></span>
-      </ion-item>
-    </ion-card>
-  </ion-list> -->
   <div *ngIf="link" #frame
   style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
   <iframe [src]="link" class="iframe" scrolling="yes"></iframe>
 </div>
-<!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
-  <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
-</div> -->
 <div class="main-container" *ngIf="linkpdf2 || video">
   <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
 </div>

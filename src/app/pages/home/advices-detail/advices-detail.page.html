@@ -27,13 +27,10 @@
     style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
     <iframe [src]="link" class="iframe" scrolling="yes"></iframe>
   </div>
-  <!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
-    <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
-  </div> -->
   <div class="main-container" *ngIf="linkpdf2 || video">
     <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
   </div>
-  <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo(m)">
+  <ion-card class="cardProfilePadding" *ngIf="video" (click)="openVideo(m)">
     <ion-row>
       <ion-col size="4" class="imgCardMedia">
       </ion-col>
@@ -43,8 +40,7 @@
       </ion-col>
     </ion-row>
   </ion-card>
-  <ion-card class="cardProfilePadding" *ngIf="linkpdf2" 
-  (click)="openFile(m)">
+  <ion-card class="cardProfilePadding" *ngIf="linkpdf2" (click)="openFile(m)">
     <ion-row>
       <ion-col size="4" class="imgCardPdf">
       </ion-col>
@@ -56,4 +52,3 @@
   </ion-card>
 
 </ion-content>
-

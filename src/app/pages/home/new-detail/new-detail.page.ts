@@ -47,9 +47,9 @@ export class NewDetailPage implements OnInit {
         console.log('[DiaryPage] getDetailNew()', await json);
         this.new=json.news;
         this.isLoading = false
-        if(this.new.description){
-          this.new.description=this.new.description.replace('"//www.','"https://www.');
-          this.new.description=this.sanitizer.bypassSecurityTrustHtml(this.new.description);
+        if(this.new.content){
+          this.new.content=this.new.content.replace('"//www.','"https://www.');
+          this.new.content=this.sanitizer.bypassSecurityTrustHtml(this.new.content);
         }
         
         if((this.new.url!='') && (this.new.url!=null)){
