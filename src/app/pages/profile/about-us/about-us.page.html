@@ -11,7 +11,8 @@
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
-  <div *ngIf="this.information !== undefined">
-    <div [innerHtml]="this.information"></div>
+  <div *ngIf="this.faq!== undefined">
+    <!-- <div [innerHtml]="this.information"></div> -->
+    <div [innerHtml]="this.faq"></div>
   </div>
 </ion-content>
