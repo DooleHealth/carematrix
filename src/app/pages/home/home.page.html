@@ -24,7 +24,7 @@
 
     <!-- Goals  --> 
     <ion-row >
-        <ion-card class="vertical-card">  
+        <ion-card class="vertical-card2">  
             <ion-item lines="none" class="noMargin" routerLink="/profile/goals">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
@@ -38,7 +38,7 @@
                   <ion-grid routerLink="/activity-goal" [state]="{ id: slide.element_id, header:slide?.element?.name}">
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
                       <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
-                      <p class="txtContactLittle">{{'goals.goals' | translate}} {{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
+                      <p class="txtContactLittle">{{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
                     </ion-row>
                   </ion-grid>
                  </ion-slide>
@@ -230,20 +230,24 @@
           <ion-slides #sliderPhysical pager="true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
-              <ion-col *ngFor="let element of slide.elements; let i = index ">
-                <div *ngIf="i <= 3">
-                  <h2   style="font-weight: bold">{{ element.value }}</h2>
-                  {{ element.units}}
+              <ion-row *ngFor="let element of slide.elements; let i = index ">
+                <ion-row *ngIf="slide.elements.length >= 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}
+                </ion-row>
+                <div *ngIf="slide.elements.length <= 2">
+                  <p style="text-align:left;">{{ element.name}} 
+                    <span style="font-weight: 800;">{{ element.value }} </span>
+                    {{element.units}}
+                  </p>
                 </div>
-              </ion-col>
+              </ion-row>
             </ion-slide>
           </ion-slides>
         </ion-card-content>
       </ion-card>
     </ion-row>
+  <app-change-user></app-change-user>
   </ion-grid>
 </ion-content>
-<app-change-user></app-change-user>
 <ion-footer>
   <ion-toolbar>
     <app-tabs #tabs></app-tabs>
