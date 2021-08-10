@@ -558,7 +558,8 @@
       },
       "medical_directory":{
         "header":"Reservar",
-        "your_professionals":"Els teus professionals habituals"
+        "your_professionals":"Els teus professionals habituals",
+        "no_professionals":"No tens professionals assignats"
       },
       "medical_calendar":{
         "header":"Seleccionar Data",

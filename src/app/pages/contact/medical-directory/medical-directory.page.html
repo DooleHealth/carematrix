@@ -13,7 +13,7 @@
   <ion-row>
     <ion-text class="txtTitle2">{{'medical_directory.your_professionals' | translate}}</ion-text>
   </ion-row>
-  <ion-list>
+  <ion-list >
     <ion-card class="cardProfile" *ngFor="let s of staff">
       <ion-card-content style="padding-left: 0%;">
         <ion-item lines="none" (click)="this.redirect(s)" >
@@ -43,4 +43,20 @@
     </ion-card>
   </ion-list>
 
+<!--   <ng-template #noData> -->
+    <div *ngIf="!this.isLoading && staff?.length == 0">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="card"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "medical_directory.no_professionals"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+ <!--  </ng-template> -->
 </ion-content>

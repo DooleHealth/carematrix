@@ -30,7 +30,6 @@ export class VerificationPage implements OnInit {
   ngOnInit() {
     //this.email = history.state.email;
     console.log('[VerificationPage] ngOnInit()');
-    this.sendEmailWithCode()
   }
 
 
