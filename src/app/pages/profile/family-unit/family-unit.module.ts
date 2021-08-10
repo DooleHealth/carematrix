@@ -8,12 +8,14 @@ import { FamilyUnitPageRoutingModule } from './family-unit-routing.module';
 
 import { FamilyUnitPage } from './family-unit.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     TranslateModule,
     FamilyUnitPageRoutingModule
   ],

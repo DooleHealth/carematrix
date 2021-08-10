@@ -600,7 +600,8 @@
       "info": {
         "button":"D’acord",
         "title":"Informació",
-        "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil"
+        "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil",
+        "family":"En aquest apartat podràs loguearte amb l'usuari del qual siguis tutor o cuidador, podent accedir a les seves dades de salut. T'advertirem en cada pàgina que actues en nom d'un altre amb un signe d'exclamació (!). Pots tornar al teu perfil sempre que ho desitgis prement damunt d'aquest mateix signe."
       },
       "face-id": {
         "description": "Aquesta aplicació es bloca automàticament per garantir-ne la seguretat",
