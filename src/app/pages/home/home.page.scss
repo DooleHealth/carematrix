@@ -40,6 +40,27 @@ ion-img{
     }
 }
 
+.vertical-card2{
+  background-color: rgb(255, 255, 255)!important;
+  width: 100%;
+  min-height: 115px;
+  ion-img{
+      height: 18px;
+      width: 18px;
+  }
+
+  ion-card-content{
+      height: 110px;
+      margin-top: -10%;
+      ion-progress-bar {
+          height: 10px;
+          width: 85%
+      }
+      p{
+          width: 85%
+      }
+  }
+}
 .customCardAppointment{
     background-color: white;
     width: 100%;
@@ -85,3 +106,34 @@ ion-img{
     min-height: 17px;
     
 }
+
+/*MEDIA QUERIES FOR IPAD*/
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+    .vertical-card2{
+      background-color: rgb(255, 255, 255)!important;
+      width: 100%;
+      min-height: 115px;
+      ion-img{
+          height: 18px;
+          width: 18px;
+      }
+    
+      ion-card-content{
+          height: 110px;
+          margin-top: 0%;
+          ion-progress-bar {
+              height: 10px;
+              width: 85%
+          }
+          p{
+              width: 85%
+          }
+      }
+    }
+}
+
