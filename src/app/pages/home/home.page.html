@@ -230,12 +230,15 @@
           <ion-slides #sliderPhysical pager="true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
-              <ion-col *ngFor="let element of slide.elements; let i = index ">
-                <div *ngIf="i <= 3">
-                  <h2   style="font-weight: bold">{{ element.value }}</h2>
-                  {{ element.units}}
+          
+              <ion-row *ngFor="let element of slide.elements; let i = index ">
+                <ion-row *ngIf="slide.elements.length >= 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}   
+                </ion-row>
+
+                <div *ngIf="slide.elements.length <= 2"><p style="text-align:left;">{{ element.name}} <span style="font-weight: 800;">{{ element.value }} </span>{{ element.units}}</p>  
                 </div>
-              </ion-col>
+     
+              </ion-row>
             </ion-slide>
           </ion-slides>
         </ion-card-content>
