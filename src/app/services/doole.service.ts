@@ -310,7 +310,7 @@ export class DooleService {
     )
   }
 
-  getAPIinformationUser(): Observable<any>{
+/*   getAPIinformationUser(): Observable<any>{
 
     let path = 'user/informationUser'
     const endpoint = this.api.getEndpoint(path);
@@ -320,7 +320,7 @@ export class DooleService {
         return res;
       })
     )
-  }
+  } */
 
 
   getAPIinformationSummary(params: Object): Observable<any> {
@@ -651,7 +651,7 @@ export class DooleService {
   }
 
   getAPIdiagnosticTestID(id: Object): Observable<any> {
-    let path = 'user/diagnosticTest/' + id;
+    let path = 'v2/user/diagnosticTest/' + id;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

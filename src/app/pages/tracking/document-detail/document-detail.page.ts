@@ -63,7 +63,7 @@ export class DocumentDetailPage implements OnInit {
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);
         this.diagnosticTest = res.diagnosticTest
-        this.diagnosticTestType = res.diagnosticTestType
+        this.diagnosticTestType = res.diagnosticTest.diagnostic_test_type
         if (res.diagnosticTest.media) {
           this.mediaFiles = res.diagnosticTest.media;
         }

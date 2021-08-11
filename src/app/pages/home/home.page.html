@@ -99,7 +99,6 @@
         <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">
           <ion-card class="cardProfilePaddingBottomMinHeight">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
-
             <img class="sliderImage" [src]="slide.image?.temporaryUrl" />
             <br /><br />
 

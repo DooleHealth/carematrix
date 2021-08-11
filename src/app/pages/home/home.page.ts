@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, Platform } from '@ionic/angular';
@@ -13,10 +13,22 @@ import { OpentokService } from 'src/app/services/opentok.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 
 export interface UserInformation {
   title?: string;
   hour?: string;
+}
+
+export class ShowcaseShellUserModel extends ShellModel {
+  id: string;
+  name: string;
+  image: string;
+  type: string;
+  data: User;
+  constructor() {
+    super();
+  }
 }
 @Component({
   selector: 'app-home',
@@ -24,8 +36,13 @@ export interface UserInformation {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  dataStore: DataStore<Array<ShowcaseShellUserModel>>;
+  data: Array<ShowcaseShellUserModel> & ShellModel;
+  @HostBinding('class.is-shell') get isShell() {
+    return (this.data && this.data.isShell) ? true : false;
+  }
   WAIT_TIME = 10 //10 minutes 
-  userDoole : User
+  userDoole : any
   goals: Goal[] =[]
   diets: Diet[] =[]
   drugs: Drug[] =[]
@@ -33,7 +50,7 @@ export class HomePage implements OnInit {
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
   isLoading = false
-  userio
+  //userio
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
@@ -114,7 +131,7 @@ export class HomePage implements OnInit {
           .catch(e => console.log(e));
     }
   }
-  async getUserInformation(){
+/*   async getUserInformation1(){
 
     this.dooleService.getAPIgoals().subscribe((res)=>{
       this.goals = res.goals;
@@ -143,13 +160,51 @@ export class HomePage implements OnInit {
     })
 
     this.getDrugIntake()
+    //this.getGames()
 
-    this.getGames()
+  } */
 
-  }
+  async getUserInformation(){
+    let date = {date: this.date}
+    this.dooleService.getAPIinformationSummary(date).subscribe(
+      async (res: any) =>{
+        console.log('[HomePage] getUserInformation()', await res);
+        this.goals = res.data?.goals;
+        this.appointment = res.data?.agenda;
+        this.advices = res.data?.advices;
+        this.diets = res.data?.diets;
 
-  async getUserInformation1(){
-    const dataSource = this.dooleService.getAPIallowedContacts();
+        this.slideDietChange()
+        let elements = res?.data.elements
+        if(elements?.eg){
+          this.treeIterate(elements?.eg, '');
+          this.sliderGames.slideTo(0)
+          this.slideActivityChange()
+        }
+
+        if(res.data.gamePlays){
+          this.games = res.data.gamePlays
+          this.games.sort(function(a,b){
+            return a.scheduled_date.localeCompare(b.scheduled_date);
+          })
+          this.searchIndexDGame()
+          this.slideGamesChange()
+          this.sliderGames.slideTo(this.currentIndexDrug)
+        }
+
+        // this.drugs = res.data.drugIntakes.drugIntakes;
+        // this.filterDrugsByStatus()
+        // this.searchIndexDrug()
+        // this.slideDrugChange()
+        // this.sliderDrug.slideTo(this.currentIndexDrug)
+        this.getDrugIntake()
+
+       },(err) => { 
+          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+/*           let messagge = this.translate.instant("verification.send_email_alert_message")
+          this.dooleService.presentAlert(messagge +' '+ err.message) */
+          throw err; 
+      });
   }
 
   treeIterate(obj, stack) {
@@ -170,7 +225,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  getGames(){
+/*   getGames(){
     this.dooleService.getAPIgamesByDate(this.date ,this.date ).subscribe((res)=>{
       if(res.gamePlays){
         this.games = res.gamePlays
@@ -182,7 +237,7 @@ export class HomePage implements OnInit {
         this.sliderGames.slideTo(this.currentIndexDrug)
       }
     });
-  }
+  } */
 
   getDrugIntake(){
     this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
