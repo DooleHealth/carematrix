@@ -24,13 +24,13 @@
         <ion-label>D</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1w">
-        <ion-label>W</ion-label>
+        <ion-label>S</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1m">
         <ion-label>M</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1y">
-        <ion-label>Y</ion-label>
+        <ion-label>A</ion-label>
       </ion-segment-button>
     </ion-segment>
 
@@ -77,7 +77,7 @@
     </ion-card>
 </div>
 
-
+<span *ngIf="this.normalValue || this.outRangeValue ||this.dangerValue">
   <div class="main-container">
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
   </div>
@@ -86,10 +86,17 @@
     <div *ngIf="description">{{description}}</div>
     <!-- <ion-item-divider></ion-item-divider> -->
     <div *ngIf="this.normalValue">
-      <ion-col >{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{this.normalValue}} {{this.units}}</ion-col>
+      <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{this.normalValue}} {{this.units}}</ion-col>
     </div>
+    <div *ngIf="this.outRangeValue">
+      <ion-col class="txtTitleWarning">{{ 'activity_goal.out_range_value' | translate}}</ion-col><ion-col>{{this.outRangeValue}} {{this.units}}</ion-col>
+    </div>
+    <div *ngIf="this.dangerValue">
+      <ion-col class="txtTitleDanger">{{ 'activity_goal.danger_value' | translate}}</ion-col><ion-col>{{this.dangerValue}} {{this.units}}</ion-col>
+    </div>
+    <br>
   </ion-card>
-
+</span>
 <!--   <div class="main-container">
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_advices' | translate}}</ion-text>
   </div>

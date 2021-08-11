@@ -280,7 +280,24 @@ text-align: left !important;
   font-size: 14px;
   font-weight: 600;
 }
-
+.txtTitleSuccess{
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: #2ECC71;
+}
+.txtTitleWarning{
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: #F39C12;
+}
+.txtTitleDanger{
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: #E74C3C;
+}
 /*Custom Buttons*/
 
 .deleteButton {

@@ -21,6 +21,8 @@ export class ActivityGoalPage implements OnInit {
   private id;
   viewTitle = ''
   normalValue
+  outRangeValue
+  dangerValue
   description
   graphics = []
   header = []
@@ -133,6 +135,10 @@ export class ActivityGoalPage implements OnInit {
         this.ranges.push(r);
         if (range.rangeType === "success")
           this.normalValue = range.conditionString
+          else if (range.rangeType == "warning")
+          this.outRangeValue = range.conditionString
+          else if (range.rangeType == "danger")
+          this.dangerValue = range.conditionString
       });
 
       this.graphValues = vArray;
