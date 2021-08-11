@@ -142,7 +142,9 @@
       },
       "activity_goal":{
         "definition": "Definición",
-        "normal_value": "Valores Normales:",
+        "normal_value": "Valores normales:",
+        "out_range_value": "Valores fuera de rango:",
+        "danger_value": "Valores anómalos:",
         "no_data":"No hay datos a mostrar"
       },
       "activity":{
