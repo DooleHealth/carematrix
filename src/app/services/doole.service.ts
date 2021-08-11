@@ -650,7 +650,7 @@ export class DooleService {
   }
 
   postAPIdiagnosticTest(params: Object): Observable<any> {
-    let path = 'user/diagnosticTests/';
+    let path = 'v2/user/diagnosticTests/';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {

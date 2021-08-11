@@ -154,7 +154,7 @@ export class DocumentsAddPage implements OnInit {
             this.addFile();
           }
         },{
-          text: this.translate.instant('documents_add.button_cancel'),
+          text: this.translate.instant('button.cancel'),
           role: 'cancel',
           handler: () => {
           }
