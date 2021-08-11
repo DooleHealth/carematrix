@@ -285,7 +285,7 @@ export class ReportProblemPage implements OnInit {
     async savePicture(fileUri){
       console.log("[ReportProblemPage] savePicture() fileUri: ",fileUri);
       var filename=new Date().getTime();
-      this.saveBase64(fileUri,filename.toString()).then(res => {
+      return this.saveBase64(fileUri,filename.toString()).then(res => {
         console.log("savePicture() saveBase64 res: ",res);
         this.dooleService.uploadFile(res).then(data => {
           console.log("savePicture() uploadFile res: ",res);

@@ -322,6 +322,18 @@ export class DooleService {
     )
   }
 
+
+  getAPIinformationSummary(params: Object): Observable<any> {
+    let path = 'home'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIinformationSummary(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIuserProfile(): Observable<any> {
     let path = 'user/profile'
     //let httpParams = this.getFamilyUnitID()

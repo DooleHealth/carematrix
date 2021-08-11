@@ -146,8 +146,10 @@ export class HomePage implements OnInit {
 
     this.getGames()
 
-    //this.activity.push({name:'456 Cal'})
+  }
 
+  async getUserInformation1(){
+    const dataSource = this.dooleService.getAPIallowedContacts();
   }
 
   treeIterate(obj, stack) {
