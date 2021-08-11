@@ -8,7 +8,6 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class AboutUsPage implements OnInit {
   information: any
-  faq: any
   isLoading = false
   constructor(
     private dooleService: DooleService
@@ -24,8 +23,7 @@ export class AboutUsPage implements OnInit {
     this.dooleService.getAPIaboutUs().subscribe(
       async (res: any) =>{
         console.log('[AboutUsPage] getInformationAboutUs()', await res);
-        // this.information = res
-        this.faq = res.faq
+        this.information = res.faq
         this.isLoading = false
        },(err) => { 
           console.log('[AboutUsPage] getInformationAboutUs() ERROR(' + err.code + '): ' + err.message); 

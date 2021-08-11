@@ -582,8 +582,7 @@ export class DooleService {
 
 
   getAPIaboutUs(): Observable<any> {
-    // let path = 'center/about_us';
-    let path = 'center/faq'
+    let path = 'center/about';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
