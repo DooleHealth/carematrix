@@ -16,7 +16,7 @@
     <ion-list>
       <ion-item (click)="openModal()">
         <ion-label>{{ 'documents_add.field_test_type' | translate }}</ion-label>
-        <ion-input formControlName="type" slot="end" [placeholder]="(this.isSubmittedType && this.form.get('type').invalid)? '': 'Selecciona uno' " (ionInput)="isSubmittedType = false"></ion-input>
+        <ion-input formControlName="type" slot="end" [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false"></ion-input>
         <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>

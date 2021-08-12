@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content>
+  
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
   <ion-grid class="iosHeader">
     <ion-row>
       <ion-col size="8" class="alingLeftTop">
@@ -99,7 +104,6 @@
         <ion-slide *ngFor="let slide of this.advices" routerLink="/advices-detail" [state]="{id: slide.id}">
           <ion-card class="cardProfilePaddingBottomMinHeight">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
-
             <img class="sliderImage" [src]="slide.image?.temporaryUrl" />
             <br /><br />
 

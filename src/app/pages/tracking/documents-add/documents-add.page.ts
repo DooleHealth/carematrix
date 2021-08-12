@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Plugins, CameraResultType, CameraSource, Capacitor } from '@capacitor/core';
 import { Chooser } from '@ionic-native/chooser/ngx';
-import { ActionSheetController, LoadingController, ModalController, NavController, Platform } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { TestTypePage } from './test-type/test-type.page';
@@ -36,7 +36,6 @@ export class DocumentsAddPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     public router: Router,
-    private loadingController: LoadingController,
     private dooleService: DooleService,
     private modalController: ModalController,
     private actionSheetCtrl: ActionSheetController,
@@ -154,7 +153,7 @@ export class DocumentsAddPage implements OnInit {
             this.addFile();
           }
         },{
-          text: this.translate.instant('documents_add.button_cancel'),
+          text: this.translate.instant('button.cancel'),
           role: 'cancel',
           handler: () => {
           }
@@ -332,6 +331,13 @@ export class DocumentsAddPage implements OnInit {
     }).finally(() => {
 
     })
+  }
+
+  changePlaceholder(){
+    let placeholder = this.translate.instant('placeholder_select')
+    if(this.isSubmittedType && this.form.get('type').invalid)
+    placeholder = ''
+    return placeholder
   }
 
 }

@@ -4,7 +4,8 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
+import { NotificationService } from 'src/app/services/notification.service';
+import { Md5 } from 'ts-md5/dist/md5';
 @Component({
   selector: 'app-biometric-auth',
   templateUrl: './biometric-auth.page.html',
@@ -12,9 +13,17 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class BiometricAuthPage implements OnInit {
   @Input() isModal: boolean;
-  showDialog: boolean = true;
-  showSuccess: boolean = false;
-  constructor(private authService: AuthenticationService, private router: Router, private modalCtrl: ModalController, public translate: TranslateService, public platform: Platform, public alertCtrl: AlertController, private faio: FingerprintAIO) {
+  showDialog = true
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private modalCtrl: ModalController, 
+    public translate: TranslateService, 
+    public platform: Platform, 
+    public alertCtrl: AlertController, 
+    private faio: FingerprintAIO,
+    private notification: NotificationService,
+  ) {
     localStorage.setItem('show-bio-dialog','false');
     localStorage.setItem('settings-bio','false');
   }
@@ -60,34 +69,39 @@ export class BiometricAuthPage implements OnInit {
 
   async registerBiometrics() {
 
-    //let e = Md5.hashStr(Date.now().toString()).toString();
-
-    let credentials = {
-     // mutua: this.authService.mutua,
-      credencial: "biometric",
-      //username: e
-    }
-
-/*     this.authService.validateCredentials(credentials, 'credencial2').subscribe(
-      async (data) => {
-
-        console.log(data);
-        localStorage.setItem('bio-auth', e);
-        localStorage.setItem('show-bio-dialog', 'false');
-        localStorage.setItem('settings-bio', 'true');
-
-        this.showDialog = !this.showDialog;
-        this.showSuccess = !this.showSuccess;
-
-      },
-      (error) => {
-        // Called when error
-        //this.showAlert(this.translate.instant('login.error_code.' + error?.status));
-      }); */
+    let hash = Md5.hashStr(Date.now().toString()).toString();
+      this.authService.postAPIbiometric({hash: hash}).subscribe(
+        async (data) => {
+          console.log(data);
+          if(data.success){
+            let e = {hash: hash, id: data.id}
+            localStorage.setItem('bio-auth', JSON.stringify(e));
+            localStorage.setItem('show-bio-dialog', 'false');
+            localStorage.setItem('settings-bio', 'true');
+            this.notification.displayToastSuccessful()
+            this.dismissLockScreen()
+          }  
+        },
+        (error) => {
+          // Called when error
+          alert(this.translate.instant(error?.message));
+        });
   }
 
   async dismissLockScreen() {
-    this.modalCtrl.dismiss();
+    //this.modalCtrl.dismiss();
+    this.showIntro()
   }
+
+  showIntro(){
+    this.authService.getShowIntroLocalstorage().then((showIntro) =>{
+      console.log(`[LegalPage] showIntro() localStorage`,showIntro);
+      if(showIntro){
+        this.router.navigate(['/home']);
+      }else{
+        this.router.navigate(['/intro']);
+      }
+    })
+}
 
 }

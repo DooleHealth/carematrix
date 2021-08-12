@@ -43,13 +43,11 @@ isLoading = false
     this.dataStore = new DataStore(shellModel);
     // Trigger the loading mechanism (with shell) in the dataStore
     this.dataStore.load(dataSource)
-
-    console.log('[MedicalDirectoryPage] allowedContacts()',  this.dataStore);
     this.dataStore.state.subscribe(res => {
       console.log('[MedicalDirectoryPage] allowedContacts()', res);
       if(!res.isShell){
         this.staff = res;
-        this.data = res;
+       // this.data = res;
       }
       this.isLoading = false
     },
