@@ -55,6 +55,7 @@ constructor(
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
     //await window.OT.getUserMedia();
+    console.log(this.durationStr);
   }
 
 publish() {
@@ -138,17 +139,19 @@ ngAfterViewInit(): void {
       },
     });
 
+
     this.session.on("signal:duration", (event) => {
-      if (event.data > 60) {
-        var min = event.data / 60;
+      if(event.data>60){
+        var min = event.data/60;
         min = Math.floor(min);
-        this.durationStr = "Unos " + Math.round(min) + " minutos";
-      } else if (event.data > 0) {
+        this.durationStr = "Unos "+Math.round(min) + " minutos";
+      }else if(event.data>0){
         this.durationStr = "Menos de 1 minuto";
-      } else {
+      }else{
         this.durationStr = "Tiempo agotado";
       }
-
+      console.log("duration in seconds " + event.data);
+      console.log(this.durationStr);
     });
 
     this.session.connect(this.token, (error: any) => {
@@ -160,7 +163,6 @@ ngAfterViewInit(): void {
   }else{
 
     console.log('*** is web');
-
     this.publisher = OT.initPublisher
     (
       this.publisherDiv.nativeElement, {

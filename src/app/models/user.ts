@@ -91,9 +91,10 @@ export interface UserProfile{
     weight: string,
     height: string,
     blood_group: string,
-    diagnostics: [string,string],
+    // diagnostics: [string,string],
     temporaryUrl:string,
     allergies: [],
+    diagnostics: [],
 }
 
 export interface FamilyUnit {
