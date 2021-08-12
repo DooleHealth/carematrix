@@ -19,7 +19,12 @@
     <ion-fab-button color="danger" (click)="this.close()" >
       <ion-icon name="call-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+    </ion-fab>
+  <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="start" slot="fixed">
+  <ion-fab-button  color="primary">
+    <p>00:00</p>
+  </ion-fab-button>
+</ion-fab>
   <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button  color="light">
       <ion-icon name="add"></ion-icon>
