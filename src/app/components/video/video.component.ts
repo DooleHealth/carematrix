@@ -139,21 +139,6 @@ ngAfterViewInit(): void {
       },
     });
 
-
-    this.session.on("signal:duration", (event) => {
-      if(event.data>60){
-        var min = event.data/60;
-        min = Math.floor(min);
-        this.durationStr = "Unos "+Math.round(min) + " minutos";
-      }else if(event.data>0){
-        this.durationStr = "Menos de 1 minuto";
-      }else{
-        this.durationStr = "Tiempo agotado";
-      }
-      console.log("duration in seconds " + event.data);
-      console.log(this.durationStr);
-    });
-
     this.session.connect(this.token, (error: any) => {
       if (error) {
         alert(`There was an error connecting to the session ${error}`);
@@ -187,6 +172,10 @@ ngAfterViewInit(): void {
           }
         });
         let that = this;
+        this.session.on("signal:duration", function(event) {
+          console.log("Signal sent from connection " + event.data);
+
+        });
         this.session.on("streamCreated", function (event) {
           that.onStreamCreated(event.stream, this.session);
         });
