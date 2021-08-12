@@ -11,16 +11,16 @@
   <div class="txtTitle2"></div>
     <ion-text class="txtTitle2">{{ 'setting.title_security' | translate}}</ion-text>
     <ion-card class="cardProfile">
-          <ion-list>
+          <ion-list [lines]="isTwoFactor? 'full': 'none' ">
             <ion-item (click)="changePassword()" >
               <ion-label>{{ 'setting.password.title_change_password' | translate}}</ion-label>
               
             </ion-item>
-            <ion-item >
+            <ion-item [lines]="isFaID? 'full': 'none' " *ngIf="isTwoFactor">
               <ion-label >{{ 'setting.subtitle_authentication' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="authentication" (ionChange)="changeAuthentication()" checked></ion-toggle>
             </ion-item>
-            <ion-item lines="none">
+            <ion-item lines="none" *ngIf="isFaID">
               <ion-label>{{ 'setting.subtitle_face_id' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="faceId" (ionChange)="changeFaceId()" checked></ion-toggle>
             </ion-item>

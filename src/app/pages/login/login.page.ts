@@ -12,7 +12,7 @@ import { LanguageService } from 'src/app/services/language.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  @Input()credentials: {username, password};
+  @Input()credentials: {username, password, hash};
   constructor( 
     private authService: AuthenticationService, 
     private dooleService: DooleService, 
@@ -20,7 +20,8 @@ export class LoginPage implements OnInit {
     private ngZone: NgZone, 
     public languageService: LanguageService, 
     private translate: TranslateService,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController,
+    ) { }
 
   ngOnInit() {
     this.loginUser();
@@ -29,9 +30,8 @@ export class LoginPage implements OnInit {
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
       console.log('[LandingPage] doDooleAppLogin()', res);
-      if(res.success){
-        //!res.twoFactor solo para pruebas  
-        if(res.twoFactor){
+      if(res.success){ 
+        if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
         }
@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LandingPage] checkConditionLegal()', await res);
-         if(res.success)
+        if(res.success)
           this.redirectPage(res.accepted_last)
         else
           this.modalCtrl.dismiss({error:res.message});
@@ -68,8 +68,8 @@ export class LoginPage implements OnInit {
     if(!condicion){
       this.router.navigate(['/legal']);
       this.modalCtrl.dismiss({error:null});
-    } else{
-      this.showIntro()
+    }else{
+      this.redirectBiometric()
     }      
   }
 
@@ -102,6 +102,16 @@ export class LoginPage implements OnInit {
     }, 500);
       
     });
+  }
+
+  redirectBiometric(){
+    let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
+    if(condicion){
+      this.router.navigate(['/login/biometric-auth']);
+      this.modalCtrl.dismiss({error:null});
+    } else{
+      this.showIntro()
+    }      
   }
 
 

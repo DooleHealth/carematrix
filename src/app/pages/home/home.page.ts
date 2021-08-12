@@ -131,40 +131,10 @@ export class HomePage implements OnInit {
           .catch(e => console.log(e));
     }
   }
-/*   async getUserInformation1(){
-
-    this.dooleService.getAPIgoals().subscribe((res)=>{
-      this.goals = res.goals;
-    });
-    
-    this.dooleService.getAPIappointmentAgenda().subscribe((res)=>{
-      console.log(res);
-      this.appointment = res.agenda;
-    });
-
-    this.dooleService.getAPIlistAdvices().subscribe((res)=>{
-      this.advices = res.advices;
-    })
-
-    this.dooleService.getAPIlistDietsByDate({}).subscribe((res)=>{
-      this.diets = res.diets;
-      this.slideDietChange()
-    })
-
-    this.dooleService.getAPIelementsListByDate({}).subscribe((res)=>{
-      if(res.eg){
-        this.treeIterate(res.eg, '');
-        this.sliderGames.slideTo(0)
-        this.slideActivityChange()
-      }
-    })
-
-    this.getDrugIntake()
-    //this.getGames()
-
-  } */
 
   async getUserInformation(){
+    this.isLoading = true
+    this.activity = []
     let date = {date: this.date}
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
@@ -173,12 +143,12 @@ export class HomePage implements OnInit {
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
         this.diets = res.data?.diets;
-
         this.slideDietChange()
+
         let elements = res?.data.elements
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
-          this.sliderGames.slideTo(0)
+          this.sliderPhysical.slideTo(0)
           this.slideActivityChange()
         }
 
@@ -198,11 +168,11 @@ export class HomePage implements OnInit {
         // this.slideDrugChange()
         // this.sliderDrug.slideTo(this.currentIndexDrug)
         this.getDrugIntake()
-
+        this.isLoading = false
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
-/*           let messagge = this.translate.instant("verification.send_email_alert_message")
-          this.dooleService.presentAlert(messagge +' '+ err.message) */
+          this.isLoading = false
+          alert(err.message)
           throw err; 
       });
   }
@@ -216,6 +186,7 @@ export class HomePage implements OnInit {
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
+            if(obj.elements.length>0)
             this.activity.push(obj);
 
           }
@@ -224,20 +195,6 @@ export class HomePage implements OnInit {
       }
     }
   }
-
-/*   getGames(){
-    this.dooleService.getAPIgamesByDate(this.date ,this.date ).subscribe((res)=>{
-      if(res.gamePlays){
-        this.games = res.gamePlays
-        this.games.sort(function(a,b){
-          return a.scheduled_date.localeCompare(b.scheduled_date);
-        })
-        this.searchIndexDGame()
-        this.slideGamesChange()
-        this.sliderGames.slideTo(this.currentIndexDrug)
-      }
-    });
-  } */
 
   getDrugIntake(){
     this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{

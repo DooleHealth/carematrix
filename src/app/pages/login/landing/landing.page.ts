@@ -47,16 +47,19 @@ export class LandingPage implements OnInit {
       password: new FormControl('',
         Validators.compose([
         Validators.required])
-      )
+      ),
+      hash: new FormControl(''),
     });
    }
 
   ngOnInit() {
   }
 
-
+  ionViewDidEnter(){
+    this.getStoredValues()
+  }
+  
   async dismissLoading() {
-
     if (this.redirectLoader) {
       console.log("dismissLoading");
       this.redirectLoader.dismiss();
@@ -160,9 +163,9 @@ export class LandingPage implements OnInit {
         cancelButtonTitle: this.translate.instant('button.cancel'),
         title: this.translate.instant('face-id.title'),
       })
-        .then(async (result: any) => {
-   
+        .then(async (result: any) => { 
           console.log("[LandingPage] doBiometricLogin()", result);
+          this.doDooleAppLogin()
         })
         .catch((error: any) => {
           console.log("show errror ", error);
@@ -177,28 +180,19 @@ export class LandingPage implements OnInit {
   }
 
   async getStoredValues() {
-    this.loginForm.patchValue({
-      password: ''
-    });
-    const doole = localStorage.getItem('doole');
-    
-    if (doole) {
-      this.loginForm.patchValue({
-        username: doole
-      });
-    }
+    if(!this.isAvailableFaID())
+    return 
 
-   
     const biometricsEnabled = localStorage.getItem('settings-bio');
     const biometricToken =  localStorage.getItem('bio-auth');
     
     if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
       this.hasBiometricAuth = true;
-      this.biometricAuth = biometricToken;
+      this.biometricAuth = JSON.parse(biometricToken) ;
+      this.loginForm.get('hash').setValue(this.biometricAuth.hash)
     }else{
       this.hasBiometricAuth = false;
     }
-
     const showDialog = localStorage.getItem('show-bio-dialog');
 
     if(showDialog!== 'false'){
@@ -211,25 +205,38 @@ export class LandingPage implements OnInit {
       
   }
 
-  async showBioDialog(){
-    
-    this.faio.isAvailable().then(async ()=>{
-
-      const modal = await this.modalCtrl.create({
-        component: BiometricAuthPage,
-        backdropDismiss: false,
-        componentProps: {
-          isModal: true
-        }
-      });
-      modal.present();
-    }).catch(() => {
-
-      console.log('Bio Auth not available');
-    })
-
+  isAvailableFaID(): Promise<any>{
+    const showDialog = localStorage.getItem('show-bio-dialog');
+    console.log('[LandingPage] isAvailableFaID() showDialog:', showDialog);
+   return this.faio.isAvailable().then((result: any)  =>{
+      console.log(result)
+      const showDialog = localStorage.getItem('show-bio-dialog');
+      console.log('[LandingPage] isAvailableFaID() showDialog:', showDialog);
+      if(showDialog === undefined || showDialog === null)
+        localStorage.setItem('show-bio-dialog','true');
+      return true
+    }).catch(async (error: any) => {
+        localStorage.setItem('show-bio-dialog','false');
+      return false
+    });
   }
 
+/*   async biometricAuthModal() : Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: BiometricAuthPage,
+      componentProps: { },
+    });
 
+    modal.onDidDismiss()
+      .then((result) => {
+        let error = result?.data['error']
+        if(error){
+          let message = error
+          this.dooleService.presentAlert(message)
+        }
+    });
+
+    await modal.present();
+  } */
 
 }
