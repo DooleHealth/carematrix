@@ -104,6 +104,22 @@ export interface FamilyUnit {
     thumbnail?: string,
     family_relationship?: string
 }
+export interface Mentoring {
+    age?: string,
+    id?: number,
+    initials?: string,
+    name?: string,
+    socialRelationType?:string,
+    thumbnail?: string,
+}
+export interface Tutor {
+    age?: string,
+    id?: number,
+    initials?: string,
+    name?: string,
+    socialRelationType?:string,
+    thumbnail?: string,
+}
 
 export interface HealthCard {
     id?: number,

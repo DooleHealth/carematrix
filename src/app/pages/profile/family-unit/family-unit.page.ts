@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { FamilyUnit } from 'src/app/models/user';
+import { FamilyUnit, Mentoring, Tutor } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -13,6 +13,8 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class FamilyUnitPage implements OnInit {
   listFamilyUnit:FamilyUnit[] = [];
+  canAccess:Mentoring[] = [];
+  othersCanAccess:Tutor[] = [];
   isLoading = false
   user
   constructor(
@@ -24,6 +26,7 @@ export class FamilyUnitPage implements OnInit {
 
   ngOnInit() {
     this.getFamilyUnitData();
+ this.getFamilyUnit2Data();
 
   }
 
@@ -38,7 +41,22 @@ export class FamilyUnitPage implements OnInit {
           console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
           throw err; 
-      });
+      });  
+  }
+  getFamilyUnit2Data(){
+    this.isLoading = true
+    this.dooleService.getAPIFamilyUnit2().subscribe(
+      async (res: any) =>{
+        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        this.canAccess = res.canAccess
+        this.othersCanAccess = res.othersCanAccess
+        // this.listFamilyUnit = this.canAccess
+        this.isLoading = false
+       },(err) => { 
+          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          throw err; 
+      });  
   }
 
   changeAccount(family){
