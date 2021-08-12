@@ -223,7 +223,9 @@
         },
         "family_unit":{
           "title_family_unit":"Unitat Familiar",
-          "msg_alert_change_perfil": "Vols canviar a aquest perfil?"
+          "msg_alert_change_perfil": "Vols canviar a aquest perfil?",
+          "canAccess":"Estàs a càrrec de:",
+          "othersCanAccess":"El teu tutor és:"
         }
 
       },

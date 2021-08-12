@@ -222,7 +222,10 @@
         },
         "family_unit":{
           "title_family_unit":"Unidad Familiar",
-          "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?"
+          "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?",
+          "canAccess":"Estás a cargo de",
+          "othersCanAccess":"Tu tutor es:"
+        
         }
 
       },

@@ -391,6 +391,16 @@ export class DooleService {
       })
     );
   }
+  getAPIFamilyUnit2(): Observable<any> {
+    let path = 'v2/user/familyUnit';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIFamilyUnit(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   postAPIReportProblem(params: Object): Observable<any> {
     let path = 'user/reportProblem'; // 'media/upload/temp' 

@@ -12,10 +12,32 @@
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
-
+<span *ngIf="this.user?.familyUnit === null">
   <div *ngIf="listFamilyUnit.length > 0; else noData">
+    <ion-row *ngIf="othersCanAccess.length > 0;" class="paddingTop">
+      <ion-text class="txtTitle">{{ 'setting.family_unit.othersCanAccess' | translate }}</ion-text>
+    </ion-row>
   <ion-list>
-    <ion-card class="cardProfile" *ngFor="let family of this.listFamilyUnit" (click)="changeAccount(family)">
+    <ion-card class="cardProfile" *ngFor="let family of this.othersCanAccess">
+      <ion-card-content style="padding-left: 0%;">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="family.thumbnail">
+      </ion-avatar>
+      <ion-label >
+        <h3>{{family.name}}</h3>
+        <p *ngIf="family?.socialRelationType">{{family.socialRelationType}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card-content>
+  </ion-card>
+  </ion-list>
+
+  <ion-row  *ngIf="canAccess.length > 0;" class="paddingTop">
+    <ion-text class="txtTitle">{{ 'setting.family_unit.canAccess' | translate }}</ion-text>
+  </ion-row>
+  <ion-list>
+    <ion-card class="cardProfile" *ngFor="let family of this.canAccess" (click)="changeAccount(family)">
       <ion-card-content style="padding-left: 0%;">
     <ion-item lines="none">
       <ion-avatar slot="start">
@@ -31,7 +53,7 @@
   </ion-list>
 </div>
 
-
+</span>
 <ng-template #noData>
   <div *ngIf="!this.isLoading">
     <ion-grid>
@@ -50,6 +72,19 @@
 </ng-template>
 
 <section *ngIf="this.user?.familyUnit !== null">
+  <ion-card class="cardProfile" *ngFor="let family of this.othersCanAccess">
+    <ion-card-content style="padding-left: 0%;">
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img [src]="family.thumbnail">
+    </ion-avatar>
+    <ion-label >
+      <h3>{{family.name}}</h3>
+      <p *ngIf="family?.socialRelationType">{{family.socialRelationType}}</p>
+    </ion-label>
+  </ion-item>
+</ion-card-content>
+</ion-card>
   <ion-button expand="block"  (click)="returnUser()" >{{'profile.button_go_back' | translate | uppercase  }}</ion-button>
 </section>  
 
