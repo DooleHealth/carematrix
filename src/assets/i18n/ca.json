@@ -446,7 +446,8 @@
         "header": "Seguiment",
         "tap_documents": "Documents",
         "tap_forms": "Formularis",
-        "tap_graphics": "Gràfics" 
+        "tap_graphics": "Gràfics",
+        "tap_test":"Proves"
       },
       "documents":{
         "subtitle_information": "Informació",

@@ -416,7 +416,8 @@
         "header": "Seguimiento",
         "tap_documents": "Documentos",
         "tap_forms": "Formularios",
-        "tap_graphics": "Gráficos"
+        "tap_graphics": "Gráficos",
+        "tap_test":"Pruebas"
       },
       "documents":{
         "subtitle_information": "Información",
