@@ -323,7 +323,7 @@ export class DooleService {
   }
 
   getAPIuserProfile(): Observable<any> {
-    let path = 'user/profile'
+    let path = 'v2/user/profile'
     //let httpParams = this.getFamilyUnitID()
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
