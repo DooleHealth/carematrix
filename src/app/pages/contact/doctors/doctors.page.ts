@@ -17,6 +17,7 @@ export class DoctorsPage implements OnInit {
 
   ngOnInit() {
     this.doctor = history.state.doctor;
+   
     console.log('[DoctorsPage] ngOnInit()', this.doctor);
     if(this.doctor)
     this.getAllowedContacts()

@@ -44,12 +44,12 @@
     </ion-row>
   </ion-card>
 
-  <ion-card *ngIf="this.doctor?.center" class="cardProfilePadding">
+  <ion-card class="cardProfilePadding" *ngIf="this.doctor?.departments" >
     <ion-row style="font-weight: 600;">
       <ion-label>{{ 'doctor.field_centers' | translate}}</ion-label>
     </ion-row>
     <ion-row *ngFor="let center of this.doctor?.departments">
-      <ion-label>{{ center?.name }}</ion-label>
+      <ion-label>{{ center?.id}}</ion-label>
     </ion-row>
   </ion-card>
 
