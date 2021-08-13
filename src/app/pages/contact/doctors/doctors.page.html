@@ -44,14 +44,15 @@
     </ion-row>
   </ion-card>
 
-  <ion-card class="cardProfilePadding">
+  <ion-card *ngIf="this.doctor?.center" class="cardProfilePadding">
     <ion-row style="font-weight: 600;">
       <ion-label>{{ 'doctor.field_centers' | translate}}</ion-label>
     </ion-row>
     <ion-row *ngFor="let center of this.doctor?.departments">
-      <ion-label>{{ center?.name |titlecase}}</ion-label>
+      <ion-label>{{ center?.name }}</ion-label>
     </ion-row>
   </ion-card>
+
   <div class="buttonContainer">
   <ion-button *ngIf="this.isAllowed" expand="block" style="margin-top: 5%;" (click)="this.redirect(doctor)">
     {{ 'doctor.button_chat' | translate}}
