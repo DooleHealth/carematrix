@@ -243,7 +243,7 @@
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
               <ion-row *ngFor="let element of slide.elements; let i = index ">
-                <ion-row *ngIf="slide.elements.length >= 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}
+                <ion-row *ngIf="slide.elements.length > 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}
                 </ion-row>
                 <div *ngIf="slide.elements.length <= 2">
                   <p style="text-align:left;">{{ element.name}} 
