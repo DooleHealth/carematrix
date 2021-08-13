@@ -10,7 +10,7 @@
 <ion-content>
   <form (ngSubmit)="submit()" [formGroup]="form">
     <ion-list>
-      <ion-card class="cardProfile">
+      <ion-card class="cardProfile" class="cardProfile" routerLink="doctor" [state]="{doctor: staff}">
         <ion-card-content style="padding-left: 1%;">
           <ion-item lines="none">
             <img [src]="this.staff?.image" class="img-wrapper-doctors" />
@@ -45,7 +45,7 @@
       </ion-list>
     </ion-card>
   
-    <ion-card class="cardProfile">
+    <ion-card>
       <ion-list>
         <!-- <ion-item>
           <ion-label class="txtTitleGoals">Tipo de cita</ion-label>

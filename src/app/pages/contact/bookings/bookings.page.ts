@@ -291,4 +291,8 @@ export class BookingsPage implements OnInit {
     this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff}});
     
   }
+//  navigateDoctors() {
+//     return this.router.navigate(['/doctors'],{state:{staff:this.staff}});;
+   
+//   }
 }

@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'detailCard',
     loadChildren: () => import('../../profile/cards/detail-health-card/detail-health-card.module').then( m => m.DetailHealthCardPageModule)
+  } ,
+  {
+    path: 'doctor',
+    loadChildren: () => import('../../contact/doctors/doctors.module').then( m => m.DoctorsPageModule)
   }
 
 ];
