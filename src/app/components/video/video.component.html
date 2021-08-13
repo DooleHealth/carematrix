@@ -21,7 +21,12 @@
     </ion-fab-button>
     </ion-fab>
   <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="start" slot="fixed">
-  <ion-fab-button  color="primary">
+  <ion-fab-button *ngIf="durationStr != 'Fin'" color="primary">
+    <p>{{durationStr}}</p>
+  </ion-fab-button>
+</ion-fab>
+  <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="start" slot="fixed">
+  <ion-fab-button *ngIf="durationStr == 'Fin'"  color="danger">
     <p>{{durationStr}}</p>
   </ion-fab-button>
 </ion-fab>

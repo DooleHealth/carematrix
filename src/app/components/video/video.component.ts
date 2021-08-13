@@ -94,7 +94,8 @@ close() {
 
 ngAfterViewInit(): void {
 
-  if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+  // if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    if (this.platform.is('desktop')) {
 
     this.session = OT.initSession(this.apiKey, this.sessionId);
     var publisherOptions = { 
@@ -179,6 +180,20 @@ ngAfterViewInit(): void {
         this.session.on("streamCreated", function (event) {
           that.onStreamCreated(event.stream, this.session);
         });
+        this.session.on("signal:duration", (event) => {
+          if(event.data>60){
+            var min = event.data/60;
+            min = Math.floor(min);
+            this.durationStr = Math.round(min) + " min";
+          }else if(event.data>0){
+            this.durationStr = event.data+ " ''";
+          }else{
+            this.durationStr = "Fin";
+          }
+          console.log(this.durationStr);
+        
+        });
+          
       }
     })
    
