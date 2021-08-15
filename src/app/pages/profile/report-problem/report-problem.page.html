@@ -36,9 +36,9 @@
           <div *ngFor="let file of this.patient_files">
             <!-- <ion-card class="cardProfile"> -->
               <div id="left">
-                <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+                <ion-icon style="height: 24px; width: 24px;" name="image" color="primary" (click)="openFile(file)"></ion-icon>
               </div>
-              <div id="middle">
+              <div id="middle" style="align-items: center;  vertical-align: middle;">
                 <p class="titule">{{ file.name }}</p>
               </div>
               <div id="right">

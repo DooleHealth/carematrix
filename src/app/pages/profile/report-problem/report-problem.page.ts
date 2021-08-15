@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { CameraResultType, CameraSource, Capacitor, Plugins } from '@capacitor/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -24,7 +23,6 @@ export class ReportProblemPage implements OnInit {
   numFile = 0;
   private images : any = [];
   private imagesTemp : any = [];
-
   isSubmittedCategory = false;
   isSubmittedDescription = false;
   isLoading = false
@@ -114,6 +112,7 @@ export class ReportProblemPage implements OnInit {
       this.fileInput.nativeElement.click();
     }else{
       this.addImage(CameraSource.Photos);
+      //this.addImage64(CameraSource.Photos);
     }
   }
 
@@ -172,7 +171,10 @@ export class ReportProblemPage implements OnInit {
       this.imagesTemp.forEach(item => {
         this.images.push(item.file);   
       });
-
+      console.log(`[ReportProblemPage] sendProblemReport() this.images.length: ${this.images.length}, this.imagesTemp.length ${this.imagesTemp.length}` );
+      if(this.imagesTemp.length >0){
+        console.log('[ReportProblemPage] sendProblemReport() this.imagesTemp.length >0', this.images[0]);
+      }else return
 /*       this.patient_files.forEach(item => {
         this.images.push(item.file);   
       }); */

@@ -6,9 +6,9 @@
 
 <ion-content>
   
-  <div class="spin" *ngIf="this.isLoading">
+<!--   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
-  </div>
+  </div> -->
 
   <ion-grid class="iosHeader">
     <ion-row>
@@ -16,8 +16,22 @@
         <ion-text class="txtTitleBig">Hola, {{this.authService?.user?.first_name}}</ion-text>
       </ion-col>
       <ion-col size="4">
-        <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile"
-          [state]="{user:this.authService?.user}"></ion-img>
+<!--         <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile"
+          [state]="{user:this.authService?.user}"></ion-img> -->
+
+          <ion-thumbnail class="img-wrapper3"
+          routerLink="/profile"
+          [state]="{user:this.userDoole}"
+          >
+            <app-aspect-ratio [ratio]="{w:1, h:1}">
+              <app-image-shell
+          animation="spinner"
+          [src]="this.userDoole?.temporaryUrl"
+          [alt]="'Sample Image'"
+        ></app-image-shell>
+            </app-aspect-ratio>
+          </ion-thumbnail>
+
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -37,7 +51,7 @@
             </ion-item>
             
           <ion-card-content>
-            <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length == 0 " >{{ 'no_data' | translate}}</div>
+              <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length === 0"> {{ 'no_data' | translate}}</div>
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid routerLink="/activity-goal" [state]="{ id: slide.element_id, header:slide?.element?.name}">
@@ -203,7 +217,7 @@
           </ion-item>
 
         <ion-card-content>
-          <div class="txtTitleGoalsLittle" *ngIf="!this.games|| this.games.length == 0 " >{{ 'no_data' | translate}}</div>
+            <div class="txtTitleGoalsLittle" *ngIf="!this.games|| this.games.length == 0 " >{{ 'no_data' | translate}}</div>
             <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideGamesChange()'>
               <ion-slide *ngFor="let slide of this.games">
                 <ion-grid>
@@ -235,7 +249,7 @@
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
               <ion-row *ngFor="let element of slide.elements; let i = index ">
-                <ion-row *ngIf="slide.elements.length >= 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}
+                <ion-row *ngIf="slide.elements.length > 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}
                 </ion-row>
                 <div *ngIf="slide.elements.length <= 2">
                   <p style="text-align:left;">{{ element.name}} 

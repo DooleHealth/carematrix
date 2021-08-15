@@ -8,6 +8,7 @@ import { DocumentDetailPageRoutingModule } from './document-detail-routing.modul
 import { ComponentsModule } from 'src/app/components/components.module';
 import { DocumentDetailPage } from './document-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { DocumentsAddPageModule } from '../documents-add/documents-add.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     TranslateModule,
-    DocumentDetailPageRoutingModule
+    DocumentDetailPageRoutingModule,
+    DocumentsAddPageModule
   ],
   declarations: [DocumentDetailPage]
 })

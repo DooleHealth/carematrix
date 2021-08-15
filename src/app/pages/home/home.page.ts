@@ -42,7 +42,7 @@ export class HomePage implements OnInit {
     return (this.data && this.data.isShell) ? true : false;
   }
   WAIT_TIME = 10 //10 minutes 
-  userDoole : any
+  userDoole : any = {}
   goals: Goal[] =[]
   diets: Diet[] =[]
   drugs: Drug[] =[]
@@ -139,6 +139,7 @@ export class HomePage implements OnInit {
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
         console.log('[HomePage] getUserInformation()', await res);
+        this.userDoole = res.data?.profile;
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
@@ -186,7 +187,7 @@ export class HomePage implements OnInit {
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
-            if(obj.elements.length>0)
+            if(obj?.elements.length>0)
             this.activity.push(obj);
 
           }
