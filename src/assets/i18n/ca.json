@@ -481,7 +481,9 @@
         "select": "Seleccionar",
         "camera": "Càmera",
         "file": "Arxius",
-        "pictures":"Imatges"
+        "pictures":"Imatges",
+        "delete_media_file": "Estàs segur d'eliminar l'arxiu?",
+        "delete_document": "Estàs segur d'eliminar la prova diagnòstica?"
        
       },
       "documents_filter":{
@@ -532,7 +534,8 @@
         "forgotten": "Oblidada",
         "continue": "Continuar",
         "send": "Enviar",
-        "perfil":"Perfil"
+        "perfil":"Perfil",
+        "open": "Obrir"
       },
       "conversation":{
         "placeholder":"Escriu un missatge"

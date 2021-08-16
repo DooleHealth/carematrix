@@ -22,7 +22,10 @@ export class BookingsPage implements OnInit {
   staffId = this.staff?.id
   selectedDate: string;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
-  files: Array<{ name: string, file: string, type: string }> = [];
+  files: Array<{ name: string, file: any, type: string }> = [];
+  private imagesTemp : any = [];
+  private images: any = [];
+  numFile
   //isNewEvent = true;
   form: FormGroup;
   dateMax:any;
@@ -43,7 +46,7 @@ export class BookingsPage implements OnInit {
       date: ['', [Validators.required]],
       duration: [this.duration],
       indications: [],
-      files:[],
+      files:[this.images],
       online:[history.state.isOnline]
     });
   }
@@ -59,9 +62,14 @@ export class BookingsPage implements OnInit {
   async addAgenda(){
     console.log(`[AgendaAddPage] addAgenda()` );
     this.isLoading = true
-    this.form.patchValue({
+/*     this.form.patchValue({
         files: this.files
+    }); */
+    this.imagesTemp.forEach(item => {
+      this.images.push(item.file);
     });
+    //this.form.get('files').setValue(this.images);
+
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] addAgenda()', await res);        
@@ -166,7 +174,8 @@ export class BookingsPage implements OnInit {
     
     await actionSheet.present();
   }
-  async addFile() {
+
+/*   async addFile() {
     this.chooser.getFile().then(async file => {
    
       if(file){
@@ -177,8 +186,10 @@ export class BookingsPage implements OnInit {
       }
     }).catch((error: any) => {
       console.error(error)});
-  }
-  async addImage(source) {
+  } */
+
+
+/*   async addImage(source) {
    
     const photo = await Camera.getPhoto({
     quality: 60,
@@ -196,7 +207,47 @@ export class BookingsPage implements OnInit {
   }else{
     console.log("no photo");
   }
+  } */
+
+  async addFile(){   
+    this.chooser.getFile().then(async image => {
+      //this.processing = true;
+      console.log(image ? image.name : 'canceled');
+      var fileUri = Capacitor.convertFileSrc(image.dataURI);
+      console.log("addfile fileUri: ", fileUri);
+      var filename = image.name
+      this.files.push({ name: filename , file: image, type: image.mediaType })
+      this.numFile = this.files.length
+      this.savePicture(fileUri)
+      
+    }).catch((error: any) => {
+      console.log(error)});
   }
+
+  async addImage(source: CameraSource) {
+    const image = await Camera.getPhoto({
+      quality: 60,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source
+    }).catch((error:any)=>{
+      console.log(error);
+    });
+
+    if(image){
+      console.log("image: ", image);
+      var fileUri = Capacitor.convertFileSrc(image.dataUrl);
+      console.log("addImage - savePicture fileUri: ", fileUri);
+
+      this.savePicture(fileUri)
+      this.files.push({ name: Date.now() + '.' + image.format, file: fileUri, type: image.format })
+      this.numFile = this.files.length;
+
+    }else{
+      console.log("no image");
+    }
+  } 
+
   openFile(file) {
     throw new Error('Method not implemented.');
   }
@@ -208,7 +259,42 @@ export class BookingsPage implements OnInit {
     });
   }
 
-  public saveBase64(base64:string, name:string, mediaType:string):Promise<string>{
+  async savePicture(fileUri){
+    console.log("[ReportProblemPage] savePicture() fileUri: ",fileUri);
+    var filename=new Date().getTime();
+    return this.saveBase64(fileUri,filename.toString()).then(res => {
+      console.log("savePicture() saveBase64 res: ",res);
+      this.dooleService.uploadFile(res).then(data => {
+        console.log("savePicture() uploadFile res: ",res);
+        this.imagesTemp.push(data)
+      }).catch(err => {
+        console.log("Error uploadFile: ", err);
+      }).finally(() => {
+
+      })
+     
+    });
+
+  }
+
+  public saveBase64(base64:string, name:string):Promise<string>{
+    return new Promise((resolve, reject)=>{
+      var realData = base64.split(",")[1]
+      let blob=this.b64toBlob(realData, 'image/jpeg');
+
+      this.file.writeFile(this.file.cacheDirectory, name, blob)
+      .then(()=>{
+        resolve(this.file.cacheDirectory+name);
+      })
+      .catch((err)=>{
+        console.log(err);
+        console.log('error writing blob');
+        reject(err);
+      })
+    })
+  }
+
+/*   public saveBase64(base64:string, name:string, mediaType:string):Promise<string>{
     console.log("file base64: ", base64);
     return new Promise((resolve, reject)=>{
       var realData = base64.split(",")[1]
@@ -224,7 +310,7 @@ export class BookingsPage implements OnInit {
         reject(err);
       })
     })
-  }
+  } */
   
   b64toBlob(b64Data, contentType) {
     contentType = contentType || '';

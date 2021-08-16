@@ -450,7 +450,9 @@
         "select": "Seleccionar",
         "camera": "Cámara",
         "file": "Archivos",
-        "pictures":"Imatges"
+        "pictures":"Imatges",
+        "delete_media_file": "¿Estás seguro de eliminar el archivo?",
+        "delete_document": "¿Estás seguro de eliminar la prueba diagnóstica?"
       },
       "documents_filter":{
         "header": "Filtros",
@@ -533,7 +535,8 @@
         "forgotten": "Olvidada",
         "continue": "Continuar",
         "send": "Enviar",
-        "perfil":"Perfil"
+        "perfil":"Perfil",
+        "open": "Abrir"
       },
       "conversation":{
         "placeholder":"Escribe un mensaje"

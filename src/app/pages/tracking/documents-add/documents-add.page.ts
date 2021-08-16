@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Plugins, CameraResultType, CameraSource, Capacitor } from '@capacitor/core';
 import { Chooser } from '@ionic-native/chooser/ngx';
-import { ActionSheetController, ModalController, NavController, Platform } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController, NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { TestTypePage } from './test-type/test-type.page';
@@ -19,6 +19,11 @@ const { Camera, Filesystem } = Plugins;
   styleUrls: ['./documents-add.page.scss'],
 })
 export class DocumentsAddPage implements OnInit {
+  @Input() test: any;
+  isEdit = false;
+  diagnosticTest;
+  //mediaFile: any = [];
+  media: any = [];
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   AVAILABLE_FILE_NUMBERS = 10
   form: FormGroup;
@@ -26,7 +31,7 @@ export class DocumentsAddPage implements OnInit {
   private images: any = [];
   mediaTemp: any = [];
   mediaFiles: any = [];
-  //public processing:boolean=false; 
+  public processing:boolean=false; 
   currentDate
   numFile
   isSubmittedType = false;
@@ -47,6 +52,7 @@ export class DocumentsAddPage implements OnInit {
     public navController: NavController,
     private notification: NotificationService,
     private modalCtrl: ModalController,
+    public alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -63,6 +69,22 @@ export class DocumentsAddPage implements OnInit {
       center:[''],
       profesional:[''], */
     });
+
+    this.showDiagnosticTest()
+  }
+
+  showDiagnosticTest(){
+    if(this.test?.success){
+      this.isEdit = true
+      this.diagnosticTest = this.test.diagnosticTest;
+      this.form.get('private').setValue(this.diagnosticTest.private)
+      this.typeTest = this.test.diagnosticTest.diagnostic_test_type;
+      this.form.get('type').setValue(this.typeTest.name)
+      this.form.get('title').setValue(this.diagnosticTest.title)
+      this.form.get('date').setValue(this.diagnosticTest.data)
+      this.form.get('description').setValue(this.diagnosticTest.description)
+      this.media = this.test.diagnosticTest.media
+    }
   }
   
 
@@ -71,8 +93,8 @@ export class DocumentsAddPage implements OnInit {
     this.isSubmittedTitle = isSubmitted;
     this.isSubmittedDate= isSubmitted;
   }
-  transformDate(date) {
-    return this.datepipe.transform(date, 'dd/MM/yyyy');
+  transformDate(date, format) {
+    return this.datepipe.transform(date, format);
   }
 
   // Save new diagnostic test
@@ -83,7 +105,7 @@ export class DocumentsAddPage implements OnInit {
     console.log("submit");
     let date = this.form.get('date').value;
     var current = new Date(date)
-    let data_prestacio = this.transformDate(current)
+    let data_prestacio = this.transformDate(current, 'dd/MM/yyyy')
     this.form.get('date').setValue(data_prestacio);
 
     let private_test = this.form.get('private').value ? 1 : 0;
@@ -91,29 +113,86 @@ export class DocumentsAddPage implements OnInit {
 
     let typeId = this.typeTest.id
     this.form.get('type').setValue(typeId);
-    console.log("submit mediaFiles:", this.mediaFiles);
+
     this.mediaTemp.forEach(item => {
       this.images.push(item.file);
     });
       console.log("submit", this.form.value);
-      this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
+    if(this.isEdit)
+      this.updateDiagnosticTest()
+    else
+      this.createDiagnosticTest()
+  }
+
+  createDiagnosticTest(){
+    this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
       async (data) => {
         console.log("data:", data);
         if(data)
         this.modalCtrl.dismiss({error:null, action: 'add'});
         else{
           let message = this.translate.instant('documents_add.error_alert_message')
-          alert(message)
+          this.modalCtrl.dismiss({error:message});
         }
       },
       (error) => {
         // Called when error
-        alert( 'ERROR(' + error.code + '): ' + error.message)
+        //alert( 'ERROR(' + error.code + '): ' + error.message)
+        this.modalCtrl.dismiss({error: 'ERROR(' + error.code + '): ' + error.message});
         console.log("error: ", error);
         throw new HttpErrorResponse(error);
       },
       () => {
         // Called when operation is complete (both success and error)
+      });
+  }
+
+  updateDiagnosticTest(){
+    this.dooleService.putAPIdiagnosticTest(this.diagnosticTest.id, this.form.value).subscribe(
+      async (data) => {
+        console.log("data:", data);
+        if(data)
+        this.modalCtrl.dismiss({error:null, action: 'update'});
+        else{
+          let message = this.translate.instant('documents_add.error_alert_message')
+          this.modalCtrl.dismiss({error:message});
+        }
+      },
+      (error) => {
+        // Called when error
+        //alert( 'ERROR(' + error.code + '): ' + error.message)
+        this.modalCtrl.dismiss({error: 'ERROR(' + error.code + '): ' + error.message});
+        console.log("error: ", error);
+        throw new HttpErrorResponse(error);
+      },
+      () => {
+        // Called when operation is complete (both success and error)
+        this.modalCtrl.dismiss({error:null});
+      });
+  }
+
+  deleteDiagnosticTest(){
+    this.dooleService.deleteAPIdiagnosticTest(this.diagnosticTest.id).subscribe(
+      async (data) => {
+        console.log("data:", data);
+        if(data)
+        this.modalCtrl.dismiss({error:null, action: 'delete'});
+        else{
+          let message = this.translate.instant('documents_add.error_alert_message')
+          this.modalCtrl.dismiss({error:message});
+        }
+        this.router.navigateByUrl('/tracking')
+      },
+      (error) => {
+        // Called when error
+        //alert( 'ERROR(' + error.code + '): ' + error.message)
+        this.modalCtrl.dismiss({error: 'ERROR(' + error.code + '): ' + error.message});
+        console.log("error: ", error);
+        throw new HttpErrorResponse(error);
+      },
+      () => {
+        // Called when operation is complete (both success and error)
+        this.modalCtrl.dismiss({error:null});
       });
   }
 
@@ -143,12 +222,21 @@ export class DocumentsAddPage implements OnInit {
       buttons: [
         {
           text: this.translate.instant('documents_add.camera'),
+          icon: 'camera',
           handler: () => {
             this.addImage(CameraSource.Camera);
           }
         },
         {
+          text: this.translate.instant('documents_add.pictures'),
+          icon: 'image',
+          handler: () => {
+            this.addImage(CameraSource.Photos);
+          }
+        },
+        {
           text: this.translate.instant('documents_add.file'),
+          icon: 'attach',
           handler: () => {
             this.addFile();
           }
@@ -166,6 +254,7 @@ export class DocumentsAddPage implements OnInit {
         if (!this.platform.is('hybrid')) {
           buttons.buttons.push({
             text: 'Choose a File',
+            icon: 'attach',
             handler: () => {
               this.fileInput.nativeElement.click();
             }
@@ -178,16 +267,9 @@ export class DocumentsAddPage implements OnInit {
     
   }
 
-  removeFile(name: string) {
-    console.log("[ReportProblemPage] removeFile: ", name);
-    this.mediaFiles.forEach((element, index) => {
-      if (element.name == name)
-        this.mediaFiles.splice(index, 1);
-    });
-    this.numFile = this.mediaFiles.length;
-  }
-
   enableButtonAddFile(){
+    if(this.processing)
+      return true
     if(this.mediaFiles.length >= this.AVAILABLE_FILE_NUMBERS || this.form.invalid){
         return true;
     }
@@ -202,9 +284,9 @@ export class DocumentsAddPage implements OnInit {
       var fileUri = Capacitor.convertFileSrc(image.dataURI);
       console.log("addfile fileUri: ", fileUri);
       var filename = image.name
-      this.mediaFiles.push({ name: filename , file: image, type: image.mediaType })
-      this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri)
+      // this.mediaFiles.push({ name: filename , file: image, type: image.mediaType, isNew: true})
+      // this.numFile = this.mediaFiles.length
+      this.savePicture(fileUri, filename)
       
     }).catch((error: any) => {
       console.log(error)});
@@ -222,30 +304,34 @@ export class DocumentsAddPage implements OnInit {
 
     if (image) {
       //this.processing = true;
-      console.log("image: ", image);
+      console.log("image: ", JSON.stringify(image));
       var fileUri = Capacitor.convertFileSrc(image.dataUrl);
-      var filename= Date.now()+ '.' + image.format;
-      this.mediaFiles.push({ name: filename , file: image, type: image.format })
-      this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri)
+      var filename= 'image_'+this.transformDate(Date.now(), 'd-M-y_h_mm_ss')+ '.' + image.format;
+      // this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
+      // this.numFile = this.mediaFiles.length
+      this.savePicture(fileUri, filename)
     }else{
       console.log("no image");
     }
   }
 
-  async savePicture(fileUri){
-    var filename=new Date().getTime();
+  async savePicture(fileUri, filename){
+    this.processing = true
+    //var filename=new Date().getTime();
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);
       this.dooleService.uploadFile(res).then(data => {
         console.log("uploadFile res: ",res);
-        //this.mediaFiles.push(data);
+        this.mediaFiles.push(data);
+        //this.media.push(data);
         this.mediaTemp.push(data);
-        console.log(" this.mediafiles.: ", this.mediaFiles);
+        this.processing = false
+       // console.log(" this.mediafiles: ", this.mediaFiles);
       }).catch(err => {
         console.log("Error uploadFile: ", err);
+        this.processing = false
       }).finally(() => {
-        //this.processing = false;
+        this.processing = false;
       })
      
     });
@@ -310,8 +396,8 @@ export class DocumentsAddPage implements OnInit {
     
     var base64result = result as string;
     //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
-    this.mediaFiles.push({ name: file.name, file: base64result, type: file.type })
-        this.numFile = this.mediaFiles.length;
+    // this.mediaFiles.push({ name: file.name, file: base64result, type: file.type })
+    //     this.numFile = this.mediaFiles.length;
     await this.saveFileWeb(base64result)
   }
 
@@ -322,10 +408,10 @@ export class DocumentsAddPage implements OnInit {
 
 
   async saveFileWeb(data){
-
     this.dooleService.uploadFile(data).then( res =>{
-      //this.mediaFiles.push(res);
+      this.mediaFiles.push(res);
       this.mediaTemp.push(res);
+      console.log("[DocumentsAddPage] saveFileWeb()",  this.mediaFiles);
     }).catch(err => {
       console.log("Error uploadFile: ", err);
     }).finally(() => {
@@ -340,4 +426,84 @@ export class DocumentsAddPage implements OnInit {
     return placeholder
   }
 
+  deleteMediaFile(m){
+    this.dooleService.deleteFile(m.id).subscribe(
+      async (data) => {
+        console.log("data:", data);
+        if(data)
+          this.notification.displayToastSuccessful()
+        else{
+          let message = this.translate.instant('documents_add.error_alert_message')
+          alert(message)
+        }
+      },
+      (error) => {
+        alert( 'ERROR(' + error.code + '): ' + error.message)
+        console.log("error: ", error);
+        throw new HttpErrorResponse(error);
+      },
+      () => {
+        // Called when operation is complete (both success and error)
+      });
+  }
+
+
+  async presentAlertConfirm(mediaFile, isDeleteMediaFile, index, isNewFile) {
+    let message = this.translate.instant(isDeleteMediaFile? "documents_add.delete_media_file": "documents_add.delete_document")
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //header: this.translate.instant("alert.header_confirmation"),
+      message: message,
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('[DocumentsAddPage] AlertConfirm Cancel');
+          }
+        }, {
+          text: this.translate.instant("alert.button_ok"),
+          handler: () => {
+            console.log('[DocumentsAddPage] AlertConfirm Okay');
+            if(isDeleteMediaFile){
+              if(isNewFile){
+                this.mediaFiles.splice(index,1)
+                return
+              }
+              this.deleteMediaFile(mediaFile);
+              this.media.splice(index,1)
+            }
+            else
+            this.deleteDiagnosticTest()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+   getName(m){
+    console.log('[DocumentsAddPage] AlertConfirm Okay', JSON.stringify(m));
+    if(m?.name && m?.name !== "")
+      return m.name
+    else if(m?.file_name)
+      return m?.file_name.split('/').pop();
+    else if(m?.file)
+      return m?.file.split('/').pop();
+    else
+      return 'new image...'
+   }
+
+
+   getThumbnail(m){
+    console.log('[DocumentsAddPage] AlertConfirm Okay', JSON.stringify(m));
+    if(m.file)
+     return m.file.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl;
+     else if(m.file_name)
+     return m.file_name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl;
+     else  
+     return m.temporaryUrl;
+   }
 }
