@@ -43,15 +43,14 @@
 
     <!-- Goals  --> 
     <ion-row >
-        <ion-card class="vertical-card2">  
+        <ion-card class="vertical-card2"  *ngIf="this.goals.length > 0 ">  
             <ion-item lines="none" class="noMargin" routerLink="/profile/goals">
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
               <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
               <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>            
             </ion-item>
-            
           <ion-card-content>
-              <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length === 0"> {{ 'no_data' | translate}}</div>
+            <div class="txtTitleGoalsLittle" *ngIf="!this.goals || this.goals.length == 0 " ><br>{{ 'no_data' | translate}}</div>
               <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid routerLink="/activity-goal" [state]="{ id: slide.element_id, header:slide?.element?.name}">
@@ -64,7 +63,16 @@
               </ion-slides>
             </ion-card-content>
         </ion-card>
-
+        <ion-card class="vertical-card" *ngIf="!this.goals || this.goals.length == 0 ">  
+          <ion-item lines="none" class="noMargin">
+            <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
+            <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>            
+          </ion-item>
+        <ion-card-content>
+          <div class="txtTitleGoalsLittle"  >{{ 'no_data' | translate}}</div>
+          </ion-card-content>
+      </ion-card>
     </ion-row>
 
     <!-- Reminders -->
