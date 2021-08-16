@@ -13,7 +13,6 @@ import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 import { mergeMap } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
-import { Constants } from 'src/app/config/constants';
 import { ActivatedRoute } from '@angular/router';
 
 export interface ListDiagnosticTests {
@@ -59,7 +58,7 @@ export class TrackingPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    private constants: Constants 
+
   ) { }
 
 
