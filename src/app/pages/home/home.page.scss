@@ -68,7 +68,8 @@ ion-img{
 }
 .cardHeader{
   --background: #ffffff!important;
-  max-height: 31px;
+  max-height: 41px;
+  text-overflow: ellipsis;
 }
 .customCardAdvices {
     background-color: white;
