@@ -189,6 +189,18 @@ export class DooleService {
     });
   }
 
+  deleteFile(id): Observable<any> {
+    let path = `media/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteFile(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+
+      })
+    );
+  }
+
   showAlert(message: string) {
 
     return this.alertController.create({
@@ -677,6 +689,30 @@ export class DooleService {
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIdiagnosticTest(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  putAPIdiagnosticTest(id, params: any): Observable<any> {
+    let path = `user/diagnosticTest/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] putAPIdiagnosticTest(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIdiagnosticTest(id): Observable<any> {
+    let path = `user/diagnosticTest/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIdiagnosticTest(${path}) res: ${res}`, JSON.stringify(res));
         return res;
 
       })

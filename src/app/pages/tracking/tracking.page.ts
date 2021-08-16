@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { DomSanitizer } from "@angular/platform-browser";
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -58,7 +59,9 @@ export class TrackingPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-  ) {}
+    private constants: Constants 
+  ) { }
+
 
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
@@ -111,7 +114,6 @@ export class TrackingPage implements OnInit {
           throw err; 
       });
   }
-
 
   async getDiagnosticTests(){
     this.isLoading = true
