@@ -45,28 +45,6 @@
     </ion-list>
   </ion-card>
 
-<!--   <ion-card class="cardProfile">
-    <ion-list>
-      <ion-item>
-        <ion-label>{{ 'documents_add.field_source' | translate }}</ion-label>
-        <ion-select placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option>procedenciasss</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ 'documents_add.field_center' | translate }}</ion-label>
-        <ion-select placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option>Centrosss</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>{{ 'documents_add.field_profesional' | translate }}</ion-label>
-        <ion-select placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option>Médicosss</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-  </ion-card> -->
 
 <ion-card class="cardProfile" text-wrap>
   <form>
@@ -74,19 +52,6 @@
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
       </ion-item>
-        <div class="files-section" *ngIf="isEdit">
-          <ion-row class="files-row">
-            <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of media; let i = index">
-              <app-aspect-ratio [ratio]="{w: 1, h: 1}">
-                <app-image-shell class="file-picture" 
-                [src]="m.file_name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl" 
-                (click)="actionFile(m, i, false)"></app-image-shell>
-              </app-aspect-ratio>
-              <span class="file-name">
-              </span>
-            </ion-col>
-          </ion-row>
-        </div>
 
       <input
       type="file"
@@ -102,37 +67,38 @@
         <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
       </ion-button>
 
-<!--       <ion-item lines="none" *ngIf="this.mediaFiles.length > 0">
-        <div id="container" style="margin-top: 10px;">
+
+        <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
+
+          <div *ngFor="let file of this.media; let i = index">
+            <ion-item lines="none">
+            <div id="left">
+              <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+            </div>
+            <div id="middle">
+              <p class="titule">{{ getName(file)  }}</p>
+            </div>
+            <div id="right">
+              <ion-icon name="close-circle" color="primary" (click)="presentAlertConfirm(file, true, i, false)"></ion-icon>
+            </div> 
+          </ion-item>
+        </div>  
+
           <div *ngFor="let file of this.mediaFiles">
+            <ion-item lines="none">
               <div id="left">
                 <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
               </div>
               <div id="middle">
-                <p class="titule">{{ file.name }}</p>
+                <p class="titule">{{ getName(file)  }}</p>
               </div>
               <div id="right">
-                <ion-icon name="close-circle" color="primary" (click)="removeFile(file.name)"></ion-icon>
+                <ion-icon name="close-circle" color="primary" (click)="presentAlertConfirm(file, true, i, true)"></ion-icon>
               </div> 
+            </ion-item>
           </div>       
         </div>
-      </ion-item> -->
 
-      <div class="files-section" *ngIf="this.mediaFile.length > 0">
-        <ion-row class="files-row">
-          <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of mediaFile; let i = index">
-              <app-aspect-ratio [ratio]="{w:1, h:1}">
-                <app-image-shell
-                  animation="spinner"
-                  [src]="getThumbnail(m)" 
-                  [alt]="'Sample Image'"
-                  (click)="actionFile(m, i, true)"
-                  class="file-picture"
-                ></app-image-shell>
-              </app-aspect-ratio>
-          </ion-col>
-        </ion-row>
-      </div>
 
     </ion-list>
   </form>

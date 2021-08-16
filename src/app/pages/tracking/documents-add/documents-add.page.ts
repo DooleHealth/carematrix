@@ -22,15 +22,15 @@ export class DocumentsAddPage implements OnInit {
   @Input() test: any;
   isEdit = false;
   diagnosticTest;
-  mediaFile: any = [];
-  media: any;
+  //mediaFile: any = [];
+  media: any = [];
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   AVAILABLE_FILE_NUMBERS = 10
   form: FormGroup;
   typeTest
   private images: any = [];
   mediaTemp: any = [];
-  //mediaFiles: any = [];
+  mediaFiles: any = [];
   public processing:boolean=false; 
   currentDate
   numFile
@@ -93,8 +93,8 @@ export class DocumentsAddPage implements OnInit {
     this.isSubmittedTitle = isSubmitted;
     this.isSubmittedDate= isSubmitted;
   }
-  transformDate(date) {
-    return this.datepipe.transform(date, 'dd/MM/yyyy');
+  transformDate(date, format) {
+    return this.datepipe.transform(date, format);
   }
 
   // Save new diagnostic test
@@ -105,7 +105,7 @@ export class DocumentsAddPage implements OnInit {
     console.log("submit");
     let date = this.form.get('date').value;
     var current = new Date(date)
-    let data_prestacio = this.transformDate(current)
+    let data_prestacio = this.transformDate(current, 'dd/MM/yyyy')
     this.form.get('date').setValue(data_prestacio);
 
     let private_test = this.form.get('private').value ? 1 : 0;
@@ -228,6 +228,13 @@ export class DocumentsAddPage implements OnInit {
           }
         },
         {
+          text: this.translate.instant('documents_add.pictures'),
+          icon: 'image',
+          handler: () => {
+            this.addImage(CameraSource.Photos);
+          }
+        },
+        {
           text: this.translate.instant('documents_add.file'),
           icon: 'attach',
           handler: () => {
@@ -260,19 +267,10 @@ export class DocumentsAddPage implements OnInit {
     
   }
 
-/*   removeFile(name: string) {
-    console.log("[DocumentsAddPage] removeFile: ", name);
-    this.mediaFiles.forEach((element, index) => {
-      if (element.name == name)
-        this.mediaFiles.splice(index, 1);
-    });
-    this.numFile = this.mediaFiles.length;
-  } */
-
   enableButtonAddFile(){
     if(this.processing)
       return true
-    if(this.mediaFile.length >= this.AVAILABLE_FILE_NUMBERS || this.form.invalid){
+    if(this.mediaFiles.length >= this.AVAILABLE_FILE_NUMBERS || this.form.invalid){
         return true;
     }
     return false
@@ -286,9 +284,9 @@ export class DocumentsAddPage implements OnInit {
       var fileUri = Capacitor.convertFileSrc(image.dataURI);
       console.log("addfile fileUri: ", fileUri);
       var filename = image.name
-      // this.mediaFiles.push({ name: filename , file: image, type: image.mediaType })
+      // this.mediaFiles.push({ name: filename , file: image, type: image.mediaType, isNew: true})
       // this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri)
+      this.savePicture(fileUri, filename)
       
     }).catch((error: any) => {
       console.log(error)});
@@ -306,28 +304,29 @@ export class DocumentsAddPage implements OnInit {
 
     if (image) {
       //this.processing = true;
-      console.log("image: ", image);
+      console.log("image: ", JSON.stringify(image));
       var fileUri = Capacitor.convertFileSrc(image.dataUrl);
-      var filename= Date.now()+ '.' + image.format;
-      // this.mediaFiles.push({ name: filename , file: image, type: image.format })
+      var filename= 'image_'+this.transformDate(Date.now(), 'd-M-y_h_mm_ss')+ '.' + image.format;
+      // this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
       // this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri)
+      this.savePicture(fileUri, filename)
     }else{
       console.log("no image");
     }
   }
 
-  async savePicture(fileUri){
+  async savePicture(fileUri, filename){
     this.processing = true
-    var filename=new Date().getTime();
+    //var filename=new Date().getTime();
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);
       this.dooleService.uploadFile(res).then(data => {
         console.log("uploadFile res: ",res);
-        this.mediaFile.push(data);
+        this.mediaFiles.push(data);
+        //this.media.push(data);
         this.mediaTemp.push(data);
         this.processing = false
-        console.log(" this.mediafiles.: ", this.mediaFile);
+       // console.log(" this.mediafiles: ", this.mediaFiles);
       }).catch(err => {
         console.log("Error uploadFile: ", err);
         this.processing = false
@@ -383,7 +382,6 @@ export class DocumentsAddPage implements OnInit {
   }
 
   async uploadFileFromBrowser(event: EventTarget) {
-    console.log('[DocumentsAddPage] uploadFileFromBrowser()');
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file = target.files[0];
@@ -410,11 +408,10 @@ export class DocumentsAddPage implements OnInit {
 
 
   async saveFileWeb(data){
-    console.log('[DocumentsAddPage] saveFileWeb()');
     this.dooleService.uploadFile(data).then( res =>{
-      this.mediaFile.push(res);
+      this.mediaFiles.push(res);
       this.mediaTemp.push(res);
-      console.log("[DocumentsAddPage] saveFileWeb()",  this.mediaFile);
+      console.log("[DocumentsAddPage] saveFileWeb()",  this.mediaFiles);
     }).catch(err => {
       console.log("Error uploadFile: ", err);
     }).finally(() => {
@@ -450,39 +447,6 @@ export class DocumentsAddPage implements OnInit {
       });
   }
 
-  async actionFile(m, index, isNewFile) {
-    const buttons = {
-      header: this.translate.instant('documents_add.select'),
-      buttons: [
-        {
-          text: this.translate.instant('button.open'),
-          icon: 'open',
-          handler: () => {
-            this.openFile(m)
-          }
-        },
-        {
-          text: this.translate.instant('button.delete'),
-          icon: 'trash',
-          handler: () => {
-            //this.deleteMediaFile(m);
-            this.presentAlertConfirm(m, true, index, isNewFile)
-          }
-        },{
-          text: this.translate.instant('button.cancel'),
-          role: 'cancel',
-          handler: () => {
-          }
-        }
-      ]     
-      
-    }
-    const actionSheet = await this.actionSheetCtrl.create(
-      buttons
-    );
-    await actionSheet.present();    
-    
-  }
 
   async presentAlertConfirm(mediaFile, isDeleteMediaFile, index, isNewFile) {
     let message = this.translate.instant(isDeleteMediaFile? "documents_add.delete_media_file": "documents_add.delete_document")
@@ -504,7 +468,7 @@ export class DocumentsAddPage implements OnInit {
             console.log('[DocumentsAddPage] AlertConfirm Okay');
             if(isDeleteMediaFile){
               if(isNewFile){
-                this.mediaFile.splice(index,1)
+                this.mediaFiles.splice(index,1)
                 return
               }
               this.deleteMediaFile(mediaFile);
@@ -520,15 +484,17 @@ export class DocumentsAddPage implements OnInit {
     await alert.present();
   }
 
-/*   getThumbnail(m){
+   getName(m){
     console.log('[DocumentsAddPage] AlertConfirm Okay', JSON.stringify(m));
-    if(m.file_name)
-     return m.file_name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl;
-    else if(m.name)
-     return m.name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl;
-    else  
-     return m.temporaryUrl;
-   } */
+    if(m?.name && m?.name !== "")
+      return m.name
+    else if(m?.file_name)
+      return m?.file_name.split('/').pop();
+    else if(m?.file)
+      return m?.file.split('/').pop();
+    else
+      return 'new image...'
+   }
 
 
    getThumbnail(m){

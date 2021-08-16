@@ -171,6 +171,16 @@ export class DocumentDetailPage implements OnInit {
     window.open(media.temporaryUrl, "");
   }
 
+  getName(m){
+    console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
+    if(m?.name && m?.name !== "")
+      return m.name
+    else if(m?.file_name)
+      return m?.file_name.split('/').pop();
+    else if(m?.file)
+      return m?.file.split('/').pop();
+   }
+
   async editDiagnosticTest(){
     const modal = await this.modalCtrl.create({
       component:  DocumentsAddPage,

@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -44,6 +45,7 @@ export class TrackingPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
+    private constants: Constants 
   ) { }
 
   ngOnInit() {
@@ -155,7 +157,7 @@ export class TrackingPage implements OnInit {
     };
     console.log('[TrackingPage] openForm()',  this.auth.user);
     if(this.auth !==undefined || this.auth.user !== undefined){
-      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+form.id+'" method="post" enctype="multipart/form-data">' +
+      var pageContent = '<html><head></head><body><form id="loginForm" action=" '+this.constants.DOOLE_ENDPOINT+'/formAnswer/fill/'+form.id+'" method="post" enctype="multipart/form-data">' +
         '<input type="hidden" name="idForm" value="'+form.id+'">' +
         '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
         '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +

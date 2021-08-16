@@ -128,22 +128,22 @@
       translate}}</ion-text>
   </ion-row>
 
-  <div class="files-section">
-    <ion-row class="files-row">
-      <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of mediaFiles">
-        <app-aspect-ratio [ratio]="{w: 1, h: 1}">
-          <app-image-shell 
-          animation="spinner"
-          [alt]="'Sample Image'"
-          class="file-picture" 
-          [src]="m.file_name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl" 
-          (click)="openFile(m)"
-          ></app-image-shell>
-        </app-aspect-ratio>
-        <span class="file-name">
-        </span>
-      </ion-col>
-    </ion-row>
-  </div>
+  <ion-card class="cardProfile" *ngIf="this.mediaFiles && this.mediaFiles.length > 0">
+
+      <div id="container" style="margin-top: 20px; margin-bottom: 10px;">
+
+        <div *ngFor="let file of this.mediaFiles" class="section">
+          <ion-item lines="full">
+            <div id="left">
+              <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+            </div>
+            <div id="middle">
+              <p class="titule">{{ getName(file) }}</p>
+            </div>
+          </ion-item>
+        </div>       
+      </div>
+
+  </ion-card>
 
 </ion-content>
