@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { DomSanitizer } from "@angular/platform-browser";
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,6 +11,11 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { DocumentsAddPage } from './documents-add/documents-add.page';
 import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
+import { mergeMap } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { Constants } from 'src/app/config/constants';
+import { ActivatedRoute } from '@angular/router';
+
 export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
@@ -31,6 +37,11 @@ export class TrackingPage implements OnInit {
   listDiagnostic:  ListDiagnosticTests[] = []
   diagnosticTests = []
   forms = []
+  public showingForm;
+  public hasToShowForm;
+  public active;
+  public id;
+  public url;
   groupedElements: any = [];
   elementValues: any = [];
   isLoading = false
@@ -40,6 +51,9 @@ export class TrackingPage implements OnInit {
   filter: Filter;
   constructor(
     private dooleService: DooleService,
+    private sanitizer: DomSanitizer,
+    private activatedRoute: ActivatedRoute,
+    private constants: Constants,
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
     private languageService: LanguageService,
@@ -48,15 +62,18 @@ export class TrackingPage implements OnInit {
     private constants: Constants 
   ) { }
 
+
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
     this.segmentChanged()
-    this.fireEvent(null, 0)
+    this.fireEvent(null, 0) 
+
   }
 
   ionViewDidEnter(){
     console.log('[TrackingPage] ionViewDidEnter()');
-    this.segmentChanged()
+    this.segmentChanged();
+    this.getFormList()
   }
 
   getDiagnosticTestsList(){
@@ -97,7 +114,6 @@ export class TrackingPage implements OnInit {
           throw err; 
       });
   }
-
 
   async getDiagnosticTests(){
     this.isLoading = true
@@ -142,40 +158,14 @@ export class TrackingPage implements OnInit {
         console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.forms = res.forms
         this.isLoading = false
+        // this.hasToShowForm = formData.showForm;
+        // this.active = formData.active;
        },async (err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
           throw err; 
       });
-  }
-
-  async openForm(form){
-    const options: InAppBrowserOptions = {
-      location: 'no',
-      toolbar: 'yes'
-    };
-    console.log('[TrackingPage] openForm()',  this.auth.user);
-    if(this.auth !==undefined || this.auth.user !== undefined){
-      var pageContent = '<html><head></head><body><form id="loginForm" action=" '+this.constants.DOOLE_ENDPOINT+'/formAnswer/fill/'+form.id+'" method="post" enctype="multipart/form-data">' +
-        '<input type="hidden" name="idForm" value="'+form.id+'">' +
-        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
-        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
-        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
-      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-      var browserRef = this.iab.create(
-        pageContentUrl,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
-    }else{
-      var browserRef = this.iab.create(
-        form.temporaryUrl,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
-    }
-
   }
 
   async getElementsList(){
