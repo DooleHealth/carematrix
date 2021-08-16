@@ -383,6 +383,7 @@ export class DocumentsAddPage implements OnInit {
   }
 
   async uploadFileFromBrowser(event: EventTarget) {
+    console.log('[DocumentsAddPage] uploadFileFromBrowser()');
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file = target.files[0];
@@ -409,6 +410,7 @@ export class DocumentsAddPage implements OnInit {
 
 
   async saveFileWeb(data){
+    console.log('[DocumentsAddPage] saveFileWeb()');
     this.dooleService.uploadFile(data).then( res =>{
       this.mediaFile.push(res);
       this.mediaTemp.push(res);
