@@ -1,5 +1,4 @@
 package com.doole.doole;
-
 import android.os.Bundle;
 
 import com.getcapacitor.BridgeActivity;

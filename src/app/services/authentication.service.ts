@@ -112,6 +112,7 @@ export class AuthenticationService {
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
         this.setTwoFactor(res.twoFactorCenter)
+
         // if (res?.familyUnit.length > 0) {
         //   this.setFamilyUnitLocalstorage(res.familyUnit);
         // }

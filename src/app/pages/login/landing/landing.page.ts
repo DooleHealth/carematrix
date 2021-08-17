@@ -10,7 +10,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
-import { BiometricAuthPage } from '../biometric-auth/biometric-auth.page';
+//import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 const { Storage } = Plugins;
 
 
@@ -37,8 +37,13 @@ export class LandingPage implements OnInit {
     public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController,
-    private faio: FingerprintAIO
+    private faio: FingerprintAIO,
+    //private firebaseAnalytics: FirebaseAnalytics
   ) {
+   // this.firebaseAnalytics.setCurrentScreen('[LandingPage]')
+   }
+
+  ngOnInit() {
     this.loginForm = new FormGroup({
       username: new FormControl('',
       Validators.compose([
@@ -50,9 +55,6 @@ export class LandingPage implements OnInit {
       ),
       hash: new FormControl(''),
     });
-   }
-
-  ngOnInit() {
   }
 
   ionViewDidEnter(){

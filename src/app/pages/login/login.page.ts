@@ -1,5 +1,6 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+//import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -21,6 +22,7 @@ export class LoginPage implements OnInit {
     public languageService: LanguageService, 
     private translate: TranslateService,
     private modalCtrl: ModalController,
+    //private firebaseAnalytics: FirebaseAnalytics,
     ) { }
 
   ngOnInit() {
@@ -41,6 +43,9 @@ export class LoginPage implements OnInit {
         let message = this.translate.instant('landing.message_wrong_credentials')
         this.modalCtrl.dismiss({error: message});
       }
+      // this.firebaseAnalytics.logEvent('[LoginPage]', {login: res})
+      // .then((res: any) => console.log(res))
+      // .catch((error: any) => console.error(error));
     }, async (error) => { 
      console.log('doDooleAppLogin() ERROR', await error?.message);
      this.modalCtrl.dismiss({error:error});
