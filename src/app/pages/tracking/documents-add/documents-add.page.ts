@@ -286,8 +286,8 @@ export class DocumentsAddPage implements OnInit {
       var filename = image.name
       // this.mediaFiles.push({ name: filename , file: image, type: image.mediaType, isNew: true})
       // this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri, filename)
-      
+      //this.savePicture(fileUri, filename)
+      this.presentPrompt(fileUri, filename)
     }).catch((error: any) => {
       console.log(error)});
   }
@@ -306,10 +306,11 @@ export class DocumentsAddPage implements OnInit {
       //this.processing = true;
       console.log("image: ", JSON.stringify(image));
       var fileUri = Capacitor.convertFileSrc(image.dataUrl);
-      var filename= 'image_'+this.transformDate(Date.now(), 'd-M-y_h_mm_ss')+ '.' + image.format;
+      var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
       // this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
       // this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri, filename)
+      //this.savePicture(fileUri, filename)
+      this.presentPrompt(fileUri, filename)
     }else{
       console.log("no image");
     }
@@ -320,10 +321,9 @@ export class DocumentsAddPage implements OnInit {
     //var filename=new Date().getTime();
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);
-      this.dooleService.uploadFile(res).then(data => {
-        console.log("uploadFile res: ",res);
+      this.dooleService.uploadFile(res).then((data: any) => {
+        data['name'] = filename
         this.mediaFiles.push(data);
-        //this.media.push(data);
         this.mediaTemp.push(data);
         this.processing = false
        // console.log(" this.mediafiles: ", this.mediaFiles);
@@ -506,4 +506,42 @@ export class DocumentsAddPage implements OnInit {
      else  
      return m.temporaryUrl;
    }
+
+  async presentPrompt(fileUri, filename) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('documents_add.input_file_name'),
+      inputs: [
+        {
+          name: 'filename',
+          type: 'text',
+          placeholder: this.translate.instant('documents_add.name'),
+        }
+      ],
+        buttons: [
+          {
+            text: this.translate.instant("button.cancel"),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('[LandingPage] AlertConfirm Cancel');
+              this.savePicture(fileUri,filename)
+            }
+          }, {
+            text: this.translate.instant("button.accept"),
+            handler: (data) => {
+              console.log('[LandingPage] AlertConfirm Okay', data.filename );
+              if (data.filename && data.filename !== '') {
+                 let name = data.filename +'.'+filename.split('.').pop()
+                 this.savePicture(fileUri,  name)
+              } else {
+                return false;
+              }
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+  }
 }

@@ -221,22 +221,4 @@ export class LandingPage implements OnInit {
     });
   }
 
-/*   async biometricAuthModal() : Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: BiometricAuthPage,
-      componentProps: { },
-    });
-
-    modal.onDidDismiss()
-      .then((result) => {
-        let error = result?.data['error']
-        if(error){
-          let message = error
-          this.dooleService.presentAlert(message)
-        }
-    });
-
-    await modal.present();
-  } */
-
 }

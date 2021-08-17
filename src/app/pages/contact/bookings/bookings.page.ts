@@ -265,7 +265,7 @@ export class BookingsPage implements OnInit {
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("savePicture() saveBase64 res: ",res);
       this.dooleService.uploadFile(res).then(data => {
-        console.log("savePicture() uploadFile res: ",res);
+        console.log("savePicture() uploadFile res: ",JSON.stringify(data));
         this.imagesTemp.push(data)
       }).catch(err => {
         console.log("Error uploadFile: ", err);

@@ -452,7 +452,8 @@
         "file": "Archivos",
         "pictures":"Imatges",
         "delete_media_file": "¿Estás seguro de eliminar el archivo?",
-        "delete_document": "¿Estás seguro de eliminar la prueba diagnóstica?"
+        "delete_document": "¿Estás seguro de eliminar la prueba diagnóstica?",
+        "input_file_name": "Ingresa un nombre para el archivo"
       },
       "documents_filter":{
         "header": "Filtros",
