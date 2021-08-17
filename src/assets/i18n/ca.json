@@ -483,7 +483,8 @@
         "file": "Arxius",
         "pictures":"Imatges",
         "delete_media_file": "Estàs segur d'eliminar l'arxiu?",
-        "delete_document": "Estàs segur d'eliminar la prova diagnòstica?"
+        "delete_document": "Estàs segur d'eliminar la prova diagnòstica?",
+        "input_file_name": "Ingressa un nom per a l'arxiu"
        
       },
       "documents_filter":{
