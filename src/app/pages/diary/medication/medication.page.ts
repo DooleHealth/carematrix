@@ -23,30 +23,18 @@ export class MedicationPage implements OnInit {
   segment = history.state?.segment ? history.state.segment : 'List';
   items = []
   isLoading:boolean = true
+  isFormVisible:boolean = false
   petitions : any = [];
   date = Date.now()
   diets = []
-  directions:any = [];
-  
+  directions:any = [];  
   isNewEvent = true
   id:any
   isSubmitted = false;
-
   loading : any;
   directionItems : any;
-
-  private name : any;
-  private phone: any;
-  private address: any;
-  private city: any;
-  private state: any;
-  private postal_code : any;
-
-
   form: FormGroup;
   times = []
-
-
 
   constructor(
     private dooleService: DooleService,
@@ -66,7 +54,7 @@ export class MedicationPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('event', this.event);
+  
     this.form = this.fb.group({
       name: [''],
       address: [''],
@@ -77,10 +65,6 @@ export class MedicationPage implements OnInit {
 
     });
 
-    this.saveDirection()
-    // this.loadDataDirections()
-  
-    
   }
 
  
@@ -107,16 +91,12 @@ export class MedicationPage implements OnInit {
   }
 
   loadDataDirections(){
-    // this.isLoading = true
-    // this.directions = []
     this.dooleService.getAPIdirectionsList().subscribe(
-
       async (data: any) =>{
         console.log('[DiaryPage] getElementsList()', await data); 
         if(data){
-          this.directions = []
-          
-          
+          this.directions = data
+          console.log("directions:" + this.directions);  
         }
         this.isLoading = false
        },(err) => { 
@@ -127,8 +107,6 @@ export class MedicationPage implements OnInit {
       });
   }
 
-
-
   addItems(list){
     this.items = []
     list.forEach(element => {
@@ -136,8 +114,6 @@ export class MedicationPage implements OnInit {
     });
     console.log('[DiaryPage] addItems()', this.items.length);
   }
-
-
 
   ionViewDidEnter(){
     this.items = []
@@ -157,63 +133,45 @@ export class MedicationPage implements OnInit {
       case 'Order':
         await this.loadDataDirections()
         break;
-    
+
       default:
-        //this.getDiagnosticTestsList()
+       
         break;
     }
   }
  
 
-
   async saveDirection(){
-      
-       
-      let name = this.form.get('name').value
-      this.form.get('name').setValue(this.name)
+    this.isLoading = true
   
-      let address = this.form.get('address').value
-      this.form.get('address').setValue(this.address)
-  
-      let city = this.form.get('city').value
-     this.form.get('city').setValue(this.city)
-  
-      let state = this.form.get('state').value
-      this.form.get('state').setValue(this.state)
-
-      let postal_code = this.form.get('postal_code').value
-     this.form.get('postal_code').setValue(this.postal_code)
-
-      let phone = this.form.get('phone').value
-     this.form.get('phone').setValue(this.phone)
-      
-
       this.dooleService.postAPIsendDirection(this.form.value).subscribe(
         async (res: any)=>{
-          if(res.success){
-            this.modalCtrl.dismiss({error:null, action: 'add', medication: this.form.value});
-        }else{
-          let message = this.translate.instant('medication.error_message_add_medication')
-          alert(message)
-        }
-      },err => {
-        alert(`Error: ${err.code }, Message: ${err.message}`)
-        console.log('upsss'); 
+      console.log('[MedicationPage] saveDirection()', await res);        
+ 
+ 
+      this.isLoading = false
+     },(err) => { 
+      this.isLoading = false
+        console.log('[MedicationPage] saveDirection() ERROR(' + err.code + '): ' + err.message); 
         throw err; 
-      });
-  
+    }) ,() => {
+      this.isLoading = false
+    };     
     }
 
     submit(){
-      console.log('esto es el resiltado del form',this.form.value);
+      console.log('submit',this.form.value);
       this.isSubmitted = true;
       if(this.form.invalid)
-      return 'okkkk'
+      return 
 
-     
+       this.saveDirection()
         
-      
+  
     }
-
+    toggleIsFormVisible()
+    {
+        this.isFormVisible = !this.isFormVisible;
+    }
   }
   
