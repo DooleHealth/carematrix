@@ -26,8 +26,13 @@
     </ion-row>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
+      <ion-icon class="primaryIcon" slot="icon-only" name="cart-outline" routerLink="/medication" ></ion-icon>
+    </ion-buttons>
+
+    <ion-buttons slot="end" *ngSwitchCase="'medication'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDrug()"></ion-icon>
     </ion-buttons>
+   
     <ion-buttons slot="end" *ngSwitchCase="'health'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
     </ion-buttons>

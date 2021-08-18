@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="{{ 'profile.button_go_init' | translate}}" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'medication.title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- SegmentBar -->
+
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+    <ion-segment-button value="List">
+      <ion-label>{{'medication.list' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Order">
+      <ion-label>{{'medication.direction' | translate}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+
+  <!-- segment -->
+  
+  <div [ngSwitch]="segment">
+    <!--1-->
+
+    <div *ngSwitchCase="'List'">
+
+      <ion-list>
+        <ion-card *ngFor="let item of items">
+          <ion-item lines="none">
+            <div class="verticalLineBlue">
+              <ion-col size="2">
+                <ion-icon name="cart" color="primary"></ion-icon>
+              </ion-col>
+          </div>
+          <ion-label>{{item.item.name}}</ion-label>
+          </ion-item>
+        </ion-card>
+      
+      </ion-list>
+
+    </div>
+
+
+    <!-- 2 -->
+
+    <div *ngSwitchCase="'Order'" >
+
+      <ion-list>
+        <ion-card *ngFor="let address of this.directions">
+          <ion-item lines="none">
+            <div class="verticalLineOrange">
+              <ion-col size="2">
+                <ion-icon name="location" color="tertiary"></ion-icon>
+              </ion-col>
+            
+              <ion-col size="2">{{address.name}}</ion-col>
+            <ion-label style="color:tertiary;"></ion-label>
+          </div>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+
+  
+      <form [formGroup]="form" (ngSubmit)="submit()" >
+      <ion-item>
+        <ion-label floating>Nombre destinatario</ion-label>
+        <ion-input  formControlName="name" type="text" [value]="name" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Teléfono</ion-label>
+        <ion-input formControlName="phone"  type="text" [value]="phone" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Dirección</ion-label>
+        <ion-input formControlName="address"  type="text" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Localidad</ion-label>
+        <ion-input formControlName="city"  type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Provincia</ion-label>
+        <ion-input formControlName="state"  type="text" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Código Postal</ion-label>
+        <ion-input formControlName="postal_code"  type="text" ></ion-input>
+      </ion-item>
+
+   
+    </form>
+      
+    <ion-button type="submit" color="danger" expand="block"  (click)="submit()">Añadir</ion-button>
+  
+    </div>
+  
+    </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>
