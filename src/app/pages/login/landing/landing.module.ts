@@ -10,7 +10,6 @@ import { LandingPage } from './landing.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsModule } from 'src/app/components/components.module';
-//import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 
 const routes: Routes = [
   {
@@ -28,10 +27,6 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes),
     LandingPageRoutingModule,
-    //FirebaseAnalytics
-  ],
-  exports: [
-    //FirebaseAnalytics
   ],
   declarations: [LandingPage]
 })

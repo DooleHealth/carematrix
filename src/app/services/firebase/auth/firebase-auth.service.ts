@@ -7,7 +7,7 @@ import { Platform } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
 
 import { User, auth } from 'firebase/app';
-import { cfaSignIn, cfaSignOut } from 'capacitor-firebase-auth';
+//import { cfaSignIn, cfaSignOut } from 'capacitor-firebase-auth';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
@@ -73,7 +73,7 @@ export class FirebaseAuthService {
 
   signOut(): Observable<any> {
     if (this.platform.is('capacitor')) {
-      return cfaSignOut();
+      //return cfaSignOut();
     } else {
       return from(this.angularFire.signOut());
     }
@@ -90,7 +90,7 @@ export class FirebaseAuthService {
   socialSignIn(providerName: string, scopes?: Array<string>): Observable<any> {
     if (this.platform.is('capacitor')) {
      
-      return cfaSignIn(providerName);
+      //return cfaSignIn(providerName);
     } else {
      
       const provider = new auth.OAuthProvider(providerName);

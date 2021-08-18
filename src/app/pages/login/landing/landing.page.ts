@@ -10,7 +10,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
-//import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 const { Storage } = Plugins;
 
 
@@ -38,9 +38,9 @@ export class LandingPage implements OnInit {
     private dooleService: DooleService,
     private modalCtrl: ModalController,
     private faio: FingerprintAIO,
-    //private firebaseAnalytics: FirebaseAnalytics
+    private analyticsService: AnalyticsService
   ) {
-   // this.firebaseAnalytics.setCurrentScreen('[LandingPage]')
+    this.analyticsService.setScreenName('[LandingPage]')
    }
 
   ngOnInit() {
