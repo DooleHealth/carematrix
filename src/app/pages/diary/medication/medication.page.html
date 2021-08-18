@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'medications.title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- SegmentBar -->
+
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+    <ion-segment-button value="List">
+      <ion-label>{{'medications.list' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Order">
+      <ion-label>{{'medications.direction' | translate}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <!-- segment -->
+
+  <div [ngSwitch]="segment">
+
+    <!--LIST-->
+
+    <div *ngSwitchCase="'List'">
+      <ion-list>
+        <ion-card class="cardProfile" *ngFor="let item of items">
+          <ion-item lines="none">
+            <div class="verticalLineBlue">
+              <ion-col size="2">
+                <ion-icon name="cart" color="primary"></ion-icon>
+              </ion-col>
+            </div>
+            <ion-label>{{item.item.name}}</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+
+    <!-- ORDER -->
+
+    <div *ngSwitchCase="'Order'">
+      <ion-row class="paddingTopNoMarginBottomBlue"  (click)="toggleIsFormVisible()" *ngIf="!isFormVisible" >
+        <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
+      </ion-row>
+      <ion-row class="paddingTopNoMarginBottom"  (click)="toggleIsFormVisible()"  *ngIf="isFormVisible">
+        <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
+      </ion-row>
+    <span *ngIf="isFormVisible">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <ion-item>
+          <ion-label floating>Nombre destinatario</ion-label>
+          <ion-input formControlName="name" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Teléfono</ion-label>
+          <ion-input formControlName="phone" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Dirección</ion-label>
+          <ion-input formControlName="address" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Localidad</ion-label>
+          <ion-input formControlName="city" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Provincia</ion-label>
+          <ion-input formControlName="state" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Código Postal</ion-label>
+          <ion-input formControlName="postal_code" type="text"></ion-input>
+        </ion-item>
+      </form>
+      <ion-button type="submit" color="primary" expand="block" (click)="submit()">Añadir</ion-button>
+    </span>
+      <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
+        <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
+      </ion-row>
+      <ion-list>
+        <ion-card class="cardProfile" *ngFor="let address of this.directions">
+          <ion-item lines="none">
+            <div class="verticalLineOrange"></div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-icon name="location" color="tertiary"></ion-icon>
+                </ion-col>
+                <ion-col size="10" color="tertiary">{{address.name}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">{{address.address}}</ion-col>
+                <ion-col size="12">{{address.city}}</ion-col>
+                <ion-col size="12">{{address.state}}</ion-col>
+                <ion-col size="12">{{address.country}}</ion-col>
+                <ion-col style="color:tertiary;">{{address.postal_code}}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div> 
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

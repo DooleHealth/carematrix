@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class DrugAddPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private modalCtrl: ModalController,
+    private translate : TranslateService,
   ) { }
 
   ngOnInit() {

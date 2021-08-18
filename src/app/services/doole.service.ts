@@ -924,6 +924,44 @@ export class DooleService {
       })
     );
   }
+// send medication list
+  getAPImedicationList(query: any): Observable<any> {
+    let path = `sendmedication/list`;
+    let httpParams = new HttpParams();
+    httpParams = (query) ? httpParams.append('search', query) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPImedicationList(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIdirectionsList(): Observable<any> {
+    let path = `user/addresses`;
+    // let httpParams = new HttpParams();
+    // httpParams = (query) ? httpParams.append('search', query) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdirectionList(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIsendDirection(params: Object): Observable<any> {
+    let path = 'user/address';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIsendDirection(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
 
   postAPIdrugIntake(params: Object): Observable<any> {
     let path = 'user/drugIntake';

@@ -633,6 +633,14 @@
         "text4":"El acceso biométrico se ha activado correctamente.",
         "text5":"Lo podrás utilizar para acceder a la app la próxima vez que la ejecutes.",
         "disabled": "No se ha podido acceder a los datos biométricos del dispositivo."
+      },
+      "medications":{
+        "list":"Listado",
+        "title":"Envío de medicación",
+        "direction":"Nuevo pedido",
+        "directions_title":"Selecciona dirección de envío",
+        "direction_add":"Añade una nueva dirección + "
+    
       }
-
+      
 }

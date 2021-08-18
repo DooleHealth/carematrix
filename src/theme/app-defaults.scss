@@ -449,6 +449,11 @@ ion-spinner {
 padding-top: 3%;
 margin-bottom: -3%;
 }
+.ios .paddingTopNoMarginBottomBlue{
+  padding-top: 3%;
+  margin-bottom: -3%;
+  color: #3498db;
+  }
 .ios .iosHeader{
   padding-top: 50px;
 }
@@ -461,7 +466,10 @@ margin-bottom: -3%;
 .md .paddingTopNoMarginBottom{
   padding-top: 6%;
 }
-
+.md .paddingTopNoMarginBottomBlue{
+  padding-top: 6%;
+  color: #3498db;
+}
 .md ion-header ion-title{
   text-align: center !important;
 }
