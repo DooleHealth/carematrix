@@ -22,12 +22,13 @@ export class MedicationPage implements OnInit {
   @Input()event: any;
   segment = history.state?.segment ? history.state.segment : 'List';
   items = []
+  items2 = []
   isLoading:boolean = true
   isFormVisible:boolean = false
   petitions : any = [];
   date = Date.now()
   diets = []
-  directions:any = [];  
+  directions = [] 
   isNewEvent = true
   id:any
   isSubmitted = false;
@@ -35,6 +36,12 @@ export class MedicationPage implements OnInit {
   directionItems : any;
   form: FormGroup;
   times = []
+  paso = 0;
+  direction : any;
+  sendType : string = 'bag19';
+  showConfirmed = false;
+  
+  
 
   constructor(
     private dooleService: DooleService,
@@ -93,14 +100,15 @@ export class MedicationPage implements OnInit {
   loadDataDirections(){
     this.dooleService.getAPIdirectionsList().subscribe(
       async (data: any) =>{
-        console.log('[DiaryPage] getElementsList()', await data); 
+        console.log('[MedicationPage] loadDataDirections()', await data); 
         if(data){
           this.directions = data
-          console.log("directions:" + this.directions);  
+          console.log(this.directions); 
+          console.log(this.paso) 
         }
-        this.isLoading = false
+       
        },(err) => { 
-          console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[MedicationPage] loadDataDirections() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
           throw err; 
@@ -143,7 +151,6 @@ export class MedicationPage implements OnInit {
 
   async saveDirection(){
     this.isLoading = true
-  
       this.dooleService.postAPIsendDirection(this.form.value).subscribe(
         async (res: any)=>{
       console.log('[MedicationPage] saveDirection()', await res);        
@@ -172,6 +179,54 @@ export class MedicationPage implements OnInit {
     toggleIsFormVisible()
     {
         this.isFormVisible = !this.isFormVisible;
+    }
+
+    // confirm(){
+
+    //   this.loading.present();
+  
+    //   var dict = [];
+    //   dict.push({key: "selected_address",value: this.direction.id});
+    //   dict.push({key: "order_shipping_method",value: this.sendType});
+    //   this.data.post("sendmedication",dict).subscribe(json=>{
+    //     this.loading.dismiss();
+    //     let alert = this.alertCtrl.create({
+    //       title: 'Datos guardados',
+    //       subTitle: 'Los datos han sido guardados correctamente',
+    //       buttons: [{
+    //         text: 'Ok',
+    //         handler: data => {
+    //           this.navCtrl.pop();
+    //         }
+    //       }]
+    //     });
+    //     alert.present();
+    //   },error => {
+    //     this.loading.dismiss();
+    //     let alert = this.alertController.create({
+    //       title: 'Error',
+    //       subTitle: 'Se ha producido un error al intentar guardar los datos',
+    //       buttons: [{
+    //         text: 'Ok',
+    //         handler: data => {
+    //           this.nav.pop();
+    //         }
+    //       }]
+    //     });
+    //     alert.present();
+    //   });
+    // }
+  
+    selectSendType(){
+      this.paso = 2;
+    }
+  
+    selectDirection(address){
+        this.direction = address;
+        this.paso = 1;
+        console.log(this.direction)
+        console.log(this.paso)
+        return;
     }
   }
   

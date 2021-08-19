@@ -42,67 +42,149 @@
     <!-- ORDER -->
 
     <div *ngSwitchCase="'Order'">
-      <ion-row class="paddingTopNoMarginBottomBlue"  (click)="toggleIsFormVisible()" *ngIf="!isFormVisible" >
-        <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
+      <ion-row class="paddingTopNoMarginBottomBlue" (click)="toggleIsFormVisible()" *ngIf="!isFormVisible && this.paso == 0 ">
+        <ion-col size="10">
+          <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-col>
       </ion-row>
-      <ion-row class="paddingTopNoMarginBottom"  (click)="toggleIsFormVisible()"  *ngIf="isFormVisible">
-        <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
+      <ion-row class="paddingTopNoMarginBottom" (click)="toggleIsFormVisible()" *ngIf="isFormVisible && this.paso == 0 ">
+        <ion-col size="10">
+          <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon color="primary" name="chevron-up-outline"></ion-icon>
+        </ion-col>
       </ion-row>
-    <span *ngIf="isFormVisible">
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <ion-item>
-          <ion-label floating>Nombre destinatario</ion-label>
-          <ion-input formControlName="name" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Teléfono</ion-label>
-          <ion-input formControlName="phone" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Dirección</ion-label>
-          <ion-input formControlName="address" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Localidad</ion-label>
-          <ion-input formControlName="city" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Provincia</ion-label>
-          <ion-input formControlName="state" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Código Postal</ion-label>
-          <ion-input formControlName="postal_code" type="text"></ion-input>
-        </ion-item>
-      </form>
-      <ion-button type="submit" color="primary" expand="block" (click)="submit()">Añadir</ion-button>
-    </span>
-      <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
-        <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
-      </ion-row>
-      <ion-list>
-        <ion-card class="cardProfile" *ngFor="let address of this.directions">
-          <ion-item lines="none">
-            <div class="verticalLineOrange"></div>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="2">
-                  <ion-icon name="location" color="tertiary"></ion-icon>
-                </ion-col>
-                <ion-col size="10" color="tertiary">{{address.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">{{address.address}}</ion-col>
-                <ion-col size="12">{{address.city}}</ion-col>
-                <ion-col size="12">{{address.state}}</ion-col>
-                <ion-col size="12">{{address.country}}</ion-col>
-                <ion-col style="color:tertiary;">{{address.postal_code}}</ion-col>
-              </ion-row>
-            </ion-grid>
+      <span *ngIf="isFormVisible">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <ion-item>
+            <ion-label floating>Nombre destinatario</ion-label>
+            <ion-input formControlName="name" type="text"></ion-input>
           </ion-item>
-        </ion-card>
-      </ion-list>
-    </div> 
+          <ion-item>
+            <ion-label floating>Teléfono</ion-label>
+            <ion-input formControlName="phone" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Dirección</ion-label>
+            <ion-input formControlName="address" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Localidad</ion-label>
+            <ion-input formControlName="city" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Provincia</ion-label>
+            <ion-input formControlName="state" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Código Postal</ion-label>
+            <ion-input formControlName="postal_code" type="text"></ion-input>
+          </ion-item>
+        </form>
+        <ion-button type="submit" color="primary" expand="block" (click)="submit()">Añadir</ion-button>
+      </span>
+      <div *ngIf="this.paso == 0 ">
+
+        <ion-row class="paddingTopNoMarginBottom">
+          <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
+        </ion-row>
+        <ion-list>
+          <span *ngFor="let address of this.directions; let i = index">
+            <ion-card class="cardProfile" (click)="selectDirection(address)">
+              <ion-item lines="none">
+                <div class="verticalLineOrange"></div>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2">
+                      <ion-icon name="location" color="tertiary"></ion-icon>
+                    </ion-col>
+                    <ion-col size="10" color="tertiary">{{address.name}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">{{address.address}}</ion-col>
+                    <ion-col size="12">{{address.city}}</ion-col>
+                    <ion-col size="12">{{address.state}}</ion-col>
+                    <ion-col size="12">{{address.country}}</ion-col>
+                    <ion-col style="color:tertiary;">{{address.postal_code}}</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-card>
+          </span>
+        </ion-list>
+        <div>
+        </div>
+       
+        <div *ngIf="paso == 1 ">
+          <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
+            <ion-text class="txtTitle">Paso 2. Seleccione tipo de envio</ion-text>
+          </ion-row>
+
+          <ion-card class="cardProfile">
+            <ion-list radio-group [(ngModel)]="sendType">
+              <ion-list-header>
+                Tipo de envio
+              </ion-list-header>
+              <ion-item>
+                <ion-label>Antes de las 10:00</ion-label>
+                <ion-radio value="urgente10"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Antes de las 14:00</ion-label>
+                <ion-radio value="bag14"></ion-radio>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label>Antes de las 19:00</ion-label>
+                <ion-radio checked="true" value="bag19"></ion-radio>
+              </ion-item>
+            </ion-list>
+            <ion-button block (click)="selectSendType()">Continuar</ion-button>
+          </ion-card>
+        </div>
+        <div *ngIf="this.paso == 2 ">
+
+          <ion-row class="paddingTopNoMarginBottom">
+            <ion-text class="txtTitle">Paso 3. Confirme el envío</ion-text>
+          </ion-row>
+
+          <p class="txtTitleGreyLeft">Su medicación se enviará a la siguiente dirección</p>
+          <ion-list>
+            <ion-card class="cardProfile">
+              <ion-item lines="none">
+                <div class="verticalLineBlue"></div>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2">
+                      <ion-icon name="location" color="primary"></ion-icon>
+                    </ion-col>
+                    <ion-col size="10" color="primary">{{this.direction.name}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">{{this.direction.address}}</ion-col>
+                    <ion-col size="12">{{this.direction.city}}</ion-col>
+                    <ion-col size="12">{{this.direction.state}}</ion-col>
+                    <ion-col size="12">{{this.direction.postal_code}}</ion-col>
+                    <ion-col size="12">{{this.direction.country}}</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-card>
+          </ion-list>
+          <ion-row class="paddingTopNoMarginBottom">
+            <ion-text class="txtTitle">A través del servicio de MRW {{sendType}}</ion-text>
+          </ion-row><br>
+          <ion-button expand="block" (click)="confirm()">Confirmar envio</ion-button>
+        </div>
+        <div *ngIf="showConfirmed">
+          <h1>Solicitud recibida correctamente<ion-button (click)="back()">Volver</ion-button>
+          </h1>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>
 <ion-footer>
