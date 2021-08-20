@@ -11,7 +11,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { DrugAddPage } from '../drug-add/drug-add.page';
 import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-medication',
@@ -22,19 +22,34 @@ export class MedicationPage implements OnInit {
   @Input()event: any;
   segment = history.state?.segment ? history.state.segment : 'List';
   items = []
+  items2 = []
   isLoading:boolean = true
   isFormVisible:boolean = false
+  checked:true
   petitions : any = [];
   date = Date.now()
   diets = []
-  directions:any = [];  
+  directions = [] 
   isNewEvent = true
   id:any
   isSubmitted = false;
   loading : any;
   directionItems : any;
   form: FormGroup;
+  formulario: FormGroup;
+  formShipment = new FormGroup({
+    sendType: new FormControl('bag19'),
+  });
+
   times = []
+  paso : string = 'cero';
+  direction : any;
+  sendType : any;
+  sendTypes : any;
+  types: any;
+  showConfirmed = false;
+  
+  
 
   constructor(
     private dooleService: DooleService,
@@ -65,9 +80,23 @@ export class MedicationPage implements OnInit {
 
     });
 
+    this.formShipment = this.fb.group({
+      sendType: [''],
+    });
+
+    this.formulario = this.fb.group({
+      selected_address : [''],
+      order_shipping_method:  [''],
+  
+    });
+  
+  }
+  ionViewWillEnter() {
+    this.loadDataDirections();
+    console.log(this.sendType)
+    
   }
 
- 
   loadData(){
     this.isLoading = true;
     console.log('[MedicationPage] getListMedications()');
@@ -76,13 +105,10 @@ export class MedicationPage implements OnInit {
       async (res: any) =>{
         console.log('[DiaryPage] getDietList()', await res);
         if(res.diets)
-        this.addItems(res.diets)
-        console.log(this.items); 
-        //this.isLoading = false
+        this.addItems(res.diets)  
        },(err) => { 
           console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          //this.isLoading = false
           throw err; 
       }, ()=>{
         this.isLoading = false
@@ -91,16 +117,18 @@ export class MedicationPage implements OnInit {
   }
 
   loadDataDirections(){
+    this.isLoading = true;
     this.dooleService.getAPIdirectionsList().subscribe(
       async (data: any) =>{
-        console.log('[DiaryPage] getElementsList()', await data); 
+        console.log('[MedicationPage] loadDataDirections()', await data); 
         if(data){
           this.directions = data
-          console.log("directions:" + this.directions);  
+          console.log(this.directions); 
+          console.log(this.paso) 
         }
-        this.isLoading = false
+       
        },(err) => { 
-          console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[MedicationPage] loadDataDirections() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
           throw err; 
@@ -117,11 +145,11 @@ export class MedicationPage implements OnInit {
 
   ionViewDidEnter(){
     this.items = []
-    console.log('[MedicationPage] ionViewDidEnter()');
+    console.log('[MedicationPage] ionViewDidEnter() holaaaaaaaaaaaaaaaaaa');
     let state = history.state?.segment;
     if(state) this.segment = state
     this.segmentChanged()
-    this.loadDataDirections()
+ 
   }
   async segmentChanged($event?){
     console.log('[MedicationPage] segmentChanged()', this.segment); 
@@ -143,7 +171,6 @@ export class MedicationPage implements OnInit {
 
   async saveDirection(){
     this.isLoading = true
-  
       this.dooleService.postAPIsendDirection(this.form.value).subscribe(
         async (res: any)=>{
       console.log('[MedicationPage] saveDirection()', await res);        
@@ -172,6 +199,39 @@ export class MedicationPage implements OnInit {
     toggleIsFormVisible()
     {
         this.isFormVisible = !this.isFormVisible;
+    }
+
+    confirm(){
+      this.isLoading = true
+        this.dooleService.postAPImedicationSendPetition(this.form.value).subscribe(
+        async (res: any)=>{
+      console.log('[MedicationPage] postAPImedicationSendPetition()', await res);        
+ 
+      this.isLoading = false
+     },(err) => { 
+      this.isLoading = false
+        console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
+        throw err; 
+    }) ,() => {
+      this.isLoading = false
+    };     
+    }
+  
+    selectSendType(){
+      this.paso = 'dos';
+      this.sendType = this.formShipment.value;
+      this.sendTypes = Object.values(this.sendType);
+      this.types = this.sendTypes[0];
+      this.formulario.get('selected_address').setValue(this.direction.id);
+      this.formulario.get('order_shipping_method').setValue(this.types);
+  
+    }
+
+  
+    async selectDirection(address){
+        this.direction = address;
+        this.paso = 'uno';
+        return;
     }
   }
   
