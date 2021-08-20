@@ -11,7 +11,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { DrugAddPage } from '../drug-add/drug-add.page';
 import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-medication',
@@ -25,6 +25,7 @@ export class MedicationPage implements OnInit {
   items2 = []
   isLoading:boolean = true
   isFormVisible:boolean = false
+  checked:true
   petitions : any = [];
   date = Date.now()
   diets = []
@@ -35,10 +36,17 @@ export class MedicationPage implements OnInit {
   loading : any;
   directionItems : any;
   form: FormGroup;
+  formulario: FormGroup;
+  formShipment = new FormGroup({
+    sendType: new FormControl('bag19'),
+  });
+
   times = []
-  paso = 0;
+  paso : string = 'cero';
   direction : any;
-  sendType : string = 'bag19';
+  sendType : any;
+  sendTypes : any;
+  types: any;
   showConfirmed = false;
   
   
@@ -72,9 +80,23 @@ export class MedicationPage implements OnInit {
 
     });
 
+    this.formShipment = this.fb.group({
+      sendType: [''],
+    });
+
+    this.formulario = this.fb.group({
+      selected_address : [''],
+      order_shipping_method:  [''],
+  
+    });
+  
+  }
+  ionViewWillEnter() {
+    this.loadDataDirections();
+    console.log(this.sendType)
+    
   }
 
- 
   loadData(){
     this.isLoading = true;
     console.log('[MedicationPage] getListMedications()');
@@ -83,13 +105,10 @@ export class MedicationPage implements OnInit {
       async (res: any) =>{
         console.log('[DiaryPage] getDietList()', await res);
         if(res.diets)
-        this.addItems(res.diets)
-        console.log(this.items); 
-        //this.isLoading = false
+        this.addItems(res.diets)  
        },(err) => { 
           console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          //this.isLoading = false
           throw err; 
       }, ()=>{
         this.isLoading = false
@@ -98,6 +117,7 @@ export class MedicationPage implements OnInit {
   }
 
   loadDataDirections(){
+    this.isLoading = true;
     this.dooleService.getAPIdirectionsList().subscribe(
       async (data: any) =>{
         console.log('[MedicationPage] loadDataDirections()', await data); 
@@ -125,11 +145,11 @@ export class MedicationPage implements OnInit {
 
   ionViewDidEnter(){
     this.items = []
-    console.log('[MedicationPage] ionViewDidEnter()');
+    console.log('[MedicationPage] ionViewDidEnter() holaaaaaaaaaaaaaaaaaa');
     let state = history.state?.segment;
     if(state) this.segment = state
     this.segmentChanged()
-    this.loadDataDirections()
+ 
   }
   async segmentChanged($event?){
     console.log('[MedicationPage] segmentChanged()', this.segment); 
@@ -181,51 +201,36 @@ export class MedicationPage implements OnInit {
         this.isFormVisible = !this.isFormVisible;
     }
 
-    // confirm(){
-
-    //   this.loading.present();
-  
-    //   var dict = [];
-    //   dict.push({key: "selected_address",value: this.direction.id});
-    //   dict.push({key: "order_shipping_method",value: this.sendType});
-    //   this.data.post("sendmedication",dict).subscribe(json=>{
-    //     this.loading.dismiss();
-    //     let alert = this.alertCtrl.create({
-    //       title: 'Datos guardados',
-    //       subTitle: 'Los datos han sido guardados correctamente',
-    //       buttons: [{
-    //         text: 'Ok',
-    //         handler: data => {
-    //           this.navCtrl.pop();
-    //         }
-    //       }]
-    //     });
-    //     alert.present();
-    //   },error => {
-    //     this.loading.dismiss();
-    //     let alert = this.alertController.create({
-    //       title: 'Error',
-    //       subTitle: 'Se ha producido un error al intentar guardar los datos',
-    //       buttons: [{
-    //         text: 'Ok',
-    //         handler: data => {
-    //           this.nav.pop();
-    //         }
-    //       }]
-    //     });
-    //     alert.present();
-    //   });
-    // }
-  
-    selectSendType(){
-      this.paso = 2;
+    confirm(){
+      this.isLoading = true
+        this.dooleService.postAPImedicationSendPetition(this.form.value).subscribe(
+        async (res: any)=>{
+      console.log('[MedicationPage] postAPImedicationSendPetition()', await res);        
+ 
+      this.isLoading = false
+     },(err) => { 
+      this.isLoading = false
+        console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
+        throw err; 
+    }) ,() => {
+      this.isLoading = false
+    };     
     }
   
-    selectDirection(address){
+    selectSendType(){
+      this.paso = 'dos';
+      this.sendType = this.formShipment.value;
+      this.sendTypes = Object.values(this.sendType);
+      this.types = this.sendTypes[0];
+      this.formulario.get('selected_address').setValue(this.direction.id);
+      this.formulario.get('order_shipping_method').setValue(this.types);
+  
+    }
+
+  
+    async selectDirection(address){
         this.direction = address;
-        this.paso = 1;
-        console.log(this.direction)
-        console.log(this.paso)
+        this.paso = 'uno';
         return;
     }
   }

@@ -42,7 +42,8 @@
     <!-- ORDER -->
 
     <div *ngSwitchCase="'Order'">
-      <ion-row class="paddingTopNoMarginBottomBlue" (click)="toggleIsFormVisible()" *ngIf="!isFormVisible && this.paso == 0 ">
+      <ion-row class="paddingTopNoMarginBottomBlue" (click)="toggleIsFormVisible()"
+        *ngIf="!isFormVisible && this.paso == 'cero' ">
         <ion-col size="10">
           <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
         </ion-col>
@@ -50,7 +51,8 @@
           <ion-icon name="chevron-down-outline"></ion-icon>
         </ion-col>
       </ion-row>
-      <ion-row class="paddingTopNoMarginBottom" (click)="toggleIsFormVisible()" *ngIf="isFormVisible && this.paso == 0 ">
+      <ion-row class="paddingTopNoMarginBottom" (click)="toggleIsFormVisible()"
+        *ngIf="isFormVisible && this.paso == 'cero' ">
         <ion-col size="10">
           <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
         </ion-col>
@@ -87,7 +89,7 @@
         </form>
         <ion-button type="submit" color="primary" expand="block" (click)="submit()">Añadir</ion-button>
       </span>
-      <div *ngIf="this.paso == 0 ">
+      <div *ngIf="this.paso == 'cero' ">
 
         <ion-row class="paddingTopNoMarginBottom">
           <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
@@ -118,71 +120,69 @@
         </ion-list>
         <div>
         </div>
-       
-        <div *ngIf="paso == 1 ">
-          <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
-            <ion-text class="txtTitle">Paso 2. Seleccione tipo de envio</ion-text>
-          </ion-row>
-
+      </div>
+      <div *ngIf="this.paso == 'uno' ">
+        <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
+          <ion-text class="txtTitle">Paso 2. Seleccione tipo de envio</ion-text>
+        </ion-row>
+        <ion-card class="cardProfile">
+          <form [formGroup]="formShipment">
+            <ion-item lines="full">
+              <ion-label>urgente10</ion-label>
+              <input type="radio" formControlName="sendType" value="urgente10" checked>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>bag14</ion-label>
+              <input type="radio" formControlName="sendType" value="bag14">
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>bag19</ion-label>
+              <input type="radio" formControlName="sendType" value="bag19">
+            </ion-item>
+          </form>
+          <ion-button block (click)="selectSendType()">Continuar</ion-button>
+        </ion-card>
+      </div>
+      <div *ngIf="this.paso == 'dos'">
+        <ion-row class="paddingTopNoMarginBottom">
+          <ion-text class="txtTitle">Paso 3. Confirme el envío</ion-text>
+        </ion-row>
+        <p class="txtTitleGreyLeft">Su medicación se enviará a la siguiente dirección</p>
+        <ion-list>
           <ion-card class="cardProfile">
-            <ion-list radio-group [(ngModel)]="sendType">
-              <ion-list-header>
-                Tipo de envio
-              </ion-list-header>
-              <ion-item>
-                <ion-label>Antes de las 10:00</ion-label>
-                <ion-radio value="urgente10"></ion-radio>
-              </ion-item>
-              <ion-item>
-                <ion-label>Antes de las 14:00</ion-label>
-                <ion-radio value="bag14"></ion-radio>
-              </ion-item>
-              <ion-item lines="none">
-                <ion-label>Antes de las 19:00</ion-label>
-                <ion-radio checked="true" value="bag19"></ion-radio>
-              </ion-item>
-            </ion-list>
-            <ion-button block (click)="selectSendType()">Continuar</ion-button>
+            <ion-item lines="none">
+              <div class="verticalLineBlue"></div>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="2">
+                    <ion-icon name="location" color="primary"></ion-icon>
+                  </ion-col>
+                  <ion-col size="10" color="primary">{{this.direction.name}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">{{this.direction.address}}</ion-col>
+                  <ion-col size="12">{{this.direction.city}}</ion-col>
+                  <ion-col size="12">{{this.direction.state}}</ion-col>
+                  <ion-col size="12">{{this.direction.postal_code}}</ion-col>
+                  <ion-col size="12">{{this.direction.country}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
           </ion-card>
-        </div>
-        <div *ngIf="this.paso == 2 ">
+        </ion-list>
+        <ion-row class="paddingTopNoMarginBottom">
 
-          <ion-row class="paddingTopNoMarginBottom">
-            <ion-text class="txtTitle">Paso 3. Confirme el envío</ion-text>
-          </ion-row>
-
-          <p class="txtTitleGreyLeft">Su medicación se enviará a la siguiente dirección</p>
-          <ion-list>
-            <ion-card class="cardProfile">
-              <ion-item lines="none">
-                <div class="verticalLineBlue"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-icon name="location" color="primary"></ion-icon>
-                    </ion-col>
-                    <ion-col size="10" color="primary">{{this.direction.name}}</ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">{{this.direction.address}}</ion-col>
-                    <ion-col size="12">{{this.direction.city}}</ion-col>
-                    <ion-col size="12">{{this.direction.state}}</ion-col>
-                    <ion-col size="12">{{this.direction.postal_code}}</ion-col>
-                    <ion-col size="12">{{this.direction.country}}</ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-          </ion-list>
-          <ion-row class="paddingTopNoMarginBottom">
-            <ion-text class="txtTitle">A través del servicio de MRW {{sendType}}</ion-text>
-          </ion-row><br>
-          <ion-button expand="block" (click)="confirm()">Confirmar envio</ion-button>
-        </div>
-        <div *ngIf="showConfirmed">
-          <h1>Solicitud recibida correctamente<ion-button (click)="back()">Volver</ion-button>
-          </h1>
-        </div>
+          <ion-text class="txtTitle">A través del servicio de MRW {{this.sendTypes}}</ion-text>
+        </ion-row><br>
+        <ion-button expand="block" (click)="confirm()">Confirmar envio</ion-button>
+        <form [formGroup]="formulario" style="visibility: hidden; ">
+          <ion-input formControlName="selected_address"></ion-input>
+          <ion-input formControlName="order_shipping_method"></ion-input>
+        </form>
+      </div>
+      <div *ngIf="showConfirmed">
+        <h1>Solicitud recibida correctamente<ion-button (click)="back()">Volver</ion-button>
+        </h1>
       </div>
     </div>
   </div>
