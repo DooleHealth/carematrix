@@ -443,7 +443,7 @@
         "field_center": "Centro",
         "field_profesional": "Médico",
         "attachments": "Documentos Adjuntos",
-        "button_add_files": "Añadir archivos",
+        "button_add_files": "Añadir Archivos",
         "button_add_result": "Añadir Resultado",
         "alert_message": "La documentación médica ha sido añadido correctamente",
         "error_alert_message": "Ha ocurrido un error al añadir un nuevo documento médico",
@@ -634,11 +634,28 @@
         "disabled": "No se ha podido acceder a los datos biométricos del dispositivo."
       },
       "medications":{
-        "list":"Listado",
+        "list":"Listado de pedidos",
         "title":"Envío de medicación",
         "direction":"Nuevo pedido",
-        "directions_title":"Selecciona dirección de envío",
-        "direction_add":"Añade una nueva dirección"
+        "directions_title":"1.-Selecciona una dirección de envío",
+        "directions_title_2":"2.-Selecciona un tipo de envío",
+        "directions_title_3":"3.-Confirma el envío",
+        "direction_add":"Añade una nueva dirección",
+        "urgente10":"Antes de las 10.00 a.m.",
+        "bag14":"Antes de las 14.00 p.m.",
+        "bag19":"Antes de las 19.00 p.m.",
+        "name":"Nombre del destinatario",
+        "telephone":"Teléfono",
+        "address":"Dirección",
+        "city":"Localidad",
+        "state":"Provincia",
+        "postal_code":"Código Postal",
+        "add":"Añadir Dirección",
+        "ok":"Tu medicación se enviará a la siguiente dirección: ",
+        "mrw":"A través del servicio de MRW: ",
+        "confirm":"Confirmar el envío",
+        "correct":"Solicitud recibida correctamente",
+        "back":"Volver"
     
       }
       

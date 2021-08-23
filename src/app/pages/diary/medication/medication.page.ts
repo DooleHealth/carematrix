@@ -203,7 +203,7 @@ export class MedicationPage implements OnInit {
 
     confirm(){
       this.isLoading = true
-        this.dooleService.postAPImedicationSendPetition(this.form.value).subscribe(
+        this.dooleService.postAPImedicationSendPetition(this.formulario.value).subscribe(
         async (res: any)=>{
       console.log('[MedicationPage] postAPImedicationSendPetition()', await res);        
  
@@ -224,6 +224,9 @@ export class MedicationPage implements OnInit {
       this.types = this.sendTypes[0];
       this.formulario.get('selected_address').setValue(this.direction.id);
       this.formulario.get('order_shipping_method').setValue(this.types);
+      console.log(this.formulario.value)
+      console.log(this.direction.id)
+      console.log(this.types)
   
     }
 
