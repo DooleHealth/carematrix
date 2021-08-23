@@ -41,13 +41,15 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Calendar } from '@ionic-native/calendar/ngx';
 import {IonicStorageModule} from '@ionic/storage';
 import localeCa from '@angular/common/locales/ca';
-import localeEs from '@angular/common/locales/es';
+import localeEs from '@angular/common/locales/es';AngularFireModule
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@ionic-native/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
 import { HttpRequestInterceptor } from "./interceptors/loading.interceptor";
 import { Badge } from "@ionic-native/badge/ngx";
 import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.module";
+import { BackgroundMode } from "@ionic-native/background-mode/ngx";
+
 
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
@@ -110,6 +112,7 @@ export function createTranslateLoader(http: HttpClient) {
     LanguageService,
     FileTransfer,
     File,
+
     Badge,
     DocumentViewer,
     PhotoViewer,
@@ -118,6 +121,7 @@ export function createTranslateLoader(http: HttpClient) {
     Calendar,
     FingerprintAIO,
     Network,
+    BackgroundMode,
     fakeBackendProvider,
     {
       provide: APP_INITIALIZER,

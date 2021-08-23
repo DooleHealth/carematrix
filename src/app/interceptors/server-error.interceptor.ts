@@ -21,11 +21,11 @@ export class ServerErrorInterceptor implements HttpInterceptor {
         if(error.message == 'ERR_INTERNET_DISCONNECTED' || error.status == 0 || error.message=='Timeout has occurred'){
           return throwError(error.message)
         } else if (error.status === 401) {
-          this.router.navigate(['login']);
-          return throwError(error.error.message);
+          //this.router.navigate(['login']);
+          return [];
         } else if (error.status === 400) {
           console.log('error 400');
-            return [];
+          return [];
         } else if (error.status === 402) {
           console.log('error 402');
             return [];

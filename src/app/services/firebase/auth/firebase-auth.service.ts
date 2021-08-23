@@ -89,7 +89,6 @@ export class FirebaseAuthService {
 
   socialSignIn(providerName: string, scopes?: Array<string>): Observable<any> {
     if (this.platform.is('capacitor')) {
-     
       //return cfaSignIn(providerName);
     } else {
      
