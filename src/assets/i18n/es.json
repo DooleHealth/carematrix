@@ -7,6 +7,8 @@
         "button_signin": "Iniciar sesión",
         "button_registre": "Crear Usuario",
         "user": "Usuario",
+        "too": "O también:",
+        "biometrics": "Autenticación biométrica",
         "header_message_password_recovery": "Ingresa tu usuario",
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
@@ -44,7 +46,8 @@
         "error_send_email_alert_message": "Ha ocurrido un error al enviar el código de verificación",
         "next_button":"Continuar",
         "error_required": "Error: Campo requerido",
-        "error_min_lenght": "Error: Debe ser 4 dígitos"
+        "error_min_lenght": "Error: Debe ser 6 dígitos",
+        "error_no_numeric": "Error: Ingresar sólo números"
       },
       "tab":{
         "home": "Inicio",
@@ -95,7 +98,8 @@
         "register_button": "Inscribirme",
         "take_button": "Tomar",
         "go_play_button": "Ir a juego",
-        "diet": "Dietes"
+        "diet": "Dietes",
+        "elements":"Visualizar todos mis datos"
       },
       "profile":{
         "title_profile": "Mi Perfil",
@@ -138,7 +142,9 @@
       },
       "activity_goal":{
         "definition": "Definición",
-        "normal_value": "Valores Normales:",
+        "normal_value": "Valores normales:",
+        "out_range_value": "Valores fuera de rango:",
+        "danger_value": "Valores anómalos:",
         "no_data":"No hay datos a mostrar"
       },
       "activity":{
@@ -159,6 +165,7 @@
         "blood_group": "Grupo Sanguíneo",
         "diagnostics":"Diagnóstico",
         "allergies": "Alergias",
+        "phone":"Teléfono",
 
         "male":"Masculino",
         "feminine": "Femenino",
@@ -216,7 +223,10 @@
         },
         "family_unit":{
           "title_family_unit":"Unidad Familiar",
-          "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?"
+          "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?",
+          "canAccess":"Estás a cargo de",
+          "othersCanAccess":"Tu tutor es:"
+        
         }
 
       },
@@ -236,7 +246,7 @@
 
       },
       "health_card":{
-        "header_card": "Tus Tarjeta Sanitaria",
+        "header_card": "Tus Tarjetas Sanitarias",
 
         "modality": "Modalidad",
         "name": "Nombre",
@@ -362,8 +372,8 @@
           "day7": "Domingo"
         },
         "frequency":{
-          "daily":"Diario",
-          "day":"Un día",
+          "daily":"Diariamente",
+          "day":"Una sola vez",
           "custom": "Personalizado",
           "week": "Lun a Vie",
           "week1": "1 semana",
@@ -410,7 +420,8 @@
         "header": "Seguimiento",
         "tap_documents": "Documentos",
         "tap_forms": "Formularios",
-        "tap_graphics": "Gráficos"
+        "tap_graphics": "Gráficos",
+        "tap_test":"Pruebas"
       },
       "documents":{
         "subtitle_information": "Información",
@@ -439,7 +450,10 @@
         "select": "Seleccionar",
         "camera": "Cámara",
         "file": "Archivos",
-        "pictures":"Imatges"
+        "pictures":"Imatges",
+        "delete_media_file": "¿Estás seguro de eliminar el archivo?",
+        "delete_document": "¿Estás seguro de eliminar la prueba diagnóstica?",
+        "input_file_name": "Ingresa un nombre para el archivo"
       },
       "documents_filter":{
         "header": "Filtros",
@@ -522,7 +536,8 @@
         "forgotten": "Olvidada",
         "continue": "Continuar",
         "send": "Enviar",
-        "perfil":"Perfil"
+        "perfil":"Perfil",
+        "open": "Abrir"
       },
       "conversation":{
         "placeholder":"Escribe un mensaje"
@@ -554,7 +569,8 @@
       },      
       "medical_directory":{
         "header":"Reservar",
-        "your_professionals":"Tus profesionales habituales"
+        "your_professionals":"Tus profesionales habituales",
+        "no_professionals":"No tienes profesionales asignados"
       }, 
       "medical_calendar":{
         "header":"Seleccionar Fecha",
@@ -596,7 +612,35 @@
       "info": {
         "button": "De acuerdo",
         "title":"Información",
-        "news":"En este apartado podrás encontrar las noticias y consejos que mejor se adaptan a tu perfil"
+        "news":"En este apartado podrás encontrar las noticias y consejos que mejor se adaptan a tu perfil",
+        "family":"En este apartado podrás loguearte con el usuario del que seas tutor o cuidador, pudiendo acceder a sus datos de salud. Te advertiremos en cada página de que actúas en nombre de otro con un signo de exclamación (!). Puedes volver a tu perfil siempre que lo desees pulsando ​encima de este mismo signo"
+      },
+      "face-id": {
+        "description": "Esta aplicación se bloquea para garantizar tu seguridad",
+        "title": "Control de seguridad",
+        "subtitle": "Acceso con huella digital",
+        "fallback": ""
+      },
+      "biometrics": {
+        "activate": "Acceso biométrico",
+        "auth": "Autenticación biométrica",
+        "login": "Biometría",
+        "active": "ACTÍVALO",
+        "dismiss": "AHORA NO",
+        "text1": "El acceso biométrico te permite acceder a la app utilizando la huella digital, el reconocimiento facial o cualquier sistema que hayas definido en este dispositivo para identificarte con seguridad.",
+        "text2": "¿Quiéres activar ahora el acceso biométrico?",
+        "text3": "Lo podrás activar y desactivar posteriormente desde el apartado de configuración de la app.",
+        "text4":"El acceso biométrico se ha activado correctamente.",
+        "text5":"Lo podrás utilizar para acceder a la app la próxima vez que la ejecutes.",
+        "disabled": "No se ha podido acceder a los datos biométricos del dispositivo."
+      },
+      "medications":{
+        "list":"Listado",
+        "title":"Envío de medicación",
+        "direction":"Nuevo pedido",
+        "directions_title":"Selecciona dirección de envío",
+        "direction_add":"Añade una nueva dirección"
+    
       }
-
+      
 }

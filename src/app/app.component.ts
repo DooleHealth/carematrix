@@ -12,6 +12,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { StorageService } from './services/storage.service';
 import { Network } from '@ionic-native/network/ngx';
 import { throwError } from 'rxjs';
+
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { VideoComponent } from './components/video/video.component';
 import { OpentokService } from './services/opentok.service';
@@ -22,6 +23,12 @@ import { setLines } from '@angular/material/core';
 const { PushNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
+
+
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+ 
+const { PushNotifications } = Plugins;
+const { BiometricAuth } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -63,6 +70,8 @@ export class AppComponent implements OnInit {
     private modalCtrl: ModalController,
     private backgroundMode: BackgroundMode,
     private dooleService: DooleService,
+    private faio : FingerprintAIO
+
   ) {
     //firebase.initializeApp(environment.firebase);
     //firebase.database.enableLogging(true);
@@ -266,14 +275,29 @@ export class AppComponent implements OnInit {
             this.router.navigate(['MessagesDetailPage'],{state: {id: id, action : "open"}});
           }
 
-          if (action == "FORM") {
-           
-            this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
-          }
+        );
 
-          if (action == "DRUGINTAKE") {
-           
-            this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}}); 
+
+        // set to landscape
+        //this.screenOrientation.lock(this.screenOrientation. ORIENTATIONS.PORTRAIT).catch((err) => { console.log('Setting screen orientation failed:', err); });
+        
+        // Lock phone after 2 minutes in pause
+        this.lastResume = new Date;
+        this.platform.pause.subscribe((e) => {
+          // Saves the time of pause to be used in resume
+          this.lastResume = new Date;
+        });
+
+        this.platform.resume.subscribe(async (e) => {
+          if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
+             // App will lock after 2 minutes
+             let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
+
+             if (secondsPassed >= 120) {
+                 // Must implement lock-screen
+                this.showFingerprintAuthDlg()
+              }
+
           }
 
         }
@@ -553,6 +577,43 @@ export class AppComponent implements OnInit {
     });
     await alert.present();
 
+  }
+
+
+  public showFingerprintAuthDlg() {
+
+    this.faio.isAvailable().then((result: any) => {
+
+      this.faio.show({
+        cancelButtonTitle: this.translate.instant('button.cancel'),
+        description: this.translate.instant('face-id.description'),
+        title: this.translate.instant('face-id.title'),
+        fallbackButtonTitle: this.translate.instant('face-id.fallback'),
+        subtitle: this.translate.instant('face-id.subtitle'),
+        disableBackup: true,
+        
+      })
+        .then((result: any) => {
+          console.log(result)
+        })
+        .catch(async (error: any) => {
+          console.log(error);
+          if(error.code == -102){
+            setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+          }else{
+            // if error.code == -108 user cancel prompt
+            // if error.code == -111 too many attempts
+            await this.authService.logout();
+            this.router.navigateByUrl('/landing'); 
+          }
+        });
+
+    })
+      .catch(async (error: any) => {
+        await this.authService.logout();
+        this.router.navigateByUrl('/landing'); 
+        console.log(error)
+      });
   }
 
 

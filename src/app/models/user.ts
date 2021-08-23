@@ -91,9 +91,10 @@ export interface UserProfile{
     weight: string,
     height: string,
     blood_group: string,
-    diagnostics: [string,string],
+    // diagnostics: [string,string],
     temporaryUrl:string,
     allergies: [],
+    diagnostics: [],
 }
 
 export interface FamilyUnit {
@@ -103,6 +104,22 @@ export interface FamilyUnit {
     age?: string,
     thumbnail?: string,
     family_relationship?: string
+}
+export interface Mentoring {
+    age?: string,
+    id?: number,
+    initials?: string,
+    name?: string,
+    socialRelationType?:string,
+    thumbnail?: string,
+}
+export interface Tutor {
+    age?: string,
+    id?: number,
+    initials?: string,
+    name?: string,
+    socialRelationType?:string,
+    thumbnail?: string,
 }
 
 export interface HealthCard {

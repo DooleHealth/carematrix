@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
-import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { Directive, HostListener } from '@angular/core';
 const { Storage } = Plugins;
 @Component({
   selector: 'app-verification',
@@ -13,20 +14,21 @@ const { Storage } = Plugins;
   styleUrls: ['./verification.page.scss'],
 })
 export class VerificationPage implements OnInit {
-  email = ''
+  //email = ''
   isSubmitted= false
-  code = new FormControl('', [Validators.required, Validators.minLength(4)]);
+  pattern = "^\\d{1,4}$"
+  code = new FormControl('', [Validators.required, Validators.minLength(6)/* , Validators.pattern(this.pattern) */]);
   constructor(
     public router: Router,    
     private translate: TranslateService,
-    private alertController: AlertController,
     private dooleService: DooleService,
     private authService: AuthenticationService,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit() {
-    this.email = history.state.email;
-    console.log('[VerificationPage] ngOnInit()', this.email);
+    //this.email = history.state.email;
+    console.log('[VerificationPage] ngOnInit()');
   }
 
 
@@ -47,6 +49,7 @@ export class VerificationPage implements OnInit {
         if(isSuccess){
           //this.checkConditionLegal()
           this.redirectPage(true)
+          this.notification.displayToastSuccessful()
         }else{
           this.dooleService.presentAlert(this.translate.instant("verification.alert_message"))
         }
@@ -57,14 +60,11 @@ export class VerificationPage implements OnInit {
   }
 
 
-  sendEmail(email){
-    let send_email ={email: email}
-    console.log('[VerificationPage] sendEmail()',send_email );
-    this.dooleService.postAPIemailVerification(send_email).subscribe(
+  sendEmailWithCode(){
+    this.dooleService.getAPICodeByEmail().subscribe(
       async (res: any) =>{
-        console.log('[LegalPage] sendEmail()', await res);
-        let  isSuccess = res.success 
-        this.showAlertSendEmail(isSuccess)
+        console.log('[VerificationPage] sendEmailWithCode()', await res);
+        this.showAlertSendEmail(res.success)
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           let messagge = this.translate.instant("verification.send_email_alert_message")
@@ -74,26 +74,22 @@ export class VerificationPage implements OnInit {
   }
 
   async showAlertSendEmail(success){
-    let messagge = '' 
     if(success)
-      messagge = this.translate.instant("verification.send_email_alert_message")
-    else
-      messagge = this.translate.instant("verification.send_email_alert_message")
-    await  this.dooleService.presentAlert(messagge)
-  }
-
-  async getVerificationCode(){
-    console.log('[VerificationPage] getVerificationCode()' );
-    this.sendEmail(this.email)
+      this.notification.displayToastSuccessful()
+    else{
+      let messagge = this.translate.instant("verification.error_send_email_alert_message")
+      await this.dooleService.presentAlert(messagge)
+    }
   }
 
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[VerificationPage] checkConditionLegal()', await res);
-         //if(res.accepted_last)
-         this.redirectPage(res.accepted_last)
-
+         if(res.success)
+          this.redirectPage(res.accepted_last)
+         else
+          alert(res.message)
        },(err) => { 
           console.log('[VerificationPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
@@ -118,6 +114,19 @@ export class VerificationPage implements OnInit {
         this.router.navigate(['/intro']);
       }
     })
+  }
+
+  @HostListener('keypress', ['$event'])
+  onInput(event: any) {
+    const pattern = /[0-9]/; // without ., for integer only
+    let inputChar = String.fromCharCode(event.which ? event.which : event.keyCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 
 }

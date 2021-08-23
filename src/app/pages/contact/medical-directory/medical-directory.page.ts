@@ -1,10 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DooleService } from 'src/app/services/doole.service';
-import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
-
-3
- 
+import { DataStore, ShellModel } from 'src/app/utils/shell/data-store'; 
 import { ActivatedRoute } from '@angular/router';
 export class ShowcaseShellUserModel extends ShellModel {
   id: string;
@@ -27,7 +24,7 @@ staff : any;
 dataStore: DataStore<Array<ShowcaseShellUserModel>>;
 data: Array<ShowcaseShellUserModel> & ShellModel;
 isChat:boolean;
-
+isLoading = false
 @HostBinding('class.is-shell') get isShell() {
   return (this.data && this.data.isShell) ? true : false;
 }
@@ -35,7 +32,7 @@ isChat:boolean;
   constructor(private dooleService: DooleService, private router: Router) { }
   
   ngOnInit() {
-
+    this.isLoading = true
     this.isChat = history.state?.isChat;
     const dataSource = this.dooleService.getAPIallowedContacts();
      // Initialize the model specifying that it is a shell model
@@ -45,19 +42,21 @@ isChat:boolean;
     ];
     this.dataStore = new DataStore(shellModel);
     // Trigger the loading mechanism (with shell) in the dataStore
-    this.dataStore.load(dataSource);
-
+    this.dataStore.load(dataSource)
     this.dataStore.state.subscribe(res => {
       console.log('[MedicalDirectoryPage] allowedContacts()', res);
-      this.staff = res;
-      this.data = res;
+      if(!res.isShell){
+        this.staff = res;
+       // this.data = res;
+      }
+      this.isLoading = false
     },
     (err) => { 
+      this.isLoading = false
       console.log('[MedicalDirectoryPage] allowedContacts() ERROR(' + err.code + '): ' + err.message); 
       throw err; 
     });
-
-     }
+  }
 
     redirect(staff){
 

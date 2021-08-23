@@ -21,6 +21,8 @@ export class ActivityGoalPage implements OnInit {
   private id;
   viewTitle = ''
   normalValue
+  outRangeValue
+  dangerValue
   description
   graphics = []
   header = []
@@ -41,7 +43,6 @@ export class ActivityGoalPage implements OnInit {
   segmentFilter = "1d";
   constructor(
     private dooleService: DooleService,
-    private loadingController: LoadingController,
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private translate : TranslateService,
@@ -134,6 +135,10 @@ export class ActivityGoalPage implements OnInit {
         this.ranges.push(r);
         if (range.rangeType === "success")
           this.normalValue = range.conditionString
+          else if (range.rangeType == "warning")
+          this.outRangeValue = range.conditionString
+          else if (range.rangeType == "danger")
+          this.dangerValue = range.conditionString
       });
 
       this.graphValues = vArray;
@@ -155,10 +160,10 @@ export class ActivityGoalPage implements OnInit {
 
   generateChart() {
     HighCharts.chart('container', {
-      chart: {
+      chart: {  
         type: (this.graphData.length > 4)? 'line':'column',  //'line' 'area'
         zoomType: 'x',
-
+         
       },
       title: {
         text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
@@ -166,11 +171,11 @@ export class ActivityGoalPage implements OnInit {
       xAxis: {
         //categories: ['L', 'M', 'MX', 'J', 'V', 'S', 'D'],
         type: 'datetime',
-
         maxRange: this.min.getTime()
       },
       yAxis: {
-        min: 0,
+        // min: 30,
+        startOnTick: false,
         title: {
           text: this.units,
           align: 'high'
@@ -178,6 +183,10 @@ export class ActivityGoalPage implements OnInit {
         opposite: true,
         plotBands: this.ranges
       },
+      rangeSelector: {
+        enabled: true
+    },
+
 /*       tooltip: {
         valueSuffix: ' millions'
       }, */
@@ -203,6 +212,7 @@ export class ActivityGoalPage implements OnInit {
       },
       series: [{
         type: undefined,
+        colorKey: 'colorValue',
         colorByPoint: false,
         data: this.graphData,
         name: this.units,

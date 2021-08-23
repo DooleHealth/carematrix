@@ -65,7 +65,7 @@ export class ElementsAddPage implements OnInit {
     this.isSubmittedCategory = true
     if(this.form.invalid)
     return
-    if(this.isValueCorrect(this.form.get('measure').value))
+    if(this.isValueCorrect( Number(this.form.get('measure').value)))
       this.addElement()
     else
       this.messageInvalidValue()
@@ -204,7 +204,7 @@ export class ElementsAddPage implements OnInit {
   }
 
   isValueCorrect(value){
-    if(value >= this.min && value <= this.max){
+    if(value >= Number(this.min) && value <= Number(this.max)){
       return true
     }
     else{

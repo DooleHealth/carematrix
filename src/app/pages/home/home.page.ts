@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, Platform } from '@ionic/angular';
@@ -13,10 +13,22 @@ import { OpentokService } from 'src/app/services/opentok.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 
 export interface UserInformation {
   title?: string;
   hour?: string;
+}
+
+export class ShowcaseShellUserModel extends ShellModel {
+  id: string;
+  name: string;
+  image: string;
+  type: string;
+  data: User;
+  constructor() {
+    super();
+  }
 }
 @Component({
   selector: 'app-home',
@@ -24,8 +36,13 @@ export interface UserInformation {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  dataStore: DataStore<Array<ShowcaseShellUserModel>>;
+  data: Array<ShowcaseShellUserModel> & ShellModel;
+  @HostBinding('class.is-shell') get isShell() {
+    return (this.data && this.data.isShell) ? true : false;
+  }
   WAIT_TIME = 10 //10 minutes 
-  userDoole : User
+  userDoole : any = {}
   goals: Goal[] =[]
   diets: Diet[] =[]
   drugs: Drug[] =[]
@@ -33,7 +50,7 @@ export class HomePage implements OnInit {
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
   isLoading = false
-  userio
+  //userio
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
@@ -114,6 +131,7 @@ export class HomePage implements OnInit {
           .catch(e => console.log(e));
     }
   }
+
   async getUserInformation(){
 
     this.dooleService.getAPIgoals().subscribe((res)=>{
@@ -133,21 +151,52 @@ export class HomePage implements OnInit {
       this.diets = res.diets;
       this.slideDietChange()
     })
+  }
 
-    this.dooleService.getAPIelementsListByDate({}).subscribe((res)=>{
-      if(res.eg){
-        this.treeIterate(res.eg, '');
-        this.sliderGames.slideTo(0)
-        this.slideActivityChange()
-      }
-    })
+  async getUserInformation(){
+    this.isLoading = true
+    this.activity = []
+    let date = {date: this.date}
+    this.dooleService.getAPIinformationSummary(date).subscribe(
+      async (res: any) =>{
+        console.log('[HomePage] getUserInformation()', await res);
+        this.userDoole = res.data?.profile;
+        this.goals = res.data?.goals;
+        this.appointment = res.data?.agenda;
+        this.advices = res.data?.advices;
+        this.diets = res.data?.diets;
+        this.slideDietChange()
 
-    this.getDrugIntake()
+        let elements = res?.data.elements
+        if(elements?.eg){
+          this.treeIterate(elements?.eg, '');
+          this.sliderPhysical.slideTo(0)
+          this.slideActivityChange()
+        }
 
-    this.getGames()
+        if(res.data.gamePlays){
+          this.games = res.data.gamePlays
+          this.games.sort(function(a,b){
+            return a.scheduled_date.localeCompare(b.scheduled_date);
+          })
+          this.searchIndexDGame()
+          this.slideGamesChange()
+          this.sliderGames.slideTo(this.currentIndexDrug)
+        }
 
-    //this.activity.push({name:'456 Cal'})
-
+        // this.drugs = res.data.drugIntakes.drugIntakes;
+        // this.filterDrugsByStatus()
+        // this.searchIndexDrug()
+        // this.slideDrugChange()
+        // this.sliderDrug.slideTo(this.currentIndexDrug)
+        this.getDrugIntake()
+        this.isLoading = false
+       },(err) => { 
+          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          alert(err.message)
+          throw err; 
+      });
   }
 
   treeIterate(obj, stack) {
@@ -159,6 +208,7 @@ export class HomePage implements OnInit {
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
+            if(obj?.elements.length>0)
             this.activity.push(obj);
 
           }
@@ -166,20 +216,6 @@ export class HomePage implements OnInit {
         }
       }
     }
-  }
-
-  getGames(){
-    this.dooleService.getAPIgamesByDate(this.date ,this.date ).subscribe((res)=>{
-      if(res.gamePlays){
-        this.games = res.gamePlays
-        this.games.sort(function(a,b){
-          return a.scheduled_date.localeCompare(b.scheduled_date);
-        })
-        this.searchIndexDGame()
-        this.slideGamesChange()
-        this.sliderGames.slideTo(this.currentIndexDrug)
-      }
-    });
   }
 
   getDrugIntake(){

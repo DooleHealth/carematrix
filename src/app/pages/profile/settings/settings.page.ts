@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { ModalController, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PasswordPage } from './password/password.page';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-settings',
@@ -23,15 +27,24 @@ export class SettingsPage implements OnInit {
   form = false
   messages = false
   language
+  isFaID = true
+  isTwoFactor = true
+  biometric: any
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    ) { }
+    private authService: AuthenticationService,
+    private translate: TranslateService, 
+    private platform: Platform,
+    private faio: FingerprintAIO,
+    ) {}
   ngOnInit() {
     this.getNotificationConfiguration()
     this.getLocalLanguages()
+    this.isAvailableFaID()
+    this.isAvailableTwoFactor()
   }
 
   getNotificationConfiguration(){
@@ -48,8 +61,10 @@ export class SettingsPage implements OnInit {
   }
 
   getConfigurationParams(params: any){
-    this.authentication = (params?.authenticationNotificaton== "1")? true:false
-    this.faceId = (params?.faceIdNotificaton== "1")? true:false
+    this.authentication = (params?.two_factor_authentication== "1")? true:false
+    //this.faceId = (params?.faceIdNotificaton== "1")? true:false
+    this.faceId = JSON.parse(localStorage.getItem('settings-bio'))
+    console.log('[SettingsPage] getConfigurationParams()', this.faceId, localStorage.getItem('settings-bio'));
     this.communications = (params?.communicationsNotificaton== "1")? true:false
     this.appointment = (params?.appointmentNotificaton== "1")? true:false
     this.diets = (params?.dietsNotificaton== "1")? true:false
@@ -63,25 +78,26 @@ export class SettingsPage implements OnInit {
   }
 
   changeAuthentication(){
-    console.log(`[SettingsPage] changeAuthentication(${this.authentication})`);
+    let factor = Number(this.authentication)
+    console.log(`[SettingsPage] changeAuthentication(${factor})`);
     let params = {
-      name: 'authenticationNotificaton',
-      value: this.authentication
+      name: 'two_factor_authentication',
+      value: factor
     }
     this.sendConfigution(params)
   }
 
   changeFaceId(){
     console.log(`[SettingsPage] changeFaceId(${this.faceId})`);
-    let params = {
-      name: 'faceIdNotificaton',
-      value: this.faceId
+    if(this.faceId){
+      if(!JSON.parse(localStorage.getItem('settings-bio')))
+      this.showBioAuthDlg()
     }
-    this.sendConfigution(params)
+    else
+      localStorage.setItem('settings-bio', 'false');
   }
 
   changeCommunications(){
-    console.log(`[SettingsPage] changeCommunications(${this.communications})`);
     let params = {
       name: 'communicationsNotificaton',
       value: this.communications
@@ -90,7 +106,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeAppointment(){
-    console.log(`[SettingsPage] changeAppointment(${this.appointment})`);
     let params = {
       name: 'appointmentNotificaton',
       value: this.appointment
@@ -99,7 +114,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeDiets(){
-    console.log(`[SettingsPage] changeDiets(${this.diets})`);
     let params = {
       name: 'dietsNotificaton',
       value: this.diets
@@ -108,7 +122,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeMedication(){
-    console.log(`[SettingsPage] changeMedication(${this.medication})`);
     let params = {
       name: 'drugIntakeNotificationMail',
       value: this.medication
@@ -118,7 +131,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeAdvices(){
-    console.log(`[SettingsPage] changeAdvices(${this.advices})`);
     let params = {
       name: 'advicesNotificaton',
       value: this.advices
@@ -127,7 +139,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeOffers(){
-    console.log(`[SettingsPage] changeOffers(${this.offers})`);
     let params = {
       name: 'offersNotificaton',
       value: this.offers
@@ -136,7 +147,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeGoals(){
-    console.log(`[SettingsPage] changeGoals(${this.goals})`);
     let params = {
       name: 'goalsNotificaton',
       value: this.goals
@@ -145,7 +155,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeForm(){
-    console.log(`[SettingsPage] changeForm(${this.form})`);
     let params = {
       name: 'formNotificaton',
       value: this.form
@@ -154,7 +163,6 @@ export class SettingsPage implements OnInit {
   }
 
   changeMessages(){
-    console.log(`[SettingsPage] changeMessages(${this.messages})`);
     let params = {
       name: 'messagesNotificaton',
       value: this.messages
@@ -172,6 +180,7 @@ export class SettingsPage implements OnInit {
        }
         else{
           console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
+          //alert(res.success)
         }
        },(err) => { 
           console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
@@ -209,6 +218,104 @@ export class SettingsPage implements OnInit {
   
       await modal.present();
   
+    }
+
+    async showBioAuthDlg() {
+
+      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+        this.faio.isAvailable().then((result: any) => {
+          console.log(result)
+  
+          this.faio.show({
+            cancelButtonTitle: this.translate.instant('face-id.cancel'),
+            title: this.translate.instant('face-id.title'),
+            fallbackButtonTitle: this.translate.instant('face-id.fallback'),
+            subtitle: this.translate.instant('face-id.subtitle'),
+            disableBackup: true,
+  
+          })
+            .then(async (result: any) => {
+             let biometric = this.getStorageBiometric()
+             if(biometric)
+             await this.updateBiometrics()
+             else
+             await this.registerBiometrics();
+            })
+            .catch(async (error: any) => {
+              console.log(error);
+              if (error.code == -102) {
+                setTimeout(() => this.showBioAuthDlg(), 500);
+              }
+            });
+  
+        }).catch(async (error: any) => {
+          localStorage.setItem('show-bio-dialog','false');
+        });
+      } else {
+        alert('only in device');
+        //this.dismissLockScreen();
+  
+      }
+  
+    }
+
+    async registerBiometrics() {
+      console.log('[SettingsPage] registerBiometrics()');
+      let hash = Md5.hashStr(Date.now().toString()).toString();
+        this.authService.postAPIbiometric({hash: hash}).subscribe(
+          async (data) => {
+            console.log(data);
+            if(data.success){
+              let e = {hash: hash, id: data.id}
+              localStorage.setItem('bio-auth', JSON.stringify(e));
+              localStorage.setItem('show-bio-dialog', 'false');
+              localStorage.setItem('settings-bio', 'true');
+              this.notification.displayToastSuccessful()
+            }  
+          },
+          (error) => {
+            // Called when error
+            alert(this.translate.instant(error?.message));
+          });
+    }
+
+    async updateBiometrics() {
+      console.log('[SettingsPage] updateBiometrics()');
+      let hash = Md5.hashStr(Date.now().toString()).toString();
+        this.authService.putAPIbiometric(this.biometric.id, {hash: hash}).subscribe(
+          async (data) => {
+            console.log(data);
+            if(data.success){
+              let e = {hash: hash, id: data.id}
+              localStorage.setItem('bio-auth', JSON.stringify(e));
+              localStorage.setItem('show-bio-dialog', 'false');
+              localStorage.setItem('settings-bio', 'true');
+              this.notification.displayToastSuccessful()
+            }  
+          },
+          (error) => {
+            // Called when error
+            alert(this.translate.instant(error?.message));
+          });
+    }
+
+    getStorageBiometric(): Promise<any> {
+      const bio = localStorage.getItem('bio-auth')
+      console.log(`[AuthenticationService] getStorageBiometric()`, JSON.parse(bio));
+      return JSON.parse(bio);
+    }
+
+    isAvailableFaID(){
+      this.faio.isAvailable().then((result: any)  =>{
+        console.log(result)
+      }).catch(async (error: any) => {
+        localStorage.setItem('show-bio-dialog','false');
+        this.isFaID = false
+      });
+    }
+
+    isAvailableTwoFactor(){
+      this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center')) 
     }
 
 }

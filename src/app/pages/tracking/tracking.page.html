@@ -21,7 +21,7 @@
   [(ngModel)]="segment" 
   scrollable>
     <ion-segment-button value="documents">
-      <ion-label>{{ 'tracking.header' | translate}}</ion-label>
+      <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="forms">
       <ion-label>{{ 'tracking.tap_forms' | translate}}</ion-label>
@@ -115,7 +115,8 @@
               {{event.doctor}}</ion-card-title>
           </ion-col> -->
           <ion-col size="12">
-            <ion-card-title class="textBlue" (click)="openForm(event)">
+            <ion-card-title class="textBlue" [routerLink]="['form', { id : event?.id }]">
+
               {{ 'documents.button_fill' | translate}}</ion-card-title>
           </ion-col>
         </ion-grid>
@@ -123,6 +124,11 @@
     </ion-card>
   </ion-list>
 </div>
+
+<!-- <div>
+  <iframe class="iframe" [src]="url"  allowfullscreen width="100%" height="120%" frameborder="0" >
+  </iframe>
+</div> -->
 </div>
 
     <!-- Graphics -->

@@ -8,6 +8,8 @@
         "button_signin": "Inici de sessió",
         "button_registre": "Crear Usuari",
         "user": "Usuari",
+        "too":"O també:",
+        "biometrics":"Autenticació biomètrica",
         "header_message_password_recovery": "Ingressa el teu usuari",
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
@@ -45,7 +47,8 @@
         "error_send_email_alert_message": "Hi ha hagut un error a l'enviar el codi de verificació",
         "next_button":"Continuar",
         "error_required": "Error: Camp requerit",
-        "error_min_lenght": "Error: Ha de ser 4 digits"
+        "error_min_lenght": "Error: Ha de ser 4 digits",
+        "error_no_numeric": "Error: Entrada només números"
       },
       "tab":{
         "home": "Inici",
@@ -96,7 +99,8 @@
         "register_button": "Inscriure",
         "take_button": "Prendre",
         "go_play_button": "Anar a joc",
-        "diet": "Dietes"
+        "diet": "Dietes",
+        "elements":"Visualitzar totes les meves dades"
       },
       "profile":{
         "title_profile": "El meu perfil",
@@ -139,7 +143,9 @@
       },
       "activity_goal":{
         "definition": "Definició",
-        "normal_value": "Valors Normals:",
+        "normal_value": "Valors normals:",
+        "out_range_value": "Valors fora de rang:",
+        "danger_value": "Valors anòmals:",
         "no_data":"No hi ha dades a mostrar"
       },
       "activity":{
@@ -160,6 +166,7 @@
         "blood_group": "Grup Sanguini",
         "diagnostics":"Diagnòstic",
         "allergies": "Al·lèrgies",
+        "phone":"Telèfon",
 
         "male":"Home",
         "feminine": "Femení",
@@ -170,7 +177,7 @@
         "button_ok": "D'acord",
         "button_acept": "Acceptar",
         "button_apply": "Aplicar",
-        "button_cancel": "Cancel",
+        "button_cancel": "Cancel·lar",
         "button_change": "Canviar",
         "button_send": "Enviar",
         "header_error": "Error",
@@ -217,7 +224,9 @@
         },
         "family_unit":{
           "title_family_unit":"Unitat Familiar",
-          "msg_alert_change_perfil": "Vols canviar a aquest perfil?"
+          "msg_alert_change_perfil": "Vols canviar a aquest perfil?",
+          "canAccess":"Estàs a càrrec de:",
+          "othersCanAccess":"El teu tutor és:"
         }
 
       },
@@ -358,8 +367,8 @@
           "day7": "Diumenge"
         },
         "frequency":{
-          "daily":"Diari",
-          "day":"Un dia",
+          "daily":"Diàriament",
+          "day":"Una sola vegada",
           "custom": "Personalitzat",
           "week": "Dll a Dv",
           "week1": "1 setmana",
@@ -440,7 +449,8 @@
         "header": "Seguiment",
         "tap_documents": "Documents",
         "tap_forms": "Formularis",
-        "tap_graphics": "Gràfics" 
+        "tap_graphics": "Gràfics",
+        "tap_test":"Proves"
       },
       "documents":{
         "subtitle_information": "Informació",
@@ -471,7 +481,10 @@
         "select": "Seleccionar",
         "camera": "Càmera",
         "file": "Arxius",
-        "pictures":"Imatges"
+        "pictures":"Imatges",
+        "delete_media_file": "Estàs segur d'eliminar l'arxiu?",
+        "delete_document": "Estàs segur d'eliminar la prova diagnòstica?",
+        "input_file_name": "Ingressa un nom per a l'arxiu"
        
       },
       "documents_filter":{
@@ -500,7 +513,7 @@
           "dose": "Dosi",
           "morning": "matí",
           "noon": "migdia",
-          "aftenoon": "tarde",
+          "aftenoon": "tarda",
           "night": "nit",
           "midnight": "mitjanit",
           "dawning": "matinada",
@@ -509,7 +522,7 @@
       "button":{
         "detail": "Detalls",
         "fill": "Omplir",
-        "cancel": "Cancel",
+        "cancel": "Cancel·lar",
         "accept": "Acceptar",
         "edit": "Edita",
         "ok": "OK",
@@ -522,7 +535,8 @@
         "forgotten": "Oblidada",
         "continue": "Continuar",
         "send": "Enviar",
-        "perfil":"Perfil"
+        "perfil":"Perfil",
+        "open": "Obrir"
       },
       "conversation":{
         "placeholder":"Escriu un missatge"
@@ -554,7 +568,8 @@
       },
       "medical_directory":{
         "header":"Reservar",
-        "your_professionals":"Els teus professionals habituals"
+        "your_professionals":"Els teus professionals habituals",
+        "no_professionals":"No tens professionals assignats"
       },
       "medical_calendar":{
         "header":"Seleccionar Data",
@@ -596,6 +611,34 @@
       "info": {
         "button":"D’acord",
         "title":"Informació",
-        "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil"
+        "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil",
+        "family":"En aquest apartat podràs loguearte amb l'usuari del qual siguis tutor o cuidador, podent accedir a les seves dades de salut. T'advertirem en cada pàgina que actues en nom d'un altre amb un signe d'exclamació (!). Pots tornar al teu perfil sempre que ho desitgis prement damunt d'aquest mateix signe."
+      },
+      "face-id": {
+        "description": "Aquesta aplicació es bloca automàticament per garantir-ne la seguretat",
+        "title": "Control de seguretat",
+        "subtitle": "Accés amb empremta digital",
+        "fallback": ""
+      },
+      "biometrics":{
+        "activate":"Accés biomètric",
+        "auth":"Autenticació biomètrica",
+        "login": "Biometria",
+        "active":"ACTIVA-HO",
+        "dismiss":"ARA NO",
+        "text1":"L’accés biomètric et permet accedir a l’app fent servir l’empremta digital, el reconeixement facial o qualsevol sistema que hagis definit en aquest dispositiu per identificar-te amb seguretat.",
+        "text2":"Vols activar ara l’accés biomètric?",
+        "text3":"el podràs activar i desactivar posteriorment des de l’apartat de configuració de l’app.",
+        "text4":"L’accés biomètric s’ha activat correctament.",
+        "text5":"La propera vegada que executis l’app el podràs fer servir per accedir-hi.",
+        "disabled": "No s'ha pogut accedir a les dades biomètriques de el dispositiu."
+      },
+      "medications":{
+        "list":"Llistat",
+        "title":"Enviament de medicació",
+        "direction":"Nova comanda",
+        "directions_title":"Selecciona adreça d'enviament",
+        "direction_add":"Afegeix una nova direcció"
       }
+      
 }

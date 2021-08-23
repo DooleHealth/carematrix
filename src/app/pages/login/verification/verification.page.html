@@ -11,17 +11,20 @@
   <div class="main-container">
     <ion-grid>
       <h2 class="bold">{{ 'verification.title' | translate}}</h2>
-      <ion-text>{{ 'verification.text1' | translate}}</ion-text><a (click)="getVerificationCode()">aquí.</a>
+      <ion-text>{{ 'verification.text1' | translate}}</ion-text><a (click)="sendEmailWithCode()">aquí.</a>
       <ion-col>
         <div style="padding-top: 15%;">
           <ion-item-divider>
-            <ion-input placeholder="" [formControl]="code" maxlength="4" (ionInput)="isSubmitted = false" required></ion-input>
+            <ion-input placeholder="" inputmode="numeric" [formControl]="code" maxlength="6" (ionInput)="isSubmitted = false" required></ion-input>
             <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.code.hasError('required')">
               {{ 'verification.error_required' | translate}}
             </ion-label>
             <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.code.hasError('minlength')">
               {{ 'verification.error_min_lenght' | translate}}
             </ion-label>
+<!--             <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.code.hasError('pattern') && !this.code.hasError('minlength')">
+              {{ 'verification.error_no_numeric' | translate}}
+            </ion-label> -->
           </ion-item-divider>
           <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" (click)="goIntro()">
             {{ 'verification.next_button' | translate}}

@@ -14,8 +14,8 @@ export class AboutUsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.information = '<div class="demo"><b>This is my About Us HTML.</b></div>';
-    //this.getInformationAboutUs();
+    // this.information = '<div class="demo"><b>This is my About Us HTML.</b></div>';
+    this.getInformationAboutUs();
   }
 
   getInformationAboutUs(){
@@ -23,7 +23,7 @@ export class AboutUsPage implements OnInit {
     this.dooleService.getAPIaboutUs().subscribe(
       async (res: any) =>{
         console.log('[AboutUsPage] getInformationAboutUs()', await res);
-        this.information = res
+        this.information = res.faq
         this.isLoading = false
        },(err) => { 
           console.log('[AboutUsPage] getInformationAboutUs() ERROR(' + err.code + '): ' + err.message); 

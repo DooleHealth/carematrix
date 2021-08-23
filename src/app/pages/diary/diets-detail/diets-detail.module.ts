@@ -8,12 +8,14 @@ import { DietsDetailPageRoutingModule } from './diets-detail-routing.module';
 
 import { DietsDetailPage } from './diets-detail.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     DietsDetailPageRoutingModule
   ],
   providers: [ InAppBrowser],

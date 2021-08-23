@@ -14,7 +14,7 @@ import { ReportProblemPage } from './report-problem/report-problem.page';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  userDoole : User
+  userDoole : any
   userImage:string = 'assets/icons/user_icon.svg'
   constructor( 
     private authService: AuthenticationService,
@@ -35,9 +35,10 @@ export class ProfilePage implements OnInit {
   }
 
   userImg(){
-    if(this.userDoole !== undefined && this.userDoole.image !== undefined && this.userDoole.image !== null 
-      && this.userDoole.image !== '')
-      this.userImage = this.userDoole.image;
+    if(this.userDoole?.temporaryUrl )
+    this.userImage = this.userDoole?.temporaryUrl;
+    else if(this.userDoole?.image )
+    this.userImage = this.userDoole?.image;
   }
 
 

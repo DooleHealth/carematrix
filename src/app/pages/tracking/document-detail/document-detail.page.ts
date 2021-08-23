@@ -1,8 +1,12 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { DocumentsAddPage } from '../documents-add/documents-add.page';
 export interface ItemDiagnostic {
   expanded?: boolean;
   elements?: any[];
@@ -15,6 +19,7 @@ export interface ItemDiagnostic {
 export class DocumentDetailPage implements OnInit {
   public items: ItemDiagnostic[] = [];
   private id;
+  private document: any;
   diagnosticTest = [];
   diagnosticTestType = [];
   groupedElements: any = [];
@@ -23,6 +28,9 @@ export class DocumentDetailPage implements OnInit {
   isLoading = false
   constructor(
     private dooleService: DooleService,
+    private modalCtrl: ModalController,
+    private notification: NotificationService,
+    private languageService: LanguageService,
   ) {
   }
 
@@ -57,13 +65,21 @@ export class DocumentDetailPage implements OnInit {
     });
   }
 
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'dd MMM yyy');
+  }
+
   async getDiagnosticData(){
     this.isLoading = true
     this.dooleService.getAPIdiagnosticTestID(this.id).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);
+        if(res.success)
+        this.document = res
         this.diagnosticTest = res.diagnosticTest
-        this.diagnosticTestType = res.diagnosticTestType
+        this.diagnosticTestType = res.diagnosticTest.diagnostic_test_type
         if (res.diagnosticTest.media) {
           this.mediaFiles = res.diagnosticTest.media;
         }
@@ -153,6 +169,40 @@ export class DocumentDetailPage implements OnInit {
   openFile(media){
     console.log("media", media);
     window.open(media.temporaryUrl, "");
+  }
+
+  getName(m){
+    console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
+    if(m?.name && m?.name !== "")
+      return m.name
+    else if(m?.file_name)
+      return m?.file_name.split('/').pop();
+    else if(m?.file)
+      return m?.file.split('/').pop();
+   }
+
+  async editDiagnosticTest(){
+    const modal = await this.modalCtrl.create({
+      component:  DocumentsAddPage,
+      componentProps: { test: this.document},
+      cssClass: "modal-custom-class"
+    });
+  
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addDocument()', result);     
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'add' || result?.data?.action == 'update'){
+          this.notification.displayToastSuccessful()
+          this.getDiagnosticData()    
+        }else if(result?.data?.action == 'delete'){
+          this.notification.displayToastSuccessful()
+        }
+      });
+  
+      await modal.present();
   }
 
 }

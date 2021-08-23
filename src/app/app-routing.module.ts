@@ -147,6 +147,14 @@ const routes: Routes = [
     path: 'new-detail',
     loadChildren: () => import('./pages/home/new-detail/new-detail.module').then( m => m.NewDetailPageModule)
   },
+  {
+    path: 'form',
+    loadChildren: () => import('./pages/tracking/form/form.module').then( m => m.FormPageModule)
+  },
+  {
+    path: 'medication',
+    loadChildren: () => import('./pages/diary/medication/medication.module').then( m => m.MedicationPageModule)
+  },
 
 
 ];

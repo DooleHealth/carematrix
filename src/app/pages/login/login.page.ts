@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -11,14 +12,16 @@ import { LanguageService } from 'src/app/services/language.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  @Input()credentials: {username, password};
+  @Input()credentials: {username, password, hash};
   constructor( 
     private authService: AuthenticationService, 
     private dooleService: DooleService, 
     private router: Router, 
     private ngZone: NgZone, 
     public languageService: LanguageService, 
-    private modalCtrl: ModalController) { }
+    private translate: TranslateService,
+    private modalCtrl: ModalController,
+    ) { }
 
   ngOnInit() {
     this.loginUser();
@@ -26,12 +29,22 @@ export class LoginPage implements OnInit {
 
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
+
       //console.log('[LandingPage] doDooleAppLogin()', res);
       if(res.success){
        // this.languageService.setLenguageLocalstorage('ca') //'ca'
+
+      console.log('[LandingPage] doDooleAppLogin()', res);
+      if(res.success){ 
+        if(res.twoFactorUser){
+          this.router.navigate(['/verification']);
+          this.modalCtrl.dismiss({error:null});
+        }
+        else
         this.checkConditionLegal();
       }else{
-        this.modalCtrl.dismiss({error: 'Credenciales Inválidas'});
+        let message = this.translate.instant('landing.message_wrong_credentials')
+        this.modalCtrl.dismiss({error: message});
       }
     }, async (error) => { 
      //console.log('doDooleAppLogin() ERROR', await error?.message);
@@ -44,11 +57,16 @@ export class LoginPage implements OnInit {
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
+
         //console.log('[LandingPage] checkConditionLegal()', await res);
          if(res.success)
+
+        console.log('[LandingPage] checkConditionLegal()', await res);
+        if(res.success)
+
           this.redirectPage(res.accepted_last)
-
-
+        else
+          this.modalCtrl.dismiss({error:res.message});
        },(err) => { 
           //console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
@@ -60,8 +78,8 @@ export class LoginPage implements OnInit {
     if(!condicion){
       this.router.navigate(['/legal']);
       this.modalCtrl.dismiss({error:null});
-    } else{
-      this.showIntro()
+    }else{
+      this.redirectBiometric()
     }      
   }
 
@@ -94,6 +112,16 @@ export class LoginPage implements OnInit {
     }, 500);
       
     });
+  }
+
+  redirectBiometric(){
+    let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
+    if(condicion){
+      this.router.navigate(['/login/biometric-auth']);
+      this.modalCtrl.dismiss({error:null});
+    } else{
+      this.showIntro()
+    }      
   }
 
 

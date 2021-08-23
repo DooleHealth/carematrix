@@ -25,7 +25,7 @@ export class PersonalPage implements OnInit {
     this.dooleService.getAPIuserProfile().subscribe(
       async (res: any) =>{
         console.log('[PersonalPage] getPersonalInformation()', res);
-        this.userProfile = res as UserProfile;
+        this.userProfile = res.user;
         this.isLoading = false
        },(err) => { 
           console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);

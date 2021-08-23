@@ -191,13 +191,20 @@ ion-back-button {
   font-weight: 400;
   color: #7f8c8d;
 }
+.txtTitleGreyLeft{
+  font-size: 12px;
+  font-weight: 400;
+  color: #7f8c8d;
+  text-align: left;
+  margin-left: 5%;
+  
+}
 .txtTitleChatDate{
   font-size: 12px;
   font-weight: 400;
   color: #7f8c8d;
   text-align: right;
   margin-top: -3px;
-  
 }
 .txtTitleTrackingLittle{
   font-size: 12px;
@@ -280,7 +287,24 @@ text-align: left !important;
   font-size: 14px;
   font-weight: 600;
 }
-
+.txtTitleSuccess{
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: #2ECC71;
+}
+.txtTitleWarning{
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: #F39C12;
+}
+.txtTitleDanger{
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: #E74C3C;
+}
 /*Custom Buttons*/
 
 .deleteButton {
@@ -432,6 +456,11 @@ ion-spinner {
 padding-top: 3%;
 margin-bottom: -3%;
 }
+.ios .paddingTopNoMarginBottomBlue{
+  padding-top: 3%;
+  margin-bottom: -3%;
+  color: #3498db;
+  }
 .ios .iosHeader{
   padding-top: 50px;
 }
@@ -443,4 +472,11 @@ margin-bottom: -3%;
 
 .md .paddingTopNoMarginBottom{
   padding-top: 6%;
+}
+.md .paddingTopNoMarginBottomBlue{
+  padding-top: 6%;
+  color: #3498db;
+}
+.md ion-header ion-title{
+  text-align: center !important;
 }

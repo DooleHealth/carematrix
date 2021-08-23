@@ -4,7 +4,7 @@
       <ion-back-button (click)="close()" text="{{'button.cancel' | translate }}"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'documents_add.header' | translate }} </ion-title>
-    <ion-button fill="clear" slot="end"  (click)="submit()">
+    <ion-button fill="clear" slot="end"  (click)="submit()" [disabled]="enableButtonAddFile()">
       {{'button.ok' | translate }}
     </ion-button>
   </ion-toolbar>
@@ -16,7 +16,7 @@
     <ion-list>
       <ion-item (click)="openModal()">
         <ion-label>{{ 'documents_add.field_test_type' | translate }}</ion-label>
-        <ion-input formControlName="type" slot="end" [placeholder]="(this.isSubmittedType && this.form.get('type').invalid)? '': 'Selecciona uno' " (ionInput)="isSubmittedType = false"></ion-input>
+        <ion-input formControlName="type" slot="end" [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false"></ion-input>
         <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
@@ -45,28 +45,6 @@
     </ion-list>
   </ion-card>
 
-  <ion-card class="cardProfile">
-    <ion-list>
-      <ion-item>
-        <ion-label>{{ 'documents_add.field_source' | translate }}</ion-label>
-        <ion-select placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option>procedenciasss</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ 'documents_add.field_center' | translate }}</ion-label>
-        <ion-select placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option>Centrosss</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>{{ 'documents_add.field_profesional' | translate }}</ion-label>
-        <ion-select placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option>Médicosss</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-  </ion-card>
 
 <ion-card class="cardProfile" text-wrap>
   <form>
@@ -74,23 +52,7 @@
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
       </ion-item>
-      <ion-item lines="none" *ngIf="this.mediaFiles.length > 0">
-        <div id="container" style="margin-top: 10px;">
-          <div *ngFor="let file of this.mediaFiles">
-            <!-- <ion-card class="cardProfile"> -->
-              <div id="left">
-                <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
-              </div>
-              <div id="middle">
-                <p class="titule">{{ file.name }}</p>
-              </div>
-              <div id="right">
-                <ion-icon name="close-circle" color="primary" (click)="removeFile(file.name)"></ion-icon>
-              </div> 
-          <!-- </ion-card> -->
-          </div>       
-        </div>
-      </ion-item>
+
       <input
       type="file"
       #fileInput
@@ -99,11 +61,44 @@
       accept="image/*">
 
       <ion-button slot="start" 
-      fill="clear" 
-      (click)="selectImageSource()"
-      [disabled]="enableButtonAddFile()">{{'report_problem.button_add_file' | translate }}
-      <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
-    </ion-button>
+        fill="clear" 
+        (click)="selectImageSource()"
+        [disabled]="enableButtonAddFile()">{{'report_problem.button_add_file' | translate }}
+        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
+      </ion-button>
+
+
+        <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
+
+          <div *ngFor="let file of this.media; let i = index">
+            <ion-item lines="none">
+            <div id="left">
+              <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+            </div>
+            <div id="middle">
+              <p class="titule">{{ getName(file)  }}</p>
+            </div>
+            <div id="right">
+              <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, true, i, false)"></ion-icon>
+            </div> 
+          </ion-item>
+        </div>  
+
+          <div *ngFor="let file of this.mediaFiles">
+            <ion-item lines="none">
+              <div id="left">
+                <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+              </div>
+              <div id="middle">
+                <p class="titule">{{ getName(file)  }}</p>
+              </div>
+              <div id="right">
+                <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, true, i, true)"></ion-icon>
+              </div> 
+            </ion-item>
+          </div>       
+        </div>
+
 
     </ion-list>
   </form>
@@ -111,6 +106,7 @@
 </form>
 
   <section>
-    <ion-button expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
+    <ion-button [disabled]="enableButtonAddFile()" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
+    <ion-button *ngIf="this.isEdit" expand="block"  (click)="presentAlertConfirm(null, false)" >{{'button.delete' | translate }}</ion-button>
   </section>  
 </ion-content>

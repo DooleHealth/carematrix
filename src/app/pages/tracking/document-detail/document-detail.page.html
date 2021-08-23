@@ -4,6 +4,7 @@
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{diagnosticTestType.name}}</ion-title>
+    <ion-button *ngIf="this.diagnosticTest.addedByUser" (click)="editDiagnosticTest()" slot="end" fill="clear">{{ 'button.edit' | translate}}</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -24,7 +25,7 @@
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.field_date' | translate}}</ion-label>
-        <ion-label *ngIf="diagnosticTest !== undefined" class="textMedium">{{diagnosticTest.data | date: 'dd MMM yyy'}}
+        <ion-label *ngIf="diagnosticTest !== undefined" class="textMedium">{{formatSelectedDate(diagnosticTest.data) }}
         </ion-label>
       </ion-item>
     </ion-list>
@@ -109,10 +110,12 @@
       <app-expandable expandHeight="100px" [expanded]="item.expanded">
         <ion-list *ngFor="let e of item.elements.elements">
           <ion-item>
-            <ion-label>{{e.name}}</ion-label>
-            <p class="txtTitleTrackingLittle">{{e.value}}{{e.units}}</p>
+            <ion-text>
+              <p class="txtTitleTrackingLittle" style="color: black; font-size: 14px;">{{e.name}}</p>
+            </ion-text>
             <ion-text slot="end">
-              <p class="txtTitleTrackingLittle">{{e.date | date: 'dd/mm/yy'}}</p>
+              <p class="txtTitleTrackingLittle">{{e.value}}{{e.units}}</p>
+              <!-- <p class="txtTitleTrackingLittle">{{e.date | date: 'dd/mm/yy'}}</p> -->
             </ion-text>
           </ion-item>
         </ion-list>
@@ -120,19 +123,27 @@
     </div>
   </ion-card>
 
-
-  <ion-text *ngIf="this.mediaFiles && this.mediaFiles.length > 0" class="txtTitle">{{ 'documents_add.attachments' |
-    translate}}</ion-text>
-  <ion-row class="files-row">
-    <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of mediaFiles">
-      <app-aspect-ratio [ratio]="{w: 1, h: 1}">
-        <app-image-shell class="file-picture"
-          [src]="m.file_name.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl"
-          (click)="openFile(m)"></app-image-shell>
-      </app-aspect-ratio>
-      <span class="file-name">
-      </span>
-    </ion-col>
+  <ion-row>
+    <ion-text *ngIf="this.mediaFiles && this.mediaFiles.length > 0" class="txtTitle2">{{ 'documents_add.attachments' |
+      translate}}</ion-text>
   </ion-row>
+
+  <ion-card class="cardProfile" *ngIf="this.mediaFiles && this.mediaFiles.length > 0">
+
+      <div id="container" style="margin-top: 20px; margin-bottom: 10px;">
+
+        <div *ngFor="let file of this.mediaFiles; let i = index" class="section">
+          <ion-item [lines]="(i === this.mediaFiles.length -1)? 'none':'full' ">
+            <div id="left">
+              <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+            </div>
+            <div id="middle">
+              <p class="titule">{{ getName(file) }}</p>
+            </div>
+          </ion-item>
+        </div>       
+      </div>
+
+  </ion-card>
 
 </ion-content>

@@ -55,6 +55,7 @@ constructor(
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
     //await window.OT.getUserMedia();
+    console.log(this.durationStr);
   }
 
 publish() {
@@ -93,7 +94,8 @@ close() {
 
 ngAfterViewInit(): void {
 
-  if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+  // if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    if (this.platform.is('desktop')) {
 
     this.session = OT.initSession(this.apiKey, this.sessionId);
     var publisherOptions = { 
@@ -138,19 +140,6 @@ ngAfterViewInit(): void {
       },
     });
 
-    this.session.on("signal:duration", (event) => {
-      if (event.data > 60) {
-        var min = event.data / 60;
-        min = Math.floor(min);
-        this.durationStr = "Unos " + Math.round(min) + " minutos";
-      } else if (event.data > 0) {
-        this.durationStr = "Menos de 1 minuto";
-      } else {
-        this.durationStr = "Tiempo agotado";
-      }
-
-    });
-
     this.session.connect(this.token, (error: any) => {
       if (error) {
         alert(`There was an error connecting to the session ${error}`);
@@ -160,7 +149,6 @@ ngAfterViewInit(): void {
   }else{
 
     console.log('*** is web');
-
     this.publisher = OT.initPublisher
     (
       this.publisherDiv.nativeElement, {
@@ -185,9 +173,27 @@ ngAfterViewInit(): void {
           }
         });
         let that = this;
+        this.session.on("signal:duration", function(event) {
+          console.log("Signal sent from connection " + event.data);
+
+        });
         this.session.on("streamCreated", function (event) {
           that.onStreamCreated(event.stream, this.session);
         });
+        this.session.on("signal:duration", (event) => {
+          if(event.data>60){
+            var min = event.data/60;
+            min = Math.floor(min);
+            this.durationStr = Math.round(min) + " min";
+          }else if(event.data>0){
+            this.durationStr = event.data+ " ''";
+          }else{
+            this.durationStr = "Fin";
+          }
+          console.log(this.durationStr);
+        
+        });
+          
       }
     })
    

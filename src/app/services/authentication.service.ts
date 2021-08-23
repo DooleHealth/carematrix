@@ -83,7 +83,7 @@ export class AuthenticationService {
     localStorage.setItem(TOKEN_KEY, token);
   }
 
-  login(credentials: { username, password }): Observable<any> {
+  login(credentials: { username, password, hash }): Observable<any> {
 
     const endpoint = this.api.getEndpoint('patient/login');
 
@@ -120,6 +120,7 @@ export class AuthenticationService {
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
+        this.setTwoFactor(res.twoFactorCenter)
         // if (res?.familyUnit.length > 0) {
         //   this.setFamilyUnitLocalstorage(res.familyUnit);
         // }
@@ -217,6 +218,10 @@ export class AuthenticationService {
     });
   }
 
+  setTwoFactor(tfCenter){
+    localStorage.setItem('two-factor-center', tfCenter);
+  }
+
   async logout(): Promise<void> {
     console.log('logout');
     this.isAuthenticated.next(false);
@@ -294,5 +299,41 @@ export class AuthenticationService {
 
     })
 
+  }
+
+
+  postAPIbiometric(params: Object): Observable<any> {
+    let path = `user/biometric`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIbiometric(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  putAPIbiometric(id: any, params: Object): Observable<any> {
+    let path = `user/biometric/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] putAPIbiometric(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIbiometric(id: Object): Observable<any> {
+    let path = `user/biometric/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIbiometric(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+      })
+    );
   }
 }

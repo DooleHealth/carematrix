@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NewDetailPageRoutingModule } from './new-detail-routing.module';
 
 import { NewDetailPage } from './new-detail.page';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { NewDetailPage } from './new-detail.page';
     IonicModule,
     NewDetailPageRoutingModule
   ],
+  providers: [ InAppBrowser],
   declarations: [NewDetailPage]
 })
 export class NewDetailPageModule {}

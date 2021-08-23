@@ -18,7 +18,6 @@ export class LegalPage implements OnInit {
   constructor(
     public router: Router,    
     private translate: TranslateService,
-    private alertController: AlertController,
     private authService: AuthenticationService,
     private dooleService: DooleService) { }
 
@@ -57,22 +56,13 @@ export class LegalPage implements OnInit {
     this.dooleService.showAlertAndReturn(header,message,false, 'landing')
   }
 
-  async showAlertgetLegal(success){
-    let messagge = '' 
-    if(success)
-      messagge = this.translate.instant("legal.send_email_alert_message")
-    else
-      messagge = this.translate.instant("legal.error_conditions_label")
-    await  this.dooleService.presentAlert(messagge)
-  }
-
   acceptLegalConditions(){
     let confirmation = {lt_id: this.legal.id}
     this.dooleService.postAPILegalConfirmation(confirmation).subscribe(
     async (res: any) =>{
       console.log('[LegalPage] sendLegalConformation()', await res);
       if(res.success){
-        this.router.navigate(['/sms']);
+        this.redirectBiometric()
         //this.showIntro()
       }
       else this.dooleService.presentAlert("legal.error_post_conditions_label")
@@ -92,6 +82,15 @@ export class LegalPage implements OnInit {
           this.router.navigate(['/intro']);
         }
       })
+  }
+
+  redirectBiometric(){
+    let condicion = JSON.parse(localStorage.getItem('show-bio-dialog') )
+    if(condicion){
+      this.router.navigate(['/login/biometric-auth']);
+    } else{
+      this.showIntro()
+    }      
   }
 
 }

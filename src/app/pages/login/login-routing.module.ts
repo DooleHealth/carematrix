@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: LoginPage
+  },
+  {
+    path: 'biometric-auth',
+    loadChildren: () => import('./biometric-auth/biometric-auth.module').then( m => m.BiometricAuthPageModule)
   }
 ];
 
