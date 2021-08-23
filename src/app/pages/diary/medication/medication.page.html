@@ -29,9 +29,15 @@
         <ion-card class="cardProfile" *ngFor="let sending of this.deliveries">
           <ion-item lines="none">
             <div class="verticalLineBlue"></div>
-          
+            <ion-grid>
             <ion-row>
-              <ion-col size="12" class="textBlueBold">{{sending.status_name}}</ion-col>
+              <ion-col size="2">
+                <ion-icon name="cart" color="primary"></ion-icon>
+              </ion-col>
+              <ion-col size="10" class="textBlueBold">{{sending.status_name}}</ion-col>
+            </ion-row>
+            <ion-row>
+             
               <ion-col size="12">{{ 'medications.shipping_method' | translate}}{{sending.shipping_method}}</ion-col>
               <ion-col size="12">{{sending.address}}</ion-col>
             <ion-col size="12">{{sending.city}},&nbsp;{{sending.state}}</ion-col>
@@ -39,6 +45,7 @@
             <ion-col size="12">{{sending.postal_code}}</ion-col>
             <ion-col size="12">{{sending.country}}</ion-col>
             </ion-row>
+            </ion-grid>
           </ion-item>
         </ion-card>
       </ion-list>
@@ -109,7 +116,7 @@
                     <ion-col size="2">
                       <ion-icon name="location" color="tertiary"></ion-icon>
                     </ion-col>
-                    <ion-col size="10" color="tertiary">{{address.name}}</ion-col>
+                    <ion-col size="10" class="textOrangeBold">{{address.name}}</ion-col>
                   </ion-row>
                   <ion-row>
                     <ion-col size="12">{{address.address}}</ion-col>
