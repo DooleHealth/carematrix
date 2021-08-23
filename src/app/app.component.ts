@@ -5,7 +5,6 @@ import { AlertController, MenuController, ModalController, Platform, ToastContro
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.service';
-import firebase from 'firebase';
 import { LanguageService } from './services/language.service';
 import { HistoryHelperService } from './utils/history-helper.service';
 import { AuthenticationService } from './services/authentication.service';
@@ -17,7 +16,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { VideoComponent } from './components/video/video.component';
 import { OpentokService } from './services/opentok.service';
 import { DooleService } from './services/doole.service';
-import { setLines } from '@angular/material/core';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 
 
 const { PushNotifications } = Plugins;
@@ -25,9 +24,6 @@ declare let VoIPPushNotification: any;
 declare let cordova: any;
 
 
-import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
- 
-const { PushNotifications } = Plugins;
 const { BiometricAuth } = Plugins;
 
 @Component({
@@ -274,8 +270,8 @@ export class AppComponent implements OnInit {
             this.badge.decrease(1);
             this.router.navigate(['MessagesDetailPage'],{state: {id: id, action : "open"}});
           }
-
-        );
+        }
+       
 
 
         // set to landscape
@@ -297,13 +293,9 @@ export class AppComponent implements OnInit {
                  // Must implement lock-screen
                 this.showFingerprintAuthDlg()
               }
-
-          }
-
-        }
-
-      }
-    );
+            }
+          });
+        });
   }
 
   async startDooleVideocall() {

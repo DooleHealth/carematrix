@@ -56,7 +56,8 @@ export class LoginPage implements OnInit {
         let message = this.translate.instant('landing.message_wrong_credentials')
         this.modalCtrl.dismiss({error: message});
       }
-
+    }
+    
     }, async (error) => { 
      //console.log('doDooleAppLogin() ERROR', await error?.message);
      this.modalCtrl.dismiss({error:error});

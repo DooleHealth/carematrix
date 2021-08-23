@@ -142,27 +142,6 @@ export class HomePage implements OnInit {
   }
 
   async getUserInformation(){
-
-    this.dooleService.getAPIgoals().subscribe((res)=>{
-      this.goals = res.goals;
-    });
-    
-    this.dooleService.getAPIappointmentAgenda().subscribe((res)=>{
-      //console.log(res);
-      this.appointment = res.agenda;
-    });
-
-    this.dooleService.getAPIlistAdvices().subscribe((res)=>{
-      this.advices = res.advices;
-    })
-
-    this.dooleService.getAPIlistDietsByDate({}).subscribe((res)=>{
-      this.diets = res.diets;
-      this.slideDietChange()
-    })
-  }
-
-  async getUserInformation(){
     this.isLoading = true
     this.activity = []
     let date = {date: this.date}
