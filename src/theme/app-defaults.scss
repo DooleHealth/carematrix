@@ -175,7 +175,7 @@ ion-back-button {
   font-size: 12px;
   font-weight: 400;
   text-align: justify;
-  margin: 3%;
+  margin-top: 3%;
 }
 .txtTitleGoalsGreenBig {
   font-size: 24px;
@@ -245,6 +245,18 @@ ion-back-button {
   color: #3498db;
   font-size: 12px;
   font-weight: 400;
+  text-align: left;
+}
+.textBlueBold {
+  color: #3498db;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+.textOrangeBold {
+  color: #F39C12;
+  font-size: 16px;
+  font-weight: 600;
   text-align: left;
 }
 .textBluePadding {

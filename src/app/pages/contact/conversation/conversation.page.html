@@ -38,7 +38,7 @@
     </div>
 
 </ion-content>
-<ion-footer >
+<ion-footer  >
  
     <ion-item no-lines>
       <ion-buttons >
@@ -53,19 +53,19 @@
           />
         </ion-button>
       </ion-buttons>
-      <div item-content >
+      <div item-content style="width:120%!important" >
         <elastic-textarea #txtChat placeholder="{{ 'conversation.placeholder' | translate}}">
-          <ion-input lineHeight="20" maxExpand="5" style="width:100%"></ion-input>
+          <ion-input lineHeight="20" maxExpand="8" style="width:120%!important"></ion-input>
         </elastic-textarea>
       </div>
       <ion-buttons >
-        <ion-button (click)="this.addImage()">
+         <ion-button (click)="this.addImage()">
           <ion-icon name="camera-outline"></ion-icon>
         </ion-button>
-        <ion-button icon-end (click)="this.addAudio()">
+        <ion-button  (click)="this.addAudio()">
           <ion-icon name="mic-outline"></ion-icon>
         </ion-button>
-        <ion-button icon-end (click)="this.send()">
+        <ion-button slot="end" (click)="this.send()">
           <ion-icon name="send"></ion-icon>
         </ion-button>
       </ion-buttons>

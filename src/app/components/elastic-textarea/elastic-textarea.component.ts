@@ -22,7 +22,7 @@ export class ElasticTextareaComponent implements AfterViewInit {
   constructor() {
     this.content = "";
     this.lineHeight = 20;
-    this.maxExpand = 5;
+    this.maxExpand = 8;
     this.maxHeight = this.lineHeight * this.maxExpand;
   }
 
