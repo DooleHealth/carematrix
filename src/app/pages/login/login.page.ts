@@ -2,6 +2,7 @@ import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -21,10 +22,15 @@ export class LoginPage implements OnInit {
     public languageService: LanguageService, 
     private translate: TranslateService,
     private modalCtrl: ModalController,
+    private analyticsService: AnalyticsService
     ) { }
 
   ngOnInit() {
     this.loginUser();
+  }
+
+  async ionViewDidEnter(){
+    this.analyticsService.setScreenName('login','LoginPage')
   }
 
   loginUser(){
@@ -35,7 +41,11 @@ export class LoginPage implements OnInit {
        // this.languageService.setLenguageLocalstorage('ca') //'ca'
 
       console.log('[LandingPage] doDooleAppLogin()', res);
+      this.analyticsService.logEvent('login', res)
+      this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
+      this.analyticsService.logEvent('user_doole', {userId: res.idUser})
       if(res.success){ 
+        this.analyticsService.setUser(res.idUser)
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
@@ -46,6 +56,7 @@ export class LoginPage implements OnInit {
         let message = this.translate.instant('landing.message_wrong_credentials')
         this.modalCtrl.dismiss({error: message});
       }
+
     }, async (error) => { 
      //console.log('doDooleAppLogin() ERROR', await error?.message);
      this.modalCtrl.dismiss({error:error});

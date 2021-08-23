@@ -73,7 +73,7 @@ export class FirebaseAuthService {
 
   signOut(): Observable<any> {
     if (this.platform.is('capacitor')) {
-      // return cfaSignOut();
+      //return cfaSignOut();
     } else {
       return from(this.angularFire.signOut());
     }

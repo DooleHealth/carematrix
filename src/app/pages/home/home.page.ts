@@ -14,6 +14,7 @@ import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 
 export interface UserInformation {
   title?: string;
@@ -92,13 +93,15 @@ export class HomePage implements OnInit {
     private auth: AuthenticationService,
     private ngZone: NgZone, 
     public translate: TranslateService, 
-    public alertController: AlertController
-  ) {}
+    public alertController: AlertController,
+    private analyticsService: AnalyticsService
+  ) {
+    this.analyticsService.setScreenName('home','[HomePage]')
+  }
 
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
     this.checkHealthAccess();
- 
   }
 
 
@@ -130,6 +133,12 @@ export class HomePage implements OnInit {
           })
           .catch(e => console.log(e));
     }
+  }
+
+  setAnalyticsUserProperty(){
+    this.analyticsService.setProperty('age', this.userDoole.age)
+    this.analyticsService.setProperty('language', this.userDoole.language.name)
+    this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
   async getUserInformation(){
@@ -191,6 +200,8 @@ export class HomePage implements OnInit {
         // this.sliderDrug.slideTo(this.currentIndexDrug)
         this.getDrugIntake()
         this.isLoading = false
+        //Analytics
+        this.setAnalyticsUserProperty()
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false

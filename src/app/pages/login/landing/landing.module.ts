@@ -10,7 +10,6 @@ import { LandingPage } from './landing.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { BiometricAuthPageModule } from '../biometric-auth/biometric-auth.module';
 
 const routes: Routes = [
   {
@@ -27,7 +26,7 @@ const routes: Routes = [
     TranslateModule,
     ComponentsModule,
     RouterModule.forChild(routes),
-    LandingPageRoutingModule
+    LandingPageRoutingModule,
   ],
   declarations: [LandingPage]
 })
