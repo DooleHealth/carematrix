@@ -46,7 +46,6 @@
         <!-- <div class="dot" [ngStyle]="{'background': list.color}"></div>
        <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}"> -->
         <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{ formatSelectedDate(list.date, 'EEEE, d MMMM YYYY')}}</ion-label>
-  
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
           <ion-card class="cardProfile">
             <ion-item lines="none">
@@ -57,12 +56,17 @@
                     <ion-img style="align-items: left;" src='assets/icons/document-attach.svg' style="margin-right: 5px;">
                     </ion-img>
                   </ion-col>
-                  <ion-col size="6">
-                    <ion-card-title class="txtTitleGoals">{{doc.diagnostic_test_type?.name}}</ion-card-title>
+                  <ion-col size="4">
+                    <ion-text class="txtTitleGoals">{{doc.diagnostic_test_type?.name}}</ion-text>
                   </ion-col>
                   <ion-col size="4">
-                    <ion-card-title class="txtTitleTrackingDate" >{{formatSelectedDate(doc.data, 'dd MMM y')}}</ion-card-title>
-                  </ion-col>
+                    <ion-text class="txtTitleTrackingDate" >{{formatSelectedDate(doc.data, 'dd MMM y')}}</ion-text>
+                   
+                  </ion-col>  
+                  <ion-col size="2">
+                
+                     <ion-icon class="arrow" size="small" name="chevron-forward-outline"></ion-icon> 
+                  </ion-col>  
                 </ion-row>
     
                 <ion-col size="12">
@@ -99,12 +103,12 @@
               <ion-img src='assets/icons/document-text.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-col size="10">
+            <ion-col size="8">
               <ion-card-title class="txtTitleGoals">{{event.title}}</ion-card-title>
             </ion-col>
-<!--             <ion-col size="4">
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-col> -->
+        <ion-col size="2">
+              <ion-icon name="chevron-forward-outline" class="arrow"  size="small"></ion-icon>
+            </ion-col>
           </ion-row>
           <ion-col size="12" *ngIf="event.description != '' ">
             <ion-card-title class="txtTracking" [innerHtml]="event.description">
@@ -166,7 +170,7 @@
               </ion-col>
               <ion-col size="2">
                 <ion-label style="text-align: right;">
-                  <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+                  <ion-icon name="chevron-forward-outline" slot="end" class="arrow" size="small"></ion-icon>
                 </ion-label>
               </ion-col>
             </ion-row>
