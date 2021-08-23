@@ -117,19 +117,40 @@ export class HomePage implements OnInit {
     if (this.platform.is('cordova')) {
       this.health.isAvailable()
           .then((available: boolean) => {
-            console.log(available);
+            //console.log(available);
             this.showGoogleFit = !available;
             this.health.requestAuthorization([
               'distance', 'steps', 'heart_rate', 'activity', 'weight'  //read and write permissions
             ])
                 .then(res => {
-                  console.log(res);
+                  //console.log(res);
                   this.syncData(30);
                 })
                 .catch(e => console.log(e));
           })
           .catch(e => console.log(e));
     }
+  }
+
+  async getUserInformation(){
+
+    this.dooleService.getAPIgoals().subscribe((res)=>{
+      this.goals = res.goals;
+    });
+    
+    this.dooleService.getAPIappointmentAgenda().subscribe((res)=>{
+      //console.log(res);
+      this.appointment = res.agenda;
+    });
+
+    this.dooleService.getAPIlistAdvices().subscribe((res)=>{
+      this.advices = res.advices;
+    })
+
+    this.dooleService.getAPIlistDietsByDate({}).subscribe((res)=>{
+      this.diets = res.diets;
+      this.slideDietChange()
+    })
   }
 
   async getUserInformation(){
@@ -228,7 +249,7 @@ export class HomePage implements OnInit {
       this.postHealth('distance', data);
 
     }).catch(error => {
-      console.log(error);
+      //console.log(error);
     });
 
     this.health.query({
@@ -238,7 +259,7 @@ export class HomePage implements OnInit {
     }).then(data => {
       this.postHealth('heart_rate', data);
     }).catch(error => {
-      console.log(error);
+      //console.log(error);
     });
 
     this.health.query({
@@ -248,7 +269,7 @@ export class HomePage implements OnInit {
     }).then(data => {
       this.postHealth('weight', data);
     }).catch(error => {
-      console.log(error);
+      //console.log(error);
     });
 
     this.health.query({
@@ -258,7 +279,7 @@ export class HomePage implements OnInit {
     }).then(data => {
       this.postHealth('temperature', data);
     }).catch(error => {
-      console.log(error);
+      //console.log(error);
     });
 
   }
@@ -271,12 +292,12 @@ export class HomePage implements OnInit {
       };
       this.authService.post('user/element/sync', postData).subscribe(
           async (data) => {
-            console.log("postHealth: ", data);
+            //console.log("postHealth: ", data);
            },
          
           (error) => {
             // Called when error
-            console.log('error: ', error);
+            //console.log('error: ', error);
             throw error;
           },
           () => {
@@ -290,34 +311,34 @@ export class HomePage implements OnInit {
   }
 
   actionSeeAllAdvices(){
-    console.log('[HomePage] actionCloseAdvice()');
+    //console.log('[HomePage] actionCloseAdvice()');
   }
 
   actionCloseAdvice(slide){
-    console.log('[HomePage] actionCloseAdvice()', slide.name);
+    //console.log('[HomePage] actionCloseAdvice()', slide.name);
   }
 
   actionRegisterAdvice(slide){
-    console.log('[HomePage] actionRegisterAdvice()', slide.name);
+    //console.log('[HomePage] actionRegisterAdvice()', slide.name);
   }
 
   actionCloseAppointment(slide){
-    console.log('[HomePage] actionCloseAppointment()', slide.title);
+    //console.log('[HomePage] actionCloseAppointment()', slide.title);
     slide.hide = true
     this.appointment = this.appointment.filter( slide => slide.hide == false)
   }
 
   actionDetailAppointment(slide){
-    console.log('[HomePage] actionDetailAppointment()', slide.name);
+    //console.log('[HomePage] actionDetailAppointment()', slide.name);
   }
 
   actionButtonDrugs(slide){
-    console.log('[HomePage] actionButtonDrugs()', slide.name);
+    //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
   slideGoalChange() {		    
 		this.sliderGoals.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideGoalChange()', index);
+      //console.log('[HomePage] slideGoalChange()', index);
       let slider = this.goals[index]
     });
   }
@@ -325,7 +346,7 @@ export class HomePage implements OnInit {
   slideDietChange(){	  
     if(this.diets !== undefined && this.diets?.length > 0) 
 		this.sliderDiet.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideDietChange()', index);
+      //console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
       this.infoDiet = {
         title: slider?.name,
@@ -337,7 +358,7 @@ export class HomePage implements OnInit {
   slideDrugChange(){	
     if(this.drugs !== undefined && this.drugs?.length > 0){
       this.sliderDrug.getActiveIndex().then(index => {      
-        console.log('[HomePage] slideDrugChange()', index);
+        //console.log('[HomePage] slideDrugChange()', index);
         let slider = this.drugs[index]
         this.infoDrugs = {
           title: slider?.name,
@@ -353,7 +374,7 @@ export class HomePage implements OnInit {
   slideGamesChange(){
     if(this.games !== undefined && this.games?.length > 0)
     this.sliderGames.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideGamesChange()', index);
+      //console.log('[HomePage] slideGamesChange()', index);
       let slider = this.games[index]
       let hour = slider?.scheduled_date.split(' ')[1]
       this.infoGames = {
@@ -365,7 +386,7 @@ export class HomePage implements OnInit {
 
   slideActivityChange(){
     this.sliderPhysical.getActiveIndex().then(index => {      
-      console.log('[HomePage] slideActivityChange()', index);
+      //console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
       this.infoActivity = {
         title: slider?.group
@@ -382,10 +403,10 @@ export class HomePage implements OnInit {
         value: ""
     });
     this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
-      console.log('[HomePage] changeTake()',  json);
+      //console.log('[HomePage] changeTake()',  json);
       this.getDrugIntake()
     },(err) => { 
-      console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
+      //console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
       alert( 'ERROR(' + err.code + '): ' + err.message)
       throw err; 
     });
@@ -423,10 +444,10 @@ export class HomePage implements OnInit {
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
+    //console.log('Begin async operation');
 
     setTimeout(() => {
-      console.log('Async operation has ended');
+      //console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
@@ -461,7 +482,7 @@ export class HomePage implements OnInit {
         browser = this.iab.create(item.url, '_blank', iosoption);
         browser.on('exit').subscribe(event => {
           this.ngZone.run(() => {
-            console.log("anim complete");
+            //console.log("anim complete");
                 this.header = false
           });
         });
@@ -493,7 +514,7 @@ export class HomePage implements OnInit {
     } */
 
     sortDate(games){
-      console.log('Async operation has ended' ,games);
+      //console.log('Async operation has ended' ,games);
       return games.sort( function (a, b) {
         if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
           return 1;
