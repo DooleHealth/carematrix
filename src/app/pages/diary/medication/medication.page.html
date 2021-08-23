@@ -63,31 +63,31 @@
       <span *ngIf="isFormVisible">
         <form [formGroup]="form" (ngSubmit)="submit()">
           <ion-item>
-            <ion-label floating>Nombre destinatario</ion-label>
+            <ion-label floating>{{ 'medications.name' | translate}}</ion-label>
             <ion-input formControlName="name" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Teléfono</ion-label>
+            <ion-label floating>{{ 'medications.telephone' | translate}}</ion-label>
             <ion-input formControlName="phone" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Dirección</ion-label>
+            <ion-label floating>{{ 'medications.address' | translate}}</ion-label>
             <ion-input formControlName="address" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Localidad</ion-label>
+            <ion-label floating>{{ 'medications.city' | translate}}</ion-label>
             <ion-input formControlName="city" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Provincia</ion-label>
+            <ion-label floating>{{ 'medications.state' | translate}}</ion-label>
             <ion-input formControlName="state" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Código Postal</ion-label>
+            <ion-label floating>{{ 'medications.postal_code' | translate}}</ion-label>
             <ion-input formControlName="postal_code" type="text"></ion-input>
           </ion-item>
         </form>
-        <ion-button type="submit" color="primary" expand="block" (click)="submit()">Añadir</ion-button>
+        <ion-button type="submit" color="primary" expand="block" (click)="submit()">{{ 'medications.add' | translate}}</ion-button>
       </span>
       <div *ngIf="this.paso == 'cero' ">
 
@@ -123,31 +123,32 @@
       </div>
       <div *ngIf="this.paso == 'uno' ">
         <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
-          <ion-text class="txtTitle">Paso 2. Seleccione tipo de envio</ion-text>
+          <ion-text class="txtTitle">{{ 'medications.directions_title_2' | translate}}</ion-text>
         </ion-row>
         <ion-card class="cardProfile">
           <form [formGroup]="formShipment">
             <ion-item lines="full">
-              <ion-label>urgente10</ion-label>
+              <ion-label>{{ 'medications.urgente10' | translate}}</ion-label>
               <input type="radio" formControlName="sendType" value="urgente10" checked>
             </ion-item>
             <ion-item lines="full">
-              <ion-label>bag14</ion-label>
+              <ion-label>{{ 'medications.bag14' | translate}}</ion-label>
               <input type="radio" formControlName="sendType" value="bag14">
             </ion-item>
             <ion-item lines="full">
-              <ion-label>bag19</ion-label>
+              <ion-label>{{ 'medications.bag19' | translate}}</ion-label>
               <input type="radio" formControlName="sendType" value="bag19">
             </ion-item>
           </form>
-          <ion-button block (click)="selectSendType()">Continuar</ion-button>
         </ion-card>
+          <ion-button  expand="block" color="primary"  (click)="selectSendType()">{{'button.continue' | translate}}</ion-button>
+        
       </div>
       <div *ngIf="this.paso == 'dos'">
         <ion-row class="paddingTopNoMarginBottom">
-          <ion-text class="txtTitle">Paso 3. Confirme el envío</ion-text>
+          <ion-text class="txtTitle">{{ 'medications.directions_title_3' | translate}}</ion-text>
         </ion-row>
-        <p class="txtTitleGreyLeft">Su medicación se enviará a la siguiente dirección</p>
+        <p class="txtTitleGreyLeft">{{ 'medications.ok' | translate}}</p>
         <ion-list>
           <ion-card class="cardProfile">
             <ion-item lines="none">
@@ -172,16 +173,16 @@
         </ion-list>
         <ion-row class="paddingTopNoMarginBottom">
 
-          <ion-text class="txtTitle">A través del servicio de MRW {{this.sendTypes}}</ion-text>
+          <ion-text class="txtTitle">{{ 'medications.mrw' | translate}}{{this.sendTypes}}</ion-text>
         </ion-row><br>
-        <ion-button expand="block" (click)="confirm()">Confirmar envio</ion-button>
+        <ion-button expand="block" (click)="confirm()">{{ 'medications.confirm' | translate}}</ion-button>
         <form [formGroup]="formulario" style="visibility: hidden; ">
           <ion-input formControlName="selected_address"></ion-input>
           <ion-input formControlName="order_shipping_method"></ion-input>
         </form>
       </div>
       <div *ngIf="showConfirmed">
-        <h1>Solicitud recibida correctamente<ion-button (click)="back()">Volver</ion-button>
+        <h1>{{ 'medications.correct' | translate}}<ion-button (click)="back()">{{ 'medications.back' | translate}}</ion-button>
         </h1>
       </div>
     </div>

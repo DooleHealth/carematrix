@@ -634,11 +634,28 @@
         "disabled": "No s'ha pogut accedir a les dades biomètriques de el dispositiu."
       },
       "medications":{
-        "list":"Llistat",
+        "list":"Llistat de comandes",
         "title":"Enviament de medicació",
         "direction":"Nova comanda",
-        "directions_title":"Selecciona adreça d'enviament",
-        "direction_add":"Afegeix una nova direcció"
+        "directions_title":"1.-Selecciona adreça d'enviament",
+        "directions_title_2":"2.-Selecciona el tipus d'enviament",
+        "directions_title_3":"3.-Confirma l'enviament",
+        "direction_add":"Afegeix una nova direcció",
+        "urgente10":"Abans de les 10.00 a.m.",
+        "bag14":"Abans de les 14.00 p.m.",
+        "bag19":"Abans de les 19.00 p.m.",
+        "name":"Nom del destinatari",
+        "telephone":"Telèfon",
+        "address":"Direcció",
+        "city":"Localitat",
+        "state":"Província",
+        "postal_code":"Codi Postal",
+        "add":"Afegir Direcció",
+        "ok":"La teva medicació s'enviarà a la següent adreça: ",
+        "mrw":"A través del servei de MRW: ",
+        "confirm":"Confirmar l'enviament",
+        "correct":"Sol·licitud rebuda correctament",
+        "back":"Tornar"
       }
       
 }
