@@ -47,7 +47,7 @@
        <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}"> -->
         <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{ formatSelectedDate(list.date, 'EEEE, d MMMM YYYY')}}</ion-label>
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
-          <ion-card class="cardProfile">
+          <ion-card class="cardProfile" routerLink="/document-detail" [state]="{id: doc.id}">
             <ion-item lines="none">
               <div class="verticalLine"></div>
               <ion-grid>
@@ -94,7 +94,7 @@
 <div  *ngSwitchCase="'forms'">
   <div *ngIf="this.forms.length > 0; else noData">
   <ion-list *ngFor="let event of this.forms">
-    <ion-card class="cardProfile">
+    <ion-card class="cardProfile" [routerLink]="['form', { id : event?.id }]">
       <ion-item lines="none">
         <div class="verticalLinePurple"></div>
         <ion-grid>
