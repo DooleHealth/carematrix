@@ -20,3 +20,8 @@ npm run build;npx cap sync; npx cap copy ios;npx cap open ios
 npm run build;npx cap sync; npx cap copy android;npx cap open android
 ## Firebase Config 
 environment.ts
+
+## Error Android “error: package android.support.v4.content does not exist”
+npm install jetifier
+npx jetify
+npx cap sync android

@@ -30,17 +30,17 @@ export class AnalyticsService {
     }
   }
 
-  setUser() {
+  setUser(userId) {
     // Use Firebase Auth uid
     FirebaseAnalytics.setUserId({
-      userId: "test_123",
+      userId: userId,
     });
   }
  
-  setProperty() {
+  setProperty(property, value) {
     FirebaseAnalytics.setUserProperty({
-      name: "framework",
-      value: "angular",
+      name: property,
+      value: value,
     });
   }
  
@@ -51,9 +51,10 @@ export class AnalyticsService {
     });
   }
  
-  setScreenName(screenName) {
+  setScreenName(screenName, nameOverride?) {
     FirebaseAnalytics.setScreenName({
-      screenName
+      screenName: screenName,
+      nameOverride: nameOverride,
     });
   }
 

@@ -10,6 +10,7 @@ import { Chooser } from '@ionic-native/chooser/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 const { Camera } = Plugins;
 @Component({
   selector: 'app-bookings',
@@ -37,7 +38,9 @@ export class BookingsPage implements OnInit {
   isLoading = false
   constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
-    public file: File, private router: Router, private notification: NotificationService) { }
+    public file: File, private router: Router, private notification: NotificationService,  private analyticsService: AnalyticsService) { 
+      this.analyticsService.setScreenName('booking','[BookingsPage]')
+    }
   ngOnInit() {
    
     this.form = this.fb.group({
@@ -46,7 +49,7 @@ export class BookingsPage implements OnInit {
       date: ['', [Validators.required]],
       duration: [this.duration],
       indications: [],
-      files:[this.images],
+      file:[this.images],
       online:[history.state.isOnline]
     });
   }
@@ -69,10 +72,11 @@ export class BookingsPage implements OnInit {
       this.images.push(item.file);
     });
     //this.form.get('files').setValue(this.images);
-
+    console.log('[BookingsPage] addAgenda()', JSON.stringify(this.form.value) );  
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] addAgenda()', await res);        
+        console.log('[ReminderAddPage] addAgenda()', await res);  
+        this.analyticsService.logEvent('create_agenda', res)      
         this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
         this.notification.displayToastSuccessful()
         this.isLoading = false

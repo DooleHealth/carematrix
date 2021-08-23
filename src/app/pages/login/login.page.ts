@@ -1,6 +1,5 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-//import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AnalyticsService } from 'src/app/services/analytics.service';
@@ -30,11 +29,18 @@ export class LoginPage implements OnInit {
     this.loginUser();
   }
 
+  async ionViewDidEnter(){
+    this.analyticsService.setScreenName('login','LoginPage')
+  }
+
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
       console.log('[LandingPage] doDooleAppLogin()', res);
-      this.analyticsService.logEvent('[LoginPage]', {login: res})
+      this.analyticsService.logEvent('login', res)
+      this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
+      this.analyticsService.logEvent('user_doole', {userId: res.idUser})
       if(res.success){ 
+        this.analyticsService.setUser(res.idUser)
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
