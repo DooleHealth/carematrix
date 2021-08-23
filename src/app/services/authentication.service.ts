@@ -47,11 +47,13 @@ export class AuthenticationService {
   public tiene_email: boolean;
   public deviceToken: string;
   public devicePlatform: string;
+  public voipDeviceToken: string;
+  public voipDevicePlatform: string;
   public dietsAndAdvices: [];
+  public deviceVoipToken: any;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   constructor(private http: HttpClient,
     private api: ApiEndpointsService,
-    private constants: Constants,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
     public router: Router,
@@ -89,7 +91,7 @@ export class AuthenticationService {
     return this.http.post(endpoint, credentials).pipe(
       map((res: any) => {
 
-        console.log("[AuthService] login(): ", res);
+        console.log("[AuthService] login() OK ");
 
         if (!res.success) {
           return res
@@ -101,11 +103,18 @@ export class AuthenticationService {
         if (res.firebaseToken) {
           this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
-              this.registerDevice();
+              //console.log(data);
+              let access = true;
+              this.registerDevice(this.deviceToken, this.devicePlatform);
+              if (this.platform.is('ios')) {
+                this.registerDevice(this.voipDeviceToken, this.voipDevicePlatform);        
+              }
+              // 
             }
 
           }, (error) => {
-            console.log(error);
+            console.log("[signInWithCustomToken] error", error);
+            throw error;
           });
         }
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
@@ -193,7 +202,6 @@ export class AuthenticationService {
       this.user.familyUnit = id;
       this.setUserLocalstorage(this.user)
     })
-
   }
 
   getShowIntroLocalstorage(): Promise<any> {
@@ -229,6 +237,10 @@ export class AuthenticationService {
   post(endpt, items): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
 
+    // endpoint
+    console.log("body", endpt);
+    // body
+    console.log("body",items);
     return this.http.post(endpoint, items).pipe(
       map((res: any) => {
         return res;
@@ -245,21 +257,32 @@ export class AuthenticationService {
   }
 
 
-  public registerDevice() {
+  public registerDevice(token, platform) {
 
-    const postData = {
-      token: this.deviceToken,
-      platform: this.devicePlatform,
+     if(platform == 'FCM')
+      platform = 'android';
+     if(platform == 'APNS')
+      platform = 'ios';
+
+     const postData = {
+      token: token,
+      platform: platform
     };
 
-    this.post('user/device/register', postData).subscribe(
-      async (data) => {
+    console.log("postData: ",  postData);
 
+    return this.post('user/device/register', postData).subscribe(
+      async (data) => {
+        let response=data;
+        console.log("response user/device/register");
+        console.log(response);
+      
+        return response;
       },
       (error) => {
         // Called when error
-        console.log('error: ', error);
-        throw new HttpErrorResponse(error);
+        console.log('error user/device/register: ', error);
+        throw error;
       });
   }
 

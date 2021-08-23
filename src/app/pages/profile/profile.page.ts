@@ -43,14 +43,15 @@ export class ProfilePage implements OnInit {
 
   async signOut() {
     await this.authService.logout();
-    this.firebaseService.signOut().subscribe(() => {
-      // Sign-out successful.
-      // Replace state as we are no longer authorized to access profile page.
-      console.log("signout user");
-      this.router.navigateByUrl('/landing');
-    }, (error) => {
-      console.log('signout error', error);
-    });
+    this.router.navigateByUrl('/landing');
+    // this.firebaseService.signOut().subscribe(() => {
+    //   // Sign-out successful.
+    //   // Replace state as we are no longer authorized to access profile page.
+    //   console.log("signout user");
+    //   this.router.navigateByUrl('/landing');
+    // }, (error) => {
+    //   console.log('signout error', error);
+    // });
   }
 
   async sendReportProblem(){

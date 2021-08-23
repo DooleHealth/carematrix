@@ -32,8 +32,8 @@ export class HttpService {
   put(path: string, body: Object = {}, options: Object = {}): Observable<any> {
 
     let httpOptions = this.setHttpOptions(options);
-    console.log("url: ", path);
-    console.log("body: ", body);
+    //console.log("url: ", path);
+    //console.log("body: ", body);
     return this.http.put(
       `${path}`,
       JSON.stringify(body),
@@ -47,8 +47,8 @@ export class HttpService {
       body['user'] = user?.familyUnit;
 
     let httpOptions = this.setHttpOptions(options);
-    console.log("url: ", path);
-    console.log("body: ", body);
+    //console.log("url: ", path);
+    //console.log("body: ", body);
 
     return this.http.post(
       `${path}`,

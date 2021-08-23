@@ -5,7 +5,7 @@
   "npmClient": "npm",
   "webDir": "www",
   "ios": {
-    "minVersion": "12"
+    "minVersion": "13"
   },
   "plugins": {
     "SplashScreen": {
@@ -25,6 +25,9 @@
         ]
       }
     }
+  },
+  "PushNotifications": {
+    "presentationOptions": ["badge", "sound", "alert"]
   },
   "cordova": {}
 }

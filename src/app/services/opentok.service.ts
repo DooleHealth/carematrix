@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class OpentokService {
 
+  public agendaId: string;
   public token$: string;
   public sessionId$: string;
   public apiKey$: string;

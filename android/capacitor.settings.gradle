@@ -4,6 +4,3 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 
 include ':capacitor-community-contacts'
 project(':capacitor-community-contacts').projectDir = new File('../node_modules/@capacitor-community/contacts/android')
-
-include ':capacitor-firebase-auth'
-project(':capacitor-firebase-auth').projectDir = new File('../node_modules/capacitor-firebase-auth/android')

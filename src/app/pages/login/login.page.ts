@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
 
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
-      console.log('[LandingPage] doDooleAppLogin()', res);
+      //console.log('[LandingPage] doDooleAppLogin()', res);
       if(res.success){
        // this.languageService.setLenguageLocalstorage('ca') //'ca'
         this.checkConditionLegal();
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
         this.modalCtrl.dismiss({error: 'Credenciales Inválidas'});
       }
     }, async (error) => { 
-     console.log('doDooleAppLogin() ERROR', await error?.message);
+     //console.log('doDooleAppLogin() ERROR', await error?.message);
      this.modalCtrl.dismiss({error:error});
      throw error;
    });
@@ -44,13 +44,13 @@ export class LoginPage implements OnInit {
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
-        console.log('[LandingPage] checkConditionLegal()', await res);
+        //console.log('[LandingPage] checkConditionLegal()', await res);
          if(res.success)
           this.redirectPage(res.accepted_last)
 
 
        },(err) => { 
-          console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+          //console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
      

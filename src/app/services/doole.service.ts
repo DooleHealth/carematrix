@@ -34,7 +34,7 @@ export class DooleService {
 
   uploadFile(image: string, id?: string) {
 
-    console.log("uploading ", image);
+    //console.log("uploading ", image);
     const token = localStorage.getItem('token');
     let options: FileUploadOptions = {
       fileKey: 'file',
@@ -54,14 +54,14 @@ export class DooleService {
     // uses diagnostic/media when diagnostic is new 
     //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
     const endpoint = this.api.getEndpoint('media/upload/temp');
-    console.log("* uploadFile endpoint", endpoint);
+    //console.log("* uploadFile endpoint", endpoint);
 
     return new Promise(function (resolve, reject) {
       fileTransfer.upload(image, endpoint, options).then(data => {
-        console.log(data);
+        //console.log(data);
         resolve(JSON.parse(data.response));
       }, (err) => {
-        console.log(err);
+        //console.log(err);
         reject(err);
       })
     })
@@ -86,7 +86,7 @@ export class DooleService {
         id: idMessageHeader
       }
     }
-    console.log("options: ", options);
+    //console.log("options: ", options);
 
     const fileTransfer: FileTransferObject = this.transfer.create();
 
@@ -95,7 +95,7 @@ export class DooleService {
         var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
         this.events.publish("uploadMessageImage", { fileUrl, perc });
       } else {
-        console.log("progressEvent - ", progressEvent);
+        //console.log("progressEvent - ", progressEvent);
       }
     });
 
@@ -104,10 +104,10 @@ export class DooleService {
     return new Promise(function (resolve, reject) {
       fileTransfer.upload(fileUrl, endpoint, options)
         .then(data => {
-          console.log("success fileTransfer.upload", JSON.parse(data.response));
+          //console.log("success fileTransfer.upload", JSON.parse(data.response));
           resolve(JSON.parse(data.response));
         }, (err) => {
-          console.log("** error ** fileTransfer.upload: ", err);
+          //console.log("** error ** fileTransfer.upload: ", err);
           reject(fileTransfer.upload);
         })
     })
@@ -145,13 +145,13 @@ export class DooleService {
       path = this.file.dataDirectory;
     }
 
-    console.log("downloadFile", url, destination, 'path,destination', path, destination);
+    //console.log("downloadFile", url, destination, 'path,destination', path, destination);
     return new Observable((observer) => {
-      console.log("before CheckFile", this.file);
+      //console.log("before CheckFile", this.file);
       this.file.checkFile(path, destination).then(res => {
-        console.log("*res*", res);
+        //console.log("*res*", res);
         if (res) {
-          console.log("exists", res);
+          //console.log("exists", res);
           result["success"] = true;
           result["downloaded"] = true;
           result["file"] = path + destination;//normalizeURL(this.file.cacheDirectory + destination);
@@ -159,7 +159,7 @@ export class DooleService {
           return observer.next(result);
         }
       }, error => {
-        console.log("not exists");
+        //console.log("not exists");
         fileTransfer.onProgress(event => {                                //descarreguem
           if (event.lengthComputable) {
             //console.log(event.loaded / event.total);
@@ -171,18 +171,18 @@ export class DooleService {
         });
 
         return fileTransfer.download(url, path + destination).then((entry) => {
-          console.log('*download:* ' + url + " " + entry.toURL());
+          //console.log('*download:* ' + url + " " + entry.toURL());
           result["success"] = true;
           result["downloaded"] = true;
           result["file"] = entry.toURL();//normalizeURL(this.file.cacheDirectory + destination);
           result["fileNormalized"] = Capacitor.convertFileSrc(path + destination);
           return observer.next(result);
         }, (error) => {
-          console.log(error);
+          //console.log(error);
           result["success"] = false;
           result["downloaded"] = false;
-          console.log("error download " + url);
-          console.log(result);
+          //console.log("error download " + url);
+          //console.log(result);
           return observer.next(result);
         })
       });
@@ -201,7 +201,7 @@ export class DooleService {
   }
 
   async showAlertAndReturn(header: string, message: string, isDismiss?: boolean, route?: string) {
-    console.log(`[DooleService] showAlertAndReturn()`);
+    //console.log(`[DooleService] showAlertAndReturn()`);
     let dismiss = (isDismiss !== undefined) ? isDismiss : false
     const alert = await this.alertController.create({
       header: header,
@@ -242,7 +242,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
+        //console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
         return res;
       })
     )
@@ -252,7 +252,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIConfirmationLegal(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIConfirmationLegal(${path}) res: `, res);
         return res;
 
       })
@@ -264,7 +264,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIpasswordRecovery(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIpasswordRecovery(${path}) res: `, res);
         return res;
       })
     );
@@ -282,7 +282,7 @@ export class DooleService {
 
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIStaffSlots(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIStaffSlots(${path}) res: `, res);
         return res;
       })
     )
@@ -293,7 +293,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
         return res;
       })
     )
@@ -304,7 +304,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIvideocall(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIvideocall(${path}) res: `, res);
         return res;
       })
     )
@@ -316,7 +316,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
         return res;
       })
     )
@@ -328,7 +328,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
         return res;
       })
     )
@@ -340,7 +340,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIChangePassword(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIChangePassword(${path}) res: `, res);
         return res;
 
       })
@@ -352,7 +352,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPInotificationConfigurations(${path}) res: `, res);
+        //console.log(`[DooleService] getAPInotificationConfigurations(${path}) res: `, res);
         return res;
       })
     )
@@ -363,7 +363,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIConfiguration(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIConfiguration(${path}) res: `, res);
         return res;
 
       })
@@ -375,7 +375,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIhomeInitial(${path}) res: `, res);
         return res;
       })
     )
@@ -386,7 +386,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIFamilyUnit(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIFamilyUnit(${path}) res: `, res);
         return res;
       })
     );
@@ -586,7 +586,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIappointmentAgenda(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIappointmentAgenda(${path}) res: `, res);
         return res;
       })
     );
@@ -701,7 +701,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIelementsListByDate(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIelementsListByDate(${path}) res: `, res);
         return res;
       })
     );
@@ -712,7 +712,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIaddElement(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIaddElement(${path}) res: `, res);
         return res;
       })
     );
@@ -725,7 +725,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
         return res;
       })
     );
@@ -736,7 +736,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
         return res;
       })
     );
@@ -747,7 +747,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIelementAvailableID(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIelementAvailableID(${path}) res: `, res);
         return res;
       })
     );
@@ -758,7 +758,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIcategory(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIcategory(${path}) res: `, res);
         return res;
       })
     );
@@ -769,7 +769,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIlistDietsByDate(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIlistDietsByDate(${path}) res: `, res);
         return res;
       })
     );
@@ -780,7 +780,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIlistAdvices(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIlistAdvices(${path}) res: `, res);
         return res;
       })
     );
@@ -791,7 +791,7 @@ export class DooleService {
       const endpoint = this.api.getEndpoint(path);
       return this.http.get(endpoint).pipe(
         map((res: any) => {
-          console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
+          //console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
           return res;
         })
       );
@@ -802,7 +802,7 @@ export class DooleService {
       const endpoint = this.api.getEndpoint(path);
       return this.http.get(endpoint).pipe(
         map((res: any) => {
-          console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
+          //console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
           return res;
         })
       );
@@ -814,7 +814,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIdetailDiets(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIdetailDiets(${path}) res: `, res);
         return res;
       })
     );
@@ -824,7 +824,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIdetailAdvices(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIdetailAdvices(${path}) res: `, res);
         return res;
       })
     );
@@ -837,7 +837,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIdrugsList(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIdrugsList(${path}) res: `, res);
         return res;
       })
     );
@@ -849,7 +849,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIdrugIntakeByDate(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIdrugIntakeByDate(${path}) res: `, res);
         return res;
 
       })
@@ -861,7 +861,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
         return res;
 
       })
@@ -873,7 +873,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
         return res;
 
       })
@@ -885,7 +885,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.put(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] putAPIdrugIntake(${path}) res: `, res);
+        //console.log(`[DooleService] putAPIdrugIntake(${path}) res: `, res);
         return res;
 
       })
@@ -897,7 +897,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPImedicationPlan(${path}) res: ${res}`, JSON.stringify(res));
+        //console.log(`[DooleService] deleteAPImedicationPlan(${path}) res: ${res}`, JSON.stringify(res));
         return res;
       })
     );
@@ -908,7 +908,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
+        //console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
         return res;
       })
     );
@@ -919,7 +919,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
         return res;
       })
     );
@@ -933,7 +933,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
         return res;
       })
     );
@@ -943,7 +943,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIgameId(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIgameId(${path}) res: `, res);
         return res;
       })
     );
@@ -954,7 +954,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIagenda(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIagenda(${path}) res: `, res);
         return res;
       })
     );
@@ -964,7 +964,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIagendaID(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIagendaID(${path}) res: `, res);
         return res;
       })
     );
@@ -975,7 +975,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIaddAgenda(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIaddAgenda(${path}) res: `, res);
         return res;
       })
     );
@@ -987,7 +987,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPIaddAgenda(${path}) res: `, res);
+        //console.log(`[DooleService] deleteAPIaddAgenda(${path}) res: `, res);
         return res;
       })
     );
@@ -998,7 +998,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         return res.allowed;
       })
     );
@@ -1009,7 +1009,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIstaffId(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIstaffId(${path}) res: `, res);
         return res;
       })
     );
@@ -1023,7 +1023,7 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
 
-        console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
         return res.messages as ShellChatModel[];
       })
     );
@@ -1050,7 +1050,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
         return res;
       })
     );
@@ -1061,7 +1061,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIreminderID(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIreminderID(${path}) res: `, res);
         return res;
       })
     );
@@ -1072,7 +1072,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] postAPIaddReminder(${path}) res: `, res);
+        //console.log(`[DooleService] postAPIaddReminder(${path}) res: `, res);
         return res;
       })
     );
@@ -1083,7 +1083,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res));
+        //console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res));
         return res;
 
       })

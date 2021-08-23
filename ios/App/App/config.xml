@@ -10,6 +10,15 @@
     <param name="ios-package" value="PhotoViewer"/>
   </feature>
 
+  <feature name="VoIPPushNotification">
+    <param name="ios-package" value="VoIPPushNotification"/>
+  </feature>
+
+  <feature name="BackgroundMode">
+    <param name="ios-package" value="APPBackgroundMode" onload="true"/>
+    <param name="onload" value="true"/>
+  </feature>
+
   <feature name="Badge">
     <param name="ios-package" value="APPBadge"/>
   </feature>
@@ -18,12 +27,21 @@
     <param name="ios-package" value="Calendar"/>
   </feature>
 
+  <feature name="CordovaCall">
+    <param name="ios-package" value="CordovaCall"/>
+    <param name="onload" value="true"/>
+  </feature>
+
   <feature name="Camera">
     <param name="ios-package" value="CDVCamera"/>
   </feature>
 
   <feature name="Chooser">
     <param name="ios-package" value="Chooser"/>
+  </feature>
+
+  <feature name="Device">
+    <param name="ios-package" value="CDVDevice"/>
   </feature>
 
   <feature name="SitewaertsDocumentViewer">
