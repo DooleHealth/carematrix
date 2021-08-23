@@ -656,7 +656,8 @@
         "mrw":"A través del servicio de MRW: ",
         "confirm":"Confirmar el envío",
         "correct":"Solicitud recibida correctamente",
-        "back":"Volver"
+        "back":"Volver",
+        "shipping_method":"Tipo de envío: "
     
       }
       

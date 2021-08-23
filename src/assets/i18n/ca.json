@@ -655,7 +655,8 @@
         "mrw":"A través del servei de MRW: ",
         "confirm":"Confirmar l'enviament",
         "correct":"Sol·licitud rebuda correctament",
-        "back":"Tornar"
+        "back":"Tornar",
+        "shipping_method":"Tipus d'enviament: "
       }
       
 }

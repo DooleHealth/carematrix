@@ -28,8 +28,10 @@ export class MedicationPage implements OnInit {
   checked:true
   petitions : any = [];
   date = Date.now()
-  diets = []
+  message: string
+  messages : any = [];
   directions = [] 
+  deliveries = [] 
   isNewEvent = true
   id:any
   isSubmitted = false;
@@ -99,13 +101,17 @@ export class MedicationPage implements OnInit {
 
   loadData(){
     this.isLoading = true;
-    console.log('[MedicationPage] getListMedications()');
+    console.log('hola');
     this.items = []
-    this.dooleService.getAPIlistDietsByDate(this.date).subscribe(
-      async (res: any) =>{
-        console.log('[DiaryPage] getDietList()', await res);
-        if(res.diets)
-        this.addItems(res.diets)  
+    this.dooleService.getAPImedicationsList().subscribe(
+      async (data: any) =>{
+        console.log('[MedicationPage] loadDataDirections()', await data); 
+        if(data){
+          this.deliveries = data.petitions
+          
+          console.log(this.deliveries ); 
+       
+        }
        },(err) => { 
           console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
@@ -205,9 +211,11 @@ export class MedicationPage implements OnInit {
       this.isLoading = true
         this.dooleService.postAPImedicationSendPetition(this.formulario.value).subscribe(
         async (res: any)=>{
-      console.log('[MedicationPage] postAPImedicationSendPetition()', await res);        
+      console.log('[MedicationPage] postAPImedicationSendPetition()', await res);    
+      this.messages = res    
  
       this.isLoading = false
+      this.presentAlert();
      },(err) => { 
       this.isLoading = false
         console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
@@ -235,6 +243,23 @@ export class MedicationPage implements OnInit {
         this.direction = address;
         this.paso = 'uno';
         return;
+    }
+    async presentAlert() {
+      
+      this.translate.get('info.button').subscribe(
+        async button => {
+          // value is our translated string
+          const alert = await this.alertController.create({
+            cssClass: "alertClass",
+            header: this.translate.instant('info.title'),
+            // subHeader: 'Subtitle',
+            message: this.messages.message,
+            buttons: [button]
+          });
+      
+          await alert.present();
+        });
+      
     }
   }
   
