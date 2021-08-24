@@ -41,10 +41,13 @@ export class SettingsPage implements OnInit {
     private faio: FingerprintAIO,
     ) {}
   ngOnInit() {
-    this.getNotificationConfiguration()
-    this.getLocalLanguages()
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
+    this.getLocalLanguages()
+  }
+
+  ionViewDidEnter(){
+    this.getNotificationConfiguration()
   }
 
   getNotificationConfiguration(){
@@ -54,6 +57,7 @@ export class SettingsPage implements OnInit {
        if(res){
         this.getConfigurationParams(res)
        }
+  
        },(err) => { 
           console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
@@ -62,7 +66,6 @@ export class SettingsPage implements OnInit {
 
   getConfigurationParams(params: any){
     this.authentication = (params?.two_factor_authentication== "1")? true:false
-    //this.faceId = (params?.faceIdNotificaton== "1")? true:false
     this.faceId = JSON.parse(localStorage.getItem('settings-bio'))
     console.log('[SettingsPage] getConfigurationParams()', this.faceId, localStorage.getItem('settings-bio'));
     this.communications = (params?.communicationsNotificaton== "1")? true:false
@@ -88,13 +91,9 @@ export class SettingsPage implements OnInit {
   }
 
   changeFaceId(){
-    console.log(`[SettingsPage] changeFaceId(${this.faceId})`);
-    if(this.faceId){
-      if(!JSON.parse(localStorage.getItem('settings-bio')))
-      this.showBioAuthDlg()
-    }
-    else
-      localStorage.setItem('settings-bio', 'false');
+    if(this.faceId == JSON.parse(localStorage.getItem('settings-bio')))
+      return
+    this.showBioAuthDlg(this.faceId)
   }
 
   changeCommunications(){
@@ -174,9 +173,9 @@ export class SettingsPage implements OnInit {
   sendConfigution(params){
     this.dooleService.postAPIConfiguration(params).subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] sendConfigution()', await res);
+       //console.log('[SettingsPage] sendConfigution()', await res);
        if(res.success){
-        console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
+       // console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
        }
         else{
           console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
@@ -220,14 +219,14 @@ export class SettingsPage implements OnInit {
   
     }
 
-    async showBioAuthDlg() {
+    async showBioAuthDlg(faceId: boolean) {
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         this.faio.isAvailable().then((result: any) => {
           console.log(result)
   
           this.faio.show({
-            cancelButtonTitle: this.translate.instant('face-id.cancel'),
+            cancelButtonTitle: this.translate.instant('button.cancel'),
             title: this.translate.instant('face-id.title'),
             fallbackButtonTitle: this.translate.instant('face-id.fallback'),
             subtitle: this.translate.instant('face-id.subtitle'),
@@ -235,16 +234,26 @@ export class SettingsPage implements OnInit {
   
           })
             .then(async (result: any) => {
-             let biometric = this.getStorageBiometric()
-             if(biometric)
-             await this.updateBiometrics()
+              console.log('[SettingsPage] registerBiometrics() result', result);
+            if(result == false){
+              this.faceId = !this.faceId
+              return
+            }
+            if(!faceId){
+              localStorage.setItem('settings-bio', 'false');
+              return
+            }
+
+             let biometric: any = this.getStorageBiometric()
+             if(biometric?.id)
+             await this.updateBiometrics(faceId)
              else
-             await this.registerBiometrics();
+             await this.registerBiometrics(faceId);
             })
             .catch(async (error: any) => {
               console.log(error);
               if (error.code == -102) {
-                setTimeout(() => this.showBioAuthDlg(), 500);
+                setTimeout(() => this.showBioAuthDlg(false), 500);
               }
             });
   
@@ -259,7 +268,7 @@ export class SettingsPage implements OnInit {
   
     }
 
-    async registerBiometrics() {
+    async registerBiometrics(faceId) {
       console.log('[SettingsPage] registerBiometrics()');
       let hash = Md5.hashStr(Date.now().toString()).toString();
         this.authService.postAPIbiometric({hash: hash}).subscribe(
@@ -279,7 +288,7 @@ export class SettingsPage implements OnInit {
           });
     }
 
-    async updateBiometrics() {
+    async updateBiometrics(faceId) {
       console.log('[SettingsPage] updateBiometrics()');
       let hash = Md5.hashStr(Date.now().toString()).toString();
         this.authService.putAPIbiometric(this.biometric.id, {hash: hash}).subscribe(
@@ -301,16 +310,20 @@ export class SettingsPage implements OnInit {
 
     getStorageBiometric(): Promise<any> {
       const bio = localStorage.getItem('bio-auth')
-      console.log(`[AuthenticationService] getStorageBiometric()`, JSON.parse(bio));
+      console.log(`[SettingsPage] getStorageBiometric()`, JSON.parse(bio));
       return JSON.parse(bio);
     }
 
     isAvailableFaID(){
       this.faio.isAvailable().then((result: any)  =>{
-        console.log(result)
+        console.log(`[SettingsPage] isAvailableFaID()`,result)
+        if(JSON.parse(localStorage.getItem('settings-bio')) === undefined)
+        localStorage.setItem('settings-bio','false');
       }).catch(async (error: any) => {
         localStorage.setItem('show-bio-dialog','false');
+        localStorage.setItem('settings-bio','false');
         this.isFaID = false
+        this.faceId = false
       });
     }
 

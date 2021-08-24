@@ -1129,10 +1129,6 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-
-        //console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
-        return res.allowed;
-
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         let allowed = res.allowed
         if(res.allowed === undefined)

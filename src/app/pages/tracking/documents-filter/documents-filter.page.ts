@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
@@ -9,8 +9,8 @@ export interface Filter {
   start_date?: string,
   end_date?: string,
   diagnosticTestTypes?: [],
-  profesional?: [],
-  sources?: [],
+/*   profesional?: [],
+  sources?: [], */
 }
 
 @Component({
@@ -19,11 +19,12 @@ export interface Filter {
   styleUrls: ['./documents-filter.page.scss'],
 })
 export class DocumentsFilterPage implements OnInit {
-// toggle = Boolean(true)
+  @Input()filter: Filter;
+  toggle = false
+  toggle2 = false
   listTestType =[]
-  listTestTypeBackup = []
+  //listTestTypeBackup = []
   diagnosticTestTypes = []
-  filter: Filter
   currentDate = new Date().toISOString()
   form: FormGroup;
   isLoading = false
@@ -43,6 +44,37 @@ export class DocumentsFilterPage implements OnInit {
       diagnosticTestTypes: [this.diagnosticTestTypes],
     });
     this.getDiagnosticTestType()
+    this.setFilter()
+  }
+
+  setFilter(){
+    if(this.filter ){
+      if(this.filter?.start_date){
+        this.form.get('start_date').setValue(this.filter?.start_date)
+        this.toggle = true
+      }
+      if(this.filter?.end_date){
+        this.form.get('end_date').setValue(this.filter?.end_date)
+        this.toggle = true
+      }
+       if(this.filter?.diagnosticTestTypes){
+        console.log('[DocumentsFilterPage] setFilter()', this.filter?.diagnosticTestTypes);
+        this.toggle2 = true
+        this.diagnosticTestTypes = this.filter?.diagnosticTestTypes
+       }
+    }
+  }
+
+  setCheckedDiagnosticTest(){
+    this.listTestType.forEach(test => {
+      if(this.filter?.diagnosticTestTypes){
+        let index = this.filter?.diagnosticTestTypes.findIndex(element => (element === test.id))
+        if(index >= 0)  test['checked'] = true
+        else  test['checked'] = false
+      }else{
+        test['checked'] = false
+      }
+    })
   }
 
   async getDiagnosticTestType(){
@@ -53,7 +85,10 @@ export class DocumentsFilterPage implements OnInit {
       async (res: any) =>{
         console.log('[DocumentsFilterPage] getDiagnosticTestType()', await res);
         this.listTestType = res.diagnosticTestTypes
-        this.listTestTypeBackup = this.listTestType
+        this.listTestType.forEach(test => {test['checked'] = false})
+        console.log('[DocumentsFilterPage] getDiagnosticTestType()', await this.listTestType);
+        //this.listTestTypeBackup = this.listTestType
+        this.setCheckedDiagnosticTest()
         this.isLoading = false
        },(err) => { 
         this.isLoading = false
@@ -66,7 +101,7 @@ export class DocumentsFilterPage implements OnInit {
       });
   }
 
-  async filterList(evt) {
+/*   async filterList(evt) {
     console.log('[DocumentsFilterPage] filterList()');
     this.listTestType = this.listTestTypeBackup;
     const searchTerm = evt.srcElement.value;
@@ -80,7 +115,7 @@ export class DocumentsFilterPage implements OnInit {
         return (test.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
     });
-  }
+  } */
 
   linesNone(index){
     if(index === (this.listTestType.length -1)){
@@ -108,7 +143,7 @@ export class DocumentsFilterPage implements OnInit {
       this.modalCtrl.dismiss({error:null, action: 'add', filter: this.form.value});
   }
 
-  close() {
+  close(){
     this.modalCtrl.dismiss({error:null});
   }
 
