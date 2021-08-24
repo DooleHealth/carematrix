@@ -27,15 +27,9 @@
                     <ion-button type="submit" size="medium" [disabled]="!loginForm.valid"
                     color="primary" expand="block" class="enter-btn">
                     {{ 'landing.button_signin' | translate}}</ion-button>
-       
-<!--                     <ion-button expand="block" color="transparent" class="buttonLink">
-                        {{ 'landing.button_registre' | translate}}
-                    </ion-button> -->
                 </form>
                 <div style="margin-top: 5%;">
                     <div *ngIf="this.hasBiometricAuth">
-                        <ion-text>
-                          {{ 'landing.too' | translate}}</ion-text>
                       <ion-button expand="block" size="medium" (click)="doBiometricLogin()">
                         <ion-icon slot="start" name="finger-print-outline"></ion-icon>
                         {{ 'landing.biometrics' | translate }}
