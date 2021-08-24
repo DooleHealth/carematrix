@@ -1,6 +1,6 @@
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button  (click)="close()">
         <ion-icon color="primary" name="chevron-back-outline" slot="icon-only"></ion-icon>
@@ -9,7 +9,7 @@
       <ion-title class="toolbarTitle">{{'medical_calendar.header' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="save()">
-        {{'button.ok' | translate}}
+        <ion-icon name="checkmark-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

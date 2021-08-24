@@ -1,6 +1,6 @@
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button fill="clear" (click)="back()">
         <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
@@ -12,7 +12,7 @@
         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-button slot="end" fill="clear" routerLink="/agenda" [state]="{calendar:listAppointment}">
+    <ion-button slot="end" fill="clear" routerLink="/agenda" [state]="{calendar:listAppointment}" routerLinkActive='active-item'>
       <ion-icon slot="icon-only" name="list-circle" color="primary"></ion-icon>
     </ion-button>
     <ion-button slot="end" fill="clear"  (click)="addAgenda()">

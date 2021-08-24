@@ -1,7 +1,7 @@
 <ion-header>
   <!-- <ion-toolbar> -->
     
-    <ion-toolbar [ngSwitch]="segment">
+    <ion-toolbar mode="ios" [ngSwitch]="segment">
       <ion-title>{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" (click)="addFilters()"></ion-icon>&nbsp;
@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
-
+  <span><changeUser></changeUser></span>
 <!-- SegmentBar -->
 
   <ion-segment 
@@ -38,7 +38,7 @@
   <!-- Documents -->
  
   <div [ngSwitch]="segment">
-    
+  
     <div *ngSwitchCase="'documents'">
       
       <div *ngIf="this.listDiagnostic.length > 0; else noData">
@@ -47,7 +47,7 @@
        <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}"> -->
         <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{ formatSelectedDate(list.date, 'EEEE, d MMMM YYYY')}}</ion-label>
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
-          <ion-card class="cardProfile" routerLink="/document-detail" [state]="{id: doc.id}">
+          <ion-card class="cardProfile" routerLink="/document-detail" [state]="{id: doc.id}"  routerLinkActive='active-item'>
             <ion-item lines="none">
               <div class="verticalLine"></div>
               <ion-grid>
@@ -79,7 +79,7 @@
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" >
-                    <p routerLink="/document-detail" [state]="{id: doc.id}">{{ 'documents.button_detail' | translate}}</p></ion-card-title>
+                    <p routerLink="/document-detail" [state]="{id: doc.id}"  routerLinkActive='active-item'>{{ 'documents.button_detail' | translate}}</p></ion-card-title>
                 </ion-col>
               </ion-grid>
             </ion-item>
@@ -144,7 +144,7 @@
     <ion-list *ngFor="let group of this.groupedElements">
       <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
       <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
-        <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
+        <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}"  routerLinkActive='active-item'>
           <div *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' " class="verticalLine"
             [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
           <div *ngIf="group.group=='Bioquímica'" class="verticalLine"
@@ -235,8 +235,9 @@
     </ion-grid>
 </div>
 </ng-template>
+
 </ion-content>
-<app-change-user></app-change-user>
+
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

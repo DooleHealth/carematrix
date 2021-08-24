@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
 <!--     <ion-buttons slot="end" routerLink="addCard" >
     <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
   </ion-buttons>  -->
-  <ion-button slot="end" fill="clear" routerLink="../edit-contact" [state]="{contact:contact}">
+  <ion-button slot="end" fill="clear" routerLink="../edit-contact" [state]="{contact:contact}" routerLinkActive='active-item'>
     {{ 'detail_contact.button_edit' | translate}}</ion-button>
   </ion-toolbar>
 </ion-header>

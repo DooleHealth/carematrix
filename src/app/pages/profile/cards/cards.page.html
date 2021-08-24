@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'health_card.header_card' | translate}}</ion-title>
     <ion-buttons slot="end" (click)="addCard()" >
@@ -16,7 +16,7 @@
   </div>
 
   <ion-list *ngIf="listCard.length > 0; else noData">
-    <ion-card *ngFor="let card of listCard" class="cardProfile" routerLink="detailCard" [state]="{id:card.id}">
+    <ion-card *ngFor="let card of listCard" class="cardProfile" routerLink="detailCard" [state]="{id:card.id}" routerLinkActive='active-item'>
       <ion-card-content>
         <ion-item lines="none">
             <img [src]="(card.thumbnail !== null)? 'card.thumbnail':'assets/images/tarjeta.png'">

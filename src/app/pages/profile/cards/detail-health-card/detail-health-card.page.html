@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'detail_health_card.header_detail_card' | translate}}</ion-title>
-    <ion-button (click)="editCard()" slot="end" fill="clear">{{ 'button.edit' | translate}}</ion-button>
+    <ion-button (click)="editCard()" slot="end" fill="clear"> <ion-icon name="create-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
