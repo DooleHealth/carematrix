@@ -71,6 +71,7 @@ export class TrackingPage implements OnInit {
 
   ionViewDidEnter(){
     console.log('[TrackingPage] ionViewDidEnter()');
+    this.filter = undefined;
     this.segmentChanged();
     this.getFormList()
   }
@@ -99,11 +100,11 @@ export class TrackingPage implements OnInit {
       async (res: any) =>{
         console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
         let diagnosticTests = res.diagnosticTests
-        if(diagnosticTests && diagnosticTests.length >0){
+        if(diagnosticTests && diagnosticTests.length >=0){
           this.diagnosticTests = []
           this.listDiagnostic = []
           this.groupDiagnosticsByDate(res)
-          this.filter = null
+          //this.filter = null
         }
         this.isLoading = false
        },(err) => { 
@@ -281,7 +282,7 @@ async addDocument(){
     async addFilters(){
       const modal = await this.modalCtrl.create({
         component:  DocumentsFilterPage,
-        componentProps: { },
+        componentProps: { filter: this.filter},
         cssClass: "modal-custom-class"
       });
     

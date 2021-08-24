@@ -1,7 +1,9 @@
 .imgProfile{
     width: 30px;
 }
-
+.active-item {
+  --color: var(--ion-color-primary);
+}
 .txtTitleHome{
     font-size: 18px;
     font-weight: 700;

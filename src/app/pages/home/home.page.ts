@@ -102,6 +102,7 @@ export class HomePage implements OnInit {
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
     this.checkHealthAccess();
+    // this.slideGoalChange() 
   }
 
 
@@ -136,9 +137,11 @@ export class HomePage implements OnInit {
   }
 
   setAnalyticsUserProperty(){
-    this.analyticsService.setProperty('age', this.userDoole.age)
-    this.analyticsService.setProperty('language', this.userDoole.language.name)
-    this.analyticsService.setProperty('gender', this.userDoole.gender)
+    if(this.userDoole?.age)
+    this.analyticsService.setProperty('Edad', this.userDoole.age)
+    if(this.userDoole?.language?.name)
+    this.analyticsService.setProperty('Idioma', this.userDoole.language.name)   
+    //this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
   async getUserInformation(){
@@ -180,6 +183,7 @@ export class HomePage implements OnInit {
         this.getDrugIntake()
         this.isLoading = false
         //Analytics
+        console.log('[HomePage] getUserInformation()', this.userDoole);
         this.setAnalyticsUserProperty()
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 

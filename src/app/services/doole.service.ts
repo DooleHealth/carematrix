@@ -950,6 +950,18 @@ export class DooleService {
       })
     );
   }
+  getAPImedicationsList(): Observable<any> {
+    let path = `sendmedication/list`;
+    // let httpParams = new HttpParams();
+    // httpParams = (query) ? httpParams.append('search', query) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIdirectionList(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   postAPIsendDirection(params: Object): Observable<any> {
     let path = 'user/address';
@@ -1117,10 +1129,6 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-
-        //console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
-        return res.allowed;
-
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         let allowed = res.allowed
         if(res.allowed === undefined)

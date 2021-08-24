@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar [ngSwitch]="segment">
+  <ion-toolbar mode="ios" [ngSwitch]="segment">
     <ion-row class="textBlueCentered1">
       <ion-col size="2">
         <ion-buttons>
@@ -26,7 +26,7 @@
     </ion-row>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="cart-outline" routerLink="/medication" ></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="cart-outline" routerLink="/medication"  routerLinkActive='active-item'></ion-icon>
     </ion-buttons>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
@@ -43,7 +43,7 @@
 <ion-content>
 
   <!-- SegmentBar -->
-
+  <span><changeUser></changeUser></span>
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
     <ion-segment-button value="diets">
       <ion-label>{{'diary.field_diet' | translate}}</ion-label>
@@ -83,7 +83,7 @@
 
   <!-- segment -->
   <div class="verticalLine2" [ngSwitch]="segment">
-
+   
     <!-- Diets-->
 
     <div *ngSwitchCase="'diets'">
@@ -92,13 +92,13 @@
       </div>
       <ion-list *ngIf="!this.isLoading && this.items.length > 0 ; else noData">
         <ion-card *ngFor="let item of items" class="cardProfile">
-          <ion-item lines="none" routerLink="diets-detail" [state]="{id: item.item.id}">
+          <ion-item lines="none" routerLink="diets-detail" [state]="{id: item.item.id}" routerLinkActive='active-item'>
             <ion-col size="2">
               <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
             <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
-            <!-- <p class="txtTitleTrackingLittle">30/02/21</p> -->
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>    
 
           </ion-item>
           <!-- <ion-item *ngIf="!item.expanded" lines="none">
@@ -217,16 +217,17 @@
         <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <ion-list *ngIf="items.length > 0; else noData">
-        <ion-card class="cardProfile" *ngFor="let item of items" routerLink="games-detail" [state]="{game: item.item}">
-          <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)" [src]='item.item.file.temporaryUrl' />
+        <ion-card class="cardProfile" *ngFor="let item of items" routerLink="games-detail" [state]="{game: item.item}" routerLinkActive='active-item'>
+          <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)" [src]='item.item.file.temporaryUrl'/>
           <ion-item lines="none" (click)="openGames(item.item)">
             <div>
               <ion-img src='assets/icons/game-controller.svg' style="width: 130%;">
               </ion-img>
             </div>
             <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{item.item.title}}</ion-label>
+            
             <div>
-              <ion-icon name="chevron-forward-outline"></ion-icon>
+              <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>    
             </div>
           </ion-item>
           <ion-card-content [innerHtml]="item.item?.description">
@@ -245,7 +246,7 @@
         <ion-list *ngFor="let group of this.groupedElements">
           <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
           <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
-            <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
+            <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}" routerLinkActive='active-item'>
               <div *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' " class="verticalLine"
                 [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
               <div *ngIf="group.group=='Bioquímica'" class="verticalLine"
@@ -265,15 +266,13 @@
                     <ion-icon *ngIf="group.group=='Constantes'" style="align-items: left;margin-right: 5px;zoom: 2;"
                       [ngStyle]="{'color': (element?.color)? element?.color: '#bcbcbc' }"
                       name="{{element?.icon? element?.icon: 'help-outline'}}"></ion-icon>
-                    <!-- <ion-img  *ngIf="element.name=='Peso'"  style="align-items: left;margin-right: 5px;" src='assets/icons/VectorConsumo.svg' >
-              </ion-img> -->
                   </ion-col>
                   <ion-col size="8">
                     <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
                   </ion-col>
                   <ion-col size="2">
                     <ion-label style="text-align: right;">
-                      <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+                      <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>    
                     </ion-label>
                   </ion-col>
                 </ion-row>
@@ -287,8 +286,8 @@
         </ion-list>
       </div>
     </div>
-
-  </div>
+    
+    </div>
 
   <ng-template #noData>
     <div *ngIf="!this.isLoading && this.items.length == 0">
@@ -307,7 +306,6 @@
     </div>
   </ng-template>
 </ion-content>
-<app-change-user></app-change-user>
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

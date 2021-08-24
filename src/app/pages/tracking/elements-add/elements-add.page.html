@@ -1,12 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button (click)="close()" text="{{ 'alert.button_cancel' | translate}}"></ion-back-button>
+      <ion-back-button (click)="close()" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
-    <ion-button fill="clear" slot="end"  (click)="submit()">
-      {{ 'button.ok' | translate}}
-    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="submit()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

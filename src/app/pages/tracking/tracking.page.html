@@ -1,7 +1,7 @@
 <ion-header>
   <!-- <ion-toolbar> -->
     
-    <ion-toolbar [ngSwitch]="segment">
+    <ion-toolbar mode="ios" [ngSwitch]="segment">
       <ion-title>{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" (click)="addFilters()"></ion-icon>&nbsp;
@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
-
+  <span><changeUser></changeUser></span>
 <!-- SegmentBar -->
 
   <ion-segment 
@@ -38,7 +38,7 @@
   <!-- Documents -->
  
   <div [ngSwitch]="segment">
-    
+  
     <div *ngSwitchCase="'documents'">
       
       <div *ngIf="this.listDiagnostic.length > 0; else noData">
@@ -46,9 +46,8 @@
         <!-- <div class="dot" [ngStyle]="{'background': list.color}"></div>
        <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}"> -->
         <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}">{{ formatSelectedDate(list.date, 'EEEE, d MMMM YYYY')}}</ion-label>
-  
         <ion-list *ngFor="let doc of list.diagnosticTests"> 
-          <ion-card class="cardProfile">
+          <ion-card class="cardProfile" routerLink="/document-detail" [state]="{id: doc.id}"  routerLinkActive='active-item'>
             <ion-item lines="none">
               <div class="verticalLine"></div>
               <ion-grid>
@@ -57,12 +56,17 @@
                     <ion-img style="align-items: left;" src='assets/icons/document-attach.svg' style="margin-right: 5px;">
                     </ion-img>
                   </ion-col>
-                  <ion-col size="6">
-                    <ion-card-title class="txtTitleGoals">{{doc.diagnostic_test_type?.name}}</ion-card-title>
+                  <ion-col size="4">
+                    <ion-text class="txtTitleGoals">{{doc.diagnostic_test_type?.name}}</ion-text>
                   </ion-col>
                   <ion-col size="4">
-                    <ion-card-title class="txtTitleTrackingDate" >{{formatSelectedDate(doc.data, 'dd MMM y')}}</ion-card-title>
-                  </ion-col>
+                    <ion-text class="txtTitleTrackingDate" >{{formatSelectedDate(doc.data, 'dd MMM y')}}</ion-text>
+                   
+                  </ion-col>  
+                  <ion-col size="2">
+                
+                     <ion-icon class="arrow" size="small" name="chevron-forward-outline"></ion-icon> 
+                  </ion-col>  
                 </ion-row>
     
                 <ion-col size="12">
@@ -75,7 +79,7 @@
                 </ion-col>
                 <ion-col size="12">
                   <ion-card-title class="textBlue" >
-                    <p routerLink="/document-detail" [state]="{id: doc.id}">{{ 'documents.button_detail' | translate}}</p></ion-card-title>
+                    <p routerLink="/document-detail" [state]="{id: doc.id}"  routerLinkActive='active-item'>{{ 'documents.button_detail' | translate}}</p></ion-card-title>
                 </ion-col>
               </ion-grid>
             </ion-item>
@@ -90,7 +94,7 @@
 <div  *ngSwitchCase="'forms'">
   <div *ngIf="this.forms.length > 0; else noData">
   <ion-list *ngFor="let event of this.forms">
-    <ion-card class="cardProfile">
+    <ion-card class="cardProfile" [routerLink]="['form', { id : event?.id }]">
       <ion-item lines="none">
         <div class="verticalLinePurple"></div>
         <ion-grid>
@@ -99,12 +103,12 @@
               <ion-img src='assets/icons/document-text.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-col size="10">
+            <ion-col size="8">
               <ion-card-title class="txtTitleGoals">{{event.title}}</ion-card-title>
             </ion-col>
-<!--             <ion-col size="4">
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-col> -->
+        <ion-col size="2">
+              <ion-icon name="chevron-forward-outline" class="arrow"  size="small"></ion-icon>
+            </ion-col>
           </ion-row>
           <ion-col size="12" *ngIf="event.description != '' ">
             <ion-card-title class="txtTracking" [innerHtml]="event.description">
@@ -133,7 +137,53 @@
 
     <!-- Graphics -->
 <div  *ngSwitchCase="'graphics'">
-  <div *ngIf="groupedElements.length > 0; else noData">
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  <div *ngIf="!this.isLoading && groupedElements.length > 0; else noData">
+    <ion-list *ngFor="let group of this.groupedElements">
+      <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
+      <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
+        <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}"  routerLinkActive='active-item'>
+          <div *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' " class="verticalLine"
+            [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
+          <div *ngIf="group.group=='Bioquímica'" class="verticalLine"
+            [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
+          <div *ngIf="group.group=='Constantes'" class="verticalLine"
+            [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="2">
+                <ion-icon *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' "
+                  style="align-items: left;margin-right: 5px;zoom: 2; "
+                  [ngStyle]="{'color': (element?.color)? element?.color: '#bcbcbc' }"
+                  name="{{element?.icon? element?.icon: 'help-outline'}}"></ion-icon>
+                <ion-icon *ngIf="group.group=='Bioquímica'" style="align-items: left;margin-right: 5px;zoom: 2;"
+                  [ngStyle]="{'color': (element?.color)? element?.color: '#bcbcbc' }"
+                  name="{{element?.icon? element?.icon: 'help-outline'}}"></ion-icon>
+                <ion-icon *ngIf="group.group=='Constantes'" style="align-items: left;margin-right: 5px;zoom: 2;"
+                  [ngStyle]="{'color': (element?.color)? element?.color: '#bcbcbc' }"
+                  name="{{element?.icon? element?.icon: 'help-outline'}}"></ion-icon>
+              </ion-col>
+              <ion-col size="8">
+                <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label style="text-align: right;">
+                  <ion-icon name="chevron-forward-outline" slot="end" class="arrow" size="small"></ion-icon>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-col size="12">
+              <ion-card-title class="txtTitleGoals">{{element.value}} {{element.units}}
+              </ion-card-title>
+            </ion-col>
+          </ion-grid>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </div>
+  <!-- <div *ngIf="groupedElements.length > 0; else noData">
     <ion-list *ngFor="let group of this.groupedElements">
       <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group  }}</ion-label>
       <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
@@ -154,7 +204,6 @@
               </ion-col>
               <ion-col size="2">
                 <ion-label style="text-align: right;">
-                  <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
                 </ion-label>
               </ion-col>
             </ion-row>
@@ -166,7 +215,7 @@
         </ion-item>
       </ion-card>
     </ion-list>
-  </div>
+  </div> -->
 </div>
 </div>
 
@@ -186,8 +235,9 @@
     </ion-grid>
 </div>
 </ng-template>
+
 </ion-content>
-<app-change-user></app-change-user>
+
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

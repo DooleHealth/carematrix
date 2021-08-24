@@ -110,7 +110,7 @@
           "data": "Tus Datos",
           "family_unit": "Unidad Familiar",
           "emergency": "Contactos de Emergencia",
-          "your_health_cards": "Tus Tarjetas Sanitarias", 
+          "your_health_cards": "Tarjetas Sanitarias", 
           "your_goals": "Tus Objetivos",
           "payment_method": "Método de Pago"
         },
@@ -656,7 +656,8 @@
         "mrw":"A través del servicio de MRW: ",
         "confirm":"Confirmar el envío",
         "correct":"Solicitud recibida correctamente",
-        "back":"Volver"
+        "back":"Volver",
+        "shipping_method":"Tipo de envío: "
     
       }
       

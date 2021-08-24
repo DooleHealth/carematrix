@@ -1,12 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button (click)="close()" text="{{ 'alert.button_cancel' | translate}}"></ion-back-button>
+      <ion-back-button (click)="close()" text="" icon="close"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'documents_filter.header' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary"
-       (click)="submit()">{{ 'alert.button_apply' | translate}}</ion-button>
+      <ion-button  color="primary"
+       (click)="submit()">
+       <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -25,7 +27,7 @@
   <form (ngSubmit)="submit()" [formGroup]="form"> 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_date' | translate}}</ion-text>
-    <ion-toggle slot="end" color="success" (ionChange)='(toggle = ! toggle) ? toggle : !toggle;'></ion-toggle>
+    <ion-toggle slot="end" color="success" [checked]="toggle" (ionChange)='(toggle = ! toggle) ? toggle : !toggle;'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle">
     <ion-list>
@@ -42,13 +44,13 @@
 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_test_type' | translate}}</ion-text>
-    <ion-toggle slot="end" color="success" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2;'></ion-toggle>
+    <ion-toggle slot="end" color="success" [checked]="toggle2" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2;'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle2">
     <ion-list *ngFor="let test of listTestType; let i = index">
       <ion-item [lines]="linesNone(i)">
         <ion-label>{{test.name}}</ion-label>
-        <ion-checkbox slot="start"  (ionChange)="actionCheckboxTestType($event, test.id)"></ion-checkbox>
+        <ion-checkbox slot="start" [checked]="test?.checked" (ionChange)="actionCheckboxTestType($event, test.id)"></ion-checkbox>
       </ion-item>
     </ion-list>
   </ion-card>

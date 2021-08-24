@@ -10,16 +10,16 @@
 </ion-header> -->
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button (click)="close()">
-        <ion-icon name="close" slot="icon-only"></ion-icon>
+        <ion-icon class="primaryIcon" name="close" text=""></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button  slot="end" fill="clear" (click)="submit()">
-        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      <ion-button  slot="end" (click)="submit()">
+        <ion-icon class="primaryIcon" name="checkmark-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-button slot="start" fill="clear" (click)="goBacktoProfile()">
       <ion-icon name="close"></ion-icon>
     </ion-button>
     <ion-title>{{'report_problem.title_report_problem' | translate }}</ion-title>
     <ion-button slot="end" fill="clear" (click)="submit()">
-      {{'report_problem.button_send' | translate }}
+      <ion-icon name="checkmark-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>

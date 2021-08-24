@@ -22,7 +22,7 @@ export class AdvicesPage implements OnInit {
   advices = []
   groupedElements: any = [];
   date = Date.now()
-   segment = 'advices'
+   segment = 'news'
   // segment = 'news'
   isLoading = false
   @ViewChild('slides') slides: IonSlides;

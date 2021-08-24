@@ -1,25 +1,27 @@
-<ion-header >
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button fill="clear" (click)="back()">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
       <h3 class="textBlueCentered1">{{ viewTitle | titlecase }}</h3>
-      <ion-button fill="clear" (click)="next()">
-        <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-button slot="end" fill="clear" routerLink="list-appointment" [state]="{calendar:eventSource}">
-      <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
-    </ion-button>
-    <ion-button slot="end" fill="clear" (click)="addAgenda()">
-      <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
-    </ion-button>
+        <ion-button fill="clear" (click)="next()">
+          <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button routerLink="list-appointment" [state]="{calendar:eventSource}" routerLinkActive='active-item'>
+          <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
+        </ion-button>
+        <ion-button (click)="addAgenda()">
+          <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+        </ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- 
+  <span><changeUser></changeUser></span>
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30" startingDayWeek="1"
@@ -94,8 +96,9 @@
       </ion-item>
     </ion-list>
   </ng-template>
+ 
 </ion-content>
-<app-change-user></app-change-user>
+
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

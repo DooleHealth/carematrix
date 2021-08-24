@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Cancelar" ></ion-back-button>
+      <ion-back-button text="" ></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'emergency_contact.header_relationship' | translate}}</ion-title>
   </ion-toolbar>
@@ -16,7 +16,7 @@
   <ion-spinner name="bubbles"></ion-spinner>
 </div>
 <ion-list *ngFor="let relationship of listRelationship">
-  <ion-item (click)="getDataContact(relationship)" class="ion-activatable ripple-parent" routerLink="../edit-contact" [state]="{newContact: emergencyContact, socialRelationType:relationship}">
+  <ion-item (click)="getDataContact(relationship)" class="ion-activatable ripple-parent" routerLink="../edit-contact" [state]="{newContact: emergencyContact, socialRelationType:relationship}"  routerLinkActive='active-item'>
     <ion-label class="txtPaddingLeft" >
       {{relationship.name}}
     </ion-label>

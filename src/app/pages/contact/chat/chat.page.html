@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'chat.header' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" routerLink="medical-directory" [state]="{isChat:true}">
+      <ion-button color="primary" routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item'>
         <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
         <ion-item lines="none">
           <ion-thumbnail slot="start">
             <app-aspect-ratio [ratio]="{w:1, h:1}">
-              <app-image-shell animation="spinner" [src]="null" [alt]="'Sample Image'" class="img-wrapper-doctors">
+              <app-image-shell animation="spinner" [src]="null" [alt]="'Sample Image'" class="img-wrapper-doctors" routerLinkActive='active-item'>
               </app-image-shell>
             </app-aspect-ratio>
           </ion-thumbnail>
@@ -35,7 +35,7 @@
       <span *ngIf="post?.recipients?.length == 2">
         <div *ngFor="let item of post?.recipients; let i = index">
           <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation"
-            [state]="{staff:item, chat: post.message?.message_header_id }">
+            [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
             <ion-thumbnail slot="start">
               <app-aspect-ratio [ratio]="{w:1, h:1}">
                 <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
@@ -67,7 +67,7 @@
         <div *ngFor="let item of post?.recipients; let i = index">
           <span *ngIf="i === 0">
             <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation"
-              [state]="{staff:item, chat: post.message?.message_header_id }">
+              [state]="{staff:item, chat: post.message?.message_header_id }" routerLinkActive='active-item'>
               <ion-thumbnail slot="start">
                 <app-aspect-ratio [ratio]="{w:1, h:1}">
                   <app-image-shell animation="spinner" src="assets/images/group.png" [alt]="'Sample Image'"
