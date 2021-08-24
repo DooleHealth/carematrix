@@ -10,3 +10,35 @@
   .ios .arrow{
     display: none;
   }
+
+  #container * {
+    margin: 0;
+    padding: 0;
+  }
+  #container {
+    width: 100%;
+  
+  }
+  #left,
+  #middle,
+  #right {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: top;
+  }
+  #left {
+    width: 10%;
+  }
+  #middle {
+    vertical-align: bottom;
+    width: 80%;
+  }
+  #right {
+    vertical-align: bottom;
+    width: 10%;
+  }
+
+  section {
+    margin: 10em;
+  }

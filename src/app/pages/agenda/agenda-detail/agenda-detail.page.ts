@@ -195,7 +195,7 @@ export class AgendaDetailPage implements OnInit {
       toolbar: 'yes'
     };
 
-    console.log('[TrackingPage] openForm()',  this.auth.user);
+    console.log('[AgendaPage] openForm()',  this.auth.user);
 
     if(this.auth !==undefined || this.auth.user !== undefined){
       var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+id+'" method="post" enctype="multipart/form-data">' +
@@ -313,5 +313,18 @@ export class AgendaDetailPage implements OnInit {
     await modal.present();
 
   }
+
+  getName(m){
+    console.log('[AgendaPage] getName()', JSON.stringify(m));
+    if(m?.name && m?.name !== "")
+      return m.name
+    else if(m?.file_name)
+      return m?.file_name.split('/').pop();
+    else if(m?.file)
+      return m?.file.split('/').pop();
+      //Solo pruebas
+      else if(m?.name == null)
+      return 'desconocido'
+   }
 
 }

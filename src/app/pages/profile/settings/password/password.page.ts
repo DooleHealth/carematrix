@@ -54,7 +54,7 @@ export class PasswordPage implements OnInit {
 
   getErrorCurrentPassword() {
     if (this.formPassword.get('currentPassword').hasError('required')) {
-      return this.translate.instant("setting.password.validators_required");
+      return this.translate.instant("error_required");
     }
     if (this.formPassword.get('currentPassword').hasError('minlength')) {
       return this.translate.instant("setting.password.validators_minlength");
@@ -64,7 +64,7 @@ export class PasswordPage implements OnInit {
 
   getErrorNewPassword(){
     if (this.formPassword.get('newPassword').hasError('required')) {
-      return this.translate.instant("setting.password.validators_required");
+      return this.translate.instant("error_required");
     }
     if (this.formPassword.get('newPassword').hasError('minlength')) {
       return this.translate.instant("setting.password.validators_minlength");
@@ -74,7 +74,7 @@ export class PasswordPage implements OnInit {
 
   getErrorConfirmPassword() {
     if (this.formPassword.get('confirmedPassword').hasError('required')) {
-      return this.translate.instant("setting.password.validators_required");
+      return this.translate.instant("error_required");
     }
     if (this.formPassword.get('confirmedPassword').hasError('NotEqual')) {
       return this.translate.instant("setting.password.validators_check_password");
@@ -128,13 +128,13 @@ export class PasswordPage implements OnInit {
 
   postChangePassword(){
     let params = {
-      oldPassword: this.formPassword.get('currentPassword').value,
-      newPassword: this.formPassword.get('newPassword').value,
+      new: this.formPassword.get('newPassword').value,
+      old: this.formPassword.get('currentPassword').value,
     }
     this.dooleService.postAPIChangePassword(params).subscribe(
       async (res: any) =>{
        console.log('[InitialPage] postChangePassword()', await res);
-       if(res.success){
+       if(res.result){
         this.modalCtrl.dismiss({error:null, action: 'change'});
        }
         else{

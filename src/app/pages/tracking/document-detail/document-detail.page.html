@@ -131,7 +131,6 @@
   <ion-card class="cardProfile" *ngIf="this.mediaFiles && this.mediaFiles.length > 0">
 
       <div id="container" style="margin-top: 20px; margin-bottom: 10px;">
-
         <div *ngFor="let file of this.mediaFiles; let i = index" class="section">
           <ion-item [lines]="(i === this.mediaFiles.length -1)? 'none':'full' ">
             <div id="left">

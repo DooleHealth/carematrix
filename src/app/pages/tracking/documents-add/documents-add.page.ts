@@ -372,7 +372,7 @@ export class DocumentsAddPage implements OnInit {
     }
 
     var blob = new Blob(byteArrays, {type: contentType});
-    console.log("this is bob: ", blob);
+    console.log("this is bob: ", JSON.stringify(blob) );
     return blob;
   }
 

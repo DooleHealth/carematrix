@@ -31,7 +31,6 @@ export class BookingsPage implements OnInit {
   form: FormGroup;
   dateMax:any;
   duration:string = "30";
-  isSubmittedPlace = false;
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
@@ -45,7 +44,7 @@ export class BookingsPage implements OnInit {
    
     this.form = this.fb.group({
       place: [''],
-      title: ['', [Validators.required]],
+      title: ['', /* [Validators.required] */],
       date: ['', [Validators.required]],
       duration: [this.duration],
       indications: [],
@@ -69,20 +68,23 @@ export class BookingsPage implements OnInit {
         files: this.files
     }); */
     this.imagesTemp.forEach(item => {
-      this.images.push(item.file);
+      //this.images.push(item.file);
+      this.images.push(item);
     });
     //this.form.get('files').setValue(this.images);
     console.log('[BookingsPage] addAgenda()', JSON.stringify(this.form.value) );  
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] addAgenda()', await res);  
-        this.analyticsService.logEvent('create_agenda', res)      
-        this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
-        this.notification.displayToastSuccessful()
+        console.log('[BookingsPage] addAgenda()', await res);  
+        if(res.success){
+          this.analyticsService.logEvent('create_agenda', res)      
+          this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+          this.notification.displayToastSuccessful()
+        }
         this.isLoading = false
        },(err) => { 
         this.isLoading = false
-          console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[BookingsPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
@@ -90,7 +92,6 @@ export class BookingsPage implements OnInit {
       };     
   }
   isSubmittedFields(isSubmitted){
-    this.isSubmittedPlace = isSubmitted
     this.isSubmittedTitle = isSubmitted;
     this.isSubmittedDuration= isSubmitted;
     this.isSubmittedStartDate= isSubmitted;
@@ -115,7 +116,6 @@ export class BookingsPage implements OnInit {
 
     modal.onDidDismiss()
       .then((result) => {
-
         if(result.data['date']){
           this.selectedDate = result.data['date']; 
           this.form.patchValue({date: this.transformDate(this.selectedDate)})
@@ -179,40 +179,6 @@ export class BookingsPage implements OnInit {
     await actionSheet.present();
   }
 
-/*   async addFile() {
-    this.chooser.getFile().then(async file => {
-   
-      if(file){
-        var filename=new Date().getTime(); 
-        this.saveBase64(file.dataURI, filename.toString(), file.mediaType).then(res => {
-          this.uploadFile(res);
-        });
-      }
-    }).catch((error: any) => {
-      console.error(error)});
-  } */
-
-
-/*   async addImage(source) {
-   
-    const photo = await Camera.getPhoto({
-    quality: 60,
-    allowEditing: false,
-    resultType: CameraResultType.DataUrl,
-    source
-  });
-
-  if(photo){
-    var filename = new Date().getTime();
-    let file = Capacitor.convertFileSrc(photo.dataUrl);
-    this.saveBase64(file ,filename.toString(), photo.format).then(res => {
-      this.uploadFile(res);
-    });
-  }else{
-    console.log("no photo");
-  }
-  } */
-
   async addFile(){   
     this.chooser.getFile().then(async image => {
       //this.processing = true;
@@ -223,7 +189,7 @@ export class BookingsPage implements OnInit {
       this.files.push({ name: filename , file: image, type: image.mediaType })
       this.numFile = this.files.length
       this.savePicture(fileUri)
-      
+      // this.imagesTemp.push(image)
     }).catch((error: any) => {
       console.log(error)});
   }
@@ -239,11 +205,12 @@ export class BookingsPage implements OnInit {
     });
 
     if(image){
-      console.log("image: ", image);
+      console.log("image: ", JSON.stringify(image) );
       var fileUri = Capacitor.convertFileSrc(image.dataUrl);
       console.log("addImage - savePicture fileUri: ", fileUri);
 
       this.savePicture(fileUri)
+      //this.imagesTemp.push(image.webPath)
       this.files.push({ name: Date.now() + '.' + image.format, file: fileUri, type: image.format })
       this.numFile = this.files.length;
 
@@ -267,15 +234,14 @@ export class BookingsPage implements OnInit {
     console.log("[ReportProblemPage] savePicture() fileUri: ",fileUri);
     var filename=new Date().getTime();
     return this.saveBase64(fileUri,filename.toString()).then(res => {
-      console.log("savePicture() saveBase64 res: ",res);
-      this.dooleService.uploadFile(res).then(data => {
-        console.log("savePicture() uploadFile res: ",JSON.stringify(data));
-        this.imagesTemp.push(data)
-      }).catch(err => {
-        console.log("Error uploadFile: ", err);
-      }).finally(() => {
+      // this.dooleService.uploadFile(res).then(data => {
+        console.log("savePicture() uploadFile res: ",JSON.stringify(res));
+        this.imagesTemp.push(res)
+      // }).catch(err => {
+      //   console.log("Error uploadFile: ", err);
+      // }).finally(() => {
 
-      })
+      // })
      
     });
 
@@ -285,7 +251,7 @@ export class BookingsPage implements OnInit {
     return new Promise((resolve, reject)=>{
       var realData = base64.split(",")[1]
       let blob=this.b64toBlob(realData, 'image/jpeg');
-
+      console.log('error writing blob');
       this.file.writeFile(this.file.cacheDirectory, name, blob)
       .then(()=>{
         resolve(this.file.cacheDirectory+name);
@@ -329,14 +295,12 @@ export class BookingsPage implements OnInit {
         for (var i = 0; i < slice.length; i++) {
             byteNumbers[i] = slice.charCodeAt(i);
         }
-  
         var byteArray = new Uint8Array(byteNumbers);
-  
         byteArrays.push(byteArray);
     }
   
   var blob = new Blob(byteArrays, {type: contentType});
-  
+  console.log("this is bob: ", JSON.stringify(blob) );
   return blob;
   }
   
@@ -356,6 +320,8 @@ export class BookingsPage implements OnInit {
     var base64result = result as string;
     //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
     this.files.push({ name: file.name, file: base64result.split(',')[1], type: file.type })
+    console.log("[VideoComponent] uploadFileFromBrowser", file);
+    this.images.push(file);
 
   }
 
@@ -373,6 +339,9 @@ export class BookingsPage implements OnInit {
 
   async payment(){
     console.log(`[AgendaAddPage] payment()` );
+    this.isSubmittedFields(true);
+    if(this.form.invalid)
+      return 
 
     this.form.patchValue({
         files: this.files
