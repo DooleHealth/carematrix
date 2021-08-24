@@ -1,7 +1,7 @@
 <ion-header>
   <!-- <ion-toolbar> -->
     
-    <ion-toolbar [ngSwitch]="segment">
+    <ion-toolbar mode="ios" [ngSwitch]="segment">
       <ion-title>{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon class="primaryIcon" slot="icon-only"  name="filter-outline" (click)="addFilters()"></ion-icon>&nbsp;

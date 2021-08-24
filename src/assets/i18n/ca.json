@@ -245,7 +245,7 @@
         "placeholderDescription":"Explica'ns aquí com ha estat el teu problema"
       },
       "health_card":{
-        "header_card": "Els teus Targeta Sanitària",
+        "header_card": "Targetes Sanitàries",
 
         "modality": "Modalitat",
         "name": "Nom",

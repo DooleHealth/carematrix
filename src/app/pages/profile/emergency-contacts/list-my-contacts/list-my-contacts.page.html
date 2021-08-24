@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text="Cancelar" ></ion-back-button>
+      <ion-back-button text="" ></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'emergency_contact.contact' | translate}}</ion-title>
     <ion-button *ngIf="!this.isHybrid" slot="end" fill="clear" routerLink="../list-relationship" [state]="{newContact:this.emergencyContact}">
