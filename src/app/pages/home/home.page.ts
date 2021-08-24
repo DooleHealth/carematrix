@@ -102,6 +102,7 @@ export class HomePage implements OnInit {
   async ngOnInit() { 
     this.date =  this.transformDate(Date.now())
     this.checkHealthAccess();
+    // this.slideGoalChange() 
   }
 
 

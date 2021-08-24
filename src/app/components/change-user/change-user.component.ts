@@ -6,7 +6,7 @@ import { FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 @Component({
-  selector: 'app-change-user',
+  selector: 'changeUser',
   templateUrl: './change-user.component.html',
   styleUrls: ['./change-user.component.scss'],
 })

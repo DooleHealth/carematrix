@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER, Optional, PLATFORM_ID, LOCALE_ID } from "@angular/core";
+import { ErrorHandler, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER, Optional, PLATFORM_ID, LOCALE_ID } from "@angular/core";
 import { BrowserModule, BrowserTransferStateModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
@@ -143,7 +143,8 @@ export function createTranslateLoader(http: HttpClient) {
     
    
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

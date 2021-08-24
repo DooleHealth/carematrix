@@ -1,12 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
        <ion-buttons slot="start">
-      <ion-back-button (click)="close()" text="{{'button.cancel' | translate }}"></ion-back-button>
+      <ion-back-button (click)="close()" text="" icon="close"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'documents_add.header' | translate }} </ion-title>
-    <ion-button fill="clear" slot="end"  (click)="submit()" [disabled]="enableButtonAddFile()">
-      {{'button.ok' | translate }}
+    <ion-buttons slot="end">
+    <ion-button (click)="submit()" [disabled]="enableButtonAddFile()">
+      <ion-icon name="checkmark-outline"></ion-icon>
     </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

@@ -19,10 +19,16 @@ ion-searchbar {
 ion-card {
   border-radius: 10px;
   overflow: hidden;
+  --background-focused: #3498DB;
 }
 ion-segment-button {
   font-size: smaller;
 }
+/*link active color*/
+.active-item {
+  --color: var(--ion-color-primary);
+}
+
 .whiteBackground {
   --ion-background-color: white !important;
 }
@@ -489,6 +495,7 @@ margin-bottom: -3%;
   padding-top: 6%;
   color: #3498db;
 }
-.md ion-header ion-title{
+
+/* .md ion-header ion-title{
   text-align: center !important;
-}
+ } */

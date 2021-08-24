@@ -146,12 +146,17 @@ export class AppComponent implements OnInit {
         this.badge.increase(1);
         console.log('Push received:');
         console.log(notification);
-        this.showMessage(JSON.stringify(notification));
 
-        if (notification?.data.action == "VIDEOCALL") {
-          console.log('Te esta llamando tu medico');
-          cordova.plugins.CordovaCall.receiveCall('Te esta llamando tu medico',1);
-
+        const voip = notification.data?.voip;
+        
+        if (voip == "true") {
+          console.log("is voip: ", voip);
+          const caller = JSON.parse(notification.data?.Caller); 
+          console.log("caller: ", caller);
+          this.opentokService.agendaId = notification.data?.callId
+         this.getTokboxSession(caller).then(()=>{
+          cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
+         });
         }
       }
     );
@@ -160,10 +165,26 @@ export class AppComponent implements OnInit {
       'pushNotificationActionPerformed',
       async (notification: PushNotificationActionPerformed) => {
         const data = notification.notification.data;
-        console.log('Action performed: ' + JSON.stringify(notification.notification));
-        if (data.detailsId) {
-          this.router.navigateByUrl(`/home/${data.detailsId}`);
+        console.log('Action performed: ');
+        console.log(notification); 
+
+        const action = notification.notification.data?.action;
+        const id = notification.notification.data?.id;
+        const msg = notification.notification.data?.message;
+
+        if (action == "MESSAGE") {
+          this.router.navigateByUrl(`/contact/chat`);
         }
+        if (action == "FORM") {
+          this.router.navigateByUrl(`/tracking/form;id=` + id);
+        }
+
+        if (action == "DRUGINTAKE") {
+          this.router.navigateByUrl(`/journal`);
+        }
+
+       
+       
       }
     );
   }
@@ -298,10 +319,10 @@ export class AppComponent implements OnInit {
         });
   }
 
-  async startDooleVideocall() {
+  async getTokboxSession(caller) {
 
     console.log("AGENDA: ", this.opentokService.agendaId);
-    this.dooleService.getAPIvideocall(this.opentokService.agendaId).subscribe(
+    return this.dooleService.getAPIvideocall(this.opentokService.agendaId).subscribe(
       async (data) => {
         if(data.result){
           let tokboxSession = await data;
@@ -309,12 +330,13 @@ export class AppComponent implements OnInit {
           this.opentokService.sessionId$ = tokboxSession.sessionId;
           this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
           console.log("this.tokboxSession: ", tokboxSession);
+          return tokboxSession;
+         
+          
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
           alert(message)
         }       
-
-        this.openVideocallModal();
       
       },
       (error) => {
@@ -331,11 +353,9 @@ export class AppComponent implements OnInit {
       component: VideoComponent,
       componentProps: {},
     });
-
-    modal.onDidDismiss().then((result) => {
-    });
-
+    cordova.plugins.CordovaCall.endCall();
     await modal.present();
+
   }
 
   initVoIpPushNotifications() {
@@ -372,15 +392,18 @@ export class AppComponent implements OnInit {
       await notification
       console.log("[Ionic] voip notification callback called");
       console.log(notification);
-      self.opentokService.agendaId = notification.extra.Caller.ConnectionId;
-
+      self.opentokService.agendaId = notification.extra?.Caller.ConnectionId;
+      //const caller = JSON.parse(notification?.extra.Caller); 
        //TODO. Penjar trucada si no s'agafa en x segons??
       // setTimeout( () => {
       //   console.log("timeout");
       //   cordova.plugins.CordovaCall.endCall();
       // }, 5000);
       //var extra = JSON.parse(notification.extra);
-      cordova.plugins.CordovaCall.receiveCall(notification.extra.Caller.Username, notification.extra.Caller.user);
+      self.getTokboxSession(notification.extra.Caller).then(()=>{
+        cordova.plugins.CordovaCall.receiveCall(notification?.extra.Caller.Username, notification?.extra.Caller.ConnectionId);
+       });
+      
 
       // do something based on received data
     });
@@ -402,8 +425,9 @@ export class AppComponent implements OnInit {
       console.log("answer");
       console.log(data);
       self.lastResume = new Date;   //evitem aixi que apareixi pantalla de desbloquejar
-      self.startDooleVideocall();
-      cordova.plugins.CordovaCall.endCall();
+      //cordova.plugins.CordovaCall.connectCall();
+      self.openVideocallModal();
+      
     });
 
    
@@ -422,7 +446,7 @@ export class AppComponent implements OnInit {
    //receive
    cordova.plugins.CordovaCall.on('receiveCall', function(data) {
      console.log("receiveCall");
-     console.log(data);
+    
 
    });
 

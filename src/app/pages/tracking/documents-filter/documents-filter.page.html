@@ -1,12 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button (click)="close()" text="{{ 'alert.button_cancel' | translate}}"></ion-back-button>
+      <ion-back-button (click)="close()" text="" icon="close"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'documents_filter.header' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary"
-       (click)="submit()">{{ 'alert.button_apply' | translate}}</ion-button>
+      <ion-button  color="primary"
+       (click)="submit()">
+       <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
