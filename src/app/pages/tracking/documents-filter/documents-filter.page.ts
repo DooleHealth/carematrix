@@ -9,8 +9,6 @@ export interface Filter {
   start_date?: string,
   end_date?: string,
   diagnosticTestTypes?: [],
-/*   profesional?: [],
-  sources?: [], */
 }
 
 @Component({
@@ -23,7 +21,6 @@ export class DocumentsFilterPage implements OnInit {
   toggle = false
   toggle2 = false
   listTestType =[]
-  //listTestTypeBackup = []
   diagnosticTestTypes = []
   currentDate = new Date().toISOString()
   form: FormGroup;
@@ -57,10 +54,12 @@ export class DocumentsFilterPage implements OnInit {
         this.form.get('end_date').setValue(this.filter?.end_date)
         this.toggle = true
       }
-       if(this.filter?.diagnosticTestTypes){
+       if(this.filter?.diagnosticTestTypes && this.filter?.diagnosticTestTypes.length > 0){
         console.log('[DocumentsFilterPage] setFilter()', this.filter?.diagnosticTestTypes);
         this.toggle2 = true
-        this.diagnosticTestTypes = this.filter?.diagnosticTestTypes
+        this.filter?.diagnosticTestTypes.forEach(test =>{
+          this.diagnosticTestTypes.push(test)
+        })
        }
     }
   }
@@ -85,9 +84,6 @@ export class DocumentsFilterPage implements OnInit {
       async (res: any) =>{
         console.log('[DocumentsFilterPage] getDiagnosticTestType()', await res);
         this.listTestType = res.diagnosticTestTypes
-        this.listTestType.forEach(test => {test['checked'] = false})
-        console.log('[DocumentsFilterPage] getDiagnosticTestType()', await this.listTestType);
-        //this.listTestTypeBackup = this.listTestType
         this.setCheckedDiagnosticTest()
         this.isLoading = false
        },(err) => { 
@@ -100,22 +96,6 @@ export class DocumentsFilterPage implements OnInit {
         this.isLoading = false
       });
   }
-
-/*   async filterList(evt) {
-    console.log('[DocumentsFilterPage] filterList()');
-    this.listTestType = this.listTestTypeBackup;
-    const searchTerm = evt.srcElement.value;
-  
-    if (!searchTerm) {
-      return;
-    }
-  
-    this.listTestType = this.listTestType.filter(test => {
-      if (test.name && searchTerm) {
-        return (test.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
-    });
-  } */
 
   linesNone(index){
     if(index === (this.listTestType.length -1)){
@@ -138,8 +118,6 @@ export class DocumentsFilterPage implements OnInit {
 
 
   submit(){
-     // this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
-      console.log('[DocumentsFilterPage] submit()', this.form.value);
       this.modalCtrl.dismiss({error:null, action: 'add', filter: this.form.value});
   }
 

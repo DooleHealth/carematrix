@@ -71,7 +71,7 @@ export class TrackingPage implements OnInit {
 
   ionViewDidEnter(){
     console.log('[TrackingPage] ionViewDidEnter()');
-    this.filter = undefined;
+    //this.filter = undefined;
     this.segmentChanged();
     this.getFormList()
   }
