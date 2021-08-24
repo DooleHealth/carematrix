@@ -43,7 +43,7 @@
 <ion-content>
 
   <!-- SegmentBar -->
-
+  <span><changeUser></changeUser></span>
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
     <ion-segment-button value="diets">
       <ion-label>{{'diary.field_diet' | translate}}</ion-label>
@@ -83,7 +83,7 @@
 
   <!-- segment -->
   <div class="verticalLine2" [ngSwitch]="segment">
-
+   
     <!-- Diets-->
 
     <div *ngSwitchCase="'diets'">
@@ -306,7 +306,6 @@
     </div>
   </ng-template>
 </ion-content>
-<app-change-user></app-change-user>
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

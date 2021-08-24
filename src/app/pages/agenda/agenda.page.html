@@ -19,7 +19,7 @@
 </ion-header>
 
 <ion-content>
- 
+  <span><changeUser></changeUser></span>
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30" startingDayWeek="1"
@@ -94,8 +94,9 @@
       </ion-item>
     </ion-list>
   </ng-template>
+ 
 </ion-content>
-<app-change-user></app-change-user>
+
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>
