@@ -10,7 +10,7 @@
         </ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button routerLink="list-appointment" [state]="{calendar:eventSource}">
+        <ion-button routerLink="list-appointment" [state]="{calendar:eventSource}" routerLinkActive='active-item'>
           <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
         </ion-button>
         <ion-button (click)="addAgenda()">

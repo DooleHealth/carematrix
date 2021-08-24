@@ -26,7 +26,7 @@
     </ion-row>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="cart-outline" routerLink="/medication" ></ion-icon>
+      <ion-icon class="primaryIcon" slot="icon-only" name="cart-outline" routerLink="/medication"  routerLinkActive='active-item'></ion-icon>
     </ion-buttons>
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
@@ -92,7 +92,7 @@
       </div>
       <ion-list *ngIf="!this.isLoading && this.items.length > 0 ; else noData">
         <ion-card *ngFor="let item of items" class="cardProfile">
-          <ion-item lines="none" routerLink="diets-detail" [state]="{id: item.item.id}">
+          <ion-item lines="none" routerLink="diets-detail" [state]="{id: item.item.id}" routerLinkActive='active-item'>
             <ion-col size="2">
               <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
               </ion-img>
@@ -217,8 +217,8 @@
         <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <ion-list *ngIf="items.length > 0; else noData">
-        <ion-card class="cardProfile" *ngFor="let item of items" routerLink="games-detail" [state]="{game: item.item}">
-          <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)" [src]='item.item.file.temporaryUrl' />
+        <ion-card class="cardProfile" *ngFor="let item of items" routerLink="games-detail" [state]="{game: item.item}" routerLinkActive='active-item'>
+          <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)" [src]='item.item.file.temporaryUrl'/>
           <ion-item lines="none" (click)="openGames(item.item)">
             <div>
               <ion-img src='assets/icons/game-controller.svg' style="width: 130%;">
@@ -246,7 +246,7 @@
         <ion-list *ngFor="let group of this.groupedElements">
           <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
           <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
-            <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}">
+            <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}" routerLinkActive='active-item'>
               <div *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' " class="verticalLine"
                 [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
               <div *ngIf="group.group=='Bioquímica'" class="verticalLine"

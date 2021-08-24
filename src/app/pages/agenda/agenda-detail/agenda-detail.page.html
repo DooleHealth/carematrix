@@ -32,7 +32,7 @@
         <ion-label>{{ 'appointment.field_date' | translate}}</ion-label>
         <ion-text class="textMedium">{{ formatSelectedDate(event?.start_date_iso8601)}}</ion-text>
       </ion-item>
-      <ion-item routerLink="doctor" 
+      <ion-item routerLink="doctor"  routerLinkActive='active-item'
               [state]="{doctor: staff}" 
               *ngFor="let staff of event?.staff; let i = index" 
               [lines]="(i == event?.staff?.length-1)? 'full': 'none'">

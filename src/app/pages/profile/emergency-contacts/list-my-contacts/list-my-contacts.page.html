@@ -20,7 +20,7 @@
 </div>
   <div *ngIf="contacts !== undefined">
     <ion-list *ngFor="let contact of contacts">
-      <ion-item *ngIf="contact !== undefined" routerLink="../list-relationship" [state]="{contact:contact}">
+      <ion-item *ngIf="contact !== undefined" routerLink="../list-relationship" [state]="{contact:contact}"  routerLinkActive='active-item'>
         <ion-label class="txtPaddingLeft" *ngIf="contact.displayName !== undefined">
           {{contact.displayName}}
         </ion-label>

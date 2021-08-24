@@ -13,7 +13,7 @@
   </div>
   <div *ngIf="listGoal.length > 0; else noData">  
   <div *ngFor="let goal of this.listGoal" >
-    <ion-card routerLink="/activity-goal" [state]="{id: goal.element_id, header: goal.element.name}" class="cardProfile">
+    <ion-card routerLink="/activity-goal" [state]="{id: goal.element_id, header: goal.element.name}" class="cardProfile"  routerLinkActive='active-item'>
  
         <ion-grid>
           <ion-row>

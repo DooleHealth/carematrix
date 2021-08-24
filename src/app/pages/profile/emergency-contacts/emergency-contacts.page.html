@@ -17,7 +17,7 @@
   
   <div *ngIf="listContact.length > 0; else noData"> 
   <ion-list *ngFor="let contact of this.listContact">
-    <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}">
+    <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}" routerLinkActive='active-item' routerLinkActive='active-item'>
       <ion-card-content style="padding: 2%;">
     <ion-item lines="none">
       <ion-avatar slot="start">
