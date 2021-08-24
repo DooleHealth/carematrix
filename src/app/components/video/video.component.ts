@@ -148,7 +148,7 @@ ngAfterViewInit(): void {
     
   }else{
 
-    console.log('*** is web');
+    console.log('***  platform ***');
     this.publisher = OT.initPublisher
     (
       this.publisherDiv.nativeElement, {
