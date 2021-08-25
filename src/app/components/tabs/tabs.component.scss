@@ -18,4 +18,6 @@ ion-tab-button{
         background-color: var(--ion-color-primary);
       }
     }
-  
+    ion-tab-button ion-label{
+      margin-bottom: 0%;
+    }
