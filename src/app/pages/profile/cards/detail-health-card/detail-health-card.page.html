@@ -27,7 +27,7 @@
       <ion-item lines="none" *ngIf="this.card !== undefined">
         <ion-label>{{ 'health_card.modality' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.card?.type?.name}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
     </ion-list>
   </ion-card>
@@ -36,21 +36,21 @@
       <ion-item>
         <ion-label class="txtTitleGoals">{{ 'health_card.name' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.card?.name}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
       <ion-item>
         <ion-label>{{ 'health_card.affiliation_number'  | translate}}</ion-label>
         <ion-label class="textMedium">{{this.card?.card_number}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
       <ion-item *ngIf="this.card.expiration_date !== undefined && this.card.expiration_date !== null">
         <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
         <ion-label class="textMedium">{{this.formatDate(card?.expiration_date) | date: 'MM/yyyy'}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
       <ion-item *ngIf="this.card.expedition_date !== undefined && this.card.expedition_date !== null" lines="none">
         <ion-label lines="none">{{ 'health_card.expedition_date' | translate}}</ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
     </ion-list>
   </ion-card>

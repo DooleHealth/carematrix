@@ -43,7 +43,7 @@ export class AgendaEditPage implements OnInit {
       title: ['', [Validators.required]],
       date: ['', [Validators.required]],
       duration: ['', [Validators.required]],
-      indications: [],
+      user_comments: [],
       origin: [1],
       online: [0],
     });
@@ -57,7 +57,7 @@ export class AgendaEditPage implements OnInit {
       console.log('[AgendaEditPage] getAppointment()', this.event);
       if(this.event.site) this.form.get('place').setValue(this.event.site)
       if(this.event.title) this.form.get('title').setValue(this.event.title)
-      if(this.event.description) this.form.get('indications').setValue(this.event.description)
+      if(this.event.description) this.form.get('user_comments').setValue(this.event.description)
       if(this.event.start_date_iso8601) this.form.get('date').setValue(this.event.start_date_iso8601)
       let duration = this.trasnforHourToMinutes(this.event.end_time) - this.trasnforHourToMinutes(this.event.start_time)
       if(this.event.end_time) this.form.get('duration').setValue( duration )

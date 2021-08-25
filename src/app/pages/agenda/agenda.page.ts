@@ -160,11 +160,13 @@ export class AgendaPage implements OnInit {
 
   addReminderToCalendar(reminders: any[]){
     var events = [];
+    var startTime;
+    var endTime
     reminders.forEach((e) =>{
       let isAllDay = false
-      if(e.from_date !== undefined && e.to_date !== undefined ){
-        var startTime =   this.formatDate(e.from_date)
-        var endTime =  this.formatDate(e.to_date)
+      if(e.from_date  && e.to_date ){
+         startTime =   this.formatDate(e.from_date)
+         endTime =  this.formatDate(e.to_date)
 
       }else{
         isAllDay = true
