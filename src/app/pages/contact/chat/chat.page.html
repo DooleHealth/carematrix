@@ -14,23 +14,38 @@
 
 <ion-content fullscreen class="whiteBackground">
   <ion-list>
-    <div *ngFor="let post of this.data">
+    <div *ngFor="let post of this.data; let i = index" >
 
       <div *ngIf="!post.recipients">
-        <ion-item lines="none">
+                <div  *ngIf="i === 0">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-icon class="iconNoData" name="chatbubbles-outline"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col >
+                <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+
+        <!-- <ion-item lines="none">
           <ion-thumbnail slot="start">
             <app-aspect-ratio [ratio]="{w:1, h:1}">
               <app-image-shell animation="spinner" [src]="null" [alt]="'Sample Image'" class="img-wrapper-doctors" routerLinkActive='active-item'>
               </app-image-shell>
             </app-aspect-ratio>
           </ion-thumbnail>
-
           <ion-label>
             <h2 class="user-name">
               <app-text-shell class="user-name" [data]="null" animation="bouncing"></app-text-shell>
             </h2>
           </ion-label>
-        </ion-item>
+        </ion-item> -->
       </div>
       <span *ngIf="post?.recipients?.length == 2">
         <div *ngFor="let item of post?.recipients; let i = index">
