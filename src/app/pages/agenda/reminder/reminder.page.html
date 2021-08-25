@@ -5,8 +5,7 @@
     </ion-buttons>
     <ion-title>{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
       translate)}}</ion-title> <!-- event.type -->
-    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" routerLink="/reminder-add"  routerLinkActive='active-item'
-      [state]="{event: reminder}">
+    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" (click)="editReminder()">
       {{ 'button.edit' | translate }}
     </ion-button>
   </ion-toolbar>
@@ -49,7 +48,11 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
-        <ion-text class="textMedium">{{ formatDate(reminder?.start_date) | date:  'EEEE, d MMMM yyyy, HH:mm'}}</ion-text>
+        <ion-text class="textMedium">{{ formatDate(reminder?.from_date) | date:  'EEEE, d MMM yyyy, HH:mm'}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'reminder.field_end' | translate }}</ion-label>
+        <ion-text class="textMedium">{{ formatDate(reminder?.to_date) | date:  'EEEE, d MMM yyyy, HH:mm'}}</ion-text>
       </ion-item>
       <ion-item lines="none" (click)="showDays()">
         <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>

@@ -415,7 +415,7 @@ export class ActivityGoalPage implements OnInit {
   async addReminder(){
     const modal = await this.modalCtrl.create({
       component: ReminderAddPage,
-      componentProps: { typeId: this.id, type: 'element', isNewReminder:true },
+      componentProps: { typeId: this.id, type: 'Element'},
       cssClass: "modal-custom-class"
     });
 

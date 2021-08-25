@@ -84,17 +84,7 @@
     </ion-list>
   </div>
 
-<!--   <ion-row class="files-row" *ngIf="event?.files?.length > 0">
-    <ion-col class="file-item" style="padding-right: 4px;" *ngFor="let m of event?.files">
-      <app-aspect-ratio [ratio]="{w: 1, h: 1}">
-        <app-image-shell class="file-picture" [src]="m?.name?.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl" (click)="openFile(m)"></app-image-shell>
-      </app-aspect-ratio>
-      <span class="file-name">
-      </span>
-    </ion-col>
-  </ion-row> -->
-
-  <div id="container" style="margin-top: 20px; margin-bottom: 10px;">
+  <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
     <div *ngFor="let file of event?.files; let i = index" class="section">
       <ion-item [lines]="(i === event?.files.length -1)? 'none':'full' ">
         <div id="left">

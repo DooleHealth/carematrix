@@ -15,7 +15,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class ReminderAddPage implements OnInit {
   @Input()typeId: string;
   @Input()type: string;
-  @Input()isNewReminder: boolean;
+  //@Input()isNewReminder: boolean;
   days = [{day1:true}, {day2:true}, {day3:true}, {day4:true}, {day5:true}, {day6:true}, {day7:true}]
   form: FormGroup;
   dateMax:any;
@@ -25,10 +25,10 @@ export class ReminderAddPage implements OnInit {
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
   id:any;
-  event:any;
+  @Input()event:any;
   agenda_id;
   frequency;
-  isNewEvent: boolean;
+  isNewEvent: boolean = true;
   isLoading = false
   constructor(
     private fb: FormBuilder,
@@ -58,12 +58,13 @@ export class ReminderAddPage implements OnInit {
       description: [],
       days: [this.days],
       frequency: [],
+      origin: [1]
     });
     this.getReminder()
   }
 
   getReminder(){
-    this.event = history.state.event;
+    //this.event = history.state.event;
     if(this.event){
       this.isNewEvent = false
       this.id = this.event.id;
@@ -71,8 +72,9 @@ export class ReminderAddPage implements OnInit {
       if(this.event.type) this.form.get('type').setValue(this.event.type)
       if(this.event.title) this.form.get('title').setValue(this.event.title)
       if(this.event.description) this.form.get('description').setValue(this.event.description)
-      if(this.event.start_date) this.form.get('start_date').setValue(this.event.start_date)
-      if(this.event.end_date) this.form.get('end_date').setValue( this.event.end_date )
+      if(this.event.from_date) this.form.get('start_date').setValue(this.event.from_date)
+      if(this.event.to_date) this.form.get('end_date').setValue( this.event.to_date )
+      if(this.event.frequency) this.form.get('frequency').setValue( this.event.frequency )
     }
     let agenda_id = history.state.agenda_id;
     if(agenda_id) this.form.get('agenda_id').setValue(agenda_id)
@@ -85,7 +87,6 @@ export class ReminderAddPage implements OnInit {
   }
 
   isSubmittedFields(isSubmitted){
-    this.isSubmittedPlace = isSubmitted
     this.isSubmittedTitle = isSubmitted;
     this.isSubmittedDuration= isSubmitted;
     this.isSubmittedStartDate= isSubmitted;
@@ -142,9 +143,9 @@ export class ReminderAddPage implements OnInit {
   }
 
   async editReminder(){
-    this.dooleService.deleteAPIaddAgenda(this.id).subscribe(
+    this.dooleService.updateAPIReminder(this.id, this.form.value).subscribe(
       async (res: any) =>{
-        console.log('[ReminderAddPage] deleteReminder()', await res);
+        console.log('[ReminderAddPage] editReminder()', await res);
         if(res.success){
           this.modalCtrl.dismiss({error:null, action: 'update', reminder: this.form.value});
           this.notification.displayToastSuccessful()
@@ -153,7 +154,7 @@ export class ReminderAddPage implements OnInit {
           this.showAlert(message)
         }
        },(err) => { 
-          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[ReminderAddPage] editReminder() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }) ,() => {
@@ -173,12 +174,12 @@ export class ReminderAddPage implements OnInit {
     this.isSubmittedFields(true);
     if(this.form.invalid)
     return 
-/*     if(this.isNewEvent)
-    this.addReminder()
+    if(this.isNewEvent)
+      this.addReminder()
     else
-    this.editReminder()*/
+      this.editReminder()
 
-    this.addReminder()
+    //this.addReminder()
   }
 
   async deleteReminder(){
