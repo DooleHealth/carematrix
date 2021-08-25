@@ -171,10 +171,11 @@ export class ActivityGoalPage implements OnInit {
       xAxis: {
         //categories: ['L', 'M', 'MX', 'J', 'V', 'S', 'D'],
         type: 'datetime',
-        maxRange: this.min.getTime()
+        maxRange: this.min.getTime(),
+  
       },
       yAxis: {
-        // min: 30,
+        // min: 0,
         startOnTick: false,
         title: {
           text: this.units,
@@ -190,7 +191,7 @@ export class ActivityGoalPage implements OnInit {
 /*       tooltip: {
         valueSuffix: ' millions'
       }, */
-      plotOptions: {
+      plotOptions: {        
 /*         bar: {
           dataLabels: {
             enabled: true
@@ -213,12 +214,13 @@ export class ActivityGoalPage implements OnInit {
       series: [{
         type: undefined,
         colorKey: 'colorValue',
+        pointWidth: 20,
         colorByPoint: false,
         data: this.graphData,
         name: this.units,
       }]
     });
-
+    
     HighCharts.setOptions({
       lang: {
          /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */

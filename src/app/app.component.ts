@@ -538,7 +538,8 @@ export class AppComponent implements OnInit {
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     let userLanguage = localStorage.getItem('language') ? localStorage.getItem('language') : this.languageService.getCurrent();
-    this.languageService.changeLanguage(userLanguage);
+    // this.languageService.changeLanguage(userLanguage);
+    this.languageService.changeLanguage('es');
 
     // this is to determine the text direction depending on the selected language
     // for the purpose of this example we determine that only arabic and hebrew are RTL.
