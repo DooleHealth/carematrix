@@ -253,6 +253,7 @@
           </ion-item>
 
         <ion-card-content>
+          <div class="txtTitleGoalsLittle3" *ngIf="!this.activity|| this.activity.length == 0 " >{{ 'no_data' | translate}}</div>
           <ion-slides #sliderPhysical pager="true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">

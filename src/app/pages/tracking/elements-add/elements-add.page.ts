@@ -27,8 +27,9 @@ export class ElementsAddPage implements OnInit {
   //id:any
   // nameElement: any
   // units:any
-  min
-  max
+  min: any
+  max: any
+  
   constructor(
     private fb: FormBuilder,
     private dooleService: DooleService,
@@ -205,6 +206,9 @@ export class ElementsAddPage implements OnInit {
 
   isValueCorrect(value){
     if(value >= Number(this.min) && value <= Number(this.max)){
+      return true
+    }
+    else if(this.min == null && this.max == null){
       return true
     }
     else{
