@@ -11,8 +11,21 @@
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
-  <div *ngIf="this.information!== undefined">
-    <!-- <div [innerHtml]="this.information"></div> -->
-    <div [innerHtml]="this.information"></div>
+  <div *ngIf="this.information !== undefined; else noData" [innerHtml]="this.information"></div>
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="home"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
   </div>
+  </ng-template>
 </ion-content>
