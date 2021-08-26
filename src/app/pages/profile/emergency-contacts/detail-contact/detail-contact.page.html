@@ -30,7 +30,7 @@
     <ion-list>
       <ion-item>
         <ion-label class="txtTitleGoals">{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-label class="textMedium" slot="end" [href]="ref_telephone" *ngIf='this.contact !== undefined'>{{this.contact.phone}}</ion-label>
+        <ion-label class="textMedium" slot="end" *ngIf='this.contact !== undefined'>{{this.contact.phone}}</ion-label>
        
       </ion-item>
       <ion-item lines="none">

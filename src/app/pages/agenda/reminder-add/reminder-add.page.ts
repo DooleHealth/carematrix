@@ -15,7 +15,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class ReminderAddPage implements OnInit {
   @Input()typeId: string;
   @Input()type: string;
-  //@Input()isNewReminder: boolean;
+  //@Input()origin_type: string;
+  @Input()origin_id: string;
   days = [{day1:true}, {day2:true}, {day3:true}, {day4:true}, {day5:true}, {day6:true}, {day7:true}]
   form: FormGroup;
   dateMax:any;
@@ -26,7 +27,7 @@ export class ReminderAddPage implements OnInit {
   isSubmittedStartDate = false;
   id:any;
   @Input()event:any;
-  agenda_id;
+  //agenda_id;
   frequency;
   isNewEvent: boolean = true;
   isLoading = false
@@ -50,7 +51,7 @@ export class ReminderAddPage implements OnInit {
     this.dateMax =  year
     this.form = this.fb.group({
       type: [this.type],
-      id: [this.typeId],
+      type_id: [this.typeId],
       title: [''],
       start_date: ['', [Validators.required]],
       time: ['', [Validators.required]],
@@ -58,13 +59,14 @@ export class ReminderAddPage implements OnInit {
       description: [],
       days: [this.days],
       frequency: [],
-      origin: [1]
+    /*   origin: [1], */
+      origin_id: [],
+      origin_type: []
     });
     this.getReminder()
   }
 
   getReminder(){
-    //this.event = history.state.event;
     if(this.event){
       this.isNewEvent = false
       this.id = this.event.id;
@@ -76,12 +78,13 @@ export class ReminderAddPage implements OnInit {
       if(this.event.to_date) this.form.get('end_date').setValue( this.event.to_date )
       if(this.event.frequency) this.form.get('frequency').setValue( this.event.frequency )
     }
-    let agenda_id = history.state.agenda_id;
-    if(agenda_id) this.form.get('agenda_id').setValue(agenda_id)
-    let element_id = history.state.element_id;
-    if(element_id) this.form.get('element_id').setValue(element_id)
+    
+    if(this.origin_id){
+      this.form.get('origin_id').setValue(this.origin_id)
+      this.form.get('origin_type').setValue('Agenda')
+    } 
     if(this.isNewEvent){
-      let message = (agenda_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
+      let message = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
       this.form.get('title').setValue(message)
     }
   }
@@ -114,7 +117,7 @@ export class ReminderAddPage implements OnInit {
     this.form.get('time').setValue(t);
 
     this.form.get('type').setValue(this.type);
-    this.form.get('id').setValue(this.typeId);
+    this.form.get('type_id').setValue(this.typeId);
 
     console.log(`[AgendaAddPage] addReminder()`,this.form.value );
 

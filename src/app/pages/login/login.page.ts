@@ -35,17 +35,13 @@ export class LoginPage implements OnInit {
 
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
-
-      //console.log('[LandingPage] doDooleAppLogin()', res);
-      if(res.success){
-       // this.languageService.setLenguageLocalstorage('ca') //'ca'
-
-      console.log('[LandingPage] doDooleAppLogin()', res);
-      this.analyticsService.logEvent('login', res)
-      this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
-      this.analyticsService.logEvent('user_doole', {userId: res.idUser})
+      console.log('[LoginPage] doDooleAppLogin()', res);
       if(res.success){ 
         this.analyticsService.setUser(res.idUser)
+        this.languageService.setLenguageLocalstorage('ca') //'ca'
+        this.analyticsService.logEvent('login', res)
+        this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
+        this.analyticsService.logEvent('user_doole', {userId: res.idUser})
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
@@ -56,7 +52,6 @@ export class LoginPage implements OnInit {
         let message = this.translate.instant('landing.message_wrong_credentials')
         this.modalCtrl.dismiss({error: message});
       }
-    }
     
     }, async (error) => { 
      //console.log('doDooleAppLogin() ERROR', await error?.message);
@@ -70,17 +65,18 @@ export class LoginPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
 
-        //console.log('[LandingPage] checkConditionLegal()', await res);
+        //console.log('[LoginPage] checkConditionLegal()', await res);
          if(res.success)
 
-        console.log('[LandingPage] checkConditionLegal()', await res);
+        console.log('[LoginPage] checkConditionLegal()', await res);
         if(res.success)
 
           this.redirectPage(res.accepted_last)
         else
           this.modalCtrl.dismiss({error:res.message});
        },(err) => { 
-          //console.log('[LandingPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[LoginPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+          this.modalCtrl.dismiss({error:err.message});
           throw err; 
       });
      
@@ -112,7 +108,7 @@ export class LoginPage implements OnInit {
     // Once the auth provider finished the authentication flow, and the auth redirect completes,
   // hide the loader and redirect the user to the profile page
   redirectLoggedUserToHomePage() {
-    console.log('[LandingPage] redirectLoggedUserToHomePage()');
+    console.log('[LoginPage] redirectLoggedUserToHomePage()');
     //this.dismissLoading();
     // As we are calling the Angular router navigation inside a subscribe method, the navigation will be triggered outside Angular zone.
     // That's why we need to wrap the router navigation call inside an ngZone wrapper
