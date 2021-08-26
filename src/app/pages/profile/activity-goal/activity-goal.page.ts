@@ -146,7 +146,7 @@ export class ActivityGoalPage implements OnInit {
 
       this.values = this.values.reverse();
 
-      
+      console.log(this.graphData)
       this.generateChart();
       this.isLoading = false
     }, error => {
@@ -163,7 +163,7 @@ export class ActivityGoalPage implements OnInit {
       chart: {  
         type: (this.graphData.length > 4)? 'line':'column',  //'line' 'area'
         zoomType: 'x',
-         
+            
       },
       title: {
         text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
@@ -173,10 +173,9 @@ export class ActivityGoalPage implements OnInit {
         type: 'datetime',
         maxRange: this.min.getTime(),
   
-      },
+      },   
       yAxis: {
-        // min: 0,
-        startOnTick: false,
+        // min: 0,  
         title: {
           text: this.units,
           align: 'high'
