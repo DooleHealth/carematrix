@@ -8,7 +8,7 @@
     <ion-title>{{ isAddCard? ('add_health_card.header_add_card' | translate) : ('edit_health_card.header_edit_card' |
       translate) }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button slot="end" fill="clear" (click)="this.isAddCard? addCard(): editCard()">
+      <ion-button (click)="this.isAddCard? addCard(): editCard()">
         <ion-icon slot="icon-only" name="checkmark-outline" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -52,12 +52,12 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
-        <ion-datetime formControlName="expiration_date" displayFormat="DD/MM/YY" placeholder="Opcional" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
+        <ion-datetime formControlName="expiration_date" displayFormat="DD/MM/YY" placeholder="Obligatorio" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item lines="none">
         <ion-label lines="none">{{ 'health_card.expedition_date' | translate}}</ion-label>
-        <ion-datetime formControlName="issue_date" displayFormat="DD/MM/YY" placeholder="Opcional" min="1990-01-01"></ion-datetime>
+        <ion-datetime formControlName="issue_date" displayFormat="DD/MM/YY" placeholder="Obligatorio" min="1990-01-01"></ion-datetime>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
     </ion-list>
