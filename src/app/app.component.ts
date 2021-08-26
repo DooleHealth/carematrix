@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
+import { LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,9 +17,10 @@ import { VideoComponent } from './components/video/video.component';
 import { OpentokService } from './services/opentok.service';
 import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { Local } from 'protractor/built/driverProviders';
 
 
-const { PushNotifications } = Plugins;
+const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
 
@@ -74,17 +75,17 @@ export class AppComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.setLanguage();
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
-    
     this.platform.ready().then(() => {
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
 
+        
         // Push
-        this.registerPush();
+        this.initPushNotifications();
 
         // VOIP calls for IOS
         if (this.platform.is('ios')) {
@@ -106,10 +107,99 @@ export class AppComponent implements OnInit {
       }
 
     });
-
   }
 
-  private registerPush() {
+  async showNotification(notification: PushNotification){
+
+   var title, body,id,color,actionType;
+   let push = JSON.parse(notification.body)
+
+   title = push?.title;
+   body = push?.message;
+   id = push?.id;
+   color = push?.color;
+   actionType = push?.action;
+    
+    await LocalNotifications.schedule({
+      notifications:[
+        {
+          title: title,
+          body: body,
+          id: parseInt(id),
+          extra:{
+            data:push
+          },
+          iconColor: color,
+          actionTypeId: actionType
+        }
+      ]
+    })
+  }
+
+  private async initPushNotifications() {
+
+    // LOCAL NOTIFICATIONS
+    await LocalNotifications.requestPermission();
+    await LocalNotifications.registerActionTypes({
+      types:[{
+        id:'MESSAGE',
+        actions:[{
+          id:'view',
+          title:'Open Chat',
+        },{
+          id:'remove',
+          title: 'Dismiss',
+          destructive: true
+        },{
+          id:'respond',
+          title:'Respond',
+          input: true
+        }],  
+      },{
+        id:'FORM',
+        actions:[{
+          id:'view',
+          title:'Open FORM',
+        },{
+          id:'remove',
+          title: 'Dismiss',
+          destructive: true
+        }],
+      },{
+        id:'DRUGINTAKE',
+        actions:[{
+          id:'view',
+          title:'TAKE THE PILL',
+        },{
+          id:'remove',
+          title: 'Dismiss',
+          destructive: true
+        }],
+      }
+    ]});
+
+    LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
+      
+    })
+    LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
+      
+      let f = notification.notification.extra;
+      console.log('localNotificationActionPerformed: ');
+      console.log(f);
+      const action = f.data?.action;
+      const id = f.idata?.id;
+      const msg = f.data?.message;
+      console.log('ACTION: ', action);
+    
+      if (action == "MESSAGE") {
+        this.router.navigateByUrl(`/contact/chat`);
+      }else if (action == "FORM") {
+        this.router.navigateByUrl(`/tracking`);
+      }else if (action == "DRUGINTAKE") {
+        this.router.navigateByUrl(`/journal`);
+      }else
+        alert('action not found')
+    })
     PushNotifications.requestPermission().then((permission) => {
       if (permission.granted) {
         // Register with Apple / Google to receive push via APNS/FCM
@@ -119,6 +209,7 @@ export class AppComponent implements OnInit {
       }
     });
  
+   
     PushNotifications.addListener(
       'registration',
       (token: PushNotificationToken) => {
@@ -146,17 +237,29 @@ export class AppComponent implements OnInit {
         this.badge.increase(1);
         console.log('Push received:');
         console.log(notification);
-
         const voip = notification.data?.voip;
         
         if (voip == "true") {
-          console.log("is voip: ", voip);
           const caller = JSON.parse(notification.data?.Caller); 
-          console.log("caller: ", caller);
-          this.opentokService.agendaId = notification.data?.callId
-         this.getTokboxSession(caller).then(()=>{
-          cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
-         });
+          let cancel = caller.CancelPush;
+          console.log("thisi si cancel _:");
+          console.log(cancel);
+          if(cancel){
+          console.log(cancel);
+            return;
+          }else{
+            this.opentokService.agendaId = notification.data?.callId
+         
+            this.getTokboxSession(caller).then(()=>{
+            cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
+           });
+          }
+         
+        }else{
+          console.log("is notification: ", JSON.parse(notification.body));
+          let push =   JSON.parse(notification.body);
+
+          await this.showNotification(notification);
         }
       }
     );
@@ -187,136 +290,7 @@ export class AppComponent implements OnInit {
        
       }
     );
-  }
-  
 
-  initPushNotification() {
-    console.log("** INIT PUSH **");
-
-    if (!this.platform.is('cordova')) {
-      console.warn('Push notifications not initialized. Cordova is not available - Run in physical device');
-      return;
-    }
-
-    PushNotifications.requestPermission().then(result => {
-      if (result.granted) {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register().catch((error) => {
-          console.log("** ERROR register PUSH **", error);
-        });
-      } else {
-        // Show some error
-      }
-    }).catch((error) => {
-      console.log("** ERROR request permission PUSH **", error);
-    });
-
-    // On success, we should be able to receive notifications
-    PushNotifications.addListener('registration',
-      (token: PushNotificationToken) => {
-        let platform = 'ios';
-        if (this.platform.is('android')) {
-          platform = 'android';
-        }
-
-        console.log("TOKEN:", token);
-
-        this.authService.devicePlatform = platform;
-        this.authService.deviceToken = token.value;
-
-      }
-    );
-
-    // Some issue with our setup and push will not work
-    PushNotifications.addListener('registrationError',
-      (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
-      }
-    );
-
-    // Show us the notification payload if the app is open on our device
-    PushNotifications.addListener('pushNotificationReceived',
-      async (notification: PushNotification) => {
-        console.log('Received a notification');
-        console.log(notification);
-        this.showMessage('Received a notification');
-        this.badge.increase(1);
-        if (notification.data.action == "VIDEOCALL") {
-          console.log('Te esta llamando tu medico');
-          cordova.plugins.CordovaCall.receiveCall('Te esta llamando tu medico');
-
-        }
-      }
-    );
-
-    // Method called when tapping on a notification
-    PushNotifications.addListener('pushNotificationActionPerformed',
-      async (notification: PushNotificationActionPerformed) => {
-        console.log('pushNotificationActionPerformed', notification);
-
-        this.showMessage("pushNotificationActionPerformed: " + JSON.stringify(notification));
-        const action = notification.notification.data?.action;
-        const id = notification.notification.data?.id;
-        const msg = notification.notification.data?.message;
-
-        // If the app is running when the push received
-        if (notification.notification.data?.foreground) {
-          console.log("foreground");
-          if (action == "MESSAGE") {
-            this.showMessage("Has recibido un mensaje");
-          }
-          if (action == "FORM") {
-            this.showMessage("Has recibido un mensaje");
-            //this.router.navigate(['FormslistPage'],{state: {id: id, action : "open"}});
-          }
-
-          if (action == "DRUGINTAKE") {
-            this.showMessage("Hora de tomarte la medicación");
-            //this.router.navigate(['DrugsIntakeMainPage'],{state: {id: id, action : "open"}});
-          }
-
-          if (action == "VIDEOCALL") {
-            this.showMessage("Videollamada de tu médico");
-            console.log("[Ionic] voip notification callback called");
-            //console.log(notification);
-
-            //cordova.plugins.CordovaCall.receiveCall('Te esta llamando tu medico', id);
-
-            //this.router.navigate(['AgendaDetailPage'],{state: {id: id, action : "open"}});
-          }
-        } else {
-          //If the app is closed and started by clicking on the push notification
-          if (action == "MESSAGE") {
-          
-            this.badge.decrease(1);
-            this.router.navigate(['MessagesDetailPage'],{state: {id: id, action : "open"}});
-          }
-        }
-       
-
-
-        // set to landscape
-        //this.screenOrientation.lock(this.screenOrientation. ORIENTATIONS.PORTRAIT).catch((err) => { console.log('Setting screen orientation failed:', err); });
-        
-        // Lock phone after 2 minutes in pause
-        this.lastResume = new Date;
-        this.platform.pause.subscribe((e) => {
-          // Saves the time of pause to be used in resume
-          this.lastResume = new Date;
-        });
-
-        this.platform.resume.subscribe(async (e) => {
-          if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
-             // App will lock after 2 minutes
-             let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-
-             if (secondsPassed >= 120) {
-                 // Must implement lock-screen
-                this.showFingerprintAuthDlg()
-              }
-            }
-          });
-        });
   }
 
   async getTokboxSession(caller) {
@@ -358,7 +332,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  initVoIpPushNotifications() {
+  async initVoIpPushNotifications() {
 
     console.log("** initVoIpPushNotifications **");
     if (!this.platform.is('cordova')) {
@@ -392,20 +366,19 @@ export class AppComponent implements OnInit {
       await notification
       console.log("[Ionic] voip notification callback called");
       console.log(notification);
-      self.opentokService.agendaId = notification.extra?.Caller.ConnectionId;
-      //const caller = JSON.parse(notification?.extra.Caller); 
-       //TODO. Penjar trucada si no s'agafa en x segons??
-      // setTimeout( () => {
-      //   console.log("timeout");
-      //   cordova.plugins.CordovaCall.endCall();
-      // }, 5000);
-      //var extra = JSON.parse(notification.extra);
-      self.getTokboxSession(notification.extra.Caller).then(()=>{
-        cordova.plugins.CordovaCall.receiveCall(notification?.extra.Caller.Username, notification?.extra.Caller.ConnectionId);
-       });
-      
 
-      // do something based on received data
+      let cancel = notification.extra?.Caller?.CancelPush;
+      console.log("thisi si cancel _:");
+      console.log(cancel);
+      if(cancel === undefined){
+        console.log("CANCELED:");
+      }else{
+        self.opentokService.agendaId = notification.extra?.Caller?.ConnectionId;
+        self.getTokboxSession(notification.extra.Caller).then(()=>{
+          cordova.plugins.CordovaCall.receiveCall(notification?.extra.Caller.Username, notification?.extra.Caller.ConnectionId);
+         });
+      }
+     
     });
 
     pushvoip.on('error', function (e) {
@@ -418,18 +391,16 @@ export class AppComponent implements OnInit {
   phonecallHandlers(){
 
     var self = this;
-    //accept de videocall
+
     cordova.plugins.CordovaCall.setVideo(true);
-    
+    //accept de videocall
     cordova.plugins.CordovaCall.on('answer', function(data) {
       console.log("answer");
       console.log(data);
-      self.lastResume = new Date;   //evitem aixi que apareixi pantalla de desbloquejar
-      //cordova.plugins.CordovaCall.connectCall();
+      self.lastResume = new Date;
       self.openVideocallModal();
       
     });
-
    
    //reject de videocall
    cordova.plugins.CordovaCall.on('reject', function(data) {
@@ -534,12 +505,18 @@ export class AppComponent implements OnInit {
   setLanguage() {
     // this language will be used as a fallback when a translation isn't found in the current language
     //this.translate.setDefaultLang('ca');
-    this.translate.setDefaultLang('es');
-
+    let lang = this.translate.getBrowserLang();
+    if(lang !== 'ca' && lang !== 'es')
+      lang = 'es'
+    
+    this.translate.setDefaultLang(lang);
+    console.log("BROWSER LANG: ", lang );
+    //this.translate.getBrowserLang()
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    let userLanguage = localStorage.getItem('language') ? localStorage.getItem('language') : this.languageService.getCurrent();
-    // this.languageService.changeLanguage(userLanguage);
-    this.languageService.changeLanguage('es');
+
+    //let userLanguage = localStorage.getItem('language') ? localStorage.getItem('language') : this.languageService.getCurrent();
+    this.languageService.changeLanguage(lang);
+
 
     // this is to determine the text direction depending on the selected language
     // for the purpose of this example we determine that only arabic and hebrew are RTL.
