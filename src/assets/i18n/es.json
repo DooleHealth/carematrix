@@ -216,7 +216,7 @@
           "error_changed_password": "Error al actualizar la contraseña!",
 
           "validators_required": "Campo requerido",
-          "validators_minlength": "El tamaño mínimo es 4 carateres",
+          "validators_minlength": "El tamaño mínimo es 6 carateres",
           "validators_check_password": "La contraseña no coincide con la anterior",
           "validators_new_password": "Debes ingresar la nueva contraseña",
           "validators_current_password": "Debes ingresar la contraseña actual"
