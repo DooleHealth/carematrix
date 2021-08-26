@@ -31,7 +31,7 @@ export class ReminderPage implements OnInit {
     this.id = history.state.id;
     if(this.id){
       this.event = history.state.event;
-      console.log('[ReminderPage] ngOnInit()', this.event);
+      console.log('[ReminderPage] ngOnInit()', this.event, this.id);
       this.getReminderData()
     }
   }
@@ -51,7 +51,7 @@ export class ReminderPage implements OnInit {
           this.days[3].day4 = res.reminder.day4
           this.days[4].day5 = res.reminder.day5
           this.days[5].day6 = res.reminder.day6
-          this.days[5].day7 = res.reminder.day7
+          this.days[6].day7 = res.reminder.day7
         }
         this.isLoading = false
        },(err) => { 
@@ -165,7 +165,7 @@ export class ReminderPage implements OnInit {
   async editReminder(){
     const modal = await this.modalCtrl.create({
       component:  ReminderAddPage,
-      componentProps: { },
+      componentProps: {typeId: this.id, type: 'Agenda', event: this.reminder},
       cssClass: "modal-custom-class"
     });
 

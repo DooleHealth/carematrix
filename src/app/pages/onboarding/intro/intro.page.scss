@@ -26,6 +26,9 @@
     margin-top: 10%;
     
 }
+.buttonPaddingIphone{
+    opacity: 0%;
+}
 
 /* ----------- iPhone 10 ----------- */
 @media only screen
@@ -49,6 +52,12 @@
         margin-top:0%;
         margin-bottom: 5%;
       }
-    
+      .buttonPadding{
+        opacity: 0%;
+    }
+    .buttonPaddingIphone{
+        opacity: 100%;
+    }
+   
 }
 

@@ -73,12 +73,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 /***
                  * Reminders
                  */
-                case url.endsWith('user/reminder') && method === 'GET':
+/*                 case url.endsWith('user/reminder') && method === 'GET':
                     return getAPIreminders();
                 case url.endsWith('user/reminder/') && method === 'POST':
                     return postAPIaddReminder();
                 case url.includes('user/reminder/id') && method === 'GET':
-                    return getAPIreminderID();
+                    return getAPIreminderID(); */
 
                 default:
                     // pass through any requests not handled above 

@@ -271,7 +271,7 @@ export class AgendaDetailPage implements OnInit {
   async addReminder(){
     const modal = await this.modalCtrl.create({
       component: ReminderAddPage,
-      componentProps: { typeId: this.event?.id, type: 'element', isNewReminder:true },
+      componentProps: { typeId: this.event?.id, type: 'Agenda', origin_id: this.event?.id/* isNewReminder:true */ },
       cssClass: "modal-custom-class"
     });
 

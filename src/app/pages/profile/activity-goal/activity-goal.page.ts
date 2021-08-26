@@ -146,7 +146,7 @@ export class ActivityGoalPage implements OnInit {
 
       this.values = this.values.reverse();
 
-      
+      console.log(this.graphData)
       this.generateChart();
       this.isLoading = false
     }, error => {
@@ -163,7 +163,7 @@ export class ActivityGoalPage implements OnInit {
       chart: {  
         type: (this.graphData.length > 4)? 'line':'column',  //'line' 'area'
         zoomType: 'x',
-         
+            
       },
       title: {
         text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
@@ -171,11 +171,11 @@ export class ActivityGoalPage implements OnInit {
       xAxis: {
         //categories: ['L', 'M', 'MX', 'J', 'V', 'S', 'D'],
         type: 'datetime',
-        maxRange: this.min.getTime()
-      },
+        maxRange: this.min.getTime(),
+  
+      },   
       yAxis: {
-        // min: 30,
-        startOnTick: false,
+        // min: 0,  
         title: {
           text: this.units,
           align: 'high'
@@ -190,7 +190,7 @@ export class ActivityGoalPage implements OnInit {
 /*       tooltip: {
         valueSuffix: ' millions'
       }, */
-      plotOptions: {
+      plotOptions: {        
 /*         bar: {
           dataLabels: {
             enabled: true
@@ -213,12 +213,13 @@ export class ActivityGoalPage implements OnInit {
       series: [{
         type: undefined,
         colorKey: 'colorValue',
+        pointWidth: 20,
         colorByPoint: false,
         data: this.graphData,
         name: this.units,
       }]
     });
-
+    
     HighCharts.setOptions({
       lang: {
          /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
@@ -413,7 +414,7 @@ export class ActivityGoalPage implements OnInit {
   async addReminder(){
     const modal = await this.modalCtrl.create({
       component: ReminderAddPage,
-      componentProps: { typeId: this.id, type: 'element', isNewReminder:true },
+      componentProps: { typeId: this.id, type: 'Element'},
       cssClass: "modal-custom-class"
     });
 

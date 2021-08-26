@@ -1192,7 +1192,7 @@ export class DooleService {
   }
 
   getAPIreminderID(id): Observable<any> {
-    let path = `user/reminder/id`; //${id}
+    let path = `user/reminder/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -1213,12 +1213,23 @@ export class DooleService {
     );
   }
 
-  deleteAPIReminder(params: HealthCard): Observable<any> {
-    let path = `user/healthcard/${params.id}`;
+  deleteAPIReminder(id): Observable<any> {
+    let path = `user/reminder/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.delete(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] deleteAPIhealthCard(${path}) res: ${res}`, JSON.stringify(res));
+        //console.log(`[DooleService] deleteAPIReminder(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+      })
+    );
+  }
+
+  updateAPIReminder(id: any, params: Object): Observable<any> {
+    let path = `user/reminder/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
         return res;
 
       })
