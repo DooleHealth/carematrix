@@ -26,7 +26,7 @@
         <ion-label>{{ 'documents_add.field_title' | translate }}</ion-label>
         <ion-input formControlName="title" slot="end" (ionInput)="isSubmittedTitle = false"></ion-input>
         <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
       <ion-item>
         <ion-label>{{ 'documents_add.field_date' | translate }}</ion-label>
@@ -37,12 +37,12 @@
       <ion-item>
         <ion-label>{{ 'documents_add.field_description' | translate }}</ion-label>
         <ion-textarea slot="end" formControlName="description"></ion-textarea>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.field_private' | translate }}</ion-label>
         <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+       
       </ion-item>
     </ion-list>
   </ion-card>
