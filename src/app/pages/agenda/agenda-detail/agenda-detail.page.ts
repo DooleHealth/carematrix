@@ -13,6 +13,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { OpentokService } from 'src/app/services/opentok.service';
+import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 
@@ -164,7 +165,8 @@ export class AgendaDetailPage implements OnInit {
       case "App\\Element":
         id = instruction.reminderable_id
         console.log('[AgendaPage] actionIntrucction()',  id);
-        this.nav.navigateForward("elements-add", { state: {id:id} });
+        //this.nav.navigateForward("elements-add", { state: {id:id} });
+        this.addElement(id)
         break;
       case  "App\\Advice":
         id = instruction.reminderable_id
@@ -180,11 +182,18 @@ export class AgendaDetailPage implements OnInit {
         id = instruction.reminderable_id
         this.openForm(id)
         break;
+/*       case  "App\\Agenda":
+        id = instruction.reminderable_id
+        this.nav.navigateForward("/diets-detail", { state: {id:id} });
+        break; */
     
       default:
-        id = 42
-        console.log('[AgendaPage] actionIntrucction()',  id);
-        this.openForm(id)
+        id = instruction.reminderable_id
+        if(instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda"){
+            id = instruction?.id
+            if(id)
+            this.nav.navigateForward("agenda/reminder", { state: {id:id} });
+        }
         break;
     }
   }
@@ -271,7 +280,7 @@ export class AgendaDetailPage implements OnInit {
   async addReminder(){
     const modal = await this.modalCtrl.create({
       component: ReminderAddPage,
-      componentProps: { typeId: this.event?.id, type: 'Agenda', origin_id: this.event?.id/* isNewReminder:true */ },
+      componentProps: { typeId: undefined, type: undefined, origin_id: this.event?.id/* isNewReminder:true */ },
       cssClass: "modal-custom-class"
     });
 
@@ -280,6 +289,9 @@ export class AgendaDetailPage implements OnInit {
 
         if(result?.data['error']){
          //TODO: handle error message
+        }
+        else if(result?.data?.action == 'add'){
+          this.getDetailAgenda();
         }
     });
     await modal.present();
@@ -296,14 +308,8 @@ export class AgendaDetailPage implements OnInit {
       .then((result) => {
 
         if(result?.data['action'] === 'update'){
-            let event = result?.data['agenda'] 
-            console.log('[AgendaPage] editAgenda() Update',  event)
-            this.event.title = event.title
-            this.event.site = event.place
-            this.event.start_date_iso8601 = event.date
-            this.event.description = event.indications
-            this.event.online = this.event.online
-           // this.event.files = this.event.file
+          if(this.event?.id)
+          this.getDetailAgenda();
          }
         if(result?.data['error']){
         //TODO: handle error message
@@ -312,6 +318,27 @@ export class AgendaDetailPage implements OnInit {
 
     await modal.present();
 
+  }
+
+  async addElement(id){
+    const modal = await this.modalCtrl.create({
+      component: ElementsAddPage,
+      componentProps: {id: id },
+      cssClass: "modal-custom-class"
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        if(result?.data['action'] === 'add'){
+          // if(this.event?.id)
+          // this.getDetailAgenda();
+          this.notification.displayToastSuccessful()
+         }
+        if(result?.data['error']){
+        //TODO: handle error message
+        }
+    });
+    await modal.present();
   }
 
   getName(m){

@@ -60,36 +60,27 @@
       </ion-item>
       <ion-item>
         <ion-label>{{'reminder.field_time' | translate}}</ion-label>
-        <ion-datetime display-format="HH:mm A" picker-format="HH:mm A" formControlName="time" required></ion-datetime>
+        <ion-datetime [placeholder]="this.isSubmittedTimes? '': '+' " (ionChange)="inputDate(); this.isSubmittedTimes = false" display-format="HH:mm A" picker-format="HH:mm A" formControlName="time"></ion-datetime>
+        <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
+      <ng-container *ngFor="let time of this.times;let i = index">
+        <ion-chip>
+          <ion-label class="txtTitleGoals">{{time}} </ion-label>
+          <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
+        </ion-chip>
+      </ng-container>
       <ion-item lines="none">
         <ion-label lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
-        <ion-select interface="action-sheet" (ionFocus)="isChangedSelect($event)" (ionChange)="this.selectedFrequency($event)" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
-          <ion-select-option value="daily">{{'reminder.frequency.day' | translate}}</ion-select-option>
-          <ion-select-option value="1week">{{'reminder.frequency.week1' | translate}}</ion-select-option>
-          <ion-select-option value="2week">{{'reminder.frequency.week2'| translate}}</ion-select-option>
-          <ion-select-option value="3week">{{'reminder.frequency.week3' | translate}}</ion-select-option>
-          <ion-select-option value="1month">{{'reminder.frequency.month1' | translate}}</ion-select-option>
-          <ion-select-option value="2month">{{'reminder.frequency.month2'| translate}}</ion-select-option>
-          <ion-select-option value="3month">{{'reminder.frequency.month3'| translate}}</ion-select-option>
-          <ion-select-option value="3month">{{'reminder.frequency.custom' | translate}}</ion-select-option>
+        <ion-select interface="action-sheet" (ionChange)="this.isChangedSelect($event)" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+          <ion-select-option value="daily">{{'reminder.frequency.daily' | translate}}</ion-select-option>
+          <ion-select-option *ngIf="this.frequency ==  '1week' " value="1week">{{'reminder.frequency.weekly' | translate}}</ion-select-option>
+          <ion-select-option *ngIf="this.frequency ==  'custom' " value="custom">{{'reminder.frequency.weekly' | translate}}</ion-select-option>
         </ion-select>
         <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
     </ion-list>
   </ion-card>
-<!--   <ion-card class="cardProfile">
-    <ion-item>
-      <ion-label lines="none">{{'reminder.field_notice' | translate}}</ion-label>
-      <ion-input class="textMedium"></ion-input>
-      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-label lines="none">{{'reminder.field_show_as' | translate}}</ion-label>
-      <ion-input class="textMedium"></ion-input>
-      <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-    </ion-item>
-  </ion-card> -->
+
 </form>
 
 <section *ngIf="!this.isNewEvent">

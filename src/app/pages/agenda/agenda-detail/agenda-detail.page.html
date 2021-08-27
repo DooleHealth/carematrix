@@ -71,6 +71,10 @@
         <ion-label>{{ 'appointment.field_information' | translate}}</ion-label>
         <ion-textarea class="textMedium" [innerHtml]="event?.description"></ion-textarea>
       </ion-item>
+      <ion-item>
+        <ion-label>{{ 'appointment.field_description' | translate}}</ion-label>
+        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments"></ion-textarea>
+      </ion-item>
       <ion-item >
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
         <ion-label  class="textMedium">{{ (event?.files?.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
