@@ -30,6 +30,8 @@ export class AgendaDetailPage implements OnInit {
   isLoading: boolean = true;
   public lat: string;
   public lon: string;
+  cord: any = {}
+  
 
   constructor(
     private dooleService: DooleService,
@@ -67,12 +69,12 @@ export class AgendaDetailPage implements OnInit {
         if(res.agenda)
           this.event = res.agenda
           this.coordenadas = this.event.center_location
-          this.lon = this.coordenadas[0].longitude
-          this.lat = this.coordenadas[0].latitude
+          this.cord = this.coordenadas[0]
+          this.lon = this.cord?.longitude
+          this.lat = this.cord?.latitude
         console.log(this.event);
         if(this.event?.online)
           this.getVideocallToken();
-
        },(err) => { 
           console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)

@@ -51,7 +51,6 @@ export class HomePage implements OnInit {
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
   isLoading = false
-  //userio
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;

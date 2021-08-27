@@ -44,8 +44,9 @@
         <ion-item [lines]="(event?.site !== null)? 'none': 'full' ">
           <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
         </ion-item>
-        <ion-item  *ngFor="let coord of event?.center_location; let i = index" >
-            <img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=16&size=600x400&key=AIzaSyCSG5Itu_gLT4XZO2u3DK46Q-RCAVvPX5c'">
+        <ion-item *ngFor="let coord of event?.center_location; let i = index">
+          <img
+            [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=16&size=600x400&key=AIzaSyCSG5Itu_gLT4XZO2u3DK46Q-RCAVvPX5c'">
         </ion-item>
       </div>
       <ion-item>
