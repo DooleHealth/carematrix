@@ -23,10 +23,14 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 })
 export class AgendaDetailPage implements OnInit {
   event: any = {}
+  coordenadas: any = {}
   tokboxSession: any;
   disabled : string;
   isSaving: boolean;
   isLoading: boolean = true;
+  public lat: string;
+  public lon: string;
+
   constructor(
     private dooleService: DooleService,
     private translate : TranslateService,
@@ -62,7 +66,10 @@ export class AgendaDetailPage implements OnInit {
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
         if(res.agenda)
           this.event = res.agenda
-       
+          this.coordenadas = this.event.center_location
+          this.lon = this.coordenadas[0].longitude
+          this.lat = this.coordenadas[0].latitude
+        console.log(this.event);
         if(this.event?.online)
           this.getVideocallToken();
 
