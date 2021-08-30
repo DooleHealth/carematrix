@@ -58,7 +58,7 @@ export class AgendaPage implements OnInit {
     private modalCtrl: ModalController,
     private analyticsService: AnalyticsService
   ) {
-    this.analyticsService.setScreenName('agenda','AgendaPage')
+    //this.analyticsService.setScreenName('agenda','AgendaPage')
   }
 
   ngOnInit() {

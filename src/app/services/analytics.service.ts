@@ -15,13 +15,13 @@ const { FirebaseAnalytics, Device } = Plugins;
 export class AnalyticsService {
   analyticsEnabled = true;
   constructor( private router: Router) {
-    this.initFb();
-    this.router.events.pipe(
-      filter((e: RouterEvent) => e instanceof NavigationEnd),
-    ).subscribe((e: RouterEvent) => {
-      console.log('route changed: ', e.url);
-      this.setScreenName(e.url)
-    });
+    // this.initFb();
+    // this.router.events.pipe(
+    //   filter((e: RouterEvent) => e instanceof NavigationEnd),
+    // ).subscribe((e: RouterEvent) => {
+    //   console.log('route changed: ', e.url);
+    //   this.setScreenName(e.url)
+    // });
   }
 
   async initFb() {
@@ -31,7 +31,6 @@ export class AnalyticsService {
   }
 
   async setUser(userId) {
-    console.log('before set user id ', await userId);
     // Use Firebase Auth uid
     FirebaseAnalytics.setUserId({
       userId: userId,

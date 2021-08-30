@@ -95,25 +95,20 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     private analyticsService: AnalyticsService
   ) {
-    this.analyticsService.setScreenName('home','[HomePage]')
+    //this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() { 
-    this.date =  this.transformDate(Date.now())
+    this.date = this.transformDate(Date.now())
     this.checkHealthAccess();
-    // this.slideGoalChange() 
+    this.getUserInformation();
   }
 
 
-  async ionViewDidEnter(){
-  
-    this.tabs.translateTab()
-    await this.getUserInformation()
-    setTimeout(() => {
-      // Close modal
-     this.loading = false;
-    }, 500);
-    
+  ionViewWillEnter(){
+    //if(!this.authService.user || history.state?.userChanged )
+      this.getUserInformation()
+   
   }
 
   checkHealthAccess(){
@@ -140,7 +135,7 @@ export class HomePage implements OnInit {
     this.analyticsService.setProperty('Edad', this.userDoole.age)
     if(this.userDoole?.language?.name)
     this.analyticsService.setProperty('Idioma', this.userDoole.language.name)   
-    //this.analyticsService.setProperty('gender', this.userDoole.gender)
+    this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
   async getUserInformation(){
@@ -149,12 +144,14 @@ export class HomePage implements OnInit {
     let date = {date: this.date}
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
-        //console.log('[HomePage] getUserInformation()', await res);
+        await res;
+       
         this.userDoole = res.data?.profile;
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
         this.diets = res.data?.diets;
+        console.log('[HomePage] getUserInformation()',  this.userDoole);
         this.slideDietChange()
 
         let elements = res?.data.elements
@@ -174,16 +171,11 @@ export class HomePage implements OnInit {
           this.sliderGames.slideTo(this.currentIndexDrug)
         }
 
-        // this.drugs = res.data.drugIntakes.drugIntakes;
-        // this.filterDrugsByStatus()
-        // this.searchIndexDrug()
-        // this.slideDrugChange()
-        // this.sliderDrug.slideTo(this.currentIndexDrug)
         this.getDrugIntake()
         this.isLoading = false
         //Analytics
         //console.log('[HomePage] getUserInformation()', this.userDoole);
-        this.setAnalyticsUserProperty()
+        //this.setAnalyticsUserProperty()
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false

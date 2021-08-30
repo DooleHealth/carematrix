@@ -1,11 +1,11 @@
 <ion-row class="changeFamily">
-<span *ngFor="let family of this.listFamilyUnit">
-  <section *ngIf="family.id  === this.authService?.user?.idUser">
+
+  <section *ngIf="this.isFamily">
     <ion-fab  vertical="bottom" horizontal="end"  slot="fixed" routerLink="/profile/family"  routerLinkActive='active-item'>
       <ion-fab-button size="small" color="warning">
         <ion-icon name="alert-outline"></ion-icon> 
       </ion-fab-button>
     </ion-fab>
   </section>
-</span>
+
 </ion-row>
