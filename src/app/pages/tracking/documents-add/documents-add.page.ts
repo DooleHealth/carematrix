@@ -448,7 +448,7 @@ export class DocumentsAddPage implements OnInit {
   }
 
 
-  async presentAlertConfirm(mediaFile, isDeleteMediaFile, index, isNewFile) {
+  async presentAlertConfirm(mediaFile, isDeleteMediaFile, index?, isNewFile?) {
     let message = this.translate.instant(isDeleteMediaFile? "documents_add.delete_media_file": "documents_add.delete_document")
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',

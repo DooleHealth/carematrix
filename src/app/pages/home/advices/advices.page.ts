@@ -28,12 +28,7 @@ export class AdvicesPage implements OnInit {
   @ViewChild('slides') slides: IonSlides;
   constructor(
     private dooleService: DooleService,
-    private loadingController: LoadingController,
     private datePipe: DatePipe,
-    private iab: InAppBrowser,
-    private auth: AuthenticationService,
-    private translate: TranslateService
-
   ) { }
 
   ngOnInit() {
@@ -77,7 +72,6 @@ export class AdvicesPage implements OnInit {
 
 // ADVICES
   async getAdvicesList(){
-    console.log('holaaa');
     this.items = []
     this.isLoading = true
     // let formattedDate = this.transformDate(this.date)
@@ -97,8 +91,8 @@ export class AdvicesPage implements OnInit {
 
 
 
-  segmentChanged(){
-    console.log(this.segment);
+  segmentChanged(event?){
+    console.log("segement changed: ", this.segment);
     switch (this.segment) {
       case 'news':
         this.getNewsList()

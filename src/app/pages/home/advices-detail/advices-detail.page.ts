@@ -94,7 +94,7 @@ export class AdvicesDetailPage implements OnInit {
   
   }
 
-  openVideo(media){
+  openVideo(media?){
     console.log("media", this.advice.media);
     console.log("video", this.video);
     console.log("miniaturaVideo", this.videoThumbnail);

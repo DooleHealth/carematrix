@@ -150,7 +150,7 @@ export class HomePage implements OnInit {
     let date = {date: this.date}
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
-        console.log('[HomePage] getUserInformation()', await res);
+        //console.log('[HomePage] getUserInformation()', await res);
         this.userDoole = res.data?.profile;
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
@@ -183,7 +183,7 @@ export class HomePage implements OnInit {
         this.getDrugIntake()
         this.isLoading = false
         //Analytics
-        console.log('[HomePage] getUserInformation()', this.userDoole);
+        //console.log('[HomePage] getUserInformation()', this.userDoole);
         this.setAnalyticsUserProperty()
        },(err) => { 
           console.log('getAll ERROR(' + err.code + '): ' + err.message); 

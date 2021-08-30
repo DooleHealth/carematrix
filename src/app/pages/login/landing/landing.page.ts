@@ -45,11 +45,11 @@ export class LandingPage implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl('',
+      username: new FormControl('magnum',
       Validators.compose([
         Validators.required
       ])),
-      password: new FormControl('',
+      password: new FormControl('123456',
         Validators.compose([
         Validators.required])
       ),

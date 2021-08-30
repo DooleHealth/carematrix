@@ -40,7 +40,7 @@
         <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_take_time' | translate}}</ion-label>
         <ion-datetime (ionChange)="inputDate(); this.isSubmittedTimes = false"  formControlName="time" displayFormat="H:mm" placeholder="+">
         </ion-datetime>
-        <ion-note *ngIf="this.isSubmittedTimes && this.times==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        <ion-note *ngIf="this.isSubmittedTimes && this.times.length == 0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
         <ng-container *ngFor="let time of this.times;let i = index">
           <ion-chip>
@@ -53,7 +53,7 @@
       <ion-button expand="block" color="danger" >Eliminar este medicamento</ion-button> -->
       <ion-item lines="none">
         <ion-label class="txtTitleGoals" lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
-        <ion-select class="txtTitleGoals" interface="action-sheet" (ionChange)="selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+        <ion-select class="txtTitleGoals" interface="action-sheet" (ionChange)="selectedFrequency($event)" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
           <ion-select-option class="txtTitleGoals" value="0">{{'reminder.frequency.day' | translate}}</ion-select-option>
           <ion-select-option class="txtTitleGoals" value="1">{{'reminder.frequency.daily' | translate}}</ion-select-option>
           <ion-select-option class="txtTitleGoals" value="2">{{'reminder.frequency.week'| translate}}</ion-select-option>

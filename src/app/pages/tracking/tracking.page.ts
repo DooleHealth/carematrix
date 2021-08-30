@@ -121,7 +121,7 @@ export class TrackingPage implements OnInit {
       async (res: any) =>{
         this.diagnosticTests = []
         this.listDiagnostic = []
-        console.log('[TrackingPage] getDiagnosticTests()', await res);
+        //console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.diagnosticTests = res.diagnosticTests
         if(this.diagnosticTests )
         this.groupDiagnosticsByDate(res)
@@ -146,7 +146,7 @@ export class TrackingPage implements OnInit {
         this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color}) 
       } 
     })
-    console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);
+    //console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);
   }
 
 
@@ -155,7 +155,7 @@ export class TrackingPage implements OnInit {
     this.dooleService.getAPIformLists().subscribe(
       async (res: any) =>{
          this.forms = []
-        console.log('[TrackingPage] getDiagnosticTests()', await res);
+        //console.log('[TrackingPage] getDiagnosticTests()', await res);
         this.forms = res.forms
         this.isLoading = false
         // this.hasToShowForm = formData.showForm;
@@ -208,7 +208,7 @@ export class TrackingPage implements OnInit {
     }
   }
 
-  segmentChanged(){
+  segmentChanged(event?){
     console.log(this.segment);
     switch (this.segment) {
       case 'documents':

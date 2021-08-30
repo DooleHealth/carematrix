@@ -54,8 +54,6 @@ constructor(
     this.apiKey = this.opentokService.apiKey$;
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
-    //await window.OT.getUserMedia();
-    console.log(this.durationStr);
   }
 
 publish() {
@@ -124,6 +122,7 @@ ngAfterViewInit(): void {
       },
       streamDestroyed: (event) => {
         console.log(`Stream ${event.stream.name} ended because ${event.reason}`);
+        this.close();
         //OT.updateViews();
       },
       sessionConnected: event => {

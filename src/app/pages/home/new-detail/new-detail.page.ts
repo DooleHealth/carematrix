@@ -85,16 +85,15 @@ export class NewDetailPage implements OnInit {
 
 
 
-  openFile(files){
+  openFile(){
     console.log("files", this.new.files);
-    // console.log("video", this.video);
     console.log("miniatura", this.thumbnail);
     console.log("news", this.linkpdf2.changingThisBreaksApplicationSecurity);
     window.open(this.linkpdf2.changingThisBreaksApplicationSecurity, "");
   
   }
 
-  openVideo(files){
+  openVideo(){
     console.log("files", this.new.files);
     console.log("video", this.video);
     console.log("miniaturaVideo", this.videoThumbnail);

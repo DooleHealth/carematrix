@@ -34,7 +34,7 @@ export class FamilyUnitPage implements OnInit {
     this.isLoading = true
     this.dooleService.getAPIFamilyUnit().subscribe(
       async (res: any) =>{
-        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        //console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
         this.listFamilyUnit = res
         this.isLoading = false
        },(err) => { 
@@ -47,7 +47,7 @@ export class FamilyUnitPage implements OnInit {
     this.isLoading = true
     this.dooleService.getAPIFamilyUnit2().subscribe(
       async (res: any) =>{
-        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        //console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
         this.canAccess = res.canAccess
         this.othersCanAccess = res.othersCanAccess
         // this.listFamilyUnit = this.canAccess

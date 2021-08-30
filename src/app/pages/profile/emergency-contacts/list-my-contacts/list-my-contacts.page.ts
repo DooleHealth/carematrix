@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Plugins } from "@capacitor/core";
-import { ModalController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
+import { EmergencyContact } from 'src/app/models/user';
 const  { Contacts } = Plugins;
 
 @Component({
@@ -12,7 +13,8 @@ export class ListMyContactsPage implements OnInit {
   contacts = [];
   contactsBackup = [];
   isHybrid = true;
-  isLoading = false
+  isLoading = false;
+  emergencyContact: EmergencyContact = {}
   constructor(
     public platform: Platform,
     ) { }

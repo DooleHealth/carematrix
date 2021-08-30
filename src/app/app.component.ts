@@ -11,13 +11,13 @@ import { AuthenticationService } from './services/authentication.service';
 import { StorageService } from './services/storage.service';
 import { Network } from '@ionic-native/network/ngx';
 import { throwError } from 'rxjs';
-
-import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import 'firebase'
 import { VideoComponent } from './components/video/video.component';
 import { OpentokService } from './services/opentok.service';
 import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { Local } from 'protractor/built/driverProviders';
+import { environment } from 'src/environments/environment';
 
 
 const { PushNotifications, LocalNotifications } = Plugins;
@@ -65,13 +65,12 @@ export class AppComponent implements OnInit {
     private network: Network,
     private opentokService: OpentokService,
     private modalCtrl: ModalController,
-    private backgroundMode: BackgroundMode,
+    //private backgroundMode: BackgroundMode,
     private dooleService: DooleService,
     private faio : FingerprintAIO
 
   ) {
-    //firebase.initializeApp(environment.firebase);
-    //firebase.database.enableLogging(true);
+
 
   }
 
@@ -112,7 +111,8 @@ export class AppComponent implements OnInit {
   async showNotification(notification: PushNotification){
 
    var title, body,id,color,actionType;
-   let push = JSON.parse(notification.body)
+   // Notifications has different Payloads: iOS = data.aps, Android = data
+   let push = notification.data?.aps ? notification.data?.aps : notification.data; 
 
    title = push?.title;
    body = push?.message;
@@ -219,8 +219,6 @@ export class AppComponent implements OnInit {
           platform = 'android';
         }
 
-        console.log("TOKEN:", token);
-
         this.authService.devicePlatform = platform;
         this.authService.deviceToken = token.value;
 
@@ -240,25 +238,22 @@ export class AppComponent implements OnInit {
         const voip = notification.data?.voip;
         
         if (voip == "true") {
-          const caller = JSON.parse(notification.data?.Caller); 
-          let cancel = caller.CancelPush;
-          console.log("thisi si cancel _:");
-          console.log(cancel);
-          if(cancel){
-          console.log(cancel);
+          // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
+          let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data.isCancelPush;
+          console.log("cancel push:", cancel);
+          if(cancel == "true"){
+            console.log(cancel);
             return;
           }else{
+            const caller = JSON.parse(notification.data?.Caller); 
             this.opentokService.agendaId = notification.data?.callId
-         
             this.getTokboxSession(caller).then(()=>{
             cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
            });
           }
          
         }else{
-          console.log("is notification: ", JSON.parse(notification.body));
-          let push =   JSON.parse(notification.body);
-
+          console.log("is notification: ", notification);
           await this.showNotification(notification);
         }
       }
@@ -286,8 +281,6 @@ export class AppComponent implements OnInit {
           this.router.navigateByUrl(`/journal`);
         }
 
-       
-       
       }
     );
 
@@ -367,16 +360,21 @@ export class AppComponent implements OnInit {
       console.log("[Ionic] voip notification callback called");
       console.log(notification);
 
-      let cancel = notification.extra?.Caller?.CancelPush;
-      console.log("thisi si cancel _:");
-      console.log(cancel);
-      if(cancel === undefined){
-        console.log("CANCELED:");
-      }else{
-        self.opentokService.agendaId = notification.extra?.Caller?.ConnectionId;
-        self.getTokboxSession(notification.extra.Caller).then(()=>{
-          cordova.plugins.CordovaCall.receiveCall(notification?.extra.Caller.Username, notification?.extra.Caller.ConnectionId);
-         });
+      const caller = notification.extra?.Caller;
+
+      if(caller){
+        let cancel = notification.extra?.Caller?.CancelPush;
+        console.log("is CancelPush:");
+        console.log(cancel);
+        if(cancel == "true"){
+          console.log("HANG UP");
+          return;
+        }else{
+          self.opentokService.agendaId = notification.extra?.Caller?.ConnectionId;
+          self.getTokboxSession(notification.extra.Caller).then(()=>{
+            cordova.plugins.CordovaCall.receiveCall(notification?.extra.Caller.Username, notification?.extra.Caller.ConnectionId);
+           });
+        }
       }
      
     });
@@ -509,6 +507,7 @@ export class AppComponent implements OnInit {
     if(lang !== 'ca' && lang !== 'es')
       lang = 'es'
     
+
     this.translate.setDefaultLang(lang);
     console.log("BROWSER LANG: ", lang );
     //this.translate.getBrowserLang()

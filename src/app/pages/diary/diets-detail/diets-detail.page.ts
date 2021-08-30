@@ -80,7 +80,7 @@ export class DietsDetailPage implements OnInit {
           throw err; 
       });
   }
-  openFile(media){
+  openFile(){
     console.log("media", this.diet.media);
     // console.log("video", this.video);
     console.log("miniatura", this.thumbnail);
@@ -89,7 +89,7 @@ export class DietsDetailPage implements OnInit {
   
   }
 
-  openVideo(media){
+  openVideo(){
     console.log("media", this.diet.media);
     console.log("video", this.video);
  

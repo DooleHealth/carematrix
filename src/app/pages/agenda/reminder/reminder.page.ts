@@ -15,7 +15,7 @@ export class ReminderPage implements OnInit {
   days = [{day1:false}, {day2:false}, {day3:false}, {day4:false}, {day5:false}, {day6:false}, {day7:false}]
   id:any
   event = []
-  reminder = {}
+  reminder : any = {}
   frequency = ''
   isLoading = false
   constructor(
