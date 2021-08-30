@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactPage implements OnInit {
   segment = 'video';
-  constructor() { }
+  constructor(public authService: AuthenticationService) { }
   ngOnInit() {
   }
 

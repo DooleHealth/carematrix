@@ -106,7 +106,7 @@ export class HomePage implements OnInit {
 
 
   ionViewWillEnter(){
-    //if(!this.authService.user || history.state?.userChanged )
+    if(!this.authService.user || history.state?.userChanged )
       this.getUserInformation()
    
   }

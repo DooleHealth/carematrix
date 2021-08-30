@@ -21,7 +21,7 @@
 </ion-header>
 
 <ion-content>
-  <changeUser></changeUser>
+  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30" startingDayWeek="1"
