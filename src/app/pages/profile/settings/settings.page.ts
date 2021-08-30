@@ -239,6 +239,7 @@ export class SettingsPage implements OnInit {
               this.faceId = !this.faceId
               return
             }
+
             if(!faceId){
               localStorage.setItem('settings-bio', 'false');
               return
@@ -255,6 +256,8 @@ export class SettingsPage implements OnInit {
               if (error.code == -102) {
                 setTimeout(() => this.showBioAuthDlg(false), 500);
               }
+              this.faceId = !this.faceId
+
             });
   
         }).catch(async (error: any) => {

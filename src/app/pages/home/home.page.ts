@@ -141,7 +141,7 @@ export class HomePage implements OnInit {
   async getUserInformation(){
     this.isLoading = true
     this.activity = []
-    let date = {date: this.date}
+    let date = {date: this.date, from_date: this.date, to_date: this.date}
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
         await res;
