@@ -48,14 +48,14 @@ export class DiaryPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
-  }
-  ionViewDidEnter(){
     this.items = []
-    console.log('[DiaryPage] ionViewDidEnter()');
+    console.log('[DiaryPage] ngOnInit()');
     let state = history.state?.segment;
     if(state) this.segment = state
     this.segmentChanged()
+  }
+  ionViewDidEnter(){
+   
   }
   next() {
     let nextDay =  new Date(this.date).getDate() + 1
@@ -314,6 +314,7 @@ export class DiaryPage implements OnInit {
 
   async segmentChanged($event?){
     console.log('[DiaryPage] segmentChanged()', this.segment); 
+    console.log('[DiaryPage] event()', $event); 
     this.items = []
     switch (this.segment) {
       case 'diets':
@@ -329,7 +330,7 @@ export class DiaryPage implements OnInit {
         await this.getElementsList()
         break;
       default:
-        //this.getDiagnosticTestsList()
+        console.log('Segment not found');
         break;
     }
   }

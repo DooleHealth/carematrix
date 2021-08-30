@@ -26,7 +26,7 @@ export class FamilyUnitPage implements OnInit {
 
   ngOnInit() {
     this.getFamilyUnitData();
- this.getFamilyUnit2Data();
+    this.getFamilyUnit2Data();
 
   }
 
@@ -34,7 +34,7 @@ export class FamilyUnitPage implements OnInit {
     this.isLoading = true
     this.dooleService.getAPIFamilyUnit().subscribe(
       async (res: any) =>{
-        //console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
         this.listFamilyUnit = res
         this.isLoading = false
        },(err) => { 
@@ -95,14 +95,14 @@ export class FamilyUnitPage implements OnInit {
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
     this.authService.setFamilyUnit(user);
     this.router.navigateByUrl('home');
-    console.log(this.listFamilyUnit) 
+   
   }
 
   returnUser(){
     console.log('[FamilyUnitPage] returnUser()');
     this.authService.setUserFamilyId(null);
     this.router.navigateByUrl('home');
-    console.log(this.listFamilyUnit) 
+   
   }
 
 

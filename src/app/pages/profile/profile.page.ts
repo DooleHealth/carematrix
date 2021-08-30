@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   userDoole : any
   userImage:string = 'assets/icons/user_icon.svg'
   constructor( 
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     private firebaseService: FirebaseAuthService,
     private dooleService: DooleService,
     private notification: NotificationService,
@@ -25,20 +25,34 @@ export class ProfilePage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
-    this.getUserProfile()
+   
+  }
+
+  ionViewWillEnter(){
+    //this.getUserProfile();
+    this.userDoole = this.authService.user;
+    console.log('[ProfilePage] ionViewWillEnter()',history.state.user);
+    
   }
 
   getUserProfile(){
-    this.userDoole = history.state.user;
-    console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
-    this.userImg()
+    
+    if(history.state?.user){
+      this.userDoole = history.state.user;
+      this.userImg()
+      console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
+    }
+    
+   
   }
 
   userImg(){
     if(this.userDoole?.temporaryUrl )
-    this.userImage = this.userDoole?.temporaryUrl;
+      this.userImage = this.userDoole?.temporaryUrl;
     else if(this.userDoole?.image )
-    this.userImage = this.userDoole?.image;
+      this.userImage = this.userDoole?.image;
+    else
+      console.log('user image not found');
   }
 
 
