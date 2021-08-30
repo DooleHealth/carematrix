@@ -25,24 +25,11 @@ export class FamilyUnitPage implements OnInit {
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
-    this.getFamilyUnitData();
+   
  this.getFamilyUnit2Data();
 
   }
 
-  getFamilyUnitData(){
-    this.isLoading = true
-    this.dooleService.getAPIFamilyUnit().subscribe(
-      async (res: any) =>{
-        //console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
-        this.listFamilyUnit = res
-        this.isLoading = false
-       },(err) => { 
-          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
-          this.isLoading = false
-          throw err; 
-      });  
-  }
   getFamilyUnit2Data(){
     this.isLoading = true
     this.dooleService.getAPIFamilyUnit2().subscribe(
