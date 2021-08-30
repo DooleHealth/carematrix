@@ -186,6 +186,8 @@ ngAfterViewInit(): void {
             this.durationStr = Math.round(min) + " min";
           }else if(event.data>0){
             this.durationStr = event.data+ " ''";
+          }else if(event.data<0){
+            this.durationStr = "instant";
           }else{
             this.durationStr = "Fin";
           }
