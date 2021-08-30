@@ -53,7 +53,7 @@ export class ReminderPage implements OnInit {
           this.days[4].day5 = res.reminder.day5
           this.days[5].day6 = res.reminder.day6
           this.days[6].day7 = res.reminder.day7
-
+          this.times = []
           if(this.reminder?.times.length > 0)
           this.reminder.times.forEach(element => {
             let t = element.time.split(':')

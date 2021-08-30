@@ -1169,7 +1169,9 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
 
-        //console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+        console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+        if(res.length == 0)
+        return res
         return res.messages as ShellChatModel[];
       })
     );

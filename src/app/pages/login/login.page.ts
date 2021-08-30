@@ -125,8 +125,8 @@ export class LoginPage implements OnInit {
   redirectBiometric(){
     let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
     if(condicion){
-      this.router.navigate(['/login/biometric-auth']);
       this.modalCtrl.dismiss({error:null});
+      this.router.navigate(['/login/biometric-auth']);
     } else{
       this.showIntro()
     }      

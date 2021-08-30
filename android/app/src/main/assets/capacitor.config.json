@@ -27,7 +27,15 @@
     }
   },
   "PushNotifications": {
-    "presentationOptions": ["badge", "sound", "alert"]
+    "presentationOptions": [
+      "badge",
+      "sound",
+      "alert"
+    ]
+  },
+  "LocalNotifications": {
+    "smallIcon": "ic_stat_circle_notifications",
+    "iconColor": "#FF0000"
   },
   "cordova": {}
 }
