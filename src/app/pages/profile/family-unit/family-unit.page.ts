@@ -25,9 +25,24 @@ export class FamilyUnitPage implements OnInit {
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
-   
- this.getFamilyUnit2Data();
 
+    this.getFamilyUnitData();
+    this.getFamilyUnit2Data();
+
+  }
+
+  getFamilyUnitData(){
+    this.isLoading = true
+    this.dooleService.getAPIFamilyUnit().subscribe(
+      async (res: any) =>{
+        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        this.listFamilyUnit = res
+        this.isLoading = false
+       },(err) => { 
+          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          throw err; 
+      });  
   }
 
   getFamilyUnit2Data(){
@@ -82,14 +97,14 @@ export class FamilyUnitPage implements OnInit {
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
     this.authService.setFamilyUnit(user);
     this.router.navigateByUrl('home');
-    console.log(this.listFamilyUnit) 
+   
   }
 
   returnUser(){
     console.log('[FamilyUnitPage] returnUser()');
     this.authService.setUserFamilyId(null);
     this.router.navigateByUrl('home');
-    console.log(this.listFamilyUnit) 
+   
   }
 
 

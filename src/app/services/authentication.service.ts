@@ -8,6 +8,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Platform } from '@ionic/angular';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
+import { FamilyUnit } from '../models/user';
 const { Storage } = Plugins;
 const TOKEN_KEY = 'token';
 const INTRO_KEY = 'intro';
@@ -22,6 +23,7 @@ export class User {
   roles: any = [];
   familyUnit: string;
   name: string;
+  listFamilyUnit: FamilyUnit[] = [];
   constructor(idUser: string, secret: string, name: string, first_name: string, image: string) {
     this.idUser = idUser
     this.secret = secret
@@ -109,7 +111,7 @@ export class AuthenticationService {
               if (this.platform.is('ios')) {
                 this.registerDevice(this.voipDeviceToken, this.voipDevicePlatform);        
               }
-              // 
+              //  p
             }
 
           }, (error) => {
@@ -121,9 +123,9 @@ export class AuthenticationService {
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
         this.setTwoFactor(res.twoFactorCenter)
-        // if (res?.familyUnit.length > 0) {
-        //   this.setFamilyUnitLocalstorage(res.familyUnit);
-        // }
+        if (res?.familyUnit.length > 0) {
+          this.setFamilyUnitLocalstorage(res.familyUnit);
+        }
 
         return res;
 
@@ -155,11 +157,12 @@ export class AuthenticationService {
 
   setFamilyUnitLocalstorage(familyUnit: []) {
 
+    this.user.listFamilyUnit = familyUnit;
     familyUnit.forEach(member => {
       let s: string = member['name'];
       let fullname = s.split(',');
       let u = new User(member['id'], '', fullname[1], fullname[0], member['thumbnail']);
-      console.log("familiUnit Local Storage:", u);
+      console.log("familyUnit Local Storage:", u);
       Storage.set({
         key: u.idUser,
         value: JSON.stringify(u)
@@ -196,7 +199,7 @@ export class AuthenticationService {
   public async setUserFamilyId(id) {
 
     await this.getUserLocalstorage().then(user => {
-      console.log(`[AuthenticationService] MEMEBER(${id})`, this.user);
+      console.log(`[AuthenticationService] MEMBER(${id})`, user);
       let s: string = user['name'];
       let fullname = s.split(',');
       this.user = new User(user['idUser'], '', fullname[0].replace(',',''), fullname[1], user['image']);

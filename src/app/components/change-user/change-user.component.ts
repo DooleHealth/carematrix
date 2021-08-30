@@ -11,7 +11,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./change-user.component.scss'],
 })
 export class ChangeUserComponent implements OnInit {
-  listFamilyUnit:FamilyUnit[] = [];
+  isFamily: boolean;
   isLoading = false
   user
   constructor(
@@ -22,27 +22,39 @@ export class ChangeUserComponent implements OnInit {
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
-    
-    this.getFamilyUnitData();
+    console.log("befor is Unit: ",  this.authService?.user?.listFamilyUnit);
+    this.authService?.user?.listFamilyUnit.forEach((family)=>{
+      console.log("checking is Unit: ", family.id, parseInt(this.authService.user.idUser))
+      if(family.id == parseInt(this.authService.user.idUser))
+        this.isFamily = true;
+    })
+  }
 
+  ionViewDidEnter(){
+    console.log("befor is Unit: ")
+    this.authService?.user.listFamilyUnit.forEach((family)=>{
+      console.log("checking is Unit: ", family.id, parseInt(this.authService.user.idUser))
+      if(family.id == parseInt(this.authService.user.idUser))
+        this.isFamily = true;
+    })
   }
 
   getFamilyUnitData(){
     this.isLoading = true
     this.dooleService.getAPIFamilyUnit().subscribe(
       async (res: any) =>{
-        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
-        this.listFamilyUnit = res
+        console.log('[ChangeUserComponent] getFamilyUnitData()', await res);
+        //this.listFamilyUnit = res
         this.isLoading = false
        },(err) => { 
-          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[ChangeUserComponent] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
           throw err; 
       });
   }
 
   changeAccount(family){
-    console.log('[FamilyUnitPage] changeAccount()', family.name);
+    console.log('[ChangeUserComponent] changeAccount()', family.name);
     this.presentAlertConfirm(family)
   }
 
@@ -63,7 +75,7 @@ export class ChangeUserComponent implements OnInit {
           text: this.translate.instant("alert.button_change"),
           handler: () => {
             console.log('Confirm Okay');
-            console.log('[FamilyUnitPage] presentAlertConfirm() Cuenta de:', family.name);
+            console.log('[ChangeUserComponent] presentAlertConfirm() Cuenta de:', family.name);
             this.changeUser(family)
           }
         }
@@ -74,17 +86,17 @@ export class ChangeUserComponent implements OnInit {
   }
 
   changeUser(user?){
-    console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
+    console.log('[ChangeUserComponent] changeUser() Cuenta de:', user);
     this.authService.setFamilyUnit(user);
     this.router.navigateByUrl('home');
-    console.log(this.listFamilyUnit) 
+    console.log(this.authService.user.listFamilyUnit) 
   }
 
   returnUser(){
-    console.log('[FamilyUnitPage] returnUser()');
+    console.log('[ChangeUserComponent] returnUser()');
     this.authService.setUserFamilyId(null);
     this.router.navigateByUrl('home');
-    console.log(this.listFamilyUnit) 
+    console.log(this.authService.user.listFamilyUnit) 
   }
 
 

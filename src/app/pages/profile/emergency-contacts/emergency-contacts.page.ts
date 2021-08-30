@@ -12,7 +12,7 @@ import { ListMyContactsPage } from './list-my-contacts/list-my-contacts.page';
 })
 export class EmergencyContactsPage implements OnInit {
   listContact = []
-  isLoading = false
+  isLoading = true
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,

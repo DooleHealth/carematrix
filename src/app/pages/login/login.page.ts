@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
   }
 
   async ionViewDidEnter(){
-    this.analyticsService.setScreenName('login','LoginPage')
+    //this.analyticsService.setScreenName('login','LoginPage')
   }
 
   loginUser(){
@@ -38,8 +38,7 @@ export class LoginPage implements OnInit {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;
       if(res.success){ 
-        this.analyticsService.setUser(res.idUser)
-        this.languageService.setLenguageLocalstorage('ca') //'ca'
+        //this.analyticsService.setUser(res.idUser)
         //this.analyticsService.logEvent('login', res)
         //this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         //this.analyticsService.logEvent('user_doole', {userId: res.idUser})
@@ -126,8 +125,14 @@ export class LoginPage implements OnInit {
   redirectBiometric(){
     let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
     if(condicion){
-      this.modalCtrl.dismiss({error:null});
-      this.router.navigate(['/login/biometric-auth']);
+      this.ngZone.run(() => {      
+        this.router.navigate(['/login/biometric-auth'])
+        setTimeout(() => {
+          // Close modal
+          this.modalCtrl.dismiss({error:null});
+      }, 500);
+        
+      });
     } else{
       this.showIntro()
     }      

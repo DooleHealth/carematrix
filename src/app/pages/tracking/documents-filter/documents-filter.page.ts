@@ -118,6 +118,7 @@ export class DocumentsFilterPage implements OnInit {
 
 
   submit(){
+      this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
       this.modalCtrl.dismiss({error:null, action: 'add', filter: this.form.value});
   }
 
@@ -140,6 +141,22 @@ export class DocumentsFilterPage implements OnInit {
       var dateEnd = new Date(end_date);
       let endDateTemp = this.datepipe.transform(dateEnd, 'y-MM-dd');
       this.form.get('end_date').setValue(endDateTemp)
+    }
+  }
+
+  changeToggleDate(event){
+    console.log('[DocumentsFilterPage] changeToggleDate()', event);
+    if(event.detail.checked){
+      this.form.get('start_date').setValue('')
+      this.form.get('end_date').setValue('')
+    }
+  }
+
+  changeToggleTestType(event){
+    console.log('[DocumentsFilterPage] changeToggleTestType()', event);
+    if(event.detail.checked && this.toggle2){
+      this.diagnosticTestTypes = []
+      console.log('[DocumentsFilterPage] diagnosticTestTypes', this.diagnosticTestTypes);
     }
   }
 

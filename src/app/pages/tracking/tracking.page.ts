@@ -288,7 +288,7 @@ async addDocument(){
     
       modal.onDidDismiss()
         .then((result) => {
-          console.log('addFilters()', result);     
+          console.log('[TrackingPage] addFilters()', result);     
           if(result?.data?.error){
            // let message = this.translate.instant('landing.message_wrong_credentials')
             //this.dooleService.presentAlert(message)

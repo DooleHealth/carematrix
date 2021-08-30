@@ -38,7 +38,7 @@ export class BookingsPage implements OnInit {
   constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
     public file: File, private router: Router, private notification: NotificationService,  private analyticsService: AnalyticsService) { 
-      this.analyticsService.setScreenName('booking','[BookingsPage]')
+      //this.analyticsService.setScreenName('booking','[BookingsPage]')
     }
   ngOnInit() {
    
@@ -77,7 +77,7 @@ export class BookingsPage implements OnInit {
       async (res: any) =>{
         console.log('[BookingsPage] addAgenda()', await res);  
         if(res.success){
-          this.analyticsService.logEvent('create_agenda', res)      
+          //this.analyticsService.logEvent('create_agenda', res)      
           this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
           this.notification.displayToastSuccessful()
         }

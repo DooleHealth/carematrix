@@ -26,8 +26,8 @@
             <app-aspect-ratio [ratio]="{w:1, h:1}">
               <app-image-shell
           animation="spinner"
-          [src]="this.userDoole?.temporaryUrl"
-          [alt]="'Sample Image'"
+          [src]="this.authService?.user?.image"
+          [alt]="'Profile Image'"
         ></app-image-shell>
             </app-aspect-ratio>
           </ion-thumbnail>

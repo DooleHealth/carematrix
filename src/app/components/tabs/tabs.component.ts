@@ -26,11 +26,7 @@ export class TabsComponent implements OnInit {
 
   constructor(
      private router: Router , 
-     private translate: TranslateService, 
-     private dooleService: DooleService,
-     private authService: AuthenticationService,
-     private alertController: AlertController,)  {
-    // this.nav=nav;
+     private authService: AuthenticationService)  {
     { this.user = this.authService.user?.familyUnit}
   }
   ngOnInit() {
@@ -39,11 +35,7 @@ export class TabsComponent implements OnInit {
   }
 
   translateTab(){
-    this.home = this.translate.instant('tab.home')
-    this.agenda= this.translate.instant('tab.agenda')
-    this.contact= this.translate.instant('tab.contact')
-    this.tracking= this.translate.instant('tab.tracking')
-    this.journal= this.translate.instant('tab.journal')
+    
   }
 
   public navigateAgenda() {
