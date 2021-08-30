@@ -27,7 +27,7 @@
   <form (ngSubmit)="submit()" [formGroup]="form"> 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_date' | translate}}</ion-text>
-    <ion-toggle slot="end" color="success" [checked]="toggle" (ionChange)='(toggle = ! toggle) ? toggle : !toggle;'></ion-toggle>
+    <ion-toggle slot="end" color="success" [checked]="toggle" (ionChange)='(toggle = ! toggle) ? toggle : !toggle; changeToggleDate($event)'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle">
     <ion-list>
@@ -44,7 +44,7 @@
 
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_test_type' | translate}}</ion-text>
-    <ion-toggle slot="end" color="success" [checked]="toggle2" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2;'></ion-toggle>
+    <ion-toggle slot="end" color="success" [checked]="toggle2" (ionChange)='(toggle2 = ! toggle2) ? toggle2 : !toggle2; changeToggleTestType($event)'></ion-toggle>
   </ion-item>
   <ion-card class="cardProfile" *ngIf="toggle2">
     <ion-list *ngFor="let test of listTestType; let i = index">
