@@ -53,7 +53,7 @@ export class AgendaPage implements OnInit {
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService, 
-    private languageService: LanguageService,
+    public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController,
     private analyticsService: AnalyticsService

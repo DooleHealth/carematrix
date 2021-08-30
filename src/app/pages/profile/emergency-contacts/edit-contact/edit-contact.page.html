@@ -27,7 +27,7 @@
   </ion-grid>
 
   <ion-card class="cardProfile">
-    <form [formGroup]="formContact" (ngSubmit)="addCard()">
+    <form [formGroup]="formContact" (ngSubmit)="this.addCard()">
     <ion-list>
       <ion-item>
         <ion-label  class="txtTitleGoals">{{ 'detail_contact.username' | translate}}</ion-label>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "429887824166-t944nvkog9vtb0b8ml3627vafiobjb6a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doole.doole",
+            "certificate_hash": "d0321f9de4ef03af9b0a42c9b44e2d5b0c4fd062"
+          }
+        },
+        {
           "client_id": "429887824166-slfio2dmed7jiiop5otojha54r2nfl0e.apps.googleusercontent.com",
           "client_type": 3
         }

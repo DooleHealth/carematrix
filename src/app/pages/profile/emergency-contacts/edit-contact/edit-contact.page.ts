@@ -213,8 +213,11 @@ export class EditContactPage implements OnInit {
           this.formContact.get('socialRelationName').setValue(this.socialRelationType?.name)
       }
     });
-
+    
     return await modal.present();
+  }
+  addCard() {
+
   }
 
 

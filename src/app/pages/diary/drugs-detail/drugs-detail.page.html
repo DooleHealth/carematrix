@@ -40,7 +40,7 @@
         <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_take_time' | translate}}</ion-label>
         <ion-datetime (ionChange)="inputDate(); this.isSubmittedTimes = false"  formControlName="time" displayFormat="H:mm" placeholder="+">
         </ion-datetime>
-        <ion-note *ngIf="this.isSubmittedTimes && this.times==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        <ion-note *ngIf="this.isSubmittedTimes && this.times.length == 0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
         <ng-container *ngFor="let time of this.times;let i = index">
           <ion-chip>
@@ -59,7 +59,6 @@
       </ion-item>
     </form>
     
- 
   </ion-card>
   <div class="buttonContainer">
   <ion-button  expand="block" (click)="submit()" color="primary" >{{'medication.save_medication' | translate}}</ion-button><br>

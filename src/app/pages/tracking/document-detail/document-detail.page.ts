@@ -20,8 +20,8 @@ export class DocumentDetailPage implements OnInit {
   public items: ItemDiagnostic[] = [];
   private id;
   private document: any;
-  diagnosticTest = [];
-  diagnosticTestType = [];
+  diagnosticTest: any = [];
+  diagnosticTestType: any = [];
   groupedElements: any = [];
   elementValues: any = [];
   mediaFiles: any;

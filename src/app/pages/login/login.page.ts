@@ -35,13 +35,14 @@ export class LoginPage implements OnInit {
 
   loginUser(){
     this.authService.login(this.credentials).subscribe(async (res) => {
-      console.log('[LoginPage] doDooleAppLogin()', res);
+      //console.log('[LoginPage] doDooleAppLogin()', res);
+      await res;
       if(res.success){ 
         this.analyticsService.setUser(res.idUser)
         this.languageService.setLenguageLocalstorage('ca') //'ca'
-        this.analyticsService.logEvent('login', res)
-        this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
-        this.analyticsService.logEvent('user_doole', {userId: res.idUser})
+        //this.analyticsService.logEvent('login', res)
+        //this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
+        //this.analyticsService.logEvent('user_doole', {userId: res.idUser})
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
@@ -68,7 +69,7 @@ export class LoginPage implements OnInit {
         //console.log('[LoginPage] checkConditionLegal()', await res);
          if(res.success)
 
-        console.log('[LoginPage] checkConditionLegal()', await res);
+        //console.log('[LoginPage] checkConditionLegal()', await res);
         if(res.success)
 
           this.redirectPage(res.accepted_last)

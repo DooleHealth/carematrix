@@ -36,7 +36,7 @@
     <div class="main-container" *ngIf="linkpdf2 || video">
       <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
     </div>
-    <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo(m)">
+    <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo()">
       <ion-row>
         <ion-col size="4" class="imgCardMedia">
         </ion-col>
@@ -46,7 +46,7 @@
         </ion-col>
       </ion-row>
     </ion-card>
-    <ion-card class="cardProfilePadding" *ngIf="linkpdf2"  (click)="openFile(m)">
+    <ion-card class="cardProfilePadding" *ngIf="linkpdf2"  (click)="openFile()">
       <ion-row>
         <ion-col size="4" class="imgCardPdf">
         </ion-col>

@@ -340,7 +340,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIinformationSummary(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIinformationSummary(${path}) res: `, res);
         return res;
       })
     );
@@ -655,7 +655,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIdiagnosticTests(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIdiagnosticTests(${path}) res: `, res);
         return res;
       })
     );

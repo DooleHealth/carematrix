@@ -8,6 +8,7 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProfilePage } from './profile.page';
 import { ReportProblemPageModule } from './report-problem/report-problem.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ReportProblemPageModule } from './report-problem/report-problem.module'
     IonicModule,
     TranslateModule,
     ProfilePageRoutingModule,
-    ReportProblemPageModule
+    ReportProblemPageModule,
+    ComponentsModule
   ],
   declarations: [ProfilePage]
 })

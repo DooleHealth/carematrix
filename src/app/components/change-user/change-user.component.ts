@@ -16,12 +16,13 @@ export class ChangeUserComponent implements OnInit {
   user
   constructor(
     private dooleService: DooleService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     private alertController: AlertController,
     public router: Router,
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
+    
     this.getFamilyUnitData();
 
   }

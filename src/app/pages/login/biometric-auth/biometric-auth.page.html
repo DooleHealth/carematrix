@@ -1,14 +1,13 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons end color="primary">
-      <!-- <ion-back-button (click)="dismissLockScreen()"></ion-back-button> -->
       <ion-icon color="primary" name="close-sharp" (click)="dismissLockScreen()" slot="end" size="large"></ion-icon>
       {{ 'biometrics.activate' | translate }}
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="back" [ngStyle]="{'background': 'url(' + backgroundImage + ')'}" fullscreen>
+<ion-content class="back" fullscreen>
   
   <ng-container *ngIf="this.showDialog">
     <div class="landing-container">
@@ -32,33 +31,5 @@
       </ion-row>
     </div>
   </ng-container>
-
-  <div class="landing-container">
-    <div *ngIf="this.showSuccess">
-      <div style="text-align: center; padding-top: 10%;">
-        <ion-row>
-          <ion-col col-3>
-          </ion-col>
-          <ion-col col-6>
-            <ion-img src="assets/images/cheque.svg"></ion-img>
-          </ion-col>
-          <ion-col col-3>
-          </ion-col>
-        </ion-row>
-      </div>
-      <br>
-      <div style="text-align: left;padding-top: 10%;">
-        <ion-text><strong>{{ 'biometrics.text4' | translate }}</strong>
-          <br><br>{{ 'biometrics.text5' | translate }} 
-        </ion-text>
-      </div>
-      <ion-row style="margin-top:30%; margin-left: 2%; margin-right: 2%;">
-        <ion-col size="12">
-          <ion-button expand="block" color="primary" (click)="dismissLockScreen()">{{ 'confirmation.button' | translate | uppercase}}</ion-button>
-        </ion-col>
-      </ion-row>
-    </div>
-    
-  </div>
   
 </ion-content>

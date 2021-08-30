@@ -16,17 +16,6 @@ export const environment = {
     storageBucket: "deneb-65a05.appspot.com",
     messagingSenderId: "429887824166",
     appId: "1:429887824166:web:8ae6abb69c876697d121e7"
-    //appId: "1:1094231160196:web:11d4eecd087e565cbed9d1",
-    //measurementId: "G-4SW50F4HMH"
-
-/*     apiKey: "AIzaSyCg7GGDmwXpVjEaA1KodELEvk8mORKw6XM",
-    authDomain: "mgc-doole.firebaseapp.com",
-    databaseURL: "https://mgc-doole.firebaseio.com",
-    projectId: "mgc-doole",
-    storageBucket: "mgc-doole.appspot.com",
-    messagingSenderId: "1094231160196",
-    appId: "1:1094231160196:web:11d4eecd087e565cbed9d1",
-    measurementId: "G-4SW50F4HMH" */
 
   }
 };

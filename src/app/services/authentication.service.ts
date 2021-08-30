@@ -243,9 +243,9 @@ export class AuthenticationService {
     const endpoint = this.api.getDooleEndpoint(endpt);
 
     // endpoint
-    console.log("body", endpt);
+    //console.log("body", endpt);
     // body
-    console.log("body",items);
+    //console.log("body",items);
     return this.http.post(endpoint, items).pipe(
       map((res: any) => {
         return res;

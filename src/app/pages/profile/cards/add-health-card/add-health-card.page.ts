@@ -22,6 +22,7 @@ export class AddHealthCardPage implements OnInit {
   isSubmittedAffiliationNumber = false;
   isSubmittedModality = false;
   isAddCard = true;
+  isSubmitted: boolean;
   constructor(
     private dooleService: DooleService,
     private formBuilder: FormBuilder,

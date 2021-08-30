@@ -86,7 +86,7 @@
           </ion-item>
         </div>  
 
-          <div *ngFor="let file of this.mediaFiles">
+          <div *ngFor="let file of this.mediaFiles; let i = index">
             <ion-item lines="none">
               <div id="left">
                 <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>

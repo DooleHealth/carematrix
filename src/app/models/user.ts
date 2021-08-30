@@ -95,6 +95,8 @@ export interface UserProfile{
     temporaryUrl:string,
     allergies: [],
     diagnostics: [],
+    phone:string,
+    language:any
 }
 
 export interface FamilyUnit {

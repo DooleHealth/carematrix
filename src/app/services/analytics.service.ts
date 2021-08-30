@@ -30,7 +30,8 @@ export class AnalyticsService {
     }
   }
 
-  setUser(userId) {
+  async setUser(userId) {
+    console.log('before set user id ', await userId);
     // Use Firebase Auth uid
     FirebaseAnalytics.setUserId({
       userId: userId,
