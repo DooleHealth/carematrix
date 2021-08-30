@@ -59,7 +59,7 @@ export class ChatPage implements OnInit {
   data: Array<ShellChatModel> & ShellModel;
   routeResolveData: ShellChatModel[];
   myDate: String = new Date().toISOString();
-
+  isLoading:boolean = true
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
@@ -84,12 +84,14 @@ export class ChatPage implements OnInit {
    this.dataStore.load(dataSource);
     this.dataStore.state.subscribe(res => {
       console.log('[ChatPage] getAPIUserMessages()', res);
-      this.chat = res;
-      this.data = res;
-      console.log(this.data);
-      console.log(this.myDate);
+        this.chat = res;
+        this.data = res;
+        console.log(this.data);
+        console.log(this.myDate);
+      this.isLoading = false;
     },
     (err) => { 
+      this.isLoading = false;
       console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message); 
       throw err; 
     });

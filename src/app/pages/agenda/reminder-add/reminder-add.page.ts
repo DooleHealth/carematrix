@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
@@ -17,18 +18,21 @@ export class ReminderAddPage implements OnInit {
   @Input()type: string;
   //@Input()origin_type: string;
   @Input()origin_id: string;
-  days = [{day1:true}, {day2:true}, {day3:true}, {day4:true}, {day5:true}, {day6:true}, {day7:true}]
+  days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
   form: FormGroup;
   dateMax:any;
   time:Date;
-  isSubmittedPlace = false;
+  isSubmited = false
+  isSubmittedTimes = false;
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
   id:any;
   @Input()event:any;
-  //agenda_id;
-  frequency;
+  times = []
+  frequency = '1week';
+  frequencySeleted = 'daily';
+  isInit = true;
   isNewEvent: boolean = true;
   isLoading = false
   constructor(
@@ -39,7 +43,8 @@ export class ReminderAddPage implements OnInit {
     public datepipe: DatePipe,
     public alertController: AlertController,
     private modalCtrl: ModalController,
-    private notification: NotificationService
+    private notification: NotificationService,
+    public router: Router,
   ) { 
     this.translate.use('es');
   }
@@ -54,29 +59,56 @@ export class ReminderAddPage implements OnInit {
       type_id: [this.typeId],
       title: [''],
       start_date: ['', [Validators.required]],
-      time: ['', [Validators.required]],
+      time: [''],
       end_date: ['', [Validators.required]],
       description: [],
-      days: [this.days],
+     /*  days: [this.days], */
+     /*   origin: [1], */
       frequency: [],
-    /*   origin: [1], */
       origin_id: [],
-      origin_type: []
+      origin_type: [],
+      day1: [1],
+      day2: [1],
+      day3: [1],
+      day4: [1],
+      day5: [1],
+      day6: [1],
+      day7: [1],
     });
     this.getReminder()
   }
 
   getReminder(){
     if(this.event){
+      console.log('[ReminderAddPage] getReminder()', this.event);
       this.isNewEvent = false
       this.id = this.event.id;
-      console.log('[ReminderAddPage] getReminder()', this.event);
       if(this.event.type) this.form.get('type').setValue(this.event.type)
       if(this.event.title) this.form.get('title').setValue(this.event.title)
       if(this.event.description) this.form.get('description').setValue(this.event.description)
       if(this.event.from_date) this.form.get('start_date').setValue(this.event.from_date)
       if(this.event.to_date) this.form.get('end_date').setValue( this.event.to_date )
-      if(this.event.frequency) this.form.get('frequency').setValue( this.event.frequency )
+      if(this.event?.frequency) {
+        this.form.get('frequency').setValue( this.event.frequency )
+        this.frequencySeleted = this.event.frequency
+      }
+
+      if(this.event.day1) this.form.get('day1').setValue( this.event.day1 )
+      if(this.event.day2) this.form.get('day2').setValue( this.event.day2 )
+      if(this.event.day3) this.form.get('day3').setValue( this.event.day3 )
+      if(this.event.day4) this.form.get('day4').setValue( this.event.day4 )
+      if(this.event.day5) this.form.get('day5').setValue( this.event.day5 )
+      if(this.event.day6) this.form.get('day6').setValue( this.event.day6 )
+      if(this.event.day7) this.form.get('day7').setValue( this.event.day7 )
+
+      if(this.event?.reminderable_type) this.form.get('type').setValue( this.event?.reminderable_type.split('\\')[1] )
+      if(this.event?.reminderable_id) this.form.get('type_id').setValue( this.event.reminderable_id )
+
+      if(this.event?.times.length > 0)
+      this.event?.times.forEach(element => {
+        let t = element.time.split(':')
+        this.times.push(t[0]+':'+t[1])
+      });
     }
     
     if(this.origin_id){
@@ -89,14 +121,28 @@ export class ReminderAddPage implements OnInit {
     }
   }
 
+  removeTime(time){
+    console.log("[DrugsDetailPage] removeTime() ", time);
+    this.times.forEach((element, index) => {
+      if (element == time)
+        this.times.splice(index, 1);
+    });
+
+  }
+
   isSubmittedFields(isSubmitted){
+    this.isSubmittedTimes = isSubmitted;
     this.isSubmittedTitle = isSubmitted;
     this.isSubmittedDuration= isSubmitted;
     this.isSubmittedStartDate= isSubmitted;
   }
 
   transformDate(date) {
-    return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
+    return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
+  }
+
+  transformHour(date) {
+    return this.datepipe.transform(date, 'HH:mm');
   }
 
 /*   trasnforHourToMinutes(time): any{
@@ -112,9 +158,11 @@ export class ReminderAddPage implements OnInit {
     let end_date = this.form.get('end_date').value 
     this.form.get('end_date').setValue(this.transformDate(end_date));
 
-    this.time = new Date(this.form.get('time').value);
-    let t = this.time.getHours() + ':' + this.time.getMinutes();
-    this.form.get('time').setValue(t);
+    let f = this.form.get('frequency').value
+    if(f== 'custom')
+    this.form.get('frequency').setValue('1week');
+
+    this.form.get('time').setValue(this.times)
 
     this.form.get('type').setValue(this.type);
     this.form.get('type_id').setValue(this.typeId);
@@ -146,6 +194,18 @@ export class ReminderAddPage implements OnInit {
   }
 
   async editReminder(){
+    let date = this.form.get('start_date').value 
+    this.form.get('start_date').setValue(this.transformDate(date));
+
+    let end_date = this.form.get('end_date').value 
+    this.form.get('end_date').setValue(this.transformDate(end_date));
+
+    let f = this.form.get('frequency').value
+    if(f== 'custom')
+    this.form.get('frequency').setValue('1week');
+
+    this.form.get('time').setValue(this.times)
+
     this.dooleService.updateAPIReminder(this.id, this.form.value).subscribe(
       async (res: any) =>{
         console.log('[ReminderAddPage] editReminder()', await res);
@@ -174,15 +234,17 @@ export class ReminderAddPage implements OnInit {
 
   async submit() {
     console.log('[ReminderAddPage] submit()', this.form.value );
+    this.isSubmited = true
     this.isSubmittedFields(true);
-    if(this.form.invalid)
-    return 
+    if(this.form.invalid || this.times.length <= 0){
+      this.isSubmited = false
+      return false;
+    }
+
     if(this.isNewEvent)
       this.addReminder()
     else
       this.editReminder()
-
-    //this.addReminder()
   }
 
   async deleteReminder(){
@@ -191,8 +253,9 @@ export class ReminderAddPage implements OnInit {
       async (res: any) =>{
         console.log('[ReminderAddPage] deleteReminder()', await res);
         if(res.success){
-          let message = this.translate.instant('reminder.message_deleted_reminder')
-          this.showAlert(message)
+          this.router.navigateByUrl('/agenda')
+          this.modalCtrl.dismiss({error:null, action: 'delete'});
+          this.notification.displayToastSuccessful()
         }else{
           let message = this.translate.instant("reminder.error_message_delete_reminder")
           alert(message)
@@ -236,55 +299,42 @@ export class ReminderAddPage implements OnInit {
   }
 
   selectedFrequency(event){
-    let fq = this.form.get('frequency').value;
-    console.log('[ReminderAddPage] selectedFrequency()', fq);
-    console.log('[ReminderAddPage] selectedFrequency()', event);
-    
-    switch (fq) {
-      case 0:
-        let index = new Date().getDay()
-        this.settingDay([index -1])
-        //this.frequency = 'day'
-        //this.form.get('frequency').setValue('day');
-        break;
-      case 1:
-        let dialy = [0,1,2,3,4,5,6]
-        this.settingDay(dialy)
-        //this.frequency = 'daily'
-        //this.form.get('frequency').setValue('daily');
-        break;
-      case 2:
-        let five = [0,1,2,3,4]
-        this.settingDay(five)
-        //this.frequency = 'mom_fri'
-        //this.form.get('frequency').setValue('mom_fri');
-        break;
-      case 3:
-        this.showDays()
-        //this.form.get('frequency').setValue('custom');
-        break;
-
-      default:
-        break;
+    if(this.frequencySeleted === '1week' && this.frequency === '1week' && this.isInit && !this.isNewEvent){
+      this.frequency =  'custom'
+      this.isInit = false
     }
   }
 
   isChangedSelect(event){
     let fq = this.form.get('frequency').value
     console.log('[AddHealthCardPage] isChangedSelect()', fq, event);
-/*     if(fq !==3 )
-    this.form.get('frequency').setValue(fq); */
+    switch (fq) {
+      case 'daily':
+        let dialy = [0,1,2,3,4,5,6]
+        this.settingDay(dialy)
+        this.frequencySeleted = fq
+        break;
+      case '1week':
+        if(this.isSubmited) return
+        this.showDays()
+        break;
+      default:
+        this.showDays()
+        break;
+    }
+
   }
 
   settingDay(index){
     this.days.forEach((day, i) =>{
-      day['day'+(i +1)] = false
-     // console.log('[AddHealthCardPage] selectedFrequency() day', index);
+      day['day'+(i +1)] = 0
+      this.form.get('day'+(i+1)).setValue(0)
     })
     if(index.length > 0)
     index.forEach(i => {
       let day = this.days[i]
-      day['day'+(i +1)] = true
+      day['day'+(i +1)] = 1
+      this.form.get('day'+(i+1)).setValue(1)
     });
     console.log('[AddHealthCardPage] settingDay() day', this.days);
   
@@ -301,6 +351,9 @@ export class ReminderAddPage implements OnInit {
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
+            if(this.frequencySeleted == 'daily')
+            this.form.get('frequency').setValue(this.frequencySeleted)
+            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
           }
         },
         {
@@ -308,7 +361,8 @@ export class ReminderAddPage implements OnInit {
           handler: data => {
             console.log('Ok clicked', data);
             this.settingDay(data)
-            this.frequency = 'custom'
+            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
+            this.frequencySeleted = this.frequency
           }
         }
       ]
@@ -335,6 +389,19 @@ export class ReminderAddPage implements OnInit {
 
   close() {
     this.modalCtrl.dismiss({date:null});
+  }
+
+  inputDate(){
+    if(this.isSubmited) 
+    return
+    let time = this.form.get('time').value
+    this.form.get('time').setValue('')
+    if(time !== '' ){
+      let date = new Date(time)
+      let hour = this.transformHour(date)
+      if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
+      this.times.push(hour)
+    }
   }
 
 }

@@ -15,9 +15,10 @@ export class ReminderPage implements OnInit {
   days = [{day1:false}, {day2:false}, {day3:false}, {day4:false}, {day5:false}, {day6:false}, {day7:false}]
   id:any
   event = []
-  reminder : any = {}
+  reminder: any = {}
   frequency = ''
   isLoading = false
+  times = []
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -52,6 +53,12 @@ export class ReminderPage implements OnInit {
           this.days[4].day5 = res.reminder.day5
           this.days[5].day6 = res.reminder.day6
           this.days[6].day7 = res.reminder.day7
+          this.times = []
+          if(this.reminder?.times.length > 0)
+          this.reminder.times.forEach(element => {
+            let t = element.time.split(':')
+            this.times.push(t[0]+':'+t[1])
+          });
         }
         this.isLoading = false
        },(err) => { 
@@ -86,12 +93,14 @@ export class ReminderPage implements OnInit {
         this.frequency = this.translate.instant('reminder.frequency.custom');
         break;
       default:
-        this.frequency = this.translate.instant('reminder.frequency.daily');
+        this.frequency = this.translate.instant('reminder.frequency.weekly');
         break;
     }
   }
 
   async showDays() {
+    if(this.reminder.frequency == 'daily')
+    return
     let alert = this.alertController.create({
       header: this.translate.instant("reminder.wwek_day"),
       inputs: this.addDaysToAlert(),
@@ -108,7 +117,7 @@ export class ReminderPage implements OnInit {
           handler: data => {
             console.log('Ok clicked', data);
             this.settingDay(data)
-            this.frequency = 'custom'
+            //this.frequency = 'custom'
           }
         }
       ]
@@ -184,6 +193,13 @@ export class ReminderPage implements OnInit {
 
     await modal.present();
    
+  }
+
+  getReminderType(){
+    let type = (this.reminder?.reminderable?.name)? this.reminder?.reminderable.name : this.reminder?.reminderable_type?.split("App\\")[0]
+    if(type == undefined)
+    type =  this.reminder?.reminder_origin_type?.split("App\\")[1]
+     return type
   }
 
 }

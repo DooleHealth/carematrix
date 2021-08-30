@@ -1124,6 +1124,17 @@ export class DooleService {
     );
   }
 
+  putAPIagenda(id: any, params: Object): Observable<any> {
+    let path = `user/agenda/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] putAPIagenda(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIallowedContacts(): Observable<any> {
     let path = `user/allowedContacts`;
     const endpoint = this.api.getEndpoint(path);
@@ -1158,7 +1169,9 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
 
-        //console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+        console.log(`[DooleService] getAPIUserMessages(${path}) res: `, res);
+        if(res.length == 0)
+        return res
         return res.messages as ShellChatModel[];
       })
     );

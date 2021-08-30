@@ -49,7 +49,9 @@ export class AddHealthCardPage implements OnInit {
       expiration_date: [''],
       issue_date: [''],
       /* description: ['description'], */
+    
     })
+  
   }
 
   ionViewDidEnter(){
@@ -101,7 +103,7 @@ export class AddHealthCardPage implements OnInit {
   }
 
   transformDate(date) {
-    return this.datepipe.transform(date, 'yyyy-MM-dd');
+    return this.datepipe.transform(date, 'dd/MM/yyyy');
   }
 
   addCard(){
@@ -120,6 +122,7 @@ export class AddHealthCardPage implements OnInit {
           console.log('[AddHealthCardPage] addCard()', await res);
           if(res.success ){
             this.modalCtrl.dismiss({error:null, action: 'add'});
+            console.log(this.formHealthCard);
           }else{
             console.log('[AddHealthCardPage] addCard() Unsuccessful response', await res);
             let messagge = this.translate.instant('add_health_card.error_alert_message_add_card')

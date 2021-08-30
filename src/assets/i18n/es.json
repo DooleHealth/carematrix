@@ -216,7 +216,7 @@
           "error_changed_password": "Error al actualizar la contraseña!",
 
           "validators_required": "Campo requerido",
-          "validators_minlength": "El tamaño mínimo es 4 carateres",
+          "validators_minlength": "El tamaño mínimo es 6 carateres",
           "validators_check_password": "La contraseña no coincide con la anterior",
           "validators_new_password": "Debes ingresar la nueva contraseña",
           "validators_current_password": "Debes ingresar la contraseña actual"
@@ -373,6 +373,7 @@
         },
         "frequency":{
           "daily":"Diariamente",
+          "weekly": "Semanalmente",
           "day":"Una sola vez",
           "custom": "Personalizado",
           "week": "Lun a Vie",
@@ -453,7 +454,8 @@
         "pictures":"Imatges",
         "delete_media_file": "¿Estás seguro de eliminar el archivo?",
         "delete_document": "¿Estás seguro de eliminar la prueba diagnóstica?",
-        "input_file_name": "Ingresa un nombre para el archivo"
+        "input_file_name": "Ingresa un nombre para el archivo",
+        "name": "Nombre"
       },
       "documents_filter":{
         "header": "Filtros",
