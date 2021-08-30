@@ -25,6 +25,7 @@ export class FamilyUnitPage implements OnInit {
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
+
     this.getFamilyUnitData();
     this.getFamilyUnit2Data();
 
@@ -43,6 +44,7 @@ export class FamilyUnitPage implements OnInit {
           throw err; 
       });  
   }
+
   getFamilyUnit2Data(){
     this.isLoading = true
     this.dooleService.getAPIFamilyUnit2().subscribe(
