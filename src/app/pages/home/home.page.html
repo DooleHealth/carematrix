@@ -272,7 +272,7 @@
         </ion-card-content>
       </ion-card>
     </ion-row>
-  <changeUser></changeUser>
+  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   </ion-grid>
 </ion-content>
 <ion-footer>

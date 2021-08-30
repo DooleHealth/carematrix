@@ -44,7 +44,8 @@ export class DiaryPage implements OnInit {
     private translate: TranslateService,
     private languageService: LanguageService,
     private modalCtrl: ModalController,
-    private notification: NotificationService
+    private notification: NotificationService,
+    public authService: AuthenticationService
   ) {}
 
   ngOnInit() {

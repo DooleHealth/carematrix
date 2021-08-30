@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { AgendaEditPage } from './agenda-edit/agenda-edit.page';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.page.html',
@@ -56,6 +57,7 @@ export class AgendaPage implements OnInit {
     public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController,
+    public authService: AuthenticationService,
     private analyticsService: AnalyticsService
   ) {
     //this.analyticsService.setScreenName('agenda','AgendaPage')

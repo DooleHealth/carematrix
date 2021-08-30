@@ -50,11 +50,7 @@ export class TrackingPage implements OnInit {
   filter: Filter;
   constructor(
     private dooleService: DooleService,
-    private sanitizer: DomSanitizer,
-    private activatedRoute: ActivatedRoute,
-    private constants: Constants,
-    private iab: InAppBrowser, 
-    private auth: AuthenticationService,
+    public authService: AuthenticationService,
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,

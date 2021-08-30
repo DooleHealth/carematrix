@@ -53,6 +53,7 @@ export class AuthenticationService {
   public voipDevicePlatform: string;
   public dietsAndAdvices: [];
   public deviceVoipToken: any;
+  public isFamily:boolean;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   constructor(private http: HttpClient,
     private api: ApiEndpointsService,
@@ -124,7 +125,7 @@ export class AuthenticationService {
         this.setUserLocalstorage(this.user)
         this.setTwoFactor(res.twoFactorCenter)
         if (res?.familyUnit.length > 0) {
-          this.setFamilyUnitLocalstorage(res.familyUnit);
+          this.user.listFamilyUnit = res.familyUnit;
         }
 
         return res;
@@ -157,7 +158,7 @@ export class AuthenticationService {
 
   setFamilyUnitLocalstorage(familyUnit: []) {
 
-    this.user.listFamilyUnit = familyUnit;
+  
     familyUnit.forEach(member => {
       let s: string = member['name'];
       let fullname = s.split(',');
@@ -178,6 +179,7 @@ export class AuthenticationService {
   }
 
   public async setFamilyUnit(user) {
+    this.isFamily = true;
     let s: string = user['name'];
     let fullname = s.split(',');
     this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,8 +10,8 @@ import { DooleService } from 'src/app/services/doole.service';
   templateUrl: './change-user.component.html',
   styleUrls: ['./change-user.component.scss'],
 })
-export class ChangeUserComponent implements OnInit {
-  isFamily: boolean;
+export class ChangeUserComponent implements OnInit {  
+  @Input('isFamily') isFamily: boolean;
   isLoading = false
   user
   constructor(
@@ -22,21 +22,7 @@ export class ChangeUserComponent implements OnInit {
     private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
 
   ngOnInit() {
-    console.log("befor is Unit: ",  this.authService?.user?.listFamilyUnit);
-    this.authService?.user?.listFamilyUnit.forEach((family)=>{
-      console.log("checking is Unit: ", family.id, parseInt(this.authService.user.idUser))
-      if(family.id == parseInt(this.authService.user.idUser))
-        this.isFamily = true;
-    })
-  }
-
-  ionViewDidEnter(){
-    console.log("befor is Unit: ")
-    this.authService?.user.listFamilyUnit.forEach((family)=>{
-      console.log("checking is Unit: ", family.id, parseInt(this.authService.user.idUser))
-      if(family.id == parseInt(this.authService.user.idUser))
-        this.isFamily = true;
-    })
+    
   }
 
   getFamilyUnitData(){

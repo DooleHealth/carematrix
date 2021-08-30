@@ -14,7 +14,7 @@
 </ion-header>
 <ion-content view-cached=”false”>
   <span>
-    <changeUser></changeUser>
+    <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   </span>
   <!-- SegmentBar -->
 

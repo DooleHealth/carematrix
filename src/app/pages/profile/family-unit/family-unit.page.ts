@@ -96,14 +96,17 @@ export class FamilyUnitPage implements OnInit {
   changeUser(user?){
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
     this.authService.setFamilyUnit(user);
-    this.router.navigateByUrl('home');
+    
+    this.router.navigate(['home'], {state:{userChanged:true}});
+   
    
   }
 
   returnUser(){
+    this.authService.isFamily = false;
     console.log('[FamilyUnitPage] returnUser()');
     this.authService.setUserFamilyId(null);
-    this.router.navigateByUrl('home');
+    this.router.navigate(['home'], {state:{userChanged:true}});
    
   }
 
