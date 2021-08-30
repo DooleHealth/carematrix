@@ -31,6 +31,8 @@ export class ReminderAddPage implements OnInit {
   @Input()event:any;
   times = []
   frequency = '1week';
+  frequencySeleted = 'daily';
+  isInit = true;
   isNewEvent: boolean = true;
   isLoading = false
   constructor(
@@ -86,7 +88,10 @@ export class ReminderAddPage implements OnInit {
       if(this.event.description) this.form.get('description').setValue(this.event.description)
       if(this.event.from_date) this.form.get('start_date').setValue(this.event.from_date)
       if(this.event.to_date) this.form.get('end_date').setValue( this.event.to_date )
-      if(this.event.frequency) this.form.get('frequency').setValue( this.event.frequency )
+      if(this.event?.frequency) {
+        this.form.get('frequency').setValue( this.event.frequency )
+        this.frequencySeleted = this.event.frequency
+      }
 
       if(this.event.day1) this.form.get('day1').setValue( this.event.day1 )
       if(this.event.day2) this.form.get('day2').setValue( this.event.day2 )
@@ -294,36 +299,9 @@ export class ReminderAddPage implements OnInit {
   }
 
   selectedFrequency(event){
-    let fq = this.form.get('frequency').value;
-    console.log('[ReminderAddPage] selectedFrequency()', fq);
-    console.log('[ReminderAddPage] selectedFrequency()', event);
-    
-    switch (fq) {
-      case 0:
-        let index = new Date().getDay()
-        this.settingDay([index -1])
-        //this.frequency = 'day'
-        //this.form.get('frequency').setValue('day');
-        break;
-      case 1:
-        let dialy = [0,1,2,3,4,5,6]
-        this.settingDay(dialy)
-        //this.frequency = 'daily'
-        //this.form.get('frequency').setValue('daily');
-        break;
-      case 2:
-        let five = [0,1,2,3,4]
-        this.settingDay(five)
-        //this.frequency = 'mom_fri'
-        //this.form.get('frequency').setValue('mom_fri');
-        break;
-      case 3:
-        this.showDays()
-        //this.form.get('frequency').setValue('custom');
-        break;
-
-      default:
-        break;
+    if(this.frequencySeleted === '1week' && this.frequency === '1week' && this.isInit && !this.isNewEvent){
+      this.frequency =  'custom'
+      this.isInit = false
     }
   }
 
@@ -334,8 +312,10 @@ export class ReminderAddPage implements OnInit {
       case 'daily':
         let dialy = [0,1,2,3,4,5,6]
         this.settingDay(dialy)
+        this.frequencySeleted = fq
         break;
       case '1week':
+        if(this.isSubmited) return
         this.showDays()
         break;
       default:
@@ -371,6 +351,9 @@ export class ReminderAddPage implements OnInit {
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
+            if(this.frequencySeleted == 'daily')
+            this.form.get('frequency').setValue(this.frequencySeleted)
+            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
           }
         },
         {
@@ -379,6 +362,7 @@ export class ReminderAddPage implements OnInit {
             console.log('Ok clicked', data);
             this.settingDay(data)
             this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
+            this.frequencySeleted = this.frequency
           }
         }
       ]

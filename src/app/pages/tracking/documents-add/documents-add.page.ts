@@ -29,6 +29,7 @@ export class DocumentsAddPage implements OnInit {
   form: FormGroup;
   typeTest
   private images: any = [];
+  names = [];
   mediaTemp: any = [];
   mediaFiles: any = [];
   public processing:boolean=false; 
@@ -65,9 +66,8 @@ export class DocumentsAddPage implements OnInit {
       date: ['', [Validators.required]],
       description: [''],
       images: [this.images],
-/*       source:[''],
-      center:[''],
-      profesional:[''], */
+      image_name: [this.names]
+
     });
 
     this.showDiagnosticTest()
@@ -116,6 +116,7 @@ export class DocumentsAddPage implements OnInit {
 
     this.mediaTemp.forEach(item => {
       this.images.push(item.file);
+      this.names.push(item.name);
     });
       console.log("submit", this.form.value);
     if(this.isEdit)
@@ -318,7 +319,6 @@ export class DocumentsAddPage implements OnInit {
 
   async savePicture(fileUri, filename){
     this.processing = true
-    //var filename=new Date().getTime();
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);
       this.dooleService.uploadFile(res).then((data: any) => {
@@ -469,6 +469,7 @@ export class DocumentsAddPage implements OnInit {
             if(isDeleteMediaFile){
               if(isNewFile){
                 this.mediaFiles.splice(index,1)
+                this.mediaTemp.splice(index,1)
                 return
               }
               this.deleteMediaFile(mediaFile);

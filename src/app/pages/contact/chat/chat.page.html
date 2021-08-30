@@ -13,24 +13,12 @@
 </ion-header>
 
 <ion-content fullscreen class="whiteBackground">
-  <ion-list>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  <ion-list *ngIf="this.data && this.data?.length > 0; else noData">
     <div *ngFor="let post of this.data; let i = index" >
-      <div *ngIf="!post.recipients">
-        <div *ngIf="i === 0">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="12">
-                <ion-icon class="iconNoData" name="chatbubbles-outline"></ion-icon>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-      </div>
+
       <span *ngIf="post?.recipients?.length == 2">
         <div *ngFor="let item of post?.recipients; let i = index">
           <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation"
@@ -106,4 +94,20 @@
       </span>
     </div>
   </ion-list>
+  <ng-template #noData>
+    <div *ngIf=" !this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="chatbubbles-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ng-template>
 </ion-content>
