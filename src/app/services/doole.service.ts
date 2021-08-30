@@ -1011,8 +1011,8 @@ export class DooleService {
     );
   }
 
-  putAPIdrugIntake(id: any, params: Object): Observable<any> {
-    let path = `user/drugIntake/${id}`;
+  putAPImedicationPlan(id: any, params: Object): Observable<any> {
+    let path = `user/medicationPlan/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.put(endpoint, params).pipe(
       map((res: any) => {
