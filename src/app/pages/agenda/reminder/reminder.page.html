@@ -48,11 +48,11 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
-        <ion-text class="textMedium">{{ formatDate(reminder?.from_date) | date:  'EEEE, d MMM yyyy, HH:mm'}}</ion-text>
+        <ion-text class="textMedium">{{ formatSelectedDate(reminder?.from_date) }}</ion-text>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_end' | translate }}</ion-label>
-        <ion-text class="textMedium">{{ formatDate(reminder?.to_date) | date:  'EEEE, d MMM yyyy, HH:mm'}}</ion-text>
+        <ion-text class="textMedium">{{ formatSelectedDate(reminder?.to_date) }}</ion-text>
       </ion-item>
       <ion-item  (click)="showDays()">
         <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>
