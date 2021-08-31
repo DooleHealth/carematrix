@@ -32,7 +32,7 @@ export class AgendaDetailPage implements OnInit {
   public lat: string;
   public lon: string;
   cord: any = {}
-  
+  enableReminder = true;
 
   constructor(
     private dooleService: DooleService,
@@ -67,15 +67,22 @@ export class AgendaDetailPage implements OnInit {
     this.dooleService.getAPIagendaID(this.event?.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
-        if(res.agenda)
+        if(res.agenda){
           this.event = res.agenda
           this.coordenadas = this.event.center_location
           this.cord = this.coordenadas[0]
           this.lon = this.cord?.longitude
           this.lat = this.cord?.latitude
-        console.log(this.event);
-        if(this.event?.online)
+          console.log(this.event);
+          if(this.event?.online)
           this.getVideocallToken();
+
+          let date = new Date(this.event.start_date_iso8601).toDateString()
+          let today = new Date().toDateString()
+          if(date === today)
+          this.enableReminder = false
+        }
+
        },(err) => { 
           console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)

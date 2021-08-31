@@ -310,7 +310,7 @@ export class DocumentsAddPage implements OnInit {
       var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
       // this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
       // this.numFile = this.mediaFiles.length
-      //this.savePicture(fileUri, filename)
+      this.savePicture(fileUri, filename)
       this.presentPrompt(fileUri, filename)
     }else{
       console.log("no image");
@@ -318,6 +318,28 @@ export class DocumentsAddPage implements OnInit {
   }
 
   async savePicture(fileUri, filename){
+    this.processing = true
+    if(this.isEdit)
+    return this.saveBase64(fileUri,filename.toString()).then(res => {
+      console.log("saveBase64 res: ",res);
+      this.dooleService.uploadFileToModel(res, this.test.id, 'diagnosticTest',filename).then((data: any) => {
+/*         data['name'] = filename
+        this.mediaFiles.push(data);
+        this.mediaTemp.push(data); */
+        this.processing = false
+        console.log(" this.mediafiles: ", data);
+      }).catch(err => {
+        console.log("Error uploadFile: ", err);
+        this.processing = false
+      }).finally(() => {
+        this.processing = false;
+      })
+     
+    });
+
+  }
+
+  async savePicture1(fileUri, filename){
     this.processing = true
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);

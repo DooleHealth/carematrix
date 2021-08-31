@@ -68,6 +68,33 @@ export class DooleService {
 
   }
 
+  uploadFileToModel(image: string, id: string, model: string, name: string) {
+    //console.log("uploading ", image);
+    const token = localStorage.getItem('token');
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: name,
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json',
+      },
+      params: {model: model,id: id, name: name}
+    }
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    const endpoint = this.api.getEndpoint('media/add');
+    return new Promise(function (resolve, reject) {
+      fileTransfer.upload(image, endpoint, options).then(data => {
+        console.log(data);
+        resolve(JSON.parse(data.response));
+      }, (err) => {
+        console.log(err);
+        reject(err);
+      })
+    })
+
+  }
+
   uploadMessageImage(idMessageHeader, idUserTo, message, fileUrl, id_usuari_amiq) {
 
     const token = localStorage.getItem('token');
