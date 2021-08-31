@@ -64,7 +64,7 @@ export class ReminderAddPage implements OnInit {
       description: [],
      /*  days: [this.days], */
      /*   origin: [1], */
-      frequency: [],
+      frequency: ['daily'],
       origin_id: [],
       origin_type: [],
       day1: [1],
@@ -86,8 +86,8 @@ export class ReminderAddPage implements OnInit {
       if(this.event.type) this.form.get('type').setValue(this.event.type)
       if(this.event.title) this.form.get('title').setValue(this.event.title)
       if(this.event.description) this.form.get('description').setValue(this.event.description)
-      if(this.event.from_date) this.form.get('start_date').setValue(this.event.from_date)
-      if(this.event.to_date) this.form.get('end_date').setValue( this.event.to_date )
+      if(this.event.from_date) this.form.get('start_date').setValue( this.formatDate(this.event.from_date))
+      if(this.event.to_date) this.form.get('end_date').setValue( this.formatDate(this.event.to_date) )
       if(this.event?.frequency) {
         this.form.get('frequency').setValue( this.event.frequency )
         this.frequencySeleted = this.event.frequency
@@ -138,11 +138,23 @@ export class ReminderAddPage implements OnInit {
   }
 
   transformDate(date) {
+    //date = new Date(date)
     return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
   }
 
   transformHour(date) {
     return this.datepipe.transform(date, 'HH:mm');
+  }
+
+  formatDate(d){
+    if(d === undefined || d === null)
+    return
+    var auxdate = d.split(' ')
+    let date = new Date(auxdate[0]);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date.toISOString();
   }
 
 /*   trasnforHourToMinutes(time): any{

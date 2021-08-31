@@ -165,6 +165,17 @@ export class DrugsDetailPage implements OnInit {
     return this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
+  formatDate(d){
+    if(d === undefined || d === null)
+    return
+    var auxdate = d.split(' ')
+    let date = new Date(auxdate[0]);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date.toISOString();
+  }
+
   inputDate(){
     if(this.isSubmited) 
     return
@@ -261,9 +272,9 @@ export class DrugsDetailPage implements OnInit {
         if(res.success){
           let medicationPlan = res.medicationPlan
           let from_date = medicationPlan.from_date
-          this.form.get('from_date').setValue(this.transformDate(from_date))     
+          this.form.get('from_date').setValue(this.formatDate(from_date))     
           let to_date = medicationPlan.to_date
-          this.form.get('to_date').setValue(this.transformDate(to_date))
+          this.form.get('to_date').setValue(this.formatDate(to_date))
 
           if(medicationPlan.frequency) {
             this.form.get('frequency').setValue(medicationPlan?.frequency)

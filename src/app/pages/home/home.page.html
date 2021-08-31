@@ -99,8 +99,7 @@
                 </ion-col>
                 <ion-col size="9" class="alingLeft">
                   <p>{{slide.doctor}}</p>
-                  <ion-text>{{slide.start_date_iso8601 | date: 'EEEE, d MMMM hh:mm' |
-                    titlecase }}</ion-text>
+                  <ion-text>{{ formatSelectedDate(slide.start_date_iso8601)  | titlecase }}</ion-text>
                   <ion-button size="small" fill="clear">
                     {{ 'home.detail_button' | translate }}</ion-button>
                 </ion-col>

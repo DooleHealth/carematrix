@@ -15,6 +15,7 @@ import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 export interface UserInformation {
   title?: string;
@@ -93,7 +94,8 @@ export class HomePage implements OnInit {
     private ngZone: NgZone, 
     public translate: TranslateService, 
     public alertController: AlertController,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private languageService: LanguageService,
   ) {
     //this.analyticsService.setScreenName('home','[HomePage]')
   }
@@ -508,6 +510,12 @@ export class HomePage implements OnInit {
         return 0;
       })
   
+    }
+
+    formatSelectedDate(date){
+      let language = this.languageService.getCurrent();
+      const datePipe: DatePipe = new DatePipe(language);
+      return datePipe.transform(date, 'EEEE, d MMMM hh:mm');
     }
 
 }

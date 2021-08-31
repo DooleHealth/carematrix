@@ -72,7 +72,7 @@ export class ReminderPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    //date = this.formatDate(date)
+    date = this.formatDate(date)
     let language = this.languageService.getCurrent()
     const datePipe: DatePipe = new DatePipe(language);
     return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
@@ -93,7 +93,7 @@ export class ReminderPage implements OnInit {
         this.frequency = this.translate.instant('reminder.frequency.custom');
         break;
       default:
-        this.frequency = this.translate.instant('reminder.frequency.weekly');
+        this.frequency = this.translate.instant('reminder.frequency.custom');
         break;
     }
   }
