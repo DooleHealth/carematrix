@@ -24,7 +24,7 @@ const { Camera } = Plugins;
   styleUrls: ['./conversation.page.scss'],
 })
 export class ConversationPage implements OnInit {
-  @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
+  @ViewChild(IonContent, {read: IonContent, static: false}) contentArea: IonContent;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   public name: string = this.staff?.name;
@@ -90,7 +90,6 @@ export class ConversationPage implements OnInit {
       } 
 
     });
-    
     this.scrollToBottom();
   }
 
@@ -106,14 +105,9 @@ export class ConversationPage implements OnInit {
   }
 
   scrollToBottom() {
-    //console.log("scroll");
-    // this._zone.run(() => {
-      setTimeout(() => {
-        if (this.content.scrollToBottom) {
-          this.content.scrollToBottom(300);
-      }
-  }, 1000);
-    // });
+      setTimeout(() => {  
+          this.contentArea.scrollToBottom(200);
+  }, 200);
   }
 
   async observeMessages(){
@@ -125,7 +119,6 @@ export class ConversationPage implements OnInit {
 
     this.commentsRef = this.firebaseDB.database.ref('room-messages').child(this.id).orderByChild('timestamp');
     this.commentsRef.on('child_added', data => {
-
       const user = this.findUser(data.val().userId);
       const tmp = [];
       tmp.push({
@@ -137,13 +130,20 @@ export class ConversationPage implements OnInit {
         from: (data.val().userId === this.authService?.user.idUser) ? 'message_response' : 'message_request',
         fromName: data.val().name
       });
-
+      this._zone.run(() => {
+        console.log('entra tmp');
+      });
       this.messagesList.push(tmp);
       this._zone.run(() => {
+        this.scrollToBottom();
         console.log('force update the screen');
       });
       console.log('afegit');
       console.log(tmp);
+      this._zone.run(() => {
+        this.scrollToBottom();
+        console.log('force update');
+      });
       //si envia un altre, marquem com a rebut el missatge
       if( (data.val().userId != this.authService.user.idUser)){
         var msg = this;
@@ -193,6 +193,7 @@ export class ConversationPage implements OnInit {
           this.txtChat.clearInput();
           this.btnEnabled = true;
           this.btnImageEnabled = true;
+   
         },
         (error) => {
           // Called when error
@@ -361,7 +362,7 @@ export class ConversationPage implements OnInit {
     msg["percentage"]=0;
 
     this.messageUploadList.push(msg);
-    this.scrollToBottom();
+  
     
     this.events.subscribe('uploadMessageImage', (data:any) => {
       console.log("this.events.subscribe", data);

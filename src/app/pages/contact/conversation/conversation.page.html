@@ -25,9 +25,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen #content>
+<ion-content>
  
-    <div>
+    <div  #contentArea>
       <ion-list no-lines>
         <ion-item *ngFor="let message of this.messagesList">
           <chat-bubble [chatMessage]="message[0]"></chat-bubble>
@@ -37,10 +37,9 @@
         </ion-item>
       </ion-list>
     </div>
-
 </ion-content>
-<ion-footer  >
- 
+<ion-footer>
+  <ion-toolbar>
     <ion-item no-lines>
       <ion-buttons >
         <ion-button (click)="selectImageSource()">
@@ -71,6 +70,6 @@
         </ion-button>
       </ion-buttons>
     </ion-item>
-  
+   </ion-toolbar>
 </ion-footer>
 
