@@ -3,10 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
+
     <ion-thumbnail slot="start">
-      
       <app-aspect-ratio [ratio]="{w:1, h:1}">
-        <img [src]="this.staff?.image">
+        <app-image-shell animation="spinner" [src]="this.staff?.image" [alt]="'Sample Image'"
+          class="img-wrapper-doctors"></app-image-shell>
       </app-aspect-ratio>
     </ion-thumbnail>
 
