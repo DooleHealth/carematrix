@@ -40,7 +40,7 @@
     <div *ngSwitchCase="'news'"> 
       <ion-list *ngIf="items.length > 0; else noData">   
         <ion-card  routerLink="/new-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
-          <img *ngIf="item.item.cover !== null"[src]='item.item.cover'/>
+          <img *ngIf="item.item.cover !== null"[src]='item.item.files[0].thumbnailTemporaryUrl'/>
           <ion-item lines="none" >
             <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.subject}}</ion-label>
             <div>
