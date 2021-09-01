@@ -23,6 +23,7 @@ export class AgendaEditPage implements OnInit {
   id:any
   isSaving: boolean = false;
   isNewEvent = true
+  enableReminder = false;
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
