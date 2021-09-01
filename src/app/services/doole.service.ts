@@ -34,7 +34,7 @@ export class DooleService {
 
   uploadFile(image: string, id?: string) {
 
-    //console.log("uploading ", image);
+    console.log("uploading ", image);
     const token = localStorage.getItem('token');
     let options: FileUploadOptions = {
       fileKey: 'file',
@@ -58,17 +58,17 @@ export class DooleService {
 
     return new Promise(function (resolve, reject) {
       fileTransfer.upload(image, endpoint, options).then(data => {
-        //console.log(data);
+        console.log(data);
         resolve(JSON.parse(data.response));
       }, (err) => {
-        //console.log(err);
+        console.log(err);
         reject(err);
       })
     })
 
   }
 
-  uploadFileToModel(image: string, id: string, model: string, name: string) {
+  uploadFileToModel(image: string, name: string, params: any) {
     //console.log("uploading ", image);
     const token = localStorage.getItem('token');
     let options: FileUploadOptions = {
@@ -78,14 +78,14 @@ export class DooleService {
         'Authorization': 'Bearer ' + token,
         'Accept': 'application/json',
       },
-      params: {model: model,id: id, name: name}
+      params
     }
 
     const fileTransfer: FileTransferObject = this.transfer.create();
     const endpoint = this.api.getEndpoint('media/add');
     return new Promise(function (resolve, reject) {
       fileTransfer.upload(image, endpoint, options).then(data => {
-        console.log(data);
+        console.log(JSON.parse(data.response));
         resolve(JSON.parse(data.response));
       }, (err) => {
         console.log(err);

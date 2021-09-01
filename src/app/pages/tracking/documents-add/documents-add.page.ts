@@ -8,7 +8,7 @@ import { ActionSheetController, AlertController, ModalController, NavController,
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { TestTypePage } from './test-type/test-type.page';
-import { File } from '@ionic-native/file/ngx';
+import { File, FileEntry } from '@ionic-native/file/ngx';
 import { DatePipe } from '@angular/common';
 import { NotificationService } from 'src/app/services/notification.service';
 const { Camera, Filesystem } = Plugins;
@@ -38,7 +38,7 @@ export class DocumentsAddPage implements OnInit {
   isSubmittedType = false;
   isSubmittedTitle = false;
   isSubmittedDate = false;
-
+  error 
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -54,6 +54,7 @@ export class DocumentsAddPage implements OnInit {
     private notification: NotificationService,
     private modalCtrl: ModalController,
     public alertController: AlertController,
+
   ) { }
 
   ngOnInit() {
@@ -281,7 +282,7 @@ export class DocumentsAddPage implements OnInit {
   async addFile(){   
     this.chooser.getFile().then(async image => {
       //this.processing = true;
-      console.log(image ? image.name : 'canceled');
+      console.log(image ? image : 'canceled');
       var fileUri = Capacitor.convertFileSrc(image.dataURI);
       console.log("addfile fileUri: ", fileUri);
       var filename = image.name
@@ -289,6 +290,7 @@ export class DocumentsAddPage implements OnInit {
       // this.numFile = this.mediaFiles.length
       //this.savePicture(fileUri, filename)
       this.presentPrompt(fileUri, filename)
+      //this.startUpload(image.uri)
     }).catch((error: any) => {
       console.log(error)});
   }
@@ -297,7 +299,7 @@ export class DocumentsAddPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 60,
       allowEditing: false,
-      resultType: CameraResultType.DataUrl,
+      resultType: CameraResultType.Uri,
       source
     }).catch((error:any)=>{
       console.log(error);
@@ -310,8 +312,9 @@ export class DocumentsAddPage implements OnInit {
       var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
       // this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
       // this.numFile = this.mediaFiles.length
-      this.savePicture(fileUri, filename)
-      this.presentPrompt(fileUri, filename)
+      //this.savePicture(fileUri, filename)
+      //this.presentPrompt(fileUri, filename)
+      this.startUpload(image.webPath)
     }else{
       console.log("no image");
     }
@@ -319,10 +322,15 @@ export class DocumentsAddPage implements OnInit {
 
   async savePicture(fileUri, filename){
     this.processing = true
+    let params = {
+      model: 'diagnosticTest',
+      id: this.diagnosticTest.id, 
+      name: [filename]
+    }
     if(this.isEdit)
     return this.saveBase64(fileUri,filename.toString()).then(res => {
-      console.log("saveBase64 res: ",res);
-      this.dooleService.uploadFileToModel(res, this.test.id, 'diagnosticTest',filename).then((data: any) => {
+      console.log("[DocumentsAddPage] saveBase64 res: ",res, this.test?.id);
+      this.dooleService.uploadFileToModel(res ,filename, params).then((data: any) => {
 /*         data['name'] = filename
         this.mediaFiles.push(data);
         this.mediaTemp.push(data); */
@@ -339,7 +347,9 @@ export class DocumentsAddPage implements OnInit {
 
   }
 
+
   async savePicture1(fileUri, filename){
+    console.log("[DocumentsAddPage]  savePicture1()",fileUri);
     this.processing = true
     return this.saveBase64(fileUri,filename.toString()).then(res => {
       console.log("saveBase64 res: ",res);
@@ -403,7 +413,7 @@ export class DocumentsAddPage implements OnInit {
     return e1 && e2 ? e1 == e2 : false;
   }
 
-  async uploadFileFromBrowser(event: EventTarget) {
+  async uploadFileFromBrowser1(event: EventTarget) {
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file = target.files[0];
@@ -421,6 +431,18 @@ export class DocumentsAddPage implements OnInit {
     // this.mediaFiles.push({ name: file.name, file: base64result, type: file.type })
     //     this.numFile = this.mediaFiles.length;
     await this.saveFileWeb(base64result)
+  }
+
+  uploadFileFromBrowser(str:any)
+  {
+    const formData = new FormData();
+
+    this.images=str.target.files[0];
+
+    formData.append('files[]', this.images);
+    console.log(formData,);
+
+    console.log(this.images);
   }
 
   openFile(media){
@@ -508,7 +530,7 @@ export class DocumentsAddPage implements OnInit {
   }
 
    getName(m){
-    console.log('[DocumentsAddPage] AlertConfirm Okay', JSON.stringify(m));
+    //console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
     if(m?.name && m?.name !== "")
       return m.name
     else if(m?.file_name)
@@ -521,7 +543,7 @@ export class DocumentsAddPage implements OnInit {
 
 
    getThumbnail(m){
-    console.log('[DocumentsAddPage] AlertConfirm Okay', JSON.stringify(m));
+    //console.log('[DocumentsAddPage] getThumbnail()', JSON.stringify(m));
     if(m.file)
      return m.file.split('.').pop() == 'pdf'? 'assets/icons/pdf-thumbnail.svg' : m.temporaryUrl;
      else if(m.file_name)
@@ -547,16 +569,16 @@ export class DocumentsAddPage implements OnInit {
             role: 'cancel',
             cssClass: 'secondary',
             handler: (blah) => {
-              console.log('[LandingPage] AlertConfirm Cancel');
-              this.savePicture(fileUri,filename)
+              console.log('[DocumentsAddPage] AlertConfirm Cancel');
+              this.savePicture1(fileUri,filename)
             }
           }, {
             text: this.translate.instant("button.accept"),
             handler: (data) => {
-              console.log('[LandingPage] AlertConfirm Okay', data.filename );
+              console.log('[DocumentsAddPage] AlertConfirm Okay', data.filename );
               if (data.filename && data.filename !== '') {
                  let name = data.filename +'.'+filename.split('.').pop()
-                 this.savePicture(fileUri,  name)
+                 this.savePicture1(fileUri,  name)
               } else {
                 return false;
               }
@@ -567,4 +589,35 @@ export class DocumentsAddPage implements OnInit {
 
     await alert.present();
   }
+
+
+  startUpload(imgEntry) {
+    console.log('[DocumentsAddPage] startUpload', imgEntry);
+    this.file.resolveLocalFilesystemUrl(imgEntry)
+        .then(entry => {
+            ( < FileEntry > entry).file(file => this.readFile(file))
+        })
+        .catch(err => {
+            alert('Error while reading file.');
+            console.log('[DocumentsAddPage] AlertConfirm Cancel');
+        });
+  }
+
+  readFile(file: any) {
+    console.log('[DocumentsAddPage] readFile()', file);
+    const reader = new FileReader();
+    reader.onload = () => {
+        const formData = new FormData();
+        const imgBlob = new Blob([reader.result], {
+            type: file.type
+        });
+        formData.append('file', imgBlob, file.name);
+        this.uploadImageData(formData);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  async uploadImageData(formData: FormData) {
+    console.log('[DocumentsAddPage] uploadImageData()', formData);
+ }
 }

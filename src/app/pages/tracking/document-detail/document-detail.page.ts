@@ -172,7 +172,7 @@ export class DocumentDetailPage implements OnInit {
   }
 
   getName(m){
-    console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
+    //console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
     if(m?.name && m?.name !== "")
       return m.name
     else if(m?.file_name)
