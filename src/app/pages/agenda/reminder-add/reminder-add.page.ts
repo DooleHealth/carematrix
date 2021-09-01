@@ -93,13 +93,14 @@ export class ReminderAddPage implements OnInit {
         this.frequencySeleted = this.event.frequency
       }
 
-      if(this.event.day1) this.form.get('day1').setValue( this.event.day1 )
-      if(this.event.day2) this.form.get('day2').setValue( this.event.day2 )
-      if(this.event.day3) this.form.get('day3').setValue( this.event.day3 )
-      if(this.event.day4) this.form.get('day4').setValue( this.event.day4 )
-      if(this.event.day5) this.form.get('day5').setValue( this.event.day5 )
-      if(this.event.day6) this.form.get('day6').setValue( this.event.day6 )
-      if(this.event.day7) this.form.get('day7').setValue( this.event.day7 )
+      this.form.get('day1').setValue( this.event.day1 )
+      this.form.get('day2').setValue( this.event.day2 )
+      this.form.get('day3').setValue( this.event.day3 )
+      this.form.get('day4').setValue( this.event.day4 )
+      this.form.get('day5').setValue( this.event.day5 )
+      this.form.get('day6').setValue( this.event.day6 )
+      this.form.get('day7').setValue( this.event.day7 )
+      this.gettingDay()
 
       if(this.event?.reminderable_type) this.form.get('type').setValue( this.event?.reminderable_type.split('\\')[1] )
       if(this.event?.reminderable_id) this.form.get('type_id').setValue( this.event.reminderable_id )
@@ -350,6 +351,15 @@ export class ReminderAddPage implements OnInit {
     });
     console.log('[AddHealthCardPage] settingDay() day', this.days);
   
+  }
+
+  gettingDay(){
+    this.days.forEach((day, i) =>{
+      let d = this.form.get('day'+(i+1)).value
+      day['day'+(i +1)] = d
+      console.log('[AddHealthCardPage] gettingDay() day', d);
+    })
+    console.log('[AddHealthCardPage] gettingDay() day', this.days);
   }
 
 
