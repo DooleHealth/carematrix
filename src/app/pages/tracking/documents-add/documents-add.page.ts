@@ -314,7 +314,7 @@ export class DocumentsAddPage implements OnInit {
       // this.numFile = this.mediaFiles.length
       //this.savePicture(fileUri, filename)
       //this.presentPrompt(fileUri, filename)
-      this.startUpload(image.webPath)
+      this.startUpload(image.path)
     }else{
       console.log("no image");
     }
@@ -599,7 +599,7 @@ export class DocumentsAddPage implements OnInit {
         })
         .catch(err => {
             alert('Error while reading file.');
-            console.log('[DocumentsAddPage] AlertConfirm Cancel');
+            console.log('[DocumentsAddPage] AlertConfirm Cancel', err);
         });
   }
 
