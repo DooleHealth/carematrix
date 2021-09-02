@@ -68,6 +68,20 @@ export class DooleService {
 
   }
 
+  
+
+  postAPIAddMedia(params: Object){
+    const endpoint = this.api.getEndpoint('media/add');
+    
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIAddMedia(${endpoint}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+  
   uploadFileToModel(image: string, name: string, params: any) {
     //console.log("uploading ", image);
     const token = localStorage.getItem('token');

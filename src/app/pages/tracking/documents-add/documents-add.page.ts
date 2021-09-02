@@ -127,12 +127,41 @@ export class DocumentsAddPage implements OnInit {
   }
 
   createDiagnosticTest(){
-    this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
+    return this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
       async (data) => {
         console.log("data:", data);
-        if(data)
-        this.modalCtrl.dismiss({error:null, action: 'add'});
-        else{
+        if(data){
+
+          let n: any = [];
+          let f: any = [];
+          this.mediaFiles.forEach(element => {
+            f.push(element.file)
+            n.push(element.name);
+          });
+          
+          let params = {
+            'model': 'Element',
+            'id':  data.diagnosticTest.id,
+            'file': this.mediaFiles,
+            'name': n
+          }
+
+          const formData: FormData = new FormData();
+          formData.append('model', 'Element');
+          formData.append('id', data.diagnosticTest.id);
+          formData.append('file', f);
+          formData.append('name', n);
+          console.log("[DocumentsAddPage] postAPIAddMedia:", params);
+          this.dooleService.postAPIAddMedia(params).subscribe(async (data)=>{
+            console.log("[DocumentsAddPage] postAPIAddMedia Responser:", await data);
+            if(data)
+              this.modalCtrl.dismiss({error:null, action: 'add'});
+            else{
+                let message = this.translate.instant('documents_add.error_alert_message')
+                this.modalCtrl.dismiss({error:message});
+            }
+          });
+        }else{
           let message = this.translate.instant('documents_add.error_alert_message')
           this.modalCtrl.dismiss({error:message});
         }
@@ -270,6 +299,9 @@ export class DocumentsAddPage implements OnInit {
   }
 
   enableButtonAddFile(){
+
+    // TODO: delete next line
+    return false
     if(this.processing)
       return true
     if(this.mediaFiles.length >= this.AVAILABLE_FILE_NUMBERS || this.form.invalid){
@@ -278,19 +310,34 @@ export class DocumentsAddPage implements OnInit {
     return false
   }
 
+  public getBlob(base64:string, name:string, type){
+  
+      var realData = base64.split(",")[1]
+      let blob=this.b64toBlob(realData, type);
+
+      return blob;
+    
+  }
+
 
   async addFile(){   
-    this.chooser.getFile().then(async image => {
+    this.chooser.getFile().then(async file => {
       //this.processing = true;
-      console.log(image ? image : 'canceled');
-      var fileUri = Capacitor.convertFileSrc(image.dataURI);
-      console.log("addfile fileUri: ", fileUri);
-      var filename = image.name
-      // this.mediaFiles.push({ name: filename , file: image, type: image.mediaType, isNew: true})
-      // this.numFile = this.mediaFiles.length
-      //this.savePicture(fileUri, filename)
-      this.presentPrompt(fileUri, filename)
-      //this.startUpload(image.uri)
+
+      if(file){
+        console.log("addfile file: ", file);
+        var fileUri = Capacitor.convertFileSrc(file.dataURI);
+        console.log("addfile fileUri: ", fileUri);
+        var filename = file.name;
+        let blob = this.getBlob(fileUri,file.name,file.mediaType);
+        this.mediaFiles.push({ name: filename , file: file, type: file.mediaType, isNew: true})
+        
+        // this.numFile = this.mediaFiles.length
+        //this.savePicture(fileUri, filename)
+        this.presentPrompt(fileUri, filename)
+        //this.startUpload(image.uri)
+      }
+     
     }).catch((error: any) => {
       console.log(error)});
   }
@@ -299,7 +346,7 @@ export class DocumentsAddPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 60,
       allowEditing: false,
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
       source
     }).catch((error:any)=>{
       console.log(error);
@@ -307,14 +354,19 @@ export class DocumentsAddPage implements OnInit {
 
     if (image) {
       //this.processing = true;
-      console.log("image: ", JSON.stringify(image));
+      console.log("image: ", image);
       var fileUri = Capacitor.convertFileSrc(image.dataUrl);
+      console.log("fileUri: ", fileUri);
+      
       var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
-      // this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
+      this.mediaFiles.push({ name: filename , file: image, type: image.format, isNew: true })
+      this.mediaTemp.push(image);
+
       // this.numFile = this.mediaFiles.length
       //this.savePicture(fileUri, filename)
       //this.presentPrompt(fileUri, filename)
-      this.startUpload(image.path)
+      //this.startUpload(image.webPath)
+
     }else{
       console.log("no image");
     }
@@ -404,7 +456,7 @@ export class DocumentsAddPage implements OnInit {
     }
 
     var blob = new Blob(byteArrays, {type: contentType});
-    console.log("this is bob: ", JSON.stringify(blob) );
+    console.log("this is blob2: ", blob );
     return blob;
   }
 
@@ -417,7 +469,8 @@ export class DocumentsAddPage implements OnInit {
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file = target.files[0];
-    
+
+    console.log("File: ", file);
     const toBase64 = file => new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -426,23 +479,23 @@ export class DocumentsAddPage implements OnInit {
     });
     const result = await toBase64(file).catch(e => Error(e));
     
+
     var base64result = result as string;
-    //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
-    // this.mediaFiles.push({ name: file.name, file: base64result, type: file.type })
-    //     this.numFile = this.mediaFiles.length;
-    await this.saveFileWeb(base64result)
+   
+    this.mediaFiles.push({ name: file.name, file:base64result, type: file.type , size:file.size})
   }
 
   uploadFileFromBrowser(str:any)
   {
     const formData = new FormData();
 
-    this.images=str.target.files[0];
-
-    formData.append('files[]', this.images);
-    console.log(formData,);
-
-    console.log(this.images);
+    let file = str.target.files[0];
+    console.log("file:", file);
+    //formData.append('file: ', file);
+   
+    //let blob = this.getBlob();
+    //this.saveBase64(file, file.name);
+    this.mediaFiles.push({ name: file.name , file: file, type: file.type, isNew: true})
   }
 
   openFile(media){
@@ -570,7 +623,7 @@ export class DocumentsAddPage implements OnInit {
             cssClass: 'secondary',
             handler: (blah) => {
               console.log('[DocumentsAddPage] AlertConfirm Cancel');
-              this.savePicture1(fileUri,filename)
+              //this.savePicture1(fileUri,filename)
             }
           }, {
             text: this.translate.instant("button.accept"),
@@ -578,7 +631,7 @@ export class DocumentsAddPage implements OnInit {
               console.log('[DocumentsAddPage] AlertConfirm Okay', data.filename );
               if (data.filename && data.filename !== '') {
                  let name = data.filename +'.'+filename.split('.').pop()
-                 this.savePicture1(fileUri,  name)
+                 //this.savePicture1(fileUri,  name)
               } else {
                 return false;
               }
