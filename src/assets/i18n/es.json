@@ -204,6 +204,7 @@
         "subtitle_messages": "Mensajes",
         "lenguage_ca": "Catalán",
         "lenguage_es": "Castellano",
+        "error_changed_language": "Error al actualizar el idioma!",
         "password":{
           "password": "Contrasenya",
           "title_change_password": "Cambiar Contraseña",

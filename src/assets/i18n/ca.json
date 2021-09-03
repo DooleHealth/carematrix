@@ -205,6 +205,7 @@
         "subtitle_messages": "Missatges",
         "lenguage_ca": "Català",
         "lenguage_es": "Castellà",
+        "error_changed_language": "Error a l'actualitzar l'idioma!",
         "password":{
           "password": "Contrasenya",
           "title_change_password": "Canviar Contrasenya",
