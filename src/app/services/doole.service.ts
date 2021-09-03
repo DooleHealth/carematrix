@@ -1249,6 +1249,18 @@ export class DooleService {
     );
   }
 
+  updateAPIuser(params: Object): Observable<any> {
+    let path = `user`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

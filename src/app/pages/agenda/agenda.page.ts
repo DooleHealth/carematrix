@@ -99,9 +99,10 @@ export class AgendaPage implements OnInit {
     return this.dooleService.getAPIreminders().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getReminders()', await res);
-        if(res.reminders)
+        if(res.reminders && res.reminders?.length > 0){
           this.addReminderToCalendar(res.reminders)
-        this.eventSource = [].concat(this.appointment, this.reminders)
+          this.eventSource = [].concat(this.appointment, this.reminders)
+        }
        },(err) => { 
           console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
