@@ -10,7 +10,7 @@ import { Capacitor } from '@capacitor/core';
 import { delay, filter, map } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
 import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
 import { AuthenticationService } from './authentication.service';
@@ -70,10 +70,12 @@ export class DooleService {
 
   
 
-  postAPIAddMedia(params: Object){
+  postAPIAddMedia(params: FormData){
     const endpoint = this.api.getEndpoint('media/add');
-    
-    return this.http.post(endpoint, params).pipe(
+    const headers = new HttpHeaders({
+      'Content-Type': 'multipart/form-data'
+});
+    return this.http.post(endpoint, params,  { headers: headers, reportProgress: true }, true).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIAddMedia(${endpoint}) res: `, res);
         return res;

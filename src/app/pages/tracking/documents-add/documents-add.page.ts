@@ -149,10 +149,10 @@ export class DocumentsAddPage implements OnInit {
           const formData: FormData = new FormData();
           formData.append('model', 'Element');
           formData.append('id', data.diagnosticTest.id);
-          formData.append('file', f);
+          formData.append('file', this.mediaFiles);
           formData.append('name', n);
           console.log("[DocumentsAddPage] postAPIAddMedia:", params);
-          this.dooleService.postAPIAddMedia(params).subscribe(async (data)=>{
+          this.dooleService.postAPIAddMedia(formData).subscribe(async (data)=>{
             console.log("[DocumentsAddPage] postAPIAddMedia Responser:", await data);
             if(data)
               this.modalCtrl.dismiss({error:null, action: 'add'});

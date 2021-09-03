@@ -41,12 +41,29 @@ export class HttpService {
     ).pipe(catchError(this.formatErrors));
   }
 
-  post(path: string, body: Object = {}, options: Object = {}): Observable<any> {
+  postform(path: string, body: Object = {}, options: Object = {}): Observable<any> {
     let user = this.authService.user
     if (user?.familyUnit !== null)
       body['user'] = user?.familyUnit;
 
     let httpOptions = this.setHttpOptions(options);
+    //console.log("url: ", path);
+    //console.log("body: ", body);
+
+    return this.http.post(
+      `${path}`,
+      JSON.stringify(body),
+      httpOptions
+    ).pipe(catchError(this.formatErrors));
+  }
+
+
+  post(path: string, body: Object = {}, options: Object = {}, formData?): Observable<any> {
+    let user = this.authService.user
+    if (user?.familyUnit !== null)
+      body['user'] = user?.familyUnit;
+
+    let httpOptions = this.setHttpOptions(options,formData);
     //console.log("url: ", path);
     //console.log("body: ", body);
 
@@ -104,15 +121,28 @@ export class HttpService {
     return params;
   }
 
-  setHttpOptions(options) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      })
-    };
+  setHttpOptions(options, formData?) {
 
+    if(formData){
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Accept': 'application/json'
+        })
+      };
+      console.log('httpOptions', httpOptions);
     return httpOptions;
+    }else{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':'application/json',
+          'Accept': 'application/json'
+        })
+      };
+      console.log('httpOptions', httpOptions);
+      return httpOptions;
+    }
+   
+    
 
   }
 }
