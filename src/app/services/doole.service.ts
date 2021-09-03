@@ -70,16 +70,13 @@ export class DooleService {
 
   
 
-  postAPIAddMedia(params: FormData){
+  postAPIAddMedia(params: Object){
     const endpoint = this.api.getEndpoint('media/add');
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data'
-});
-    return this.http.post(endpoint, params,  { headers: headers, reportProgress: true }, true).pipe(
+   
+    return this.http.postForm(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIAddMedia(${endpoint}) res: `, res);
         return res;
-
       })
     );
   }

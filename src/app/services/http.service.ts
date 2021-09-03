@@ -74,6 +74,29 @@ export class HttpService {
     ).pipe(catchError(this.formatErrors));
   }
 
+  postForm(path: string, body: Object = {}, options: Object = {}, formData?): Observable<any> {
+
+
+    let user = this.authService.user
+    if (user?.familyUnit !== null)
+      body['user'] = user?.familyUnit;
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Accept': 'application/json'
+        })
+      };
+    
+    console.log("url: ", path);
+    console.log("body: ", body);
+
+    return this.http.post(
+      `${path}`,
+      body,
+      httpOptions
+    ).pipe(catchError(this.formatErrors));
+  }
+
   delete(path): Observable<any> {
     return this.http.delete(
       `${path}`
@@ -135,7 +158,8 @@ export class HttpService {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          options
         })
       };
       console.log('httpOptions', httpOptions);
