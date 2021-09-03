@@ -166,28 +166,54 @@ export class AgendaPage implements OnInit {
     var startTime;
     var endTime
     reminders.forEach((e) =>{
-      let isAllDay = false
-      if(e.from_date  && e.to_date ){
-         startTime =   this.formatDate(e.from_date)
-         endTime =  this.formatDate(e.to_date)
 
-      }else{
-        isAllDay = true
-      }
-        events.push({
-          id: e.id, 
-          title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
-          origin: e.origin,
-          startTime: startTime,
-          endTime: startTime,
-          allDay: isAllDay,
-          type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
-          color: e.agenda_type?.color,
-          site: e.site,
-          staff: e.staff,
-          agenda_type: e.agenda_type,
-          is_reminder: true
+      if(e.executions && e.executions.length > 0){
+        e.executions.forEach(element => {
+          let isAllDay = false
+          if(element.date)
+          startTime =   this.formatDate(element.date)
+          else isAllDay = true
+
+          events.push({
+            id: e.id, 
+            title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
+            origin: e.origin,
+            startTime: startTime,
+            endTime: startTime,
+            allDay: isAllDay,
+            type: this.translate.instant('reminder.header'),
+            color: '#27AE60',
+            site: e.site,
+            staff: e.staff,
+            agenda_type: e.agenda_type,
+            is_reminder: true
+          });
         });
+      }else{
+        let isAllDay = false
+        if(e.from_date  && e.to_date ){
+           startTime =   this.formatDate(e.from_date)
+           endTime =  this.formatDate(e.to_date)
+  
+        }else{
+          isAllDay = true
+        }
+          events.push({
+            id: e.id, 
+            title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
+            origin: e.origin,
+            startTime: startTime,
+            endTime: startTime,
+            allDay: isAllDay,
+            type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
+            color: e.agenda_type?.color,
+            site: e.site,
+            staff: e.staff,
+            agenda_type: e.agenda_type,
+            is_reminder: true
+          });
+      }
+
       })
       this.reminders = [];
       this.reminders = events;
