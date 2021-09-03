@@ -110,9 +110,9 @@ export class AuthenticationService {
               let access = true;
               this.registerDevice(this.deviceToken, this.devicePlatform);
               if (this.platform.is('ios')) {
-                this.registerDevice(this.voipDeviceToken, this.voipDevicePlatform);        
+                this.registerDevice(this.voipDeviceToken,'iosvoip');        
               }
-              //  p
+              
             }
 
           }, (error) => {

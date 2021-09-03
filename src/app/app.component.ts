@@ -18,6 +18,7 @@ import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { Local } from 'protractor/built/driverProviders';
 import { environment } from 'src/environments/environment';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 
 const { PushNotifications, LocalNotifications } = Plugins;
@@ -65,7 +66,7 @@ export class AppComponent implements OnInit {
     private network: Network,
     private opentokService: OpentokService,
     private modalCtrl: ModalController,
-    //private backgroundMode: BackgroundMode,
+    private backgroundMode: BackgroundMode,
     private dooleService: DooleService,
     private faio : FingerprintAIO
 
@@ -101,7 +102,7 @@ export class AppComponent implements OnInit {
         this.listenConnection();
 
          // Enable background mode
-        //this.backgroundMode.enable();
+        this.backgroundMode.enable();
 
       }
 
@@ -179,6 +180,8 @@ export class AppComponent implements OnInit {
     ]});
 
     LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
+      console.log('localNotificationReceived received:');
+      cordova.plugins.CordovaCall.receiveCall('El teu metge', 'id');
       
     })
     LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
@@ -235,6 +238,8 @@ export class AppComponent implements OnInit {
         this.badge.increase(1);
         console.log('Push received:');
         console.log(notification);
+
+        //cordova.plugins.CordovaCall.receiveCall('El teu metge', 'id');
         const voip = notification.data?.voip;
         
         if (voip == "true") {

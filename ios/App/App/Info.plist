@@ -16,6 +16,15 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+		<string>nl</string>
+		<string>fr</string>
+		<string>it</string>
+		<string>pt-BR</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
@@ -48,6 +57,8 @@
 	<string>To Take Photos and Video</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Allow to read user's contacts </string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Unlock phone with FaceID</string>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
 	<string>Share your health records activity</string>
 	<key>NSHealthShareUsageDescription</key>
@@ -96,16 +107,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSFaceIDUsageDescription</key>
-  <string>Unlock phone with FaceID</string>
-   <key>CFBundleLocalizations</key>
-  <array>
-    <string>en</string>
-    <string>de</string>
-    <string>nl</string>
-    <string>fr</string>
-    <string>it</string>
-    <string>pt-BR</string>
-  </array>
 </dict>
 </plist>
