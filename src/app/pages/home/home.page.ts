@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { group } from '@angular/animations';
 
 export interface UserInformation {
   title?: string;
@@ -56,6 +57,7 @@ export class HomePage implements OnInit {
   appointment: Agenda[] =[]
   showGoogleFit = false;
   advices: Advice[] =[]
+
   date
   loading:boolean = true;
   currentIndexDrug = 0
@@ -152,7 +154,7 @@ export class HomePage implements OnInit {
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
-        this.diets = res.data?.diets;
+        this.diets = res.data?.diets;    
         console.log('[HomePage] getUserInformation()',  this.userDoole);
         this.slideDietChange()
 
@@ -160,9 +162,9 @@ export class HomePage implements OnInit {
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
           this.sliderPhysical.slideTo(0)
-          this.slideActivityChange()
+          this.slideActivityChange()       
         }
-
+      
         if(res.data.gamePlays){
           this.games = res.data.gamePlays
           this.games.sort(function(a,b){
@@ -185,7 +187,7 @@ export class HomePage implements OnInit {
           throw err; 
       });
   }
-
+    
   treeIterate(obj, stack) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

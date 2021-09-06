@@ -3,6 +3,7 @@ ion-tab-button{
     --color-selected: #3498DB;
     background-color: #FAFAFA;
     --padding-bottom: 12%;
+
  
     
     &::before {
@@ -20,4 +21,10 @@ ion-tab-button{
     }
     ion-tab-button ion-label{
       margin-bottom: 0%;
+    }
+
+    ion-tab-bar {
+      position: relative;
+      width: 95%;
+      margin: 0 auto;
     }
