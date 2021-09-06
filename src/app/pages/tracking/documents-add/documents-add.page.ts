@@ -140,7 +140,7 @@ export class DocumentsAddPage implements OnInit {
           });
           
           let params = {
-            'model': 'Element',
+            'model': 'DiagnosticTest',
             'id':  data.diagnosticTest.id,
             'file': this.mediaFiles,
             'name': n
