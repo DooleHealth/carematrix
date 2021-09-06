@@ -55,7 +55,7 @@
       </ion-buttons>
       <div item-content style="width:120%!important" >
         <elastic-textarea #txtChat placeholder="{{ 'conversation.placeholder' | translate}}">
-          <ion-input lineHeight="20" maxExpand="8" style="width:120%!important"></ion-input>
+          <ion-input  lineHeight="20" maxExpand="8" style="width:120%!important"></ion-input>
         </elastic-textarea>
       </div>
       <ion-buttons >
@@ -65,7 +65,7 @@
         <ion-button  (click)="this.addAudio()">
           <ion-icon name="mic-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" (click)="this.send()">
+        <ion-button [disabled]="txtChat.content.trim().length<1 || !btnEnabled" slot="end" (click)="this.send()">
           <ion-icon name="send"></ion-icon>
         </ion-button>
       </ion-buttons>
