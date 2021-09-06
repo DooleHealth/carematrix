@@ -60,7 +60,7 @@ export class TrackingPage implements OnInit {
 
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
-    this.segmentChanged()
+    //this.segmentChanged()
     this.fireEvent(null, 0) 
 
   }

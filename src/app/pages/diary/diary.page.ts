@@ -51,12 +51,12 @@ export class DiaryPage implements OnInit {
   ngOnInit() {
     this.items = []
     console.log('[DiaryPage] ngOnInit()');
-    let state = history.state?.segment;
-    if(state) this.segment = state
-    this.segmentChanged()
+    // let state = history.state?.segment;
+    // if(state) this.segment = state
+    //this.segmentChanged()
   }
   ionViewDidEnter(){
-   
+    this.segmentChanged()
   }
   next() {
     let nextDay =  new Date(this.date).getDate() + 1
