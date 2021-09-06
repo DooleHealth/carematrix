@@ -57,7 +57,6 @@ export class HomePage implements OnInit {
   appointment: Agenda[] =[]
   showGoogleFit = false;
   advices: Advice[] =[]
-
   date
   loading:boolean = true;
   currentIndexDrug = 0
@@ -155,10 +154,12 @@ export class HomePage implements OnInit {
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
         this.diets = res.data?.diets;    
+
         console.log('[HomePage] getUserInformation()',  this.userDoole);
         this.slideDietChange()
 
         let elements = res?.data.elements
+
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
           this.sliderPhysical.slideTo(0)
@@ -187,7 +188,7 @@ export class HomePage implements OnInit {
           throw err; 
       });
   }
-    
+  
   treeIterate(obj, stack) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {
