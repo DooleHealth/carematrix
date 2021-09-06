@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ChatPageRoutingModule } from './chat-routing.module';
-
+import { ComponentsModule } from 'src/app/components/components.module';
 import { ChatPage } from './chat.page';
 import { ShellModule } from 'src/app/utils/shell/shell.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     TranslateModule,
     ChatPageRoutingModule,
     ShellModule

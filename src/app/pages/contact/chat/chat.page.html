@@ -3,7 +3,10 @@
     <ion-buttons slot="start">
       <ion-back-button text="" ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'chat.header' | translate}}</ion-title>
+    <ion-title>{{ 'chat.header' | translate}}
+      <app-info info="{{'info.chat' | translate}}"></app-info>
+    </ion-title>
+    
     <ion-buttons slot="end">
       <ion-button color="primary" routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item'>
         <ion-icon name="add"></ion-icon>
