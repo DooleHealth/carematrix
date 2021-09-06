@@ -60,4 +60,24 @@
     }
    
 }
+/* ----------- Galaxy s3 ----------- */
+@media only screen
+  and (min-device-width : 360px)
+  and (max-device-width : 390px)
+  and (max-device-height: 670px) 
+{
 
+    .main-container {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top:0%;
+        margin-bottom: 5%;
+      }
+      .buttonPadding{
+        opacity: 0%;
+    }
+    .buttonPaddingIphone{
+        opacity: 100%;
+    }
+   
+}
