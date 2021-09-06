@@ -60,7 +60,7 @@ export class ConversationPage implements OnInit {
               public _zone: NgZone,
               public actionSheetCtrl: ActionSheetController,
               public events: Events,
-              public doole: DooleService,
+              public dooleService: DooleService,
               public file: File, private translate : TranslateService,
               private chooser: Chooser,       
               public platform: Platform,
@@ -78,7 +78,7 @@ export class ConversationPage implements OnInit {
       if (user) {
         if (this.id != '')               // només observem missatges si tenim idHeader
         {
-          console.log("user:", user);
+          console.log("messagesList:", this.messagesList);
           const dict = [];
           dict.push({key: 'id', value: this.id });
           if(this.authService.user && this.id){
@@ -159,7 +159,7 @@ export class ConversationPage implements OnInit {
                 updates['/room-messages/'+msg.id+"/"+ data.key+"/"+msg.authService?.user.idUser] = {state:2};
                 firebase.database().ref().update(updates);
 
-                msg.authService.post("message/"+data.val().id+"/state/2",null).subscribe(data=>{
+                msg.dooleService.post("message/"+data.val().id+"/state/2",null).subscribe(data=>{
                 //console.log("marcat com a llegit")
                 });
             }else{
@@ -182,7 +182,7 @@ export class ConversationPage implements OnInit {
       to: this.to,
       type: this.type
     };
-    this.authService.post('message', postData).subscribe(
+    this.dooleService.post('message', postData).subscribe(
         async (data) => {
           if (this.id != data.idMessageHeader){
             this.id = data.idMessageHeader;
@@ -373,7 +373,7 @@ export class ConversationPage implements OnInit {
       }
     });
     
-    this.doole.uploadMessageImage(this.id,this.to,"",fileUri, this.authService.user.idUser).then(data =>{
+    this.dooleService.uploadMessageImage(this.id,this.to,"",fileUri, this.authService.user.idUser).then(data =>{
       console.log(" this.doole.uploadMessageImage", data);
       this.btnEnabled = true;
         this.btnImageEnabled=true;
