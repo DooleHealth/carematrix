@@ -44,13 +44,20 @@ export class BookingsPage implements OnInit {
    
     this.form = this.fb.group({
       place: [''],
-      title: ['', /* [Validators.required] */],
+      title: [''],
+      user_comments: [''],
       date: ['', [Validators.required]],
       duration: [this.duration],
       indications: [],
       file:[this.images],
       online:[history.state.isOnline]
     });
+    this.setTitle()
+  }
+
+  setTitle(){
+    let messagge = this.translate.instant('appointment.field_specially')+': '+ this.staff?.name
+    this.form.get('title').setValue(messagge)
   }
 
   transformDate(date) {
