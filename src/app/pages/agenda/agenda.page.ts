@@ -67,8 +67,8 @@ export class AgendaPage implements OnInit {
   }
 
  async ionViewDidEnter(){
-    console.log('[AgendaPage] ionViewDidEnter()');
-    let date = history.state.date;
+  let date = history.state.date;
+    console.log('[AgendaPage] ionViewDidEnter()', date);
     if(date)
       this.myCal.currentDate = this.formatDate(date) 
     else
@@ -150,7 +150,7 @@ export class AgendaPage implements OnInit {
           startTime: startTime,
           endTime: endTime,
           allDay: isAllDay,
-          type: e.agenda_type?.name,
+          type: this.setTypeEvent(e.agenda_type),
           color: e.agenda_type?.color,
           site: e.site,
           staff: e.staff,
@@ -159,6 +159,12 @@ export class AgendaPage implements OnInit {
       })
       this.appointment = []
       this.appointment = events ;
+  }
+
+  setTypeEvent(type: any){
+    if(type?.name == "" && type?.type == "Added_By_User")
+      return this.translate.instant('agenda.appointment_by_user')
+    else type?.name
   }
 
   addReminderToCalendar(reminders: any[]){
@@ -275,9 +281,15 @@ export class AgendaPage implements OnInit {
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
         }else if(result?.data?.action == 'add'){
-          this.getAgenda();
-          
+          let agenda = result?.data['data']
+          if(agenda?.start_date)
+          this.myCal.currentDate = this.formatDate(agenda.start_date)        
+        }else if(result?.data?.action == 'update'){
+          let agenda = result?.data['data']
+          if(agenda?.start_date)
+          this.myCal.currentDate = this.formatDate(agenda.start_date)        
         }
+        this.getAgenda();
     });
 
     await modal.present();
