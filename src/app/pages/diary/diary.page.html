@@ -43,7 +43,7 @@
 <ion-content>
 
   <!-- SegmentBar -->
-  <span><changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser></span>
+  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
     <ion-segment-button value="diets">
       <ion-label>{{'diary.field_diet' | translate}}</ion-label>
