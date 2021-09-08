@@ -75,6 +75,7 @@ export class DocumentDetailPage implements OnInit {
   async getDiagnosticData(){
     this.isLoading = true
     this.mediaFiles = []
+    this.groupedElements = []
     this.dooleService.getAPIdiagnosticTestID(this.id).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);

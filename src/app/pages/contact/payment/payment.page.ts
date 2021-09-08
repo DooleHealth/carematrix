@@ -13,6 +13,7 @@ export class PaymentPage implements OnInit {
 
   agenda= history.state?.agenda;
   staff = history.state?.staff;
+  files = history.state?.files;
   add = this.agenda?.online ? 'contact.tap_video' : 'contact.tap_appointment';
   isLoading = false
   constructor(private dooleService: DooleService, private translate: TranslateService, private loadingController: LoadingController,  private notification: NotificationService, private nav: NavController, ) { }
@@ -27,9 +28,35 @@ export class PaymentPage implements OnInit {
       async (res: any) =>{
         console.log('[PaymentPage] addAgenda()', await res);
         if(res.success){
-          let date = this.agenda.date
-          this.nav.navigateForward('/agenda', { state: {date: date} });
-          this.notification.displayToastSuccessful()
+          if(this.files.length >0){
+            let n: any = [];
+            let f: any = [];
+            this.files.forEach(element => {
+              f.push(element.file)
+              n.push(element.name);
+            });
+        
+            let params = {
+              'model': 'Agenda',
+              'id':  res.agenda.id,
+              'file': f,
+              'name': n
+            }
+            this.dooleService.postAPIAddMedia(params).subscribe(res =>{
+              if(res.success){
+                let date = this.agenda.date
+                this.nav.navigateForward('/agenda', { state: {date: date} });
+                this.notification.displayToastSuccessful()
+              }else{
+                let message = this.translate.instant('documents_add.error_alert_message')
+                alert(message)
+              }
+            })
+          }else{
+            let date = this.agenda.date
+            this.nav.navigateForward('/agenda', { state: {date: date} });
+            this.notification.displayToastSuccessful()
+          }
         }
         this.isLoading = false
        },(err) => { 

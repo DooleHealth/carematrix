@@ -143,6 +143,7 @@ export class AgendaPage implements OnInit {
       }else{
         isAllDay = true
       }
+        let type = this.translate.instant('agenda.appointment_by_user')
         events.push({
           id: e.id, 
           title:  e.title,
@@ -150,7 +151,7 @@ export class AgendaPage implements OnInit {
           startTime: startTime,
           endTime: endTime,
           allDay: isAllDay,
-          type: this.setTypeEvent(e.agenda_type),
+          type: (e.agenda_type.type === "Added_By_User")? type:e.agenda_type.name,
           color: e.agenda_type?.color,
           site: e.site,
           staff: e.staff,
@@ -162,9 +163,10 @@ export class AgendaPage implements OnInit {
   }
 
   setTypeEvent(type: any){
-    if(type?.name == "" && type?.type == "Added_By_User")
+    
+    if(type?.type === "Added_By_User")
       return this.translate.instant('agenda.appointment_by_user')
-    else type?.name
+    if(type?.name)  type?.name
   }
 
   addReminderToCalendar(reminders: any[]){

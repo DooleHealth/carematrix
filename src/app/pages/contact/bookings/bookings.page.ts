@@ -138,12 +138,10 @@ export class BookingsPage implements OnInit {
     this.isSubmittedFields(true);
     if(this.form.invalid)
       return 
+  
+    this.files = this.uploadFile.files
 
-    this.form.patchValue({
-        files: this.files
-    });
-
-    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff}});
+    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files}});
     
   }
 //  navigateDoctors() {
