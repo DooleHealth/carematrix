@@ -60,7 +60,7 @@ export class TrackingPage implements OnInit {
 
   ngOnInit() {
     console.log('[TrackingPage] ngOnInit()');
-    this.segmentChanged()
+    //this.segmentChanged()
     this.fireEvent(null, 0) 
 
   }
@@ -290,7 +290,7 @@ async addDocument(){
             //this.dooleService.presentAlert(message)
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
-            this.getFilteredDiagnosticTests()    
+            this.getDiagnosticTestsList()
           }
         });
     

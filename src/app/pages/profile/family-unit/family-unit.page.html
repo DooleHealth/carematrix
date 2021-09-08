@@ -12,7 +12,7 @@
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
-<span >
+  <span *ngIf="this.user?.familyUnit === null">
   <div>
     <ion-row *ngIf="othersCanAccess.length > 0; else noData" class="paddingTop">
       <ion-text class="txtTitle">{{ 'setting.family_unit.othersCanAccess' | translate }}</ion-text>

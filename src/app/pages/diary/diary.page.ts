@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { DrugAddPage } from './drug-add/drug-add.page';
 import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
+import { StorageService } from 'src/app/services/storage.service';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -27,6 +28,7 @@ export interface ListDrugByDate {
 })
 
 export class DiaryPage implements OnInit {
+  firstTime: boolean;
   public items: ItemDiary[] = [];
   listDrug:  ListDrugByDate[] = []
   diets = []
@@ -45,18 +47,34 @@ export class DiaryPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
     this.items = []
     console.log('[DiaryPage] ngOnInit()');
-    let state = history.state?.segment;
-    if(state) this.segment = state
-    this.segmentChanged()
+    // let state = history.state?.segment;
+    // if(state) this.segment = state
+    //this.segmentChanged()
+         
+    this.storageService.isFirstTimeLoad().then(((result) =>
+    {
+      this.firstTime = result;
+    }));
+
+    //if first time update first time 
+    if(this.firstTime){
+      // this.storageService.saveFirstTimeLoad();
+    }
+  }
+    
+  load(){
+    this.firstTime = true;
+    this.storageService.saveFirstTimeLoad(false);
   }
   ionViewDidEnter(){
-   
+    this.segmentChanged()
   }
   next() {
     let nextDay =  new Date(this.date).getDate() + 1

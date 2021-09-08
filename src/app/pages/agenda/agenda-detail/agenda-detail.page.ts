@@ -32,7 +32,7 @@ export class AgendaDetailPage implements OnInit {
   public lat: string;
   public lon: string;
   cord: any = {}
-  enableReminder = true;
+  enableReminder = false;
 
   constructor(
     private dooleService: DooleService,
@@ -79,8 +79,8 @@ export class AgendaDetailPage implements OnInit {
 
           let date = new Date(this.event.start_date_iso8601).toDateString()
           let today = new Date().toDateString()
-          if(date === today)
-          this.enableReminder = false
+          if(date !== today)
+          this.enableReminder = true
         }
 
        },(err) => { 

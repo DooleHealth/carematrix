@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <span><changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser></span>
+ <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
 <!-- SegmentBar -->
 
 <ion-segment [(ngModel)]="segment" scrollable>

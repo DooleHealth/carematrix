@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-payment',
@@ -13,9 +14,8 @@ export class PaymentPage implements OnInit {
   agenda= history.state?.agenda;
   staff = history.state?.staff;
   add = this.agenda?.online ? 'contact.tap_video' : 'contact.tap_appointment';
-  isNewEvent = true;
   isLoading = false
-  constructor(private dooleService: DooleService, private translate: TranslateService, private loadingController: LoadingController,   ) { }
+  constructor(private dooleService: DooleService, private translate: TranslateService, private loadingController: LoadingController,  private notification: NotificationService, private nav: NavController, ) { }
 
   ngOnInit() {
     console.log('[PaymentPage] agenda = ', this.agenda);
@@ -26,10 +26,11 @@ export class PaymentPage implements OnInit {
     this.dooleService.postAPIaddAgenda(this.agenda).subscribe(
       async (res: any) =>{
         console.log('[PaymentPage] addAgenda()', await res);
-        let message = this.translate.instant('reminder.message_added_appointment')
-        if(!this.isNewEvent)
-        message = this.translate.instant('reminder.message_updated_reminder')
-        this.showAlert(message)
+        if(res.success){
+          let date = this.agenda.date
+          this.nav.navigateForward('/agenda', { state: {date: date} });
+          this.notification.displayToastSuccessful()
+        }
         this.isLoading = false
        },(err) => { 
         this.isLoading = false

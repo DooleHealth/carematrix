@@ -24,7 +24,7 @@ const { Camera } = Plugins;
   styleUrls: ['./conversation.page.scss'],
 })
 export class ConversationPage implements OnInit {
-  @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
+  @ViewChild(IonContent, {read: IonContent, static: false}) contentArea: IonContent;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   public name: string = this.staff?.name;
@@ -41,7 +41,7 @@ export class ConversationPage implements OnInit {
   private commentsRef;
   private loadingShow = false;
   private btnImageEnabled = true;
-  private btnEnabled = true;
+  public  btnEnabled = true;
   private title : string;
   private image : string = '';
   mediaFiles: any = [];
@@ -60,7 +60,7 @@ export class ConversationPage implements OnInit {
               public _zone: NgZone,
               public actionSheetCtrl: ActionSheetController,
               public events: Events,
-              public doole: DooleService,
+              public dooleService: DooleService,
               public file: File, private translate : TranslateService,
               private chooser: Chooser,       
               public platform: Platform,
@@ -78,7 +78,7 @@ export class ConversationPage implements OnInit {
       if (user) {
         if (this.id != '')               // només observem missatges si tenim idHeader
         {
-          console.log("user:", user);
+          console.log("messagesList:", this.messagesList);
           const dict = [];
           dict.push({key: 'id', value: this.id });
           if(this.authService.user && this.id){
@@ -90,7 +90,6 @@ export class ConversationPage implements OnInit {
       } 
 
     });
-    
     this.scrollToBottom();
   }
 
@@ -106,26 +105,18 @@ export class ConversationPage implements OnInit {
   }
 
   scrollToBottom() {
-    //console.log("scroll");
-    // this._zone.run(() => {
-      setTimeout(() => {
-        if (this.content.scrollToBottom) {
-          this.content.scrollToBottom(300);
-      }
-  }, 1000);
-    // });
+      setTimeout(() => {  
+          this.contentArea.scrollToBottom(200);
+  }, 200);
   }
 
   async observeMessages(){
 
     console.log(this.id);
-
-  
     this.loadingShow = true;
 
     this.commentsRef = this.firebaseDB.database.ref('room-messages').child(this.id).orderByChild('timestamp');
     this.commentsRef.on('child_added', data => {
-
       const user = this.findUser(data.val().userId);
       const tmp = [];
       tmp.push({
@@ -137,13 +128,19 @@ export class ConversationPage implements OnInit {
         from: (data.val().userId === this.authService?.user.idUser) ? 'message_response' : 'message_request',
         fromName: data.val().name
       });
-
-      this.messagesList.push(tmp);
       this._zone.run(() => {
-        console.log('force update the screen');
+        this.messagesList.push(tmp);
       });
-      console.log('afegit');
-      console.log(tmp);
+      this._zone.run(() => {
+        
+      this.scrollToBottom();
+      console.log('force update the screen');
+      });
+      
+      this._zone.run(() => {
+        this.scrollToBottom();
+        console.log('force update');
+      });
       //si envia un altre, marquem com a rebut el missatge
       if( (data.val().userId != this.authService.user.idUser)){
         var msg = this;
@@ -159,7 +156,7 @@ export class ConversationPage implements OnInit {
                 updates['/room-messages/'+msg.id+"/"+ data.key+"/"+msg.authService?.user.idUser] = {state:2};
                 firebase.database().ref().update(updates);
 
-                msg.authService.post("message/"+data.val().id+"/state/2",null).subscribe(data=>{
+                msg.dooleService.post("message/"+data.val().id+"/state/2",null).subscribe(data=>{
                 //console.log("marcat com a llegit")
                 });
             }else{
@@ -182,7 +179,7 @@ export class ConversationPage implements OnInit {
       to: this.to,
       type: this.type
     };
-    this.authService.post('message', postData).subscribe(
+    this.dooleService.post('message', postData).subscribe(
         async (data) => {
           if (this.id != data.idMessageHeader){
             this.id = data.idMessageHeader;
@@ -193,6 +190,7 @@ export class ConversationPage implements OnInit {
           this.txtChat.clearInput();
           this.btnEnabled = true;
           this.btnImageEnabled = true;
+   
         },
         (error) => {
           // Called when error
@@ -361,7 +359,7 @@ export class ConversationPage implements OnInit {
     msg["percentage"]=0;
 
     this.messageUploadList.push(msg);
-    this.scrollToBottom();
+  
     
     this.events.subscribe('uploadMessageImage', (data:any) => {
       console.log("this.events.subscribe", data);
@@ -372,7 +370,7 @@ export class ConversationPage implements OnInit {
       }
     });
     
-    this.doole.uploadMessageImage(this.id,this.to,"",fileUri, this.authService.user.idUser).then(data =>{
+    this.dooleService.uploadMessageImage(this.id,this.to,"",fileUri, this.authService.user.idUser).then(data =>{
       console.log(" this.doole.uploadMessageImage", data);
       this.btnEnabled = true;
         this.btnImageEnabled=true;
@@ -424,10 +422,5 @@ export class ConversationPage implements OnInit {
         }
     });
   }
-
- 
-
-
-
 
 }

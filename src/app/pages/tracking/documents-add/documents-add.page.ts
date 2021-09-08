@@ -225,6 +225,7 @@ export class DocumentsAddPage implements OnInit {
     return await modal.present();
   }
 
+
   changePlaceholder(){
     let placeholder = this.translate.instant('placeholder_select')
     if(this.isSubmittedType && this.form.get('type').invalid)

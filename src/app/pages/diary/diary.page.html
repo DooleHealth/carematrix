@@ -43,7 +43,7 @@
 <ion-content>
 
   <!-- SegmentBar -->
-  <span><changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser></span>
+  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
     <ion-segment-button value="diets">
       <ion-label>{{'diary.field_diet' | translate}}</ion-label>
@@ -138,7 +138,6 @@
       <ion-list *ngIf="listDrug.length > 0; else noData">
         <ion-list *ngFor="let list of this.listDrug">
           <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
-
           <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" (click)="expandItem(item)">
             <ion-item *ngIf="item.expanded" lines="none">
               <ion-col size="2">
@@ -186,20 +185,22 @@
               </ion-item>
               <div class="main-container3">
 
-                <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" size="small" color="primary"
-                  (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
-                <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" size="small" color="danger"
-                  (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon
-                    style="margin-left: 5px;" name="close-outline" color="light"></ion-icon>
-                </ion-button>
-                <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" size="small" color="success"
-                  (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
-                    style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
-                </ion-button>&nbsp;
-
                 <ion-button *ngIf="item.item.origin == 1" size="small" color="transparent" class="buttonLink"
                   (click)="this.addDrugPlan(item.item, item.item.id)">{{ 'detail_contact.button_edit' | translate }}
                 </ion-button>&nbsp;
+                <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary"
+                  (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
+                
+                <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" color="danger"
+                  (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon
+                    style="margin-left: 5px;" name="alert-outline" color="light"></ion-icon>
+                </ion-button>
+                
+                <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" color="success"
+                  (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
+                    style="margin-left: 5px;" name="checkmark-outline" color="light"></ion-icon>
+                </ion-button>&nbsp;&nbsp;&nbsp;
+                <app-info info="{{'info.medication' | translate}}"></app-info>
               </div>
 
             </app-expandable>

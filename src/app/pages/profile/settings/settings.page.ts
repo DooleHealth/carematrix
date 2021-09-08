@@ -187,9 +187,29 @@ export class SettingsPage implements OnInit {
       });
   }
 
+  updateLanguage(id){
+    let params = {language_id: id}
+    this.dooleService.updateAPIuser(params).subscribe(
+      async (res: any) =>{
+       console.log('[SettingsPage] sendConfigution()', await res);
+       if(res.success){
+        if(id == res.user.language_id){
+          this.languageService.setLenguageLocalstorage(this.language)
+          //this.notification.displayToastSuccessful()
+        }
+       }else{
+         alert(this.translate.instant('setting.error_changed_language'))
+       }
+       },(err) => { 
+          console.log('[SettingsPage] updateLanguajes() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
+  }
+
   changeLanguages(){
     console.log('[SettingsPage] changeLanguages()', this.language);
-    this.languageService.setLenguageLocalstorage(this.language)
+    let id = this.getIdLanguage(this.language)
+    this.updateLanguage(id)
   }
 
   getLocalLanguages(){
@@ -333,5 +353,17 @@ export class SettingsPage implements OnInit {
     isAvailableTwoFactor(){
       this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center')) 
     }
+
+    
+  getIdLanguage(code){
+    switch (code) {
+      case 'ca':
+        return 11
+      case 'es':
+        return 13
+      default:
+        return 11
+    }
+  }
 
 }

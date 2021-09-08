@@ -67,8 +67,8 @@ export class AgendaPage implements OnInit {
   }
 
  async ionViewDidEnter(){
-    console.log('[AgendaPage] ionViewDidEnter()');
-    let date = history.state.date;
+  let date = history.state.date;
+    console.log('[AgendaPage] ionViewDidEnter()', date);
     if(date)
       this.myCal.currentDate = this.formatDate(date) 
     else
@@ -99,9 +99,10 @@ export class AgendaPage implements OnInit {
     return this.dooleService.getAPIreminders().subscribe(
       async (res: any) =>{
         console.log('[AgendaPage] getReminders()', await res);
-        if(res.reminders)
+        if(res.reminders && res.reminders?.length > 0){
           this.addReminderToCalendar(res.reminders)
-        this.eventSource = [].concat(this.appointment, this.reminders)
+          this.eventSource = [].concat(this.appointment, this.reminders)
+        }
        },(err) => { 
           console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
@@ -149,7 +150,7 @@ export class AgendaPage implements OnInit {
           startTime: startTime,
           endTime: endTime,
           allDay: isAllDay,
-          type: e.agenda_type?.name,
+          type: this.setTypeEvent(e.agenda_type),
           color: e.agenda_type?.color,
           site: e.site,
           staff: e.staff,
@@ -160,33 +161,65 @@ export class AgendaPage implements OnInit {
       this.appointment = events ;
   }
 
+  setTypeEvent(type: any){
+    if(type?.name == "" && type?.type == "Added_By_User")
+      return this.translate.instant('agenda.appointment_by_user')
+    else type?.name
+  }
+
   addReminderToCalendar(reminders: any[]){
     var events = [];
     var startTime;
     var endTime
     reminders.forEach((e) =>{
-      let isAllDay = false
-      if(e.from_date  && e.to_date ){
-         startTime =   this.formatDate(e.from_date)
-         endTime =  this.formatDate(e.to_date)
 
-      }else{
-        isAllDay = true
-      }
-        events.push({
-          id: e.id, 
-          title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
-          origin: e.origin,
-          startTime: startTime,
-          endTime: startTime,
-          allDay: isAllDay,
-          type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
-          color: e.agenda_type?.color,
-          site: e.site,
-          staff: e.staff,
-          agenda_type: e.agenda_type,
-          is_reminder: true
+      if(e.executions && e.executions.length > 0){
+        e.executions.forEach(element => {
+          let isAllDay = false
+          if(element.date)
+          startTime =   this.formatDate(element.date)
+          else isAllDay = true
+
+          events.push({
+            id: e.id, 
+            title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
+            origin: e.origin,
+            startTime: startTime,
+            endTime: startTime,
+            allDay: isAllDay,
+            type: this.translate.instant('reminder.header'),
+            color: '#27AE60',
+            site: e.site,
+            staff: e.staff,
+            agenda_type: e.agenda_type,
+            is_reminder: true
+          });
         });
+      }else{
+        let isAllDay = false
+        if(e.from_date  && e.to_date ){
+           startTime =   this.formatDate(e.from_date)
+           endTime =  this.formatDate(e.to_date)
+  
+        }else{
+          isAllDay = true
+        }
+          events.push({
+            id: e.id, 
+            title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
+            origin: e.origin,
+            startTime: startTime,
+            endTime: startTime,
+            allDay: isAllDay,
+            type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
+            color: e.agenda_type?.color,
+            site: e.site,
+            staff: e.staff,
+            agenda_type: e.agenda_type,
+            is_reminder: true
+          });
+      }
+
       })
       this.reminders = [];
       this.reminders = events;
@@ -248,9 +281,15 @@ export class AgendaPage implements OnInit {
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
         }else if(result?.data?.action == 'add'){
-          this.getAgenda();
-          
+          let agenda = result?.data['data']
+          if(agenda?.start_date)
+          this.myCal.currentDate = this.formatDate(agenda.start_date)        
+        }else if(result?.data?.action == 'update'){
+          let agenda = result?.data['data']
+          if(agenda?.start_date)
+          this.myCal.currentDate = this.formatDate(agenda.start_date)        
         }
+        this.getAgenda();
     });
 
     await modal.present();

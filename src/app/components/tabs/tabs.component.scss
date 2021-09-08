@@ -5,12 +5,13 @@ ion-tab-button{
     --padding-bottom: 12%;
  
     
+    
     &::before {
         background-color: transparent;
         display: block;
         content: "";
         margin: 0 auto;
-        width: 20px;
+        width: 17px;
         height: 2px;
       }
     
@@ -20,4 +21,11 @@ ion-tab-button{
     }
     ion-tab-button ion-label{
       margin-bottom: 0%;
+     
+    }
+    ion-tab-bar {
+      position: relative;
+      width: 100%;
+      height:100%;
+      margin: 0 auto;
     }

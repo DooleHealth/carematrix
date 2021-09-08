@@ -3,10 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
+
     <ion-thumbnail slot="start">
-      
       <app-aspect-ratio [ratio]="{w:1, h:1}">
-        <img [src]="this.staff?.image">
+        <app-image-shell animation="spinner" [src]="this.staff?.image" [alt]="'Sample Image'"
+          class="img-wrapper-doctors"></app-image-shell>
       </app-aspect-ratio>
     </ion-thumbnail>
 
@@ -24,9 +25,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen #content>
+<ion-content>
  
-    <div>
+    <div  #contentArea>
       <ion-list no-lines>
         <ion-item *ngFor="let message of this.messagesList">
           <chat-bubble [chatMessage]="message[0]"></chat-bubble>
@@ -36,10 +37,9 @@
         </ion-item>
       </ion-list>
     </div>
-
 </ion-content>
-<ion-footer  >
- 
+<ion-footer>
+  <ion-toolbar>
     <ion-item no-lines>
       <ion-buttons >
         <ion-button (click)="selectImageSource()">
@@ -55,7 +55,7 @@
       </ion-buttons>
       <div item-content style="width:120%!important" >
         <elastic-textarea #txtChat placeholder="{{ 'conversation.placeholder' | translate}}">
-          <ion-input lineHeight="20" maxExpand="8" style="width:120%!important"></ion-input>
+          <ion-input  lineHeight="20" maxExpand="8" style="width:120%!important"></ion-input>
         </elastic-textarea>
       </div>
       <ion-buttons >
@@ -65,11 +65,11 @@
         <ion-button  (click)="this.addAudio()">
           <ion-icon name="mic-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" (click)="this.send()">
+        <ion-button [disabled]="txtChat.content.trim().length<1 || !btnEnabled" slot="end" (click)="this.send()">
           <ion-icon name="send"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-item>
-  
+   </ion-toolbar>
 </ion-footer>
 

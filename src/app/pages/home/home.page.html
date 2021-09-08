@@ -12,7 +12,7 @@
 
   <ion-grid class="iosHeader">
     <ion-row>
-      <ion-col size="8" class="alingLeftTop">
+      <ion-col size="8" class="alingLeftTop">    
         <ion-text class="txtTitleBig">Hola, {{this.authService?.user?.first_name}}</ion-text>
       </ion-col>
       <ion-col size="4">
@@ -55,7 +55,9 @@
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid routerLink="/activity-goal"  routerLinkActive='active-item' [state]="{ id: slide.element_id, header:slide?.element?.name}">
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
-                      <br><ion-progress-bar  class="my-buffer-progress" *ngIf="slide.score as Number" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
+                      <br><ion-progress-bar  class="my-buffer-progress_red" *ngIf="slide.score < 50" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
+                      <ion-progress-bar  class="my-buffer-progress_orange" *ngIf="slide.score > 49 && slide.score < 75" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
+                      <ion-progress-bar  class="my-buffer-progress_green" *ngIf="slide.score > 74" [value]="slide.score/100"  reversed="true" ></ion-progress-bar>
                       <p class="txtContactLittle">{{slide?.element?.name}}: {{slide?.typeString}} {{slide?.element?.element_unit?.abbreviation}}</p>
                     </ion-row>
                   </ion-grid>

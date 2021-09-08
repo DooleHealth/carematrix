@@ -101,13 +101,29 @@ ion-img{
     font-weight: 900;
     overflow: hidden;
   }
-  .my-buffer-progress{
+  .my-buffer-progress_red{
     --background:#82F038;
-    --buffer-background:#faeacc;
-    --progress-background:#F39C12;
+    --buffer-background:#facdcc;
+    --progress-background:#f31212;
     border-radius: 20px;
     min-height: 17px;
     
+}
+.my-buffer-progress_orange{
+  --background:#82F038;
+  --buffer-background:#faeacc;
+  --progress-background:#F39C12;
+  border-radius: 20px;
+  min-height: 17px;
+  
+}
+.my-buffer-progress_green{
+  --background:#82F038;
+  --buffer-background:#cdfacc;
+  --progress-background:#048b22;
+  border-radius: 20px;
+  min-height: 17px;
+  
 }
 
 /*MEDIA QUERIES FOR IPAD*/

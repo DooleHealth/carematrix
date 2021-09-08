@@ -204,6 +204,7 @@
         "subtitle_messages": "Mensajes",
         "lenguage_ca": "Catalán",
         "lenguage_es": "Castellano",
+        "error_changed_language": "Error al actualizar el idioma!",
         "password":{
           "password": "Contrasenya",
           "title_change_password": "Cambiar Contraseña",
@@ -326,7 +327,7 @@
         "no_events": "No hay eventos",
         "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
         "days": ["L", "M", "X", "J", "V", "S", "D"],
-
+        "appointment_by_user": "Cita añadida por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada"
       },
       "reminder":{
@@ -516,7 +517,7 @@
           "field_to_date": "Fecha fin del tratamiento",
           "field_dose": "Ingesta",
           "field_take_time": "Añadir hora de toma",
-          "field_alias": "Alias",
+          "field_alias": "Nombre alternativo",
           "placeholder_chosse":"Selecciona",
           "placeholder_dose":"Nº de dosis",
           "placeholder_alias":"Nombre alternativo",
@@ -616,7 +617,9 @@
         "button": "De acuerdo",
         "title":"Información",
         "news":"En este apartado podrás encontrar las noticias y consejos que mejor se adaptan a tu perfil",
-        "family":"En este apartado podrás loguearte con el usuario del que seas tutor o cuidador, pudiendo acceder a sus datos de salud. Te advertiremos en cada página de que actúas en nombre de otro con un signo de exclamación (!). Puedes volver a tu perfil siempre que lo desees pulsando ​encima de este mismo signo"
+        "family":"En este apartado podrás loguearte con el usuario del que seas tutor o cuidador, pudiendo acceder a sus datos de salud. Te advertiremos en cada página de que actúas en nombre de otro con un signo de exclamación (!). Puedes volver a tu perfil siempre que lo desees pulsando ​encima de este mismo signo",
+        "medication":"Puedes cambiar el estado de la medicación (tomar, tomada u olvidada) pinchando encima de este botón",
+        "chat":"Recuerda que tu doctor puede tardar un tiempo en contestarte, dependiendo de su carga de trabajo. ¡Gracias por ser paciente!"
       },
       "face-id": {
         "description": "Esta aplicación se bloquea para garantizar tu seguridad",
