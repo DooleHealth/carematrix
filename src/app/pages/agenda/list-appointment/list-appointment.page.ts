@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { IEvent } from 'ionic2-calendar/calendar';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
 
 export interface DayEvent {
@@ -25,7 +26,9 @@ export class ListAppointmentPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private languageService: LanguageService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private nav: NavController,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -181,6 +184,10 @@ export class ListAppointmentPage implements OnInit {
         if(result?.data['error']){
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
+        }else if(result?.data['action'] == 'add'){
+          let agenda = result?.data['data']
+          this.nav.navigateForward('/agenda', { state: {date: agenda.start_date} });
+          this.notification.displayToastSuccessful()
         }
     });
     await modal.present();

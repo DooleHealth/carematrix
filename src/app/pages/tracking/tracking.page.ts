@@ -290,7 +290,7 @@ async addDocument(){
             //this.dooleService.presentAlert(message)
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
-            this.getFilteredDiagnosticTests()    
+            this.getDiagnosticTestsList()
           }
         });
     

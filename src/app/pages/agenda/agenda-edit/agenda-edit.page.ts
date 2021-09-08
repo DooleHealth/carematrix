@@ -108,7 +108,7 @@ export class AgendaEditPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaEditPage] editAgenda()', await res);
         if(res.success){
-          this.modalCtrl.dismiss({error:null, action: 'update'});
+          this.modalCtrl.dismiss({error:null, action: 'update', data: res.agenda});
           this.notification.displayToastSuccessful()
         }else{
           let message = this.translate.instant('reminder.error_message_added_reminder')
@@ -138,7 +138,7 @@ export class AgendaEditPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaEditPage] addAgenda()', await res);
         if(res.success){
-          this.modalCtrl.dismiss({error:null, action: 'add'});
+          this.modalCtrl.dismiss({error:null, action: 'add', data: res.agenda});
           this.notification.displayToastSuccessful()
         }else{
           let message = this.translate.instant('appointment.error_message_added_reminder')

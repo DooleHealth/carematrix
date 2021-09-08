@@ -118,8 +118,16 @@ export class DocumentsFilterPage implements OnInit {
 
 
   submit(){
-      this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
-      this.modalCtrl.dismiss({error:null, action: 'add', filter: this.form.value});
+      let filter = this.isEmptyForm()? undefined:  this.form.value
+      this.modalCtrl.dismiss({error:null, action: 'add', filter: filter});
+  }
+
+  isEmptyForm(){
+    let start_date = (this.form.get('start_date').value === null ||  this.form.get('start_date').value === null)? true:false
+    let end_date = (this.form.get('end_date').value === null ||  this.form.get('end_date').value === null)? true:false
+    if(start_date && end_date && this.diagnosticTestTypes.length == 0)
+      return true
+    else return false
   }
 
   close(){
@@ -128,7 +136,7 @@ export class DocumentsFilterPage implements OnInit {
 
   changeFormatToDate(){
     let start_date =  this.form.get('start_date').value
-    if(start_date !== null){
+    if(start_date !== null && start_date !== ''){
       var dateStart = new Date(start_date);
       let startDateTemp = this.datepipe.transform(dateStart, 'y-MM-dd');
       this.form.get('start_date').setValue(startDateTemp)
@@ -137,7 +145,7 @@ export class DocumentsFilterPage implements OnInit {
 
   changeFormatFromDate(){
     let end_date =  this.form.get('end_date').value
-    if(end_date !== null){
+    if(end_date !== null && end_date !== ''){
       var dateEnd = new Date(end_date);
       let endDateTemp = this.datepipe.transform(dateEnd, 'y-MM-dd');
       this.form.get('end_date').setValue(endDateTemp)
@@ -146,7 +154,7 @@ export class DocumentsFilterPage implements OnInit {
 
   changeToggleDate(event){
     console.log('[DocumentsFilterPage] changeToggleDate()', event);
-    if(event.detail.checked){
+    if(!event.detail.checked){
       this.form.get('start_date').setValue('')
       this.form.get('end_date').setValue('')
     }
@@ -154,9 +162,9 @@ export class DocumentsFilterPage implements OnInit {
 
   changeToggleTestType(event){
     console.log('[DocumentsFilterPage] changeToggleTestType()', event);
-    if(event.detail.checked && this.toggle2){
+    if(!event.detail.checked){
       this.diagnosticTestTypes = []
-      console.log('[DocumentsFilterPage] diagnosticTestTypes', this.diagnosticTestTypes);
+      console.log('[DocumentsFilterPage] changeToggleTestType', this.diagnosticTestTypes);
     }
   }
 

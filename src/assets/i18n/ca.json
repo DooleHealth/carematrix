@@ -322,7 +322,7 @@
         "no_events": "No hi ha esdeveniments",
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"],
-
+        "appointment_by_user": "Cita afegida per l'usuari",
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada"
       },
       "reminder":{

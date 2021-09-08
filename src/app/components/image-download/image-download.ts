@@ -42,7 +42,7 @@ export class ImageDownloadComponent {
       file: this.url,
     };
 
-    this.auth.post("message/temporaryUrl",postData).subscribe(data=>{
+    this.doole.post("message/temporaryUrl",postData).subscribe(data=>{
       this.temporaryUrl=data.temporaryUrl;
       this.doole.downloadFile(data.temporaryUrl,this.target).subscribe(datad => {
 

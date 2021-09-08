@@ -1011,6 +1011,18 @@ export class DooleService {
     );
   }
 
+  postAPImedicationPla(params: Object): Observable<any> {
+    let path = `user/medicationPlan`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   putAPImedicationPlan(id: any, params: Object): Observable<any> {
     let path = `user/medicationPlan/${id}`;
     const endpoint = this.api.getEndpoint(path);
