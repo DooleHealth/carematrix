@@ -8,6 +8,9 @@ import { AgendaEditPageRoutingModule } from './agenda-edit-routing.module';
 
 import { AgendaEditPage } from './agenda-edit.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { Chooser } from '@ionic-native/chooser/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -15,7 +18,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    AgendaEditPageRoutingModule
-  ]
+    AgendaEditPageRoutingModule,
+    ComponentsModule,
+  ],
+  providers:[Chooser,InAppBrowser]
 })
 export class AgendaEditPageModule {}
