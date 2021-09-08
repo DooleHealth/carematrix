@@ -118,7 +118,7 @@ export class DocumentsAddPage implements OnInit {
               if(res.success)
                 this.modalCtrl.dismiss({error:null, action: 'add'});
               else{
-                  let message = this.translate.instant('documents_add.error_alert_message')
+                  let message = this.translate.instant('bookings.error_upload_files')
                   this.modalCtrl.dismiss({error:message});
               }
             })
@@ -155,7 +155,7 @@ export class DocumentsAddPage implements OnInit {
                     this.modalCtrl.dismiss({error: null, action: 'update'});
                 }
                 else{
-                    let message = this.translate.instant('documents_add.error_alert_message')
+                    let message = this.translate.instant('bookings.error_upload_files')
                     this.modalCtrl.dismiss({error:message});
                 }
             })

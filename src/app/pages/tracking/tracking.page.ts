@@ -43,7 +43,7 @@ export class TrackingPage implements OnInit {
   public url;
   groupedElements: any = [];
   elementValues: any = [];
-  isLoading = false
+  isLoading = true
   segment = 'documents'
   active_color= '#3498DB'
   inactive_color= '#7F8C8D'
@@ -115,13 +115,19 @@ export class TrackingPage implements OnInit {
     this.isLoading = true
     this.dooleService.getAPIdiagnosticTests().subscribe(
       async (res: any) =>{
-        this.diagnosticTests = []
-        this.listDiagnostic = []
-        //console.log('[TrackingPage] getDiagnosticTests()', await res);
-        this.diagnosticTests = res.diagnosticTests
-        if(this.diagnosticTests )
-        this.groupDiagnosticsByDate(res)
+
+        if(await res.success){
+          this.diagnosticTests = []
+          this.listDiagnostic = []
+          //console.log('[TrackingPage] getDiagnosticTests()', await res);
+          this.diagnosticTests =  res.diagnosticTests
+          if(this.diagnosticTests.length > 0 )
+          this.groupDiagnosticsByDate(res)
+          else
+          this.isLoading = false
+        } 
         this.isLoading = false
+        
        },(err) => { 
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
@@ -142,6 +148,7 @@ export class TrackingPage implements OnInit {
         this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color}) 
       } 
     })
+    this.isLoading = false
     //console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);
   }
 

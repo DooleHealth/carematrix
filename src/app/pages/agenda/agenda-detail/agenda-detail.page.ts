@@ -358,7 +358,6 @@ export class AgendaDetailPage implements OnInit {
   }
 
   getName(m){
-    console.log('[AgendaPage] getName()', JSON.stringify(m));
     if(m?.name && m?.name !== "")
       return m.name
     else if(m?.file_name)

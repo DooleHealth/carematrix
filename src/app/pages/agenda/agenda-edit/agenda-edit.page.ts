@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { Location } from '@angular/common';
 import { NotificationService } from 'src/app/services/notification.service';
+import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-agenda-edit',
   templateUrl: './agenda-edit.page.html',
@@ -24,6 +25,8 @@ export class AgendaEditPage implements OnInit {
   isSaving: boolean = false;
   isNewEvent = true
   enableReminder = false;
+  media = []
+  @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
@@ -63,6 +66,7 @@ export class AgendaEditPage implements OnInit {
       let duration = this.trasnforHourToMinutes(this.event.end_time) - this.trasnforHourToMinutes(this.event.start_time)
       if(this.event.end_time) this.form.get('duration').setValue( duration )
       if(this.event.online !== undefined && this.event.online !== null) this.form.get('online').setValue(this.event.online )
+      if(this.event.files.length > 0) this.media = this.event.files
     }
   }
 
@@ -108,8 +112,23 @@ export class AgendaEditPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaEditPage] editAgenda()', await res);
         if(res.success){
-          this.modalCtrl.dismiss({error:null, action: 'update', data: res.agenda});
-          this.notification.displayToastSuccessful()
+
+          if(this.uploadFile.isEmptyFiles()){
+            this.modalCtrl.dismiss({error:null, action: 'update', data: res.agenda});
+            this.notification.displayToastSuccessful()
+          }else{
+            this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
+              if(res.success){
+                this.modalCtrl.dismiss({error:null, action: 'update', data: res.agenda});
+                this.notification.displayToastSuccessful()
+              }
+              else{
+                let message = this.translate.instant('bookings.error_upload_files')
+                  this.modalCtrl.dismiss({error:message});
+              }
+            })
+          }
+
         }else{
           let message = this.translate.instant('reminder.error_message_added_reminder')
           alert(message)
@@ -138,8 +157,23 @@ export class AgendaEditPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaEditPage] addAgenda()', await res);
         if(res.success){
-          this.modalCtrl.dismiss({error:null, action: 'add', data: res.agenda});
-          this.notification.displayToastSuccessful()
+
+          if(this.uploadFile.isEmptyFiles()){
+            this.modalCtrl.dismiss({error:null, action: 'add', data: res.agenda});
+            this.notification.displayToastSuccessful()
+          }else{
+            this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
+              if(res.success){
+                this.modalCtrl.dismiss({error:null, action: 'add', data: res.agenda});
+                this.notification.displayToastSuccessful()
+              }
+              else{
+                let message = this.translate.instant('bookings.error_upload_files')
+                  this.modalCtrl.dismiss({error:message});
+              }
+            })
+          }
+
         }else{
           let message = this.translate.instant('appointment.error_message_added_reminder')
           alert(message)

@@ -40,7 +40,7 @@
 
     <div *ngSwitchCase="'documents'">
 
-      <div *ngIf="this.listDiagnostic.length > 0; else noData">
+      <div *ngIf="!this.isLoading && this.listDiagnostic.length > 0; else noData">
         <ion-list *ngFor="let list of this.listDiagnostic; let i = index" (mouseover)="fireEvent($event,i)"
           (click)="fireEvent($event,i)">
           <!-- <div class="dot" [ngStyle]="{'background': list.color}"></div>
@@ -222,7 +222,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
+          <ion-col *ngIf="!this.isLoading && this.listDiagnostic.length > 0;">
             <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
           </ion-col>
         </ion-row>
