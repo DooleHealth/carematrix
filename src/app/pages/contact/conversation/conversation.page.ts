@@ -41,7 +41,7 @@ export class ConversationPage implements OnInit {
   private commentsRef;
   private loadingShow = false;
   private btnImageEnabled = true;
-  private btnEnabled = true;
+  public  btnEnabled = true;
   private title : string;
   private image : string = '';
   mediaFiles: any = [];
@@ -113,8 +113,6 @@ export class ConversationPage implements OnInit {
   async observeMessages(){
 
     console.log(this.id);
-
-  
     this.loadingShow = true;
 
     this.commentsRef = this.firebaseDB.database.ref('room-messages').child(this.id).orderByChild('timestamp');
@@ -131,15 +129,14 @@ export class ConversationPage implements OnInit {
         fromName: data.val().name
       });
       this._zone.run(() => {
-        console.log('entra tmp');
+        this.messagesList.push(tmp);
       });
-      this.messagesList.push(tmp);
       this._zone.run(() => {
-        this.scrollToBottom();
-        console.log('force update the screen');
+        
+      this.scrollToBottom();
+      console.log('force update the screen');
       });
-      console.log('afegit');
-      console.log(tmp);
+      
       this._zone.run(() => {
         this.scrollToBottom();
         console.log('force update');
