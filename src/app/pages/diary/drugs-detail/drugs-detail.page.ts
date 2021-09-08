@@ -111,7 +111,7 @@ export class DrugsDetailPage implements OnInit {
     this.form.get('frequency').setValue('1week');
     
     //console.log('[DrugsDetailPage] saveDrug()', this.form.value);
-    this.dooleService.postAPIdrugIntake(this.form.value).subscribe(async json=>{
+    this.dooleService.postAPImedicationPlan(this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] saveDrug()', await json);
       if(json.message){
         this.modalCtrl.dismiss({error:null, action: 'add'});
