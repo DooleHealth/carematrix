@@ -59,28 +59,6 @@ export class ReportProblemPage implements OnInit {
 
   }
 
-/*   async addImage(source: CameraSource) {
-    const image = await Camera.getPhoto({
-      quality: 60,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source
-    }).catch((e) => {
-      console.log('cancelled');
-
-    });
-
-    if (image) {
-      console.log("image: ", image);
-      var fileUri = Capacitor.convertFileSrc(image.dataUrl);
-      var filename= Date.now() //new Date().getTime(); 
-      this.saveBase64(fileUri,filename.toString()).then((file)=>{
-        this.patient_files.push({ name: filename + '.' + image.format, file: file, type: image.format })
-        this.numFile = this.patient_files.length;
-      })
-
-    }
-  }  */
 
    async addImage(source: CameraSource) {
     const image = await Camera.getPhoto({
@@ -168,19 +146,6 @@ export class ReportProblemPage implements OnInit {
       let description = this.form.get('description').value
       this.form.get('description').setValue(description);
 
-      this.imagesTemp.forEach(item => {
-        this.images.push(item.file);   
-      });
-      console.log(`[ReportProblemPage] sendProblemReport() this.images.length: ${this.images.length}, this.imagesTemp.length ${this.imagesTemp.length}` );
-      if(this.imagesTemp.length >0){
-        console.log('[ReportProblemPage] sendProblemReport() this.imagesTemp.length >0', this.images[0]);
-      }else return
-/*       this.patient_files.forEach(item => {
-        this.images.push(item.file);   
-      }); */
-      this.form.get('images').setValue(this.images);
-  
-      console.log("data:", this.images);
       this.dooleService.postAPIReportProblem( this.form.value).subscribe(
           async (data) => {
             console.log("data:", data);

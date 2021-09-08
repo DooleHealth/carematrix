@@ -595,7 +595,8 @@
         "attachments": "Documentos Adjuntos",
         "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
         "button_videocall": "Confirmar cita",
-        "button_videocall_charge": "Confirmar cita con pago"
+        "button_videocall_charge": "Confirmar cita con pago",
+        "error_upload_files": "Error al adjuntar los archivos"
       },      
       "chat":{
         "header":"Chat"
