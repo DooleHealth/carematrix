@@ -140,10 +140,10 @@ export class DrugsDetailPage implements OnInit {
     if(f== 'custom')
     this.form.get('frequency').setValue('1week');
 
-    //console.log('[DrugsDetailPage] updateDrug()', this.form.value);
-    this.dooleService.putAPImedicationPlan(this.drug.id ,this.form.value).subscribe(async json=>{
+    console.log('[DrugsDetailPage] updateDrug()', this.form.value);
+    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id ,this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
-      if(json.message){
+      if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'update'});
       }else{
         let message = this.translate.instant('medication.error_message_edit_medication')

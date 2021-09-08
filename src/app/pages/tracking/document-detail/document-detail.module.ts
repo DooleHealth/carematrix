@@ -9,6 +9,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { DocumentDetailPage } from './document-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { DocumentsAddPageModule } from '../documents-add/documents-add.module';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { DocumentsAddPageModule } from '../documents-add/documents-add.module';
     DocumentDetailPageRoutingModule,
     DocumentsAddPageModule
   ],
+  providers: [ InAppBrowser],
   declarations: [DocumentDetailPage]
 })
 export class DocumentDetailPageModule {}

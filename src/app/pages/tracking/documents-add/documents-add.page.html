@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{'documents_add.header' | translate }} </ion-title>
     <ion-buttons slot="end">
-    <ion-button (click)="submit()" [disabled]="enableButtonAddFile()">
+    <ion-button (click)="submit()" [disabled]="this.isLoading">
       <ion-icon name="checkmark-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -54,53 +54,8 @@
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
       </ion-item>
-
-      <input
-      type="file"
-      #fileInput
-      (change)="uploadFileFromBrowser($event)"
-      hidden="true"
-      accept="image/*">
-
-      <ion-button slot="start" 
-        fill="clear" 
-        (click)="selectImageSource()"
-        [disabled]="enableButtonAddFile()">{{'report_problem.button_add_file' | translate }}
-        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
-      </ion-button>
-
-
-        <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
-
-          <div *ngFor="let file of this.media; let i = index">
-            <ion-item lines="none">
-            <div id="left">
-              <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
-            </div>
-            <div id="middle">
-              <p class="titule">{{ getName(file)  }}</p>
-            </div>
-            <div id="right">
-              <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, true, i, false)"></ion-icon>
-            </div> 
-          </ion-item>
-        </div>  
-
-          <div *ngFor="let file of this.mediaFiles; let i = index">
-            <ion-item lines="none">
-              <div id="left">
-                <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
-              </div>
-              <div id="middle">
-                <p class="titule">{{ getName(file)  }}</p>
-              </div>
-              <div id="right">
-                <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, true, i, true)"></ion-icon>
-              </div> 
-            </ion-item>
-          </div>       
-        </div>
-
+      
+        <app-file-upload #uploadFile [media]="this.media"></app-file-upload>
 
     </ion-list>
   </form>
@@ -108,7 +63,7 @@
 </form>
 
   <section>
-    <ion-button [disabled]="enableButtonAddFile()" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
+    <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
     <ion-button *ngIf="this.isEdit" expand="block"  (click)="presentAlertConfirm(null, false)" >{{'button.delete' | translate }}</ion-button>
   </section>  
 </ion-content>

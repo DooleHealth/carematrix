@@ -1,3 +1,5 @@
+import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -6,6 +8,9 @@ import { Chooser } from '@ionic-native/chooser/ngx';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
+import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
 const { Camera } = Plugins;
 @Component({
   selector: 'app-file-upload',
@@ -13,8 +18,8 @@ const { Camera } = Plugins;
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
-
-  constructor(private platform: Platform, private iab: InAppBrowser, private alertCtrl : AlertController, private translate: TranslateService,private actionSheetCtrl: ActionSheetController, private chooser: Chooser, private sanitizer: DomSanitizer, ) { }
+  @Input('media') media: any = [];
+  constructor(private dooleService: DooleService, private platform: Platform, private iab: InAppBrowser, private alertCtrl : AlertController, private translate: TranslateService,private actionSheetCtrl: ActionSheetController,private notification: NotificationService, private chooser: Chooser, private sanitizer: DomSanitizer, private datepipe: DatePipe,) { }
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   @Input('text') text: string;
   @Input('form') form: FormGroup;
@@ -35,21 +40,21 @@ export class FileUploadComponent implements OnInit {
   async selectSource() {
     const buttons = [
       {
-        text: this.translate.instant('Cámara'),
+        text: this.translate.instant('documents_add.camera'),
         icon: 'camera',
         handler: () => {
           this.addImage(CameraSource.Camera);
         }
       },
       {
-        text: this.translate.instant('videocall.pictures'),
+        text: this.translate.instant('documents_add.pictures'),
         icon: 'image',
         handler: () => {
           this.addImage(CameraSource.Photos);
         }
       },
       {
-        text: this.translate.instant('videocall.choose-file'),
+        text: this.translate.instant('documents_add.file'),
         icon: 'document',
         handler: () => {
           this.addFile();
@@ -75,16 +80,25 @@ export class FileUploadComponent implements OnInit {
     await actionSheet.present();
   }
 
+  getName(m){
+    if(m?.name && m?.name !== "")
+      return m.name
+    else if(m?.file_name)
+      return m?.file_name.split('/').pop();
+    else if(m?.file)
+      return m?.file.split('/').pop();
+    else
+      return 'new image...'
+   }
+
   async addFile() {
 
     this.chooser.getFile().then(async file => {
-      //console.log(file ? file : 'canceled');
       if (file) {
-
-        //console.log("file", file);
-        //console.log(" base64result.split(',')[1] ", file.dataURI.split(',')[1]);
-
-        this.files.push({ name: file.name, file: file.dataURI.split(',')[1], type: file.mediaType })
+        //`data:${file.mediaType};base64,`+
+        console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
+        this.presentPrompt(file.dataURI, file.name, file.mediaType)
+        //this.files.push({ name: file.name, file: file.dataURI.split(',')[1], type: file.mediaType })
       }
     }).catch((error: any) => {
       console.error(error)
@@ -99,16 +113,19 @@ export class FileUploadComponent implements OnInit {
       source
     }).catch((e) => {
       console.log('cancelled');
-
     });
 
     if (image) {
-      this.file64 = this.sanitizer.bypassSecurityTrustResourceUrl('data:' + `image/${image.format}` + ';base64,' + image.base64String)
-      this.files.push({ name: Date.now() + '.' + image.format, file: image.base64String, type: image.format })
-      // this.form.patchValue({
-      //   auto: 'data:' + `image/${image.format}` + ';base64,' + image.base64String
-      // });
+      //data:image/png;base64,
+      var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
+      console.log("[FileUploadComponent] addImage()", JSON.stringify(image));
+      this.presentPrompt(`data:image/${image.format};base64,`+image.base64String, filename, image.format)
+      //this.files.push({ name: Date.now() + '.' + image.format, file: image.base64String, type: image.format })
     }
+  }
+
+  transformDate(date, format) {
+    return this.datepipe.transform(date, format);
   }
 
   async uploadFileFromBrowser(event: EventTarget) {
@@ -124,12 +141,8 @@ export class FileUploadComponent implements OnInit {
 
     const result = await toBase64(file).catch(e => Error(e));
     var base64result = result as string;
-    //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
-    this.files.push({ name: file.name, file: base64result.split(',')[1], type: file.type })
-
-    // this.form.patchValue({
-    //   auto: result
-    // });
+    console.log("[FileUploadComponent] uploadFileFromBrowser()", JSON.stringify(base64result));
+    this.files.push({ name: file.name, file: base64result, type: file.type })
 
   }
 
@@ -143,6 +156,11 @@ export class FileUploadComponent implements OnInit {
       if (element.name == name)
         this.files.splice(index, 1);
     });
+  }
+
+  openFileMedia(media){
+    console.log("media", media);
+    window.open(media.temporaryUrl, "");
   }
 
   openFile(file){
@@ -194,21 +212,158 @@ export class FileUploadComponent implements OnInit {
       allowInlineMediaPlayback : 'no',//iOS only 
       presentationstyle : 'pagesheet',//iOS only 
       fullscreen : 'yes',//Windows only    
-  };
-    let target = "_blank";
+    };
+      let target = "_blank";
+  
+      this.iab.create(url,target, options);
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      message: this.translate.instant("videocall.file_type_not supported"),
+      buttons: [{
+        text: 'Ok',
+      }]
+    });
+
+    await alert.present();
+  }
+
+  async presentPrompt(file, filename, type) {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('documents_add.input_file_name'),
+      inputs: [
+        {
+          name: 'filename',
+          type: 'text',
+          placeholder: this.translate.instant('documents_add.name'),
+        }
+      ],
+        buttons: [
+          {
+            text: this.translate.instant("button.cancel"),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('[FileUploadComponent] AlertConfirm Cancel');
+              this.files.push({ name: filename, file: file, type: type })
+            }
+          }, {
+            text: this.translate.instant("button.accept"),
+            handler: (data) => {
+              console.log('[FileUploadComponent] AlertConfirm Okay', data.filename );
+              if (data.filename && data.filename !== '') {
+                 let name = data.filename +'.'+filename.split('.').pop()
+                 this.files.push({ name: name, file: file, type: type })
+              } else {
+                return false;
+              }
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+  }
+
+  isEmptyFiles():boolean{
+    if(this.files.length == 0){ 
+      return true
+    }
+    else false
+  }
+
+
+   uploadFiles(id, model: string):Observable<any>{
+    let n: any = [];
+    let f: any = [];
+    this.files.forEach(element => {
+      f.push(element.file)
+      n.push(element.name);
+    });
+
+    let params = {
+      'model': model,
+      'id':  id,
+      'file': f,
+      'name': n
+    }
+
+    console.log("[FileUploadComponent] postAPIAddMedia:", params);
+    return this.dooleService.postAPIAddMedia(params)
+
+  }
+
+  getParamsToSend(id, model: string){
+    let n: any = [];
+    let f: any = [];
+    this.files.forEach(element => {
+      f.push(element.file)
+      n.push(element.name);
+    });
+
+    return {
+      'model': model,
+      'id':  id,
+      'file': f,
+      'name': n
+    }
  
-    this.iab.create(url,target, options);
-}
+  }
 
-async presentAlert() {
-  const alert = await this.alertCtrl.create({
-    cssClass: 'my-custom-class',
-    message: this.translate.instant("videocall.file_type_not supported"),
-    buttons: [{
-      text: 'Ok',
-    }]
-  });
 
-  await alert.present();
-}
+  deleteMediaFile(m){
+    this.dooleService.deleteFile(m.id).subscribe(
+      async (data) => {
+        console.log("data:", data);
+        if(data)
+          this.notification.displayToastSuccessful()
+        else{
+          let message = this.translate.instant('documents_add.error_alert_message')
+          alert(message)
+        }
+      },
+      (error) => {
+        alert( 'ERROR(' + error.code + '): ' + error.message)
+        console.log("error: ", error);
+        throw new HttpErrorResponse(error);
+      },
+      () => {
+        // Called when operation is complete (both success and error)
+      });
+  }
+
+  async presentAlertConfirm(mediaFile, index?, isNewFile?) {
+    let message = this.translate.instant("documents_add.delete_media_file")
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-alert-class',
+      //header: this.translate.instant("alert.header_confirmation"),
+      message: message,
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('[FileUploadComponent] AlertConfirm Cancel');
+          }
+        }, {
+          text: this.translate.instant("alert.button_ok"),
+          handler: () => {
+            console.log('[FileUploadComponent] AlertConfirm Okay');
+              if(isNewFile){
+                this.files.splice(index,1)
+                return
+              }
+              this.deleteMediaFile(mediaFile);
+              this.media.splice(index,1)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 }

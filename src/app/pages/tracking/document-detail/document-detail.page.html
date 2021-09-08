@@ -128,11 +128,11 @@
   </ion-card>
 
   <ion-row>
-    <ion-text *ngIf="this.mediaFiles && this.mediaFiles.length > 0" class="txtTitle2">{{ 'documents_add.attachments' |
+    <ion-text *ngIf="this.mediaFiles.length > 0" class="txtTitle2">{{ 'documents_add.attachments' |
       translate}}</ion-text>
   </ion-row>
 
-  <ion-card class="cardProfile" *ngIf="this.mediaFiles && this.mediaFiles.length > 0">
+  <ion-card class="cardProfile" *ngIf="this.mediaFiles.length > 0">
 
       <div id="container" style="margin-top: 20px; margin-bottom: 10px;">
         <div *ngFor="let file of this.mediaFiles; let i = index" class="section">

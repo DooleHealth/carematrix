@@ -8,10 +8,11 @@ import { BookingsPageRoutingModule } from './bookings-routing.module';
 
 import { BookingsPage } from './bookings.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { MedicalCalendarPageModule } from '../medical-calendar/medical-calendar.module';
 import { Chooser } from '@ionic-native/chooser/ngx';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @NgModule({
@@ -23,11 +24,11 @@ import { Chooser } from '@ionic-native/chooser/ngx';
     BookingsPageRoutingModule,
     TranslateModule,
     NgCalendarModule,
-    MedicalCalendarPageModule
-   
+    MedicalCalendarPageModule,
+    ComponentsModule,
   ],
   declarations: [BookingsPage],
-  providers:[Chooser,DatePipe]
+  providers:[Chooser,DatePipe,InAppBrowser]
  
 })
 export class BookingsPageModule {}

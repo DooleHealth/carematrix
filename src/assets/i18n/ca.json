@@ -594,7 +594,8 @@
         "attachments": "Documents Adjunts",
         "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
         "button_videocall": "Confirma Cita",
-        "button_videocall_charge": "Confirma Cita amb pagament"
+        "button_videocall_charge": "Confirma Cita amb pagament",
+        "error_upload_files": "Error a l'adjuntar els arxius"
       },
       "chat":{
         "header":"Chat"

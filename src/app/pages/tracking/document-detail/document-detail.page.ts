@@ -24,7 +24,7 @@ export class DocumentDetailPage implements OnInit {
   diagnosticTestType: any = [];
   groupedElements: any = [];
   elementValues: any = [];
-  mediaFiles: any;
+  mediaFiles: any = [];
   isLoading = false
   constructor(
     private dooleService: DooleService,
@@ -60,6 +60,7 @@ export class DocumentDetailPage implements OnInit {
 
   addItems(){
     console.log('[DocumentDetailPage] expandItems()');
+    this.items = []
     this.groupedElements.forEach(element => {
       this.items.push({expanded: false, elements: element })
     });
@@ -73,6 +74,7 @@ export class DocumentDetailPage implements OnInit {
 
   async getDiagnosticData(){
     this.isLoading = true
+    this.mediaFiles = []
     this.dooleService.getAPIdiagnosticTestID(this.id).subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getDiagnosticData()', await res);
@@ -172,7 +174,7 @@ export class DocumentDetailPage implements OnInit {
   }
 
   getName(m){
-    console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
+    //console.log('[DocumentsAddPage] getName()', JSON.stringify(m));
     if(m?.name && m?.name !== "")
       return m.name
     else if(m?.file_name)
@@ -189,20 +191,22 @@ export class DocumentDetailPage implements OnInit {
     });
   
     modal.onDidDismiss()
-      .then((result) => {
-        console.log('addDocument()', result);     
+      .then(async (result) => {
+        await result   
         if(result?.data?.error){
+          console.log('[DocumentDetailPage] editDiagnosticTest() error'); 
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
         }else if(result?.data?.action == 'add' || result?.data?.action == 'update'){
           this.notification.displayToastSuccessful()
           this.getDiagnosticData()    
         }else if(result?.data?.action == 'delete'){
+          //this.router.navigateByUrl('/tracking')
           this.notification.displayToastSuccessful()
         }
       });
   
-      await modal.present();
+      return await modal.present();
   }
 
 }

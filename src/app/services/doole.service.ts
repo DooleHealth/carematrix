@@ -10,7 +10,7 @@ import { Capacitor } from '@capacitor/core';
 import { delay, filter, map } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
 import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
 import { AuthenticationService } from './authentication.service';
@@ -34,7 +34,7 @@ export class DooleService {
 
   uploadFile(image: string, id?: string) {
 
-    //console.log("uploading ", image);
+    console.log("uploading ", image);
     const token = localStorage.getItem('token');
     let options: FileUploadOptions = {
       fileKey: 'file',
@@ -58,10 +58,50 @@ export class DooleService {
 
     return new Promise(function (resolve, reject) {
       fileTransfer.upload(image, endpoint, options).then(data => {
-        //console.log(data);
+        console.log(data);
         resolve(JSON.parse(data.response));
       }, (err) => {
-        //console.log(err);
+        console.log(err);
+        reject(err);
+      })
+    })
+
+  }
+
+  
+
+  postAPIAddMedia(params: Object){
+    const endpoint = this.api.getEndpoint('media/add');
+   
+    return this.http.postForm(endpoint, params).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] postAPIAddMedia(${endpoint}) res: `, res);
+        return res;
+      })
+    );
+  }
+  
+  uploadFileToModel(image: string, name: string, params: any) {
+    //console.log("uploading ", image);
+    const token = localStorage.getItem('token');
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: name,
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json',
+      },
+      params
+    }
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    const endpoint = this.api.getEndpoint('media/add');
+    return new Promise(function (resolve, reject) {
+      fileTransfer.upload(image, endpoint, options).then(data => {
+        console.log(JSON.parse(data.response));
+        resolve(JSON.parse(data.response));
+      }, (err) => {
+        console.log(err);
         reject(err);
       })
     })
