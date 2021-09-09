@@ -113,7 +113,7 @@ export class DrugsDetailPage implements OnInit {
     //console.log('[DrugsDetailPage] saveDrug()', this.form.value);
     this.dooleService.postAPImedicationPlan(this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] saveDrug()', await json);
-      if(json.message){
+      if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'add'});
       }else{
         let message = this.translate.instant('medication.error_message_add_medication')
@@ -265,10 +265,10 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan(){
-    console.log('[DiaryPage] getMedicationPlan()');
+    console.log('[DrugsDetailPage] getMedicationPlan()');
     this.dooleService.getAPImedicationPlan(this.drug.medication_plan_id).subscribe(
       async (res: any) =>{
-        console.log('[DiaryPage] getMedicationPlan()', await res);
+        console.log('[DrugsDetailPage] getMedicationPlan()', await res);
         if(res.success){
           let medicationPlan = res.medicationPlan
           let from_date = medicationPlan.from_date
@@ -276,27 +276,30 @@ export class DrugsDetailPage implements OnInit {
           let to_date = medicationPlan.to_date
           this.form.get('to_date').setValue(this.formatDate(to_date))
 
-          if(medicationPlan.frequency) {
-            this.form.get('frequency').setValue(medicationPlan?.frequency)
-            this.frequencySeleted = medicationPlan.frequency
-          }
-
           let plan = medicationPlan.medication_plan_times
           plan.forEach(element => {            
             let hour = element.time.split(':')
             this.times.push(`${hour[0]}:${hour[1]}`)
           });
 
-          if(medicationPlan.day1) this.form.get('day1').setValue( medicationPlan.day1 )
-          if(medicationPlan.day2) this.form.get('day2').setValue( medicationPlan.day2 )
-          if(medicationPlan.day3) this.form.get('day3').setValue( medicationPlan.day3 )
-          if(medicationPlan.day4) this.form.get('day4').setValue( medicationPlan.day4 )
-          if(medicationPlan.day5) this.form.get('day5').setValue( medicationPlan.day5 )
-          if(medicationPlan.day6) this.form.get('day6').setValue( medicationPlan.day6 )
-          if(medicationPlan.day7) this.form.get('day7').setValue( medicationPlan.day7 )
+          this.form.get('day1').setValue( medicationPlan.day1 )
+          this.form.get('day2').setValue( medicationPlan.day2 )
+          this.form.get('day3').setValue( medicationPlan.day3 )
+          this.form.get('day4').setValue( medicationPlan.day4 )
+          this.form.get('day5').setValue( medicationPlan.day5 )
+          this.form.get('day6').setValue( medicationPlan.day6 )
+          this.form.get('day7').setValue( medicationPlan.day7 )
+          console.log('[DrugsDetailPage] getMedicationPlan()', this.form.value); 
+          this.gettingDay()
+
+          if(medicationPlan.frequency) {
+            this.form.get('frequency').setValue(medicationPlan?.frequency)
+            this.frequencySeleted = medicationPlan.frequency
+          }
+
         }
        },(err) => { 
-          console.log('[DiaryPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       });
@@ -311,7 +314,7 @@ export class DrugsDetailPage implements OnInit {
 
   isChangedSelect(event){
     let fq = this.form.get('frequency').value
-    console.log('[AddHealthCardPage] isChangedSelect()', fq, event);
+    console.log('[DrugsDetailPage] isChangedSelect()', fq, event);
     switch (fq) {
       case 'daily':
         let dialy = [0,1,2,3,4,5,6]
@@ -340,8 +343,17 @@ export class DrugsDetailPage implements OnInit {
       day['day'+(i +1)] = 1
       this.form.get('day'+(i+1)).setValue(1)
     });
-    console.log('[AddHealthCardPage] settingDay() day', this.days);
+    console.log('[DrugsDetailPage] settingDay() day', this.days);
   
+  }
+
+  gettingDay(){
+    this.days.forEach((day, i) =>{
+      let d = this.form.get('day'+(i+1)).value
+      day['day'+(i +1)] = d
+      console.log('[DrugsDetailPage] gettingDay() day', d);
+    })
+    console.log('[DrugsDetailPage] gettingDay() day', this.days);
   }
 
   async showDays() {
