@@ -362,7 +362,7 @@
         "confirmation_delete_reminder":"¿Estás seguro de eliminar el recordatorio personal?",
         "error_message_added_reminder":"Ha ocurrido un error al guardar los datos",
         "error_message_delete_reminder":"Ha ocurrido un error al eliminar el recordatorio",
-        "wwek_day": "Días de la semana",
+        "week_day": "Días de la semana",
         "day":{
           "day1": "Lunes",
           "day2": "Martes",

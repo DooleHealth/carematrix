@@ -12,13 +12,15 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
   styleUrls: ['./reminder.page.scss'],
 })
 export class ReminderPage implements OnInit {
-  days = [{day1:false}, {day2:false}, {day3:false}, {day4:false}, {day5:false}, {day6:false}, {day7:false}]
+  days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
   id:any
   event = []
   reminder: any = {}
   frequency = ''
   isLoading = false
   times = []
+  frequencySeleted = 'daily';
+  expanded = true
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -36,7 +38,9 @@ export class ReminderPage implements OnInit {
       this.getReminderData()
     }
   }
-
+  expandItem(): void {
+    this.expanded = !this.expanded
+  }
 
   async getReminderData(){
     this.isLoading = true
@@ -45,7 +49,6 @@ export class ReminderPage implements OnInit {
         console.log('[ReminderPage] getReminderData()', await res);
         if (res.reminder) {
           this.reminder = res.reminder
-          this.selectedFrequency(res.reminder?.frequency)
           this.days[0].day1 = res.reminder.day1
           this.days[1].day2 = res.reminder.day2
           this.days[2].day3 = res.reminder.day3
@@ -59,6 +62,7 @@ export class ReminderPage implements OnInit {
             let t = element.time.split(':')
             this.times.push(t[0]+':'+t[1])
           });
+          this.selectedFrequency(res.reminder?.frequency)
         }
         this.isLoading = false
        },(err) => { 
@@ -80,79 +84,59 @@ export class ReminderPage implements OnInit {
 
   selectedFrequency(frequency){
     switch (frequency) {
-      case 'day':
-        this.frequency = this.translate.instant('reminder.frequency.day');
-        break;
+      // case 'day':
+      //   this.frequency = this.translate.instant('reminder.frequency.day');
+      //   this.frequencySeleted = frequency
+      //   break;
       case 'daily':
         this.frequency = this.translate.instant('reminder.frequency.daily');
+        this.frequencySeleted = frequency
+        this.gettingFrequency()
         break;
-      case 'mom_fri':
-        this.frequency = this.translate.instant('reminder.frequency.week');
-        break;
-      case 'custom':
-        this.frequency = this.translate.instant('reminder.frequency.custom');
-        break;
+      // case 'mom_fri':
+      //   this.frequency = this.translate.instant('reminder.frequency.week');
+      //   this.frequencySeleted = frequency
+      //   break;
+      // case 'custom':
+      //   this.frequency = this.translate.instant('reminder.frequency.custom');
+      //   this.frequencySeleted = frequency
+      //   break;
       default:
         this.frequency = this.translate.instant('reminder.frequency.custom');
+        this.frequencySeleted = frequency
+        this.gettingFrequency()
         break;
     }
-  }
-
-  async showDays() {
-    if(this.reminder.frequency == 'daily')
-    return
-    let alert = this.alertController.create({
-      header: this.translate.instant("reminder.wwek_day"),
-      inputs: this.addDaysToAlert(),
-      buttons: [
-/*         {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        }, */
-        {
-          text: 'ok',
-          handler: data => {
-            console.log('Ok clicked', data);
-            this.settingDay(data)
-            //this.frequency = 'custom'
-          }
-        }
-      ]
-    });
-    (await alert).present();
   }
 
   settingDay(index){
     this.days.forEach((day, i) =>{
       day['day'+(i +1)] = false
-     // console.log('[AddHealthCardPage] selectedFrequency() day', index);
     })
     if(index.length > 0)
     index.forEach(i => {
       let day = this.days[i]
       day['day'+(i +1)] = true
     });
-    console.log('[AddHealthCardPage] settingDay() day', this.days);
   
   }
 
-  addDaysToAlert(){
-    let days_week = []
-    this.days.forEach((day, i)=>{
-      days_week.push(
-        {
-          type: 'checkbox',
-          label: this.translate.instant('reminder.day.day'+(i+1)),
-          value: i,
-          checked: day['day'+(i +1)]
+  setDay( day, i){
+     return day['day'+(i +1)]
+  }
 
-        }
-      )
+  gettingFrequency(){
+    let ceros = 1
+    this.days.forEach((day, i) =>{
+      let d = day['day'+(i +1)]
+      if(d==0 || d == false) ceros =0
+      console.log('[DrugsDetailPage] gettingFrequency() day', d, day);
     })
-    return days_week
+    console.log('[DrugsDetailPage] gettingFrequency() day', this.days);
+    if(ceros==0){
+      this.frequency = this.translate.instant('reminder.frequency.custom');
+      this.frequencySeleted =  'custom'
+    }
   }
 
 /*   trasnforHourToMinutes(time): any{

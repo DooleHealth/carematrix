@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CameraSource,CameraResultType, Plugins } from '@capacitor/core';
@@ -19,13 +19,15 @@ const { Camera } = Plugins;
 })
 export class FileUploadComponent implements OnInit {
   @Input('media') media: any = [];
+  @Input('disableNames') disableNames: boolean;
   constructor(private dooleService: DooleService, private platform: Platform, private iab: InAppBrowser, private alertCtrl : AlertController, private translate: TranslateService,private actionSheetCtrl: ActionSheetController,private notification: NotificationService, private chooser: Chooser, private sanitizer: DomSanitizer, private datepipe: DatePipe,) { }
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   @Input('text') text: string;
   @Input('form') form: FormGroup;
   @Input('files') files:  Array<{ name: string, file: string, type: string }> = [];
+  @Output() numFilesChange: EventEmitter<number> = new EventEmitter<number>();
   file64: SafeResourceUrl;
- 
+  enableButtonAddFile = false
   ngOnInit() {}
 
   // Used for browser direct file upload
@@ -92,13 +94,16 @@ export class FileUploadComponent implements OnInit {
    }
 
   async addFile() {
-
     this.chooser.getFile().then(async file => {
       if (file) {
-        //`data:${file.mediaType};base64,`+
-        console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
-        this.presentPrompt(file.dataURI, file.name, file.mediaType)
-        //this.files.push({ name: file.name, file: file.dataURI.split(',')[1], type: file.mediaType })
+        //console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
+        if(this.disableNames){
+          this.files.push({ name: file.name, file: file.dataURI, type: file.mediaType })
+          this.numFilesChange.emit(this.files.length)
+        }
+        else{
+          this.presentPrompt(file.dataURI, file.name, file.mediaType)
+        }
       }
     }).catch((error: any) => {
       console.error(error)
@@ -116,11 +121,15 @@ export class FileUploadComponent implements OnInit {
     });
 
     if (image) {
-      //data:image/png;base64,
       var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
-      console.log("[FileUploadComponent] addImage()", JSON.stringify(image));
-      this.presentPrompt(`data:image/${image.format};base64,`+image.base64String, filename, image.format)
-      //this.files.push({ name: Date.now() + '.' + image.format, file: image.base64String, type: image.format })
+      //console.log("[FileUploadComponent] addImage()", JSON.stringify(image));
+      let img = `data:image/${image.format};base64,`+image.base64String
+      if(this.disableNames){
+        this.files.push({ name: filename, file: img, type: image.format })
+        this.numFilesChange.emit(this.files.length)
+      }
+      else
+      this.presentPrompt(img, filename, image.format)
     }
   }
 
@@ -138,12 +147,13 @@ export class FileUploadComponent implements OnInit {
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
     });
-
-    const result = await toBase64(file).catch(e => Error(e));
-    var base64result = result as string;
-    console.log("[FileUploadComponent] uploadFileFromBrowser()", JSON.stringify(base64result));
-    this.files.push({ name: file.name, file: base64result, type: file.type })
-
+    if(file){
+      const result = await toBase64(file).catch(e => Error(e));
+      var base64result = result as string;
+      console.log("[FileUploadComponent] uploadFileFromBrowser()", JSON.stringify(base64result));
+      this.files.push({ name: file.name, file: base64result, type: file.type })
+      this.numFilesChange.emit(this.files.length)
+    }
   }
 
   fileError(error) {
@@ -153,8 +163,10 @@ export class FileUploadComponent implements OnInit {
   removeFile(name: string) {
     console.log("removeFile: ", name);
     this.files.forEach((element, index) => {
-      if (element.name == name)
+      if (element.name == name){
         this.files.splice(index, 1);
+        this.numFilesChange.emit(this.files.length)
+      }
     });
   }
 
@@ -249,6 +261,7 @@ export class FileUploadComponent implements OnInit {
             handler: (blah) => {
               console.log('[FileUploadComponent] AlertConfirm Cancel');
               this.files.push({ name: filename, file: file, type: type })
+              this.numFilesChange.emit(this.files.length)
             }
           }, {
             text: this.translate.instant("button.accept"),
@@ -257,6 +270,7 @@ export class FileUploadComponent implements OnInit {
               if (data.filename && data.filename !== '') {
                  let name = data.filename +'.'+filename.split('.').pop()
                  this.files.push({ name: name, file: file, type: type })
+                 this.numFilesChange.emit(this.files.length)
               } else {
                 return false;
               }
@@ -355,6 +369,7 @@ export class FileUploadComponent implements OnInit {
             console.log('[FileUploadComponent] AlertConfirm Okay');
               if(isNewFile){
                 this.files.splice(index,1)
+                this.numFilesChange.emit(this.files.length)
                 return
               }
               this.deleteMediaFile(mediaFile);

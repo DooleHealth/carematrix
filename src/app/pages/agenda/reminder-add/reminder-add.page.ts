@@ -30,11 +30,12 @@ export class ReminderAddPage implements OnInit {
   id:any;
   @Input()event:any;
   times = []
-  frequency = '1week';
+  frequency = 'daily';
   frequencySeleted = 'daily';
   isInit = true;
   isNewEvent: boolean = true;
   isLoading = false
+  expanded = true
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
@@ -76,6 +77,11 @@ export class ReminderAddPage implements OnInit {
       day7: [1],
     });
     this.getReminder()
+    if(this.isNewEvent) this.isInit = false
+  }
+
+  expandItem(): void {
+    this.expanded = !this.expanded
   }
 
   getReminder(){
@@ -110,6 +116,8 @@ export class ReminderAddPage implements OnInit {
         let t = element.time.split(':')
         this.times.push(t[0]+':'+t[1])
       });
+
+      this.isInit = false
     }
     
     if(this.origin_id){
@@ -172,8 +180,8 @@ export class ReminderAddPage implements OnInit {
     this.form.get('end_date').setValue(this.transformDate(end_date));
 
     let f = this.form.get('frequency').value
-    if(f== 'custom')
-    this.form.get('frequency').setValue('1week');
+    if(f !== 'daily')
+    this.form.get('frequency').setValue('daily');
 
     this.form.get('time').setValue(this.times)
 
@@ -214,8 +222,8 @@ export class ReminderAddPage implements OnInit {
     this.form.get('end_date').setValue(this.transformDate(end_date));
 
     let f = this.form.get('frequency').value
-    if(f== 'custom')
-    this.form.get('frequency').setValue('1week');
+    if(f !== 'daily')
+    this.form.get('frequency').setValue('daily');
 
     this.form.get('time').setValue(this.times)
 
@@ -311,101 +319,82 @@ export class ReminderAddPage implements OnInit {
     await alert.present();
   }
 
-  selectedFrequency(event){
-    if(this.frequencySeleted === '1week' && this.frequency === '1week' && this.isInit && !this.isNewEvent){
-      this.frequency =  'custom'
-      this.isInit = false
-    }
-  }
 
-  isChangedSelect(event){
+  selectedFrequency(){
     let fq = this.form.get('frequency').value
-    console.log('[AddHealthCardPage] isChangedSelect()', fq, event);
+    console.log('[DrugsDetailPage] isChangedSelect()', fq);
     switch (fq) {
       case 'daily':
+        if(this.isSubmited)
+        return 
         let dialy = [0,1,2,3,4,5,6]
-        this.settingDay(dialy)
+        this.settingDayForm(dialy)
         this.frequencySeleted = fq
         break;
       case '1week':
-        if(this.isSubmited) return
-        this.showDays()
+        if(this.isSubmited)
+          return       
+          this.settingBackupDay()
+          this.frequencySeleted = fq
+        break;
+      case 'custom':
+        if(this.isSubmited)
+          return       
+          this.settingBackupDay()
+          this.frequencySeleted = fq
         break;
       default:
-        this.showDays()
+        this.settingBackupDay()
+        this.frequencySeleted = fq
         break;
     }
 
   }
 
-  settingDay(index){
+  settingBackupDay(){
+    if(!this.isInit)
     this.days.forEach((day, i) =>{
-      day['day'+(i +1)] = 0
-      this.form.get('day'+(i+1)).setValue(0)
+      let value =  day['day'+(i +1)]? 1:0
+      this.form.get('day'+(i+1)).setValue(value)
+      console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
     })
+    console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
+  }
+
+  settingDayForm(index){
+    for(let i =1; i <=7; i++){
+      this.form.get('day'+(i)).setValue(0)
+    }
     if(index.length > 0)
     index.forEach(i => {
-      let day = this.days[i]
-      day['day'+(i +1)] = 1
       this.form.get('day'+(i+1)).setValue(1)
     });
-    console.log('[AddHealthCardPage] settingDay() day', this.days);
-  
+    console.log('[DrugsDetailPage] settingDayForm() day', this.days);
+  }
+
+  setDay(event, day, i){
+    if(!this.isInit){
+      let value = (event.detail.checked)? 1: 0
+      if(this.form.get('frequency').value == 'custom')
+      day['day'+(i +1)] = value
+      console.log('[DrugsDetailPage] setDay()',day);
+      this.form.get('day'+(i+1)).setValue(value)
+    }
   }
 
   gettingDay(){
+    let ceros = 1
     this.days.forEach((day, i) =>{
-      let d = this.form.get('day'+(i+1)).value
+      let d = this.form.get('day'+(i+1)).value? 1:0
       day['day'+(i +1)] = d
-      console.log('[AddHealthCardPage] gettingDay() day', d);
+      if(d==0) ceros =0
+      console.log('[DrugsDetailPage] gettingDay() day', d);
     })
-    console.log('[AddHealthCardPage] gettingDay() day', this.days);
-  }
-
-
-  async showDays() {
-    let alert = this.alertController.create({
-      header: this.translate.instant("reminder.wwek_day"),
-      inputs: this.addDaysToAlert(),
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-            if(this.frequencySeleted == 'daily')
-            this.form.get('frequency').setValue(this.frequencySeleted)
-            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
-          }
-        },
-        {
-          text: 'ok',
-          handler: data => {
-            console.log('Ok clicked', data);
-            this.settingDay(data)
-            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
-            this.frequencySeleted = this.frequency
-          }
-        }
-      ]
-    });
-    (await alert).present();
-  }
-
-  addDaysToAlert(){
-    let days_week = []
-    this.days.forEach((day, i)=>{
-      days_week.push(
-        {
-          type: 'checkbox',
-          label: this.translate.instant('reminder.day.day'+(i+1)),
-          value: i,
-          checked: day['day'+(i +1)]
-
-        }
-      )
-    })
-    return days_week
+    console.log('[DrugsDetailPage] gettingDay() day', this.days);
+    if(ceros==0) {
+      this.form.get('frequency').setValue('custom')
+      this.frequencySeleted ='custom'
+    }
   }
 
 

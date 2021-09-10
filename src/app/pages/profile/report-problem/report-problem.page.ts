@@ -2,14 +2,11 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
-import { CameraResultType, CameraSource, Capacitor, Plugins } from '@capacitor/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
+import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { File } from '@ionic-native/file/ngx';
-
-const { Camera } = Plugins;
+import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-report-problem',
   templateUrl: './report-problem.page.html',
@@ -17,12 +14,10 @@ const { Camera } = Plugins;
   providers: [Chooser],
 })
 export class ReportProblemPage implements OnInit {
-  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
-  patient_files: Array<{ name: string, file: string, type: string }> = [];
+  @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   form: FormGroup;
   numFile = 0;
   private images : any = [];
-  private imagesTemp : any = [];
   isSubmittedCategory = false;
   isSubmittedDescription = false;
   isLoading = false
@@ -32,7 +27,6 @@ export class ReportProblemPage implements OnInit {
     private dooleService: DooleService,
     private fb: FormBuilder,
     public platform: Platform,
-    public file: File,
     private alertController: AlertController,
     private modalCtrl: ModalController,
   ) { }
@@ -59,75 +53,6 @@ export class ReportProblemPage implements OnInit {
 
   }
 
-
-   async addImage(source: CameraSource) {
-    const image = await Camera.getPhoto({
-      quality: 60,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source
-    }).catch((error:any)=>{
-      console.log(error);
-    });
-
-    if(image){
-      console.log("image: ", image);
-      var fileUri = Capacitor.convertFileSrc(image.dataUrl);
-      console.log("addImage - savePicture fileUri: ", fileUri);
-
-      this.savePicture(fileUri)
-      this.patient_files.push({ name: Date.now() + '.' + image.format, file: fileUri, type: image.format })
-      this.numFile = this.patient_files.length;
-
-    }else{
-      console.log("no image");
-    }
-  } 
-
-  async selectImageSource(){
-    // Only allow file selection inside a browser
-    if (!this.platform.is('hybrid')) {
-      this.fileInput.nativeElement.click();
-    }else{
-      this.addImage(CameraSource.Photos);
-      //this.addImage64(CameraSource.Photos);
-    }
-  }
-
-  async uploadFileFromBrowser(event: EventTarget) {
-    const eventObj: MSInputMethodContext = event as MSInputMethodContext;
-    const target: HTMLInputElement = eventObj.target as HTMLInputElement;
-    const file = target.files[0];
-    
-    const toBase64 = file => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
-    const result = await toBase64(file).catch(e => Error(e));
-    
-    var base64result = result as string;
-    //console.log(" base64result.split(',')[1] ", base64result.split(',')[1]);
-   // this.images.push(base64result)
-    this.patient_files.push({ name: file.name, file: base64result, type: file.type })
-        this.numFile = this.patient_files.length;
-  }
-
-  openFile(file){
-    console.log("[ReportProblemPage] openFile: ", file);
-  }
-
-
-  removeFile(name: string) {
-    console.log("[ReportProblemPage] removeFile: ", name);
-    this.patient_files.forEach((element, index) => {
-      if (element.name == name)
-        this.patient_files.splice(index, 1);
-    });
-    this.numFile = this.patient_files.length;
-  }
-
   async submit(){
     this.isSubmittedFields(true);
     if(this.form.invalid)
@@ -146,6 +71,10 @@ export class ReportProblemPage implements OnInit {
       let description = this.form.get('description').value
       this.form.get('description').setValue(description);
 
+      if(this.uploadFile.files.length > 0)
+      this.uploadFile.files.forEach(element => {
+        this.images.push(element.file)
+      });
       this.dooleService.postAPIReportProblem( this.form.value).subscribe(
           async (data) => {
             console.log("data:", data);
@@ -168,10 +97,10 @@ export class ReportProblemPage implements OnInit {
 
 
     enableButtonAddFile(){
-      if(this.patient_files.length >= 6 || this.form.invalid){
-          return true;
-      }
-      return false
+      this.numFile = this.uploadFile.files.length
+      if(this.numFile >= 6)
+      this.uploadFile.enableButtonAddFile = true
+      else this.uploadFile.enableButtonAddFile = false
     }
 
     goBacktoProfile(){
@@ -229,81 +158,6 @@ export class ReportProblemPage implements OnInit {
       });
   
       await alert.present();
-    }
-
-/*     async saveFile(data){
-      this.isLoading = true
-      this.dooleService.uploadFile(data).then( res =>{
-        let isSuccess = (res as any).success
-        if(isSuccess)
-        this.presentAlert(this.translate.instant("report_problem.alert_successful_response"));
-        else
-        this.presentAlert(this.translate.instant("report_problem.alert_no_successful_response"));
-         this.isLoading = false
-      }).catch(err => {
-        console.log("Error uploadFile: ", err);
-         this.isLoading = false
-        this.presentAlert(err);
-      }).finally(() => {
-         this.isLoading = false
-      })
-    } */
-
-    async savePicture(fileUri){
-      console.log("[ReportProblemPage] savePicture() fileUri: ",fileUri);
-      var filename=new Date().getTime();
-      return this.saveBase64(fileUri,filename.toString()).then(res => {
-        console.log("savePicture() saveBase64 res: ",res);
-        this.dooleService.uploadFile(res).then(data => {
-          console.log("savePicture() uploadFile res: ",res);
-          this.imagesTemp.push(data)
-        }).catch(err => {
-          console.log("Error uploadFile: ", err);
-        }).finally(() => {
-
-        })
-       
-      });
-  
-    }
-
-
-    public saveBase64(base64:string, name:string):Promise<string>{
-      return new Promise((resolve, reject)=>{
-        var realData = base64.split(",")[1]
-        let blob=this.b64toBlob(realData, 'image/jpeg');
-  
-        this.file.writeFile(this.file.cacheDirectory, name, blob)
-        .then(()=>{
-          resolve(this.file.cacheDirectory+name);
-        })
-        .catch((err)=>{
-          console.log(err);
-          console.log('error writing blob');
-          reject(err);
-        })
-      })
-    }
-  
-    b64toBlob(b64Data, contentType) {
-      contentType = contentType || '';
-      var sliceSize = 512;
-      var byteCharacters = atob(b64Data);
-      var byteArrays = [];
-  
-      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          var slice = byteCharacters.slice(offset, offset + sliceSize);
-          var byteNumbers = new Array(slice.length);
-          for (var i = 0; i < slice.length; i++) {
-              byteNumbers[i] = slice.charCodeAt(i);
-          }
-          var byteArray = new Uint8Array(byteNumbers);
-          byteArrays.push(byteArray);
-      }
-  
-    var blob = new Blob(byteArrays, {type: contentType});
-    console.log("this is bob: ", blob);
-    return blob;
     }
 
     close() {

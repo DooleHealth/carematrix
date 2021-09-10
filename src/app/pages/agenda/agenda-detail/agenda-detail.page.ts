@@ -198,10 +198,10 @@ export class AgendaDetailPage implements OnInit {
         id = instruction.reminderable_id
         this.openForm(id)
         break;
-/*       case  "App\\Agenda":
+      case  "App\\Agenda":
         id = instruction.reminderable_id
-        this.nav.navigateForward("/diets-detail", { state: {id:id} });
-        break; */
+        this.nav.navigateForward("agenda/reminder", { state: {id:id} });
+        break;
     
       default:
         id = instruction.reminderable_id
