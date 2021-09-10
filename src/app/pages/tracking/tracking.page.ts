@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { DomSanitizer } from "@angular/platform-browser";
-import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
-import { Constants } from 'src/app/config/constants';
+import { ModalController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -11,9 +9,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { DocumentsAddPage } from './documents-add/documents-add.page';
 import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
-import { mergeMap } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -33,17 +28,20 @@ export interface Filter {
   styleUrls: ['./tracking.page.scss'],
 })
 export class TrackingPage implements OnInit {
-  listDiagnostic:  ListDiagnosticTests[] = []
-  diagnosticTests = []
-  forms = []
+  listDiagnostic:  ListDiagnosticTests[];
+  diagnosticTests : Array<any>; 
+  forms: Array<any>; 
   public showingForm;
   public hasToShowForm;
   public active;
   public id;
   public url;
-  groupedElements: any = [];
-  elementValues: any = [];
+  groupedElements: Array<any>; 
+  elementValues: Array<any>; 
   isLoading = true
+  loadingForms = false;
+  loadingTests = false;
+  loadingGraphics = false;
   segment = 'documents'
   active_color= '#3498DB'
   inactive_color= '#7F8C8D'
@@ -54,26 +52,21 @@ export class TrackingPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
+    private domSanitizer: DomSanitizer
 
   ) { }
 
 
   ngOnInit() {
-    console.log('[TrackingPage] ngOnInit()');
-    //this.segmentChanged()
-    this.fireEvent(null, 0) 
-
   }
 
-  ionViewDidEnter(){
-    console.log('[TrackingPage] ionViewDidEnter()');
-    //this.filter = undefined;
+  ionViewWillEnter(){
     this.segmentChanged();
-    this.getFormList()
+    //this.getFormList();
+    this.fireEvent(null, 0) 
   }
 
   getDiagnosticTestsList(){
-    //this.filter = history.state.filter;
     console.log('[TrackingPage] getDiagnosticTestsList()' ,  this.filter);
     if(this.filter){
       this.getFilteredDiagnosticTests()
@@ -90,50 +83,56 @@ export class TrackingPage implements OnInit {
   }
 
   async getFilteredDiagnosticTests(){
-    console.log('[TrackingPage] getFilteredDiagnosticTests()' ,  this.filter);
-    this.isLoading = true
-    this.dooleService.getAPIfilteredDiagnosticTest(this.filter).subscribe(
-      async (res: any) =>{
-        console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
-        let diagnosticTests = res.diagnosticTests
-        if(diagnosticTests && diagnosticTests.length >=0){
-          this.diagnosticTests = []
-          this.listDiagnostic = []
-          this.groupDiagnosticsByDate(res)
-          //this.filter = null
-        }
-        this.isLoading = false
-       },(err) => { 
-          alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          this.isLoading = false
-          throw err; 
-      });
+    if(!this.listDiagnostic){
+      console.log('[TrackingPage] getFilteredDiagnosticTests()' ,  this.filter);
+      this.loadingTests = true
+      this.dooleService.getAPIfilteredDiagnosticTest(this.filter).subscribe(
+        async (res: any) =>{
+          console.log('[TrackingPage] getFilteredDiagnosticTests()', await res);
+          let diagnosticTests = res.diagnosticTests
+          if(diagnosticTests && diagnosticTests?.length >=0){
+            this.diagnosticTests = []
+            this.listDiagnostic = []
+            this.groupDiagnosticsByDate(res)
+            //this.filter = null
+          }
+          this.loadingTests = false
+         },(err) => { 
+            alert(`Error: ${err.code }, Message: ${err.message}`)
+            console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+            this.loadingTests = false
+            throw err; 
+        });
+    }
+    
   }
 
   async getDiagnosticTests(){
-    this.isLoading = true
-    this.dooleService.getAPIdiagnosticTests().subscribe(
-      async (res: any) =>{
-
-        if(await res.success){
-          this.diagnosticTests = []
-          this.listDiagnostic = []
-          //console.log('[TrackingPage] getDiagnosticTests()', await res);
-          this.diagnosticTests =  res.diagnosticTests
-          if(this.diagnosticTests.length > 0 )
-          this.groupDiagnosticsByDate(res)
-          else
-          this.isLoading = false
-        } 
-        this.isLoading = false
-        
-       },(err) => { 
-          alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          this.isLoading = false
-          throw err; 
-      });
+    if(!this.diagnosticTests){
+      this.loadingTests = true
+      this.dooleService.getAPIdiagnosticTests().subscribe(
+        async (res: any) =>{
+  
+          if(await res.success){
+            this.diagnosticTests = []
+            this.listDiagnostic = []
+            console.log('[TrackingPage] getDiagnosticTests()', await res);
+            this.diagnosticTests =  res.diagnosticTests
+            if(this.diagnosticTests?.length > 0 )
+              this.groupDiagnosticsByDate(res)
+           
+          }else
+          this.loadingTests = false;
+         
+          
+         },(err) => { 
+            alert(`Error: ${err.code }, Message: ${err.message}`)
+            console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+            this.loadingTests = false
+            throw err; 
+        });
+    }
+   
   }
 
   groupDiagnosticsByDate(list){
@@ -148,52 +147,56 @@ export class TrackingPage implements OnInit {
         this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color}) 
       } 
     })
-    this.isLoading = false
-    //console.log('[TrackingPage] groupDiagnosticsByDate()', this.listDiagnostic);
+    this.loadingTests = false
   }
 
 
   async getFormList(){
-    this.isLoading = true
-    this.dooleService.getAPIformLists().subscribe(
-      async (res: any) =>{
-         this.forms = []
-        //console.log('[TrackingPage] getDiagnosticTests()', await res);
-        this.forms = res.forms
-        this.isLoading = false
-        // this.hasToShowForm = formData.showForm;
-        // this.active = formData.active;
-       },async (err) => { 
-          alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
-          this.isLoading = false
-          throw err; 
-      });
+
+    if(!this.forms){
+      this.loadingForms = true
+      this.dooleService.getAPIformLists().subscribe(
+        async (res: any) =>{
+           this.forms = []
+          //console.log('[TrackingPage] getDiagnosticTests()', await res);
+          this.forms = res.forms
+          this.loadingForms = false
+         },async (err) => { 
+            alert(`Error: ${err.code }, Message: ${err.message}`)
+            console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+            this.loadingForms = false
+            throw err; 
+        });
+    }
   }
 
   async getElementsList(){
-    this.isLoading = true
-    this.groupedElements = [];
-    this.elementValues = [];
-    this.dooleService.getAPIelementsList().subscribe(
-      async (data: any) =>{
-        console.log('[TrackingPage] getElementsList()', await data); 
-        if(data.eg){
-          // Iterate elements in the tree searching for element groups
-          this.treeIterate(data.eg, '');
-          // Order grouped elements by Name
-          this.groupedElements.sort(function(a,b){
-            return a.group.localeCompare(b.group);
-          })
-          this.elementValues = data.elementValues;
-        }
-        this.isLoading = false
-       },(err) => { 
-          alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
-          this.isLoading = false
-          throw err; 
-      });
+    
+    if(!this.groupedElements){
+      this.loadingGraphics = true
+      this.groupedElements = [];
+      this.elementValues = [];
+      this.dooleService.getAPIelementsList().subscribe(
+        async (data: any) =>{
+          console.log('[TrackingPage] getElementsList()', await data); 
+          if(data.eg){
+            // Iterate elements in the tree searching for element groups
+            this.treeIterate(data.eg, '');
+            // Order grouped elements by Name
+            this.groupedElements?.sort(function(a,b){
+              return a.group.localeCompare(b.group);
+            })
+            this.elementValues = data.elementValues;
+          }
+          this.loadingGraphics = false
+         },(err) => { 
+            alert(`Error: ${err.code }, Message: ${err.message}`)
+            console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+            this.loadingGraphics = false
+            throw err; 
+        });
+    }
+   
   }
 
   treeIterate(obj, stack) {
@@ -230,7 +233,7 @@ export class TrackingPage implements OnInit {
   }
 
   fireEvent(e, i){
-    this.listDiagnostic.forEach( (diagnostic, index) =>{
+    this.listDiagnostic?.forEach( (diagnostic, index) =>{
       if(index == i)
       diagnostic.color = this.active_color
       else
@@ -249,8 +252,6 @@ async addDocument(){
     .then((result) => {
       console.log('addDocument()', result);     
       if(result?.data?.error){
-       // let message = this.translate.instant('landing.message_wrong_credentials')
-        //this.dooleService.presentAlert(message)
       }else if(result?.data?.action == 'add'){
         this.notification.displayToastSuccessful()
         this.getDiagnosticTestsList()     
@@ -293,8 +294,6 @@ async addDocument(){
         .then((result) => {
           console.log('[TrackingPage] addFilters()', result);     
           if(result?.data?.error){
-           // let message = this.translate.instant('landing.message_wrong_credentials')
-            //this.dooleService.presentAlert(message)
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
             this.getDiagnosticTestsList()
