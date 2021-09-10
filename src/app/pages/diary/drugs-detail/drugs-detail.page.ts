@@ -24,9 +24,10 @@ export class DrugsDetailPage implements OnInit {
   isSubmittedDate = false;
   isSubmittedDosis = false;
   isSubmittedTimes = false;
-  frequency = '1week';
+  frequency = 'daily';
   frequencySeleted = 'daily';
   isInit = true;
+  expanded = true
   constructor(
     private dooleService: DooleService,
     private fb: FormBuilder,
@@ -63,6 +64,7 @@ export class DrugsDetailPage implements OnInit {
       this.getMedicationPlan()
       this.isEditDrug = true
     }
+    if(!this.isEditDrug) this.isInit = false
   }
 
   showDetailsDrug(){
@@ -79,6 +81,10 @@ export class DrugsDetailPage implements OnInit {
     this.isSubmittedDate= isSubmitted;
     this.isSubmittedDosis = isSubmitted;
     this.isSubmittedTimes = isSubmitted;   
+  }
+
+  expandItem(): void {
+      this.expanded = !this.expanded
   }
 
   submit(){
@@ -107,8 +113,8 @@ export class DrugsDetailPage implements OnInit {
     this.form.get('to_date').setValue(this.transformDate(to_date))
 
     let f = this.form.get('frequency').value
-    if(f== 'custom')
-    this.form.get('frequency').setValue('1week');
+    if(f !== 'daily')
+    this.form.get('frequency').setValue('daily');
     
     //console.log('[DrugsDetailPage] saveDrug()', this.form.value);
     this.dooleService.postAPImedicationPlan(this.form.value).subscribe(async json=>{
@@ -137,10 +143,11 @@ export class DrugsDetailPage implements OnInit {
     this.form.get('to_date').setValue(this.transformDate(to_date))
 
     let f = this.form.get('frequency').value
-    if(f== 'custom')
-    this.form.get('frequency').setValue('1week');
+    if(f !== 'daily')
+    this.form.get('frequency').setValue('daily');
 
     console.log('[DrugsDetailPage] updateDrug()', this.form.value);
+
     this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id ,this.form.value).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
       if(json.success){
@@ -209,11 +216,6 @@ export class DrugsDetailPage implements OnInit {
 
   }
 
-/*   showAlert(message){
-    let header = this.translate.instant('alert.header_info')
-    this.dooleService.showAlertAndReturn(header,message,false, '/journal')
-  } */
-
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
@@ -276,11 +278,10 @@ export class DrugsDetailPage implements OnInit {
           let to_date = medicationPlan.to_date
           this.form.get('to_date').setValue(this.formatDate(to_date))
 
-          let plan = medicationPlan.medication_plan_times
-          plan.forEach(element => {            
-            let hour = element.time.split(':')
-            this.times.push(`${hour[0]}:${hour[1]}`)
-          });
+          if(medicationPlan.frequency) {
+            this.form.get('frequency').setValue(medicationPlan?.frequency)
+            this.frequencySeleted = medicationPlan.frequency
+          }
 
           this.form.get('day1').setValue( medicationPlan.day1 )
           this.form.get('day2').setValue( medicationPlan.day2 )
@@ -292,11 +293,12 @@ export class DrugsDetailPage implements OnInit {
           console.log('[DrugsDetailPage] getMedicationPlan()', this.form.value); 
           this.gettingDay()
 
-          if(medicationPlan.frequency) {
-            this.form.get('frequency').setValue(medicationPlan?.frequency)
-            this.frequencySeleted = medicationPlan.frequency
-          }
-
+          let plan = medicationPlan.medication_plan_times
+          plan.forEach(element => {            
+            let hour = element.time.split(':')
+            this.times.push(`${hour[0]}:${hour[1]}`)
+          });
+          this.isInit = false
         }
        },(err) => { 
           console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message); 
@@ -305,34 +307,59 @@ export class DrugsDetailPage implements OnInit {
       });
   }
 
-  selectedFrequency(event){
-    if(this.frequencySeleted === '1week' && this.frequency === '1week' && this.isInit && this.isEditDrug){
-      this.frequency =  'custom'
-      this.isInit = false
-    }
-  }
-
-  isChangedSelect(event){
+  selectedFrequency(){
     let fq = this.form.get('frequency').value
-    console.log('[DrugsDetailPage] isChangedSelect()', fq, event);
+    console.log('[DrugsDetailPage] isChangedSelect()', fq);
     switch (fq) {
       case 'daily':
+        if(this.isSubmited)
+        return 
         let dialy = [0,1,2,3,4,5,6]
-        this.settingDay(dialy)
+        this.settingDayForm(dialy)
         this.frequencySeleted = fq
         break;
       case '1week':
-        if(this.isSubmited || (this.isInit&&this.isEditDrug)) return
-        this.showDays()
+        if(this.isSubmited)
+          return       
+          this.settingBackupDay()
+          this.frequencySeleted = fq
+        break;
+      case 'custom':
+        if(this.isSubmited)
+          return       
+          this.settingBackupDay()
+          this.frequencySeleted = fq
         break;
       default:
-        this.showDays()
+        this.settingBackupDay()
+        this.frequencySeleted = fq
         break;
     }
 
   }
 
-  settingDay(index){
+  settingBackupDay(){
+    if(!this.isInit)
+    this.days.forEach((day, i) =>{
+      let value =  day['day'+(i +1)]? 1:0
+      this.form.get('day'+(i+1)).setValue(value)
+      console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
+    })
+    console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
+  }
+
+  settingDayForm(index){
+    for(let i =1; i <=7; i++){
+      this.form.get('day'+(i)).setValue(0)
+    }
+    if(index.length > 0)
+    index.forEach(i => {
+      this.form.get('day'+(i+1)).setValue(1)
+    });
+    console.log('[DrugsDetailPage] settingDayForm() day', this.days);
+  }
+
+/*   settingDay(index){
     this.days.forEach((day, i) =>{
       day['day'+(i +1)] = 0
       this.form.get('day'+(i+1)).setValue(0)
@@ -343,63 +370,29 @@ export class DrugsDetailPage implements OnInit {
       day['day'+(i +1)] = 1
       this.form.get('day'+(i+1)).setValue(1)
     });
-    console.log('[DrugsDetailPage] settingDay() day', this.days);
-  
+    console.log('[DrugsDetailPage] settingDay() day', this.days);  
+  } */
+
+  setDay(event, day, i){
+    if(!this.isInit){
+      let value = (event.detail.checked)? 1: 0
+      if(this.form.get('frequency').value == 'custom')
+      day['day'+(i +1)] = value
+      console.log('[DrugsDetailPage] setDay()',day);
+      this.form.get('day'+(i+1)).setValue(value)
+    }
   }
 
   gettingDay(){
+    let ceros = 1
     this.days.forEach((day, i) =>{
-      let d = this.form.get('day'+(i+1)).value
+      let d = this.form.get('day'+(i+1)).value? 1:0
       day['day'+(i +1)] = d
+      if(d==0) ceros =0
       console.log('[DrugsDetailPage] gettingDay() day', d);
     })
     console.log('[DrugsDetailPage] gettingDay() day', this.days);
-  }
-
-  async showDays() {
-    let alert = this.alertController.create({
-      header: this.translate.instant("reminder.wwek_day"),
-      inputs: this.addDaysToAlert(),
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked', this.form.get('frequency').value);
-            if(this.frequencySeleted == 'daily')
-            this.form.get('frequency').setValue(this.frequencySeleted)
-            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
-          }
-        },
-        {
-          text: 'ok',
-          handler: data => {
-            console.log('Ok clicked', data);
-            this.settingDay(data)
-            this.frequency = (this.form.get('frequency').value == '1week')? 'custom': '1week'
-            this.frequencySeleted = this.frequency
-          }
-        }
-      ]
-    });
-    (await alert).present();
-  }
-
-
-  addDaysToAlert(){
-    let days_week = []
-    this.days.forEach((day, i)=>{
-      days_week.push(
-        {
-          type: 'checkbox',
-          label: this.translate.instant('reminder.day.day'+(i+1)),
-          value: i,
-          checked: day['day'+(i +1)]
-
-        }
-      )
-    })
-    return days_week
+    if(ceros==0) this.form.get('frequency').setValue('custom')
   }
 
   close() {

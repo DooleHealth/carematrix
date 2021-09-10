@@ -9,12 +9,14 @@ import { ReminderPageRoutingModule } from './reminder-routing.module';
 import { ReminderPage } from './reminder.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReminderAddPageModule } from '../reminder-add/reminder-add.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     ReminderPageRoutingModule,   
     TranslateModule,
     ReminderAddPageModule

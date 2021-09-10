@@ -357,7 +357,7 @@
         "confirmation_delete_reminder":"Estàs segur d'eliminar el recordatori personal?",
         "error_message_added_reminder":"Hi ha hagut un error a l'desar les dades",
         "error_message_delete_reminder":"Hi ha hagut un error a l'eliminar el recordatori",
-        "wwek_day": "Dies de la setmana",
+        "week_day": "Dies de la setmana",
         "day":{
           "day1": "Dilluns",
           "day2": "Dimarts",

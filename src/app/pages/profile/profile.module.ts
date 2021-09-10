@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProfilePage } from './profile.page';
 import { ReportProblemPageModule } from './report-problem/report-problem.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     ReportProblemPageModule,
     ComponentsModule
   ],
+  providers: [ InAppBrowser,DatePipe],
   declarations: [ProfilePage]
 })
 export class ProfilePageModule {}

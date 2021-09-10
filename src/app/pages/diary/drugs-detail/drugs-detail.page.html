@@ -14,8 +14,8 @@
       <ion-text style="margin: 10px;" class="txtTitleGoals" stacked>{{drug?.name}}</ion-text>
     </ion-item>
   </ion-card>
+  <form (ngSubmit)="submit()" [formGroup]="form">
   <ion-card  class="cardProfilePaddingBottom" >
-      <form (ngSubmit)="submit()" [formGroup]="form">
       <ion-item>
         <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_from_date' | translate}}</ion-label>
         <ion-datetime (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
@@ -50,16 +50,39 @@
         </ng-container>
       <ion-item lines="none">
         <ion-label class="txtTitleGoals" lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
-        <ion-select class="txtTitleGoals" interface="action-sheet" (ionFocus)="selectedFrequency($event)" (ionChange)="this.isChangedSelect($event)" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+        <ion-select class="txtTitleGoals" interface="action-sheet" (ionChange)="this.selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
           <ion-select-option value="daily">{{'reminder.frequency.daily' | translate}}</ion-select-option>
-          <ion-select-option *ngIf="this.frequency ==  '1week' " value="1week">{{'reminder.frequency.custom' | translate}}</ion-select-option>
-          <ion-select-option *ngIf="this.frequency ==  'custom' " value="custom">{{'reminder.frequency.custom' | translate}}</ion-select-option>
+          <ion-select-option value="custom">{{'reminder.frequency.custom' | translate}}</ion-select-option>
         </ion-select>
         <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
-    </form>
     
   </ion-card>
+  <ion-card class="cardProfile" *ngIf="this.frequencySeleted === 'custom' ">
+    <div>
+      <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="this.expanded" lines="none">
+        <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+        <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="!this.expanded"  lines="none">
+        <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+        <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+
+      <!-- ACORDION -->
+      <app-expandable expandHeight="400px" [expanded]="this.expanded">
+        <ion-list *ngFor="let e of days;let i= index">
+          <ion-item [lines]="(i==7)? 'none':'full' ">
+            <ion-checkbox color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox>
+            <ion-text>
+              <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>
+            </ion-text>
+          </ion-item>
+        </ion-list>
+      </app-expandable>
+    </div>
+  </ion-card>
+</form>
   <div class="buttonContainer">
   <ion-button  expand="block" (click)="submit()" color="primary" >{{'medication.save_medication' | translate}}</ion-button><br>
   <!-- <ion-button expand="block" color="tertiary" >Editar este medicamento</ion-button> -->

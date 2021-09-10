@@ -1097,6 +1097,17 @@ export class DooleService {
     );
   }
 
+  getAPIdiets(): Observable<any> {
+    let path = `user/dietaryIntakes`
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIgames(): Observable<any> {
     let path = 'user/games';
     const endpoint = this.api.getEndpoint(path);

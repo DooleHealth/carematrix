@@ -9,7 +9,8 @@
 
   <ion-button slot="start" 
   fill="clear" 
-  (click)="selectSource()">{{'report_problem.button_add_file' | translate }}
+  (click)="selectSource()"
+  [disabled]="enableButtonAddFile">{{'report_problem.button_add_file' | translate }}
   <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
 </ion-button>
 
