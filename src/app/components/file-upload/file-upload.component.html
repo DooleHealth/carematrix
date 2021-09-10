@@ -5,7 +5,7 @@
   #fileInput
   (change)="uploadFileFromBrowser($event)"
   hidden="true"
-  accept="image/*, video/*, audio/*, .doc,.docx,application/msword">
+  accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword">
 
   <ion-button slot="start" 
   fill="clear" 
@@ -16,7 +16,7 @@
 
 
   <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
-  
+
     <div *ngFor="let file of this.media; let i = index">
       <ion-item lines="none">
       <div id="left">
@@ -27,9 +27,9 @@
       </div>
       <div id="right">
         <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, false)"></ion-icon>
-      </div> 
+      </div>
     </ion-item>
-  </div>  
+  </div>
 
   <div *ngFor="let file of this.files;let i = index">
     <ion-item lines="none">
