@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { IonSlides, LoadingController, ModalController} from '@ionic/angular'; 
+import { IonSlides, ModalController} from '@ionic/angular'; 
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -19,7 +19,12 @@ export interface ItemDiary {
 export interface ListDrugByDate {
   date?: string;
   itemDrugs?: ItemDiary[];
- 
+}
+export interface ListItemByDate {
+  date?: string;
+  name?: string;
+  items?: ItemDiary[];
+  expanded: boolean
 }
 @Component({
   selector: 'app-diary',
@@ -30,8 +35,9 @@ export interface ListDrugByDate {
 export class DiaryPage implements OnInit {
   firstTime: boolean;
   public items: ItemDiary[] = [];
-  listDrug:  ListDrugByDate[] = []
-  diets = []
+  listDrug:  ListDrugByDate[] = [];
+  listDiets:  ListItemByDate[] = [];
+  diets:any = {}
   groupedElements: any = [];
   date = Date.now()
   segment = history.state?.segment ? history.state.segment : 'diets';
@@ -90,6 +96,7 @@ export class DiaryPage implements OnInit {
     this.segmentChanged()
   }
   expandItem(item): void {
+    console.log('[DiaryPage] expandItem()', item.expanded);
     if (item.expanded) {
       item.expanded = false;
     } else {
@@ -102,6 +109,10 @@ export class DiaryPage implements OnInit {
         return listItem;
       });
     }
+  }
+
+  expandItemDiet(item){
+      item.expanded = !item.expanded;
   }
 
   transformDate(date) {
@@ -142,6 +153,44 @@ export class DiaryPage implements OnInit {
       }, ()=>{
         this.isLoading = false
       });
+  }
+
+  async getDietListByDate(){
+    this.isLoading = true;
+    console.log('[DiaryPage] getDietListByDate()');
+    this.listDiets = []
+    let date  = this.transformDate(this.date)
+    this.dooleService.getAPIdietsByDate(date).subscribe(
+      async (res: any) =>{
+        console.log('[DiaryPage] getDietListByDate()', await res);
+        if(res.success){
+          this.diets = res.diet
+          this.treeIterateDiets(res.dietIntakes, '')
+          //console.log('[DiaryPage] getDietListByDate()', await this.diets);
+        }
+        this.isLoading = false
+       },(err) => { 
+          console.log('[DiaryPage] getDietListByDate() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
+          //this.isLoading = false
+          throw err; 
+      }, ()=>{
+        this.isLoading = false
+      });
+  }
+
+  treeIterateDiets(obj, stack) {
+    for (var property in obj) {
+      console.log('[DiaryPage] treeIterateDiets()', property);
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+          console.log('[DiaryPage] treeIterateDiets()', obj[property]);
+          this.listDiets.push({date: property, items: obj[property], expanded: false,})
+          //this.treeIterate(obj[property], stack + '.' + property);
+        }
+      }
+    }
+    console.log('[DiaryPage] treeIterateDiets()', this.listDiets);
   }
 
   async getDrugIntakeList(){
@@ -337,7 +386,8 @@ export class DiaryPage implements OnInit {
     this.items = []
     switch (this.segment) {
       case 'diets':
-        await this.getDietList()
+        //await this.getDietList()
+        await this.getDietListByDate()
         break;
       case 'medication':
         await this.getDrugIntakeList()
