@@ -883,6 +883,31 @@ export class DooleService {
       })
     );
   }
+
+  getAPIdietsByDate(date: any): Observable<any> {
+    let path = `user/dietaryIntakes`
+    let httpParams = new HttpParams();
+    httpParams = (date) ? httpParams.append('date', date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdietsByDate(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIdetailDiets(id: any): Observable<any> {
+    let path = `diet/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailDiets(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   /** get advices  **/
   getAPIlistAdvices(): Observable<any> {
     let path = 'user/advices';
@@ -917,17 +942,6 @@ export class DooleService {
       );
     } 
 
-
-  getAPIdetailDiets(id: any): Observable<any> {
-    let path = `diet/${id}`;
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] getAPIdetailDiets(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
   getAPIdetailAdvices(id: any): Observable<any> {
     let path = `advice/${id}`;
     const endpoint = this.api.getEndpoint(path);
@@ -1088,17 +1102,6 @@ export class DooleService {
 
   getAPImedicationPlan(id): Observable<any> {
     let path = `user/medicationPlan/${id}`
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
-
-  getAPIdiets(): Observable<any> {
-    let path = `user/dietaryIntakes`
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

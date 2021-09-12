@@ -105,7 +105,7 @@ export class ReportProblemPage implements OnInit {
 
     goBacktoProfile(){
       if(this.form.valid 
-        || this.form.get('images').value.length > 0){
+        || this.numFile > 0){
         console.log("[ReportProblemPage] goBacktoProfile()", this.form.value);
         this.presentAlertConfirm();
       }else{

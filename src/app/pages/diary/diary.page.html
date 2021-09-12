@@ -90,37 +90,53 @@
       <div class="spin" *ngIf="this.isLoading">
         <ion-spinner name="bubbles"></ion-spinner>
       </div>
-      <ion-list *ngIf="!this.isLoading && this.items.length > 0 ; else noData">
-        <ion-card *ngFor="let item of items" class="cardProfile">
-          <ion-item lines="none" routerLink="diets-detail" [state]="{id: item.item.id}" routerLinkActive='active-item'>
+
+      <ion-list *ngIf="!this.isLoading && this.listDiets.length > 0 ; else noData">
+        <ion-card class="cardProfile" *ngIf="this.diets?.id">
+<!--           <ion-card-header>
+            <ion-card-title>{{diets?.name}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content [innerHtml]="diets?.description">
+          </ion-card-content> -->
+          <ion-item lines="none" routerLink="diets-detail" [state]="{id: diets?.id}" routerLinkActive='active-item'>
             <ion-col size="2">
               <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
               </ion-img>
             </ion-col>
-            <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
+            <ion-label style="color:#E67E22;">{{diets?.name}}</ion-label>
             <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>    
-
           </ion-item>
-          <!-- <ion-item *ngIf="!item.expanded" lines="none">
-        <ion-col size="2">
-          <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
-          </ion-img>
-        </ion-col>
-        <ion-label style="color:#E67E22;">{{item.item.name}}</ion-label>
-        <p class="txtTitleTrackingLittle">30/02/21</p>
-        <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
-      </ion-item> -->
+        </ion-card>
 
-
-          <!-- <app-expandable expandHeight="100px" [expanded]="item.expanded">
-          <ion-item lines="none">            
-            <ion-label>{{'diary.description' | translate}}</ion-label>
-         
+        <ion-card *ngFor="let item of this.listDiets" (click)="expandItemDiet(item)" class="cardProfile">
+          <ion-item  *ngIf="item.expanded" lines="none">
+            <ion-col size="2">
+              <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
+              </ion-img>
+            </ion-col>
+            <ion-label style="color:#E67E22;">{{item.date.split(' ')[0] }}</ion-label>
+            <p style="color:#E67E22;" >{{item.date.split(' ')[1] }}</p>
+            <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
-         
-            <ion-button  size="small" color="transparent" class="buttonLink" routerLink="diets-detail" [state]="{id: item.item.id}">{{'button.detail' | translate}}</ion-button>&nbsp;
-        
-        </app-expandable> -->
+          <ion-item *ngIf="!item.expanded" lines="none">
+            <ion-col size="2">
+              <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
+              </ion-img>
+            </ion-col>
+            <ion-label style="color:#E67E22;">{{item.date.split(' ')[0] }}</ion-label>
+            <p style="color:#E67E22;" >{{item.date.split(' ')[1] }}</p>
+            <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+          </ion-item>
+
+
+          <app-expandable  [expanded]="item.expanded">
+            <ion-list *ngFor="let e of item.items;let i= index">
+              <ion-item [lines]="(i== item.items.length-1)? 'none':'full' ">            
+                <ion-label> - {{e.item.name}} ({{ e.quantity }})</ion-label>       
+              </ion-item>
+            </ion-list>        
+           <!--  <ion-button  size="small" color="transparent" class="buttonLink">{{'button.detail' | translate}}</ion-button>&nbsp;  -->     
+        </app-expandable>
 
         </ion-card>
       </ion-list>

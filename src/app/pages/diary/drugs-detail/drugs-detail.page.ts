@@ -290,7 +290,6 @@ export class DrugsDetailPage implements OnInit {
           this.form.get('day5').setValue( medicationPlan.day5 )
           this.form.get('day6').setValue( medicationPlan.day6 )
           this.form.get('day7').setValue( medicationPlan.day7 )
-          console.log('[DrugsDetailPage] getMedicationPlan()', this.form.value); 
           this.gettingDay()
 
           let plan = medicationPlan.medication_plan_times
@@ -309,7 +308,7 @@ export class DrugsDetailPage implements OnInit {
 
   selectedFrequency(){
     let fq = this.form.get('frequency').value
-    console.log('[DrugsDetailPage] isChangedSelect()', fq);
+    //console.log('[DrugsDetailPage] isChangedSelect()', fq);
     switch (fq) {
       case 'daily':
         if(this.isSubmited)
@@ -343,9 +342,8 @@ export class DrugsDetailPage implements OnInit {
     this.days.forEach((day, i) =>{
       let value =  day['day'+(i +1)]? 1:0
       this.form.get('day'+(i+1)).setValue(value)
-      console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
     })
-    console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
+    //console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
   }
 
   settingDayForm(index){
@@ -356,29 +354,15 @@ export class DrugsDetailPage implements OnInit {
     index.forEach(i => {
       this.form.get('day'+(i+1)).setValue(1)
     });
-    console.log('[DrugsDetailPage] settingDayForm() day', this.days);
+    //console.log('[DrugsDetailPage] settingDayForm() day', this.days);
   }
-
-/*   settingDay(index){
-    this.days.forEach((day, i) =>{
-      day['day'+(i +1)] = 0
-      this.form.get('day'+(i+1)).setValue(0)
-    })
-    if(index.length > 0)
-    index.forEach(i => {
-      let day = this.days[i]
-      day['day'+(i +1)] = 1
-      this.form.get('day'+(i+1)).setValue(1)
-    });
-    console.log('[DrugsDetailPage] settingDay() day', this.days);  
-  } */
 
   setDay(event, day, i){
     if(!this.isInit){
       let value = (event.detail.checked)? 1: 0
       if(this.form.get('frequency').value == 'custom')
       day['day'+(i +1)] = value
-      console.log('[DrugsDetailPage] setDay()',day);
+      //console.log('[DrugsDetailPage] setDay()',day);
       this.form.get('day'+(i+1)).setValue(value)
     }
   }
@@ -389,7 +373,7 @@ export class DrugsDetailPage implements OnInit {
       let d = this.form.get('day'+(i+1)).value? 1:0
       day['day'+(i +1)] = d
       if(d==0) ceros =0
-      console.log('[DrugsDetailPage] gettingDay() day', d);
+      //console.log('[DrugsDetailPage] gettingDay() day', d);
     })
     console.log('[DrugsDetailPage] gettingDay() day', this.days);
     if(ceros==0) this.form.get('frequency').setValue('custom')
