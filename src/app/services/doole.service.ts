@@ -908,6 +908,17 @@ export class DooleService {
     );
   }
 
+  getAPIdetailRecipe(id: any): Observable<any> {
+    let path = `diet/receipt/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   /** get advices  **/
   getAPIlistAdvices(): Observable<any> {
     let path = 'user/advices';

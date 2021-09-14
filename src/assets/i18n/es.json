@@ -665,6 +665,12 @@
         "back":"Volver",
         "shipping_method":"Tipo de envío: "
     
+      },
+      "recipe": {
+        "header": "Recetas",
+        "ingredients": "Ingredientes",
+        "family": "Familia"
       }
+
       
 }
