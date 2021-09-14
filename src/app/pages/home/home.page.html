@@ -162,8 +162,8 @@
             (ionSlideDidChange)="slideDietChange()">
             <ion-slide *ngFor="let slide of this.diets">
               <ion-grid>
-                <ion-row routerLink="/journal/diets-detail" routerLinkActive='active-item' [state]="{id: slide.id}">
-                  <p style="text-align: left">{{slide.name}}</p>
+                <ion-row *ngFor="let i of slide.items" routerLink="/journal/diets-detail" routerLinkActive='active-item' [state]="{id: slide.id}">
+                  <p style="text-align: left">-{{i.item.name}}</p>
                 </ion-row>
               </ion-grid>
             </ion-slide>

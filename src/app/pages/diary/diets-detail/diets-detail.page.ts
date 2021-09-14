@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { Constants } from 'src/app/config/constants';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class DietsDetailPage implements OnInit {
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
+    private constants: Constants,
     public sanitizer: DomSanitizer) {
   }
 
@@ -57,8 +59,8 @@ export class DietsDetailPage implements OnInit {
   
         this.diet.media.forEach(element => {
           if(element.mime_type=="application/pdf"){
-            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
-            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
+            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.constants.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
+            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.constants.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
             this.linkpdf2=this.sanitizer.bypassSecurityTrustResourceUrl(element.temporaryUrl);
             this.thumbnail=(element.thumbnailTemporaryUrl);
             this.linkPdfDescription=(element.description);

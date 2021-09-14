@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
   WAIT_TIME = 10 //10 minutes 
   userDoole : any = {}
   goals: Goal[] =[]
-  diets: Diet[] =[]
+  diets: any =[]
   drugs: Drug[] =[]
   games =[]
   header = false;
@@ -144,16 +144,19 @@ export class HomePage implements OnInit {
   async getUserInformation(){
     this.isLoading = true
     this.activity = []
+    this.date = this.transformDate2(this.date)
     let date = {date: this.date, from_date: this.date, to_date: this.date}
+    console.log('[HomePage] getUserInformation()',  date);
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
         await res;
-       
+        console.log('[HomePage] getUserInformation()',  res);
         this.userDoole = res.data?.profile;
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
-        this.diets = res.data?.diets;    
+        //this.diets = res.data?.dietaryIntake.dietIntakes; 
+        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)   
 
         console.log('[HomePage] getUserInformation()',  this.userDoole);
         this.slideDietChange()
@@ -187,6 +190,19 @@ export class HomePage implements OnInit {
           alert(err.message)
           throw err; 
       });
+  }
+  treeIterateDiets(obj) {
+    for (var property in obj) {
+      console.log('[DiaryPage] treeIterateDiets()', property);
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+          console.log('[DiaryPage] treeIterateDiets()', obj[property]);
+          this.diets.push({date: property, items: obj[property]})
+          //this.treeIterate(obj[property], stack + '.' + property);
+        }
+      }
+    }
+    console.log('[DiaryPage] treeIterateDiets()', this.diets);
   }
   
   treeIterate(obj, stack) {
@@ -338,9 +354,10 @@ export class HomePage implements OnInit {
 		this.sliderDiet.getActiveIndex().then(index => {      
       //console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
+      let hour = slider?.date.split(' ')[1]
       this.infoDiet = {
-        title: slider?.name,
-        hour: slider?.hour
+        title: slider?.items,
+        hour: hour.split(':')[0]+':'+hour.split(':')[1]
       }
     });
   }
@@ -519,6 +536,10 @@ export class HomePage implements OnInit {
       let language = this.languageService.getCurrent();
       const datePipe: DatePipe = new DatePipe(language);
       return datePipe.transform(date, 'EEEE, d MMMM hh:mm');
+    }
+
+    transformDate2(date) {
+      return this.datePipe.transform(date, 'dd-MM-yyyy');
     }
 
 }

@@ -662,6 +662,11 @@
         "correct":"Sol·licitud rebuda correctament",
         "back":"Tornar",
         "shipping_method":"Tipus d'enviament: "
+      },
+      "recipe": {
+        "header": "Receptes",
+        "ingredients": "Ingredients",
+        "family": "família"
       }
       
 }

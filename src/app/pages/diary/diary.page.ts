@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { IonSlides, ModalController} from '@ionic/angular'; 
+import { IonSlides, ModalController, NavController} from '@ionic/angular'; 
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -55,6 +55,7 @@ export class DiaryPage implements OnInit {
     private notification: NotificationService,
     public authService: AuthenticationService,
     private storageService: StorageService,
+    private nav: NavController,
   ) {}
 
   ngOnInit() {
@@ -119,6 +120,10 @@ export class DiaryPage implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
+  transformDate2(date) {
+    return this.datePipe.transform(date, 'dd-MM-yyyy');
+  }
+
   formatSelectedDate(date){
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
@@ -158,12 +163,12 @@ export class DiaryPage implements OnInit {
   async getDietListByDate(){
     this.isLoading = true;
     console.log('[DiaryPage] getDietListByDate()');
-    this.listDiets = []
-    let date  = this.transformDate(this.date)
+    let date  = this.transformDate2(this.date)
     this.dooleService.getAPIdietsByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDietListByDate()', await res);
         if(res.success){
+          this.listDiets = []
           this.diets = res.diet
           this.treeIterateDiets(res.dietIntakes, '')
           //console.log('[DiaryPage] getDietListByDate()', await this.diets);
@@ -190,7 +195,7 @@ export class DiaryPage implements OnInit {
         }
       }
     }
-    console.log('[DiaryPage] treeIterateDiets()', this.listDiets);
+    //console.log('[DiaryPage] treeIterateDiets()', this.listDiets);
   }
 
   async getDrugIntakeList(){
@@ -495,6 +500,12 @@ export class DiaryPage implements OnInit {
         });
     
         await modal.present(); 
+      }
+
+      goDetailRecipe(e){
+        let id = e.item.id
+        if(e.item_type === 'App\\Receipt')
+        this.nav.navigateForward("journal/diets-detail/recipe", { state: {id:id} });
       }
 
 }
