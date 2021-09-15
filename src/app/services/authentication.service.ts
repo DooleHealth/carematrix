@@ -113,10 +113,13 @@ export class AuthenticationService {
               else
                 alert('Push Token not found');
               
-              if (this.platform.is('ios') && this.voipDeviceToken) {
-                this.registerDevice(this.voipDeviceToken,'iosvoip');        
-              }else
-                alert('VoIP Token not found');
+              if (this.platform.is('ios')){
+                if(this.voipDeviceToken) 
+                  this.registerDevice(this.voipDeviceToken,'iosvoip');        
+                else
+                  alert('VoIP Token not found');
+              }
+               
               
             }
 
