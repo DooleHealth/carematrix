@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
-import { IonSlides, ModalController, Platform } from '@ionic/angular';
+import { IonSlides, ModalController, NavController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { VideoComponent } from 'src/app/components/video/video.component';
@@ -97,6 +97,7 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
+    private nav: NavController,
   ) {
     //this.analyticsService.setScreenName('home','[HomePage]')
   }
@@ -540,6 +541,12 @@ export class HomePage implements OnInit {
 
     transformDate2(date) {
       return this.datePipe.transform(date, 'dd-MM-yyyy');
+    }
+
+    goDetailRecipe(e){
+      let id = e.item.id
+      if(e.item_type === 'App\\Receipt')
+      this.nav.navigateForward("/journal/diets-detail/recipe", { state: {id:id} });
     }
 
 }

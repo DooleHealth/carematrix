@@ -162,9 +162,15 @@
             (ionSlideDidChange)="slideDietChange()">
             <ion-slide *ngFor="let slide of this.diets">
               <ion-grid>
-                <ion-row *ngFor="let i of slide.items" routerLink="/journal/diets-detail" routerLinkActive='active-item' [state]="{id: slide.id}">
-                  <p style="text-align: left">-{{i.item.name}}</p>
-                </ion-row>
+                <div *ngIf="slide.items.length <= 3">
+                  <ion-row *ngFor="let e of slide.items; let i = index">
+                    <p style="text-align: left" (click)="goDetailRecipe(e)">-{{e.item?.name}} ({{e?.quantity}})</p>
+                  </ion-row> 
+                </div>
+                <div *ngIf="slide.items.length > 3" class="textBlueCenter" style="align-items: center;" routerLink="/journal">
+                  {{ 'home.elements' | translate}}
+                </div>
+                             
               </ion-grid>
             </ion-slide>
           </ion-slides>

@@ -125,10 +125,10 @@
           </ion-item>
 
 
-          <app-expandable  [expanded]="item.expanded">
+          <app-expandable expandHeight="250px" [expanded]="item.expanded">
             <ion-list *ngFor="let e of item.items;let i= index">
               <ion-item [lines]="(i== item.items.length-1)? 'none':'full' " (click)="goDetailRecipe(e)">            
-                <ion-label> - {{e.item.name}} ({{ e.quantity }})</ion-label>  
+                <ion-label> - {{e?.item?.name}} ({{ e?.quantity }})</ion-label>  
                 <ion-icon *ngIf="e.item_type == 'App\\Receipt'" slot="end" size="small" name="chevron-forward-outline"></ion-icon>     
               </ion-item>
             </ion-list>        

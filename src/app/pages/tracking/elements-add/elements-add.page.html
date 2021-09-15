@@ -19,7 +19,7 @@
       <ion-item>
         <ion-label>{{ 'element.field_category' | translate}}</ion-label>
         <ion-select interface="action-sheet"  (ionChange)="selectedCategory(); isSubmittedCategory = false" formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option *ngFor="let group of groupElements" [value]="group.group">{{group.group}}</ion-select-option>
+          <ion-select-option *ngFor="let group of groupElements" [value]="group.id">{{group.text}}</ion-select-option>
         </ion-select>
 <!--         <ion-note *ngIf="this.isSubmittedCategory && this.form.get('category').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
       </ion-item>
