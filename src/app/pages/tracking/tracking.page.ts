@@ -121,7 +121,8 @@ export class TrackingPage implements OnInit {
             if(this.diagnosticTests?.length > 0 )
               this.groupDiagnosticsByDate(res)
            
-          }else
+          }
+          
           this.loadingTests = false;
          
           
