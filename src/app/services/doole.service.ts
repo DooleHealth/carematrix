@@ -3,11 +3,11 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { ApiEndpointsService } from './api-endpoints.service';
 import { Events } from './events.service';
 import { HttpService } from './http.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError, TimeoutError } from 'rxjs';
 import { AlertController, Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { Capacitor } from '@capacitor/core';
-import { delay, filter, map } from 'rxjs/operators';
+import { catchError, delay, filter, map, mergeMap } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
@@ -375,16 +375,21 @@ export class DooleService {
   } */
 
 
-  getAPIinformationSummary(params: Object): Observable<any> {
+  getAPIinformationSummary(params: Object){
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] getAPIinformationSummary(${path}) res: `, res);
-        return res;
-      })
+      mergeMap((v) => v instanceof TimeoutError ? throwError(v) : of(v)) 
     );
   }
+  getAPIinformationSummaryOld(params: Object){
+    let path = 'home'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map(res => res) 
+    );
+  }
+
 
   getAPIuserProfile(): Observable<any> {
     let path = 'v2/user/profile'

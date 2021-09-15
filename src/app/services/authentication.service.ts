@@ -108,10 +108,15 @@ export class AuthenticationService {
             if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
               //console.log(data);
               let access = true;
-              this.registerDevice(this.deviceToken, this.devicePlatform);
-              if (this.platform.is('ios')) {
+              if(this.deviceToken && this.devicePlatform)
+                this.registerDevice(this.deviceToken, this.devicePlatform);
+              else
+                alert('Push Token not found');
+              
+              if (this.platform.is('ios') && this.voipDeviceToken) {
                 this.registerDevice(this.voipDeviceToken,'iosvoip');        
-              }
+              }else
+                alert('VoIP Token not found');
               
             }
 

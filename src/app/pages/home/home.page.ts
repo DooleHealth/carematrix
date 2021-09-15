@@ -102,6 +102,7 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() { 
+    
     this.date = this.transformDate(Date.now())
     this.checkHealthAccess();
     this.getUserInformation();
@@ -148,14 +149,14 @@ export class HomePage implements OnInit {
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
         await res;
-       
+        //console.log('[HomePage] getUserInformation()',  res);
         this.userDoole = res.data?.profile;
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
         this.diets = res.data?.diets;    
 
-        console.log('[HomePage] getUserInformation()',  this.userDoole);
+    
         this.slideDietChange()
 
         let elements = res?.data.elements
@@ -182,10 +183,11 @@ export class HomePage implements OnInit {
         //console.log('[HomePage] getUserInformation()', this.userDoole);
         //this.setAnalyticsUserProperty()
        },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          console.log('***** ERROR ' + err); 
           this.isLoading = false
-          alert(err.message)
+         
           throw err; 
+          
       });
   }
   
@@ -219,57 +221,69 @@ export class HomePage implements OnInit {
   }
 
   
+  
   syncData(days){
 
+    let startDate =  new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000);
+    let endDate =  new Date(); // now
+    console.log('dataType: steps');
     this.health.queryAggregated({
-      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
-      endDate: new Date(), // now
+      startDate,
+      endDate,
       dataType: 'steps',
       bucket: 'day'
     }).then(data => {
       this.postHealth('steps', data);
     });
 
+    console.log('dataType: distance');
     this.health.queryAggregated({
-      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
-      endDate: new Date(), // now
+      startDate,
+      endDate,
       dataType: 'distance',
       bucket: 'day'
     }).then(data => {
       this.postHealth('distance', data);
 
     }).catch(error => {
-      //console.log(error);
+      console.error(error);
+      throw error; 
     });
 
+    console.log('dataType: heart_rate');
     this.health.query({
-      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
-      endDate: new Date(), // now
+      startDate,
+      endDate,
       dataType: 'heart_rate',
     }).then(data => {
-      this.postHealth('heart_rate', data);
+      //this.postHealth('heart_rate', data);
     }).catch(error => {
-      //console.log(error);
+      console.error(error);
+      throw error; 
     });
 
+    console.log('dataType: weight');
     this.health.query({
-      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
-      endDate: new Date(), // now
+      startDate,
+      endDate,
       dataType: 'weight',
     }).then(data => {
-      this.postHealth('weight', data);
+      //this.postHealth('weight', data);
     }).catch(error => {
-      //console.log(error);
+      console.error(error);
+      throw error; 
     });
 
+    console.log('dataType: temperature');
     this.health.query({
-      startDate: new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000),
-      endDate: new Date(), // now
+      startDate,
+      endDate,
       dataType: 'temperature',
     }).then(data => {
-      this.postHealth('temperature', data);
+      //this.postHealth('temperature', data);
     }).catch(error => {
-      //console.log(error);
+      console.error(error);
+      throw error; 
     });
 
   }
@@ -282,12 +296,12 @@ export class HomePage implements OnInit {
       };
       this.authService.post('user/element/sync', postData).subscribe(
           async (data) => {
-            //console.log("postHealth: ", data);
+            console.log("postHealth: ", data);
            },
          
           (error) => {
             // Called when error
-            //console.log('error: ', error);
+            console.log('error: ', error);
             throw error;
           },
           () => {
