@@ -112,6 +112,7 @@ export class HomePage implements OnInit {
 
 
   ionViewWillEnter(){
+    this.date = this.transformDate(Date.now())
     if(!this.authService.user || history.state?.userChanged )
       this.getUserInformation()
    
@@ -161,6 +162,7 @@ export class HomePage implements OnInit {
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
 
+        //diets
         this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes) 
         this.searchIndexDiet()  
         this.slideDietChange()
@@ -197,6 +199,7 @@ export class HomePage implements OnInit {
       });
   }
   treeIterateDiets(obj) {
+    this.diets = []
     for (var property in obj) {
       console.log('[DiaryPage] treeIterateDiets()', property);
       if (obj.hasOwnProperty(property)) {
