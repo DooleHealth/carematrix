@@ -16,17 +16,11 @@ import { VideoComponent } from './components/video/video.component';
 import { OpentokService } from './services/opentok.service';
 import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
-import { Local } from 'protractor/built/driverProviders';
-import { environment } from 'src/environments/environment';
-import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 
 const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
-
-
-const { BiometricAuth } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -66,7 +60,7 @@ export class AppComponent implements OnInit {
     private network: Network,
     private opentokService: OpentokService,
     private modalCtrl: ModalController,
-    private backgroundMode: BackgroundMode,
+    //private backgroundMode: BackgroundMode,
     private dooleService: DooleService,
     private faio : FingerprintAIO
 
@@ -102,7 +96,7 @@ export class AppComponent implements OnInit {
         this.listenConnection();
 
          // Enable background mode
-        this.backgroundMode.enable();
+        //this.backgroundMode.enable();
 
       }
 
@@ -113,14 +107,15 @@ export class AppComponent implements OnInit {
 
    var title, body,id,color,actionType;
    // Notifications has different Payloads: iOS = data.aps, Android = data
-   let push = notification.data?.aps ? notification.data?.aps : notification.data; 
+   let push = notification.data?.aps ? notification.data.aps : notification.data; 
 
    title = push?.title;
    body = push?.message;
    id = push?.id;
-   color = push?.color;
+   color = push?.color ? push?.color : '#109DB0';
    actionType = push?.action;
     
+    console.log("ActionType:", actionType);
     await LocalNotifications.schedule({
       notifications:[
         {
@@ -134,75 +129,13 @@ export class AppComponent implements OnInit {
           actionTypeId: actionType
         }
       ]
-    })
+    }).then((data)=>{
+      console.log("showNotification:", data);
+    });
   }
 
   private async initPushNotifications() {
 
-    // LOCAL NOTIFICATIONS
-    await LocalNotifications.requestPermission();
-    await LocalNotifications.registerActionTypes({
-      types:[{
-        id:'MESSAGE',
-        actions:[{
-          id:'view',
-          title:'Open Chat',
-        },{
-          id:'remove',
-          title: 'Dismiss',
-          destructive: true
-        },{
-          id:'respond',
-          title:'Respond',
-          input: true
-        }],  
-      },{
-        id:'FORM',
-        actions:[{
-          id:'view',
-          title:'Open FORM',
-        },{
-          id:'remove',
-          title: 'Dismiss',
-          destructive: true
-        }],
-      },{
-        id:'DRUGINTAKE',
-        actions:[{
-          id:'view',
-          title:'TAKE THE PILL',
-        },{
-          id:'remove',
-          title: 'Dismiss',
-          destructive: true
-        }],
-      }
-    ]});
-
-    LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
-      console.log('localNotificationReceived received:');
-      cordova.plugins.CordovaCall.receiveCall('El teu metge', 'id');
-      
-    })
-    LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
-      
-      let f = notification.notification.extra;
-      console.log('localNotificationActionPerformed: ');
-      console.log(f);
-      const action = f.data?.action;
-      const id = f.idata?.id;
-      const msg = f.data?.message;
-      console.log('ACTION: ', action);
-    
-      if (action == "MESSAGE") {
-        this.router.navigateByUrl(`/contact/chat`);
-      }else if (action == "FORM") {
-        this.router.navigateByUrl(`/tracking`);
-      }else if (action == "DRUGINTAKE") {
-        this.router.navigateByUrl(`/journal`);
-      }else
-        alert('action not found')
-    })
     PushNotifications.requestPermission().then((permission) => {
       if (permission.granted) {
         // Register with Apple / Google to receive push via APNS/FCM
@@ -211,11 +144,10 @@ export class AppComponent implements OnInit {
         // No permission for push granted
       }
     });
- 
-   
+       
     PushNotifications.addListener(
       'registration',
-      (token: PushNotificationToken) => {
+      async (token: PushNotificationToken) => {
         console.log('My token: ' + JSON.stringify(token));
         let platform = 'ios';
         if (this.platform.is('android')) {
@@ -247,19 +179,14 @@ export class AppComponent implements OnInit {
           let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data.isCancelPush;
           console.log("cancel push:", cancel);
           if(cancel == "true"){
-            console.log(cancel);
             return;
           }else{
-            const caller = JSON.parse(notification.data?.Caller); 
-            this.opentokService.agendaId = notification.data?.callId
-            this.getTokboxSession(caller).then(()=>{
-            cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
-           });
+           this.redirecToVideocall(notification)
           }
          
         }else{
           console.log("is notification: ", notification);
-          await this.showNotification(notification);
+          this.showNotification(notification);
         }
       }
     );
@@ -267,27 +194,120 @@ export class AppComponent implements OnInit {
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       async (notification: PushNotificationActionPerformed) => {
-        const data = notification.notification.data;
+        const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data; 
         console.log('Action performed: ');
         console.log(notification); 
 
-        const action = notification.notification.data?.action;
-        const id = notification.notification.data?.id;
-        const msg = notification.notification.data?.message;
-
+        const action = data?.action;
+        const id = data?.id;
+        const msg = data?.message;
+      
+        console.log('ACTION: ', action);
+      
         if (action == "MESSAGE") {
-          this.router.navigateByUrl(`/contact/chat`);
-        }
-        if (action == "FORM") {
-          this.router.navigateByUrl(`/tracking/form;id=` + id);
-        }
-
-        if (action == "DRUGINTAKE") {
-          this.router.navigateByUrl(`/journal`);
-        }
-
+          this.router.navigate([`/contact/chat`],{state:{data:data}});
+        }else if (action == "FORM") {
+          this.router.navigate([`/tracking`],{state:{data:data}});
+        }else if (action == "DRUGINTAKE") {
+          this.router.navigate([`/journal`],{state:{data:data}});
+        }else if (action == "VIDEOCALL") {
+          this.redirecToVideocall(notification)
+        }else
+          console.error('Action on pushNotificationActionPerformed not found')
       }
     );
+
+    // LOCAL NOTIFICATIONS
+    await LocalNotifications.requestPermission().then((data)=>{
+      console.log("LocalNotifications Registered", data);
+    });
+    await LocalNotifications.registerActionTypes({
+      types:[{
+        id:'MESSAGE',
+        actions:[{
+          id:'view',
+          title: this.translate.instant('notification.chat'),
+        },{
+          id:'remove',
+          title: 'Dismiss',
+          destructive: true
+        },{
+          id:'respond',
+          title:'Respond',
+          input: true
+        }],  
+      },{
+        id:'FORM',
+        actions:[{
+          id:'view',
+          title: this.translate.instant('notification.form')
+        },{
+          id:'remove',
+          title: this.translate.instant('notification.close'),
+          destructive: true
+        }],
+      },{
+        id:'DRUGINTAKE',
+        actions:[{
+          id:'view',
+          title:this.translate.instant('notification.drug'),
+        },{
+          id:'remove',
+          title: 'Dismiss',
+          destructive: true
+        }],
+      },
+      ,{
+        id:'VIDEOCALL',
+        actions:[{
+          id:'view',
+          title: this.translate.instant('notification.videocall'),
+        },{
+          id:'remove',
+          title: this.translate.instant('notification.close'),
+          destructive: true
+        }],
+      }
+    ]});
+
+    LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
+      console.log('localNotificationReceived received:', notification);
+     
+      
+    })
+    LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
+      
+      let f = notification.notification.extra;
+      console.log('localNotificationActionPerformed: ');
+      console.log(f);
+      const action = f.data?.action;
+      const id = f.idata?.id;
+      const msg = f.data?.message;
+      console.log('ACTION: ', action);
+    
+      if (action == "MESSAGE") {
+        this.router.navigate([`/contact/chat`],{state:{data:f.data}});
+      }else if (action == "FORM") {
+        this.router.navigate([`/tracking`],{state:{data:f.data}});
+      }else if (action == "DRUGINTAKE") {
+        this.router.navigate([`/journal`],{state:{data:f.data}});
+      }else if (action == "VIDEOCALL") {
+        this.redirecToVideocall(notification)
+      }else
+        console.error('Action on localNotificationActionPerformed not found')
+    })
+   
+ 
+  }
+
+  redirecToVideocall(notification){
+
+    console.log('redirecToVideocall: ', notification);
+    const caller = JSON.parse(notification.data?.Caller); 
+    this.opentokService.agendaId = notification.data?.callId
+    this.getTokboxSession(caller).then(()=>{
+    cordova.plugins.CordovaCall.receiveCall(caller.Username, notification.data?.callId);
+   });
 
   }
 
@@ -442,38 +462,38 @@ export class AppComponent implements OnInit {
     this.platform.resume.subscribe(async (e) => {
 
       //en android, tenim de mirar al obrir app si tenim videotrucada pendent
-      // if (this.platform.is('android')) {
-      //   let th = this;
-      //   this.authService.post("user/videocall/pendingConnect", null).subscribe(json => {
-      //     console.log(json);
-      //     console.log(json.agenda);
-      //     if (json.success) {
-      //       th.idAgenda = json.agenda;
-      //       console.log(th.idAgenda);
+      if (this.platform.is('android')) {
+        let th = this;
+        this.authService.post("user/videocall/pendingConnect", null).subscribe(json => {
+          console.log(json);
+          console.log(json.agenda);
+          if (json.success) {
+            th.idAgenda = json.agenda;
+            console.log(th.idAgenda);
 
-      //       //si tenim videotrucada pendent
-      //       if (th.idAgenda != null) {
+            //si tenim videotrucada pendent
+            if (th.idAgenda != null) {
 
-      //         if (th.lastVideocall == null) {
-      //           th.lastVideocall = new Date;
-      //           this.router.navigate(['VideocallPage', { id: th.idAgenda, auto: true }]);
-      //         } else {
-      //           let secondsPassed = ((new Date).getTime() - th.lastVideocall.getTime()) / 1000;
-      //           console.log(secondsPassed + ' seconds passed');
-      //           if (secondsPassed >= 10) {
-      //             console.log("redirecting");
-      //             this.router.navigate(['VideocallPage', { id: th.idAgenda, auto: true }]);
-      //           }
-      //         }
+              if (th.lastVideocall == null) {
+                th.lastVideocall = new Date;
+                this.redirecToVideocall(json)
+              } else {
+                let secondsPassed = ((new Date).getTime() - th.lastVideocall.getTime()) / 1000;
+                console.log(secondsPassed + ' seconds passed');
+                if (secondsPassed >= 10) {
+                  console.log("redirecting");
+                  this.redirecToVideocall(json)
+                }
+              }
 
-      //       } else {
-      //         console.log("not redirecting");
-      //       }
-      //     }
-      //   }, error => {
-
-      //   });
-      // }
+            } else {
+              console.log("not redirecting");
+            }
+          }
+        }, error => {
+          console.error("Error on user/videocall/pendingConnect:", error);
+        });
+      }
 
       if (this.router.url.includes('app')) {
 
