@@ -61,6 +61,7 @@ export class HomePage implements OnInit {
   loading:boolean = true;
   currentIndexDrug = 0
   currentIndexGame = 0
+  currentIndexDiet = 0
    sliderConfig = {
     slidesPerView: 1,
     direction: 'vertical',
@@ -159,14 +160,13 @@ export class HomePage implements OnInit {
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
-        //this.diets = res.data?.dietaryIntake.dietIntakes; 
-        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)   
 
-    
+        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes) 
+        this.searchIndexDiet()  
         this.slideDietChange()
+        this.sliderDiet.slideTo(this.currentIndexDiet)
 
         let elements = res?.data.elements
-
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
           this.sliderPhysical.slideTo(0)
@@ -459,6 +459,16 @@ export class HomePage implements OnInit {
         )
       let index = this.games.indexOf(game);
       this.currentIndexDrug = (index > -1)? index: 0
+    }
+  }
+
+  searchIndexDiet(){
+    if(this.diets !== undefined && this.diets?.length > 0){
+      let diet = this.diets?.find(element => 
+        ((this.hourToMinutes(element.date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
+        )
+      let index = this.diets.indexOf(diet);
+      this.currentIndexDiet = (index > -1)? index: 0
     }
   }
 
