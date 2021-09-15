@@ -877,6 +877,28 @@ export class DooleService {
       })
     );
   }
+
+  getAPIelementGroupID(id: Object): Observable<any> {
+    let path = `center/elementGroup/${id}/elements`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIelementGroupID(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  searchAPIelementGroup(params: Object): Observable<any> {
+    let path = 'center/elementGroups'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] searchAPIelementGroup(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
   /** get diets with query by parameter date  */
   getAPIlistDietsByDate(params: Object): Observable<any> {
     let path = 'user/diets';
@@ -908,6 +930,17 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIdetailDiets(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIdetailRecipe(id: any): Observable<any> {
+    let path = `diet/receipt/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);
         return res;
       })
     );

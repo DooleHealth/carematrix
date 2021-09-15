@@ -93,11 +93,7 @@
 
       <ion-list *ngIf="!this.isLoading && this.listDiets.length > 0 ; else noData">
         <ion-card class="cardProfile" *ngIf="this.diets?.id">
-<!--           <ion-card-header>
-            <ion-card-title>{{diets?.name}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content [innerHtml]="diets?.description">
-          </ion-card-content> -->
+
           <ion-item lines="none" routerLink="diets-detail" [state]="{id: diets?.id}" routerLinkActive='active-item'>
             <ion-col size="2">
               <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
@@ -108,8 +104,8 @@
           </ion-item>
         </ion-card>
 
-        <ion-card *ngFor="let item of this.listDiets" (click)="expandItemDiet(item)" class="cardProfile">
-          <ion-item  *ngIf="item.expanded" lines="none">
+        <ion-card *ngFor="let item of this.listDiets" class="cardProfile">
+          <ion-item  *ngIf="item.expanded" lines="none" (click)="expandItemDiet(item)">
             <ion-col size="2">
               <ion-img src='assets/icons/apple-diet.svg' style="margin-right: 5px;">
               </ion-img>
@@ -118,7 +114,7 @@
             <p style="color:#E67E22;" >{{item.date.split(' ')[1] }}</p>
             <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
-          <ion-item *ngIf="!item.expanded" lines="none">
+          <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItemDiet(item)">
             <ion-col size="2">
               <ion-img src='assets/icons/Union.svg' style="margin-right: 5px;">
               </ion-img>
@@ -129,10 +125,11 @@
           </ion-item>
 
 
-          <app-expandable  [expanded]="item.expanded">
+          <app-expandable expandHeight="250px" [expanded]="item.expanded">
             <ion-list *ngFor="let e of item.items;let i= index">
-              <ion-item [lines]="(i== item.items.length-1)? 'none':'full' ">            
-                <ion-label> - {{e.item.name}} ({{ e.quantity }})</ion-label>       
+              <ion-item [lines]="(i== item.items.length-1)? 'none':'full' " (click)="goDetailRecipe(e)">            
+                <ion-label> - {{e?.item?.name}} ({{ e?.quantity }})</ion-label>  
+                <ion-icon *ngIf="e.item_type == 'App\\Receipt'" slot="end" size="small" name="chevron-forward-outline"></ion-icon>     
               </ion-item>
             </ion-list>        
            <!--  <ion-button  size="small" color="transparent" class="buttonLink">{{'button.detail' | translate}}</ion-button>&nbsp;  -->     
@@ -261,7 +258,7 @@
       </div>
       <div *ngIf="!this.isLoading && groupedElements.length > 0; else noData">
         <ion-list *ngFor="let group of this.groupedElements">
-          <ion-label *ngIf="group.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
+          <ion-label *ngIf="group?.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
           <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
             <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}" routerLinkActive='active-item'>
               <div class="verticalLine"

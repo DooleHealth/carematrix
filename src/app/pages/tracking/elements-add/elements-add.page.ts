@@ -79,15 +79,12 @@ export class ElementsAddPage implements OnInit {
   }
 
   getIdElement(){
-    // this.id = history.state.id;
-    // this.nameElement = history.state.name;
-    // this.units = history.state.units
     console.log('[ElementsAddPage] getIdElement()', this.id);
     if(this.id){
       this.isNewValueElement = true
       this.getElementAvailable()
     }else{
-      this.getElementsList()
+      this.getElementsGroup()
     }
   }
 
@@ -124,46 +121,39 @@ export class ElementsAddPage implements OnInit {
         });
   }
 
-  async getElementsList(){
+  async getElementsGroup(){
     this.isLoading = true
-    this.dooleService.getAPIelementsList().subscribe(
+    let params = {}
+    this.dooleService.searchAPIelementGroup(params).subscribe(
       async (data: any) =>{
-        console.log('[DiaryPage] getElementsList()', await data); 
-        if(data.eg){
-          this.groupElements = []
-          // Iterate elements in the tree searching for element groups
-          this.treeIterate(data.eg, '');
-          this.filterCategoryWithElement()
+        console.log('[DiaryPage] getElementsGroup()', await data); 
+        if(data.results){
+          this.groupElements = data.results
         }
         this.isLoading = false
        },(err) => { 
-          console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[DiaryPage] getElementsGroup() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
           throw err; 
       });
   }
 
-  treeIterate(obj, stack) {
-    for (var property in obj) {
-      if (obj.hasOwnProperty(property)) {
-        if (typeof obj[property] == "object") {
-
-          this.treeIterate(obj[property], stack + '.' + property);
-        } else {
-          if(property=="group"){
-            obj['is_child'] = stack.includes('childs');
-            this.groupElements.push(obj);
-
-          }
-
+  async getElements(id){
+    this.isLoading = true
+    this.dooleService.getAPIelementGroupID(id).subscribe(
+      async (data: any) =>{
+        console.log('[DiaryPage] getElements()', await data); 
+        if(data.success){
+          this.group = data
         }
-      }
-    }
-  }
-
-  filterCategoryWithElement(){
-    this.groupElements = this.groupElements.filter( group => group.elements.length > 0)
+        this.isLoading = false
+       },(err) => { 
+          console.log('[DiaryPage] getElements() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
+          this.isLoading = false
+          throw err; 
+      });
   }
 
   async getElementAvailable(){
@@ -190,7 +180,8 @@ export class ElementsAddPage implements OnInit {
 
   selectedCategory(){
     let category = this.form.get('category').value
-    this.group = this.groupElements.find(group =>(group.group === category))
+    console.log('[ElementsAddPage] selectedCategory()', category);
+    this.getElements(category)
     this.form.get('data').setValue('')
   }
 
@@ -200,8 +191,12 @@ export class ElementsAddPage implements OnInit {
     if(this.element){
       this.form.get('units').setValue( this.element.units)
       this.id = this.element.id
+      // this.units = this.element.units
+      // this.min = this.element.min
+      // this.max = this.element.max
       this.getElementAvailable()
     }
+    console.log('[ElementsAddPage] selectedElement()', this.element);
   }
 
   isValueCorrect(value){

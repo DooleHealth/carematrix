@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
-import { IonSlides, ModalController, Platform } from '@ionic/angular';
+import { IonSlides, ModalController, NavController, Platform } from '@ionic/angular';
 import { catchError } from 'rxjs/operators';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { VideoComponent } from 'src/app/components/video/video.component';
@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
   WAIT_TIME = 10 //10 minutes 
   userDoole : any = {}
   goals: Goal[] =[]
-  diets: Diet[] =[]
+  diets: any =[]
   drugs: Drug[] =[]
   games =[]
   header = false;
@@ -97,6 +97,7 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
+    private nav: NavController,
   ) {
     //this.analyticsService.setScreenName('home','[HomePage]')
   }
@@ -145,16 +146,21 @@ export class HomePage implements OnInit {
   async getUserInformation(){
     this.isLoading = true
     this.activity = []
+    this.date = this.transformDate2(this.date)
     let date = {date: this.date, from_date: this.date, to_date: this.date}
+    console.log('[HomePage] getUserInformation()',  date);
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
         await res;
+
         //console.log('[HomePage] getUserInformation()',  res);
+
         this.userDoole = res.data?.profile;
         this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
-        this.diets = res.data?.diets;    
+        //this.diets = res.data?.dietaryIntake.dietIntakes; 
+        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)   
 
     
         this.slideDietChange()
@@ -189,6 +195,19 @@ export class HomePage implements OnInit {
           throw err; 
           
       });
+  }
+  treeIterateDiets(obj) {
+    for (var property in obj) {
+      console.log('[DiaryPage] treeIterateDiets()', property);
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+          console.log('[DiaryPage] treeIterateDiets()', obj[property]);
+          this.diets.push({date: property, items: obj[property]})
+          //this.treeIterate(obj[property], stack + '.' + property);
+        }
+      }
+    }
+    console.log('[DiaryPage] treeIterateDiets()', this.diets);
   }
   
   treeIterate(obj, stack) {
@@ -352,9 +371,10 @@ export class HomePage implements OnInit {
 		this.sliderDiet.getActiveIndex().then(index => {      
       //console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
+      let hour = slider?.date.split(' ')[1]
       this.infoDiet = {
-        title: slider?.name,
-        hour: slider?.hour
+        title: slider?.items,
+        hour: hour.split(':')[0]+':'+hour.split(':')[1]
       }
     });
   }
@@ -533,6 +553,16 @@ export class HomePage implements OnInit {
       let language = this.languageService.getCurrent();
       const datePipe: DatePipe = new DatePipe(language);
       return datePipe.transform(date, 'EEEE, d MMMM hh:mm');
+    }
+
+    transformDate2(date) {
+      return this.datePipe.transform(date, 'dd-MM-yyyy');
+    }
+
+    goDetailRecipe(e){
+      let id = e.item.id
+      if(e.item_type === 'App\\Receipt')
+      this.nav.navigateForward("/journal/diets-detail/recipe", { state: {id:id} });
     }
 
 }
