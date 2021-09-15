@@ -508,5 +508,12 @@ export class DiaryPage implements OnInit {
         this.nav.navigateForward("journal/diets-detail/recipe", { state: {id:id} });
       }
 
+      formatHour(time){
+        if(time){
+          let hour =  time.split(':')
+          return hour[0]+':'+hour[1]
+        }
+      }
+
 }
 
