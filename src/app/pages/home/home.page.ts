@@ -100,7 +100,7 @@ export class HomePage implements OnInit {
     private languageService: LanguageService,
     private nav: NavController,
   ) {
-    //this.analyticsService.setScreenName('home','[HomePage]')
+    this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() { 

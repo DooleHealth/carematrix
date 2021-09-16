@@ -110,14 +110,11 @@ export class AuthenticationService {
               let access = true;
               if(this.deviceToken && this.devicePlatform)
                 this.registerDevice(this.deviceToken, this.devicePlatform);
-              else
-                alert('Push Token not found');
               
               if (this.platform.is('ios')){
                 if(this.voipDeviceToken) 
                   this.registerDevice(this.voipDeviceToken,'iosvoip');        
-                else
-                  alert('VoIP Token not found');
+                
               }
                
               

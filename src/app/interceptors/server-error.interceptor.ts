@@ -15,7 +15,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       // TODO: SET RETRY TO 1
       retry(0),
-      timeout(10000),
+      timeout(30000),
       catchError((error) => {
         console.log('ServerErrorInterceptor -> ', error);
       if (error instanceof TimeoutError) {

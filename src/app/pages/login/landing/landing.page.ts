@@ -40,7 +40,7 @@ export class LandingPage implements OnInit {
     private faio: FingerprintAIO,
     private analyticsService: AnalyticsService
   ) {
-    //this.analyticsService.setScreenName('[LandingPage]')
+    this.analyticsService.setScreenName('[LandingPage]')
    }
 
   ngOnInit() {
