@@ -191,12 +191,12 @@ export class ElementsAddPage implements OnInit {
     if(this.element){
       this.form.get('units').setValue( this.element.units)
       this.id = this.element.id
-      // this.units = this.element.units
+      this.units = this.element?.element_unit?.abbreviation
       // this.min = this.element.min
       // this.max = this.element.max
-      this.getElementAvailable()
+      //this.getElementAvailable()
     }
-    console.log('[ElementsAddPage] selectedElement()', this.element);
+    console.log('[ElementsAddPage] selectedElement()', this.element , this.element.element_unit.abbreviation);
   }
 
   isValueCorrect(value){

@@ -168,7 +168,7 @@ export class AppComponent implements OnInit {
       'pushNotificationReceived',
       async (notification: PushNotification) => {
         this.badge.increase(1);
-        console.log('Push received:');
+        console.log('[pushNotificationReceived] Push received:');
         console.log(notification);
 
         //cordova.plugins.CordovaCall.receiveCall('El teu metge', 'id');

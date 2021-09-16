@@ -39,12 +39,12 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_type' | translate }}</ion-label>
-        <ion-text class="textMedium">{{this.getReminderType()}}</ion-text>
+        <ion-text class="textMedium">{{this.type}}</ion-text>
       </ion-item>
-      <ion-item routerLink="detail" [state]="{ event: reminder}" routerLinkActive='active-item'>
-        <ion-label>{{ 'reminder.field_appointment' | translate }}</ion-label>
-        <ion-text class="textMedium">{{reminder?.title}}</ion-text>
-        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+      <ion-item (click)="actionIntrucction()">
+        <ion-label>{{ (this.isElement)?('reminder.field_reminder' | translate) :('reminder.field_appointment' | translate) }}</ion-label>
+        <ion-text class="textMedium">{{this.getReminderTitle()}}</ion-text>
+        <ion-icon  name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
