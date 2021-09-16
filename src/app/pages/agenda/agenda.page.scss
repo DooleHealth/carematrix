@@ -20,6 +20,8 @@
     border: 0px !important;
     border-bottom:  0.5px solid #BDC3C7 !important;//  rgb(143, 143, 143) 
     color: #7F8C8D;
+  
+ 
   };
   td {
     padding: 10px;
@@ -31,9 +33,10 @@
 
   .dayWeek{
     font-size: 14px;
-    width: 35px;
+    width: 36px;
     height: 36px;
     border-radius: 50%;
+ 
   }
 
   .monthview-disabled{
@@ -56,14 +59,15 @@
   .monthview-eventdetail-timecolumn{
     color: #7f8c8d!important;
   }
- 
   .monthview-selected  {
+    background-color: rgba(255, 255, 255, 0) !important;
+  }
+  .monthview-selected  .dayWeek {
     background-color: var(--ion-color-primary) !important;
     border-radius: 50%;
-    max-width: 10px!important;
+    max-width: 100px!important;
     color: white !important;
   }
-
 
 .blanco{
   background-color: white!important;
