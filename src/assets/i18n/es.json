@@ -343,6 +343,7 @@
         "field_place": "Lugar",
         "field_all_day": "Todo el día",
         "field_appointment": "Cita relacionada",
+        "field_reminder": "Recordatorio relacionado",
         "field_start": "Empieza",
         "field_end": "Termina",
         "field_duration": "Duración",
@@ -362,6 +363,9 @@
         "confirmation_delete_reminder":"¿Estás seguro de eliminar el recordatorio personal?",
         "error_message_added_reminder":"Ha ocurrido un error al guardar los datos",
         "error_message_delete_reminder":"Ha ocurrido un error al eliminar el recordatorio",
+        "personal": "Personal",
+        "medical": "Médico",
+        "activity": "Actividad",
         "week_day": "Días de la semana",
         "day":{
           "day1": "Lunes",

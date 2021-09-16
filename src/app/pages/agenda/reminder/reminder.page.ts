@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 
 @Component({
@@ -21,6 +23,8 @@ export class ReminderPage implements OnInit {
   times = []
   frequencySeleted = 'daily';
   expanded = true
+  type = ''
+  isElement = false
   constructor(
     private loadingController: LoadingController,
     private dooleService: DooleService,
@@ -28,6 +32,8 @@ export class ReminderPage implements OnInit {
     private translate : TranslateService,
     public alertController: AlertController,
     private modalCtrl: ModalController,
+    public nav: NavController,
+    public notification: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -62,6 +68,7 @@ export class ReminderPage implements OnInit {
             let t = element.time.split(':')
             this.times.push(t[0]+':'+t[1])
           });
+          this.selectType(  this.reminder )
           this.selectedFrequency(res.reminder?.frequency)
         }
         this.isLoading = false
@@ -130,9 +137,8 @@ export class ReminderPage implements OnInit {
     this.days.forEach((day, i) =>{
       let d = day['day'+(i +1)]
       if(d==0 || d == false) ceros =0
-      console.log('[DrugsDetailPage] gettingFrequency() day', d, day);
     })
-    console.log('[DrugsDetailPage] gettingFrequency() day', this.days);
+    //console.log('[DrugsDetailPage] gettingFrequency() day', this.days);
     if(ceros==0){
       this.frequency = this.translate.instant('reminder.frequency.custom');
       this.frequencySeleted =  'custom'
@@ -185,5 +191,87 @@ export class ReminderPage implements OnInit {
     type =  this.reminder?.reminder_origin_type?.split("App\\")[1]
      return type
   }
+
+  getReminderTitle(){
+    let type = (this.reminder?.reminderable?.title)? this.reminder?.reminderable.title : this.reminder?.reminderable?.name
+    if(type == undefined)
+    type =  this.reminder?.reminder_origin_type?.split("App\\")[1]
+     return type
+  }
+
+  selectType( instruction){
+    console.log('[AgendaPage] selectType()',  instruction);
+    //let type = ''
+    switch (instruction?.reminderable_type) {
+      case "App\\Element": 
+        this.type = this.translate.instant('reminder.activity')
+        this.isElement = true
+        break;
+      case  "App\\Advice":
+        break;
+      case  "App\\Diet":
+        break;
+      case  "App\\Form":
+        break;
+      case  "App\\Agenda":
+        if(instruction?.reminderable?.model_type == "App\\Visit")
+        this.type = this.translate.instant('reminder.medical')
+        else
+        this.type = this.translate.instant('reminder.personal')
+        break;
+    
+      default:
+        this.type = this.translate.instant('reminder.personal')
+        break;
+    }
+    //return type
+  }
+
+  actionIntrucction(){
+    let instruction = this.reminder
+    console.log('[AgendaPage] actionIntrucction()',  instruction);
+    let id
+    switch (instruction.reminderable_type) {
+      case "App\\Element":
+        id = instruction.reminderable_id
+        console.log('[AgendaPage] actionIntrucction()',  id);
+        this.addElement(id)
+        break;
+      case  "App\\Agenda":
+        id = instruction.reminderable_id
+        this.nav.navigateForward("agenda/detail", { state: {event: this.reminder} });
+        break;
+    
+      default:
+        id = instruction.reminderable_id
+        if(instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda"){
+            id = instruction?.reminder_origin_id
+            if(id)
+            this.nav.navigateForward("agenda/detail", { state: {event: this.reminder} });
+        }
+        break;
+    }
+  }
+
+  async addElement(id){
+    const modal = await this.modalCtrl.create({
+      component: ElementsAddPage,
+      componentProps: {id: id },
+      cssClass: "modal-custom-class"
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        if(result?.data['action'] === 'add'){
+          this.notification.displayToastSuccessful()
+         }
+        if(result?.data['error']){
+        //TODO: handle error message
+        }
+    });
+    await modal.present();
+  }
+
+
 
 }
