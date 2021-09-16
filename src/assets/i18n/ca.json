@@ -667,6 +667,11 @@
         "header": "Receptes",
         "ingredients": "Ingredients",
         "family": "família"
+      },
+      "notifications":{
+        "register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions.",
+        "voip_register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions VoIP."
+
       }
       
 }

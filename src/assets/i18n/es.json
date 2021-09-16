@@ -670,6 +670,10 @@
         "header": "Recetas",
         "ingredients": "Ingredientes",
         "family": "Familia"
+      },
+      "notifications":{
+        "register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones.",
+        "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP."
       }
 
       

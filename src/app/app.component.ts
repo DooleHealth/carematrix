@@ -161,7 +161,8 @@ export class AppComponent implements OnInit {
     );
  
     PushNotifications.addListener('registrationError', (error: any) => {
-      console.log('Error: ' + JSON.stringify(error));
+      console.error('Error: ' + JSON.stringify(error));
+      alert(this.translate.instant('notifications.register_error'));
     });
  
     PushNotifications.addListener(
@@ -406,7 +407,7 @@ export class AppComponent implements OnInit {
 
     pushvoip.on('error', function (e) {
       console.log("[Ionic] VoIPPushNotification error");
-      console.log(e);
+      alert(this.translate.instant('notifications.voip_register_error'))
     });
   }
 
