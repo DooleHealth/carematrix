@@ -24,10 +24,10 @@
         </ion-buttons>
       </ion-col>
     </ion-row>
-
-    <ion-buttons slot="end" *ngSwitchCase="'medication'">
+    <!-- hide medication shipping cart -->
+    <!-- <ion-buttons slot="end" *ngSwitchCase="'medication'">
       <ion-icon class="primaryIcon" slot="icon-only" name="cart-outline" routerLink="/medication"  routerLinkActive='active-item'></ion-icon>
-    </ion-buttons>
+    </ion-buttons> -->
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDrug()"></ion-icon>
