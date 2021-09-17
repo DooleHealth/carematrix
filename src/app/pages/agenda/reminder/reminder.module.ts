@@ -10,6 +10,7 @@ import { ReminderPage } from './reminder.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReminderAddPageModule } from '../reminder-add/reminder-add.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     ComponentsModule,
     ReminderPageRoutingModule,   
     TranslateModule,
-    ReminderAddPageModule
+    ReminderAddPageModule,
+    ElementsAddPageModule,
   ],
   declarations: [ReminderPage]
 })
