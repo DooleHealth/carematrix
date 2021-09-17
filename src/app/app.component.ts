@@ -16,6 +16,8 @@ import { VideoComponent } from './components/video/video.component';
 import { OpentokService } from './services/opentok.service';
 import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
+import { environment } from 'src/environments/environment';
 
 
 const { PushNotifications, LocalNotifications } = Plugins;
@@ -73,6 +75,7 @@ export class AppComponent implements OnInit {
     this.setLanguage();
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
+    FirebaseAnalytics.initializeFirebase(environment.firebase);
     this.platform.ready().then(() => {
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
