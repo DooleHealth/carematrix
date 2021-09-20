@@ -11,6 +11,7 @@ export const environment = {
     projectId: "deneb-65a05",
     storageBucket: "deneb-65a05.appspot.com",
     messagingSenderId: "429887824166",
-    appId: "1:429887824166:web:8ae6abb69c876697d121e7"
+    appId: "1:429887824166:web:8ae6abb69c876697d121e7",
+    measurementId: "G-QQ3CM8YL1S"
   }
 };

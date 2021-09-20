@@ -102,6 +102,8 @@ export class AgendaPage implements OnInit {
         if(res.reminders && res.reminders?.length > 0){
           this.addReminderToCalendar(res.reminders)
           this.eventSource = [].concat(this.appointment, this.reminders)
+        }else{
+          this.eventSource = this.appointment
         }
        },(err) => { 
           console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message); 
