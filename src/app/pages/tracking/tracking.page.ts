@@ -83,7 +83,6 @@ export class TrackingPage implements OnInit {
   }
 
   async getFilteredDiagnosticTests(){
-    if(!this.listDiagnostic){
       console.log('[TrackingPage] getFilteredDiagnosticTests()' ,  this.filter);
       this.loadingTests = true
       this.dooleService.getAPIfilteredDiagnosticTest(this.filter).subscribe(
@@ -103,20 +102,16 @@ export class TrackingPage implements OnInit {
             this.loadingTests = false
             throw err; 
         });
-    }
     
   }
 
   async getDiagnosticTests(){
-    if(!this.diagnosticTests){
       this.loadingTests = true
       this.dooleService.getAPIdiagnosticTests().subscribe(
         async (res: any) =>{
-  
           if(await res.success){
             this.diagnosticTests = []
             this.listDiagnostic = []
-            console.log('[TrackingPage] getDiagnosticTests()', await res);
             this.diagnosticTests =  res.diagnosticTests
             if(this.diagnosticTests?.length > 0 )
               this.groupDiagnosticsByDate(res)
@@ -131,9 +126,7 @@ export class TrackingPage implements OnInit {
             console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
             this.loadingTests = false
             throw err; 
-        });
-    }
-   
+        });   
   }
 
   groupDiagnosticsByDate(list){
@@ -153,8 +146,6 @@ export class TrackingPage implements OnInit {
 
 
   async getFormList(){
-
-    if(!this.forms){
       this.loadingForms = true
       this.dooleService.getAPIformLists().subscribe(
         async (res: any) =>{
@@ -168,12 +159,9 @@ export class TrackingPage implements OnInit {
             this.loadingForms = false
             throw err; 
         });
-    }
   }
 
   async getElementsList(){
-    
-    if(!this.groupedElements){
       this.loadingGraphics = true
       this.groupedElements = [];
       this.elementValues = [];
@@ -196,7 +184,6 @@ export class TrackingPage implements OnInit {
             this.loadingGraphics = false
             throw err; 
         });
-    }
    
   }
 
@@ -278,6 +265,7 @@ async addDocument(){
           //this.dooleService.presentAlert(message)
         }else if(result?.data?.action == 'add'){
           this.notification.displayToastSuccessful()
+          this.getElementsList()
         }
       });
   

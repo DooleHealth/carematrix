@@ -496,6 +496,7 @@ export class DiaryPage implements OnInit {
             //this.dooleService.presentAlert(message)
           }else if(result?.data?.action == 'add'){
             this.notification.displayToastSuccessful()
+            this.getElementsList()
           }
         });
     
