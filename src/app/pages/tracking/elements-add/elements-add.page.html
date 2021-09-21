@@ -43,7 +43,7 @@
 
       <ion-item lines="none" *ngIf="this.element">
         <ion-label>{{ 'element.field_units' | translate}}</ion-label>
-        <ion-text slot="end">{{this.units}}</ion-text >
+        <ion-text slot="end">{{ (this.units)? this.units: ''}}</ion-text >
       </ion-item>
     </ion-list>
   </ion-card>
