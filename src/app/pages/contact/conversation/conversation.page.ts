@@ -144,13 +144,15 @@ export class ConversationPage implements OnInit {
       //si envia un altre, marquem com a rebut el missatge
       if( (data.val().userId != this.authService.user.idUser)){
         var msg = this;
+        console.log('force update 1');
         //this.nativeAudio.play('received', () => console.log('uniqueId1 is done playing'));
         firebase.database().ref('/room-messages/'+msg.id).child(data.key).child(msg.authService?.user.idUser).once('value').then(function(snapshot) {
             //si no hem llegit
-            if(snapshot.numChildren()==0){
+            console.log('force update 2');
+            if(snapshot?.numChildren()==0){
                 //marquem com a rebut
                 //this.nativeAudio.play('received', () => console.log('uniqueId1 is done playing'));
-
+                console.log('force update 3');
                 var newPostKey = firebase.database().ref().child('room-messages').child(msg.id).child(data.key).child(msg.authService?.user.idUser).push().key;
                 var updates = {};
                 updates['/room-messages/'+msg.id+"/"+ data.key+"/"+msg.authService?.user.idUser] = {state:2};
@@ -160,6 +162,7 @@ export class ConversationPage implements OnInit {
                 //console.log("marcat com a llegit")
                 });
             }else{
+              console.log('force update 4');
             }
         });
     }
@@ -401,6 +404,7 @@ export class ConversationPage implements OnInit {
   }
 
   public observeTyping(){
+    console.log("observeTyping()");
     if(this.id.length==0) return;
 
     var typingIndicatorRef = firebase.database().ref('room-typing').child(this.id);
