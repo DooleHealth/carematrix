@@ -11,6 +11,7 @@ export class DoctorsPage implements OnInit {
   doctor : any ={}
   allowed = []
   isAllowed = false
+  staff
   constructor(
     private dooleService: DooleService, private router: Router
   ) { }
@@ -19,8 +20,24 @@ export class DoctorsPage implements OnInit {
     this.doctor = history.state.doctor;
    
     console.log('[DoctorsPage] ngOnInit()', this.doctor);
-    if(this.doctor)
-    this.getAllowedContacts()
+    if(this.doctor){
+      this.getDoctor()
+      this.getAllowedContacts()
+    }
+  }
+
+  getDoctor(){
+    this.dooleService.getAPIstaffId(this.doctor.id).subscribe(
+      async (res: any) =>{
+        console.log('[AgendaPage] getDoctor()', await res);
+        if(res.success){
+          this.doctor = res.staff
+        }
+
+       },(err) => { 
+          console.log('[AgendaPage] getDoctor() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
   }
 
   getAllowedContacts(){
@@ -41,15 +58,19 @@ export class DoctorsPage implements OnInit {
 
   isAllowedDoctor(){
     let contact = this.allowed.find(user => user.id == this.doctor.id)
-    if(contact?.id === this.doctor.id) this.isAllowed = true
+    if(contact?.id === this.doctor.id) {
+      this.staff = contact
+      this.isAllowed = true
+    }
   }
 
-  redirect(doctor){
-
-    if(this.doctor){
-      this.router.navigate(['/contact/chat/conversation'],{state:{staff:doctor, chat:doctor.message_header_id}})
+  redirect(){
+    //let doctor = this.staff
+    console.log('[AgendaPage] redirect()', this.staff);
+    if(this.staff){
+      this.router.navigate(['/contact/chat/conversation'],{state:{staff:this.staff, chat:this.staff.message_header_id}})
     }else{
-      this.router.navigate(['bookings'], {state:{staff:doctor, isOnline:history.state.isOnline}});
+      this.router.navigate(['bookings'], {state:{staff:this.staff, isOnline:history.state.isOnline}});
     }
   }
 
