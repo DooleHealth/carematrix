@@ -14,6 +14,7 @@ import { LanguageService } from 'src/app/services/language.service';
 })
 export class LoginPage implements OnInit {
   @Input()credentials: {username, password, hash};
+  language: any;
   constructor( 
     private authService: AuthenticationService, 
     private dooleService: DooleService, 
@@ -42,6 +43,7 @@ export class LoginPage implements OnInit {
         this.analyticsService.logEvent('login', res)
         this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         this.analyticsService.logEvent('user_doole', {userId: res.idUser})
+        this.setLocalLanguages(res.language)
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
@@ -58,6 +60,14 @@ export class LoginPage implements OnInit {
      this.modalCtrl.dismiss({error:error});
      throw error;
    });
+  }
+
+  setLocalLanguages(language){
+    if(language == 'es-es')
+    this.language = 'es'
+    else
+    this.language = language
+    this.languageService.setLenguageLocalstorage(this.language)
   }
 
 

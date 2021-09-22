@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as HighCharts from 'highcharts';
+import { element } from 'protractor';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -41,6 +42,8 @@ export class ActivityGoalPage implements OnInit {
   max: Date = new Date();
   curr: Date = new Date();
   segmentFilter = "1d";
+  times = []
+  typeChart
   constructor(
     private dooleService: DooleService,
     private languageService: LanguageService,
@@ -99,10 +102,30 @@ export class ActivityGoalPage implements OnInit {
         var y = mydate.getFullYear();
         element.date = d + "-" + m + "-" + y;
         var k = [];
-        k.push(element.timestamp * 1000);
+        if(interval == '1d'){
+          this.typeChart = 'category'
+          let time = element.date_value.split(' ')[1]
+          let hour = time.split(':')[0]+':'+time.split(':')[1]
+          k.push(hour);
+        }
+        else if(interval == '1w'){
+          this.typeChart = 'category'
+          let date = this.formatSelectedDate2(element.date_value, 'd MMM')
+          k.push(date);
+        }
+        else if(this.values.length >= 1 && this.values.length < 4){
+          this.typeChart = 'category'
+          let date = this.formatSelectedDate2(element.date_value, 'd. MMM')
+          k.push(date);
+        }
+        else{
+          this.typeChart = 'datetime'
+          k.push(element.timestamp * 1000);
+        }
         k.push(element.valueNumeric);
         this.graphData.push(k);
         dArray.push(y + "-" + m + "-" + d + " " + element.time);
+        //console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
       });
 
       json.ranges.forEach(range => {
@@ -159,6 +182,7 @@ export class ActivityGoalPage implements OnInit {
 
 
   generateChart() {
+    console.log('[ActivityGoalPage] generateChart()', this.times);
     HighCharts.chart('container', {
       chart: {  
         type: (this.graphData.length > 4)? 'line':'column',  //'line' 'area'
@@ -169,9 +193,8 @@ export class ActivityGoalPage implements OnInit {
         text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
       },
       xAxis: {
-        //categories: ['L', 'M', 'MX', 'J', 'V', 'S', 'D'],
-        type: 'datetime',
-        maxRange: this.min.getTime(),
+         type:  this.typeChart,
+         maxRange: this.min.getTime(),
   
       },   
       yAxis: {
@@ -364,6 +387,17 @@ export class ActivityGoalPage implements OnInit {
   formatSelectedDate(date, format){
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, format);
+  }
+
+  formatSelectedDate2(d, format){
+    var auxdate = d.split(' ')
+    let date = new Date(auxdate[0]);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe('en');
     return datePipe.transform(date, format);
   }
 
