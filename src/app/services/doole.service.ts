@@ -1255,7 +1255,7 @@ export class DooleService {
   }
 
   getAPIstaffId(id): Observable<any> {
-    let path = `user/staff/${id}`;
+    let path = `staff/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
