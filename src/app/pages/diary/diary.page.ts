@@ -201,6 +201,7 @@ export class DiaryPage implements OnInit {
   async getDrugIntakeList(){
     console.log('[DiaryPage] getDrugIntakeList()');
     this.items = []
+    this.listDrug = []
     this.isLoading = true
     let formattedDate = this.transformDate(this.date)
     let date = {date: formattedDate}
@@ -209,9 +210,11 @@ export class DiaryPage implements OnInit {
         console.log('[DiaryPage] getDrugIntakeList()', await res);
         let list = res.drugIntakes
         if(list){
+          this.items = []
           this.listDrug = []
           list = this.sortDate(list)
           this.addItems(list)
+          console.log('[DiaryPage] getDrugIntakeList() items', this.items);
           this.groupDiagnosticsByDate(this.items)
         }
         this.isLoading = false
