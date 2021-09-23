@@ -193,6 +193,12 @@ export class ReminderPage implements OnInit {
   }
 
   getReminderTitle(){
+    if(this.reminder?.reminder_origin?.title){
+        if(this.reminder?.reminder_origin?.title.length > 25)
+        return this.reminder?.reminder_origin?.title.substr(0,24)+'...'
+        else
+        return this.reminder?.reminder_origin?.title
+    }
     let type = (this.reminder?.reminderable?.title)? this.reminder?.reminderable.title : this.reminder?.reminderable?.name
     if(type == undefined)
     type =  this.reminder?.reminder_origin_type?.split("App\\")[1]
@@ -210,8 +216,10 @@ export class ReminderPage implements OnInit {
       case  "App\\Advice":
         break;
       case  "App\\Diet":
+        this.type = this.translate.instant('reminder.diet')
         break;
       case  "App\\Form":
+        this.type = this.translate.instant('reminder.form')
         break;
       case  "App\\Agenda":
         if(instruction?.reminderable?.model_type == "App\\Visit")
@@ -238,16 +246,19 @@ export class ReminderPage implements OnInit {
         this.addElement(id)
         break;
       case  "App\\Agenda":
-        id = instruction.reminderable_id
-        this.nav.navigateForward("agenda/detail", { state: {event: this.reminder} });
+        let agenda = instruction?.reminder_origin
+        this.nav.navigateForward("agenda/detail", { state: {event: agenda} });
         break;
     
       default:
         id = instruction.reminderable_id
         if(instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda"){
             id = instruction?.reminder_origin_id
-            if(id)
-            this.nav.navigateForward("agenda/detail", { state: {event: this.reminder} });
+            if(id){
+              console.log('[AgendaPage] actionIntrucction()',  id);
+              let agenda = instruction?.reminder_origin
+              this.nav.navigateForward("agenda/detail", { state: {event: agenda} });
+            }
         }
         break;
     }

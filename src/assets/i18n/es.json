@@ -366,6 +366,8 @@
         "personal": "Personal",
         "medical": "Médico",
         "activity": "Actividad",
+        "form": "Formulario",
+        "diet": "Dieta",
         "week_day": "Días de la semana",
         "day":{
           "day1": "Lunes",
@@ -473,6 +475,7 @@
           "field_data": "Dato",
           "field_measure": "Valor",
           "field_units": "Unidades",
+          "field_date": "Fecha",
           "alert_message_add_element": "Los datos ha sido añadido correctamente",
           "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
           "value_invalid":"El valor no es válido. Ingresa un valor de"

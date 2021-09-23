@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
   }
   WAIT_TIME = 10 //10 minutes 
   userDoole : any = {}
-  goals: Goal[] =[]
+  goals: any =[]
   diets: any =[]
   drugs: Drug[] =[]
   games =[]
@@ -73,6 +73,7 @@ export class HomePage implements OnInit {
     spaceBetween: 0,
     centeredSlides: false,
    };
+
    @ViewChild('sliderGoals') sliderGoals: IonSlides;
    @ViewChild('sliderDiet') sliderDiet: IonSlides;
    @ViewChild('sliderDrug') sliderDrug: IonSlides;
@@ -84,6 +85,7 @@ export class HomePage implements OnInit {
    infoDrugs: UserInformation
    infoGames: UserInformation
    infoActivity: UserInformation
+   infoGoals: UserInformation
   constructor(
     public router:Router,
     public platform: Platform,
@@ -104,7 +106,6 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() { 
-    
     this.date = this.transformDate(Date.now())
     this.checkHealthAccess();
     this.getUserInformation();
@@ -112,7 +113,7 @@ export class HomePage implements OnInit {
 
 
   ionViewWillEnter(){
-    this.date = this.transformDate(Date.now())
+   // this.date = this.transformDate(Date.now())
     if(!this.authService.user || history.state?.userChanged )
       this.getUserInformation()
    
@@ -150,17 +151,22 @@ export class HomePage implements OnInit {
     this.activity = []
     let date2= this.transformDate2(this.date)
     let date = {date: date2, from_date: this.date, to_date: this.date}
-    console.log('[HomePage] getUserInformation()',  date);
+
     this.dooleService.getAPIinformationSummary(date).subscribe(
       async (res: any) =>{
         await res;
 
         //console.log('[HomePage] getUserInformation()',  res);
-
         this.userDoole = res.data?.profile;
-        this.goals = res.data?.goals;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
+
+        if(res.data?.goals){
+          this.goals = res.data?.goals
+           this.infoGoals = {
+            title: this.goals[0]?.typeString +' '+this.goals[0]?.element?.element_unit?.abbreviation
+          }
+        }
 
         //diets
         this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes) 
@@ -362,10 +368,15 @@ export class HomePage implements OnInit {
     //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
-  slideGoalChange() {		    
+  slideGoalChange() {	
+    if(this.goals !== undefined && this.goals?.length > 0) 	    
 		this.sliderGoals.getActiveIndex().then(index => {      
       //console.log('[HomePage] slideGoalChange()', index);
       let slider = this.goals[index]
+         console.log('[HomePage] slideGoalChange()', slider);
+      this.infoGoals = {
+        title: slider?.typeString +' '+slider?.element?.element_unit?.abbreviation
+      }
     });
   }
 

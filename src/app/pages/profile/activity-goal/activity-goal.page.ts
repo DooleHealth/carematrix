@@ -44,6 +44,7 @@ export class ActivityGoalPage implements OnInit {
   segmentFilter = "1d";
   times = []
   typeChart
+  minY = 0
   constructor(
     private dooleService: DooleService,
     private languageService: LanguageService,
@@ -74,6 +75,7 @@ export class ActivityGoalPage implements OnInit {
     this.isLoading = true
     let vArray = [];
     let dArray = [];
+    let numDay = 0;
 
     this.dooleService.getAPIgraphicsElement(this.id, interval).subscribe(async json => {
       console.log('[ActivityGoalPage] loadData()', await json);
@@ -86,6 +88,7 @@ export class ActivityGoalPage implements OnInit {
       var min = null, max = null;
 
       this.values = this.filterDate(this.values)
+      numDay = this.returnNumDays(this.values)
 
       this.values.forEach(element => {
         if (min == null || min > element.value)
@@ -102,6 +105,7 @@ export class ActivityGoalPage implements OnInit {
         var y = mydate.getFullYear();
         element.date = d + "-" + m + "-" + y;
         var k = [];
+
         if(interval == '1d'){
           this.typeChart = 'category'
           let time = element.date_value.split(' ')[1]
@@ -113,7 +117,7 @@ export class ActivityGoalPage implements OnInit {
           let date = this.formatSelectedDate2(element.date_value, 'd MMM')
           k.push(date);
         }
-        else if(this.values.length >= 1 && this.values.length < 4){
+        else if(this.values.length >= 1 && this.values.length < 4 || numDay<4){
           this.typeChart = 'category'
           let date = this.formatSelectedDate2(element.date_value, 'd. MMM')
           k.push(date);
@@ -166,7 +170,7 @@ export class ActivityGoalPage implements OnInit {
 
       this.graphValues = vArray;
       this.graphDates = dArray;
-
+      this.minY = Math.min.apply(null,vArray)
       this.values = this.values.reverse();
 
       console.log(this.graphData)
@@ -178,6 +182,26 @@ export class ActivityGoalPage implements OnInit {
     },()=>{
       this.isLoading = false
     });
+  }
+
+  returnNumDays(values){
+    let newDate = ''
+    let count = 0;
+    let numDay = 0;
+
+    for(let i = 0 ; i < values.length; i ++){
+      let date = values[i].date.split(' ')[0]
+      if(newDate ===  date){
+        count++
+      }else{
+        numDay++
+        console.log(`[ActivityGoalPage] returnNumDays() newDate ${newDate} count ${numDay}`)
+      }
+      newDate =  date
+      if(numDay > 3) 
+        break;
+    }
+    return numDay
   }
 
 
@@ -198,7 +222,7 @@ export class ActivityGoalPage implements OnInit {
   
       },   
       yAxis: {
-        // min: 0,  
+        min: this.minY,  
         title: {
           text: this.units,
           align: 'high'

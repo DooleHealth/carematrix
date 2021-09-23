@@ -361,6 +361,8 @@
         "personal": "Personal",
         "medical": "Metge",
         "activity": "Activitat",
+        "form": "Formulari",
+        "diet": "Dieta",
         "week_day": "Dies de la setmana",
         "day":{
           "day1": "Dilluns",
@@ -504,6 +506,7 @@
         "field_data": "Dada",
         "field_measure": "Valor",
         "field_units": "Unitats",
+        "field_date": "Data",
         "alert_message_add_element": "Les dades ha estat afegit correctament",
         "error_alert_message_add_element": "Hi ha hagut un error a l'afegir el valor",
         "value_invalid":"El valor no és vàlid. Ingressa un valor de"
