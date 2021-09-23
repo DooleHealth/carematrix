@@ -4,10 +4,11 @@ ion-back-button {
 }
 
 .img-wrapper {
-  max-height:100px;
-  max-width: 100px;
+  height: 81px;
+  width: 81px;
   display: block;
   margin: auto;
+  object-fit: cover;
 }
 
 .paddingGrid {
