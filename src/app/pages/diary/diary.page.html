@@ -149,6 +149,7 @@
         <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <ion-list *ngIf="listDrug.length > 0; else noData">
+        <br>
         <ion-list *ngFor="let list of this.listDrug">
           <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date| titlecase}}</ion-label>
           <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" (click)="expandItem(item)">
@@ -257,6 +258,7 @@
         <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <div *ngIf="!this.isLoading && groupedElements.length > 0; else noData">
+        <br>
         <ion-list *ngFor="let group of this.groupedElements">
           <ion-label *ngIf="group?.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
           <ion-card class="cardProfile" *ngFor="let element of this.group.elements">

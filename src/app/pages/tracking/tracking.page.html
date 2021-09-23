@@ -62,6 +62,7 @@
       <div
         *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0; else noData"
       >
+      <br>
         <ion-list
           *ngFor="let list of this.listDiagnostic; let i = index"
           (mouseover)="fireEvent($event,i)"
@@ -217,6 +218,7 @@
       <div
         *ngIf="!this.loadingGraphics && this.groupedElements && this.groupedElements.length > 0; else noData"
       >
+      <br>
         <ion-list *ngFor="let group of this.groupedElements">
           <ion-label *ngIf="group.elements.length > 0" class="txtTitle"
             >{{group.group }}</ion-label
