@@ -60,7 +60,7 @@
                   <ion-label class="event-detail2" text-wrap>{{event.type}}</ion-label>
                 </ion-col>
               </ion-row>
-              <ion-row *ngIf="event.origin == 1">
+              <ion-row *ngIf="event.origin == 1 || event.is_reminder">
                 <ion-col class="event-detail">{{event.title}}</ion-col>
               </ion-row>
               <ion-row *ngFor="let doctor of event.staff;">

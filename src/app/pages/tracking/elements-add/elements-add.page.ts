@@ -42,6 +42,7 @@ export class ElementsAddPage implements OnInit {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
     this.date =  localISOTime;
+    console.log('[ElementsAddPage] formatDate() constructor()', this.date);
   }
 
   ngOnInit() {
@@ -50,14 +51,20 @@ export class ElementsAddPage implements OnInit {
       data: ['', [Validators.required]],
       measure: ['', [Validators.required]],
       units: [''],
-      date: [''],
+      date: [this.date],
 
     });
 
   }
   ionViewDidEnter(){
-    console.log('[ElementsAddPage] ionViewDidEnter()');
+    //console.log('[ElementsAddPage] ionViewDidEnter()');
     this.getIdElement()
+  }
+
+  formatDate(){
+    let date = new Date(this.form.get('date').value)
+    const localISOTime = (date).toISOString().slice(0, -1);
+    this.date =  localISOTime;
   }
 
   submit(){
@@ -90,6 +97,7 @@ export class ElementsAddPage implements OnInit {
 
   async addElement() {
     this.isLoading = true
+    this.formatDate()
     const postData = {
       date_value: this.date,
       value: this.form.get('measure').value,

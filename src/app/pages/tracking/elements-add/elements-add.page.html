@@ -41,10 +41,17 @@
         <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
       </ion-item>
 
-      <ion-item lines="none" *ngIf="this.element">
+      <ion-item *ngIf="this.element">
         <ion-label>{{ 'element.field_units' | translate}}</ion-label>
         <ion-text slot="end">{{ (this.units)? this.units: ''}}</ion-text >
       </ion-item>
+
+      <ion-item lines="none" *ngIf="this.element">
+        <ion-label>{{ 'element.field_date' | translate}}</ion-label>
+        <ion-datetime displayFormat="D MMM YYYY" min="1990-01-01" [max]="date" formControlName="date" class="textMedium" required></ion-datetime>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+
     </ion-list>
   </ion-card>
 </form>
