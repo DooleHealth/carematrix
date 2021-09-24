@@ -56,15 +56,6 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     return event;
   }
 
-  // private handleErrorResponse(error):  Observable<HttpEvent<any>> {
-  //   // console.log('response at interceptor', event);
-
-  //   {
-        
-      
-
-  //   }
-  // }
   private handleRequestCompleted(): void {
     console.log(`Request finished`);
   }
