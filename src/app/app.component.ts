@@ -416,7 +416,7 @@ export class AppComponent implements OnInit {
         }
       }else{
         console.log("voip notification as message");
-        self.showNotification(notification);
+        //self.showNotification(notification);
       }
      
     });

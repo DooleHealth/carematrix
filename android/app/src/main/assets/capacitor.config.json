@@ -35,7 +35,7 @@
   },
   "LocalNotifications": {
     "smallIcon": "ic_stat_circle_notifications",
-    "iconColor": "#FF0000"
+    "iconColor": "#009CB3"
   },
   "cordova": {}
 }
