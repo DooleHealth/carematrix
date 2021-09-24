@@ -60,6 +60,7 @@ export class LandingPage implements OnInit {
   ionViewDidEnter(){
     this.loginForm.get('username').setValue('')
     this.loginForm.get('password').setValue('')
+    this.loginForm.get('hash').setValue('')
     this.getStoredValues()
   }
   
@@ -74,6 +75,11 @@ export class LandingPage implements OnInit {
     this.submitError = null;
   }
 
+  submit(){
+    this.loginForm.get('hash').setValue('')
+    this.doDooleAppLogin()
+  }
+
   async doDooleAppLogin() : Promise<void> {
     const modal = await this.modalCtrl.create({
       component: LoginPage,
@@ -86,6 +92,10 @@ export class LandingPage implements OnInit {
         if(error){
           let message = error
           this.dooleService.presentAlert(message)
+        }else{
+          this.loginForm.get('username').setValue('')
+          this.loginForm.get('password').setValue('')
+          this.loginForm.get('hash').setValue('')
         }
     });
 
@@ -169,6 +179,7 @@ export class LandingPage implements OnInit {
       })
         .then(async (result: any) => { 
           console.log("[LandingPage] doBiometricLogin()", result);
+          this.loginForm.get('hash').setValue(this.biometricAuth.hash)
           this.doDooleAppLogin()
         })
         .catch((error: any) => {
@@ -193,7 +204,7 @@ export class LandingPage implements OnInit {
     if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
       this.hasBiometricAuth = true;
       this.biometricAuth = JSON.parse(biometricToken) ;
-      this.loginForm.get('hash').setValue(this.biometricAuth.hash)
+      //this.loginForm.get('hash').setValue(this.biometricAuth.hash)
     }else{
       this.hasBiometricAuth = false;
     }
