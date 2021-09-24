@@ -108,13 +108,11 @@ export class HomePage implements OnInit {
   async ngOnInit() { 
     this.date = this.transformDate(Date.now())
     this.checkHealthAccess();
-    this.getUserInformation();
+    //this.getUserInformation();
   }
 
 
   ionViewWillEnter(){
-   // this.date = this.transformDate(Date.now())
-    if(!this.authService.user || history.state?.userChanged )
       this.getUserInformation()
    
   }

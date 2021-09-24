@@ -165,7 +165,7 @@
               <ion-grid>
                 <div *ngIf="slide.items.length <= 3">
                   <ion-row *ngFor="let e of slide.items; let i = index">
-                    <p style="text-align: left" (click)="goDetailRecipe(e)">- {{e.item?.name[0].toUpperCase()+''+ e.item?.name.substr(1).toLowerCase()}} ({{e?.quantity}})</p>
+                    <p style="text-align: left" (click)="goDetailRecipe(e)">- {{e.item?.name[0]?.toUpperCase()+''+ e.item?.name.substr(1)?.toLowerCase()}} ({{e?.quantity}})</p>
                   </ion-row> 
                 </div>
                 <div *ngIf="slide.items.length > 3" class="textBlueCenter" style="align-items: center;" routerLink="/journal">

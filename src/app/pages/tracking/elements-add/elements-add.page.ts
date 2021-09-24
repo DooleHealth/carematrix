@@ -29,7 +29,7 @@ export class ElementsAddPage implements OnInit {
   // units:any
   min: any
   max: any
-  
+  maxDate
   constructor(
     private fb: FormBuilder,
     private dooleService: DooleService,
@@ -42,6 +42,7 @@ export class ElementsAddPage implements OnInit {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
     this.date =  localISOTime;
+    //this.maxDate = (new Date().setHours(24)).toLocaleString()
     console.log('[ElementsAddPage] formatDate() constructor()', this.date);
   }
 
@@ -63,8 +64,10 @@ export class ElementsAddPage implements OnInit {
 
   formatDate(){
     let date = new Date(this.form.get('date').value)
-    const localISOTime = (date).toISOString().slice(0, -1);
+    const tzoffset = (date).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(date.getTime() - tzoffset)).toISOString()
     this.date =  localISOTime;
+     console.log('[ElementsAddPage] formatDate()', this.date );
   }
 
   submit(){
@@ -103,7 +106,7 @@ export class ElementsAddPage implements OnInit {
       value: this.form.get('measure').value,
       value2: undefined //this.value2
     };
-
+    return
     this.dooleService.postAPIaddElement( this.element.id ,postData).subscribe(
         async (data) => {
           console.log("[ElementsAddPage] addElement()",data);
