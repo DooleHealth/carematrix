@@ -108,7 +108,7 @@ export class ElementsAddPage implements OnInit {
       value: this.form.get('measure').value,
       value2: undefined //this.value2
     };
-    return
+
     this.dooleService.postAPIaddElement( this.element.id ,postData).subscribe(
         async (data) => {
           console.log("[ElementsAddPage] addElement()",data);

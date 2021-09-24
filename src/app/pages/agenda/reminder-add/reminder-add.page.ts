@@ -16,6 +16,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class ReminderAddPage implements OnInit {
   @Input()typeId: string;
   @Input()type: string;
+  @Input()titleReminder: string;
   //@Input()origin_type: string;
   @Input()origin_id: string;
   days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
@@ -47,7 +48,7 @@ export class ReminderAddPage implements OnInit {
     private notification: NotificationService,
     public router: Router,
   ) { 
-    this.translate.use('es');
+    //this.translate.use('es');
   }
 
   ngOnInit() {
@@ -125,8 +126,11 @@ export class ReminderAddPage implements OnInit {
       this.form.get('origin_type').setValue('Agenda')
     } 
     if(this.isNewEvent){
-      let message = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
+      let message = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')    
+      if(this.type == 'Element' && this.titleReminder)
+        message = this.translate.instant('reminder.header')+' '+ this.titleReminder
       this.form.get('title').setValue(message)
+      console.log('[ReminderAddPage] getReminder()', this.type, message);
     }
   }
 
