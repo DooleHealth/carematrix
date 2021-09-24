@@ -326,7 +326,7 @@
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada"
       },
       "reminder":{
-        "header": "Recodatori",
+        "header": "Recordatori",
         "personal_reminder": "Recordatori Personal",
         "medical_reminder": "Recordatori Metge",
         "activity_reminder": "Recordatori d'Activitat",
