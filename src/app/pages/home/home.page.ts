@@ -146,6 +146,17 @@ export class HomePage implements OnInit {
     this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
+   getValue(object, key) {
+    var k, temp;
+    if (key in object) return object[key];                // if found return value
+    for (k in object) {                                   // iterate keys
+        if (object[k] && typeof object[k] === 'object') { // check not null and object
+            temp = this.getValue(object[k], key);              // get sub value, if exists
+            if (temp !== null) return temp;               // if not null return value
+        }
+    }
+    return null;
+  }
   async getUserInformation(){
     this.isLoading = true
     this.activity = []
@@ -156,7 +167,7 @@ export class HomePage implements OnInit {
       async (res: any) =>{
         await res;
 
-        //console.log('[HomePage] getUserInformation()',  res);
+        console.log('[HomePage] getUserInformation()',  res);
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
@@ -166,6 +177,34 @@ export class HomePage implements OnInit {
            this.infoGoals = {
             title: this.goals[0]?.typeString +' '+this.goals[0]?.element?.element_unit?.abbreviation
           }
+
+          this.goals.forEach(element => {
+            
+            console.log("** element.element_id: ", element.element_id);
+            console.log("** element.element_group_id: ", element.element.element_group_id);
+            console.log("** res.data.elements: ", res?.data.elements);
+            let k = this.getValue(res?.data.elements.eg,element.element.element_group_id);
+            if(k){
+              console.log("** K: ", k);
+              const found = k.elements.find(e => e.id == element.element_id);
+              if(found){
+                console.log("** found last value: ", found?.value);
+                element.last_value = found?.value;
+                element.last_value_date = found?.date;
+                if(element.last_value > 0){
+                  let p = (element.last_value/100)*element.score
+                  element.goal_percentage = p/100;
+                  console.log("**  element.goal_percentage: ", element.goal_percentage);
+                  element.reversed = element.goalType == '<'
+                  console.log("** element.reversed: ", element.reversed);
+                }
+                
+              }
+            }
+            
+           
+            
+          });
         }
 
         //diets
