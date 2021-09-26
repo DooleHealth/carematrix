@@ -176,32 +176,11 @@ export class HomePage implements OnInit {
             title: this.goals[0]?.typeString +' '+this.goals[0]?.element?.element_unit?.abbreviation
           }
 
-          this.goals.forEach(element => {
-            
-            console.log("** element.element_id: ", element.element_id);
-            console.log("** element.element_group_id: ", element.element.element_group_id);
-            console.log("** res.data.elements: ", res?.data.elements);
-            let k = this.getValue(res?.data.elements.eg,element.element.element_group_id);
-            if(k){
-              console.log("** K: ", k);
-              const found = k.elements.find(e => e.id == element.element_id);
-              if(found){
-                console.log("** found last value: ", found?.value);
-                element.last_value = found?.value;
-                element.last_value_date = found?.date;
-                if(element.last_value > 0){
-                  let p = (element.last_value/100)*element.score
-                  element.goal_percentage = p/100;
-                  console.log("**  element.goal_percentage: ", element.goal_percentage);
-                  element.reversed = element.goalType == '<'
-                  console.log("** element.reversed: ", element.reversed);
-                }
-                
-              }
-            }
-            
-           
-            
+          // Get the latest value of the element-goal
+          this.goals.forEach(goal => {
+            let group = this.getValue(res.data.elements.eg, goal.element.element_group_id); // Get the group
+            if(group)
+              this.getGoalLastValue(group, goal)
           });
         }
 
@@ -273,6 +252,29 @@ export class HomePage implements OnInit {
         }
       }
     }
+  }
+
+  getGoalLastValue(group, goal){
+    console.log("** element.element_id: ", goal.element_id);
+    console.log("** element.element_group_id: ", goal.element.element_group_id);
+    console.log("** res.data.elements: ", group);
+   
+      console.log("** Family Group: ", group);
+      const element_goal = group?.elements.find(e => e.id == goal.element_id);
+      if(element_goal){
+        console.log("** found last value: ", element_goal?.value);
+        goal.last_value = element_goal?.value;
+        goal.last_value_date = element_goal?.date;
+        if(goal.last_value > 0){
+          let p = (goal.last_value/100)*goal.score
+          goal.goal_percentage = p/100;
+          console.log("**  element.goal_percentage: ", goal.goal_percentage);
+          goal.reversed = goal.goalType == '<'
+          console.log("** element.reversed: ", goal.reversed);
+        }
+        
+      }
+    
   }
 
   getDrugIntake(){
