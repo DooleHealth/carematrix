@@ -331,7 +331,7 @@
         "error_alert_message_get_token":"Error al obtener el token de videollamada"
       },
       "reminder":{
-        "header": "Recodatorio",
+        "header": "Recordatorio",
         "personal_reminder": "Recordatorio Personal",
         "medical_reminder": "Recordatorio Médico",
         "activity_reminder": "Recordatorio de Actividad",
