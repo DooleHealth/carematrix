@@ -178,7 +178,7 @@ export class HomePage implements OnInit {
 
           // Get the latest value of the element-goal
           this.goals.forEach(goal => {
-            let group = this.getValue(res.data.elements.eg, goal.element.element_group_id); // Get the group
+            let group = this.getValue(res.data.elements.eg, goal.element.element_group_id); // Get the element group
             if(group)
               this.getGoalLastValue(group, goal)
           });
