@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -17,7 +19,9 @@ export class RecipePage implements OnInit {
   ingredients: any;
   constructor(
     private dooleService: DooleService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private alertController: AlertController,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -50,6 +54,33 @@ export class RecipePage implements OnInit {
           this.isLoading = false
           throw err; 
       });
+  }
+
+  async presentFamily(ingredient) {
+    if(ingredient.family.length == 0)
+    return
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      header: this.titleCaseWord(ingredient.name),
+      message: this.translate.instant("recipe.family")+': '+ingredient?.family[0]?.name,
+      buttons: [
+       {
+          text: this.translate.instant("alert.button_ok"),
+          handler: () => {
+            console.log('Confirm Okay');
+            //this.router.navigateByUrl('/profile')
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  titleCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toUpperCase() + word.substr(1).toLowerCase();
   }
 
 }
