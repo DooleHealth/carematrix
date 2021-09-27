@@ -212,7 +212,6 @@ export class AppComponent implements OnInit {
           this.router.navigate([`/contact/chat`],{state:{data:data}});
         }else if (action == "FORM") {
           this.router.navigate([`/tracking`],{state:{data:data}});
-          this.showFingerprintAuthDlg()
         }else if (action == "DRUGINTAKE") {
           this.router.navigate([`/journal`],{state:{data:data}});
         }else if (action == "VIDEOCALL") {
