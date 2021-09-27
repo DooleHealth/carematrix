@@ -228,6 +228,7 @@ export class AppComponent implements OnInit {
           this.redirecToVideocall(notification)
         }else
           console.error('Action on pushNotificationActionPerformed not found')
+
       }
     );
 
@@ -512,15 +513,13 @@ export class AppComponent implements OnInit {
         });
       }
 
-      if (this.router.url.includes('app')) {
-
+      if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
         // App will lock after 2 minutes
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-
-
         if (secondsPassed >= 120) {
           // Must implement lock-screen
-        }
+         this.showFingerprintAuthDlg()
+       }
       }
     });
 
@@ -630,6 +629,7 @@ export class AppComponent implements OnInit {
       })
         .then((result: any) => {
           console.log(result)
+          this.lastResume = new Date;
         })
         .catch(async (error: any) => {
           console.log(error);
