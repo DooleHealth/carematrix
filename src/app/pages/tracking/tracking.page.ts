@@ -61,6 +61,11 @@ export class TrackingPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    let segment = history.state.notification
+    if(segment) {
+      this.segment = segment
+      console.log('[TrackingPage] ionViewWillEnter()' ,  this.segment);
+    }
     this.segmentChanged();
     //this.getFormList();
     this.fireEvent(null, 0) 

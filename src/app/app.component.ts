@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
   lastResume;
   idAgenda = null;
   lastVideocall: any; //ultima vegada que hem acceptat videotrucada
+  isNotification: any;
   // Inject HistoryHelperService in the app.components.ts so its available app-wide
   constructor(
     private router: Router,
@@ -100,7 +101,6 @@ export class AppComponent implements OnInit {
 
          // Enable background mode
         //this.backgroundMode.enable();
-
       }
 
     });
@@ -215,13 +215,12 @@ export class AppComponent implements OnInit {
         const action = data?.action;
         const id = data?.id;
         const msg = data?.message;
-      
+
         console.log('ACTION: ', action);
-      
         if (action == "MESSAGE") {
           this.router.navigate([`/contact/chat`],{state:{data:data}});
         }else if (action == "FORM") {
-          this.router.navigate([`/tracking`],{state:{data:data}});
+          this.router.navigate([`/tracking`],{state:{data:data, notification: 'forms' }});
         }else if (action == "DRUGINTAKE") {
           this.router.navigate([`/journal`],{state:{data:data}});
         }else if (action == "VIDEOCALL") {
@@ -229,8 +228,11 @@ export class AppComponent implements OnInit {
         }else
           console.error('Action on pushNotificationActionPerformed not found')
 
+        this.isNotification = true;
+        setTimeout(()=>this.showFingerprintAuthDlg(), 500);
       }
     );
+    
 
     // LOCAL NOTIFICATIONS
     await LocalNotifications.requestPermission().then((data)=>{
@@ -303,7 +305,7 @@ export class AppComponent implements OnInit {
       if (action == "MESSAGE") {
         this.router.navigate([`/contact/chat`],{state:{data:f.data}});
       }else if (action == "FORM") {
-        this.router.navigate([`/tracking`],{state:{data:f.data}});
+        this.router.navigate([`/tracking`],{state:{data:f.data, notification: 'forms'}});
       }else if (action == "DRUGINTAKE") {
         this.router.navigate([`/journal`],{state:{data:f.data}});
       }else if (action == "VIDEOCALL") {
@@ -516,11 +518,12 @@ export class AppComponent implements OnInit {
       if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
         // App will lock after 2 minutes
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-        if (secondsPassed >= 120) {
+        if (secondsPassed >= 120 && !this.isNotification) {
           // Must implement lock-screen
          this.showFingerprintAuthDlg()
-       }
+        }
       }
+      this.isNotification = false
     });
 
   }
@@ -650,7 +653,6 @@ export class AppComponent implements OnInit {
         console.log(error)
       });
   }
-
 
 }
 

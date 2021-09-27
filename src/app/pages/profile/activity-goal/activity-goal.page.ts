@@ -171,6 +171,7 @@ export class ActivityGoalPage implements OnInit {
       this.graphValues = vArray;
       this.graphDates = dArray;
       this.minY = Math.min.apply(null,vArray)
+      this.minY = this.minY - this.minY / 50
       this.values = this.values.reverse();
 
       console.log(this.graphData)
