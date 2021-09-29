@@ -21,9 +21,10 @@
       <ion-label style="color:black;">{{'recipe.ingredients' | translate | uppercase}}</ion-label>  
     </ion-item>
     <div *ngFor="let item of this.ingredients">
-      <ion-item lines="none" (click)="presentFamily(item)">
+      <ion-item lines="none">
         <ion-label>- {{item.name | titlecase}} ({{item.quantity}}) </ion-label>  
-        <ion-icon *ngIf="item?.family" slot="end" size="small" name="chevron-forward-outline"></ion-icon> 
+        <app-info  *ngIf="item?.family" title="{{item.name | titlecase}}" info="{{'recipe.family' | translate}}: {{item?.family[0]?.name}}"></app-info>
+       <!--  <ion-icon *ngIf="item?.family" slot="end" size="small" name="chevron-forward-outline"></ion-icon>  -->
       </ion-item>
     </div>
 

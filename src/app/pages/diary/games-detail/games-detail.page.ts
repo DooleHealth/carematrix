@@ -21,19 +21,18 @@ export class GamesDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.id = history.state.id;
-    this.game = history.state.game;
-    console.log('[GamesDetailPage] ngOnInit()', this.game);
-    if(this.game)
+    this.id = history.state.id;
+    if(this.id)
     this.getGameData()
   }
 
   async getGameData(){
     this.isLoading = true
-    this.dooleService.getAPIgameId(this.game.id).subscribe(
+    this.dooleService.getAPIgameId(this.id).subscribe(
       async (res: any) =>{
         console.log('[GamesDetailPage] getGameData()', await res);
-        if (res.game) {
+        if (res.success) {
+          this.game = res.game
           this.score = res.game.score
         }
         this.isLoading = false

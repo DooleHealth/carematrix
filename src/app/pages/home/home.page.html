@@ -26,7 +26,7 @@
             <app-aspect-ratio [ratio]="{w:1, h:1}">
               <app-image-shell
           animation="spinner"
-          [src]="this.authService?.user?.image"
+          [src]="this.userDoole?.temporaryUrl"
           [alt]="'Profile Image'"
         ></app-image-shell>
             </app-aspect-ratio>
@@ -166,12 +166,12 @@
             (ionSlideDidChange)="slideDietChange()">
             <ion-slide *ngFor="let slide of this.diets">
               <ion-grid>
-                <div *ngIf="slide.items.length <= 3">
+                <div *ngIf="slide.items.length < 3">
                   <ion-row *ngFor="let e of slide.items; let i = index">
                     <p style="text-align: left" (click)="goDetailRecipe(e)">- {{e.item?.name[0]?.toUpperCase()+''+ e.item?.name.substr(1)?.toLowerCase()}} ({{e?.quantity}})</p>
                   </ion-row> 
                 </div>
-                <div *ngIf="slide.items.length > 3" class="textBlueCenter" style="align-items: center;" routerLink="/journal">
+                <div *ngIf="slide.items.length >= 3" class="textBlueCenter" style="align-items: center;" routerLink="/journal">
                   {{ 'home.elements' | translate}}
                 </div>
                              

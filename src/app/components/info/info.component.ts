@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class InfoComponent implements OnInit {
 
-  // @Input('title') title: string;
+  @Input('title') title: string;
   // @Input('icon') icon: string;
   @Input('info') info: string;
   // info: string;
@@ -29,7 +29,7 @@ export class InfoComponent implements OnInit {
           // value is our translated string
           const alert = await this.alertController.create({
             cssClass: "alertClass",
-            header: this.translate.instant('info.title'),
+            header: (this.title)? this.title : this.translate.instant('info.title'),
             // subHeader: 'Subtitle',
             message: this.info,
             buttons: [button]

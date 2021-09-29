@@ -277,7 +277,7 @@ export class DrugsDetailPage implements OnInit {
           this.form.get('from_date').setValue(this.formatDate(from_date))     
           let to_date = medicationPlan.to_date
           this.form.get('to_date').setValue(this.formatDate(to_date))
-
+          if(medicationPlan?.alias) this.form.get('alias').setValue(medicationPlan.alias)
           if(medicationPlan.frequency) {
             this.form.get('frequency').setValue(medicationPlan?.frequency)
             this.frequencySeleted = medicationPlan.frequency

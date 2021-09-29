@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="game">{{game.title}}</ion-title>
+    <ion-title *ngIf="game">{{game?.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,13 +15,13 @@
 
   <ion-list *ngIf="game">
     <ion-card class="cardProfile">
-      <img *ngIf="game.file !== null"  [src]='game.file?.temporaryUrl'/>
+      <img *ngIf="game?.cover !== null"  [src]='game?.cover'/>
       <ion-item lines="none">
         <div>
           <ion-img src='assets/icons/game-controller.svg' style="width: 130%;" >
           </ion-img>
         </div>
-        <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{game.title}}</ion-label>
+        <ion-label style="color:#9B59B6"> &nbsp;&nbsp; {{game?.title}}</ion-label>
         <div>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
