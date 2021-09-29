@@ -4,8 +4,6 @@
   margin-left: 2%;
 }
 
-
-
 /*  .verticalLine2 {
    border-left: 2px solid  #3498DB,;
    margin-left: 5%;
@@ -17,6 +15,19 @@ ion-img {
 
 ion-segment-button {
   font-size: smaller;
+}
+
+ion-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 5em;
+  width: em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 .backBtn {
   position: absolute;
@@ -39,27 +50,30 @@ ion-segment-button {
   border: none;
   background: green;
 }
-#custom-overlay{
-   display: flex; 
-   flex-direction: column; 
-   justify-content: center; 
-   position: fixed; 
-   top: 0; 
-   right: 0; 
-   bottom: 0; 
-   left: 0; 
-   z-index: 1; 
-   background-color: #ffffff; } 
-   #custom-overlay img { 
-     display: block; 
-     margin: 10em auto 1em;
-     width: 60%; 
-     height: auto; } 
-     .iconGif{
-      z-index: 3;
-      top: 0; 
-      right: 0; 
-      bottom:40; 
-      left: 40; 
-      position: absolute;
-  }
+#custom-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #ffffff;
+}
+#custom-overlay img {
+  display: block;
+  margin: 10em auto 1em;
+  width: 60%;
+  height: auto;
+}
+.iconGif {
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 40;
+  left: 40;
+  position: absolute;
+}
+
