@@ -73,14 +73,15 @@ export class ConversationPage implements OnInit {
 
   ngOnInit() {
 
-    console.log("message_header_id: ", this.id);
+    console.log("[ConversationPage] ngOnInit() message_header_id: ", this.id);
     this.firebaseAuth.onAuthStateChanged( user => {
       if (user) {
         if (this.id != '')               // només observem missatges si tenim idHeader
         {
-          console.log("messagesList:", this.messagesList);
+          console.log("[ConversationPage] ngOnInit() messagesList:", this.messagesList);
           const dict = [];
           dict.push({key: 'id', value: this.id });
+          console.log("[ConversationPage] ngOnInit() this.authService.user:", JSON.stringify(this.authService.user) );
           if(this.authService.user && this.id){
             this.observeMessages();
           }

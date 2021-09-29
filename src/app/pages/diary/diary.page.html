@@ -231,7 +231,7 @@
         <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <ion-list *ngIf="items.length > 0; else noData">
-        <ion-card class="cardProfile" *ngFor="let item of items" routerLink="games-detail" [state]="{game: item.item}" routerLinkActive='active-item'>
+        <ion-card class="cardProfile" *ngFor="let item of items" routerLink="games-detail" [state]="{game: item.item, id:item.item.id}" routerLinkActive='active-item'>
           <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)" [src]='item.item.file.temporaryUrl'/>
           <ion-item lines="none" (click)="openGames(item.item)">
             <div>

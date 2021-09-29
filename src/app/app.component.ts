@@ -206,20 +206,47 @@ export class AppComponent implements OnInit {
         const id = data?.id;
         const msg = data?.message;
 
-        console.log('ACTION: ', action);
-        if (action == "MESSAGE") {
-          this.router.navigate([`/contact/chat`],{state:{data:data}});
-        }else if (action == "FORM") {
-          this.router.navigate([`/tracking`],{state:{data:data, notification: 'forms' }});
-        }else if (action == "DRUGINTAKE") {
-          this.router.navigate([`/journal`],{state:{data:data}});
-        }else if (action == "VIDEOCALL") {
-          this.redirecToVideocall(notification)
-        }else
-          console.error('Action on pushNotificationActionPerformed not found')
+        switch (action) {
+          case "MESSAGE":
+            this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:id, staff:data?.staff}});
+            break;
+          case "FORM":
+            this.router.navigate([`/tracking/form`, {id: id}],{state:{data:data}});
+            break;
+          case "DRUGINTAKE":
+            this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+            break;
+          case "VIDEOCALL":
+            this.redirecToVideocall(notification)
+            break;
+          case "ADVICE":
+            this.router.navigate([`/advices-detail`],{state:{data:data, id:id}});
+            break;
+          case "DIET":
+            this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:id}});
+            break;
+          case "AGENDA":
+            this.router.navigate([`/agenda/detail`],{state:{data:data, id:id}});
+            break;
+          case "REMINDER":
+            this.router.navigate([`/agenda/reminder`],{state:{data:data, id:id}});
+            break;
+          case "GAME":
+            this.router.navigate([`/journal/games-detail`],{state:{data:data, id:id}});
+            break;
+          default:
+            console.error('Action on localNotificationActionPerformed not found')
+            break;
+        }
 
         this.isNotification = true;
         setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+          // App will lock after 2 minutes
+        // let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
+        // if (secondsPassed >= 120) {
+        //   // Must implement lock-screen
+        //   setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+        // }
       }
     );
     
@@ -291,17 +318,40 @@ export class AppComponent implements OnInit {
       const id = f.idata?.id;
       const msg = f.data?.message;
       console.log('ACTION: ', action);
+
+      switch (action) {
+        case "MESSAGE":
+          this.router.navigate([`/contact/chat/conversation`],{state:{data:f.data, chat:id, staff:f.data?.staff}});
+          break;
+        case "FORM":
+          this.router.navigate([`/tracking/form`, {id: id}],{state:{data:f.data}});
+          break;
+        case "DRUGINTAKE":
+          this.router.navigate([`/journal`],{state:{data:f.data, segment: 'medication'}});
+          break;
+        case "VIDEOCALL":
+          this.redirecToVideocall(notification)
+          break;
+        case "ADVICE":
+          this.router.navigate([`/advices-detail`],{state:{data:f.data, id:id}});
+          break;
+        case "DIET":
+          this.router.navigate([`/journal/diets-detail`],{state:{data:f.data, id:id}});
+          break;
+        case "AGENDA":
+          this.router.navigate([`/agenda/detail`],{state:{data:f.data, id:id}});
+          break;
+        case "REMINDER":
+          this.router.navigate([`/agenda/reminder`],{state:{data:f.data, id:id}});
+          break;
+        case "GAME":
+          this.router.navigate([`/journal/games-detail`],{state:{data:f.data, id:id}});
+          break;
+        default:
+          console.error('Action on localNotificationActionPerformed not found')
+          break;
+      }
     
-      if (action == "MESSAGE") {
-        this.router.navigate([`/contact/chat`],{state:{data:f.data}});
-      }else if (action == "FORM") {
-        this.router.navigate([`/tracking`],{state:{data:f.data, notification: 'forms'}});
-      }else if (action == "DRUGINTAKE") {
-        this.router.navigate([`/journal`],{state:{data:f.data}});
-      }else if (action == "VIDEOCALL") {
-        this.redirecToVideocall(notification)
-      }else
-        console.error('Action on localNotificationActionPerformed not found')
     })
    
  
@@ -604,7 +654,12 @@ export class AppComponent implements OnInit {
   }
 
 
-  public showFingerprintAuthDlg() {
+  public async showFingerprintAuthDlg() {
+/*     if(!JSON.parse(localStorage.getItem('settings-bio'))){
+      await this.authService.logout();
+      this.router.navigateByUrl('/landing'); 
+      return
+    } */
 
     this.faio.isAvailable().then((result: any) => {
 
@@ -624,7 +679,12 @@ export class AppComponent implements OnInit {
         .catch(async (error: any) => {
           console.log(error);
           if(error.code == -102){
-            setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+            //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+            let secondsPassed = ((new Date).getTime() - this.lastResume?.getTime()) / 1000;
+            if (secondsPassed >= 120) {
+              // Must implement lock-screen
+              setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+            }
           }else{
             // if error.code == -108 user cancel prompt
             // if error.code == -111 too many attempts
