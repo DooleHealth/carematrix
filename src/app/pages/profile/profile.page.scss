@@ -4,10 +4,12 @@ ion-back-button {
  }
 
 .img-wrapper {
-    max-height: 81px;
-  max-width: 81px;
+  height: 81px;
+  width: 81px;
   display: block;
   margin: auto;
+  object-fit: cover;
+
 }
 
 

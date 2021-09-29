@@ -85,7 +85,7 @@ export class AdvicesDetailPage implements OnInit {
 
 
 
-  openFile(media){
+  openFile(media?){
     console.log("media", this.advice.media);
     // console.log("video", this.video);
     console.log("miniatura", this.thumbnail);

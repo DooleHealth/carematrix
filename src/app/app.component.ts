@@ -106,11 +106,21 @@ export class AppComponent implements OnInit {
     });
   }
 
-  async showNotification(notification: PushNotification){
+  async showNotification(notification: any){
 
    var title, body,id,color,actionType;
+   var push;
    // Notifications has different Payloads: iOS = data.aps, Android = data
-   let push = notification.data?.aps ? notification.data.aps : notification.data; 
+   if(notification?.extra){
+    push = notification.extra;
+    console.log("notification.extra:", push);
+   }else if(notification.data?.aps){
+    push = notification.data.aps;
+    console.log("notification.data.aps:", push);
+   }else{
+    push = notification.data;
+    console.log("notification.data:", push);
+   }
 
    title = push?.title;
    body = push?.message;
@@ -129,7 +139,7 @@ export class AppComponent implements OnInit {
             data:push
           },
           iconColor: color,
-          actionTypeId: actionType
+          actionTypeId: actionType,
         }
       ]
     }).then((data)=>{
@@ -457,6 +467,9 @@ export class AppComponent implements OnInit {
             cordova.plugins.CordovaCall.receiveCall(notification?.extra.Caller.Username, notification?.extra.Caller.ConnectionId);
            });
         }
+      }else{
+        console.log("voip notification as message");
+        //self.showNotification(notification);
       }
      
     });

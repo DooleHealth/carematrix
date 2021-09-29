@@ -144,6 +144,17 @@ export class HomePage implements OnInit {
     this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
+   getValue(object, key) {
+    var k, temp;
+    if (key in object) return object[key];                // if found return value
+    for (k in object) {                                   // iterate keys
+        if (object[k] && typeof object[k] === 'object') { // check not null and object
+            temp = this.getValue(object[k], key);              // get sub value, if exists
+            if (temp !== null) return temp;               // if not null return value
+        }
+    }
+    return null;
+  }
   async getUserInformation(){
     this.isLoading = true
     this.activity = []
@@ -154,7 +165,7 @@ export class HomePage implements OnInit {
       async (res: any) =>{
         await res;
 
-        //console.log('[HomePage] getUserInformation()',  res);
+        console.log('[HomePage] getUserInformation()',  res);
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
@@ -164,6 +175,13 @@ export class HomePage implements OnInit {
            this.infoGoals = {
             title: this.goals[0]?.typeString +' '+this.goals[0]?.element?.element_unit?.abbreviation
           }
+
+          // Get the latest value of the element-goal
+          this.goals.forEach(goal => {
+            let group = this.getValue(res.data.elements.eg, goal.element.element_group_id); // Get the element group
+            if(group)
+              this.getGoalLastValue(group, goal)
+          });
         }
 
         //diets
@@ -234,6 +252,29 @@ export class HomePage implements OnInit {
         }
       }
     }
+  }
+
+  getGoalLastValue(group, goal){
+    console.log("** element.element_id: ", goal.element_id);
+    console.log("** element.element_group_id: ", goal.element.element_group_id);
+    console.log("** res.data.elements: ", group);
+   
+      console.log("** Family Group: ", group);
+      const element_goal = group?.elements.find(e => e.id == goal.element_id);
+      if(element_goal){
+        console.log("** found last value: ", element_goal?.value);
+        goal.last_value = element_goal?.value;
+        goal.last_value_date = element_goal?.date;
+        if(goal.last_value > 0){
+          let p = (goal.last_value/100)*goal.score
+          goal.goal_percentage = p/100;
+          console.log("**  element.goal_percentage: ", goal.goal_percentage);
+          goal.reversed = goal.goalType == '<'
+          console.log("** element.reversed: ", goal.reversed);
+        }
+        
+      }
+    
   }
 
   getDrugIntake(){

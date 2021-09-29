@@ -72,8 +72,13 @@ export class ConversationPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log("message_header_id: ", this.id);
 
-    console.log("[ConversationPage] ngOnInit() message_header_id: ", this.id);
+    if(this.staff)
+      this.to.push(this.staff?.id);
+    else 
+      console.log("staff is undefined, post message without staff id");
+
     this.firebaseAuth.onAuthStateChanged( user => {
       if (user) {
         if (this.id != '')               // només observem missatges si tenim idHeader

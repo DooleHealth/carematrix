@@ -40,12 +40,15 @@ body{
   }
   
   
+
   .dayWeek{
     font-size: 14px;
-    width: 35px;
-    height: 35px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
+ 
   }
+
 
   .monthview-disabled{
     color: #BDC3C7 !important;
@@ -67,17 +70,14 @@ body{
       color: #7f8c8d!important;
     }
    
-    .monthview-selected  {
-      background-color: var(--ion-color-primary) !important;
+    .monthview-selected   .dayWeek  {
+      background-color: var(--ion-color-tertiary) !important;
       border-radius: 50%;
-      max-width: 10px!important;
+      max-width: 100px!important;
       color: white !important;
     }
       .monthview-current  {
-        background-color: orange !important;
-        border-radius: 50%;
-        max-width: 10px!important;
-        color: white !important;
+        background-color: rgba(0, 174, 255, 0) !important;
     }
   
   .blanco{
