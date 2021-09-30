@@ -253,7 +253,7 @@ export class AppComponent implements OnInit {
         this.isNotification = true;
         setTimeout(()=>this.showFingerprintAuthDlg(), 500);
           // App will lock after 2 minutes
-        // let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
+         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
         // if (secondsPassed >= 120) {
         //   // Must implement lock-screen
         //   setTimeout(()=>this.showFingerprintAuthDlg(), 500);
