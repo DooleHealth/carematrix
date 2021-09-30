@@ -127,6 +127,7 @@ export class AppComponent implements OnInit {
    id = push?.id;
    color = push?.color ? push?.color : '#109DB0';
    actionType = push?.action;
+  
     
     console.log("ActionType:", actionType);
     await LocalNotifications.schedule({
@@ -325,10 +326,10 @@ export class AppComponent implements OnInit {
       console.log('localNotificationActionPerformed: ');
       console.log(f);
       const action = f.data?.action;
-      const id = f.idata?.id;
+      const id = f.data?.id;
       const msg = f.data?.message;
       console.log('ACTION: ', action);
-
+      console.log("localNotificationActionPerformed", JSON.stringify(f.data));
       switch (action) {
         case "MESSAGE":
           this.router.navigate([`/contact/chat/conversation`],{state:{data:f.data, chat:id, staff:f.data?.staff}});

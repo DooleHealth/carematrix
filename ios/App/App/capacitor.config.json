@@ -24,6 +24,11 @@
           "profile"
         ]
       }
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_circle_notifications",
+      "iconColor": "#009CB3",
+      "sound": "sound.mp3"
     }
   },
   "PushNotifications": {
@@ -33,9 +38,6 @@
       "alert"
     ]
   },
-  "LocalNotifications": {
-    "smallIcon": "ic_stat_circle_notifications",
-    "iconColor": "#009CB3"
-  },
+
   "cordova": {}
 }
