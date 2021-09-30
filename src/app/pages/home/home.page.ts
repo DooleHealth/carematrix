@@ -106,7 +106,7 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() { 
-    this.date = this.transformDate(Date.now())
+    this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.checkHealthAccess();
     //this.getUserInformation();
   }
@@ -158,7 +158,7 @@ export class HomePage implements OnInit {
   async getUserInformation(){
     this.isLoading = true
     this.activity = []
-    let date2= this.transformDate2(this.date)
+    let date2= this.transformDate(this.date, 'dd-MM-yyyy')
     let date = {date: date2, from_date: this.date, to_date: this.date}
 
     this.dooleService.getAPIinformationSummary(date).subscribe(
@@ -376,10 +376,6 @@ export class HomePage implements OnInit {
             // loading.dismiss();
           });
     }
-
-  transformDate(date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
 
   actionSeeAllAdvices(){
     //console.log('[HomePage] actionCloseAdvice()');
@@ -618,8 +614,19 @@ export class HomePage implements OnInit {
       return datePipe.transform(date, 'EEEE, d MMMM hh:mm');
     }
 
-    transformDate2(date) {
-      return this.datePipe.transform(date, 'dd-MM-yyyy');
+    formatDate(d){
+      if(d){
+        var auxdate = d.split(' ')
+        let date = new Date(auxdate[0]);
+        let time = auxdate[1];
+        date.setHours(time.substring(0,2));
+        date.setMinutes(time.substring(3,5));
+        return this.transformDate(date, 'MM/dd/yyyy HH:mm')
+      }
+    }
+
+    transformDate(date, format) {
+      return this.datePipe.transform(date, format);
     }
 
     goDetailRecipe(e){

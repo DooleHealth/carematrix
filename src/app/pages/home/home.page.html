@@ -60,7 +60,7 @@
                       <ion-progress-bar  class="my-buffer-progress_red" *ngIf="slide?.goal_percentage < 50" [value]="slide?.goal_percentage"  [reversed]="slide?.reversed" ></ion-progress-bar>
                       <ion-progress-bar  class="my-buffer-progress_orange" *ngIf="slide?.goal_percentage > 49 && slide?.goal_percentage < 75" [value]="slide?.goal_percentage"  [reversed]="slide.reversed" ></ion-progress-bar>
                       <ion-progress-bar  class="my-buffer-progress_green" *ngIf="slide?.goal_percentage > 74" [value]="slide?.goal_percentage"  [reversed]="slide?.reversed" ></ion-progress-bar>
-                      <p class="txtContactLittle">{{slide?.element?.name}}: {{slide?.last_value}} {{slide?.element?.element_unit?.abbreviation}} <br> {{ 'element.field_date' | translate }}: {{ slide?.last_value_date }}</p>
+                      <p class="txtContactLittle">{{slide?.element?.name}}: {{slide?.last_value}} {{slide?.element?.element_unit?.abbreviation}} <br> {{ 'element.field_date' | translate }}: {{ formatDate(slide?.last_value_date)  }}</p>
                     
                     
                     </ion-row>
