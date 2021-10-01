@@ -677,7 +677,13 @@
       },
       "notifications":{
         "register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions.",
-        "voip_register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions VoIP."
+        "voip_register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions VoIP.",
+        "chat":"Missatge",
+        "form":"Formulari",
+        "drug":"Medicament",
+        "videocall":"Trucada de vídeo",
+        "close":"Amagar"
+
 
       }
       

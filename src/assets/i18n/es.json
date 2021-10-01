@@ -680,7 +680,13 @@
       },
       "notifications":{
         "register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones.",
-        "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP."
+        "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP.",
+        "chat":"Mensaje",
+        "form":"Formulario",
+        "drug":"Medicamento",
+        "videocall":"Videollamada",
+        "close":"Cerrar"
+      
       }
 
       
