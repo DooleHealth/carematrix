@@ -271,7 +271,7 @@ export class AppComponent implements OnInit {
         id:'MESSAGE',
         actions:[{
           id:'view',
-          title: this.translate.instant('notification.chat'),
+          title: this.translate.instant('notifications.chat'),
         },{
           id:'remove',
           title: 'Dismiss',
@@ -285,17 +285,17 @@ export class AppComponent implements OnInit {
         id:'FORM',
         actions:[{
           id:'view',
-          title: this.translate.instant('notification.form')
+          title: this.translate.instant('notifications.form')
         },{
           id:'remove',
-          title: this.translate.instant('notification.close'),
+          title: this.translate.instant('notifications.close'),
           destructive: true
         }],
       },{
         id:'DRUGINTAKE',
         actions:[{
           id:'view',
-          title:this.translate.instant('notification.drug'),
+          title:this.translate.instant('notifications.drug'),
         },{
           id:'remove',
           title: 'Dismiss',
@@ -306,10 +306,10 @@ export class AppComponent implements OnInit {
         id:'VIDEOCALL',
         actions:[{
           id:'view',
-          title: this.translate.instant('notification.videocall'),
+          title: this.translate.instant('notifications.videocall'),
         },{
           id:'remove',
-          title: this.translate.instant('notification.close'),
+          title: this.translate.instant('notifications.close'),
           destructive: true
         }],
       }

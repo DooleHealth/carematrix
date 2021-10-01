@@ -342,16 +342,16 @@ export class HomePage implements OnInit {
     });
 
     console.log('dataType: temperature');
-    this.health.query({
-      startDate,
-      endDate,
-      dataType: 'temperature',
-    }).then(data => {
-      //this.postHealth('temperature', data);
-    }).catch(error => {
-      console.error(error);
-      throw error; 
-    });
+    // this.health.query({
+    //   startDate,
+    //   endDate,
+    //   dataType: 'temperature',
+    // }).then(data => {
+    //   //this.postHealth('temperature', data);
+    // }).catch(error => {
+    //   console.error(error);
+    //   throw error; 
+    // });
 
   }
 
