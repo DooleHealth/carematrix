@@ -16,6 +16,7 @@ import { ReportProblemPage } from './report-problem/report-problem.page';
 export class ProfilePage implements OnInit {
   userDoole : any
   userImage:string = 'assets/icons/user_icon.svg'
+  isLoading: boolean;
   constructor( 
     public authService: AuthenticationService,
     private firebaseService: FirebaseAuthService,
@@ -25,25 +26,33 @@ export class ProfilePage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
-   
+    this.getUserProfile();
   }
 
   ionViewWillEnter(){
-    //this.getUserProfile();
-    this.userDoole = this.authService.user;
-    console.log('[ProfilePage] ionViewWillEnter()',history.state.user);
-    
+    this.getPersonalInformation()
   }
 
-  getUserProfile(){
-    
+  getUserProfile(){   
     if(history.state?.user){
       this.userDoole = history.state.user;
       this.userImg()
       console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
-    }
-    
-   
+    }  
+  }
+
+  getPersonalInformation(){
+    this.isLoading = true
+    this.dooleService.getAPIuserProfile().subscribe(
+      async (res: any) =>{
+        console.log('[ProfilePage] getPersonalInformation()', res);
+        this.userDoole = res.user;
+        this.isLoading = false
+       },(err) => { 
+          console.log('[ProfilePage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
+          this.isLoading = false 
+          throw err; 
+      });
   }
 
   userImg(){

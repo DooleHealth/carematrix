@@ -59,6 +59,7 @@ export class HomePage implements OnInit {
   advices: Advice[] =[]
   date
   loading:boolean = true;
+  userName = this.authService?.user?.first_name
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
@@ -107,6 +108,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() { 
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
+    this.confirmAllNotification()
     this.checkHealthAccess();
     //this.getUserInformation();
   }
@@ -167,6 +169,7 @@ export class HomePage implements OnInit {
 
         console.log('[HomePage] getUserInformation()',  res);
         this.userDoole = res.data?.profile;
+        this.userName = this.userDoole.first_name
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
 
@@ -633,6 +636,43 @@ export class HomePage implements OnInit {
       let id = e.item.id
       if(e.item_type === 'App\\Receipt')
       this.nav.navigateForward("/journal/diets-detail/recipe", { state: {id:id} });
+    }
+
+
+    async confirmAllNotification() {
+      const notification = localStorage.getItem('allNotification');
+      if(notification !== undefined)
+      return
+
+      const alert = await this.alertController.create({
+        cssClass: 'my-alert-class',
+        subHeader: this.translate.instant('home.enable_notifications'),
+        message: this.translate.instant('home.message_enable_notifications'),
+          buttons: [
+            {
+              text: this.translate.instant("button.cancel"),
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {
+                console.log('[LandingPage] AlertConfirm Cancel');
+                localStorage.setItem('allNotification', 'false');
+              }
+            }, {
+              text: this.translate.instant("button.ok"),
+              handler: (data) => {
+                console.log('[LandingPage] AlertConfirm Okay', data.username );
+                localStorage.setItem('allNotification', 'true')
+                this.activateAllNotifications()
+              }
+            }
+          ]
+      });
+  
+      await alert.present();
+    }
+
+    activateAllNotifications(){
+      console.log('[HomePage] activateAllNotifications()');
     }
 
 }

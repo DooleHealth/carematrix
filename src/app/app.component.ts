@@ -217,47 +217,19 @@ export class AppComponent implements OnInit {
         const id = data?.id;
         const msg = data?.message;
 
-        switch (action) {
-          case "MESSAGE":
-            this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:id, staff:data?.staff}});
-            break;
-          case "FORM":
-            this.router.navigate([`/tracking/form`, {id: id}],{state:{data:data}});
-            break;
-          case "DRUGINTAKE":
-            this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
-            break;
-          case "VIDEOCALL":
-            this.redirecToVideocall(notification)
-            break;
-          case "ADVICE":
-            this.router.navigate([`/advices-detail`],{state:{data:data, id:id}});
-            break;
-          case "DIET":
-            this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:id}});
-            break;
-          case "AGENDA":
-            this.router.navigate([`/agenda/detail`],{state:{data:data, id:id}});
-            break;
-          case "REMINDER":
-            this.router.navigate([`/agenda/reminder`],{state:{data:data, id:id}});
-            break;
-          case "GAME":
-            this.router.navigate([`/journal/games-detail`],{state:{data:data, id:id}});
-            break;
-          default:
-            console.error('Action on localNotificationActionPerformed not found')
-            break;
-        }
-
         this.isNotification = true;
-        setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+        //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
           // App will lock after 2 minutes
-         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-        // if (secondsPassed >= 120) {
-        //   // Must implement lock-screen
-        //   setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-        // }
+          let lastTime = this.lastResume.getTime()
+         let secondsPassed = ((new Date).getTime() - lastTime) / 1000;
+         console.error(`[AppComponent] lastTime: ${lastTime}, secondsPassed: ${secondsPassed}`)
+        if (secondsPassed >= 120) {
+          // Must implement lock-screen
+          setTimeout(()=>this.showFingerprintAuthDlg({data: data, notification: notification}), 500);
+          console.error(`[AppComponent] lastTime: ${lastTime}, secondsPassed: ${secondsPassed} 120`)
+        }else{
+          this.redirecPushNotification(data, notification)
+        }
       }
     );
     
@@ -329,43 +301,47 @@ export class AppComponent implements OnInit {
       const id = f.data?.id;
       const msg = f.data?.message;
       console.log('ACTION: ', action);
-      console.log("localNotificationActionPerformed", JSON.stringify(f.data));
-      switch (action) {
-        case "MESSAGE":
-          this.router.navigate([`/contact/chat/conversation`],{state:{data:f.data, chat:id, staff:f.data?.staff}});
-          break;
-        case "FORM":
-          this.router.navigate([`/tracking/form`, {id: id}],{state:{data:f.data}});
-          break;
-        case "DRUGINTAKE":
-          this.router.navigate([`/journal`],{state:{data:f.data, segment: 'medication'}});
-          break;
-        case "VIDEOCALL":
-          this.redirecToVideocall(notification)
-          break;
-        case "ADVICE":
-          this.router.navigate([`/advices-detail`],{state:{data:f.data, id:id}});
-          break;
-        case "DIET":
-          this.router.navigate([`/journal/diets-detail`],{state:{data:f.data, id:id}});
-          break;
-        case "AGENDA":
-          this.router.navigate([`/agenda/detail`],{state:{data:f.data, id:id}});
-          break;
-        case "REMINDER":
-          this.router.navigate([`/agenda/reminder`],{state:{data:f.data, id:id}});
-          break;
-        case "GAME":
-          this.router.navigate([`/journal/games-detail`],{state:{data:f.data, id:id}});
-          break;
-        default:
-          console.error('Action on localNotificationActionPerformed not found')
-          break;
-      }
+
+      this.redirecPushNotification(f.data, notification)
     
     })
    
  
+  }
+
+  redirecPushNotification(data, notification){
+    switch (data.action) {
+      case "MESSAGE":
+        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:data?.origin}});
+        break;
+      case "FORM":
+        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        break;
+      case "DRUGINTAKE":
+        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        break;
+      case "VIDEOCALL":
+        this.redirecToVideocall(notification)
+        break;
+      case "ADVICE":
+        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "DIET":
+        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "AGENDA":
+        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        break;
+      case "REMINDER":
+        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        break;
+      case "GAME":
+        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+        break;
+      default:
+        console.error('Action on localNotificationActionPerformed not found')
+        break;
+    }
   }
 
   redirecToVideocall(notification){
@@ -667,13 +643,16 @@ export class AppComponent implements OnInit {
 
   }
 
+  public redirecloginAuth(pushNotification){
+    this.router.navigate([`/landing`],{state: pushNotification});
+  }
 
-  public async showFingerprintAuthDlg() {
-/*     if(!JSON.parse(localStorage.getItem('settings-bio'))){
-      await this.authService.logout();
-      this.router.navigateByUrl('/landing'); 
+  public async showFingerprintAuthDlg(pushNotification?) {
+
+    if(!JSON.parse(localStorage.getItem('settings-bio'))){
+      this.router.navigate([`/landing`],{state: pushNotification.data});
       return
-    } */
+    }
 
     this.faio.isAvailable().then((result: any) => {
 
@@ -689,6 +668,11 @@ export class AppComponent implements OnInit {
         .then((result: any) => {
           console.log(result)
           this.lastResume = new Date;
+          if(pushNotification){
+            let data = pushNotification.data;
+            let notification = pushNotification.notification;
+            this.redirecPushNotification(data, notification)
+          }
         })
         .catch(async (error: any) => {
           console.log(error);
@@ -697,7 +681,7 @@ export class AppComponent implements OnInit {
             let secondsPassed = ((new Date).getTime() - this.lastResume?.getTime()) / 1000;
             if (secondsPassed >= 120) {
               // Must implement lock-screen
-              setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+              setTimeout(()=>this.showFingerprintAuthDlg(pushNotification), 500);
             }
           }else{
             // if error.code == -108 user cancel prompt

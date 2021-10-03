@@ -83,15 +83,15 @@ export class ConversationPage implements OnInit {
       if (user) {
         if (this.id != '')               // només observem missatges si tenim idHeader
         {
-          console.log("[ConversationPage] ngOnInit() messagesList:", this.messagesList);
+          //console.log("[ConversationPage] ngOnInit() messagesList:", this.messagesList);
           const dict = [];
           dict.push({key: 'id', value: this.id });
-          console.log("[ConversationPage] ngOnInit() this.authService.user:", JSON.stringify(this.authService.user) );
+          //console.log("[ConversationPage] ngOnInit() this.authService.user:", JSON.stringify(this.authService.user) );
           if(this.authService.user && this.id){
             this.observeMessages();
           }
         }else{
-          console.log('no id');
+          //console.log('no id');
         }
       } 
 
@@ -118,7 +118,7 @@ export class ConversationPage implements OnInit {
 
   async observeMessages(){
 
-    console.log(this.id);
+    //console.log(this.id);
     this.loadingShow = true;
 
     this.commentsRef = this.firebaseDB.database.ref('room-messages').child(this.id).orderByChild('timestamp');
@@ -140,25 +140,22 @@ export class ConversationPage implements OnInit {
       this._zone.run(() => {
         
       this.scrollToBottom();
-      console.log('force update the screen');
+      //console.log('force update the screen');
       });
       
       this._zone.run(() => {
         this.scrollToBottom();
-        console.log('force update');
+       // console.log('force update');
       });
       //si envia un altre, marquem com a rebut el missatge
       if( (data.val().userId != this.authService.user.idUser)){
         var msg = this;
-        console.log('force update 1');
         //this.nativeAudio.play('received', () => console.log('uniqueId1 is done playing'));
         firebase.database().ref('/room-messages/'+msg.id).child(data.key).child(msg.authService?.user.idUser).once('value').then(function(snapshot) {
             //si no hem llegit
-            console.log('force update 2');
             if(snapshot?.numChildren()==0){
                 //marquem com a rebut
                 //this.nativeAudio.play('received', () => console.log('uniqueId1 is done playing'));
-                console.log('force update 3');
                 var newPostKey = firebase.database().ref().child('room-messages').child(msg.id).child(data.key).child(msg.authService?.user.idUser).push().key;
                 var updates = {};
                 updates['/room-messages/'+msg.id+"/"+ data.key+"/"+msg.authService?.user.idUser] = {state:2};
@@ -168,7 +165,7 @@ export class ConversationPage implements OnInit {
                 //console.log("marcat com a llegit")
                 });
             }else{
-              console.log('force update 4');
+              //console.log('force update 4');
             }
         });
     }

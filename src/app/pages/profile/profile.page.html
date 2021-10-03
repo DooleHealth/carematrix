@@ -12,12 +12,12 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <ion-img [src]="this.authService.user?.image" class="img-wrapper"></ion-img>
+          <ion-img [src]="this.userDoole?.temporaryUrl" class="img-wrapper"></ion-img>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <h3 style="text-align: center;"> {{this.authService?.user?.first_name}}</h3>
+          <h3 style="text-align: center;"> {{this.userDoole?.first_name}}</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
