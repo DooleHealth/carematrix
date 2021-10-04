@@ -73,7 +73,7 @@ export class ConversationPage implements OnInit {
 
   ngOnInit() {
     console.log("message_header_id: ", this.id);
-
+    console.log("[ConversationPage] ngOnInit()", this.staff);
     if(this.staff)
       this.to.push(this.staff?.id);
     else 

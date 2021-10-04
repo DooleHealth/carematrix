@@ -108,9 +108,8 @@ export class HomePage implements OnInit {
 
   async ngOnInit() { 
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    this.confirmAllNotification()
     this.checkHealthAccess();
-    //this.getUserInformation();
+    setTimeout(()=>this.confirmAllNotification(), 1000);
   }
 
 
