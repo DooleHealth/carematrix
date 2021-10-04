@@ -14,7 +14,6 @@ import { LanguageService } from 'src/app/services/language.service';
 })
 export class LoginPage implements OnInit {
   @Input()credentials: {username, password, hash};
-  @Input()pushNotification: any;
   language: any;
   constructor( 
     private authService: AuthenticationService, 
@@ -45,13 +44,6 @@ export class LoginPage implements OnInit {
         this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         this.analyticsService.logEvent('user_doole', {userId: res.idUser})
         this.setLocalLanguages(res.language)
-
-        if(this.pushNotification){
-          this.redirecPushNotification(this.pushNotification)
-          this.modalCtrl.dismiss({error:null});
-          return
-        }
-
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
@@ -156,35 +148,5 @@ export class LoginPage implements OnInit {
     }      
   }
 
-  redirecPushNotification(data){
-    switch (data.action) {
-      case "MESSAGE":
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:data?.staff}});
-        break;
-      case "FORM":
-        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
-        break;
-      case "DRUGINTAKE":
-        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
-        break;
-      case "ADVICE":
-        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
-        break;
-      case "DIET":
-        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
-        break;
-      case "AGENDA":
-        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
-        break;
-      case "REMINDER":
-        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
-        break;
-      case "GAME":
-        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
-        break;
-      default:
-        console.error('Action on localNotificationActionPerformed not found')
-        break;
-    }
-  }
+
 }

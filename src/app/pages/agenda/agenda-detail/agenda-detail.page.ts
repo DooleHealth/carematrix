@@ -24,7 +24,6 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 })
 export class AgendaDetailPage implements OnInit {
   event: any = {}
-  id: any = {}
   coordenadas: any = {}
   tokboxSession: any;
   disabled : string;
@@ -56,12 +55,7 @@ export class AgendaDetailPage implements OnInit {
     this.disabled = Capacitor.isNative? 'disabled': '';
     this.event = history.state.event;
     
-    if(this.event)
-      this.id = history.state.event.id;
-    else
-      this.id = history.state.id;
-    
-    if(this.id)
+    if(this.event?.id)
       this.getDetailAgenda();
 
     console.log('[AgendaDetailPage] ngOnInit()', this.event);
@@ -70,7 +64,7 @@ export class AgendaDetailPage implements OnInit {
   // TODO: remove (agenda detail in state.event)
   getDetailAgenda(){ 
     this.isLoading = true;
-    this.dooleService.getAPIagendaID(this.id).subscribe(
+    this.dooleService.getAPIagendaID(this.event?.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
         if(res.agenda){
