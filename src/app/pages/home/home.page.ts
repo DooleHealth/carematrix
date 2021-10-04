@@ -659,7 +659,6 @@ export class HomePage implements OnInit {
             }, {
               text: this.translate.instant("button.ok"),
               handler: (data) => {
-                console.log('[LandingPage] AlertConfirm Okay', data.username );
                 localStorage.setItem('allNotification', 'true')
                 this.activateAllNotifications()
               }
