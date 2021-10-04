@@ -86,6 +86,7 @@
       },
       "home": {
         "goals_title": "El teu objectiu",
+        "goals_no_data": "No hi ha dades",
         "advices_title": "Novetats i Consells",
         "today_title": "El teu Dia",
         "reminders_title": "Recordatoris",
@@ -120,7 +121,9 @@
         "configuration": {
           "title_setting": "Configuració",
           "linked_accounts":"Comptes Vinculades",
-          "settings": "Ajustos"
+          "settings": "Ajustos",
+          "videocall_test": "Test de Connectivitat",
+          "videocall_open":"Obrir"
         },
         "help": {
           "title_help":  "Ajuda",
@@ -129,7 +132,8 @@
           "legal_warning": "Avís Legal",
           "us": "Nosaltres"
         },
-        "button_sign_off": "Tancar Sessió"
+        "button_sign_off": "Tancar Sessió",
+        "version": "Versió"
       },
       "goals": {
         "your_goals": "Els teus Objectius",
@@ -436,6 +440,7 @@
       "medication":{
         "add_medication":"Afegir medicament",
         "edit_medication":"Edita medicament",
+        "send_medication":"Sol·licitar enviament de medicació",
         "save_medication":"Desar medicament",
         "delete_medication":"Eliminar medicament",
         "message_add_medication":"S'ha afegit un nou medicament",
@@ -682,7 +687,13 @@
       },
       "notifications":{
         "register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions.",
-        "voip_register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions VoIP."
+        "voip_register_error":"Error a l'registrar el dispositiu. No podrà rebre notificacions VoIP.",
+        "chat":"Missatge",
+        "form":"Formulari",
+        "drug":"Medicament",
+        "videocall":"Trucada de vídeo",
+        "close":"Amagar"
+
 
       }
       
