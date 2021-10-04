@@ -45,7 +45,7 @@ export class HomePage implements OnInit {
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
-  WAIT_TIME = 10 //10 minutes 
+  WAIT_TIME = 10 //10 minutes
   userDoole : any = {}
   goals: any =[]
   diets: any =[]
@@ -96,8 +96,8 @@ export class HomePage implements OnInit {
     private health: Health,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
-    private ngZone: NgZone, 
-    public translate: TranslateService, 
+    private ngZone: NgZone,
+    public translate: TranslateService,
     public alertController: AlertController,
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
@@ -106,16 +106,15 @@ export class HomePage implements OnInit {
     this.analyticsService.setScreenName('home','[HomePage]')
   }
 
-  async ngOnInit() { 
+  async ngOnInit() {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.checkHealthAccess();
-    //this.getUserInformation();
   }
 
 
   ionViewWillEnter(){
       this.getUserInformation()
-   
+
   }
 
   checkHealthAccess(){
@@ -130,10 +129,17 @@ export class HomePage implements OnInit {
                 .then(res => {
                   //console.log(res);
                   this.syncData(30);
+                  setTimeout(()=>this.confirmAllNotification(), 500);
                 })
-                .catch(e => console.log(e));
+                .catch(e => {
+                  console.log(e)
+                  setTimeout(()=>this.confirmAllNotification(), 100);
+                });
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            console.log(e)
+            setTimeout(()=>this.confirmAllNotification(), 500);
+          });
     }
   }
 
@@ -141,7 +147,7 @@ export class HomePage implements OnInit {
     if(this.userDoole?.age)
     this.analyticsService.setProperty('Edad', this.userDoole.age)
     if(this.userDoole?.language?.name)
-    this.analyticsService.setProperty('Idioma', this.userDoole.language.name)   
+    this.analyticsService.setProperty('Idioma', this.userDoole.language.name)
     this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
@@ -188,8 +194,8 @@ export class HomePage implements OnInit {
         }
 
         //diets
-        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes) 
-        this.searchIndexDiet()  
+        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
+        this.searchIndexDiet()
         this.slideDietChange()
         this.sliderDiet.slideTo(this.currentIndexDiet)
 
@@ -197,9 +203,9 @@ export class HomePage implements OnInit {
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
           this.sliderPhysical.slideTo(0)
-          this.slideActivityChange()       
+          this.slideActivityChange()
         }
-      
+
         if(res.data.gamePlays){
           this.games = res.data.gamePlays
           this.games.sort(function(a,b){
@@ -215,12 +221,12 @@ export class HomePage implements OnInit {
         //Analytics
         //console.log('[HomePage] getUserInformation()', this.userDoole);
         //this.setAnalyticsUserProperty()
-       },(err) => { 
-          console.log('***** ERROR ' + err); 
+       },(err) => {
+          console.log('***** ERROR ' + err);
           this.isLoading = false
-         
-          throw err; 
-          
+
+          throw err;
+
       });
   }
   treeIterateDiets(obj) {
@@ -237,7 +243,7 @@ export class HomePage implements OnInit {
     }
     console.log('[DiaryPage] treeIterateDiets()', this.diets);
   }
-  
+
   treeIterate(obj, stack) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {
@@ -258,8 +264,8 @@ export class HomePage implements OnInit {
   }
 
   getGoalLastValue(element_goal, goal){
-    
-    
+
+
     goal.last_value = parseFloat(element_goal?.value);
     goal.value1 = parseFloat(goal.value1)
     goal.last_value_date = element_goal?.date_value;
@@ -295,7 +301,7 @@ export class HomePage implements OnInit {
     console.log("**  element.progress_bar_value: ",  goal.progress_bar_value);
     console.log("**  element.progress_bar_color: ",  goal.progress_bar_color);
     goal.last_value_text = goal.last_value + ' ' + goal.element?.element_unit?.abbreviation
-      
+
   }
 
   inBetween(goal){
@@ -322,13 +328,13 @@ export class HomePage implements OnInit {
 
   getGoalProgress(goal, target){
     if(goal.last_value <= target){
-      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target); 
+      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target);
       goal.progress_bar_value = this.convertToDecimal(goal.goal_percentage);
     }else if(goal.last_value > target){
-      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target); 
+      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target);
       goal.progress_bar_value = this.getProgressBarValue(goal);
     }
-   
+
     goal.progress_bar_color = this.getProgressBarClass(goal.progress_bar_value, goal.reversed);
 
     return goal;
@@ -353,17 +359,17 @@ export class HomePage implements OnInit {
         goal.reversed = false;
         progress_bar_value = this.convertToDecimal(goal.goal_percentage)
       }
-     
+
     }else
       progress_bar_value = this.convertToDecimal(goal.goal_percentage);
 
     return progress_bar_value;
-    
+
   }
 
   getGoalPercentage(last_value, value){
     return (last_value*100)/value;
-      
+
   }
 
   getProgress(goal){
@@ -435,7 +441,7 @@ export class HomePage implements OnInit {
       return (numberVal / 1000).toFixed(2);
 
  }
- 
+
 
   getProgressBarClass(percentage, isReversed){
 
@@ -444,7 +450,7 @@ export class HomePage implements OnInit {
       cssClass = this.reversedProgressBarClass(percentage);
     else
       cssClass = this.progressBarClass(percentage);
-  
+
     return cssClass
   }
 
@@ -481,8 +487,8 @@ export class HomePage implements OnInit {
     })
   }
 
-  
-  
+
+
   syncData(days){
 
     let startDate =  new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000);
@@ -508,7 +514,7 @@ export class HomePage implements OnInit {
 
     }).catch(error => {
       console.error(error);
-      throw error; 
+      throw error;
     });
 
     console.log('dataType: heart_rate');
@@ -520,7 +526,7 @@ export class HomePage implements OnInit {
       //this.postHealth('heart_rate', data);
     }).catch(error => {
       console.error(error);
-      throw error; 
+      throw error;
     });
 
     console.log('dataType: weight');
@@ -532,7 +538,7 @@ export class HomePage implements OnInit {
       //this.postHealth('weight', data);
     }).catch(error => {
       console.error(error);
-      throw error; 
+      throw error;
     });
 
     console.log('dataType: temperature');
@@ -544,7 +550,7 @@ export class HomePage implements OnInit {
     //   //this.postHealth('temperature', data);
     // }).catch(error => {
     //   console.error(error);
-    //   throw error; 
+    //   throw error;
     // });
 
   }
@@ -559,7 +565,7 @@ export class HomePage implements OnInit {
           async (data) => {
             console.log("postHealth: ", data);
            },
-         
+
           (error) => {
             // Called when error
             console.log('error: ', error);
@@ -597,9 +603,9 @@ export class HomePage implements OnInit {
     //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
-  slideGoalChange() {	
-    if(this.goals !== undefined && this.goals?.length > 0) 	    
-		this.sliderGoals.getActiveIndex().then(index => {      
+  slideGoalChange() {
+    if(this.goals !== undefined && this.goals?.length > 0)
+		this.sliderGoals.getActiveIndex().then(index => {
       //console.log('[HomePage] slideGoalChange()', index);
       let slider = this.goals[index]
          console.log('[HomePage] slideGoalChange()', slider);
@@ -609,9 +615,9 @@ export class HomePage implements OnInit {
     });
   }
 
-  slideDietChange(){	  
-    if(this.diets !== undefined && this.diets?.length > 0) 
-		this.sliderDiet.getActiveIndex().then(index => {      
+  slideDietChange(){
+    if(this.diets !== undefined && this.diets?.length > 0)
+		this.sliderDiet.getActiveIndex().then(index => {
       //console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
       let hour = slider?.date.split(' ')[1]
@@ -622,9 +628,9 @@ export class HomePage implements OnInit {
     });
   }
 
-  slideDrugChange(){	
+  slideDrugChange(){
     if(this.drugs !== undefined && this.drugs?.length > 0){
-      this.sliderDrug.getActiveIndex().then(index => {      
+      this.sliderDrug.getActiveIndex().then(index => {
         //console.log('[HomePage] slideDrugChange()', index);
         let slider = this.drugs[index]
         this.infoDrugs = {
@@ -635,12 +641,12 @@ export class HomePage implements OnInit {
     }else{
       this.infoDrugs = null;
     }
-	
+
   }
 
   slideGamesChange(){
     if(this.games !== undefined && this.games?.length > 0)
-    this.sliderGames.getActiveIndex().then(index => {      
+    this.sliderGames.getActiveIndex().then(index => {
       //console.log('[HomePage] slideGamesChange()', index);
       let slider = this.games[index]
       let hour = slider?.scheduled_date.split(' ')[1]
@@ -652,7 +658,7 @@ export class HomePage implements OnInit {
   }
 
   slideActivityChange(){
-    this.sliderPhysical.getActiveIndex().then(index => {      
+    this.sliderPhysical.getActiveIndex().then(index => {
       //console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
       this.infoActivity = {
@@ -662,7 +668,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  changeTake(id,taked){  
+  changeTake(id,taked){
     taked=(taked=="0") ? "1" : "0";
     var dict = [];
     dict.push({
@@ -672,10 +678,10 @@ export class HomePage implements OnInit {
     this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
       //console.log('[HomePage] changeTake()',  json);
       this.getDrugIntake()
-    },(err) => { 
-      //console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message); 
+    },(err) => {
+      //console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message);
       alert( 'ERROR(' + err.code + '): ' + err.message)
-      throw err; 
+      throw err;
     });
   }
 
@@ -686,7 +692,7 @@ export class HomePage implements OnInit {
 
   searchIndexDrug(){
     if(this.drugs !== undefined && this.drugs?.length > 0){
-      let drug = this.drugs?.find(element => 
+      let drug = this.drugs?.find(element =>
         ((this.hourToMinutes(element.hour_intake) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
         )
       let index = this.drugs.indexOf(drug);
@@ -697,7 +703,7 @@ export class HomePage implements OnInit {
 
   searchIndexDGame(){
     if(this.games !== undefined && this.games?.length > 0){
-      let game = this.games?.find(element => 
+      let game = this.games?.find(element =>
         ((this.hourToMinutes(element.scheduled_date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
         )
       let index = this.games.indexOf(game);
@@ -707,7 +713,7 @@ export class HomePage implements OnInit {
 
   searchIndexDiet(){
     if(this.diets !== undefined && this.diets?.length > 0){
-      let diet = this.diets?.find(element => 
+      let diet = this.diets?.find(element =>
         ((this.hourToMinutes(element.date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
         )
       let index = this.diets.indexOf(diet);
@@ -752,10 +758,10 @@ export class HomePage implements OnInit {
       await this.auth.getUserLocalstorage().then(value =>{
         this.auth.user = value
       })
-      
+
       if(item.url.startsWith("http")){
         this.header = true
-        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;      
+        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
         browser = this.iab.create(item.url, '_blank', iosoption);
         browser.on('exit').subscribe(event => {
           this.ngZone.run(() => {
@@ -766,10 +772,10 @@ export class HomePage implements OnInit {
       }
       else{
         browser = this.iab.create(item.url, '_system', iosoption);
-      }        
+      }
     }
 
-   
+
 
 /*     if(item.type=="form") {
       const options: InAppBrowserOptions = {
@@ -793,13 +799,13 @@ export class HomePage implements OnInit {
     sortDate(games){
       //console.log('Async operation has ended' ,games);
       return games.sort( function (a, b) {
-        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1])) 
+        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
           return 1;
         if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
           return -1;
         return 0;
       })
-  
+
     }
 
     formatSelectedDate(date){
@@ -829,4 +835,42 @@ export class HomePage implements OnInit {
       this.nav.navigateForward("/journal/diets-detail/recipe", { state: {id:id} });
     }
 
+    async confirmAllNotification() {
+      const notification = localStorage.getItem('allNotification');
+      if(JSON.parse(notification))
+      return
+
+      const alert = await this.alertController.create({
+        cssClass: 'my-alert-class',
+        subHeader: this.translate.instant('home.enable_notifications'),
+        message: this.translate.instant('home.message_enable_notifications'),
+          buttons: [
+            {
+              text: this.translate.instant("button.cancel"),
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {
+                console.log('[LandingPage] AlertConfirm Cancel');
+                localStorage.setItem('allNotification', 'true');
+                this.activateAllNotifications(0)
+              }
+            }, {
+              text: this.translate.instant("button.ok"),
+              handler: (data) => {
+                localStorage.setItem('allNotification', 'true')
+                this.activateAllNotifications(1)
+              }
+            }
+          ]
+      });
+
+      await alert.present();
+    }
+
+    activateAllNotifications(factor){
+      console.log('[HomePage] activateAllNotifications()');
+      let params = { active: 'all', value: factor }
+      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{ })
+
+    }
 }
