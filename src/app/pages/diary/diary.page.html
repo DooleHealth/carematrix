@@ -107,7 +107,7 @@
                   </ion-img>
                 </ion-col>
                 <ion-label style="color: #e67e22">{{item.date.split(' ')[0] }}</ion-label>
-                <p style="color: #e67e22">{{item.date.split(' ')[1] }}</p>
+                <p style="color: #e67e22"> {{ formatHour(item.date.split(' ')[1]) }}</p>
                 <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
               </ion-item>
               <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItemDiet(item)">
@@ -171,8 +171,8 @@
           <ion-list *ngFor="let list of this.listDrug">
             <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
               titlecase}}</ion-label>
-            <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" (click)="expandItem(item)">
-              <ion-item *ngIf="item.expanded" lines="none">
+            <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" >
+              <ion-item *ngIf="item.expanded" lines="none" (click)="expandItem(item)">
                 <ion-col size="2">
                   <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
                     style="margin-right: 5px"></ion-img>
@@ -196,7 +196,7 @@
                 <p class="txtTitleTrackingLittle">{{item.item.hour_intake}}</p>
                 <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
               </ion-item>
-              <ion-item *ngIf="!item.expanded" lines="none">
+              <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItem(item)">
                 <ion-col size="2">
                   <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
                     style="margin-right: 5px"></ion-img>

@@ -51,7 +51,6 @@ export class ProfilePage implements OnInit {
   getUserProfile(){   
     if(history.state?.user){
       this.userDoole = history.state.user;
-      this.userImg()
       console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
     }  
   }
@@ -69,16 +68,7 @@ export class ProfilePage implements OnInit {
           throw err; 
       });
     }
-  }
 
-  userImg(){
-    if(this.userDoole?.temporaryUrl )
-      this.userImage = this.userDoole?.temporaryUrl;
-    else if(this.userDoole?.image )
-      this.userImage = this.userDoole?.image;
-    else
-      console.log('user image not found');
-  }
 
   getTokboxCredentials(){
     this.dooleService.getAPIvideocall("1386").subscribe(

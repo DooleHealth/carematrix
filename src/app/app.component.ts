@@ -635,7 +635,7 @@ export class AppComponent implements OnInit {
           if(pushNotification){
             let data = pushNotification.data;
             let notification = pushNotification.notification;
-            this.redirecPushNotification(data, notification)
+            setTimeout(()=>this.redirecPushNotification(data, notification), 500);
           }
         })
         .catch(async (error: any) => {
