@@ -508,6 +508,7 @@
       "medication":{
           "add_medication":"Añadir medicamento",
           "edit_medication":"Editar medicamento",
+          "send_medication":"Solicitar envío de medicación",
           "save_medication":"Guardar medicamento",
           "delete_medication":"Eliminar medicamento",
           "message_add_medication":"Se ha añadido un nuevo medicamento",
