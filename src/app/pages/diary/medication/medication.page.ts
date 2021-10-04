@@ -73,12 +73,12 @@ export class MedicationPage implements OnInit {
   ngOnInit() {
   
     this.form = this.fb.group({
-      name: [''],
-      address: [''],
-      city: [''],
-      state: [''],
-      postal_code: [''],
-      phone: [''],
+      name: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      postal_code: ['', [Validators.required, Validators.minLength(5)]],
+      phone: ['', [Validators.required, Validators.minLength(6)]],
 
     });
 

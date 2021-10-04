@@ -47,6 +47,10 @@ const routes: Routes = [
   {
     path: 'about-us',
     loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
+  },
+  {
+    path: 'videocall-test',
+    loadChildren: () => import('../profile/videocall-test/videocall-test.module').then( m => m.VideocallTestPageModule)
   }
 ];
 
