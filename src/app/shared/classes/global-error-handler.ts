@@ -4,7 +4,6 @@ import { LoggingService } from '../../services/logging.service';
 import { ErrorService } from '../../services/error.service';
 import { NotificationService } from '../../services/notification.service';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -27,20 +26,13 @@ export class GlobalErrorHandler implements ErrorHandler {
             // Server Error
             message = errorService.getServerMessage(error);
             // Always log errors
-            if(!environment.production)
-                notifier.showError(message);
-            else
-                console.error(message);
-            
+            notifier.showError(message);
         } else {
             // Client Error
             message = errorService.getClientMessage(error);
            
             // Always log errors
-            if(!environment.production)
-                notifier.showError(message)
-            else
-                console.error(message); 
+            notifier.showError(message); 
         }
 
        

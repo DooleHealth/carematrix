@@ -17,7 +17,6 @@ import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { group } from '@angular/animations';
-import { stringify } from 'querystring';
 
 export interface UserInformation {
   title?: string;
@@ -182,11 +181,9 @@ export class HomePage implements OnInit {
 
           // Get the latest value of the element-goal
           this.goals.forEach(goal => {
-            let element_last_value = goal?.element?.element_last_value // Get the element group
-            if(element_last_value)
-              this.getGoalLastValue(element_last_value, goal)
-            else
-              goal.last_value_text = this.translate.instant('home.goal_no_data');
+            let group = this.getValue(res.data.elements.eg, goal.element.element_group_id); // Get the element group
+            if(group)
+              this.getGoalLastValue(group, goal)
           });
         }
 
@@ -229,10 +226,10 @@ export class HomePage implements OnInit {
   treeIterateDiets(obj) {
     this.diets = []
     for (var property in obj) {
-      //console.log('[DiaryPage] treeIterateDiets()', property);
+      console.log('[DiaryPage] treeIterateDiets()', property);
       if (obj.hasOwnProperty(property)) {
         if (typeof obj[property] == "object") {
-          //console.log('[DiaryPage] treeIterateDiets()', obj[property]);
+          console.log('[DiaryPage] treeIterateDiets()', obj[property]);
           this.diets.push({date: property, items: obj[property]})
           //this.treeIterate(obj[property], stack + '.' + property);
         }
@@ -260,219 +257,28 @@ export class HomePage implements OnInit {
     }
   }
 
-  getGoalLastValue(element_goal, goal){
-    
-    
-    goal.last_value = parseFloat(element_goal?.value);
-    goal.value1 = parseFloat(goal.value1)
-    goal.last_value_date = element_goal?.date_value;
-
-    switch(goal.goalType){
-
-      case '=':
-        goal = this.equal(goal);
-        break;
-      case 'a<x<b':
-        goal = this.inBetween(goal);
-        break;
-      case '<':
-        goal = this.lessThan(goal);
-        break;
-      case '<=':
-        goal = this.lessOrEqualThan(goal);
-        break;
-      case '>':
-        goal = this.greaterThan(goal);
-        break;
-      case '=>':
-        goal = this.greaterOrEqualThan(goal);
-        break;
-      default:
-        break;
-    }
-    console.log("** Goal: ", goal );
-    console.log("** goalType: ", goal.goalType );
-    console.log("**  element.last value: ", element_goal?.value);
-    console.log("**  element.reversed: ", goal.reversed);
-    console.log("**  element.goal_percentage: ", goal.goal_percentage);
-    console.log("**  element.progress_bar_value: ",  goal.progress_bar_value);
-    console.log("**  element.progress_bar_color: ",  goal.progress_bar_color);
-    goal.last_value_text = goal.last_value + ' ' + goal.element?.element_unit?.abbreviation
-      
-  }
-
-  inBetween(goal){
-    goal.value2 = parseFloat(goal?.value2);
-    goal.reversed = false;
-      if(goal.last_value >= goal.value1 && goal.last_value <= goal.value2){
-        goal = this.goalAchieved(goal);
-      }else if(goal.last_value >= goal.value1 && goal.last_value >= goal.value2){
-        goal.reversed = true;
-        goal = this.getGoalProgress(goal, goal.value2)
-      }else if(goal.last_value <= goal.value1 && goal.last_value >= goal.value2){
-        goal = this.getGoalProgress(goal, goal.value1)
-      }
-    return goal;
-  }
-
-  goalAchieved(goal){
-    goal.goal_percentage = 100;
-    goal.progress_bar_value = 1;
-    goal.progress_bar_color = this.getProgressBarClass(goal.progress_bar_value, goal.reversed);
-
-    return goal
-  }
-
-  getGoalProgress(goal, target){
-    if(goal.last_value <= target){
-      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target); 
-      goal.progress_bar_value = this.convertToDecimal(goal.goal_percentage);
-    }else if(goal.last_value > target){
-      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target); 
-      goal.progress_bar_value = this.getProgressBarValue(goal);
-    }
+  getGoalLastValue(group, goal){
+    console.log("** element.element_id: ", goal.element_id);
+    console.log("** element.element_group_id: ", goal.element.element_group_id);
+    console.log("** res.data.elements: ", group);
    
-    goal.progress_bar_color = this.getProgressBarClass(goal.progress_bar_value, goal.reversed);
-
-    return goal;
-  }
-
-  getProgressBarValue(goal){
-    let progress_bar_value;
-    if(goal.goalType == 'a<x<b'){
-      let percentage = 100 - (parseFloat(goal.goal_percentage) - 100);
-      progress_bar_value = this.convertToDecimal(percentage)
-    }else if(goal.goalType == '>' || goal.goalType == '=>' )
-      progress_bar_value = this.convertToDecimal(goal.goal_percentage)
-    else if(goal.goalType == '<' || goal.goalType == '<=' ){
-      let percentage = 100 - (parseFloat(goal.goal_percentage) - 100);
-      progress_bar_value = this.convertToDecimal(percentage)
-    }else if(goal.goalType == '='){
-      if(goal.last_value > goal.value1){
-        goal.reversed = true;
-        let percentage = 100 - (parseFloat(goal.goal_percentage) - 100);
-        progress_bar_value = this.convertToDecimal(percentage)
-      }else{
-        goal.reversed = false;
-        progress_bar_value = this.convertToDecimal(goal.goal_percentage)
+      console.log("** Family Group: ", group);
+      const element_goal = group?.elements.find(e => e.id == goal.element_id);
+      if(element_goal){
+        console.log("** found last value: ", element_goal?.value);
+        goal.last_value = element_goal?.value;
+        goal.last_value_date = element_goal?.date;
+        if(goal.last_value > 0){
+          let p = (goal.last_value/100)*goal.score
+          goal.goal_percentage = p/100;
+          console.log("**  element.goal_percentage: ", goal.goal_percentage);
+          goal.reversed = goal.goalType == '<'
+          console.log("** element.reversed: ", goal.reversed);
+        }
+        
       }
-     
-    }else
-      progress_bar_value = this.convertToDecimal(goal.goal_percentage);
-
-    return progress_bar_value;
     
   }
-
-  getGoalPercentage(last_value, value){
-    return (last_value*100)/value;
-      
-  }
-
-  getProgress(goal){
-    return goal.last_value <= goal.value1 ? 1 : this.convertToDecimal(goal.goal_percentage);
-  }
-
-  equal(goal){
-    console.log("** equal() goalType: ", goal.goalType);
-    if(goal.last_value == goal.value1){
-      goal = this.goalAchieved(goal);
-    }else{
-      goal = this.getGoalProgress(goal, goal.value1)
-    }
-    return goal;
-  }
-
-  lessThan(goal){
-    console.log("** lessThan() goalType: ", goal.goalType);
-    goal.reversed = true;
-    if(goal.last_value < goal.value1){
-      goal = this.goalAchieved(goal);
-    }else{
-      goal = this.getGoalProgress(goal, goal.value1)
-    }
-    return goal;
-  }
-
-  greaterOrEqualThan(goal){
-    console.log("** greaterThan() goalType: ", goal.goalType);
-    goal.reversed = false;
-    if(goal.last_value >= goal.value1){
-      goal = this.goalAchieved(goal);
-    }else{
-      goal = this.getGoalProgress(goal, goal.value1)
-    }
-
-    return goal;
-  }
-
-  lessOrEqualThan(goal){
-    console.log("** lessThan() goalType: ", goal.goalType);
-    goal.reversed = true;
-    if(goal.last_value <= goal.value1){
-      goal = this.goalAchieved(goal);
-    }else{
-      goal = this.getGoalProgress(goal, goal.value1)
-    }
-    return goal;
-  }
-
-  greaterThan(goal){
-    console.log("** greaterThan() goalType: ", goal.goalType);
-    goal.reversed = false;
-    if(goal.last_value > goal.value1){
-      goal = this.goalAchieved(goal);
-    }else{
-      goal = this.getGoalProgress(goal, goal.value1)
-    }
-
-    return goal;
-  }
-
-   convertToDecimal(numberVal){
-    if(numberVal<10)
-      return (numberVal / 10).toFixed(2);
-    else if(numberVal<100)
-      return (numberVal / 100).toFixed(2);
-    else
-      return (numberVal / 1000).toFixed(2);
-
- }
- 
-
-  getProgressBarClass(percentage, isReversed){
-
-    let cssClass: string;
-    if(isReversed)
-      cssClass = this.reversedProgressBarClass(percentage);
-    else
-      cssClass = this.progressBarClass(percentage);
-  
-    return cssClass
-  }
-
-  progressBarClass(value){
-    console.log("** progressBarClass(): ", value);
-    if(value<0.50)
-      return 'my-buffer-progress_red'
-    else if(value>0.49 && value<0.75)
-      return 'my-buffer-progress_orange'
-    else
-      return 'my-buffer-progress_green'
-
-  }
-
-  reversedProgressBarClass(value){
-    console.log("** reversedProgressBarClass(): ", value);
-    if(1 > value && value < 0.50)
-      return 'my-buffer-progress_red'
-    else if(value >= 0.50 && value <= 0.75)
-      return 'my-buffer-progress_orange'
-    else
-      return 'my-buffer-progress_green'
-  }
-
-
 
   getDrugIntake(){
     this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
@@ -539,16 +345,16 @@ export class HomePage implements OnInit {
     });
 
     console.log('dataType: temperature');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'temperature',
-    // }).then(data => {
-    //   //this.postHealth('temperature', data);
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error; 
-    // });
+    this.health.query({
+      startDate,
+      endDate,
+      dataType: 'temperature',
+    }).then(data => {
+      //this.postHealth('temperature', data);
+    }).catch(error => {
+      console.error(error);
+      throw error; 
+    });
 
   }
 
@@ -558,7 +364,7 @@ export class HomePage implements OnInit {
         type: type,
         vals: JSON.stringify(data),
       };
-      this.dooleService.post('user/element/sync', postData).subscribe(
+      this.authService.post('user/element/sync', postData).subscribe(
           async (data) => {
             console.log("postHealth: ", data);
            },

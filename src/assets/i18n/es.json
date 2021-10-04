@@ -85,7 +85,6 @@
       },
       "home": {
         "goals_title": "Tu Objetivo",
-        "goals_no_data": "No hay datos",
         "advices_title": "Novedades y Consejos",
         "today_title": "Tu Día",
         "reminders_title": "Recodatorios",
@@ -120,9 +119,7 @@
         "configuration": {
           "title_setting": "Configuración",
           "linked_accounts":"Cuentas Vinculadas",
-          "settings": "Ajustes",
-          "videocall_test": "Test de Conectividad",
-          "videocall_open":"Abrir"
+          "settings": "Ajustes"
         },
         "help": {
           "title_help":  "Ayuda",
@@ -131,8 +128,7 @@
           "legal_warning": "Aviso Legal",
           "us": "Nosotros"
         },
-        "button_sign_off": "Cerrar Sesión",
-        "version": "Versión"
+        "button_sign_off": "Cerrar Sesión"
       },
       "goals": {
         "your_goals": "Tus Objetivos",
@@ -517,7 +513,6 @@
       "medication":{
           "add_medication":"Añadir medicamento",
           "edit_medication":"Editar medicamento",
-          "send_medication":"Solicitar envío de medicación",
           "save_medication":"Guardar medicamento",
           "delete_medication":"Eliminar medicamento",
           "message_add_medication":"Se ha añadido un nuevo medicamento",
@@ -690,13 +685,7 @@
       },
       "notifications":{
         "register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones.",
-        "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP.",
-        "chat":"Mensaje",
-        "form":"Formulario",
-        "drug":"Medicamento",
-        "videocall":"Videollamada",
-        "close":"Cerrar"
-      
+        "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP."
       }
 
       
