@@ -431,6 +431,7 @@
       "medication":{
         "add_medication":"Afegir medicament",
         "edit_medication":"Edita medicament",
+        "send_medication":"Sol·licitar enviament de medicació",
         "save_medication":"Desar medicament",
         "delete_medication":"Eliminar medicament",
         "message_add_medication":"S'ha afegit un nou medicament",
