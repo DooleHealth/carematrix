@@ -689,6 +689,13 @@ export class AppComponent implements OnInit {
         .then((result: any) => {
           console.log(result)
           this.lastResume = new Date;
+
+          // if(pushNotification){
+          //   let data = pushNotification.data;
+          //   let notification = pushNotification.notification;
+          //   setTimeout(()=>this.redirecPushNotification(data, notification), 500);
+          // }
+
         })
         .catch(async (error: any) => {
           console.log(error);
