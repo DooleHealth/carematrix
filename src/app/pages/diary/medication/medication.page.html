@@ -58,9 +58,10 @@
           <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
         </ion-col>
         <ion-col size="2">
-          <ion-icon name="chevron-down-outline"></ion-icon>
+          <ion-icon name="add-outline"></ion-icon>
         </ion-col>
-      </ion-row>
+      </ion-row>   
+      <br> 
       <ion-row class="paddingTopNoMarginBottom" (click)="toggleIsFormVisible()"
         *ngIf="isFormVisible && this.paso == 'cero' ">
         <ion-col size="10">
@@ -72,25 +73,26 @@
       </ion-row>
       <span *ngIf="isFormVisible">
         <form [formGroup]="form" (ngSubmit)="submit()">
+          <br>
           <ion-item>
             <ion-label floating>{{ 'medications.name' | translate}}</ion-label>
-            <ion-input formControlName="name" type="text"></ion-input>
+            <ion-input formControlName="name" type="text" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{ 'medications.telephone' | translate}}</ion-label>
-            <ion-input formControlName="phone" type="text"></ion-input>
+            <ion-input formControlName="phone" type="text" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{ 'medications.address' | translate}}</ion-label>
-            <ion-input formControlName="address" type="text"></ion-input>
+            <ion-input formControlName="address" type="text" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{ 'medications.city' | translate}}</ion-label>
-            <ion-input formControlName="city" type="text"></ion-input>
+            <ion-input formControlName="city" type="text" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{ 'medications.state' | translate}}</ion-label>
-            <ion-input formControlName="state" type="text"></ion-input>
+            <ion-input formControlName="state" type="text"required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{ 'medications.postal_code' | translate}}</ion-label>
@@ -104,6 +106,7 @@
         <ion-row class="paddingTopNoMarginBottom">
           <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
         </ion-row>
+        <br>
         <ion-list>
           <span *ngFor="let address of this.directions; let i = index">
             <ion-card class="cardProfile" (click)="selectDirection(address)">
