@@ -100,7 +100,9 @@
         "take_button": "Tomar",
         "go_play_button": "Ir a juego",
         "diet": "Dietas",
-        "elements":"Visualizar todos mis datos"
+        "elements":"Visualizar todos mis datos",
+        "enable_notifications": "Activar Notificaciones",
+        "message_enable_notifications": "¿Deseas activar todas las notificaciones?"
       },
       "profile":{
         "title_profile": "Mi Perfil",
