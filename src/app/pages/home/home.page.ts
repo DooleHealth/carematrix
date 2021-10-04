@@ -640,7 +640,7 @@ export class HomePage implements OnInit {
 
     async confirmAllNotification() {
       const notification = localStorage.getItem('allNotification');
-      if(notification !== undefined)
+      if(JSON.parse(notification))
       return
 
       const alert = await this.alertController.create({
@@ -654,7 +654,7 @@ export class HomePage implements OnInit {
               cssClass: 'secondary',
               handler: (blah) => {
                 console.log('[LandingPage] AlertConfirm Cancel');
-                localStorage.setItem('allNotification', 'false');
+                localStorage.setItem('allNotification', 'true');
               }
             }, {
               text: this.translate.instant("button.ok"),
