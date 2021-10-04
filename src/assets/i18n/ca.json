@@ -86,6 +86,7 @@
       },
       "home": {
         "goals_title": "El teu objectiu",
+        "goals_no_data": "No hi ha dades",
         "advices_title": "Novetats i Consells",
         "today_title": "El teu Dia",
         "reminders_title": "Recordatoris",
@@ -118,7 +119,9 @@
         "configuration": {
           "title_setting": "Configuració",
           "linked_accounts":"Comptes Vinculades",
-          "settings": "Ajustos"
+          "settings": "Ajustos",
+          "videocall_test": "Test de Connectivitat",
+          "videocall_open":"Obrir"
         },
         "help": {
           "title_help":  "Ajuda",
@@ -127,7 +130,8 @@
           "legal_warning": "Avís Legal",
           "us": "Nosaltres"
         },
-        "button_sign_off": "Tancar Sessió"
+        "button_sign_off": "Tancar Sessió",
+        "version": "Versió"
       },
       "goals": {
         "your_goals": "Els teus Objectius",

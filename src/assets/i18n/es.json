@@ -85,6 +85,7 @@
       },
       "home": {
         "goals_title": "Tu Objetivo",
+        "goals_no_data": "No hay datos",
         "advices_title": "Novedades y Consejos",
         "today_title": "Tu Día",
         "reminders_title": "Recodatorios",
@@ -117,7 +118,9 @@
         "configuration": {
           "title_setting": "Configuración",
           "linked_accounts":"Cuentas Vinculadas",
-          "settings": "Ajustes"
+          "settings": "Ajustes",
+          "videocall_test": "Test de Conectividad",
+          "videocall_open":"Abrir"
         },
         "help": {
           "title_help":  "Ayuda",
@@ -126,7 +129,8 @@
           "legal_warning": "Aviso Legal",
           "us": "Nosotros"
         },
-        "button_sign_off": "Cerrar Sesión"
+        "button_sign_off": "Cerrar Sesión",
+        "version": "Versión"
       },
       "goals": {
         "your_goals": "Tus Objetivos",

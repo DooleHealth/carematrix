@@ -186,7 +186,6 @@ export class AppComponent implements OnInit {
         console.log('[pushNotificationReceived] Push received:');
         console.log(notification);
 
-        //cordova.plugins.CordovaCall.receiveCall('El teu metge', 'id');
         const voip = notification.data?.voip;
         
         if (voip == "true") {
@@ -370,7 +369,6 @@ export class AppComponent implements OnInit {
 
   redirecToVideocall(notification){
 
-    console.log('redirecToVideocall: ', notification);
     const caller = JSON.parse(notification.data?.Caller); 
     this.opentokService.agendaId = notification.data?.callId
     this.getTokboxSession(caller).then(()=>{
@@ -457,7 +455,7 @@ export class AppComponent implements OnInit {
 
       if(caller){
         let cancel = notification.extra?.Caller?.CancelPush;
-        console.log("is CancelPush:");
+        console.log("is CancelPush:", cancel);
         console.log(cancel);
         if(cancel == "true"){
           console.log("HANG UP");
@@ -531,41 +529,7 @@ export class AppComponent implements OnInit {
     });
 
     this.platform.resume.subscribe(async (e) => {
-
-      //en android, tenim de mirar al obrir app si tenim videotrucada pendent
-      if (this.platform.is('android')) {
-        let th = this;
-        this.authService.post("user/videocall/pendingConnect", null).subscribe(json => {
-          console.log(json);
-          console.log(json.agenda);
-          if (json.success) {
-            th.idAgenda = json.agenda;
-            console.log(th.idAgenda);
-
-            //si tenim videotrucada pendent
-            if (th.idAgenda != null) {
-
-              if (th.lastVideocall == null) {
-                th.lastVideocall = new Date;
-                this.redirecToVideocall(json)
-              } else {
-                let secondsPassed = ((new Date).getTime() - th.lastVideocall.getTime()) / 1000;
-                console.log(secondsPassed + ' seconds passed');
-                if (secondsPassed >= 10) {
-                  console.log("redirecting");
-                  this.redirecToVideocall(json)
-                }
-              }
-
-            } else {
-              console.log("not redirecting");
-            }
-          }
-        }, error => {
-          console.error("Error on user/videocall/pendingConnect:", error);
-        });
-      }
-
+     
       if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
         // App will lock after 2 minutes
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;

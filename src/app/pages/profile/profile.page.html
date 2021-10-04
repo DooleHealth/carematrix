@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar  mode="ios">
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -12,7 +12,7 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <ion-img [src]="this.authService.user?.image" class="img-wrapper"></ion-img>
+          <ion-img [src]="this.userImage" class="img-wrapper"></ion-img>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -78,11 +78,28 @@
               <ion-label routerLink="legal" detail="false" routerLinkActive='active-item'>{{ 'profile.help.legal_warning' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="about-us" detail="false" lines="none" routerLinkActive='active-item'>
+            <ion-item routerLink="about-us" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.help.us' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
+            <ion-item detail="false" lines="none" >
+              <ion-label>{{ 'profile.version' | translate}}: {{this.version}}</ion-label>
+            </ion-item> 
           </ion-list>
+          
+    </ion-card>
+    <ion-text class="txtTitle">{{ 'contact.tap_video' | translate}}</ion-text>
+    <ion-card class="cardProfile">
+      <ion-list>
+        <ion-item (click)="this.testVideocall()" detail="false">
+          <ion-label>{{'profile.configuration.videocall_open' | translate}}</ion-label>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+        <ion-item (click)="this.openWithInAppBrowser()" detail="false" lines="none" >
+          <ion-label>{{'profile.configuration.videocall_test' | translate}}</ion-label>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+      </ion-list>
     </ion-card>
     <ion-button expand="block" color="transparent" class="buttonClose" (click)="signOut()">
       {{ 'profile.button_sign_off' | translate}}
