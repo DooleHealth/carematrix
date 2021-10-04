@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProfilePage implements OnInit {
   userDoole : any
+  isLoading: boolean;
   userImage:string = history.state?.user ?  history.state?.user.temporaryUrl : 'assets/icons/user_icon.svg'
   version:string = "";
   tokboxSession: any;
@@ -33,6 +34,11 @@ export class ProfilePage implements OnInit {
     private opentokService: OpentokService, private translate : TranslateService,) { }
 
   ngOnInit() {
+    this.getUserProfile();
+  }
+
+  ionViewWillEnter(){
+    this.getPersonalInformation()
     this.getTokboxCredentials(); // Fake agenda for videocall test
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
     this.appVersion.getVersionNumber().then((version)=>{
@@ -42,21 +48,27 @@ export class ProfilePage implements OnInit {
     
   }
 
-  ionViewWillEnter(){
-    //this.getUserProfile();
-    this.userDoole = history.state?.user;
-    console.log('[ProfilePage] ionViewWillEnter()',this.userDoole );
-    
-  }
-
-  getUserProfile(){
-    
+  getUserProfile(){   
     if(history.state?.user){
       this.userDoole = history.state.user;
       this.userImg()
       console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
+    }  
+  }
+
+  getPersonalInformation(){
+    this.isLoading = true
+    this.dooleService.getAPIuserProfile().subscribe(
+      async (res: any) =>{
+        console.log('[ProfilePage] getPersonalInformation()', res);
+        this.userDoole = res.user;
+        this.isLoading = false
+       },(err) => { 
+          console.log('[ProfilePage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
+          this.isLoading = false 
+          throw err; 
+      });
     }
-   
   }
 
   userImg(){
