@@ -6,7 +6,7 @@
 
     <ion-thumbnail slot="start">
       <app-aspect-ratio [ratio]="{w:1, h:1}">
-        <app-image-shell animation="spinner" [src]="this.staff?.image" [alt]="'Sample Image'"
+        <app-image-shell animation="spinner" [src]="(this.staff?.image)? this.staff?.image: this.staff?.temporaryUrl" [alt]="'Sample Image'"
           class="img-wrapper-doctors"></app-image-shell>
       </app-aspect-ratio>
     </ion-thumbnail>

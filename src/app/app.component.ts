@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
 
-        
+
         // Push
         this.initPushNotifications();
 
@@ -89,10 +89,10 @@ export class AppComponent implements OnInit {
         if (this.platform.is('ios')) {
           this.initVoIpPushNotifications();
         }
-      
+
         // Actions when a VOIP call is received
         this.phonecallHandlers();
-        
+
         // Lock device after 2 mins on pause
         this.lockDevice();
 
@@ -127,8 +127,8 @@ export class AppComponent implements OnInit {
    id = push?.id;
    color = push?.color ? push?.color : '#109DB0';
    actionType = push?.action;
-  
-    
+
+
     console.log("ActionType:", actionType);
     await LocalNotifications.schedule({
       notifications:[
@@ -158,7 +158,7 @@ export class AppComponent implements OnInit {
         // No permission for push granted
       }
     });
-       
+
     PushNotifications.addListener(
       'registration',
       async (token: PushNotificationToken) => {
@@ -173,12 +173,12 @@ export class AppComponent implements OnInit {
 
       }
     );
- 
+
     PushNotifications.addListener('registrationError', (error: any) => {
       console.error('Error: ' + JSON.stringify(error));
       alert(this.translate.instant('notifications.register_error'));
     });
- 
+
     PushNotifications.addListener(
       'pushNotificationReceived',
       async (notification: PushNotification) => {
@@ -187,7 +187,7 @@ export class AppComponent implements OnInit {
         console.log(notification);
 
         const voip = notification.data?.voip;
-        
+
         if (voip == "true") {
           // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
           let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data.isCancelPush;
@@ -197,57 +197,26 @@ export class AppComponent implements OnInit {
           }else{
            this.redirecToVideocall(notification)
           }
-         
+
         }else{
           console.log("is notification: ", notification);
           this.showNotification(notification);
         }
       }
     );
- 
+
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       async (notification: PushNotificationActionPerformed) => {
-        const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data; 
+        const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data;
         console.log('Action performed: ');
-        console.log(notification); 
+        console.log(notification);
 
         const action = data?.action;
         const id = data?.id;
         const msg = data?.message;
 
-        switch (action) {
-          case "MESSAGE":
-            this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:id, staff:data?.staff}});
-            break;
-          case "FORM":
-            this.router.navigate([`/tracking/form`, {id: id}],{state:{data:data}});
-            break;
-          case "DRUGINTAKE":
-            this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
-            break;
-          case "VIDEOCALL":
-            this.redirecToVideocall(notification)
-            break;
-          case "ADVICE":
-            this.router.navigate([`/advices-detail`],{state:{data:data, id:id}});
-            break;
-          case "DIET":
-            this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:id}});
-            break;
-          case "AGENDA":
-            this.router.navigate([`/agenda/detail`],{state:{data:data, id:id}});
-            break;
-          case "REMINDER":
-            this.router.navigate([`/agenda/reminder`],{state:{data:data, id:id}});
-            break;
-          case "GAME":
-            this.router.navigate([`/journal/games-detail`],{state:{data:data, id:id}});
-            break;
-          default:
-            console.error('Action on localNotificationActionPerformed not found')
-            break;
-        }
+        this.redirecPushNotification(data, notification)
 
         this.isNotification = true;
         setTimeout(()=>this.showFingerprintAuthDlg(), 500);
@@ -259,7 +228,7 @@ export class AppComponent implements OnInit {
         // }
       }
     );
-    
+
 
     // LOCAL NOTIFICATIONS
     await LocalNotifications.requestPermission().then((data)=>{
@@ -279,7 +248,7 @@ export class AppComponent implements OnInit {
           id:'respond',
           title:'Respond',
           input: true
-        }],  
+        }],
       },{
         id:'FORM',
         actions:[{
@@ -316,11 +285,11 @@ export class AppComponent implements OnInit {
 
     LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
       console.log('localNotificationReceived received:', notification);
-     
-      
+
+
     })
     LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
-      
+
       let f = notification.notification.extra;
       console.log('localNotificationActionPerformed: ');
       console.log(f);
@@ -329,47 +298,54 @@ export class AppComponent implements OnInit {
       const msg = f.data?.message;
       console.log('ACTION: ', action);
       console.log("localNotificationActionPerformed", JSON.stringify(f.data));
-      switch (action) {
-        case "MESSAGE":
-          this.router.navigate([`/contact/chat/conversation`],{state:{data:f.data, chat:id, staff:f.data?.staff}});
-          break;
-        case "FORM":
-          this.router.navigate([`/tracking/form`, {id: id}],{state:{data:f.data}});
-          break;
-        case "DRUGINTAKE":
-          this.router.navigate([`/journal`],{state:{data:f.data, segment: 'medication'}});
-          break;
-        case "VIDEOCALL":
-          this.redirecToVideocall(notification)
-          break;
-        case "ADVICE":
-          this.router.navigate([`/advices-detail`],{state:{data:f.data, id:id}});
-          break;
-        case "DIET":
-          this.router.navigate([`/journal/diets-detail`],{state:{data:f.data, id:id}});
-          break;
-        case "AGENDA":
-          this.router.navigate([`/agenda/detail`],{state:{data:f.data, id:id}});
-          break;
-        case "REMINDER":
-          this.router.navigate([`/agenda/reminder`],{state:{data:f.data, id:id}});
-          break;
-        case "GAME":
-          this.router.navigate([`/journal/games-detail`],{state:{data:f.data, id:id}});
-          break;
-        default:
-          console.error('Action on localNotificationActionPerformed not found')
-          break;
-      }
-    
+      this.redirecPushNotification(f.data, notification)
+
     })
-   
- 
+
+
+  }
+
+  redirecPushNotification(data, notification){
+    switch (data.action) {
+      case "MESSAGE":
+        let origin = (data?.origin).replace(/\\/g, '');
+        let staff = JSON.parse(origin);
+        console.log('redirecPushNotification() ', data);
+        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        break;
+      case "FORM":
+        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        break;
+      case "DRUGINTAKE":
+        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        break;
+      case "VIDEOCALL":
+        this.redirecToVideocall(notification)
+        break;
+      case "ADVICE":
+        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "DIET":
+        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "AGENDA":
+        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        break;
+      case "REMINDER":
+        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        break;
+      case "GAME":
+        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+        break;
+      default:
+        console.error('Action on localNotificationActionPerformed not found')
+        break;
+    }
   }
 
   redirecToVideocall(notification){
 
-    const caller = JSON.parse(notification.data?.Caller); 
+    const caller = JSON.parse(notification.data?.Caller);
     this.opentokService.agendaId = notification.data?.callId
     this.getTokboxSession(caller).then(()=>{
     cordova.plugins.CordovaCall.receiveCall(caller.Username, notification.data?.callId);
@@ -389,13 +365,13 @@ export class AppComponent implements OnInit {
           this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
           console.log("this.tokboxSession: ", tokboxSession);
           return tokboxSession;
-         
-          
+
+
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
           alert(message)
-        }       
-      
+        }
+
       },
       (error) => {
         // Called when error
@@ -403,7 +379,7 @@ export class AppComponent implements OnInit {
         console.log("error: ", error);
         throw error;
       });
-      
+
   }
 
   async openVideocallModal(){
@@ -470,7 +446,7 @@ export class AppComponent implements OnInit {
         console.log("voip notification as message");
         //self.showNotification(notification);
       }
-     
+
     });
 
     pushvoip.on('error', function (e) {
@@ -479,7 +455,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  
+
   phonecallHandlers(){
 
     var self = this;
@@ -491,9 +467,9 @@ export class AppComponent implements OnInit {
       console.log(data);
       self.lastResume = new Date;
       self.openVideocallModal();
-      
+
     });
-   
+
    //reject de videocall
    cordova.plugins.CordovaCall.on('reject', function(data) {
      console.log("reject");
@@ -509,7 +485,7 @@ export class AppComponent implements OnInit {
    //receive
    cordova.plugins.CordovaCall.on('receiveCall', function(data) {
      console.log("receiveCall");
-    
+
 
    });
 
@@ -518,7 +494,7 @@ export class AppComponent implements OnInit {
      console.log("send call");
      console.log(data);
    });
-    
+
   }
   lockDevice() {
     // Lock phone after 2 minutes in pause
@@ -529,7 +505,7 @@ export class AppComponent implements OnInit {
     });
 
     this.platform.resume.subscribe(async (e) => {
-     
+
       if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
         // App will lock after 2 minutes
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
@@ -565,7 +541,7 @@ export class AppComponent implements OnInit {
     let lang = this.translate.getBrowserLang();
     if(lang !== 'ca' && lang !== 'es')
       lang = 'es'
-    
+
 
     this.translate.setDefaultLang(lang);
     console.log("BROWSER LANG: ", lang );
@@ -635,7 +611,7 @@ export class AppComponent implements OnInit {
   public async showFingerprintAuthDlg() {
 /*     if(!JSON.parse(localStorage.getItem('settings-bio'))){
       await this.authService.logout();
-      this.router.navigateByUrl('/landing'); 
+      this.router.navigateByUrl('/landing');
       return
     } */
 
@@ -648,7 +624,7 @@ export class AppComponent implements OnInit {
         fallbackButtonTitle: this.translate.instant('face-id.fallback'),
         subtitle: this.translate.instant('face-id.subtitle'),
         disableBackup: true,
-        
+
       })
         .then((result: any) => {
           console.log(result)
@@ -674,18 +650,16 @@ export class AppComponent implements OnInit {
             // if error.code == -108 user cancel prompt
             // if error.code == -111 too many attempts
             await this.authService.logout();
-            this.router.navigateByUrl('/landing'); 
+            this.router.navigateByUrl('/landing');
           }
         });
 
     })
       .catch(async (error: any) => {
         await this.authService.logout();
-        this.router.navigateByUrl('/landing'); 
+        this.router.navigateByUrl('/landing');
         console.log(error)
       });
   }
 
 }
-
-
