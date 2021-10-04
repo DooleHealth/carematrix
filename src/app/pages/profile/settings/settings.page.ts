@@ -30,6 +30,9 @@ export class SettingsPage implements OnInit {
   isFaID = true
   isTwoFactor = true
   biometric: any
+  reminder = false
+  news = false
+  release = false
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
@@ -77,6 +80,9 @@ export class SettingsPage implements OnInit {
     this.offers = (params?.offersNotificaton== "1")? true:false
     this.form = (params?.formNotificaton== "1")? true:false
     this.messages = (params?.messagesNotificaton== "1")? true:false
+    this.reminder = (params?.reminderNotificationApp== "1")? true:false
+    this.release = (params?.promoteContentNotification== "1")? true:false
+    this.news = (params?.newsNotificationApp== "1")? true:false
 
   }
 
@@ -122,11 +128,15 @@ export class SettingsPage implements OnInit {
 
   changeMedication(){
     let params = {
-      name: 'drugIntakeNotificationMail',
+      name: 'drugIntakeNotificationApp',
       value: this.medication
     }
-    //let params2 = {drugIntakeNotificationMail: 1}
     this.sendConfigution(params)
+    // let params2 = {
+    //   name: 'drugIntakeNotificationMail',
+    //   value: this.medication
+    // }
+    // this.sendConfigution(params2)
   }
 
   changeAdvices(){
@@ -168,6 +178,41 @@ export class SettingsPage implements OnInit {
     }
     this.sendConfigution(params)
   }
+
+  changeReminders(){
+    let params = {
+      name: 'reminderNotificationApp',
+      value: this.medication
+    }
+    this.sendConfigution(params)
+    // let params2 = {
+    //   name: 'reminderNotificationMail',
+    //   value: this.reminder
+    // }
+    // this.sendConfigution(params2)
+  }
+
+  changeNews(){
+    let params = {
+      name: 'newsNotificationApp',
+      value: this.medication
+    }
+    this.sendConfigution(params)
+    // let params2 = {
+    //   name: 'newsNotificationMail',
+    //   value: this.reminder
+    // }
+    // this.sendConfigution(params2)
+  }
+
+  changeRelease(){
+    let params = {
+      name: 'promoteContentNotification',
+      value: this.release
+    }
+    this.sendConfigution(params)
+  }
+
 
 
   sendConfigution(params){
