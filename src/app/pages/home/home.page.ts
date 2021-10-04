@@ -109,7 +109,6 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.checkHealthAccess();
-    setTimeout(()=>this.confirmAllNotification(), 1000);
   }
 
 
@@ -130,10 +129,17 @@ export class HomePage implements OnInit {
                 .then(res => {
                   //console.log(res);
                   this.syncData(30);
+                  setTimeout(()=>this.confirmAllNotification(), 500);
                 })
-                .catch(e => console.log(e));
+                .catch(e => {
+                  console.log(e)
+                  setTimeout(()=>this.confirmAllNotification(), 100);
+                });
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            console.log(e)
+            setTimeout(()=>this.confirmAllNotification(), 500);
+          });
     }
   }
 
@@ -846,12 +852,13 @@ export class HomePage implements OnInit {
               handler: (blah) => {
                 console.log('[LandingPage] AlertConfirm Cancel');
                 localStorage.setItem('allNotification', 'true');
+                this.activateAllNotifications(0)
               }
             }, {
               text: this.translate.instant("button.ok"),
               handler: (data) => {
                 localStorage.setItem('allNotification', 'true')
-                this.activateAllNotifications()
+                this.activateAllNotifications(1)
               }
             }
           ]
@@ -860,7 +867,10 @@ export class HomePage implements OnInit {
       await alert.present();
     }
 
-    activateAllNotifications(){
+    activateAllNotifications(factor){
       console.log('[HomePage] activateAllNotifications()');
+      let params = { active: 'all', value: factor }
+      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{ })
+
     }
 }
