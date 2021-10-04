@@ -4,7 +4,7 @@ import * as OT from '@opentok/client';
 import { SubscriberComponent } from '../subscriber/subscriber.component';
 import { OpentokService } from '../../services/opentok.service';
 import { Router } from '@angular/router';
-import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController, Platform } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
 import { File } from '@ionic-native/file/ngx';
@@ -23,10 +23,10 @@ export class VideoComponent implements  AfterViewInit, OnInit {
 
   @ViewChild('publisherDiv', { static: false }) publisherDiv: ElementRef;
   @ViewChild('subscriberHost', { read: ViewContainerRef, static: true }) subscriberHost: ViewContainerRef;
-  //session: OT.Session;
-  //publisher: OT.Publisher;
-  session: any;
-  publisher: any;
+  session: OT.Session;
+  publisher: OT.Publisher;
+  //session: any;
+  //publisher: any;
   publishing;
   apiKey: string;
   token: string;
@@ -39,7 +39,7 @@ export class VideoComponent implements  AfterViewInit, OnInit {
 constructor(
   private componentFactoryResolver: ComponentFactoryResolver,
   private opentokService: OpentokService,
-  private router: Router,
+  private navController: NavController,
   public platform: Platform,
   private dooleService: DooleService,
   private modalCtrl: ModalController,
@@ -83,9 +83,11 @@ onStreamCreated(stream, session) {
 
 close() {
   
-  if(this.session)
+  if(this.session){
+    console.log('*- session.disconnect()');
     this.session.disconnect();
-
+    this.publisher.destroy();
+  }
   this.modalCtrl.dismiss({date:null});
 }
 
@@ -126,17 +128,17 @@ ngAfterViewInit(): void {
         //OT.updateViews();
       },
       sessionConnected: event => {
-        this.session.publish(this.publisher);
+        this.session.publish(this.publisher, (err) => {
+          console.log();
+        });
        
         //OT.updateViews();
       },
       connectionCreated: (event) => {
-        // if (event.connection.connectionId != this.session.connection.connectionId) {
-        //  this.showMessage("Se ha conectado un usuario");
-        //  this.infoStr = "";
-        // } else {
-        // }
-      },
+        if (event.connection.connectionId != this.session.connection.connectionId) 
+         console.log("Se ha conectado un usuario");
+        
+      }
     });
 
     this.session.connect(this.token, (error: any) => {
@@ -148,38 +150,44 @@ ngAfterViewInit(): void {
   }else{
 
     console.log('***  platform ***');
-    this.publisher = OT.initPublisher
-    (
+    this.session = OT.initSession(this.apiKey, this.sessionId);
+    this.publisher = OT.initPublisher(
       this.publisherDiv.nativeElement, {
       height: "100%",
       width: "100%",
       insertMode: 'append'
+    }, (err) => {
+      if (err) {
+        if (err.name === 'OT_USER_MEDIA_ACCESS_DENIED') {
+          // Access denied can also be handled by the accessDenied event
+          alert('Please allow access to the Camera and Microphone and try publishing again.');
+        } else {
+          alert('Failed to get access to your camera or microphone. Please check that your webcam'
+            + ' is connected and not being used by another application and try again.');
+        }
+        this.publisher.destroy();
+        this.publisher = null;
+        console.error(err);
+      }
     });
-    this.session = OT.initSession(this.apiKey, this.sessionId);
-    
+   
     this.session.connect(this.token, (err) => {
       if (err) {
-        console.log(err);
-      }
-      else {
+        console.error(err);
+      }else {
         console.log("connected");
         this.session.publish(this.publisher, (err) => {
           if (err) {
-            console.log(err)
+            console.error(err)
           }
           else {
+            console.log("publishing");
             this.publishing = true;
           }
         });
-        let that = this;
-        this.session.on("signal:duration", function(event) {
+        let self = this;
+        this.session.on("signal:duration", function(event:any) {
           console.log("Signal sent from connection " + event.data);
-
-        });
-        this.session.on("streamCreated", function (event) {
-          that.onStreamCreated(event.stream, this.session);
-        });
-        this.session.on("signal:duration", (event) => {
           if(event.data>60){
             var min = event.data/60;
             min = Math.floor(min);
@@ -192,8 +200,12 @@ ngAfterViewInit(): void {
             this.durationStr = "Fin";
           }
           console.log(this.durationStr);
-        
+
         });
+        this.session.on("streamCreated", function (event) {
+          self.onStreamCreated(event.stream, this.session);
+        });
+       
           
       }
     })
