@@ -440,19 +440,20 @@ export class AppComponent implements OnInit {
       console.log(notification);
 
       const caller = JSON.parse(notification.extra);
-      console.log("caller: ", caller);
+      console.log("extra: ", caller);
+      console.log("caller: ", caller.Caller);
       if(caller){
-        let cancel = notification.extra?.Caller?.CancelPush;
+        let cancel = caller.Caller.CancelPush;
         console.log("is CancelPush:", cancel);
         console.log(cancel);
         if(cancel == "true"){
           console.log("HANG UP");
           return;
         }else{
-          console.log("caller.ConnectionId", caller.ConnectionId);
-          self.opentokService.agendaId = caller.ConnectionId;
+          console.log("caller.ConnectionId", caller.Caller.ConnectionId);
+          self.opentokService.agendaId = caller.Caller.ConnectionId;
           self.getTokboxSession(notification.extra.Caller).then(()=>{
-            cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.ConnectionId);
+            cordova.plugins.CordovaCall.receiveCall(caller.Caller.Username, caller.Caller.ConnectionId);
            });
         }
       }else{
@@ -481,9 +482,9 @@ export class AppComponent implements OnInit {
       self.lastResume = new Date;
 
        // VOIP calls for IOS
-       if (self.platform.is('ios')) {
-        self.openVideocallIframeModal(self.opentokService.agendaId);
-      }else
+       //if (self.platform.is('ios')) {
+       // self.openVideocallIframeModal(self.opentokService.agendaId);
+      //}else
         self.openVideocallModal();
 
     });
