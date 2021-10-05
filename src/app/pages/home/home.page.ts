@@ -821,7 +821,7 @@ export class HomePage implements OnInit {
         let time = auxdate[1];
         date.setHours(time.substring(0,2));
         date.setMinutes(time.substring(3,5));
-        return this.transformDate(date, 'MM/dd/yyyy HH:mm')
+        return this.transformDate(date, 'dd/MM/yyyy HH:mm')
       }
     }
 
