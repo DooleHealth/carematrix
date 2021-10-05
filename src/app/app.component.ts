@@ -481,10 +481,10 @@ export class AppComponent implements OnInit {
       console.log(data);
       self.lastResume = new Date;
 
-       // VOIP calls for IOS
-       //if (self.platform.is('ios')) {
-       // self.openVideocallIframeModal(self.opentokService.agendaId);
-      //}else
+      // VOIP calls for IOS
+      if (self.platform.is('ios'))
+        self.openVideocallIframeModal(self.opentokService.agendaId);
+      else
         self.openVideocallModal();
 
     });
