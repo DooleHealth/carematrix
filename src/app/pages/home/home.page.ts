@@ -103,7 +103,7 @@ export class HomePage implements OnInit {
     private languageService: LanguageService,
     private nav: NavController,
   ) {
-    this.analyticsService.setScreenName('home','[HomePage]')
+    // this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() {
@@ -144,11 +144,11 @@ export class HomePage implements OnInit {
   }
 
   setAnalyticsUserProperty(){
-    if(this.userDoole?.age)
-    this.analyticsService.setProperty('Edad', this.userDoole.age)
-    if(this.userDoole?.language?.name)
-    this.analyticsService.setProperty('Idioma', this.userDoole.language.name)
-    this.analyticsService.setProperty('gender', this.userDoole.gender)
+    // if(this.userDoole?.age)
+    // this.analyticsService.setProperty('Edad', this.userDoole.age)
+    // if(this.userDoole?.language?.name)
+    // this.analyticsService.setProperty('Idioma', this.userDoole.language.name)
+    // this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
    getValue(object, key) {

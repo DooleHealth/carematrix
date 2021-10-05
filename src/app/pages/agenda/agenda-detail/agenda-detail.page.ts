@@ -16,6 +16,7 @@ import { OpentokService } from 'src/app/services/opentok.service';
 import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
+import { VideocallIframePage } from '../videocall-iframe/videocall-iframe.page';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -369,4 +370,13 @@ export class AgendaDetailPage implements OnInit {
       return 'desconocido'
    }
 
+   async openVideocallIframeModal(){
+    const modal = await this.modalCtrl.create({
+      component: VideocallIframePage,
+      componentProps: {"id":this.event?.id}
+    });
+   
+    await modal.present();
+
+  }
 }

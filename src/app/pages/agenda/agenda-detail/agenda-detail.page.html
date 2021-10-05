@@ -15,8 +15,8 @@
 <ion-content fullscreen class="whiteBackground">
   <div class="whiteBackground">
     <!-- floating action buttom -->
-    <ion-fab  *ngIf="this.event?.online === 1 && this.tokboxSession && event?.origin !== 1" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="this.startDooleVideocall()">
+    <ion-fab  *ngIf="this.event?.online === 1 && this.tokboxSession" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="this.openVideocallIframeModal()">
         <ion-icon name="videocam-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
