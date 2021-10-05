@@ -216,16 +216,20 @@ export class AppComponent implements OnInit {
         const id = data?.id;
         const msg = data?.message;
 
-        this.redirecPushNotification(data, notification)
-
         this.isNotification = true;
-        setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-          // App will lock after 2 minutes
-         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-        // if (secondsPassed >= 120) {
-        //   // Must implement lock-screen
-        //   setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-        // }
+        // Only VIDEOCALL does not verify lock-screen
+        if(action == "VIDEOCALL"){
+          this.redirecToVideocall(notification)
+          return
+        }
+
+        // App will lock after 2 minutes
+        let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
+        if (secondsPassed >= 120) {
+          // Must implement lock-screen
+          setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+        }else
+        this.redirecPushNotification(data, notification)
       }
     );
 
@@ -609,11 +613,14 @@ export class AppComponent implements OnInit {
 
 
   public async showFingerprintAuthDlg() {
-/*     if(!JSON.parse(localStorage.getItem('settings-bio'))){
-      await this.authService.logout();
+    if(!JSON.parse(localStorage.getItem('settings-bio')) || 
+        JSON.parse(localStorage.getItem('settings-bio')) == null || 
+        JSON.parse(localStorage.getItem('settings-bio')) == undefined){
+
       this.router.navigateByUrl('/landing');
+      //this.router.navigate([`/landing`],{state:{data:data, segment: 'medication'}});
       return
-    } */
+    }
 
     this.faio.isAvailable().then((result: any) => {
 
