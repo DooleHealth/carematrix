@@ -70,7 +70,7 @@ export class ProfilePage implements OnInit {
     }
 
   getTokboxCredentials(){
-    this.dooleService.getAPIvideocall("1386").subscribe(
+    this.dooleService.getAPIvideocall("1").subscribe(
       async (data) => {
         await data;
         if(data.result){
