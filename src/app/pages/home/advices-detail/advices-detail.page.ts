@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
@@ -11,6 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./advices-detail.page.scss'],
 })
 export class AdvicesDetailPage implements OnInit {
+  private data: any = history.state?.data;
   id : any;
   loading : any;
   advice : any = [];
@@ -26,6 +28,7 @@ export class AdvicesDetailPage implements OnInit {
   thumbnail : any = null;
   isLoading = false
   constructor(
+    private router: Router,
     private iab: InAppBrowser, 
     public loadingController: LoadingController, 
     public alertCtrl: AlertController,     
@@ -99,6 +102,11 @@ export class AdvicesDetailPage implements OnInit {
     console.log("video", this.video);
     console.log("miniaturaVideo", this.videoThumbnail);
     window.open(this.video, "");
+  }
+
+  backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
   }
 
   

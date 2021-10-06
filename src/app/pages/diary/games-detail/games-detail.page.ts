@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,11 +11,13 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./games-detail.page.scss'],
 })
 export class GamesDetailPage implements OnInit {
+  private data: any = history.state?.data;
   game:any ={}
   id:any
   score = 0
   isLoading = false
   constructor(
+    private router: Router,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
     private dooleService: DooleService,
@@ -91,6 +94,11 @@ export class GamesDetailPage implements OnInit {
       );
     } */
 
+  }
+
+  backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
   }
 
 }

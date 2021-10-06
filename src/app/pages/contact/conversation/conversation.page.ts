@@ -16,6 +16,7 @@ import { Storage } from '@ionic/storage'; // This line added manually.
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { IonContent } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 const { Camera } = Plugins;
 @Component({
@@ -27,6 +28,7 @@ export class ConversationPage implements OnInit {
   @ViewChild(IonContent, {read: IonContent, static: false}) contentArea: IonContent;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
+  private data: any = history.state?.data;
   public name: string = this.staff?.name;
 
   public messagesList = [];
@@ -66,6 +68,7 @@ export class ConversationPage implements OnInit {
               public platform: Platform,
               private mediaCapture: MediaCapture,
               private media: Media,
+              private router: Router,
               private storage: Storage) {
 
    
@@ -431,6 +434,11 @@ export class ConversationPage implements OnInit {
             self.title=this.translate.instant("Chat");
         }
     });
+  }
+
+  backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
   }
 
 }
