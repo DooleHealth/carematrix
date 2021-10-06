@@ -19,7 +19,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class DooleService {
-
+  pushNotification: any;
   constructor(
     private authService: AuthenticationService,
     private transfer: FileTransfer,
@@ -1381,6 +1381,14 @@ export class DooleService {
         return res;
       })
     );
+  }
+
+  setPushNotification(pushNotification: any){
+    this.pushNotification = pushNotification;
+  }
+
+  getPushNotification(){
+   return this.pushNotification;
   }
 
 }
