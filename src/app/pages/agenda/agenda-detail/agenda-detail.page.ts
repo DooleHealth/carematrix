@@ -23,6 +23,7 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
   styleUrls: ['./agenda-detail.page.scss'],
 })
 export class AgendaDetailPage implements OnInit {
+  private data: any = history.state?.data;
   event: any = {}
   coordenadas: any = {}
   tokboxSession: any;
@@ -35,6 +36,7 @@ export class AgendaDetailPage implements OnInit {
   enableReminder = false;
 
   constructor(
+    private router: Router,
     private dooleService: DooleService,
     private translate : TranslateService,
     public datepipe: DatePipe, 
@@ -368,5 +370,10 @@ export class AgendaDetailPage implements OnInit {
       else if(m?.name == null)
       return 'desconocido'
    }
+
+   backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
+  }
 
 }

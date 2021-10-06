@@ -306,7 +306,13 @@ export class AppComponent implements OnInit {
       const msg = f.data?.message;
       console.log('ACTION: ', action);
       console.log("localNotificationActionPerformed", JSON.stringify(f.data));
-      this.redirecPushNotification(f.data, notification)
+
+      if(this.authService.user){
+        this.redirecPushNotification(f.data, notification)
+      }else{
+        this.dooleService.setPushNotification(f.data)
+        this.router.navigate([`/landing`],{state:{pushNotification: f.data}});
+      }
 
     })
 
@@ -621,7 +627,8 @@ export class AppComponent implements OnInit {
     console.log("[AppComponent] showFingerprintAuthDlg(), data", data);
     if(!JSON.parse(localStorage.getItem('settings-bio')) || 
         JSON.parse(localStorage.getItem('settings-bio')) == null || 
-        JSON.parse(localStorage.getItem('settings-bio')) == undefined || this.lastPause == undefined){
+        JSON.parse(localStorage.getItem('settings-bio')) == undefined || 
+        this.lastPause == undefined || !this.authService.user ){
 
       if(data){
         console.log("[AppComponent] showFingerprintAuthDlg(), data", data);

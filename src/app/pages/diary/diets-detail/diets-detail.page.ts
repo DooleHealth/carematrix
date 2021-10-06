@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { Constants } from 'src/app/config/constants';
@@ -11,6 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./diets-detail.page.scss'],
 })
 export class DietsDetailPage implements OnInit {
+  private data: any = history.state?.data;
   id : any;
   loading : any;
   isLoading = false
@@ -25,6 +27,7 @@ export class DietsDetailPage implements OnInit {
   videoTitle: any = null;
   thumbnail : any = null;
   constructor(
+    private router: Router,
     private iab: InAppBrowser, 
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
@@ -96,6 +99,11 @@ export class DietsDetailPage implements OnInit {
     console.log("video", this.video);
  
     window.open(this.video, "");
+  }
+
+  backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
   }
 
 }
