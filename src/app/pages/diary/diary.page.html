@@ -158,10 +158,10 @@
     <!-- Medication-->
     <div *ngSwitchCase="'medication'">
        <!--medication shipping cart buttton-->
-       <!-- <ng-container>
+       <ng-container>
          <br>
         <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
-    </ng-container> -->
+    </ng-container>
       <ng-container *ngIf="this.isLoadingDrugs;else second">
         <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>

@@ -307,7 +307,7 @@ export class AppComponent implements OnInit {
       console.log('ACTION: ', action);
       console.log("localNotificationActionPerformed", JSON.stringify(f.data));
 
-      if(this.authService.user){
+      if(this.authService.user || action == "VIDEOCALL" ){
         this.redirecPushNotification(f.data, notification)
       }else{
         this.dooleService.setPushNotification(f.data)

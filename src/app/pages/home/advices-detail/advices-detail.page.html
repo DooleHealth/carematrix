@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{advice.name}}</ion-title>
+    <ion-title>{{advice?.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,9 +14,14 @@
   </div>
 
   <ion-card class="cardProfile">
+<!--     <ion-card-header>    </ion-card-header> -->
     <img *ngIf="advice.image" [src]="advice.image.temporaryUrl">
     <ion-item lines="none">
-      <ion-label style="color:#141414"> {{advice.name}}</ion-label>
+      <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>
+      <ion-icon [color]="(this.favourite)? 'primary':'secundary' "name="star" slot="end" (click)= "setContentStatus('favourite')"></ion-icon>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label style="color:#141414"> {{advice?.name}}</ion-label>
     </ion-item>
     <ion-item lines="none" *ngIf="advice.description" padding>
       <span [innerHTML]="advice.description"></span>
