@@ -1365,6 +1365,17 @@ export class DooleService {
     );
   }
 
+  postAPIContentStatus(params: Object): Observable<any> {
+    let path = 'content/status'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

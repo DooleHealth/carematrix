@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
   activity: any =[]
   appointment: Agenda[] =[]
   showGoogleFit = false;
-  advices: Advice[] =[]
+  advices: any =[]
   date
   loading:boolean = true;
   currentIndexDrug = 0
@@ -176,6 +176,7 @@ export class HomePage implements OnInit {
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
+        //this.advices = this.advices.filter(advice => (advice.statusable.favourited_at == null))
 
         if(res.data?.goals){
           this.goals = res.data?.goals
