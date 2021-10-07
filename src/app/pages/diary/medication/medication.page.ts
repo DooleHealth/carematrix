@@ -20,7 +20,7 @@ import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class MedicationPage implements OnInit {
   @Input()event: any;
-  segment = history.state?.segment ? history.state.segment : 'List';
+  segment = history.state?.segment ? history.state.segment : 'Order';
   items = []
   items2 = []
   isLoading:boolean = true
@@ -36,6 +36,7 @@ export class MedicationPage implements OnInit {
   id:any
   isSubmitted = false;
   loading : any;
+  loadingList : any;
   directionItems : any;
   form: FormGroup;
   formulario: FormGroup;
@@ -51,8 +52,13 @@ export class MedicationPage implements OnInit {
   types: any;
   showConfirmed = false;
   
+  isSubmittedName
+  isSubmittedAddress
+  isSubmittedTelephone
+  isSubmittedCity
+  isSubmittedState
+  isSubmittedPostalCode
   
-
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
@@ -71,7 +77,6 @@ export class MedicationPage implements OnInit {
   ) {}
 
   ngOnInit() {
-  
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
@@ -79,11 +84,10 @@ export class MedicationPage implements OnInit {
       state: ['', [Validators.required]],
       postal_code: ['', [Validators.required, Validators.minLength(5)]],
       phone: ['', [Validators.required, Validators.minLength(6)]],
-
     });
 
     this.formShipment = this.fb.group({
-      sendType: [''],
+      sendType: ['urgente10'],
     });
 
     this.formulario = this.fb.group({
@@ -95,29 +99,37 @@ export class MedicationPage implements OnInit {
   }
   ionViewWillEnter() {
     this.loadDataDirections();
-    console.log(this.sendType)
-    
+    console.log(this.sendType) 
+  }
+
+  isSubmittedFields(isSubmitted){
+    this.isSubmittedName = isSubmitted
+    this.isSubmittedAddress = isSubmitted;
+    this.isSubmittedTelephone= isSubmitted;
+    this.isSubmittedCity= isSubmitted;
+    this.isSubmittedState= isSubmitted;
+    this.isSubmittedPostalCode= isSubmitted;
   }
 
   loadData(){
-    this.isLoading = true;
+    this.loadingList = true;
     console.log('hola');
     this.items = []
     this.dooleService.getAPImedicationsList().subscribe(
       async (data: any) =>{
-        console.log('[MedicationPage] loadDataDirections()', await data); 
+        console.log('[MedicationPage] loadData()', await data); 
         if(data){
           this.deliveries = data.petitions
           
-          console.log(this.deliveries ); 
+          console.log(this.deliveries); 
        
         }
        },(err) => { 
-          console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[MedicationPage] loadData() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       }, ()=>{
-        this.isLoading = false
+        this.loadingList = false
       });
  
   }
@@ -128,7 +140,13 @@ export class MedicationPage implements OnInit {
       async (data: any) =>{
         console.log('[MedicationPage] loadDataDirections()', await data); 
         if(data){
+          this.directions = []
           this.directions = data
+          this.directions .sort(function(a,b){
+            return b.created_at.localeCompare(a.created_at);
+          })
+          // this.isSubmittedFields(false)
+          // this.form.reset()
           console.log(this.directions); 
           console.log(this.paso) 
         }
@@ -180,7 +198,11 @@ export class MedicationPage implements OnInit {
       this.dooleService.postAPIsendDirection(this.form.value).subscribe(
         async (res: any)=>{
       console.log('[MedicationPage] saveDirection()', await res);        
- 
+          if(res.result){
+            this. loadDataDirections()
+            this.isFormVisible = false;
+            this.notification.displayToastSuccessful()
+          }
  
       this.isLoading = false
      },(err) => { 
@@ -194,16 +216,15 @@ export class MedicationPage implements OnInit {
 
     submit(){
       console.log('submit',this.form.value);
+      this.isSubmittedFields(true)
       this.isSubmitted = true;
       if(this.form.invalid)
       return 
 
        this.saveDirection()
-        
-  
     }
-    toggleIsFormVisible()
-    {
+
+    toggleIsFormVisible(){
         this.isFormVisible = !this.isFormVisible;
     }
 
@@ -212,10 +233,11 @@ export class MedicationPage implements OnInit {
         this.dooleService.postAPImedicationSendPetition(this.formulario.value).subscribe(
         async (res: any)=>{
       console.log('[MedicationPage] postAPImedicationSendPetition()', await res);    
-      this.messages = res    
- 
-      this.isLoading = false
-      this.presentAlert();
+        this.messages = res    
+        
+        this.isLoading = false
+        this.segmentChanged("List")
+        this.presentAlert();
      },(err) => { 
       this.isLoading = false
         console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
@@ -261,5 +283,6 @@ export class MedicationPage implements OnInit {
         });
       
     }
+
   }
   
