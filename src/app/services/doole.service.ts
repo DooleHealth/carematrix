@@ -362,6 +362,18 @@ export class DooleService {
     )
   }
 
+
+  postAPIPendingConnect(): Observable<any>{
+    let path = 'user/videocall/pendingConnect'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIPendingConnect(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
 /*   getAPIinformationUser(): Observable<any>{
 
     let path = 'user/informationUser'

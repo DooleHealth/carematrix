@@ -5,7 +5,7 @@ import { Capacitor } from '@capacitor/core';
 import { Calendar } from '@ionic-native/calendar/ngx';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -50,6 +50,7 @@ export class AgendaDetailPage implements OnInit {
     public alertCtrl: AlertController,
     public notification: NotificationService,
     private languageService: LanguageService,
+    public platform: Platform,
   ) { }
 
   ngOnInit() {
@@ -65,16 +66,20 @@ export class AgendaDetailPage implements OnInit {
   // TODO: remove (agenda detail in state.event)
   getDetailAgenda(){ 
     this.isLoading = true;
+  
     this.dooleService.getAPIagendaID(this.event?.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
         if(res.agenda){
+         
           this.event = res.agenda
           this.coordenadas = this.event.center_location
           this.cord = this.coordenadas[0]
           this.lon = this.cord?.longitude
           this.lat = this.cord?.latitude
+          this.opentokService.agendaId$ = this.event?.id;
           console.log(this.event);
+
           if(this.event?.online)
           this.getVideocallToken();
 
@@ -369,14 +374,33 @@ export class AgendaDetailPage implements OnInit {
       else if(m?.name == null)
       return 'desconocido'
    }
-
-   async openVideocallIframeModal(){
+   async openVideocallModal(){
     const modal = await this.modalCtrl.create({
-      component: VideocallIframePage,
-      componentProps: {"id":this.event?.id}
+      component: VideoComponent,
+      componentProps: {},
     });
    
     await modal.present();
 
+  }
+
+  async openVideocallIframeModal(){
+
+    const modal = await this.modalCtrl.create({
+      component: VideocallIframePage,
+      componentProps: {"id": this.opentokService.agendaId$}
+    });
+    
+    return await modal.present();
+
+  }
+
+
+  startVideoCall(){
+    // VOIP calls for IOS
+    if (this.platform.is('ios'))
+      this.openVideocallIframeModal();
+    else
+      this.openVideocallModal();
   }
 }
