@@ -223,6 +223,7 @@ export class AppComponent implements OnInit {
           this.redirecToVideocall(notification)
           return
         }
+      
         let secondsLastPause =  (this.lastPause)? this.lastPause.getTime() : 0
         let secondsNow = (new Date).getTime()
         // App will lock after 2 minutes
@@ -307,7 +308,7 @@ export class AppComponent implements OnInit {
       console.log('ACTION: ', action);
       console.log("localNotificationActionPerformed", JSON.stringify(f.data));
 
-      if(this.authService.user || action == "VIDEOCALL" ){
+      if(this.authService.user || action == "VIDEOCALL" || !this.router.url.includes('landing')){
         this.redirecPushNotification(f.data, notification)
       }else{
         this.dooleService.setPushNotification(f.data)
@@ -359,7 +360,7 @@ export class AppComponent implements OnInit {
 
   redirecToVideocall(notification){
 
-    const caller = JSON.parse(notification?.extra.Caller);
+    const caller = JSON.parse(notification?.data.Caller);
   
     console.error('redirecToVideocall() notification?.extra.Caller', caller)
     this.opentokService.agendaId$ = caller.ConnectionId
