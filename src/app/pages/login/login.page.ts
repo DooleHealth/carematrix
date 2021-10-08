@@ -83,13 +83,8 @@ export class LoginPage implements OnInit {
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
-
-        //console.log('[LoginPage] checkConditionLegal()', await res);
-         if(res.success)
-
         //console.log('[LoginPage] checkConditionLegal()', await res);
         if(res.success)
-
           this.redirectPage(res.accepted_last)
         else
           this.modalCtrl.dismiss({error:res.message});
@@ -103,6 +98,7 @@ export class LoginPage implements OnInit {
 
   redirectPage(condicion){
     if(!condicion){
+      localStorage.setItem('allNotification', 'false');
       this.router.navigate(['/legal']);
       this.modalCtrl.dismiss({error:null});
     }else{

@@ -26,6 +26,7 @@ export class NewDetailPage implements OnInit {
   thumbnail : any = null;
   like = false;
   favourite = false;
+  hide = false;
   constructor(
     private iab: InAppBrowser, 
     private auth: AuthenticationService,
@@ -55,6 +56,7 @@ export class NewDetailPage implements OnInit {
           let status = this.getStatusable(news?.statusable)
           this.like = (status?.liked_at)? true:false
           this.favourite = status?.favourited_at? true:false
+          this.hide = (status?.hided_at !== null)? false:true
           return
         }
 
@@ -128,6 +130,10 @@ export class NewDetailPage implements OnInit {
     if(type == 'like'){
       this.like = !this.like
       value =  this.like? 1:0
+    }
+    else if(type == 'hide'){
+      this.hide = !this.hide
+      value =  this.hide? 0:1
     }
     else{
       this.favourite = !this.favourite
