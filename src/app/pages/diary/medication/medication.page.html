@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ 'medications.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -77,8 +80,8 @@
     <!-- ORDER -->
 
     <div *ngSwitchCase="'Order'">
-      <ion-row class="paddingTopNoMarginBottomBlue" (click)="toggleIsFormVisible()"
-        *ngIf="!isFormVisible && this.paso == 'cero' ">
+      <ion-row class="paddingTopNoMarginBottomBlue" (click)="addAddress()"
+        *ngIf="this.paso == 'cero' ">
         <ion-col size="10">
           <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
         </ion-col>
@@ -87,52 +90,6 @@
         </ion-col>
       </ion-row>   
       <br> 
-      <ion-row class="paddingTopNoMarginBottom" (click)="toggleIsFormVisible()"
-        *ngIf="isFormVisible && this.paso == 'cero' ">
-        <ion-col size="10">
-          <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
-        </ion-col>
-        <ion-col size="2">
-          <ion-icon color="primary" name="chevron-up-outline"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <span *ngIf="isFormVisible">
-        <form [formGroup]="form" (ngSubmit)="submit()">
-          <br>
-          <ion-item>
-            <ion-label floating>{{ 'medications.name' | translate}}</ion-label>
-            <ion-input formControlName="name" type="text" (ionFocus)="this.isSubmittedName = false" required></ion-input>
-            <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedName && this.form.get('name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.telephone' | translate}}</ion-label>
-            <ion-input formControlName="phone" type="text" required (ionFocus)="this.isSubmittedTelephone = false" maxlength="18"></ion-input>
-            <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedTelephone && this.form.get('phone').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.address' | translate}}</ion-label>
-            <ion-input formControlName="address" type="text" (ionFocus)="this.isSubmittedAddress = false" required></ion-input>
-            <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedAddress && this.form.get('address').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.city' | translate}}</ion-label>
-            <ion-input formControlName="city" type="text" (ionFocus)="this.isSubmittedCity = false" required></ion-input>
-            <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedCity && this.form.get('city').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.state' | translate}}</ion-label>
-            <ion-input formControlName="state" type="text" (ionFocus)="this.isSubmittedState = false" required></ion-input>
-            <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedState && this.form.get('state').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.postal_code' | translate}}</ion-label>
-            <ion-input formControlName="postal_code" type="numeric" (ionFocus)="this.isSubmittedPostalCode = false" maxlength="10"></ion-input>
-            <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedPostalCode && this.form.get('postal_code').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          </ion-item>
-        </form>
-        <ion-button type="submit" color="primary" expand="block" (click)="submit()">{{ 'medications.add' | translate}}
-        </ion-button>
-      </span>
       <div *ngIf="this.paso == 'cero' ">
         <ion-row class="paddingTopNoMarginBottom">
           <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
@@ -140,17 +97,23 @@
         <br>
         <ion-list>
           <span *ngFor="let address of this.directions; let i = index">
-            <ion-card class="cardProfile" (click)="selectDirection(address)">
+            <ion-card class="cardProfile" >
               <ion-item lines="none">
                 <div class="verticalLineOrange"></div>
                 <ion-grid>
                   <ion-row>
-                    <ion-col size="2">
+                    <ion-col size="1">
                       <ion-icon name="location" color="tertiary"></ion-icon>
                     </ion-col>
-                    <ion-col size="10" class="textOrangeBold">{{address.name}}</ion-col>
+                    <ion-col size="8.5" class="textOrangeBold">{{address.name}}</ion-col>
+                    <ion-col size="1.2">
+                      <ion-icon (click)="addAddress(address)" name="create" color="tertiary"></ion-icon>
+                    </ion-col>
+                    <ion-col size="1.2">
+                      <ion-icon (click)="deleteAddress(address)" name="trash" color="tertiary"></ion-icon>
+                    </ion-col>
                   </ion-row>
-                  <ion-row>
+                  <ion-row (click)="selectDirection(address)">
                     <ion-col size="12">{{address.address}}</ion-col>
                     <ion-col size="12">{{address.city}}</ion-col>
                     <ion-col size="12">{{address.state}}</ion-col>
@@ -167,8 +130,9 @@
       </div>
       <div *ngIf="this.paso == 'uno' ">
 
-        <ion-row class="paddingTopNoMarginBottom" (click)="this.paso = 'cero'">
-          <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
+        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" (click)="this.paso = 'cero'">          
+          <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
+          <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
         </ion-row>
         <br>
 
@@ -199,8 +163,9 @@
       </div>
       <div *ngIf="this.paso == 'dos'">
 
-        <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions" (click)="this.paso = 'uno'">
-          <ion-text class="txtTitle">{{ 'medications.directions_title_2' | translate}}</ion-text>
+        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" *ngIf="this.directions" (click)="this.paso = 'uno'">
+          <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
+          <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
         </ion-row>
         <br>
 

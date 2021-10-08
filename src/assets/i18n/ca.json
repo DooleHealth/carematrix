@@ -677,7 +677,10 @@
         "confirm":"Confirmar l'enviament",
         "correct":"Sol·licitud rebuda correctament",
         "back":"Tornar",
-        "shipping_method":"Tipus d'enviament: "
+        "shipping_method":"Tipus d'enviament: ",
+        "go_back": "Tornar a el pas anterior",
+        "add_address": "Añadir dirección",
+        "edit_address": "Editar dirección"
       },
       "recipe": {
         "header": "Receptes",

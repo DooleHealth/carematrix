@@ -9,6 +9,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { MedicationPage } from './medication.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AddAddressPageModule } from './add-address/add-address.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ComponentsModule,
     TranslateModule,
     MedicationPageRoutingModule,
+    AddAddressPageModule,
     ReactiveFormsModule
   ],
   providers: [DatePipe, InAppBrowser] ,

@@ -1067,6 +1067,29 @@ export class DooleService {
     );
   }
 
+  putAPIsendDirection(id: any, params: Object): Observable<any> {
+    let path = `user/address/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] putAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIsendDirection(id: Object): Observable<any> {
+    let path = `user/address/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] deleteAPImedicationPlan(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+      })
+    );
+  }
+
   postAPImedicationSendPetition(params: Object): Observable<any> {
     let path = 'sendmedication';
     const endpoint = this.api.getEndpoint(path);

@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { DrugAddPage } from '../drug-add/drug-add.page';
 import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AddAddressPage } from './add-address/add-address.page';
 
 @Component({
   selector: 'app-medication',
@@ -24,7 +25,7 @@ export class MedicationPage implements OnInit {
   items = []
   items2 = []
   isLoading:boolean = true
-  isFormVisible:boolean = false
+  //isFormVisible:boolean = false
   checked:true
   petitions : any = [];
   date = Date.now()
@@ -51,13 +52,6 @@ export class MedicationPage implements OnInit {
   sendTypes : any;
   types: any;
   showConfirmed = false;
-  
-  isSubmittedName
-  isSubmittedAddress
-  isSubmittedTelephone
-  isSubmittedCity
-  isSubmittedState
-  isSubmittedPostalCode
   
   constructor(
     private dooleService: DooleService,
@@ -100,15 +94,6 @@ export class MedicationPage implements OnInit {
   ionViewWillEnter() {
     this.loadDataDirections();
     console.log(this.sendType) 
-  }
-
-  isSubmittedFields(isSubmitted){
-    this.isSubmittedName = isSubmitted
-    this.isSubmittedAddress = isSubmitted;
-    this.isSubmittedTelephone= isSubmitted;
-    this.isSubmittedCity= isSubmitted;
-    this.isSubmittedState= isSubmitted;
-    this.isSubmittedPostalCode= isSubmitted;
   }
 
   loadData(){
@@ -193,51 +178,32 @@ export class MedicationPage implements OnInit {
   }
  
 
-  async saveDirection(){
-    this.isLoading = true
-      this.dooleService.postAPIsendDirection(this.form.value).subscribe(
+  async deleteDirection(address){
+      this.dooleService.deleteAPIsendDirection(address.id).subscribe(
         async (res: any)=>{
-      console.log('[MedicationPage] saveDirection()', await res);        
-          if(res.result){
+      console.log('[MedicationPage] deleteDirection()', await res);        
+         // if(res.result){
             this. loadDataDirections()
-            this.isFormVisible = false;
             this.notification.displayToastSuccessful()
-          }
- 
-      this.isLoading = false
+          //}
      },(err) => { 
-      this.isLoading = false
-        console.log('[MedicationPage] saveDirection() ERROR(' + err.code + '): ' + err.message); 
+        console.log('[MedicationPage] deleteDirection() ERROR(' + err.code + '): ' + err.message); 
         throw err; 
     }) ,() => {
       this.isLoading = false
     };     
     }
 
-    submit(){
-      console.log('submit',this.form.value);
-      this.isSubmittedFields(true)
-      this.isSubmitted = true;
-      if(this.form.invalid)
-      return 
-
-       this.saveDirection()
-    }
-
-    toggleIsFormVisible(){
-        this.isFormVisible = !this.isFormVisible;
-    }
-
     confirm(){
       this.isLoading = true
         this.dooleService.postAPImedicationSendPetition(this.formulario.value).subscribe(
         async (res: any)=>{
-      console.log('[MedicationPage] postAPImedicationSendPetition()', await res);    
-        this.messages = res    
-        
-        this.isLoading = false
-        this.segmentChanged("List")
-        this.presentAlert();
+           console.log('[MedicationPage] postAPImedicationSendPetition()', await res);    
+            this.messages = res              
+            this.isLoading = false
+            this.segment = "List"
+            this.segmentChanged()
+            this.presentAlert();
      },(err) => { 
       this.isLoading = false
         console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
@@ -283,6 +249,32 @@ export class MedicationPage implements OnInit {
         });
       
     }
+
+    async addAddress(address?){
+      const modal = await this.modalCtrl.create({
+        component: AddAddressPage,
+        componentProps: {address: address },
+        cssClass: "modal-custom-class"
+      });
+  
+      modal.onDidDismiss()
+        .then((result) => {
+          if(result?.data['action'] === 'add' || result?.data['action'] === 'update'){
+            this.segment = 'Order'
+            this.segmentChanged()
+            this.notification.displayToastSuccessful()
+           }
+          if(result?.data['error']){
+          //TODO: handle error message
+          }
+      });
+      await modal.present();
+    }
+
+    deleteAddress(address){
+      console.log('[MedicationPage] deleteAddress() '); 
+    }
+
 
   }
   
