@@ -110,7 +110,8 @@ export class HomePage implements OnInit {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.getUserInformation()
     this.checkHealthAccess();
-    setTimeout(()=>this.confirmAllNotification(), 2000);
+    //setTimeout(()=>this.confirmAllNotification(), 2000);
+    this.activateAllNotifications(1)
   }
 
 
