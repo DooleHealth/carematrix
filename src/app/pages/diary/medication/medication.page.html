@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ 'medications.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,11 +12,11 @@
   <!-- SegmentBar -->
 
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
-    <ion-segment-button value="List">
-      <ion-label>{{'medications.list' | translate}}</ion-label>
-    </ion-segment-button>
     <ion-segment-button value="Order">
       <ion-label>{{'medications.direction' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="List">
+      <ion-label>{{'medications.list' | translate}}</ion-label>
     </ion-segment-button>
 
   </ion-segment>
@@ -25,35 +28,60 @@
     <!--LIST-->
 
     <div *ngSwitchCase="'List'">
-      <ion-list>
-        <ion-card class="cardProfile" *ngFor="let sending of this.deliveries">
-          <ion-item lines="none">
-            <div class="verticalLineBlue"></div>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="2">
-                  <ion-icon name="cart" color="primary"></ion-icon>
-                </ion-col>
-                <ion-col size="10" class="textBlueBold">{{sending.status_name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">{{ 'medications.shipping_method' | translate}}{{sending.shipping_method}}</ion-col>
-                <ion-col size="12">{{sending.address}}</ion-col>
-                <ion-col size="12">{{sending.city}},&nbsp;{{sending.state}}</ion-col>
-                <ion-col size="12">{{sending.postal_code}}</ion-col>
-                <ion-col size="12">{{sending.country}}</ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-card>
-      </ion-list>
+      <ng-container *ngIf="this.loadingList; else second">
+        <div class="spin">
+          <ion-spinner name="bubbles"></ion-spinner>
+        </div>
+      </ng-container>
+
+      <ng-template #second>
+        <ng-container *ngIf="this.deliveries.length > 0;else third">
+          <ion-list>
+            <ion-card class="cardProfile" *ngFor="let sending of this.deliveries">
+              <ion-item lines="none">
+                <div class="verticalLineBlue"></div>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2">
+                      <ion-icon name="cart" color="primary"></ion-icon>
+                    </ion-col>
+                    <ion-col size="10" class="textBlueBold">{{sending.status_name}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">{{ 'medications.shipping_method' | translate}}{{sending.shipping_method}}</ion-col>
+                    <ion-col size="12">{{sending.address}}</ion-col>
+                    <ion-col size="12">{{sending.city}},&nbsp;{{sending.state}}</ion-col>
+                    <ion-col size="12">{{sending.postal_code}}</ion-col>
+                    <ion-col size="12">{{sending.country}}</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-card>
+          </ion-list>
+        </ng-container>
+      </ng-template>
+
+      <ng-template #third>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-icon class="iconNoData" name="heart"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-template>
     </div>
 
     <!-- ORDER -->
 
     <div *ngSwitchCase="'Order'">
-      <ion-row class="paddingTopNoMarginBottomBlue" (click)="toggleIsFormVisible()"
-        *ngIf="!isFormVisible && this.paso == 'cero' ">
+      <ion-row class="paddingTopNoMarginBottomBlue" (click)="addAddress()"
+        *ngIf="this.paso == 'cero' ">
         <ion-col size="10">
           <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
         </ion-col>
@@ -62,46 +90,6 @@
         </ion-col>
       </ion-row>   
       <br> 
-      <ion-row class="paddingTopNoMarginBottom" (click)="toggleIsFormVisible()"
-        *ngIf="isFormVisible && this.paso == 'cero' ">
-        <ion-col size="10">
-          <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
-        </ion-col>
-        <ion-col size="2">
-          <ion-icon color="primary" name="chevron-up-outline"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <span *ngIf="isFormVisible">
-        <form [formGroup]="form" (ngSubmit)="submit()">
-          <br>
-          <ion-item>
-            <ion-label floating>{{ 'medications.name' | translate}}</ion-label>
-            <ion-input formControlName="name" type="text" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.telephone' | translate}}</ion-label>
-            <ion-input formControlName="phone" type="text" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.address' | translate}}</ion-label>
-            <ion-input formControlName="address" type="text" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.city' | translate}}</ion-label>
-            <ion-input formControlName="city" type="text" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.state' | translate}}</ion-label>
-            <ion-input formControlName="state" type="text"required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{ 'medications.postal_code' | translate}}</ion-label>
-            <ion-input formControlName="postal_code" type="text"></ion-input>
-          </ion-item>
-        </form>
-        <ion-button type="submit" color="primary" expand="block" (click)="submit()">{{ 'medications.add' | translate}}
-        </ion-button>
-      </span>
       <div *ngIf="this.paso == 'cero' ">
         <ion-row class="paddingTopNoMarginBottom">
           <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
@@ -109,17 +97,23 @@
         <br>
         <ion-list>
           <span *ngFor="let address of this.directions; let i = index">
-            <ion-card class="cardProfile" (click)="selectDirection(address)">
+            <ion-card class="cardProfile" >
               <ion-item lines="none">
                 <div class="verticalLineOrange"></div>
                 <ion-grid>
                   <ion-row>
-                    <ion-col size="2">
+                    <ion-col size="1">
                       <ion-icon name="location" color="tertiary"></ion-icon>
                     </ion-col>
-                    <ion-col size="10" class="textOrangeBold">{{address.name}}</ion-col>
+                    <ion-col size="8.5" class="textOrangeBold">{{address.name}}</ion-col>
+                    <ion-col size="1.2">
+                      <ion-icon (click)="addAddress(address)" name="create" color="tertiary"></ion-icon>
+                    </ion-col>
+                    <ion-col size="1.2">
+                      <ion-icon (click)="deleteAddress(address)" name="trash" color="tertiary"></ion-icon>
+                    </ion-col>
                   </ion-row>
-                  <ion-row>
+                  <ion-row (click)="selectDirection(address)">
                     <ion-col size="12">{{address.address}}</ion-col>
                     <ion-col size="12">{{address.city}}</ion-col>
                     <ion-col size="12">{{address.state}}</ion-col>
@@ -135,29 +129,46 @@
         </div>
       </div>
       <div *ngIf="this.paso == 'uno' ">
+
+        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" (click)="this.paso = 'cero'">          
+          <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
+          <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
+        </ion-row>
+        <br>
+
         <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
           <ion-text class="txtTitle">{{ 'medications.directions_title_2' | translate}}</ion-text>
         </ion-row>
         <ion-card class="cardProfile">
           <form [formGroup]="formShipment">
-            <ion-item lines="full">
-              <ion-label>{{ 'medications.urgente10' | translate}}</ion-label>
-              <input type="radio" formControlName="sendType" value="urgente10" checked>
-            </ion-item>
-            <ion-item lines="full">
-              <ion-label>{{ 'medications.bag14' | translate}}</ion-label>
-              <input type="radio" formControlName="sendType" value="bag14">
-            </ion-item>
-            <ion-item lines="full">
-              <ion-label>{{ 'medications.bag19' | translate}}</ion-label>
-              <input type="radio" formControlName="sendType" value="bag19">
-            </ion-item>
+            <ion-radio-group mode="md" formControlName="sendType" value="urgente10">
+              <ion-item lines="full">
+                <ion-label>{{ 'medications.urgente10' | translate}}</ion-label>
+                <ion-radio  value="urgente10" checked></ion-radio>
+              </ion-item>
+              <ion-item lines="full">
+                <ion-label>{{ 'medications.bag14' | translate}}</ion-label>
+                <ion-radio  value="bag14"></ion-radio>
+              </ion-item>
+              <ion-item lines="full">
+                <ion-label>{{ 'medications.bag19' | translate}}</ion-label>
+                <ion-radio value="bag19"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+
           </form>
         </ion-card>
         <ion-button expand="block" color="primary" (click)="selectSendType()">{{'button.continue' | translate}}
         </ion-button>
       </div>
       <div *ngIf="this.paso == 'dos'">
+
+        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" *ngIf="this.directions" (click)="this.paso = 'uno'">
+          <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
+          <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
+        </ion-row>
+        <br>
+
         <ion-row class="paddingTopNoMarginBottom">
           <ion-text class="txtTitle">{{ 'medications.directions_title_3' | translate}}</ion-text>
         </ion-row>

@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
   idAgenda = null;
   lastVideocall: any; //ultima vegada que hem acceptat videotrucada
   isNotification: any;
+  lastPause: Date;
   // Inject HistoryHelperService in the app.components.ts so its available app-wide
   constructor(
     private router: Router,
@@ -216,16 +217,23 @@ export class AppComponent implements OnInit {
         const id = data?.id;
         const msg = data?.message;
 
-        this.redirecPushNotification(data, notification)
-
         this.isNotification = true;
-        setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-          // App will lock after 2 minutes
-         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-        // if (secondsPassed >= 120) {
-        //   // Must implement lock-screen
-        //   setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-        // }
+        // Only VIDEOCALL does not verify lock-screen
+        if(action == "VIDEOCALL"){
+          this.redirecToVideocall(notification)
+          return
+        }
+        let secondsLastPause =  (this.lastPause)? this.lastPause.getTime() : 0
+        let secondsNow = (new Date).getTime()
+        // App will lock after 2 minutes
+        let secondsPassed = (secondsNow - secondsLastPause) / 1000;
+        console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
+        if (secondsPassed >= 120) {
+          // Must implement lock-screen
+          this.showFingerprintAuthDlg(data)
+          //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
+        }else
+        this.redirecPushNotification(data, notification)
       }
     );
 
@@ -298,14 +306,20 @@ export class AppComponent implements OnInit {
       const msg = f.data?.message;
       console.log('ACTION: ', action);
       console.log("localNotificationActionPerformed", JSON.stringify(f.data));
-      this.redirecPushNotification(f.data, notification)
+
+      if(this.authService.user || action == "VIDEOCALL" ){
+        this.redirecPushNotification(f.data, notification)
+      }else{
+        this.dooleService.setPushNotification(f.data)
+        this.router.navigate([`/landing`],{state:{pushNotification: f.data}});
+      }
 
     })
 
 
   }
 
-  redirecPushNotification(data, notification){
+  redirecPushNotification(data, notification?){
     switch (data.action) {
       case "MESSAGE":
         let origin = (data?.origin).replace(/\\/g, '');
@@ -551,6 +565,7 @@ export class AppComponent implements OnInit {
     this.platform.pause.subscribe((e) => {
       // Saves the time of pause to be used in resume
       this.lastResume = new Date;
+      this.lastPause = new Date;
     });
 
     this.platform.resume.subscribe(async (e) => {
@@ -657,12 +672,22 @@ export class AppComponent implements OnInit {
   }
 
 
-  public async showFingerprintAuthDlg() {
-/*     if(!JSON.parse(localStorage.getItem('settings-bio'))){
-      await this.authService.logout();
-      this.router.navigateByUrl('/landing');
+  public async showFingerprintAuthDlg(data?) {
+    console.log("[AppComponent] showFingerprintAuthDlg(), data", data);
+    if(!JSON.parse(localStorage.getItem('settings-bio')) || 
+        JSON.parse(localStorage.getItem('settings-bio')) == null || 
+        JSON.parse(localStorage.getItem('settings-bio')) == undefined || 
+        this.lastPause == undefined || !this.authService.user ){
+
+      if(data){
+        console.log("[AppComponent] showFingerprintAuthDlg(), data", data);
+        this.dooleService.setPushNotification(data)
+        this.router.navigate([`/landing`],{state:{pushNotification: data}});
+      }
+      else
+        this.router.navigateByUrl('/landing');
       return
-    } */
+    }
 
     this.faio.isAvailable().then((result: any) => {
 
@@ -679,11 +704,9 @@ export class AppComponent implements OnInit {
           console.log(result)
           this.lastResume = new Date;
 
-          // if(pushNotification){
-          //   let data = pushNotification.data;
-          //   let notification = pushNotification.notification;
-          //   setTimeout(()=>this.redirecPushNotification(data, notification), 500);
-          // }
+          if(data){
+            setTimeout(()=>this.redirecPushNotification(data), 500);
+          }
 
         })
         .catch(async (error: any) => {

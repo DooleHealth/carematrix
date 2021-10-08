@@ -3,6 +3,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-new-detail',
@@ -23,9 +24,12 @@ export class NewDetailPage implements OnInit {
   videoDescription: any = null;
   videoTitle: any = null;
   thumbnail : any = null;
-
+  like = false;
+  favourite = false;
+  hide = false;
   constructor(
     private iab: InAppBrowser, 
+    private auth: AuthenticationService,
     public loadingController: LoadingController, 
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
@@ -39,12 +43,23 @@ export class NewDetailPage implements OnInit {
     this.getDetailNew();
   }
 
-  async getDetailNew(){
+  async getDetailNew(onlyStatus?){
     console.log('[DiaryPage] getDetailNew()');
     this.isLoading = true
     this.dooleService.getAPIdetailNew( this.id).subscribe(
       async (json: any) =>{
         console.log('[DiaryPage] getDetailNew()', await json);
+
+        //Refresh only status content
+        if(onlyStatus){
+          let news =json.news;
+          let status = this.getStatusable(news?.statusable)
+          this.like = (status?.liked_at)? true:false
+          this.favourite = status?.favourited_at? true:false
+          this.hide = (status?.hided_at !== null)? false:true
+          return
+        }
+
         this.new=json.news;
         this.isLoading = false
         if(this.new.content){
@@ -74,6 +89,10 @@ export class NewDetailPage implements OnInit {
             this.videoTitle=(element.name);
           }
         });
+
+        let status = this.getStatusable(this.new?.statusable)
+        this.like = (status?.liked_at)? true:false
+        this.favourite = status?.favourited_at? true:false
     
         this.isLoading = false
        },(err) => { 
@@ -98,6 +117,42 @@ export class NewDetailPage implements OnInit {
     console.log("video", this.video);
     console.log("miniaturaVideo", this.videoThumbnail);
     window.open(this.video, "");
+  }
+
+  getStatusable(list){
+    if(list?.length >0)
+      return list.find(status => (this.auth.user.idUser == status.user_id))
+    else return null
+  }
+
+  setContentStatus(type){
+    let value = 0
+    if(type == 'like'){
+      this.like = !this.like
+      value =  this.like? 1:0
+    }
+    else if(type == 'hide'){
+      this.hide = !this.hide
+      value =  this.hide? 0:1
+    }
+    else{
+      this.favourite = !this.favourite
+      value = this.favourite? 1:0
+    }
+    let params = {
+      model: 'Advice',
+      id: this.new?.id,
+      type: type,
+      status: value
+    }
+    if(this.id)
+    this.dooleService.postAPIContentStatus(params).subscribe(
+      async (res: any) =>{
+          if(res.success){
+            this.getDetailNew('onlyStatus');
+          }
+      }
+    )
   }
 
   

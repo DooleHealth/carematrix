@@ -15,6 +15,12 @@
   <ion-card class="cardProfile">
     <img *ngIf="new.cover" [src]="new.cover">
     <ion-item lines="none">
+      <ion-icon *ngIf="hide" color="primary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
+      <ion-icon *ngIf="!hide" color="secundary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
+      <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>
+      <ion-icon [color]="(this.favourite)? 'primary':'secundary' "name="star" slot="end" (click)= "setContentStatus('favourite')"></ion-icon>
+    </ion-item>
+    <ion-item lines="none">
       <ion-label style="color:#141414; font-weight: bold;"> {{new.subject}}</ion-label>
     </ion-item>
     <ion-item lines="none" *ngIf="new.content" padding>

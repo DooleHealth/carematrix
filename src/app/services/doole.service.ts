@@ -19,7 +19,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class DooleService {
-
+  pushNotification: any;
   constructor(
     private authService: AuthenticationService,
     private transfer: FileTransfer,
@@ -1079,6 +1079,29 @@ export class DooleService {
     );
   }
 
+  putAPIsendDirection(id: any, params: Object): Observable<any> {
+    let path = `user/address/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] putAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIsendDirection(id: Object): Observable<any> {
+    let path = `user/address/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] deleteAPImedicationPlan(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+      })
+    );
+  }
+
   postAPImedicationSendPetition(params: Object): Observable<any> {
     let path = 'sendmedication';
     const endpoint = this.api.getEndpoint(path);
@@ -1377,6 +1400,17 @@ export class DooleService {
     );
   }
 
+  postAPIContentStatus(params: Object): Observable<any> {
+    let path = 'content/status'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(
@@ -1393,6 +1427,14 @@ export class DooleService {
         return res;
       })
     );
+  }
+
+  setPushNotification(pushNotification: any){
+    this.pushNotification = pushNotification;
+  }
+
+  getPushNotification(){
+   return this.pushNotification;
   }
 
 }

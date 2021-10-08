@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
@@ -14,6 +15,7 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
   styleUrls: ['./reminder.page.scss'],
 })
 export class ReminderPage implements OnInit {
+  private data: any = history.state?.data;
   days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
   id:any
   event = []
@@ -26,6 +28,7 @@ export class ReminderPage implements OnInit {
   type = ''
   isElement = false
   constructor(
+    private router: Router,
     private loadingController: LoadingController,
     private dooleService: DooleService,
     private languageService: LanguageService,
@@ -283,6 +286,9 @@ export class ReminderPage implements OnInit {
     await modal.present();
   }
 
-
+  backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
+  }
 
 }

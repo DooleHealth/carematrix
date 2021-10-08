@@ -14,6 +14,7 @@ import { LanguageService } from 'src/app/services/language.service';
 })
 export class LoginPage implements OnInit {
   @Input()credentials: {username, password, hash};
+  @Input()pushNotification: any;
   language: any;
   constructor( 
     private authService: AuthenticationService, 
@@ -44,6 +45,14 @@ export class LoginPage implements OnInit {
         // this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         // this.analyticsService.logEvent('user_doole', {userId: res.idUser})
         this.setLocalLanguages(res.language)
+
+        console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);
+        if(this.pushNotification){
+          this.redirecPushNotification(this.pushNotification)
+          this.modalCtrl.dismiss({error:null});
+          return
+        }
+
         if(res.twoFactorUser){
           this.router.navigate(['/verification']);
           this.modalCtrl.dismiss({error:null});
@@ -74,13 +83,8 @@ export class LoginPage implements OnInit {
   checkConditionLegal(){
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
-
-        //console.log('[LoginPage] checkConditionLegal()', await res);
-         if(res.success)
-
         //console.log('[LoginPage] checkConditionLegal()', await res);
         if(res.success)
-
           this.redirectPage(res.accepted_last)
         else
           this.modalCtrl.dismiss({error:res.message});
@@ -94,6 +98,7 @@ export class LoginPage implements OnInit {
 
   redirectPage(condicion){
     if(!condicion){
+      localStorage.setItem('allNotification', 'false');
       this.router.navigate(['/legal']);
       this.modalCtrl.dismiss({error:null});
     }else{
@@ -146,6 +151,40 @@ export class LoginPage implements OnInit {
     } else{
       this.showIntro()
     }      
+  }
+
+  redirecPushNotification(data){
+    switch (data.action) {
+      case "MESSAGE":
+        let origin = (data?.origin).replace(/\\/g, '');
+        let staff = JSON.parse(origin);
+        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        break;
+      case "FORM":
+        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        break;
+      case "DRUGINTAKE":
+        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        break;
+      case "ADVICE":
+        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "DIET":
+        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "AGENDA":
+        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        break;
+      case "REMINDER":
+        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        break;
+      case "GAME":
+        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+        break;
+      default:
+        console.error('Action on localNotificationActionPerformed not found')
+        break;
+    }
   }
 
 

@@ -37,7 +37,7 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'element.field_measure' | translate}}</ion-label>
-        <ion-input formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
+        <ion-input  type="number" formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
         <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
       </ion-item>
 

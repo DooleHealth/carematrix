@@ -24,6 +24,7 @@ import { VideocallIframePage } from '../videocall-iframe/videocall-iframe.page';
   styleUrls: ['./agenda-detail.page.scss'],
 })
 export class AgendaDetailPage implements OnInit {
+  private data: any = history.state?.data;
   event: any = {}
   coordenadas: any = {}
   tokboxSession: any;
@@ -36,6 +37,7 @@ export class AgendaDetailPage implements OnInit {
   enableReminder = false;
 
   constructor(
+    private router: Router,
     private dooleService: DooleService,
     private translate : TranslateService,
     public datepipe: DatePipe, 
@@ -386,6 +388,7 @@ export class AgendaDetailPage implements OnInit {
 
   async openVideocallIframeModal(){
 
+
     const modal = await this.modalCtrl.create({
       component: VideocallIframePage,
       componentProps: {"id": this.opentokService.agendaId$}
@@ -403,4 +406,11 @@ export class AgendaDetailPage implements OnInit {
     else
       this.openVideocallModal();
   }
+
+   backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
+  }
+
+
 }

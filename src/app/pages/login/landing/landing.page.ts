@@ -20,6 +20,7 @@ const { Storage } = Plugins;
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
+  pushNotification: any;
   loginForm: FormGroup;
   submitError: string;
   redirectLoader: HTMLIonLoadingElement;
@@ -55,9 +56,16 @@ export class LandingPage implements OnInit {
       ),
       hash: new FormControl(''),
     });
+
   }
 
   ionViewDidEnter(){
+    this.pushNotification = history.state.pushNotification;
+    console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
+    // if(this.pushNotification){
+    //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
+    // }
+
     this.loginForm.get('username').setValue('')
     this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')
@@ -75,15 +83,23 @@ export class LandingPage implements OnInit {
     this.submitError = null;
   }
 
-  submit(){
+/*   submit(){
     this.loginForm.get('hash').setValue('')
     this.doDooleAppLogin()
-  }
+  } */
 
   async doDooleAppLogin() : Promise<void> {
+    let notification = this.dooleService.getPushNotification()
+    console.log("[LandingPage] doDooleAppLogin() pushNotification", notification);
+    if(notification){
+      this.pushNotification = notification
+      this.dooleService.setPushNotification(undefined)
+    }
+
+
     const modal = await this.modalCtrl.create({
       component: LoginPage,
-      componentProps: { credentials: this.loginForm.value },
+      componentProps: { credentials: this.loginForm.value, pushNotification: this.pushNotification },
     });
 
     modal.onDidDismiss()

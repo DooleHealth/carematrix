@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,11 +11,13 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./games-detail.page.scss'],
 })
 export class GamesDetailPage implements OnInit {
+  private data: any = history.state?.data;
   game:any ={}
   id:any
   score = 0
   isLoading = false
   constructor(
+    private router: Router,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
     private dooleService: DooleService,
@@ -49,7 +52,7 @@ export class GamesDetailPage implements OnInit {
 
   async openGames(item){
     var browser : any;
-    //if(item.type=="html5"){
+    if(item.type=="html5"){
       const iosoption: InAppBrowserOptions = {
         zoom: 'no',
         location:'yes',
@@ -70,9 +73,9 @@ export class GamesDetailPage implements OnInit {
       }
       else
         browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
-    //}
+    }
 
-/*     if(item.type=="form") {
+    if(item.type=="form") {
       const options: InAppBrowserOptions = {
         location: 'no',
         toolbar: 'yes'
@@ -89,8 +92,13 @@ export class GamesDetailPage implements OnInit {
         "_blank",
         "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
       );
-    } */
+    }
 
+  }
+
+  backButton(){
+    if(this.data)
+    this.router.navigate([`/home`]);
   }
 
 }
