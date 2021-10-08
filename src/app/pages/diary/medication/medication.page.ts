@@ -196,6 +196,10 @@ export class MedicationPage implements OnInit {
 
     confirm(){
       this.isLoading = true
+      this.segment = "List"
+      this.segmentChanged()
+      this.notification.displayToastSuccessful()
+      return
         this.dooleService.postAPImedicationSendPetition(this.formulario.value).subscribe(
         async (res: any)=>{
            console.log('[MedicationPage] postAPImedicationSendPetition()', await res);    
@@ -203,14 +207,15 @@ export class MedicationPage implements OnInit {
             this.isLoading = false
             this.segment = "List"
             this.segmentChanged()
+            this.notification.displayToastSuccessful()
             this.presentAlert();
-     },(err) => { 
-      this.isLoading = false
-        console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
-        throw err; 
-    }) ,() => {
-      this.isLoading = false
-    };     
+        },(err) => { 
+          this.isLoading = false
+            console.log('[MedicationPage] postAPImedicationSendPetition() ERROR(' + err.code + '): ' + err.message); 
+            throw err; 
+        }) ,() => {
+          this.isLoading = false
+        };     
     }
   
     selectSendType(){
