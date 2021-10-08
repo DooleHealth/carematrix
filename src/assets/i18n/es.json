@@ -679,8 +679,10 @@
         "confirm":"Confirmar el envío",
         "correct":"Solicitud recibida correctamente",
         "back":"Volver",
-        "shipping_method":"Tipo de envío: "
-    
+        "shipping_method":"Tipo de envío: ",
+        "go_back": "Volver al paso anterior",
+        "add_address": "Añadir dirección",
+        "edit_address": "Editar dirección"
       },
       "recipe": {
         "header": "Recetas",
