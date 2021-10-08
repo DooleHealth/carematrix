@@ -35,6 +35,10 @@ const routes: Routes = [
   {
     path: 'agenda-detail',
     loadChildren: () => import('./agenda-detail/agenda-detail.module').then( m => m.AgendaDetailPageModule)
+  },
+  {
+    path: 'videocall-iframe',
+    loadChildren: () => import('./videocall-iframe/videocall-iframe.module').then( m => m.VideocallIframePageModule)
   }
 ];
 

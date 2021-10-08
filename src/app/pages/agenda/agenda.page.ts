@@ -60,7 +60,7 @@ export class AgendaPage implements OnInit {
     public authService: AuthenticationService,
     private analyticsService: AnalyticsService
   ) {
-    this.analyticsService.setScreenName('agenda','AgendaPage')
+    // this.analyticsService.setScreenName('agenda','AgendaPage')
   }
 
   ngOnInit() {

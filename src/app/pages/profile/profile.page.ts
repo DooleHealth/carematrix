@@ -10,6 +10,7 @@ import { VideoComponent } from 'src/app/components/video/video.component';
 import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 import { TranslateService } from '@ngx-translate/core';
+import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe.page';
 
 @Component({
   selector: 'app-profile',
@@ -150,6 +151,16 @@ export class ProfilePage implements OnInit {
       this.iab.create(url,target, options);
   }
 
+  async openVideocallIframeModal(){
+    const modal = await this.modalCtrl.create({
+      component: VideocallIframePage,
+      componentProps: {"id":"1281"}
+    });
+   
+    await modal.present();
+
+  }
+  
   async testVideocall(){
 
     const modal = await this.modalCtrl.create({
