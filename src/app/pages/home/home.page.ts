@@ -110,6 +110,7 @@ export class HomePage implements OnInit {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.getUserInformation()
     this.checkHealthAccess();
+    setTimeout(()=>this.confirmAllNotification(), 2000);
   }
 
 
@@ -129,16 +130,16 @@ export class HomePage implements OnInit {
                 .then(res => {
                   //console.log(res);
                   this.syncData(30);
-                  setTimeout(()=>this.confirmAllNotification(), 500);
+                  //setTimeout(()=>this.confirmAllNotification(), 500);
                 })
                 .catch(e => {
                   console.log(e)
-                  setTimeout(()=>this.confirmAllNotification(), 100);
+                  //setTimeout(()=>this.confirmAllNotification(), 100);
                 });
           })
           .catch(e => {
             console.log(e)
-            setTimeout(()=>this.confirmAllNotification(), 500);
+            //setTimeout(()=>this.confirmAllNotification(), 500);
           });
     }
   }
@@ -176,7 +177,7 @@ export class HomePage implements OnInit {
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
-        //this.advices = this.advices.filter(advice => (advice.statusable.favourited_at == null))
+        this.advices = this.advices.filter(advice => (advice?.statusable == null || advice?.statusable?.hided_at == null))
 
         if(res.data?.goals){
           this.goals = res.data?.goals
@@ -578,12 +579,25 @@ export class HomePage implements OnInit {
           });
     }
 
-  actionSeeAllAdvices(){
-    //console.log('[HomePage] actionCloseAdvice()');
+  actionCloseAdvice(slide){
+    console.log('[HomePage] actionCloseAdvice()', slide.name);
+    let params = {
+      model: 'Advice',
+      id: slide.id,
+      type: 'hide',
+      status: 1
+    }   
+    this.dooleService.postAPIContentStatus(params).subscribe(
+      async (res: any) =>{
+          if(res.success){
+            this.advices = this.advices.filter(advice => (advice?.id != slide.id))
+          }
+      }
+    )
   }
 
-  actionCloseAdvice(slide){
-    //console.log('[HomePage] actionCloseAdvice()', slide.name);
+  actionSeeAllAdvices(){
+    //console.log('[HomePage] actionCloseAdvice()');
   }
 
   actionRegisterAdvice(slide){
