@@ -40,7 +40,7 @@ export class ProfilePage implements OnInit {
 
   ionViewWillEnter(){
     this.getPersonalInformation()
-    this.getTokboxCredentials(); // Fake agenda for videocall test
+   
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
     this.appVersion.getVersionNumber().then((version)=>{
       this.version = version;
@@ -69,29 +69,6 @@ export class ProfilePage implements OnInit {
           throw err; 
       });
     }
-
-  getTokboxCredentials(){
-    this.dooleService.getAPIvideocall("1").subscribe(
-      async (data) => {
-        await data;
-        if(data.result){
-          this.tokboxSession = data;
-          this.opentokService.token$ = this.tokboxSession.token;
-          this.opentokService.sessionId$ = this.tokboxSession.sessionId;
-          this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
-          console.log("this.tokboxSession: ", this.tokboxSession);
-        }else{
-          let message = this.translate.instant('agenda.error_alert_message_get_token')
-          alert(message)
-        }       
-      },
-      (error) => {
-        // Called when error
-        console.error(error);
-       
-      });
-
-  }
 
 
   async signOut() {
@@ -151,30 +128,61 @@ export class ProfilePage implements OnInit {
       this.iab.create(url,target, options);
   }
 
-  async openVideocallIframeModal(){
+  startVideoCall(){
+    // VOIP calls for IOS
+    let agenda = "1281";
+    this.getTokboxSession(agenda);
+   
+  }
+
+  async getTokboxSession(agenda) {
+
+    return this.dooleService.getAPIvideocall(agenda).subscribe(
+      async (data) => {
+        await data;
+        if(data.result){
+          let tokboxSession = data;
+          this.opentokService.token$ = tokboxSession.token;
+          this.opentokService.sessionId$ = tokboxSession.sessionId;
+          this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
+          console.log("this.tokboxSession: ", this.opentokService.sessionId$);
+
+          if (this.platform.is('ios'))
+            this.openVideocallIframeModal(agenda);
+          else
+            this.openVideocallModal();
+
+          return tokboxSession;
+        }else{
+          let message = this.translate.instant('agenda.error_alert_message_get_token')
+          throw message;
+        }
+
+      },
+      (error) => {
+        // Called when error
+        alert( 'ERROR(' + error.code + '): ' + error.message)
+        console.log("error: ", error);
+        throw error;
+      });
+
+  }
+
+  async openVideocallIframeModal(agenda){
     const modal = await this.modalCtrl.create({
       component: VideocallIframePage,
-      componentProps: {"id":"1281"}
+      componentProps: {"id":agenda}
     });
    
     await modal.present();
 
   }
-  
-  async testVideocall(){
 
+  async openVideocallModal(){
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
-      componentProps: { },
+      componentProps: {},
     });
-
-    modal.onDidDismiss().then((result) => {
-      this.opentokService.token$ = '';
-      this.opentokService.sessionId$ = '';
-      this.opentokService.apiKey$ = '';
-      console.log('Test End');
-    });
-
     await modal.present();
 
   }

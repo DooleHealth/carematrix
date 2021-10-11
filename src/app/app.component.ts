@@ -356,11 +356,14 @@ export class AppComponent implements OnInit {
 
   redirecToVideocall(notification){
 
+    console.log("before: ");
     const caller = JSON.parse(notification.data.Caller);
-    this.opentokService.agendaId$ = caller.ConnectionId;
-   
-    this.getTokboxSession(caller.ConnectionId).then(()=>{
-    cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.ConnectionId);
+     console.log("caller: ", caller);
+    console.log("caller.callId: ", caller.callId);
+    this.opentokService.agendaId$ = caller.callId;
+    console.log("this.opentokService.agendaId$: ", this.opentokService.agendaId$);
+    this.getTokboxSession(caller.callId).then(()=>{
+    cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
    });
 
   }
@@ -380,7 +383,7 @@ export class AppComponent implements OnInit {
           return tokboxSession;
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
-          alert(message)
+          throw message;
         }
 
       },
