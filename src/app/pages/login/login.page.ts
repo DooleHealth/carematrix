@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
   }
 
   async ionViewDidEnter(){
-    this.analyticsService.setScreenName('login','LoginPage')
+    // this.analyticsService.setScreenName('login','LoginPage')
   }
 
   loginUser(){
@@ -40,10 +40,10 @@ export class LoginPage implements OnInit {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;
       if(res.success){ 
-        this.analyticsService.setUser(res.idUser)
-        this.analyticsService.logEvent('login', res)
-        this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
-        this.analyticsService.logEvent('user_doole', {userId: res.idUser})
+        // this.analyticsService.setUser(res.idUser)
+        // this.analyticsService.logEvent('login', res)
+        // this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
+        // this.analyticsService.logEvent('user_doole', {userId: res.idUser})
         this.setLocalLanguages(res.language)
 
         console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);

@@ -59,7 +59,7 @@
     "@nguniversal/express-engine": "^11.1.2",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
-    "@opentok/client": "^2.20.3",
+    "@opentok/client": "2.18.1",
     "@videogular/ngx-videogular": "^2.1.0",
     "angular-pipes": "^10.0.0",
     "browser": "^0.2.6",
