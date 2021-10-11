@@ -38,6 +38,9 @@ export class NewDetailPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
     this.id = history.state.id;
     if(this.id)
     this.getDetailNew();
@@ -56,7 +59,7 @@ export class NewDetailPage implements OnInit {
           let status = this.getStatusable(news?.statusable)
           this.like = (status?.liked_at)? true:false
           this.favourite = status?.favourited_at? true:false
-          this.hide = (status?.hided_at !== null)? false:true
+          this.hide = (status?.hided_at != null)? true:false
           return
         }
 
@@ -93,6 +96,7 @@ export class NewDetailPage implements OnInit {
         let status = this.getStatusable(this.new?.statusable)
         this.like = (status?.liked_at)? true:false
         this.favourite = status?.favourited_at? true:false
+        this.hide = (status?.hided_at != null)? true:false
     
         this.isLoading = false
        },(err) => { 
@@ -133,7 +137,7 @@ export class NewDetailPage implements OnInit {
     }
     else if(type == 'hide'){
       this.hide = !this.hide
-      value =  this.hide? 0:1
+      value =  this.hide? 1:0
     }
     else{
       this.favourite = !this.favourite
