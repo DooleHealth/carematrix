@@ -95,8 +95,9 @@ export class ProfilePage implements OnInit {
 
 
   async signOut() {
-    await this.authService.logout();
-    this.router.navigateByUrl('/landing');
+    await this.authService.logout().then(res=>{
+      this.router.navigateByUrl('/landing');
+    });
   }
 
   async sendReportProblem(){
