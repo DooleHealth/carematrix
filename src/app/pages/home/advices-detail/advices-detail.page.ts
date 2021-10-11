@@ -42,6 +42,9 @@ export class AdvicesDetailPage implements OnInit {
     public sanitizer: DomSanitizer) {
   }
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
     this.id = history.state.id;
     if(this.id)
     this.getDetailAdvices();
@@ -60,7 +63,7 @@ export class AdvicesDetailPage implements OnInit {
           let status = this.getStatusable(advice?.statusable)
           this.like = (status?.liked_at)? true:false
           this.favourite = status?.favourited_at? true:false
-          this.hide = (status?.hided_at !== null)? false:true
+          this.hide = (status?.hided_at != null)? true:false
           return
         }
 
@@ -97,6 +100,7 @@ export class AdvicesDetailPage implements OnInit {
         let status = this.getStatusable(this.advice?.statusable)
         this.like = (status?.liked_at)? true:false
         this.favourite = status?.favourited_at? true:false
+        this.hide = (status?.hided_at != null)? true:false
     
         this.isLoading = false
        },(err) => { 
@@ -142,7 +146,7 @@ export class AdvicesDetailPage implements OnInit {
       value =  this.like? 1:0
     }else if(type == 'hide'){
       this.hide = !this.hide
-      value =  this.hide? 0:1
+      value =  this.hide? 1:0
     }
     else{
       this.favourite = !this.favourite
