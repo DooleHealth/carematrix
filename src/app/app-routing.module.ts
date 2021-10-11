@@ -12,6 +12,7 @@ import { VideoComponent } from './components/video/video.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReminderAddPage } from './pages/agenda/reminder-add/reminder-add.page';
 import { ReminderAddPageModule } from './pages/agenda/reminder-add/reminder-add.module';
+import { AutoLoginGuard } from './guards/auto-login.guard';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
   },
   {
     path: 'landing',
-    loadChildren: () => import('./pages/login/landing/landing.module').then( m => m.LandingPageModule)
+    loadChildren: () => import('./pages/login/landing/landing.module').then( m => m.LandingPageModule),
+    canLoad: [AutoLoginGuard] 
   },
   {
     path: 'legal',
@@ -50,7 +52,8 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canLoad: [AuthGuard] // Secure all child pages
   },
   {
     path: 'personal',
@@ -87,7 +90,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canLoad: [AuthGuard] // Secure all child pages
   },
   {
     path: 'agenda',
