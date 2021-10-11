@@ -19,7 +19,7 @@ export class ChangeUserComponent implements OnInit {
     public authService: AuthenticationService,
     private alertController: AlertController,
     public router: Router,
-    private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
+    private translate: TranslateService) { this.user = this.authService?.user?.familyUnit}
 
   ngOnInit() {
     
@@ -75,14 +75,14 @@ export class ChangeUserComponent implements OnInit {
     console.log('[ChangeUserComponent] changeUser() Cuenta de:', user);
     this.authService.setFamilyUnit(user);
     this.router.navigateByUrl('home');
-    console.log(this.authService.user.listFamilyUnit) 
+    console.log(this.authService?.user.listFamilyUnit) 
   }
 
   returnUser(){
     console.log('[ChangeUserComponent] returnUser()');
     this.authService.setUserFamilyId(null);
     this.router.navigateByUrl('home');
-    console.log(this.authService.user.listFamilyUnit) 
+    console.log(this.authService?.user.listFamilyUnit) 
   }
 
 

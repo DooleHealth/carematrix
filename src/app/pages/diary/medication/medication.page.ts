@@ -198,7 +198,10 @@ export class MedicationPage implements OnInit {
       this.isLoading = true
       this.segment = "List"
       this.segmentChanged()
+      this.isLoading = false
       this.notification.displayToastSuccessful()
+      this.loadDataDirections();
+      this.paso = 'cero';
       return
         this.dooleService.postAPImedicationSendPetition(this.formulario.value).subscribe(
         async (res: any)=>{

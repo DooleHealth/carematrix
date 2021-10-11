@@ -34,20 +34,20 @@ export class ChatBubbleComponent implements OnInit {
 
   ngOnInit() {
     this.format(this.message);
-    console.log("Init");
+    //console.log("Init");
   }
 
   nl2br(text: string) { return text.replace(/(\\n)/, "<br/>");}
 
   format(message){
-    console.log(message);
+    //console.log(message);
     if(message.mediaType=="TEXT"){
       if(message.message){
         message.message=this.nl2br(message.message);
         message.message=message.message.replace(String.fromCharCode(92),''); //treiem \'
         message.message=message.message.replace("\\/", "/");
         this.message.message=message.message;
-        console.log(this.message.message);
+        //console.log(this.message.message);
       }
 
     }else if(message.mediaType=="FILE"){

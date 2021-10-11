@@ -158,16 +158,13 @@
     <!-- Medication-->
     <div *ngSwitchCase="'medication'">
        <!--medication shipping cart buttton-->
-       <ng-container>
-         <br>
-        <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
-    </ng-container>
       <ng-container *ngIf="this.isLoadingDrugs;else second">
         <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>
       <ng-template #second>
         <ng-container *ngIf="this.listDrug.length > 0;else third">
           <br>
+          <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
           <ion-list *ngFor="let list of this.listDrug">
             <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
               titlecase}}</ion-label>
@@ -262,6 +259,13 @@
             <ion-col>
               <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
             </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <br>
+              <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
+            </ion-col>
+           
           </ion-row>
         </ion-grid>
       </ng-template>

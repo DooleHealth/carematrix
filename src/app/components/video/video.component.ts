@@ -23,10 +23,10 @@ export class VideoComponent implements  AfterViewInit, OnInit {
 
   @ViewChild('publisherDiv', { static: false }) publisherDiv: ElementRef;
   @ViewChild('subscriberHost', { read: ViewContainerRef, static: true }) subscriberHost: ViewContainerRef;
-  session: OT.Session;
-  publisher: OT.Publisher;
-  //session: any;
-  //publisher: any;
+  //session: OT.Session;
+  //publisher: OT.Publisher;
+  session: any;
+  publisher: any;
   publishing;
   apiKey: string;
   token: string;
@@ -83,20 +83,20 @@ onStreamCreated(stream, session) {
 
 close() {
   
-  if(this.session){
-    console.log('*- session.disconnect()');
+  if(this.session)
     this.session.disconnect();
+
+  if(this.publisher)
     this.publisher.destroy();
-  }
+
+  console.log('*- session.disconnect()');
   this.modalCtrl.dismiss({date:null});
 }
 
 
 ngAfterViewInit(): void {
 
-  // if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
-    if (this.platform.is('desktop')) {
-
+  if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
     this.session = OT.initSession(this.apiKey, this.sessionId);
     var publisherOptions = { 
       height: "100%",
