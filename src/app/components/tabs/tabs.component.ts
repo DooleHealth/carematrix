@@ -27,7 +27,7 @@ export class TabsComponent implements OnInit {
   constructor(
      private router: Router , 
      private authService: AuthenticationService)  {
-    { this.user = this.authService.user?.familyUnit}
+    { this.user = this.authService?.user?.familyUnit}
   }
   ngOnInit() {
     this.translateTab();

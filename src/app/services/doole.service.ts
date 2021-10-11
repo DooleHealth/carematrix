@@ -285,7 +285,7 @@ export class DooleService {
 
   getFamilyUnitID(): HttpParams {
     let httpParams = new HttpParams();
-    let user = this.authService.user
+    let user = this.authService?.user
     return httpParams = (user.familyUnit) ? httpParams.append('user', user.familyUnit) : httpParams
   }
 

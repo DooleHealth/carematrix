@@ -27,7 +27,7 @@
     },
     "LocalNotifications": {
       "smallIcon": "ic_stat_circle_notifications",
-      "iconColor": "#009CB3",
+      "iconColor": "#109DB0",
       "sound": "sound.mp3"
     }
   },
@@ -38,5 +38,9 @@
       "alert"
     ]
   },
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.0.158:8100",
+    "cleartext": true
+  }
 }

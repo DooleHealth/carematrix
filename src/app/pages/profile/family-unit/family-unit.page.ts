@@ -22,7 +22,7 @@ export class FamilyUnitPage implements OnInit {
     private authService: AuthenticationService,
     private alertController: AlertController,
     public router: Router,
-    private translate: TranslateService) { this.user = this.authService.user?.familyUnit}
+    private translate: TranslateService) { this.user = this.authService?.user?.familyUnit}
 
   ngOnInit() {
 
