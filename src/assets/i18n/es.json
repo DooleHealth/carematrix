@@ -102,7 +102,8 @@
         "diet": "Dietas",
         "elements":"Visualizar todos mis datos",
         "enable_notifications": "Activar Notificaciones",
-        "message_enable_notifications": "¿Deseas activar todas las notificaciones?"
+        "message_enable_notifications": "¿Deseas activar todas las notificaciones?",
+        "close_app": "¿Deseas cerrar la aplicación?"
       },
       "profile":{
         "title_profile": "Mi Perfil",
@@ -557,7 +558,8 @@
         "continue": "Continuar",
         "send": "Enviar",
         "perfil":"Perfil",
-        "open": "Abrir"
+        "open": "Abrir",
+        "exit": "Salir"
       },
       "conversation":{
         "placeholder":"Escribe un mensaje"

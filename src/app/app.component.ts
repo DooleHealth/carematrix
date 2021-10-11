@@ -96,6 +96,8 @@ export class AppComponent implements OnInit {
 
          // Enable background mode
         //this.backgroundMode.enable();
+
+        this.backButton();
       }
 
     });
@@ -724,6 +726,42 @@ export class AppComponent implements OnInit {
         await this.authService.logout();
         this.router.navigateByUrl('/landing');
         console.log(error)
+      });
+  }
+
+  backButton(){
+    this.platform.backButton.subscribeWithPriority(10,() => {
+      // this does work
+      if (this.router.url.includes('home')){
+        //Exit from app
+        this.showExitConfirm()
+      }else if (this.router.url.includes('landing')){
+        //Exit from app
+        navigator['app'].exitApp();
+      }
+    });
+  }
+
+  showExitConfirm() {
+    this.alertController.create({
+      header: 'Doole App',
+      message: this.translate.instant('home.close_app'),
+      backdropDismiss: false,
+      buttons: [{
+        text: this.translate.instant('button.cancel'),
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit prevented!');
+        }
+      }, {
+        text: this.translate.instant('button.accept'),
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    })
+      .then(alert => {
+        alert.present();
       });
   }
 
