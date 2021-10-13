@@ -306,8 +306,12 @@ export class DiaryPage implements OnInit {
          if(res.gamePlays){
           this.listGames = []
           res.gamePlays.forEach(element => {
+            element.game['scheduled_date'] = element.scheduled_date
             this.listGames.push(element.game)
           });
+          this.listGames.sort(function(a,b){
+            return a.scheduled_date.localeCompare(b.scheduled_date);
+          })
           this.listGamePlays = this.addItems(this.listGames)
          }
        
@@ -467,6 +471,26 @@ export class DiaryPage implements OnInit {
     return  this.translate.instant('diary.all_day')
   }
 
+  selectMealTime(time){
+    let h =  time.split(':')  //new Date(time).getHours()
+    let hour = Number(h[0])
+    if(hour >= 6  && hour < 10){
+      return this.translate.instant('diet.breakfast')
+    }
+    if(hour >= 11 && hour < 13){
+      return this.translate.instant('diet.brunch')
+    }
+    if(hour >= 14 && hour <= 16){
+      return this.translate.instant('diet.lunch')
+    }
+    if(hour >=18 && hour <= 19){
+      return this.translate.instant('diet.afternoon_snack')
+    }
+    if(hour >=20 && hour <= 22){
+      return this.translate.instant('diet.dinner')
+    }
+  }
+
   async addDrugPlan(drug, id){
     const modal = await this.modalCtrl.create({
       component:  DrugsDetailPage,
@@ -546,6 +570,13 @@ export class DiaryPage implements OnInit {
           let hour =  time.split(':')
           return hour[0]+':'+hour[1]
         }
+      }
+
+      formatHourGamePlay(date){
+        if(date){
+          let time = date.split(' ')[1]
+          return this.formatHour(time)
+        }else return ''
       }
 
 }

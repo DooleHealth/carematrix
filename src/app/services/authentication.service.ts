@@ -239,6 +239,21 @@ export class AuthenticationService {
     return Storage.remove({ key: TOKEN_KEY });
   }
 
+/*   logout(params): Observable<any>  {
+    console.log('logout');
+    const endpoint = this.api.getEndpoint('patient/login');
+    return this.http.post(endpoint, params).pipe(
+      map(async (res: any) => {
+        //console.log(`[DooleService] postAPIaddAgenda(${path}) res: `, res);
+        this.isAuthenticated.next(false);
+        await Storage.remove({ key: 'user' }).then((val) => { });
+        await Storage.remove({ key: TOKEN_KEY });
+        return res;
+      })
+    );
+
+  } */
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

@@ -306,11 +306,15 @@ export class AppComponent implements OnInit {
       console.log('ACTION: ', action);
       console.log("localNotificationActionPerformed", JSON.stringify(f.data));
 
-      if(this.router.url.includes('landing')){
+      if( action == "VIDEOCALL"){
+        this.redirecToVideocall(notification)
+        return
+      }
+      else if(this.router.url.includes('landing')){
         this.dooleService.setPushNotification(f.data)
         this.router.navigate([`/landing`],{state:{pushNotification: f.data}});
       }
-      else if(this.authService?.user?.idUser || action == "VIDEOCALL"){
+      else if(this.authService?.user?.idUser){
         console.log('localNotificationActionPerformed idUser: ', this.authService?.user?.idUser)
         this.redirecPushNotification(f.data, notification)
       }

@@ -99,7 +99,7 @@
         "detail_button": "Detalls",
         "register_button": "Inscriure",
         "take_button": "Prendre",
-        "go_play_button": "Anar a joc",
+        "go_play_button": "Anar al joc",
         "diet": "Dietes",
         "elements":"Visualitzar totes les meves dades",
         "enable_notifications": "Activar Notificacions",
@@ -539,6 +539,13 @@
           "dawning": "matinada",
           "all_day": "tot el dia"
       },
+      "diet":{
+        "breakfast": "Desdejuni",
+        "brunch": "Esmorzar",
+        "lunch": "Dinar",
+        "afternoon_snack": "Berenar",
+        "dinner": "Sopar"
+    },
       "button":{
         "detail": "Detalls",
         "fill": "Omplir",
