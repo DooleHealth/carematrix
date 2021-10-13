@@ -98,7 +98,7 @@
         "detail_button": "Detalles",
         "register_button": "Inscribirme",
         "take_button": "Tomar",
-        "go_play_button": "Ir a juego",
+        "go_play_button": "Ir al juego",
         "diet": "Dietas",
         "elements":"Visualizar todos mis datos",
         "enable_notifications": "Activar Notificaciones",
@@ -507,6 +507,13 @@
           "midnight": "media noche",
           "dawning": "madrugada",
           "all_day": "todo el día"
+      },
+      "diet":{
+          "breakfast": "Desayuno",
+          "brunch": "Almuerzo",
+          "lunch": "Comida",
+          "afternoon_snack": "Merienda",
+          "dinner": "Cena"
       },
       "game":{
         "games":"Juegos",
