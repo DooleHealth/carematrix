@@ -81,10 +81,6 @@ export class AgendaDetailPage implements OnInit {
           this.lat = this.cord?.latitude
           this.opentokService.agendaId$ = this.event?.id;
           console.log(this.event);
-
-          if(this.event?.online)
-          this.getVideocallToken();
-
           let date = new Date(this.event.start_date_iso8601).toDateString()
           let today = new Date().toDateString()
           if(date !== today)
@@ -108,6 +104,7 @@ export class AgendaDetailPage implements OnInit {
           this.opentokService.token$ = this.tokboxSession.token;
           this.opentokService.sessionId$ = this.tokboxSession.sessionId;
           this.opentokService.apiKey$ = this.tokboxSession.tokboxAPI;
+          this.openVideocallModal();
           console.log("this.tokboxSession: ", this.tokboxSession);
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
@@ -376,6 +373,7 @@ export class AgendaDetailPage implements OnInit {
       else if(m?.name == null)
       return 'desconocido'
    }
+
    async openVideocallModal(){
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
@@ -401,10 +399,9 @@ export class AgendaDetailPage implements OnInit {
 
   startVideoCall(){
     // VOIP calls for IOS
-    if (this.platform.is('ios'))
-      this.openVideocallIframeModal();
-    else
-      this.openVideocallModal();
+   
+    this.getVideocallToken();
+    
   }
 
    backButton(){

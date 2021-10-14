@@ -1,6 +1,6 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -24,7 +24,9 @@ export class LoginPage implements OnInit {
     public languageService: LanguageService, 
     private translate: TranslateService,
     private modalCtrl: ModalController,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    public platform: Platform,
+
     ) { }
 
   ngOnInit() {
@@ -156,8 +158,18 @@ export class LoginPage implements OnInit {
   redirecPushNotification(data){
     switch (data.action) {
       case "MESSAGE":
-        let origin = (data?.origin).replace(/\\/g, '');
-        let staff = JSON.parse(origin);
+        let staff;
+        // Different payloads for ios and android
+        if(this.platform.is('ios')){
+          staff = data?.origin;
+        }else{
+          let origin = data?.origin;
+          if(origin){
+            origin = origin.replace(/\\/g, '');
+            staff = JSON.parse(origin);
+          }
+        }
+        console.log('staff: ', staff);
         this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
         break;
       case "FORM":

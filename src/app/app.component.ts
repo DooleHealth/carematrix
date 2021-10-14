@@ -19,8 +19,6 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
-
-
 const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
@@ -61,7 +59,6 @@ export class AppComponent implements OnInit {
     private modalCtrl: ModalController,
     private dooleService: DooleService,
     private faio : FingerprintAIO
-
   ) {
 
 
@@ -111,6 +108,7 @@ export class AppComponent implements OnInit {
      }else if(notification?.data?.aps){
       push = notification.data.aps;
       console.log("notification.data.aps:", push);
+      push.message = push.alert;
      }else{
       push = notification.data;
       console.log("notification.data:", push);
@@ -187,15 +185,18 @@ export class AppComponent implements OnInit {
           // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
           let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data.isCancelPush;
           
-          if(cancel == "true"){
-            return;
-          }else{
-           this.redirecToVideocall(notification)
+          if(cancel == "false"){
+            const caller = JSON.parse(notification.data.Caller);
+            this.opentokService.agendaId$ = caller.callId;
+            cordova.plugins.CordovaCall.receiveCall(caller.Username);
           }
-
+            
+           
+          
         }else{
           console.log("is notification: ", notification);
           this.showNotification(notification);
+        
         }
       }
     );
@@ -228,7 +229,8 @@ export class AppComponent implements OnInit {
           this.showFingerprintAuthDlg(data)
           //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
         }else
-        this.redirecPushNotification(data, notification)
+          this.redirecPushNotification(data, notification);
+        
       }
     );
 
@@ -329,11 +331,22 @@ export class AppComponent implements OnInit {
   }
 
   redirecPushNotification(data, notification?){
+
+    
     switch (data.action) {
       case "MESSAGE":
-        let origin = (data?.origin).replace(/\\/g, '');
-        let staff = JSON.parse(origin);
-        console.log('redirecPushNotification() ', data);
+        let staff;
+        // Different payloads for ios and android
+        if(this.platform.is('ios')){
+          staff = data?.origin;
+        }else{
+          let origin = data?.origin;
+          if(origin){
+            origin = origin.replace(/\\/g, '');
+            staff = JSON.parse(origin);
+          }
+        }
+        console.log('staff: ', staff);
         this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
         break;
       case "FORM":
@@ -368,21 +381,17 @@ export class AppComponent implements OnInit {
 
   redirecToVideocall(notification){
 
-    console.log("before: ");
+    
     const caller = JSON.parse(notification.data.Caller);
-     console.log("caller: ", caller);
-    console.log("caller.callId: ", caller.callId);
     this.opentokService.agendaId$ = caller.callId;
-    console.log("this.opentokService.agendaId$: ", this.opentokService.agendaId$);
-    this.getTokboxSession(caller.callId).then(()=>{
-    cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
-   });
+
+    //this.getTokboxSessionAndroid(caller.callId, caller);
+    
 
   }
 
-  async getTokboxSession(agenda) {
+  async getTokboxSessionAndroid(agenda, caller?) {
 
-    
     return this.dooleService.getAPIvideocall(agenda).subscribe(
       async (data) => {
         await data;
@@ -391,8 +400,52 @@ export class AppComponent implements OnInit {
           this.opentokService.token$ = tokboxSession.token;
           this.opentokService.sessionId$ = tokboxSession.sessionId;
           this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-          console.log("this.tokboxSession: ", this.opentokService.sessionId$);
-          return tokboxSession;
+      
+            // iOS fires call automatically on devices when receives voIP push
+            const modal = await this.modalCtrl.create({
+              component: VideoComponent,
+              componentProps: {},
+            });
+            
+            await modal.present();
+            cordova.plugins.CordovaCall.endCall();
+
+        }else{
+          let message = this.translate.instant('agenda.error_alert_message_get_token')
+          throw message;
+        }
+
+      },
+      (error) => {
+        // Called when error
+        alert( 'ERROR(' + error.code + '): ' + error.message)
+        console.log("error: ", error);
+        throw error;
+      });
+
+  }
+
+  async getTokboxSessionIOS(agenda, caller?) {
+
+    return this.dooleService.getAPIvideocall(agenda).subscribe(
+      async (data) => {
+        await data;
+        if(data.result){
+          let tokboxSession = data;
+          this.opentokService.token$ = tokboxSession.token;
+          this.opentokService.sessionId$ = tokboxSession.sessionId;
+          this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
+      
+          // iOS fires call automatically on devices when receives voIP push
+          const modal = await this.modalCtrl.create({
+            component: VideoComponent,
+            componentProps: {},
+          });
+          
+          await modal.present();
+          cordova.plugins.CordovaCall.endCall();
+        
+          
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
           throw message;
@@ -409,12 +462,8 @@ export class AppComponent implements OnInit {
   }
 
   async openVideocallModal(){
-    const modal = await this.modalCtrl.create({
-      component: VideoComponent,
-      componentProps: {},
-    });
-    await modal.present();
-
+   
+   
   }
 
   async openVideocallIframeModal(agenda){
@@ -468,11 +517,8 @@ export class AppComponent implements OnInit {
         let cancel = extra.Caller.CancelPush;
         if(cancel == "false"){
           self.opentokService.agendaId$ = extra.Caller.ConnectionId;
-          self.getTokboxSession(extra.Caller.ConnectionId).then(()=>{
-            cordova.plugins.CordovaCall.receiveCall(extra.Caller.Username, extra.Caller.ConnectionId);
-           });
         }else
-        console.error("Hang up notification");
+          console.error("Hang up notification");
       }else{
         console.error("Caller not found in voip notification");
       }
@@ -487,31 +533,92 @@ export class AppComponent implements OnInit {
 
   async getAgenda(){
 
+    console.log("getAgenda():")
     return this.dooleService.postAPIPendingConnect().subscribe(async (data)=>{
       await data;
       console.log('[AppComponent] getAgendaId()', data)
       if(data.success && data.agenda){
         this.opentokService.agendaId$ = data.agenda;
-        this.getTokboxSession(data.agenda).then(()=>{
-        this.startVideoCall(data.agenda);
-      })
+        this.startVideocall(data.agenda);
       }else{
         let message = this.translate.instant('agenda.error_alert_message_get_agenda')
         throw message;
       }
     })
   }
-  
-  startVideoCall(agenda){
-    // VOIP calls for IOS
-    if (this.platform.is('ios'))
-      this.openVideocallIframeModal(agenda).then(()=>{
-        cordova.plugins.CordovaCall.endCall();
+
+  async startVideocall(agenda){
+    if(this.platform.is('ios'))
+      await this.startVideocallIos(agenda);
+        else
+          await this.startVideocallAndroid(agenda).then(()=>{
+            cordova.plugins.CordovaCall.endCall();
+          });
+  }
+  async startVideocallIos(agenda) {
+    console.log("startVideocall")
+    return this.dooleService.getAPIvideocall(agenda).subscribe(
+      async (data) => {
+        await data;
+        if(data.result){
+          let tokboxSession = data;
+          this.opentokService.token$ = tokboxSession.token;
+          this.opentokService.sessionId$ = tokboxSession.sessionId;
+          this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
+          const modal = await this.modalCtrl.create({
+            component: VideoComponent,
+            componentProps: {},
+          });
+          
+          await modal.present();
+          cordova.plugins.CordovaCall.endCall();
+          return data; 
+
+        }else{
+          let message = this.translate.instant('agenda.error_alert_message_get_token')
+          throw message;
+        }
+
+      },
+      (error) => {
+        // Called when error
+        alert( 'ERROR(' + error.code + '): ' + error.message)
+        console.log("error: ", error);
+        throw error;
       });
-  else
-    this.openVideocallModal().then(()=>{
-      cordova.plugins.CordovaCall.endCall();
-    });
+  }
+
+  async startVideocallAndroid(agenda) {
+
+    console.log("startVideocallAndroid")
+    this.dooleService.getAPIvideocall(agenda).subscribe(
+      async (data) => {
+        await data;
+        if(data.result){
+          let tokboxSession = data;
+          this.opentokService.token$ = tokboxSession.token;
+          this.opentokService.sessionId$ = tokboxSession.sessionId;
+          this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
+          const modal = await this.modalCtrl.create({
+            component: VideoComponent,
+            componentProps: {},
+          });
+          
+          await modal.present();
+          return data; 
+
+        }else{
+          let message = this.translate.instant('agenda.error_alert_message_get_token')
+          throw message;
+        }
+
+      },
+      (error) => {
+        // Called when error
+        alert( 'ERROR(' + error.code + '): ' + error.message)
+        console.log("error: ", error);
+        throw error;
+      });
   }
 
 
@@ -521,15 +628,16 @@ export class AppComponent implements OnInit {
 
     cordova.plugins.CordovaCall.setVideo(true);
     //accept de videocall
-    cordova.plugins.CordovaCall.on('answer', async function(data) {
+    cordova.plugins.CordovaCall.on('answer',async function(data) {
       console.log(data);
       self.lastResume = new Date;
-     
+
+      // Grab last agenda id from BO
       if(!self.opentokService.agendaId$)
         self.getAgenda();
       else
-        self.startVideoCall(self.opentokService.agendaId$);
-
+        self.startVideocall(self.opentokService.agendaId$)
+    
     });
 
    //reject de videocall
@@ -770,3 +878,12 @@ export class AppComponent implements OnInit {
   }
 
 }
+function callback(Username: any, arg1: number, callback: any) {
+  console.log('on receive callback');
+  return;
+}
+
+function errorCallback(Username: any, arg1: number, callback: (Username: any, arg1: number, callback: any) => void, errorCallback: any) {
+  console.error('on error receive callback');
+}
+

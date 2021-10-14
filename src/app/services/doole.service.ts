@@ -356,7 +356,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIvideocall(${path}) res: `, res);
+        console.log(`[DooleService] getAPIvideocall(${path}) res: `, res);
         return res;
       })
     )

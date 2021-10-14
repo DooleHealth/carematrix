@@ -148,10 +148,7 @@ export class ProfilePage implements OnInit {
           this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
           console.log("this.tokboxSession: ", this.opentokService.sessionId$);
 
-          if (this.platform.is('ios'))
-            this.openVideocallIframeModal(agenda);
-          else
-            this.openVideocallModal();
+          this.openVideocallModal();
 
           return tokboxSession;
         }else{
