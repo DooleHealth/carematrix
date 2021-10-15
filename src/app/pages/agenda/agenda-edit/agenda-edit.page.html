@@ -38,13 +38,8 @@
           <ion-item lines="none">
             <ion-label>{{'appointment.field_description' | translate}}</ion-label>
           </ion-item>
-          <ion-item>
-            <ion-textarea formControlName="user_comments" class="textMedium" placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
-          </ion-item>
           <ion-item lines="none">
-            <ion-label>{{'reminder.field_place' | translate}}</ion-label>
-            <ion-input formControlName="place" class="textMedium"></ion-input>
-  <!--           <ion-note *ngIf="this.isSubmittedPlace && this.form.get('place').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note> -->
+            <ion-textarea formControlName="user_comments" class="textMedium" placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
           </ion-item>
         </ion-list>
       </ion-card>
@@ -61,6 +56,10 @@
         <ion-item>
           <ion-label>{{'Online' | translate}}</ion-label>
           <ion-toggle slot="end" color="success" formControlName="online" checked></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="!this.form.get('online').value">
+          <ion-label>{{'reminder.field_place' | translate}}</ion-label>
+          <ion-input formControlName="place" class="textMedium"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>{{'reminder.field_start' | translate}}</ion-label>
