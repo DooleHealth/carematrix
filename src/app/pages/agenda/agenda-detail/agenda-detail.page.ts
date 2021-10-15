@@ -197,7 +197,7 @@ export class AgendaDetailPage implements OnInit {
       case  "App\\Diet":
         id = instruction.reminderable_id
         console.log('[AgendaPage] actionIntrucction()',  id);
-        this.nav.navigateForward("/diets-detail", { state: {id:id} });
+        this.nav.navigateForward("journal/diets-detail", { state: {id:id} });
         break;
       case  "App\\Form":
         id = instruction.reminderable_id
