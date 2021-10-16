@@ -6,7 +6,7 @@
     <ion-title>{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
       translate)}}</ion-title> <!-- event.type -->
     <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" (click)="editReminder()">
-      {{ 'button.edit' | translate }}
+      <ion-icon name="create-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>

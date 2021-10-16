@@ -30,7 +30,7 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'documents_add.field_date' | translate }}</ion-label>
-        <ion-datetime formControlName="date" displayFormat="DD/MM/YY" (ionInput)="isSubmittedDate = false" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" displayFormat="DD/MM/YY" (ionInput)="isSubmittedDate = false" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>

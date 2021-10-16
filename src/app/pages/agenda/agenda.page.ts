@@ -115,6 +115,7 @@ export class AgendaPage implements OnInit {
   }
 
   onCurrentDateChanged(event:Date) {
+    console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
     this.getAgenda();
   }
 
