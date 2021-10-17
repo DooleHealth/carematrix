@@ -188,11 +188,10 @@ export class AppComponent implements OnInit {
           if(cancel == "false"){
             const caller = JSON.parse(notification.data.Caller);
             this.opentokService.agendaId$ = caller.callId;
-            cordova.plugins.CordovaCall.receiveCall(caller.Username);
-          }
-            
-           
-          
+            cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
+          }else
+            console.log("End call push");
+
         }else{
           console.log("is notification: ", notification);
           this.showNotification(notification);
@@ -381,13 +380,20 @@ export class AppComponent implements OnInit {
 
   redirecToVideocall(notification){
 
-    
-    const caller = JSON.parse(notification.data.Caller);
-    this.opentokService.agendaId$ = caller.callId;
+    let caller;
 
-    //this.getTokboxSessionAndroid(caller.callId, caller);
-    
+    if(notification?.data?.Caller){
+      caller = JSON.parse(notification.data.Caller);
+    }else if(notification?.notification?.data?.Caller)
+      caller = JSON.parse(notification.notification.data.Caller);
+    else {
+      console.error('caller not found on notificaiton payload')
+    }
+    this.opentokService.agendaId$ = caller?.callId;
 
+    console.log('caller',  caller);
+  
+    this.startVideocallAndroid(caller.callId)
   }
 
   async getTokboxSessionAndroid(agenda, caller?) {
@@ -518,7 +524,7 @@ export class AppComponent implements OnInit {
         if(cancel == "false"){
           self.opentokService.agendaId$ = extra.Caller.ConnectionId;
         }else
-          console.error("Hang up notification");
+          console.log("Hang up notification");
       }else{
         console.error("Caller not found in voip notification");
       }
