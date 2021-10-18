@@ -223,7 +223,10 @@ export class AppComponent implements OnInit {
         // App will lock after 2 minutes
         let secondsPassed = (secondsNow - secondsLastPause) / 1000;
         console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
-        if (secondsPassed >= 120) {
+        if(this.router.url.includes('landing')){
+          this.dooleService.setPushNotification(data)
+          //this.router.navigate([`/landing`],{state:{pushNotification: data}});
+        }else if (secondsPassed >= 120) {
           // Must implement lock-screen
           this.showFingerprintAuthDlg(data)
           //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
