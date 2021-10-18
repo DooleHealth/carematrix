@@ -540,8 +540,8 @@
           "all_day": "tot el dia"
       },
       "diet":{
-        "breakfast": "Desdejuni",
-        "brunch": "Esmorzar",
+        "breakfast": "Esmorzar",
+        "brunch": "Mig Matí",
         "lunch": "Dinar",
         "afternoon_snack": "Berenar",
         "dinner": "Sopar"
