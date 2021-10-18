@@ -42,7 +42,7 @@ export class TrackingPage implements OnInit {
   loadingForms = false;
   loadingTests = false;
   loadingGraphics = false;
-  segment = 'documents'
+  segment = history.state?.segment ? history.state.segment : 'documents';
   active_color= '#3498DB'
   inactive_color= '#7F8C8D'
   filter: Filter;
