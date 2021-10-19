@@ -301,14 +301,13 @@ export class AppComponent implements OnInit {
 
     LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
 
-      let f = notification.notification.extra;
       console.log('localNotificationActionPerformed: ');
+      let f = notification.notification.extra;
       console.log(f);
       const action = f.data?.action;
       const id = f.data?.id;
       const msg = f.data?.message;
       console.log('ACTION: ', action);
-      console.log("localNotificationActionPerformed", JSON.stringify(f.data));
 
       if( action == "VIDEOCALL"){
         this.redirecToVideocall(notification)
@@ -323,13 +322,11 @@ export class AppComponent implements OnInit {
         this.redirecPushNotification(f.data, notification)
       }
       else{
-        this.dooleService.setPushNotification(f.data)
-        this.router.navigate([`/landing`],{state:{pushNotification: f.data}});
+        this.redirecToVideocall(notification)
+        return
       }
 
     })
-
-
   }
 
   redirecPushNotification(data, notification?){
@@ -376,7 +373,8 @@ export class AppComponent implements OnInit {
         this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
         break;
       default:
-        console.error('Action on localNotificationActionPerformed not found')
+        console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
+        this.redirecToVideocall(notification)
         break;
     }
   }
@@ -542,7 +540,6 @@ export class AppComponent implements OnInit {
 
   async getAgenda(){
 
-    console.log("getAgenda():")
     return this.dooleService.postAPIPendingConnect().subscribe(async (data)=>{
       await data;
       console.log('[AppComponent] getAgendaId()', data)
