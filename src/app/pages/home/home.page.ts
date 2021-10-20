@@ -192,7 +192,7 @@ export class HomePage implements OnInit {
             if(element_last_value)
               this.getGoalLastValue(element_last_value, goal)
             else
-              goal.last_value_text = this.translate.instant('home.goal_no_data');
+              goal.last_value_text = this.translate.instant('home.goals_no_data');
           });
         }
 
