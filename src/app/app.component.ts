@@ -225,7 +225,7 @@ export class AppComponent implements OnInit {
         console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
         if(this.router.url.includes('landing')){
           this.dooleService.setPushNotification(data)
-          //this.router.navigate([`/landing`],{state:{pushNotification: data}});
+          this.router.navigate([`/landing`],{state:{pushNotification: data}});
         }else if (secondsPassed >= 120) {
           // Must implement lock-screen
           this.showFingerprintAuthDlg(data)

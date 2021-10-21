@@ -26,6 +26,7 @@ import { VideocallIframePage } from '../videocall-iframe/videocall-iframe.page';
 export class AgendaDetailPage implements OnInit {
   private data: any = history.state?.data;
   event: any = {}
+  id: any = {}
   coordenadas: any = {}
   tokboxSession: any;
   disabled : string;
@@ -57,9 +58,9 @@ export class AgendaDetailPage implements OnInit {
 
   ngOnInit() {
     this.disabled = Capacitor.isNative? 'disabled': '';
-    this.event = history.state.event;
-    
-    if(this.event?.id)
+    this.event = history.state.event;  
+    this.id = (this.event)? history.state.event.id: history.state.id;  
+    if(this.id)
       this.getDetailAgenda();
 
     console.log('[AgendaDetailPage] ngOnInit()', this.event);
@@ -69,7 +70,7 @@ export class AgendaDetailPage implements OnInit {
   getDetailAgenda(){ 
     this.isLoading = true;
   
-    this.dooleService.getAPIagendaID(this.event?.id).subscribe(
+    this.dooleService.getAPIagendaID(this.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
         if(res.agenda){
