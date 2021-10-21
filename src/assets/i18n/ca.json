@@ -102,6 +102,7 @@
         "go_play_button": "Anar al joc",
         "diet": "Dietes",
         "elements":"Visualitzar totes les meves dades",
+        "element":"Elements",
         "enable_notifications": "Activar Notificacions",
         "message_enable_notifications": "Voleu activar totes les notificacions?",
         "close_app": "Vols tancar l'aplicació?"

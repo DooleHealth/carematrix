@@ -253,11 +253,11 @@
     <!-- Physical Activity -->
     <ion-row class="narRow">
 
-      <ion-card class="vertical-card" routerLink="/journal" routerLinkActive='active-item' [state]="{segment: 'health'}">       
-          <ion-item lines="none" class="noMargin">
+      <ion-card class="vertical-card">       
+          <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive='active-item' [state]="{segment: 'health'}">
             <ion-img slot="start" src='assets/icons/fire.svg'></ion-img>
 <!--             <ion-text style="color:'#E74C3C';" slot="start">{{ 'home.physical_activity_subtitle' | translate}}</ion-text> -->
-            <ion-text style="color:'#E74C3C';" slot="start" *ngIf="infoActivity">{{infoActivity?.title}}</ion-text>
+            <ion-text style="color:'#E74C3C';" slot="start" *ngIf="infoActivity">{{(infoActivity?.title)? infoActivity?.title: ('home.element' | translate)}}</ion-text>
             <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
