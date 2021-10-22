@@ -115,7 +115,7 @@
     </ion-row>
 
     <!-- Advices -->
-    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.advices.length != 0">
+    <ion-row class="paddingTopNoMarginBottom">
       <!-- News and Advices -->
 
       <ion-text class="txtTitle" style="white-space: nowrap">
@@ -124,7 +124,7 @@
       <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}
       </ion-text>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="this.advices.length != 0">
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices">
           <ion-card class="cardProfilePaddingBottomMinHeight">
@@ -140,6 +140,8 @@
         </ion-slide>
       </ion-slides>
     </ion-row>
+
+    <ion-row *ngIf="this.advices.length == 0" style="margin-top: 35px;"></ion-row>
 
     <ion-row class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'home.today_title' | translate | titlecase}}</ion-text>
