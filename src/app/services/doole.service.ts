@@ -451,6 +451,17 @@ export class DooleService {
     );
   }
 
+  getAPIlanguagesCenter(): Observable<any> {
+    let path = 'center/languages'
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIlanguagesCenter(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
+
   getAPIFaqs(): Observable<any> {
     let path = 'center/faq'
     const endpoint = this.api.getEndpoint(path);
