@@ -808,7 +808,8 @@ export class HomePage implements OnInit {
       //   "_blank",
       //   "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
       // );
-      this.nav.navigateForward('/tracking/form', { state: {id: item.id} });
+      //this.nav.navigateForward('/tracking/form', { state: {id: item.id} });
+      this.nav.navigateForward(['/tracking/form', {id: item.id}] );
     }
 
   }

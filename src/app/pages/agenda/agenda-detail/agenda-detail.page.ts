@@ -202,7 +202,7 @@ export class AgendaDetailPage implements OnInit {
         break;
       case  "App\\Form":
         id = instruction.reminderable_id
-        this.openForm(id)
+        this.nav.navigateForward(['/tracking/form', {id: id}] );
         break;
       case  "App\\Agenda":
         id = instruction.reminderable_id
