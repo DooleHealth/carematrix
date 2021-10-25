@@ -46,6 +46,7 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
+    this.getCenterLanguages()
     this.getLocalLanguages()
   }
 
@@ -260,6 +261,21 @@ export class SettingsPage implements OnInit {
   getLocalLanguages(){
     this.language = this.languageService.getCurrent()
     console.log('[SettingsPage] getLocalLanguages()', this.language);
+  }
+
+  getCenterLanguages(){
+    this.dooleService.getAPIlanguagesCenter().subscribe(
+      async (res: any) =>{
+       console.log('[SettingsPage] sendConfigution()', await res);
+       if(res.success){
+
+       }else{
+         //alert(this.translate.instant('setting.error_changed_language'))
+       }
+       },(err) => { 
+          console.log('[SettingsPage] updateLanguajes() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      });
   }
 
   async changePassword(){
