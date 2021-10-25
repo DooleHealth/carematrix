@@ -27,6 +27,7 @@ export class SettingsPage implements OnInit {
   form = false
   messages = false
   language
+  listLanguage = []
   isFaID = true
   isTwoFactor = true
   biometric: any
@@ -266,14 +267,15 @@ export class SettingsPage implements OnInit {
   getCenterLanguages(){
     this.dooleService.getAPIlanguagesCenter().subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] sendConfigution()', await res);
-       if(res.success){
-
+       console.log('[SettingsPage] getCenterLanguages()', await res);
+       if(res){
+        this.listLanguage = []
+        this.listLanguage = res
        }else{
          //alert(this.translate.instant('setting.error_changed_language'))
        }
        },(err) => { 
-          console.log('[SettingsPage] updateLanguajes() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[SettingsPage] getCenterLanguages() ERROR(' + err.code + '): ' + err.message); 
           throw err; 
       });
   }
@@ -416,15 +418,21 @@ export class SettingsPage implements OnInit {
     }
 
     
-  getIdLanguage(code){
-    switch (code) {
-      case 'ca':
-        return 11
-      case 'es':
-        return 13
-      default:
-        return 11
+    getIdLanguage(code){
+      if(code == 'es')
+      code = 'es-es';
+  
+      let language = this.listLanguage.find(lag => lag.code == code)
+      if(language) return language.id
+      else
+        switch (code) {
+          case 'ca':
+            return 11
+          case 'es':
+            return 13
+          default:
+            return 11
+        }
     }
-  }
 
 }
