@@ -220,36 +220,6 @@ export class AgendaDetailPage implements OnInit {
     }
   }
 
-  async openForm(id){
-    const options: InAppBrowserOptions = {
-      location: 'no',
-      toolbar: 'yes'
-    };
-
-    console.log('[AgendaPage] openForm()',  this.auth.user);
-
-    if(this.auth !==undefined || this.auth.user !== undefined){
-      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+id+'" method="post" enctype="multipart/form-data">' +
-        '<input type="hidden" name="idForm" value="'+id+'">' +
-        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
-        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
-        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
-      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-      var browserRef = this.iab.create(
-        pageContentUrl,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
-    }else{
-      var browserRef = this.iab.create(
-        /* form.temporaryUrl */null,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
-    }
-
-  }
-
   formatSelectedDate(date){
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);

@@ -178,6 +178,10 @@ export class HomePage implements OnInit {
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
         this.advices = res.data?.advices;
+        res.data.news.forEach(element => {
+          element['new'] = true
+          this.advices.push(element)
+        });
         this.advices = this.advices.filter(advice => (advice?.statusable == null || advice?.statusable?.hided_at == null))
 
         if(res.data?.goals){
@@ -582,8 +586,9 @@ export class HomePage implements OnInit {
 
   actionCloseAdvice(slide){
     console.log('[HomePage] actionCloseAdvice()', slide.name);
+    let model = (slide.new)? 'News':'Advice'
     let params = {
-      model: 'Advice',
+      model: model,
       id: slide.id,
       type: 'hide',
       status: 1

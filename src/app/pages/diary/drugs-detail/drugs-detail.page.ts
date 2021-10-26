@@ -27,7 +27,8 @@ export class DrugsDetailPage implements OnInit {
   frequency = 'daily';
   frequencySeleted = 'daily';
   isInit = true;
-  expanded = true
+  expanded = true;
+  maxYear = (new Date()?.getFullYear() + 5);
   constructor(
     private dooleService: DooleService,
     private fb: FormBuilder,

@@ -79,7 +79,8 @@ export class AgendaPage implements OnInit {
     //return date.getDay() == 0 || date.getDay() == 6;
     return 0
 };
-/*   getAgenda(){
+
+/* getallAgenda(){
     this.isLoading = true;
     return this.dooleService.getAPIagenda().subscribe(
       async (res: any) =>{

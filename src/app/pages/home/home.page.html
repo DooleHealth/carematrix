@@ -127,15 +127,23 @@
     <ion-row *ngIf="this.advices.length != 0">
       <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices">
-          <ion-card class="cardProfilePaddingBottomMinHeight">
+          <ion-card *ngIf="!slide.new" class="cardProfilePaddingBottomMinHeight">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
             <img class="sliderImage" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}" [src]="slide.image?.temporaryUrl" />
             <br /><br />
-
             <ion-card-title class="txtTitleHome" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.name}}</ion-card-title>
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
             </ion-card-subtitle>
             <!-- <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button> -->
+          </ion-card>
+
+          <ion-card *ngIf="slide.new" class="cardProfilePaddingBottomMinHeight">
+            <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
+            <img class="sliderImage" routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}" [src]="slide?.cover" />
+            <br /><br />
+            <ion-card-title class="txtTitleHome" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.subject}}</ion-card-title>
+            <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
+            </ion-card-subtitle>
           </ion-card>
         </ion-slide>
       </ion-slides>
