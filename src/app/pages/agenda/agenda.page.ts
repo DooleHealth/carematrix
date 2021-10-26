@@ -72,14 +72,15 @@ export class AgendaPage implements OnInit {
     if(date)
       this.myCal.currentDate = this.formatDate(date) 
     else
-    this.getAgenda()
+    this.getallAgenda()
   }
 
   markDisabled = (date: Date) => {
     //return date.getDay() == 0 || date.getDay() == 6;
     return 0
 };
-  getAgenda(){
+
+/* getallAgenda(){
     this.isLoading = true;
     return this.dooleService.getAPIagenda().subscribe(
       async (res: any) =>{
@@ -90,6 +91,22 @@ export class AgendaPage implements OnInit {
         this.getReminders()
        },(err) => { 
           console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
+          alert( 'ERROR(' + err.code + '): ' + err.message)
+          throw err; 
+      });
+  } */
+
+  getallAgenda(){
+    this.isLoading = true;
+    return this.dooleService.getAPIallAgenda().subscribe(
+      async (res: any) =>{
+        console.log('[AgendaPage] getallAgenda()', await res);
+        if(res.agenda){    
+          this.addScheduleToCalendar(res.agenda)
+        }
+        this.getReminders()
+       },(err) => { 
+          console.log('[AgendaPage] getallAgenda() ERROR(' + err.code + '): ' + err.message); 
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err; 
       });
@@ -116,7 +133,7 @@ export class AgendaPage implements OnInit {
 
   onCurrentDateChanged(event:Date) {
     console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
-    this.getAgenda();
+    this.getallAgenda();
   }
 
   transformDate(date) {
@@ -294,7 +311,7 @@ export class AgendaPage implements OnInit {
           if(agenda?.start_date)
           this.myCal.currentDate = this.formatDate(agenda.start_date)        
         }
-        this.getAgenda();
+        this.getallAgenda();
     });
 
     await modal.present();

@@ -705,18 +705,6 @@ export class DooleService {
     );
   }
 
-  postAPIappointmentAgenda(params: Object): Observable<any> {
-    let path = 'user/appointment';
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.post(endpoint, params).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] postAPIemergencyContact(${path}) res: `, res);
-        return res;
-
-      })
-    );
-  }
-
   //documents-Tracking
   getAPIdiagnosticTests(): Observable<any> {
     let path = 'user/diagnosticTests';
@@ -1240,6 +1228,18 @@ export class DooleService {
       })
     );
   }
+
+  getAPIallAgenda(): Observable<any>{
+    let path = 'user/agenda/v2';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIappointmentAgendaV2(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIagendaID(id): Observable<any> {
     let path = `user/agenda/${id}`;
     const endpoint = this.api.getEndpoint(path);

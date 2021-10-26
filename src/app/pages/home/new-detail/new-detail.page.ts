@@ -144,7 +144,7 @@ export class NewDetailPage implements OnInit {
       value = this.favourite? 1:0
     }
     let params = {
-      model: 'Advice',
+      model: 'News',
       id: this.new?.id,
       type: type,
       status: value

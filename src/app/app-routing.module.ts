@@ -91,7 +91,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canLoad: [AuthGuard] // Secure all child pages
+    //canLoad: [AuthGuard] // Secure all child pages
   },
   {
     path: 'agenda',
