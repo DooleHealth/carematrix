@@ -405,6 +405,7 @@
       },
       "appointment":{
         "header_appointment": "Detalle cita",
+        "header_event": "Detalle evento",
         "field_title": "Título",
         "field_modality": "Modalidad",
         "field_description": "Descripción",
@@ -427,7 +428,9 @@
         "message_updated_appointment":"Se ha actualizado la cita con éxito",
         "error_message_added_appointment":"Ha ocurrido un error al guardar los datos",
         "edit_appointment": "Editar cita",
-        "add_appointment": "Añadir cita"
+        "add_appointment": "Añadir cita",
+        "edit_event": "Editar evento",
+        "add_event": "Añadir evento"
       },
       "doctor":{
         "header_doctor": "Detall Médico",

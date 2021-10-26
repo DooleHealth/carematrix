@@ -401,6 +401,7 @@
       },
       "appointment":{
         "header_appointment": "Detall cita",
+        "header_event": "Detall esdeveniment",
         "field_title": "Títol",
         "field_modality": "Modalitat",
         "field_description": "Descripció",
@@ -424,7 +425,9 @@
         "error_message_added_appointment":"Hi ha hagut un error a l'desar les dades",
 
         "edit_appointment": "Edita cita",
-        "add_appointment": "Afegir cita"
+        "add_appointment": "Afegir cita",
+        "edit_event": "Edita esdeveniment",
+        "add_event": "Afegir esdeveniment"
       },
       "doctor":{
         "header_doctor": "Detall Metge",

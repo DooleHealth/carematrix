@@ -18,12 +18,12 @@
   <ion-card  class="cardProfilePaddingBottom" >
       <ion-item>
         <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_from_date' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedFromDate && this.form.get('from_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
       <ion-item>
         <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_to_date' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" displayFormat="DD/MM/YYYY" placeholder="{{ 'medication.placeholder_chosse' | translate}}" pickerFormat="DD/MM/YYYY"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedToDate && this.form.get('to_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
       <ion-item>

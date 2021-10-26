@@ -16,7 +16,8 @@
         <ion-icon class="primaryIcon" name="close" text=""></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title>
+<!--     <ion-title text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title> -->
+    <ion-title text-wrap>{{ (isNewEvent)? ('appointment.add_event' | translate): ('appointment.edit_event' | translate) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button  slot="end" (click)="submit()">
         <ion-icon class="primaryIcon" name="checkmark-outline"></ion-icon>

@@ -3,7 +3,8 @@
     <ion-buttons slot="start" [class.isDisabled]="this.isSaving">
       <ion-back-button text=""  (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'appointment.header_appointment' | translate}}</ion-title>
+    <ion-title *ngIf="this.event?.origin == 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
+    <ion-title *ngIf="this.event?.origin == 1">{{ 'appointment.header_event' | translate}}</ion-title>
     <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
       <ion-button *ngIf="this.enableReminder" color="primary" (click)="addReminder()" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
@@ -45,7 +46,12 @@
         <ion-item [lines]="(event?.site !== null)? 'none': 'full' ">
           <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
         </ion-item>
-        <ion-item *ngFor="let coord of event?.center_location; let i = index">
+      </div>
+      <div *ngFor="let coord of event?.center_location; let i = index">
+        <ion-item *ngIf="coord?.name">
+          <ion-text slot="start" class="textMedium">{{coord?.name}}</ion-text>
+        </ion-item>
+        <ion-item *ngIf="coord?.latitude && coord?.longitude">
           <img
             [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=16&size=600x400&key=AIzaSyCSG5Itu_gLT4XZO2u3DK46Q-RCAVvPX5c'">
         </ion-item>
