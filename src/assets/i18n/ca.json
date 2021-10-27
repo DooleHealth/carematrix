@@ -333,6 +333,7 @@
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"],
         "appointment_by_user": "Cita afegida per l'usuari",
+        "event_by_user": "Esdeveniment afegit per l'usuari",
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada",
         "error_alert_message_get_agenda":"Error a l'obtenir l'agenda"
       },
@@ -427,7 +428,8 @@
         "edit_appointment": "Edita cita",
         "add_appointment": "Afegir cita",
         "edit_event": "Edita esdeveniment",
-        "add_event": "Afegir esdeveniment"
+        "add_event": "Afegir esdeveniment",
+        "delete_event": "Eliminar esdeveniment"
       },
       "doctor":{
         "header_doctor": "Detall Metge",

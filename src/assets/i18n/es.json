@@ -338,6 +338,7 @@
         "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
         "days": ["L", "M", "X", "J", "V", "S", "D"],
         "appointment_by_user": "Cita añadida por el usuario",
+        "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",
         "error_alert_message_get_agenda":"Error al obtener la agenda"
       },
@@ -419,7 +420,7 @@
         "field_attached_files": "Archivos Adjuntos",
         "online": "Online",
         "face_to_face": "Presencial",
-        "button_delete": "Eliminar Cita",
+        "button_delete": "Eliminar cita",
         "message_deleted_appointment":"Se ha eliminado la cita con éxito",
         "confirmation_delete_appointment":"¿Estás seguro de eliminar la cita?",
         "no_files":"No existen archivos",
@@ -430,7 +431,8 @@
         "edit_appointment": "Editar cita",
         "add_appointment": "Añadir cita",
         "edit_event": "Editar evento",
-        "add_event": "Añadir evento"
+        "add_event": "Añadir evento",
+        "delete_event": "Eliminar evento"
       },
       "doctor":{
         "header_doctor": "Detall Médico",

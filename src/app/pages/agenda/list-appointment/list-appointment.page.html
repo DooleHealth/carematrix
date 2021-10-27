@@ -38,7 +38,7 @@
                 <ion-text class="event-detail2" text-wrap>{{e.type}}</ion-text>
               </ion-col>
             </ion-row>          
-            <ion-row *ngIf="e.origin == 1">{{e.title}}</ion-row>
+            <ion-row *ngIf="e.origin == 1 && (e?.staff?.length ==0) || e.is_reminder">{{e.title}}</ion-row>
             <ion-row *ngFor="let doctor of e.staff; let i = index">
               <!-- <ion-col class="event-detail">{{ (i== 0)? ('appointment.field_specially' | translate)+': ' :'' }}{{doctor.name}}</ion-col> -->
               <ion-col class="event-detail">{{ 'appointment.field_specially' | translate }}: {{doctor.name}}</ion-col>

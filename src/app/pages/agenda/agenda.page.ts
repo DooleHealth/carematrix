@@ -163,7 +163,7 @@ export class AgendaPage implements OnInit {
       }else{
         isAllDay = true
       }
-        let type = this.translate.instant('agenda.appointment_by_user')
+        let type = this.translate.instant((e?.staff?.length > 0)?'agenda.appointment_by_user': 'agenda.event_by_user')
         events.push({
           id: e.id, 
           title:  e.title,
