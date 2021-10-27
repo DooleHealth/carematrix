@@ -45,9 +45,11 @@ export class BookingsPage implements OnInit {
       duration: [this.duration],
       indications: [],
       // file:[this.images],
+      staff_id:[this.staffId],
       online:[history.state.isOnline]
     });
     this.setTitle()
+    console.log(`[BookingsPage] ngOnInit() staffId: `, this.staffId );
   }
 
   setTitle(){
@@ -64,7 +66,7 @@ export class BookingsPage implements OnInit {
     return (Number(hour[0]))*60 + (Number(hour[1]))  }
 
   async addAgenda(){
-    console.log(`[AgendaAddPage] addAgenda()` );
+    console.log(`[BookingsPage] addAgenda()`, this.form.value );
     this.isLoading = true
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
