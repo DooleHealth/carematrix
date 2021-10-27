@@ -73,20 +73,7 @@ export class AppComponent implements OnInit {
 
     this.platform.ready().then(() => {
 
-       if (typeof (IRoot) !== 'undefined' && IRoot) {
-        IRoot.isRooted((data) => {
-            if (data && data == 1) {
-                console.log("This is routed device");
-                alert("This is routed device");
-            } else {
-                console.log("This is not routed device");
-                alert("This is not routed device");
-            }
-        }, (data) => {
-                console.log("routed device detection failed case", data);
-                alert(`routed device detection failed case, ${{data}}`);
-            });
-      }
+
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         // Push
@@ -113,6 +100,23 @@ export class AppComponent implements OnInit {
       }
 
     });
+  }
+
+  isDeviceRooted(){
+    if (typeof (IRoot) !== 'undefined' && IRoot) {
+      IRoot.isRooted((data) => {
+          if (data && data == 1) {
+              console.log("This is routed device");
+              alert(this.translate.instant('security.rooted'));
+          } else {
+              console.log("This is not routed device");
+              //alert("This is not routed device");
+          }
+      }, (data) => {
+              console.log("routed device detection failed case", data);
+              alert(`routed device detection failed case, ${{data}}`);
+          });
+    }
   }
 
   getPushData(notification){

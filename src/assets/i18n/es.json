@@ -716,6 +716,9 @@
         "open":"Abrir",
         "close":"Cerrar"
       
+      },
+      "security":{
+        "rooted": "Se ha detectado que este dispositivo ha sido rooteado. Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso."
       }
 
       

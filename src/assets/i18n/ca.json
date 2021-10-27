@@ -713,8 +713,9 @@
         "videocall":"Trucada de vídeo",
         "open":"Obrir",
         "close":"Amagar"
-
-
+      },
+      "security":{
+        "rooted": "S'ha detectat que aquest dispositiu ha estat rooteado. Per motius de seguretat i integritat de les dades s'ha bloquejat l'accés."
       }
       
 }
