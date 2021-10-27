@@ -22,7 +22,7 @@ import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-i
 const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
-
+declare let IRoot: any;
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
     private opentokService: OpentokService,
     private modalCtrl: ModalController,
     private dooleService: DooleService,
-    private faio : FingerprintAIO
+    private faio : FingerprintAIO,
   ) {
 
 
@@ -68,10 +68,25 @@ export class AppComponent implements OnInit {
     this.setLanguage();
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
-    
+
     FirebaseAnalytics.initializeFirebase(environment.firebase);
 
     this.platform.ready().then(() => {
+
+       if (typeof (IRoot) !== 'undefined' && IRoot) {
+        IRoot.isRooted((data) => {
+            if (data && data == 1) {
+                console.log("This is routed device");
+                alert("This is routed device");
+            } else {
+                console.log("This is not routed device");
+                alert("This is not routed device");
+            }
+        }, (data) => {
+                console.log("routed device detection failed case", data);
+                alert(`routed device detection failed case, ${{data}}`);
+            });
+      }
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         // Push

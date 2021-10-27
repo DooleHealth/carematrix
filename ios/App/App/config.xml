@@ -74,6 +74,11 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="IRoot">
+    <param name="ios-package" value="IRoot"/>
+    <param name="onload" value="true"/>
+  </feature>
+
   <feature name="Capture">
     <param name="ios-package" value="CDVCapture"/>
   </feature>

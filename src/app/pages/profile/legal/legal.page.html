@@ -14,4 +14,10 @@
   <div class="main-container" *ngIf="this.legal !== undefined">
     <div [innerHtml]="this.legal.legal_text"></div>
   </div>
+
+  <div class="buttonContainer">
+    <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="confirmLegalTerms()">
+      {{ 'legal.no_acept_conditions' | translate}}
+    </ion-button>
+  </div>
 </ion-content>

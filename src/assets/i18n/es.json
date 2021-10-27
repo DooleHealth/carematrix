@@ -19,9 +19,11 @@
         "ok_button": "Acepto",
         "ko_button": "No acepto",
         "acept_conditions_label": "He leído y acepto las condiciones",
+        "no_acept_conditions": "Rechazar condiciones legales",
         "no_get_conditions_label": "No existe terminos legales asignados para este usuario",
         "error_conditions_label": "Error al obtener los terminos legales",
-        "error_post_conditions_label": "No se pudo actualizar las condiciones legales"
+        "error_post_conditions_label": "No se pudo actualizar las condiciones legales",
+        "messaje_reject_terms": "Esta app para su adecuado uso requiere que las condiciones legales se han aceptadas, en tal caso no podrás seguir navegando. ¿Deseas rechazar las condiciones legales?"
       },
       "sms":{
         "header": "Verificación de Identidad",
@@ -570,7 +572,8 @@
         "send": "Enviar",
         "perfil":"Perfil",
         "open": "Abrir",
-        "exit": "Salir"
+        "exit": "Salir",
+        "reject": "Rechazar"
       },
       "conversation":{
         "placeholder":"Escribe un mensaje"

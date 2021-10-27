@@ -20,9 +20,11 @@
         "ok_button": "Les accepto",
         "ko_button": "No les accepto",
         "acept_conditions_label": "He llegit i accepto les condicions",
+        "no_acept_conditions": "Rebutjar condicions legals",
         "no_get_conditions_label": "No hi ha termes legals assignats per a aquest usuari",
         "error_conditions_label": "Error a l'obtenir els termes legals",
-        "error_post_conditions_label": "No s'ha pogut actualitzar les condicions legals"
+        "error_post_conditions_label": "No s'ha pogut actualitzar les condicions legals",
+        "messaje_reject_terms": "Aquesta app per al seu adequat ús requereix que les condicions legals s'han acceptades, en tal cas no podràs continuar navegant. Desitges rebutjar les condicions legals?"
       },
       "sms":{
         "header": "Verificació d'Identitat",
@@ -568,7 +570,8 @@
         "send": "Enviar",
         "perfil":"Perfil",
         "open": "Obrir",
-        "exit": "Sortir"
+        "exit": "Sortir",
+        "reject": "Rebutjar"
       },
       "conversation":{
         "placeholder":"Escriu un missatge"
