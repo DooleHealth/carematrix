@@ -12,7 +12,8 @@
         "header_message_password_recovery": "Ingresa tu usuario",
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
-        "message_wrong_credentials": "El usuario o la contraseñas no son correctas"
+        "message_wrong_credentials": "El usuario o la contraseñas no son correctas",
+        "blocked_login": "La APP se ha bloqueado debido a que se ha excesido el número de intentos, intenta despues de 2 minutos."
       },
       "legal": {
         "header": "Condiciones de uso",
@@ -718,7 +719,8 @@
       
       },
       "security":{
-        "rooted": "Se ha detectado que este dispositivo ha sido rooteado. Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso."
+        "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",
+        "alert_security": "Alerta de Seguridad"
       }
 
       

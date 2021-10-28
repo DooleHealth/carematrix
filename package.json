@@ -38,6 +38,7 @@
     "@ionic-native/camera": "^5.31.1",
     "@ionic-native/chooser": "^5.31.1",
     "@ionic-native/core": "^5.31.1",
+    "@ionic-native/device": "^5.36.0",
     "@ionic-native/document-viewer": "^5.31.1",
     "@ionic-native/file": "^5.31.1",
     "@ionic-native/file-transfer": "^5.31.1",

@@ -263,7 +263,7 @@ export class DooleService {
         {
           text: 'OK',
           handler: (blah) => {
-            console.log('Confirm OK: blah');
+           // console.log('Confirm OK: blah');
             if (route !== undefined && route !== null)
               this.router.navigateByUrl(route);
           }

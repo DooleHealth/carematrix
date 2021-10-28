@@ -2,10 +2,12 @@ import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Device } from '@ionic-native/device/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,8 @@ export class LoginPage implements OnInit {
     private modalCtrl: ModalController,
     private analyticsService: AnalyticsService,
     public platform: Platform,
-
+    private device: Device,
+    private network: Network,
     ) { }
 
   ngOnInit() {
@@ -35,9 +38,17 @@ export class LoginPage implements OnInit {
 
   async ionViewDidEnter(){
     // this.analyticsService.setScreenName('login','LoginPage')
+    console.log('[LoginPage] ionViewDidEnter() Device: ',  JSON.stringify(this.device));
   }
 
+
+
   loginUser(){
+    // this.device.platform
+    // this.device.model
+    // this.device.version
+    // this.network.type
+    console.log('[LoginPage] ionViewDidEnter() Device: ',  this.device.platform, this.device.model, this.device.version, this.network.type);
     this.authService.login(this.credentials).subscribe(async (res) => {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;

@@ -13,7 +13,8 @@
         "header_message_password_recovery": "Ingressa el teu usuari",
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
-        "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes"
+        "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes",
+        "blocked_login": "L'APP s'ha bloquejat pel fet que s'ha excesido el nombre d'intents, intenta despues de 2 minuts."
       },    
       "legal": {
         "header": "Condicions d'ús",
@@ -715,7 +716,8 @@
         "close":"Amagar"
       },
       "security":{
-        "rooted": "S'ha detectat que aquest dispositiu ha estat rooteado. Per motius de seguretat i integritat de les dades s'ha bloquejat l'accés."
+        "rooted": "S'ha detectat que aquest dispositiu ha estat inicialitzat amb drets d'usuari inusuals (root). Per motius de seguretat i integritat de les dades s'ha bloquejat l'accés.",
+        "alert_security": "Alerta de Seguretat"
       }
       
 }

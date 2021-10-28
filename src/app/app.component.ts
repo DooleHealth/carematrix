@@ -72,8 +72,8 @@ export class AppComponent implements OnInit {
     FirebaseAnalytics.initializeFirebase(environment.firebase);
 
     this.platform.ready().then(() => {
-
-
+      // Secutity - Rooted
+      this.isDeviceRooted()
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         // Push
@@ -108,15 +108,37 @@ export class AppComponent implements OnInit {
           if (data && data == 1) {
               console.log("This is routed device");
               alert(this.translate.instant('security.rooted'));
+              this.appBlockedByRootedUser()
           } else {
               console.log("This is not routed device");
-              //alert("This is not routed device");
+              this.appBlockedByRootedUser()
+              alert("This is not routed device");
           }
       }, (data) => {
               console.log("routed device detection failed case", data);
               alert(`routed device detection failed case, ${{data}}`);
           });
     }
+  }
+
+  async appBlockedByRootedUser() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('security.alert_security'),
+      message: this.translate.instant('security.rooted'),
+      backdropDismiss: false,
+        buttons: [
+         {
+            text: this.translate.instant("button.accept"),
+            handler: (data) => {
+              //Exit from app
+              navigator['app'].exitApp();
+            }
+          }
+        ]
+    });
+
+    await alert.present();
   }
 
   getPushData(notification){
@@ -160,7 +182,6 @@ export class AppComponent implements OnInit {
   }
 
   private async initPushNotifications() {
-
     var chat_notification = this.translate.instant('notifications.chat');
 
     PushNotifications.requestPermission().then((permission) => {
@@ -832,12 +853,17 @@ export class AppComponent implements OnInit {
         disableBackup: true,
 
       })
-        .then((result: any) => {
-          console.log(result)
-          this.lastResume = new Date;
-
-          if(data){
-            setTimeout(()=>this.redirecPushNotification(data), 500);
+        .then(async (result: any) => {
+          console.log("[AppComponent] showFingerprintAuthDlg(), data",result)
+          if(result){
+            this.lastResume = new Date;
+            this.authService.removeNumloginFailed()
+            if(data){
+              setTimeout(()=>this.redirecPushNotification(data), 500);
+            }
+          }else{
+            //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+            this.router.navigateByUrl('/landing');
           }
 
         })
@@ -847,6 +873,12 @@ export class AppComponent implements OnInit {
             //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
             let secondsPassed = ((new Date).getTime() - this.lastResume?.getTime()) / 1000;
             if (secondsPassed >= 120) {
+/*               let num = this.authService.getNumloginFailed()
+              if(num >=3){
+                await this.authService.logout();
+                this.router.navigateByUrl('/landing');
+              }
+              else */
               // Must implement lock-screen
               setTimeout(()=>this.showFingerprintAuthDlg(), 500);
             }
