@@ -30,6 +30,7 @@ export class LandingPage implements OnInit {
   showBiometricDialog: boolean = false;
   biometricAuth: any;
   numFailLogin = 0;
+  numFailFingerP = 0;
   constructor(
     private router: Router,
     public route: ActivatedRoute,
@@ -126,6 +127,7 @@ export class LandingPage implements OnInit {
           this.loginForm.get('password').setValue('')
           this.loginForm.get('hash').setValue('')
           this.authService.removeNumloginFailed()
+          this.authService.removeNumFirgerPFailed()
         }
     });
 
@@ -140,10 +142,13 @@ export class LandingPage implements OnInit {
     if(secondsPassed >= 120){
       //alert('La APP no se ha bloqueado')
       this.authService.removeNumloginFailed()
+      this.authService.removeNumFirgerPFailed()
       this.numFailLogin = 0;
+      this.numFailFingerP = 0;
     }else{
       //alert('La APP se ha bloqueado debido a que se ha excesido el número de intentos, intenta despues de 2 minutos')
       this.numFailLogin = this.authService.getNumloginFailed();
+      this.numFailFingerP = this.authService.getNumFingerPrinterFailed();
       this.appBlocked()
     }
   }
@@ -225,9 +230,9 @@ export class LandingPage implements OnInit {
         .catch((error: any) => {
           console.log("show errror ", error);
           if (error.code == -102) {
-            this.authService.increaseNumloginFailed()
-            this.numFailLogin = this.authService.getNumloginFailed();
-            if(this.numFailLogin < this.NUM_FAIL_LOGIN)
+            this.authService.increaseNumFPAIOFailed()
+            this.numFailFingerP = this.authService.getNumFingerPrinterFailed();
+            if(this.numFailFingerP < this.NUM_FAIL_LOGIN)
             setTimeout(() => this.doBiometricLogin(), 500);
             else
             this.appBlocked()
@@ -281,7 +286,7 @@ export class LandingPage implements OnInit {
     });
   }
 
-  getNumloginFailed(){
+/*   getNumloginFailed(){
     let num = localStorage.getItem('num-fail-login');
     if(num){
       this.numFailLogin = Number(JSON.parse(num))
@@ -289,18 +294,18 @@ export class LandingPage implements OnInit {
       localStorage.setItem('num-fail-login','0');
       this.numFailLogin = 0
     }
-  }
+  } */
 
-/*   increaseNumloginFailed(){
-    let num = localStorage.getItem('num-fail-login');
+/*   increaseNumFPAIOFailed(){
+    let num = localStorage.getItem('num-fail-finger-print');
     if(num){
-      this.numFailLogin = Number(JSON.parse(num)) + 1
-      localStorage.setItem('num-fail-login',''+this.numFailLogin);
+      this.numFailFingerP = Number(JSON.parse(num)) + 1
+      localStorage.setItem('num-fail-finger-print',''+this.numFailFingerP);
     }else{
-      localStorage.setItem('num-fail-login','1');
-      this.numFailLogin = 1
+      localStorage.setItem('num-fail-finger-print','1');
+      this.numFailFingerP = 1
     }
-    console.log('[LandingPage] increaseNumloginFailed()', this.numFailLogin);
+    console.log('[LandingPage] increaseNumFPAIOFailed()', this.numFailFingerP);
   } */
 
   async appBlocked() {

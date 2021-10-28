@@ -25,9 +25,9 @@
                     color="primary" expand="block" class="enter-btn">
                     {{ 'landing.button_signin' | translate}}</ion-button>
                 </form>
-                <div *ngIf="this.numFailLogin < 3" style="margin-top: 5%;">
+                <div *ngIf="this.numFailFingerP < 3" style="margin-top: 5%;">
                     <div *ngIf="this.hasBiometricAuth">
-                      <ion-button expand="block" [disabled]="this.numFailLogin >= 3" size="medium" (click)="doBiometricLogin()">
+                      <ion-button expand="block" [disabled]="this.numFailFingerP >= 3" size="medium" (click)="doBiometricLogin()">
                         <ion-icon slot="start" name="finger-print-outline"></ion-icon>
                         {{ 'landing.biometrics' | translate }}
                       </ion-button>

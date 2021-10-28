@@ -111,8 +111,7 @@ export class AppComponent implements OnInit {
               this.appBlockedByRootedUser()
           } else {
               console.log("This is not routed device");
-              this.appBlockedByRootedUser()
-              alert("This is not routed device");
+              //alert("This is not routed device");
           }
       }, (data) => {
               console.log("routed device detection failed case", data);

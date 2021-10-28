@@ -269,6 +269,17 @@ export class AuthenticationService {
     console.log('[AuthenticationService] increaseNumloginFailed()', numFailLogin);
   }
 
+  increaseNumFPAIOFailed(){
+    let num = localStorage.getItem('num-fail-finger-print');
+    if(num){
+      localStorage.setItem('num-fail-login',''+(Number(JSON.parse(num)) + 1));
+      localStorage.setItem('login_request_locked_at',''+(new Date().getTime()));
+    }else{
+      localStorage.setItem('num-fail-login','1');
+      localStorage.setItem('login_request_locked_at',''+(new Date().getTime()));
+    }
+  }
+
   getNumloginFailed(){
     let num = localStorage.getItem('num-fail-login');
     if(num) return Number(JSON.parse(num))
@@ -281,8 +292,19 @@ export class AuthenticationService {
     return 0
   }
 
+  getNumFingerPrinterFailed(){
+    let num = localStorage.getItem('num-fail-finger-print');
+    if(num) return Number(JSON.parse(num))
+    return 0
+  }
+
   removeNumloginFailed(){
     localStorage.removeItem('num-fail-login');
+    localStorage.removeItem('login_request_locked_at');
+  }
+
+  removeNumFirgerPFailed(){
+    localStorage.removeItem('num-fail-finger-print');
     localStorage.removeItem('login_request_locked_at');
   }
 
