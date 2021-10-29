@@ -18,6 +18,7 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { group } from '@angular/animations';
 import { stringify } from 'querystring';
+import { Observable } from 'rxjs';
 
 export interface UserInformation {
   title?: string;
@@ -222,7 +223,7 @@ export class HomePage implements OnInit {
           this.slideGamesChange()
           this.sliderGames.slideTo(this.currentIndexDrug)
         }
-
+        //this.drugs = res.data.drugIntakes.drugIntakes
         this.getDrugIntake()
         this.isLoading = false
         //Analytics
@@ -486,6 +487,7 @@ export class HomePage implements OnInit {
 
   getDrugIntake(){
     this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
+      console.log('[HomePage] getDrugIntake()', res);
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus()
       this.searchIndexDrug()
@@ -707,8 +709,9 @@ export class HomePage implements OnInit {
   }
 
   filterDrugsByStatus(){
-    if(this.drugs !== undefined && this.drugs?.length > 0)
-    this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+    if(this.drugs !== undefined && this.drugs?.length > 0){
+      this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+    }
   }
 
   searchIndexDrug(){

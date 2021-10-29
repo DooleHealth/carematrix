@@ -52,7 +52,7 @@
             </ion-item>
           <ion-card-content>
             <div class="txtTitleGoalsLittle3" *ngIf="!this.goals || this.goals.length == 0 " ><br>{{ 'no_data' | translate}}</div>
-              <ion-slides #sliderGoals pager="true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
+              <ion-slides #sliderGoals [pager]="(this.goals?.length === 1)? false:true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
                 <ion-slide *ngFor="let slide of this.goals">
                   <ion-grid routerLink="/activity-goal"  routerLinkActive='active-item' [state]="{ id: slide?.element_id, header:slide?.element?.name}">
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
@@ -85,7 +85,7 @@
     </ion-row>
     <!-- Agendas -->
     <ion-row >
-      <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
+      <ion-slides #slider pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
             <div class="txtTitleGoalsLittle3" *ngIf="!this.appointment || this.appointment.length == 0 ">
@@ -125,7 +125,7 @@
       </ion-text>
     </ion-row>
     <ion-row *ngIf="this.advices.length != 0">
-      <ion-slides #slider pager="true" pager="false" [options]="sliderConfigHorizontal">
+      <ion-slides #slider pager="false" [options]="sliderConfigHorizontal">
         <ion-slide *ngFor="let slide of this.advices">
           <ion-card *ngIf="!slide.new" class="cardProfilePaddingBottomMinHeight">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
@@ -170,7 +170,7 @@
           <div class="txtTitleGoalsLittle3" *ngIf="!this.diets|| this.diets.length == 0 ">
             {{ 'no_data' | translate}}
           </div>
-          <ion-slides #sliderDiet pager="true" [options]="sliderConfig" class="slides"
+          <ion-slides #sliderDiet [pager]="(this.diets?.length === 1)? false:true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideDietChange()">
             <ion-slide *ngFor="let slide of this.diets">
               <ion-grid>
@@ -205,7 +205,7 @@
           <div class="txtTitleGoalsLittle3" *ngIf="!this.drugs || this.drugs.length == 0">
             {{ 'no_data' | translate}}
           </div>
-          <ion-slides #sliderDrug pager="true" [options]="sliderConfig" class="slides"
+          <ion-slides #sliderDrug [pager]="(this.drugs?.length ==1)? false:true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideDrugChange()">
             <ion-slide *ngFor="let slide of this.drugs">
               <ion-grid>
@@ -245,7 +245,7 @@
 
         <ion-card-content>
             <div class="txtTitleGoalsLittle3" *ngIf="!this.games|| this.games.length == 0 " >{{ 'no_data' | translate}}</div>
-            <ion-slides #sliderGames pager="true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideGamesChange()'>
+            <ion-slides #sliderGames [pager]="(this.games?.length === 1)? false:true" [options]="sliderConfig" class="slides" (ionSlideDidChange)='slideGamesChange()'>
               <ion-slide *ngFor="let slide of this.games">
                 <ion-grid>
                   <ion-row>
@@ -273,11 +273,13 @@
 
         <ion-card-content>
           <div class="txtTitleGoalsLittle3" *ngIf="!this.activity|| this.activity.length == 0 " >{{ 'no_data' | translate}}</div>
-          <ion-slides #sliderPhysical pager="true" [options]="sliderConfig" class="slides"
+          <ion-slides #sliderPhysical [pager]="(this.activity?.length === 1)? false:true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideActivityChange()">
             <ion-slide *ngFor="let slide of this.activity">
               <ion-row *ngFor="let element of slide.elements; let i = index ">
-                <ion-row *ngIf="slide.elements.length > 2 && i == 0" class="textBlue">{{ 'home.elements' | translate}}
+                <ion-row *ngIf="slide.elements.length > 2 && i == 0" class="textBlue"
+                  routerLink="/journal" [state]="{segment: 'health'}"
+                  >{{ 'home.elements' | translate}}
                 </ion-row>
                 <div *ngIf="slide.elements.length <= 2">
                   <p style="text-align:left;">{{ element?.name}} 
