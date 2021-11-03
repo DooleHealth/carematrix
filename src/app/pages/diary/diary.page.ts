@@ -414,6 +414,7 @@ export class DiaryPage implements OnInit {
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
+            if(obj?.elements.length>0)
             this.groupedElements.push(obj);
 
           }
