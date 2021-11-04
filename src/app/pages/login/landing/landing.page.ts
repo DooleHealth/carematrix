@@ -107,6 +107,9 @@ export class LandingPage implements OnInit {
         let error = result?.data['error']
         if(error){
           let message = error
+          if(message.status === 500)
+          this.dooleService.presentAlert(this.translate.instant('landing.message_error_serve'))
+          else
           this.dooleService.presentAlert(message)
         }else{
           this.loginForm.get('username').setValue('')

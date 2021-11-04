@@ -13,7 +13,8 @@
         "header_message_password_recovery": "Ingressa el teu usuari",
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
-        "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes"
+        "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes",
+        "message_error_serve":"Error del servidor"
       },    
       "legal": {
         "header": "Condicions d'ús",
