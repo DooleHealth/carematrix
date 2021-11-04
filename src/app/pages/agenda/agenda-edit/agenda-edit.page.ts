@@ -14,6 +14,7 @@ import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.
   styleUrls: ['./agenda-edit.page.scss'],
 })
 export class AgendaEditPage implements OnInit {
+  NUM_YEAR = 10
   @Input()event: any;
   form: FormGroup;
   dateMax:any;
@@ -40,8 +41,7 @@ export class AgendaEditPage implements OnInit {
 
   ngOnInit() {
     console.log('event', this.event);
-    let year = (new Date(Date.now()).getFullYear()) + 1
-    this.dateMax =  year
+    this.dateMax = (new Date(Date.now()).getFullYear()) + this.NUM_YEAR
     this.form = this.fb.group({
       place: [],
       title: ['', [Validators.required]],

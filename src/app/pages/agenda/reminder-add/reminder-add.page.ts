@@ -14,6 +14,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   providers:[DatePipe, TranslateService]
 })
 export class ReminderAddPage implements OnInit {
+  NUM_YEAR = 10
   @Input()typeId: string;
   @Input()type: string;
   @Input()titleReminder: string;
@@ -55,7 +56,7 @@ export class ReminderAddPage implements OnInit {
    
    
     let year = (new Date(Date.now()).getFullYear()) + 1
-    this.dateMax =  year
+    this.dateMax = (new Date(Date.now()).getFullYear()) + this.NUM_YEAR
     this.form = this.fb.group({
       type: [this.type],
       type_id: [this.typeId],
