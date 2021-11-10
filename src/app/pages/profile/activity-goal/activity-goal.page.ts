@@ -44,7 +44,8 @@ export class ActivityGoalPage implements OnInit {
   segmentFilter = "1d";
   times = []
   typeChart
-  minY = 0
+  minY = 0;
+  
   constructor(
     private dooleService: DooleService,
     private languageService: LanguageService,
@@ -90,7 +91,7 @@ export class ActivityGoalPage implements OnInit {
       this.goals = json.goals;
       this.graphData = [];
       var min = null, max = null;
-
+      min =0; max = 300
       this.values = this.filterDate(this.values)
       numDay = this.returnNumDays(this.values)
 
@@ -136,6 +137,12 @@ export class ActivityGoalPage implements OnInit {
         //console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
       });
 
+      this.minY = Math.min.apply(null,vArray)
+      this.minY = (this.minY)?(this.minY - this.minY/50):0
+      min = this.minY
+      max = Math.max.apply(null,vArray)
+      max = (max)? (max+max/2): 0
+
       json.ranges.forEach(range => {
         var r = [];
         var color;
@@ -156,7 +163,7 @@ export class ActivityGoalPage implements OnInit {
         }
 
         if (range.rangeType == "success")
-          color = 'rgba(96, 173, 121, 0.1)'; //'rgba(46, 204, 113, 0.1)'
+          color = 'rgba(96, 173, 121, 0.1)';
         else if (range.rangeType == "warning")
           color = 'rgba(245, 157, 24, 0.1)'; //'rgb(243, 156, 18, 0.1)'
         else if (range.rangeType == "danger")
@@ -174,10 +181,6 @@ export class ActivityGoalPage implements OnInit {
 
       this.graphValues = vArray;
       this.graphDates = dArray;
-      this.minY = Math.min.apply(null,vArray)
-      if(this.minY)
-      this.minY = this.minY - this.minY / 50
-      else this.minY = 0
       this.values = this.values.reverse();
 
       console.log(this.graphData)
