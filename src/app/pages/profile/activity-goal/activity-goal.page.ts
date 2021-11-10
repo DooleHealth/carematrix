@@ -76,6 +76,10 @@ export class ActivityGoalPage implements OnInit {
     let vArray = [];
     let dArray = [];
     let numDay = 0;
+    this.normalValue = [];
+    this.outRangeValue = [];
+    this.dangerValue = [];
+    this.ranges = []
 
     this.dooleService.getAPIgraphicsElement(this.id, interval).subscribe(async json => {
       console.log('[ActivityGoalPage] loadData()', await json);
@@ -152,11 +156,11 @@ export class ActivityGoalPage implements OnInit {
         }
 
         if (range.rangeType == "success")
-          color = 'rgba(96, 173, 121, 0.1)';
+          color = 'rgba(96, 173, 121, 0.1)'; //'rgba(46, 204, 113, 0.1)'
         else if (range.rangeType == "warning")
-          color = 'rgba(245, 157, 24, 0.1)';
+          color = 'rgba(245, 157, 24, 0.1)'; //'rgb(243, 156, 18, 0.1)'
         else if (range.rangeType == "danger")
-          color = 'rgba(245, 46, 24, 0.1)';
+          color = 'rgba(245, 46, 24, 0.1)'; //'rgb(231, 76, 60, 0.1)'
 
         r["color"] = color;
         this.ranges.push(r);
