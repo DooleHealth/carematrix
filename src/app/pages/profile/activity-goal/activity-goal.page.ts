@@ -21,9 +21,9 @@ export class ActivityGoalPage implements OnInit {
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
   private id;
   viewTitle = ''
-  normalValue
-  outRangeValue
-  dangerValue
+  normalValue = []
+  outRangeValue= []
+  dangerValue= []
   description
   graphics = []
   header = []
@@ -161,11 +161,11 @@ export class ActivityGoalPage implements OnInit {
         r["color"] = color;
         this.ranges.push(r);
         if (range.rangeType === "success")
-          this.normalValue = range.conditionString
+          this.normalValue.push(range.conditionString)
           else if (range.rangeType == "warning")
-          this.outRangeValue = range.conditionString
+          this.outRangeValue.push(range.conditionString)
           else if (range.rangeType == "danger")
-          this.dangerValue = range.conditionString
+          this.dangerValue.push(range.conditionString)
       });
 
       this.graphValues = vArray;
