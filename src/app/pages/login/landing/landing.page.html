@@ -21,13 +21,13 @@
                     </ion-text>
             
 
-                <ion-button type="submit" size="medium" [disabled]="!loginForm.valid || this.numFailLogin >= 3"
+                <ion-button type="submit" size="medium" [disabled]="!loginForm.valid || this.numFailLogin >= NUM_FAIL_LOGIN"
                     color="primary" expand="block" class="enter-btn">
                     {{ 'landing.button_signin' | translate}}</ion-button>
                 </form>
-                <div *ngIf="this.numFailFingerP < 3" style="margin-top: 5%;">
+                <div *ngIf="this.numFailFingerP < NUM_FAIL_LOGIN" style="margin-top: 5%;">
                     <div *ngIf="this.hasBiometricAuth">
-                      <ion-button expand="block" [disabled]="this.numFailFingerP >= 3" size="medium" (click)="doBiometricLogin()">
+                      <ion-button expand="block" [disabled]="this.numFailFingerP >= NUM_FAIL_LOGIN" size="medium" (click)="doBiometricLogin()">
                         <ion-icon slot="start" name="finger-print-outline"></ion-icon>
                         {{ 'landing.biometrics' | translate }}
                       </ion-button>

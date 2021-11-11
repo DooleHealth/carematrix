@@ -21,7 +21,7 @@ const { Storage } = Plugins;
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
-  NUM_FAIL_LOGIN = 3;
+  NUM_FAIL_LOGIN = 4;
   pushNotification: any;
   loginForm: FormGroup;
   submitError: string;
