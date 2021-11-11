@@ -713,8 +713,10 @@
         "videocall":"Trucada de vídeo",
         "open":"Obrir",
         "close":"Amagar"
-
-
+      },
+      "commons":{
+        "error-network": "S'ha perdut la connexió amb Internet",
+        "error-timeout": "S'ha superat el temps d'espera, si us plau intenteu de nou"
       }
       
 }

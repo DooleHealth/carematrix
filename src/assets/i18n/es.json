@@ -714,8 +714,11 @@
         "drug":"Medicamento",
         "videocall":"Videollamada",
         "open":"Abrir",
-        "close":"Cerrar"
-      
+        "close":"Cerrar"    
+      },
+      "commons":{
+        "error-network": "Se ha perdido la conexión con Internet",
+        "error-timeout": "Se ha superado el tiempo de espera, por favor intentelo de nuevo"
       }
 
       
