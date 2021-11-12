@@ -48,7 +48,7 @@ export class SettingsPage implements OnInit {
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
-    this.getLocalLanguages()
+    //this.getLocalLanguages()
   }
 
   ionViewDidEnter(){
@@ -241,7 +241,7 @@ export class SettingsPage implements OnInit {
        console.log('[SettingsPage] sendConfigution()', await res);
        if(res.success){
         if(id == res.user.language_id){
-          this.languageService.setLenguageLocalstorage(this.language)
+          this.languageService.setLenguageLocalstorage(this.language.code)
           //this.notification.displayToastSuccessful()
         }
        }else{
@@ -255,12 +255,14 @@ export class SettingsPage implements OnInit {
 
   changeLanguages(){
     console.log('[SettingsPage] changeLanguages()', this.language);
-    let id = this.getIdLanguage(this.language)
-    this.updateLanguage(id)
+    //let id = this.getIdLanguage(this.language)
+    this.updateLanguage(this.language.id)
   }
 
   getLocalLanguages(){
-    this.language = this.languageService.getCurrent()
+    let language = this.languageService.getCurrent()
+    this.language = this.listLanguage.find(lang => lang.code.split('-')[0] == language )
+    if(this.language.code.split('-')[0] == 'es') this.language.code = 'es';
     console.log('[SettingsPage] getLocalLanguages()', this.language);
   }
 
@@ -271,6 +273,7 @@ export class SettingsPage implements OnInit {
        if(res){
         this.listLanguage = []
         this.listLanguage = res
+        this.getLocalLanguages()
        }else{
          //alert(this.translate.instant('setting.error_changed_language'))
        }
@@ -418,7 +421,7 @@ export class SettingsPage implements OnInit {
     }
 
     
-    getIdLanguage(code){
+/*     getIdLanguage(code){
       if(code == 'es')
       code = 'es-es';
   
@@ -433,6 +436,6 @@ export class SettingsPage implements OnInit {
           default:
             return 11
         }
-    }
+    } */
 
 }
