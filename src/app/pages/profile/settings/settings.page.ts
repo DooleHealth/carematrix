@@ -48,7 +48,6 @@ export class SettingsPage implements OnInit {
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
-    //this.getLocalLanguages()
   }
 
   ionViewDidEnter(){
@@ -419,23 +418,5 @@ export class SettingsPage implements OnInit {
     isAvailableTwoFactor(){
       this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center')) 
     }
-
-    
-/*     getIdLanguage(code){
-      if(code == 'es')
-      code = 'es-es';
-  
-      let language = this.listLanguage.find(lag => lag.code == code)
-      if(language) return language.id
-      else
-        switch (code) {
-          case 'ca':
-            return 11
-          case 'es':
-            return 13
-          default:
-            return 11
-        }
-    } */
 
 }
