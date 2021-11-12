@@ -254,7 +254,7 @@ export class SettingsPage implements OnInit {
 
   changeLanguages(){
     console.log('[SettingsPage] changeLanguages()', this.language);
-    //let id = this.getIdLanguage(this.language)
+    if(this.language.code.split('-')[0] == 'es') this.language.code = 'es';
     this.updateLanguage(this.language.id)
   }
 
