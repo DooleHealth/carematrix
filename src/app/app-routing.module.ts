@@ -53,7 +53,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canLoad: [AuthGuard] // Secure all child pages
+    //canLoad: [AuthGuard] // Secure all child pages
   },
   {
     path: 'personal',
