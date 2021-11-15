@@ -36,7 +36,7 @@ export class PasswordPage implements OnInit {
     if(this.formPassword !== null && this.formPassword !== undefined) {
       const pass = this.formPassword.get('newPassword').value;
       const confirmPass = group.value;
-      //console.log(`[PasswordPage] checkPasswords(${pass}, ${confirmPass})`);
+      console.log(`[PasswordPage] checkPasswords(${pass}, ${confirmPass})`);
       return pass === confirmPass ? null : {
           NotEqual: true
       };
@@ -128,7 +128,7 @@ export class PasswordPage implements OnInit {
 
   postChangePassword(){
     let params = {
-      new: this.formPassword.get('newPassword').value,
+      new: this.formPassword.get('confirmedPassword').value,
       old: this.formPassword.get('currentPassword').value,
     }
     this.dooleService.postAPIChangePassword(params).subscribe(
@@ -137,12 +137,23 @@ export class PasswordPage implements OnInit {
        if(res.result){
         this.modalCtrl.dismiss({error:null, action: 'change'});
        }
-        else{
-          this.presentAlert(this.translate.instant("setting.password.no_success_changed_password"))
+       else{
+          if(!res.success){
+            let msg =   this.translate.instant("setting.password.no_success_changed_password");
+            let message = (res?.errors?.new?.length > 0)? msg+'. '+ res?.errors?.new[0]+'.': msg
+            this.presentAlert(message)
+          }
+          else{
+            let msg =   this.translate.instant("setting.password.no_success_changed_password");
+            let message = (res.message)? msg+'. '+ res.message+'.': msg
+            this.presentAlert(message)
+          }
         }
        },(err) => { 
           console.log('postChangePassword() ERROR(' + err.code + '): ' + err.message); 
-          this.presentAlert(this.translate.instant("setting.password.error_changed_password"))
+          let msg =   this.translate.instant("setting.password.no_success_changed_password");
+          let message = (err.message)? msg+'. '+ err.message+'.': msg
+          this.presentAlert(message)
           throw err; 
       });
   }

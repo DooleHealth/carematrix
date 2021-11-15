@@ -44,12 +44,12 @@ export class LoginPage implements OnInit {
 
 
   loginUser(){
-    // this.device.platform
-    // this.device.model
-    // this.device.version
-    // this.device.manufacturer
-    // this.network.type
-    console.log('[LoginPage] ionViewDidEnter() Device: ',  this.device.platform, this.device.model, this.device.version, this.device.manufacturer, this.network.type);
+    this.credentials['platform'] = this.device?.platform
+    this.credentials['device_model'] = this.device?.model
+    this.credentials['os_version'] = this.device?.version
+    this.credentials['device_brand'] = this.device?.manufacturer
+    this.credentials['connection_type'] = this.network?.type
+    //console.log('[LoginPage] ionViewDidEnter() Device: ',  this.device.platform, this.device.model, this.device.version, this.device.manufacturer, this.network.type);
     this.authService.login(this.credentials).subscribe(async (res) => {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;
