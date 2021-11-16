@@ -114,7 +114,14 @@ export class LandingPage implements OnInit {
         let error = result?.data['error']
         if(error){
           let message = error
-          this.dooleService.presentAlert(message)
+          if(message.status === 500)
+          this.dooleService.presentAlert(this.translate.instant('landing.message_error_serve'))
+          if(message.status === 403)
+          //this.dooleService.presentAlert(message.error.message)
+          this.appBlockedByUser(message.error.message)
+          else
+          this.dooleService.presentAlert(message?.message? message?.message: message)
+
           this.authService.increaseNumloginFailed()
           this.numFailLogin = this.authService.getNumloginFailed();
           if(this.numFailLogin >= this.NUM_FAIL_LOGIN){
@@ -286,27 +293,6 @@ export class LandingPage implements OnInit {
     });
   }
 
-/*   getNumloginFailed(){
-    let num = localStorage.getItem('num-fail-login');
-    if(num){
-      this.numFailLogin = Number(JSON.parse(num))
-    }else{
-      localStorage.setItem('num-fail-login','0');
-      this.numFailLogin = 0
-    }
-  } */
-
-/*   increaseNumFPAIOFailed(){
-    let num = localStorage.getItem('num-fail-finger-print');
-    if(num){
-      this.numFailFingerP = Number(JSON.parse(num)) + 1
-      localStorage.setItem('num-fail-finger-print',''+this.numFailFingerP);
-    }else{
-      localStorage.setItem('num-fail-finger-print','1');
-      this.numFailFingerP = 1
-    }
-    console.log('[LandingPage] increaseNumFPAIOFailed()', this.numFailFingerP);
-  } */
 
   async appBlocked() {
     const alert = await this.alertController.create({
@@ -320,6 +306,33 @@ export class LandingPage implements OnInit {
             handler: (data) => {
               //Exit from app
               navigator['app'].exitApp();
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+  }
+
+  async appBlockedByUser(message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('security.alert_security'),
+      message: message,
+      backdropDismiss: false,
+        buttons: [
+          {
+            text: this.translate.instant("button.cancel"),
+            handler: (data) => {
+              //Exit from app
+              navigator['app'].exitApp();
+            }
+          },
+         {
+            text: this.translate.instant("button.accept"),
+            handler: (data) => {
+              //Desblobked App
+              this.passwordRecovery()
             }
           }
         ]
