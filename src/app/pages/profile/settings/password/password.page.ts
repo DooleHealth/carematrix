@@ -134,11 +134,11 @@ export class PasswordPage implements OnInit {
     this.dooleService.postAPIChangePassword(params).subscribe(
       async (res: any) =>{
        console.log('[InitialPage] postChangePassword()', await res);
-       if(res.result){
+       if(res.success){
         this.modalCtrl.dismiss({error:null, action: 'change'});
        }
        else{
-          if(!res.success){
+          if(res?.errors?.new?.length > 0){
             let msg =   this.translate.instant("setting.password.no_success_changed_password");
             let message = (res?.errors?.new?.length > 0)? msg+'. '+ res?.errors?.new[0]+'.': msg
             this.presentAlert(message)
