@@ -116,7 +116,7 @@ export class LandingPage implements OnInit {
           let message = error
           if(message.status === 500)
           this.dooleService.presentAlert(this.translate.instant('landing.message_error_serve'))
-          if(message.status === 403)
+          if(message.status === 403 && message?.error?.message)
           //this.dooleService.presentAlert(message.error.message)
           this.appBlockedByUser(message.error.message)
           else
