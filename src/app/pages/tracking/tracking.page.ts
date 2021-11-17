@@ -286,6 +286,7 @@ async addDocument(){
           if(result?.data?.error){
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
+            this.filter.start_date = this.filter.start_date.split('T')[0]
             this.getDiagnosticTestsList()
           }
         });
