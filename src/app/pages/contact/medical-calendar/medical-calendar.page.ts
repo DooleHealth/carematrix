@@ -157,8 +157,8 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     this.eventSource = [];
     appointments.forEach((e) =>{ 
 
-    var from_date = this.formatDate(e.from_date.split(" "));
-    var to_date = this.formatDate(e.to_date.split(" "));
+    var from_date = this.formatDate(e.from_date);
+    var to_date = this.formatDate(e.to_date);
     let isAllDay = false
     events.push({
       title: 'Day - ' + from_date.toDateString(),
@@ -171,16 +171,15 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
       this.eventSource = events;
   }
 
-  formatDate(d){
-   
-    let date = new Date(d[0]);
-    let time = d[1];
+  formatDate(d){ 
+    var auxdate = d.split(' ')
+    //let date = new Date(auxdate[0]);
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toUTCString();
+    let date = new Date(date0);
+    let time = auxdate[1];
     date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-
-    // console.log("date: ", date);
-    // console.log("time", time);
-    
+    date.setMinutes(time.substring(3,5)); 
     return date;
   }
 
