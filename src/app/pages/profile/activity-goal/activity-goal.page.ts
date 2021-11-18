@@ -103,7 +103,7 @@ export class ActivityGoalPage implements OnInit {
           max = element.value;
 
         vArray.push(element.value);
-        var mydate = new Date(element.date);
+        var mydate = new Date(element.date_value.replace(' ', 'T'));
         var d = mydate.getDate();
         var m = mydate.getMonth();
         m += 1;  // JavaScript months are 0-11
@@ -374,8 +374,13 @@ export class ActivityGoalPage implements OnInit {
   }
 
   formatDate(d) {
-    let date = new Date(d.split(' ')[0]);
-    let time = d[1];
+    //let date = new Date(d.split(' ')[0]);
+    var auxdate = d.split(' ')
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toUTCString();
+    let date = new Date(date0);
+
+    let time = auxdate[1];
     date.setHours(time.substring(0, 2));
     date.setMinutes(time.substring(3, 5));
     return date;
@@ -426,7 +431,10 @@ export class ActivityGoalPage implements OnInit {
 
   formatSelectedDate2(d, format){
     var auxdate = d.split(' ')
-    let date = new Date(auxdate[0]);
+    // let date = new Date(auxdate[0]);
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toUTCString();
+    let date = new Date(date0);
     let time = auxdate[1];
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));

@@ -33,11 +33,11 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'documents_filter.from' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="changeFormatToDate()" formControlName="start_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="start_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_filter.until' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="changeFormatFromDate()" formControlName="end_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </ion-card>

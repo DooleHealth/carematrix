@@ -38,7 +38,7 @@ export class BiometricAuthPage implements OnInit {
         console.log(result)
 
         this.faio.show({
-          cancelButtonTitle: this.translate.instant('face-id.cancel'),
+          cancelButtonTitle: this.translate.instant('button.cancel'),
           title: this.translate.instant('face-id.title'),
           fallbackButtonTitle: this.translate.instant('face-id.fallback'),
           subtitle: this.translate.instant('face-id.subtitle'),

@@ -83,7 +83,7 @@
   </div>
   <ion-card class="cardProfilePadding">
     <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
-    <div *ngIf="description">{{description}}</div>
+    <div *ngIf="description" [innerHtml]="this.description"></div>
     <!-- <ion-item-divider></ion-item-divider> -->
     <div *ngIf="this.normalValue.length > 0">
       <div *ngFor="let range of this.normalValue">

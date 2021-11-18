@@ -41,8 +41,12 @@ export class GoalsPage implements OnInit {
   }
 
   formatDate(d){
-    let date = new Date(d.split(' ')[0]);
-    let time = d[1];
+    var auxdate = d.split(' ')
+    //let date = new Date(auxdate[0]);
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toUTCString();
+    let date = new Date(date0);
+    let time = auxdate[1];
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));
     return date;
