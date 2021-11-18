@@ -22,6 +22,7 @@ const { Storage } = Plugins;
 })
 export class LandingPage implements OnInit {
   NUM_FAIL_LOGIN = 4;
+  NUM_SECONDS = 120
   pushNotification: any;
   loginForm: FormGroup;
   submitError: string;
@@ -146,7 +147,7 @@ export class LandingPage implements OnInit {
   async blockedLogin(){
     let numDate = this.authService.getDateloginFailed();
     let secondsPassed = ((new Date).getTime() - numDate) / 1000;
-    if(secondsPassed >= 120){
+    if(secondsPassed >= this.NUM_SECONDS){
       //alert('La APP no se ha bloqueado')
       this.authService.removeNumloginFailed()
       this.authService.removeNumFirgerPFailed()
@@ -241,8 +242,10 @@ export class LandingPage implements OnInit {
             this.numFailFingerP = this.authService.getNumFingerPrinterFailed();
             if(this.numFailFingerP < this.NUM_FAIL_LOGIN)
             setTimeout(() => this.doBiometricLogin(), 500);
-            else
-            this.appBlocked()
+            else{
+              this.appBlocked()
+            }
+
           }
         });
     })
