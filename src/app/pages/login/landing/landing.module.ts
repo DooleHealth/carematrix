@@ -10,6 +10,7 @@ import { LandingPage } from './landing.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { Device } from '@ionic-native/device/ngx';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     LandingPageRoutingModule,
   ],
+  providers:[Device],
   declarations: [LandingPage]
 })
 export class LandingPageModule {}

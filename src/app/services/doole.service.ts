@@ -263,7 +263,7 @@ export class DooleService {
         {
           text: 'OK',
           handler: (blah) => {
-            console.log('Confirm OK: blah');
+           // console.log('Confirm OK: blah');
             if (route !== undefined && route !== null)
               this.router.navigateByUrl(route);
           }
@@ -294,13 +294,26 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
+        console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
         return res;
       })
     )
   }
+
   postAPILegalConfirmation(params: Object): Observable<any> {
     let path = 'user/legalTerm/lastAccepted';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIConfirmationLegal(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  postAPIRejectLegalConfirmation(params: Object): Observable<any> {
+    let path = 'user/legalTerm/lastDeclined';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {

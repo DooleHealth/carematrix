@@ -23,6 +23,7 @@ dependencies {
 apply from: "../../node_modules/com-sarriaroman-photoviewer/src/android/photoviewer.gradle"
 apply from: "../../node_modules/cordova-plugin-badge/src/android/badge.gradle"
 apply from: "../../node_modules/cordova-plugin-fingerprint-aio/src/android/build.gradle"
+apply from: "../../node_modules/cordova-plugin-iroot/src/android/build-extras.gradle"
 apply from: "../../node_modules/cordova-plugin-opentok/build-extras.gradle"
 
 if (hasProperty('postBuildExtras')) {

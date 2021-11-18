@@ -75,6 +75,11 @@
     <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
   </feature>
 
+  <feature name="IRoot">
+    <param name="android-package" value="de.cyberkatze.iroot.IRoot"/>
+    <param name="onload" value="true"/>
+  </feature>
+
   <feature name="Capture">
     <param name="android-package" value="org.apache.cordova.mediacapture.Capture"/>
   </feature>

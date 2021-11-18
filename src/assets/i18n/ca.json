@@ -14,6 +14,7 @@
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
         "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes",
+        "blocked_login": "L'APP s'ha bloquejat pel fet que s'ha excesido el nombre d'intents, intenta despues de 2 minuts.",
         "message_error_serve":"Error del servidor"
       },    
       "legal": {
@@ -21,9 +22,11 @@
         "ok_button": "Les accepto",
         "ko_button": "No les accepto",
         "acept_conditions_label": "He llegit i accepto les condicions",
+        "no_acept_conditions": "Rebutjar condicions legals",
         "no_get_conditions_label": "No hi ha termes legals assignats per a aquest usuari",
         "error_conditions_label": "Error a l'obtenir els termes legals",
-        "error_post_conditions_label": "No s'ha pogut actualitzar les condicions legals"
+        "error_post_conditions_label": "No s'ha pogut actualitzar les condicions legals",
+        "messaje_reject_terms": "Aquesta app per al seu adequat ús requereix que les condicions legals s'han acceptades, en tal cas no podràs continuar navegant. Desitges rebutjar les condicions legals?"
       },
       "sms":{
         "header": "Verificació d'Identitat",
@@ -571,7 +574,8 @@
         "send": "Enviar",
         "perfil":"Perfil",
         "open": "Obrir",
-        "exit": "Sortir"
+        "exit": "Sortir",
+        "reject": "Rebutjar"
       },
       "conversation":{
         "placeholder":"Escriu un missatge"
@@ -713,6 +717,10 @@
         "videocall":"Trucada de vídeo",
         "open":"Obrir",
         "close":"Amagar"
+      },
+      "security":{
+        "rooted": "S'ha detectat que aquest dispositiu ha estat inicialitzat amb drets d'usuari inusuals (root). Per motius de seguretat i integritat de les dades s'ha bloquejat l'accés.",
+        "alert_security": "Alerta de Seguretat"
       },
       "commons":{
         "error-network": "S'ha perdut la connexió amb Internet",

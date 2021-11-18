@@ -19,6 +19,7 @@ export class LegalPage implements OnInit {
     public router: Router,    
     private translate: TranslateService,
     private authService: AuthenticationService,
+    private alertController: AlertController,
     private dooleService: DooleService) { }
 
   ngOnInit() {
@@ -91,6 +92,57 @@ export class LegalPage implements OnInit {
     } else{
       this.showIntro()
     }      
+  }
+
+  rejectLegalConditions(){
+    let confirmation = {lt_id: this.legal.id}
+    this.dooleService.postAPIRejectLegalConfirmation(confirmation).subscribe(
+    async (res: any) =>{
+      console.log('[LegalPage] sendLegalConformation()', await res);
+      if(res.success){
+        this.signOut()
+      }
+      else this.dooleService.presentAlert("legal.error_post_conditions_label")
+     },(err) => { 
+        console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+        this.dooleService.presentAlert(err.message)
+        throw err; 
+    });
+  }
+
+  async confirmLegalTerms() {
+    const notification = localStorage.getItem('allNotification');
+    if(JSON.parse(notification))
+    return
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('legal.no_acept_conditions'),
+      message: this.translate.instant('legal.messaje_reject_terms'),
+        buttons: [
+          {
+            text: this.translate.instant("button.cancel"),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              //console.log('[LandingPage] AlertConfirm Cancel');
+            }
+          }, {
+            text: this.translate.instant("button.ok"),
+            handler: (data) => {
+              this.rejectLegalConditions()
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+  }
+
+  async signOut() {
+    await this.authService.logout().then(res=>{
+      this.router.navigateByUrl('/landing');
+    });
   }
 
 }

@@ -13,6 +13,7 @@
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
         "message_wrong_credentials": "El usuario o la contraseñas no son correctas",
+        "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
         "message_error_serve":"Error del servidor"
       },
       "legal": {
@@ -20,9 +21,11 @@
         "ok_button": "Acepto",
         "ko_button": "No acepto",
         "acept_conditions_label": "He leído y acepto las condiciones",
+        "no_acept_conditions": "Rechazar condiciones legales",
         "no_get_conditions_label": "No existe terminos legales asignados para este usuario",
         "error_conditions_label": "Error al obtener los terminos legales",
-        "error_post_conditions_label": "No se pudo actualizar las condiciones legales"
+        "error_post_conditions_label": "No se pudo actualizar las condiciones legales",
+        "messaje_reject_terms": "Esta app para su adecuado uso requiere que las condiciones legales se han aceptadas, en tal caso no podrás seguir navegando. ¿Deseas rechazar las condiciones legales?"
       },
       "sms":{
         "header": "Verificación de Identidad",
@@ -573,7 +576,8 @@
         "send": "Enviar",
         "perfil":"Perfil",
         "open": "Abrir",
-        "exit": "Salir"
+        "exit": "Salir",
+        "reject": "Rechazar"
       },
       "conversation":{
         "placeholder":"Escribe un mensaje"
@@ -714,7 +718,11 @@
         "drug":"Medicamento",
         "videocall":"Videollamada",
         "open":"Abrir",
-        "close":"Cerrar"    
+        "close":"Cerrar"     
+      },
+      "security":{
+        "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",
+        "alert_security": "Alerta de Seguridad"
       },
       "commons":{
         "error-network": "Se ha perdido la conexión con Internet",
