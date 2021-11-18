@@ -52,7 +52,7 @@
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
+            android:resource="@color/primary" />
         <service
             android:name="com.getcapacitor.CapacitorFirebaseMessagingService"
             android:exported="false">
@@ -91,4 +91,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 </manifest>

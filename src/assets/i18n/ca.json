@@ -14,7 +14,8 @@
         "message_password_recovery":"Si l'usuari és correcte s'enviarà un correu per recuperar la teva contrasenya.",
         "message_email_sent":"El correu ha estat enviat",
         "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes",
-        "blocked_login": "L'APP s'ha bloquejat pel fet que s'ha excesido el nombre d'intents, intenta despues de 2 minuts."
+        "blocked_login": "L'APP s'ha bloquejat pel fet que s'ha excesido el nombre d'intents, intenta despues de 2 minuts.",
+        "message_error_serve":"Error del servidor"
       },    
       "legal": {
         "header": "Condicions d'ús",
@@ -336,6 +337,7 @@
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"],
         "appointment_by_user": "Cita afegida per l'usuari",
+        "event_by_user": "Esdeveniment afegit per l'usuari",
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada",
         "error_alert_message_get_agenda":"Error a l'obtenir l'agenda"
       },
@@ -430,7 +432,8 @@
         "edit_appointment": "Edita cita",
         "add_appointment": "Afegir cita",
         "edit_event": "Edita esdeveniment",
-        "add_event": "Afegir esdeveniment"
+        "add_event": "Afegir esdeveniment",
+        "delete_event": "Eliminar esdeveniment"
       },
       "doctor":{
         "header_doctor": "Detall Metge",
@@ -718,6 +721,10 @@
       "security":{
         "rooted": "S'ha detectat que aquest dispositiu ha estat inicialitzat amb drets d'usuari inusuals (root). Per motius de seguretat i integritat de les dades s'ha bloquejat l'accés.",
         "alert_security": "Alerta de Seguretat"
+      },
+      "commons":{
+        "error-network": "S'ha perdut la connexió amb Internet",
+        "error-timeout": "S'ha superat el temps d'espera, si us plau intenteu de nou"
       }
       
 }

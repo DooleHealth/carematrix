@@ -236,11 +236,10 @@ export class DiaryPage implements OnInit {
     this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDrugIntakeList()', await res);
-       
+        this.listDrug = [];
         let list = res?.drugIntakes
         if(list){
           this.listDrugIntakes = res.drugIntakes;
-          this.listDrug = [];
           list = this.sortDate(list)
           let items = this.addItems(list)
           console.log('[DiaryPage] getDrugIntakeList() items', items);
@@ -414,6 +413,7 @@ export class DiaryPage implements OnInit {
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
+            if(obj?.elements.length>0)
             this.groupedElements.push(obj);
 
           }

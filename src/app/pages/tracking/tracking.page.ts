@@ -195,6 +195,7 @@ export class TrackingPage implements OnInit {
         } else {
           if(property=="group"){
             obj['is_child'] = stack.includes('childs');
+            if(obj?.elements.length>0)
             this.groupedElements.push(obj);
           }
         }
@@ -285,6 +286,7 @@ async addDocument(){
           if(result?.data?.error){
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
+            this.filter.start_date = this.filter.start_date.split('T')[0]
             this.getDiagnosticTestsList()
           }
         });

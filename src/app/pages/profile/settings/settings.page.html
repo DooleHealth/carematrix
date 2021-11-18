@@ -34,8 +34,7 @@
             <ion-item lines="none">
               <ion-label>{{ 'setting.subtitle_languages'| translate}}</ion-label>
               <ion-select [(ngModel)]="language" (ionChange)="changeLanguages()" interface="action-sheet"  okText="{{ 'button.ok' | translate}}" cancelText="{{ 'button.cancel' | translate}}" placeholder="{{'add_health_card.placeholder_select' | translate}}">
-                <ion-select-option value="ca">{{'setting.lenguage_ca' | translate}}</ion-select-option>
-                <ion-select-option value="es">{{'setting.lenguage_es' | translate}}</ion-select-option>
+                <ion-select-option *ngFor="let language of listLanguage" [value]="language">{{language.name}}</ion-select-option>
               </ion-select>
             </ion-item>
        

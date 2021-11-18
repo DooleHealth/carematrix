@@ -3,8 +3,8 @@
     <ion-buttons slot="start" [class.isDisabled]="this.isSaving">
       <ion-back-button text=""  (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="this.event?.origin == 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
-    <ion-title *ngIf="this.event?.origin == 1">{{ 'appointment.header_event' | translate}}</ion-title>
+    <ion-title *ngIf="this.event?.origin == 1 && !this.event?.staff">{{ 'appointment.header_event' | translate}}</ion-title>
+    <ion-title *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
     <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
       <ion-button *ngIf="this.enableReminder" color="primary" (click)="addReminder()" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
@@ -113,12 +113,20 @@
     <ion-spinner  name="bubbles" ></ion-spinner>
     </div>  
   <ng-template #buttons>
-    <div class="buttonContainer">
+    <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
       <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_appointment' | translate}}</ion-button>
     
       <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
         {{ 'appointment.button_delete' | translate}}</ion-button>
+    </div>
+
+    <div class="buttonContainer"  *ngIf="event?.origin === 1 && !this.event?.staff">
+      <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
+        {{ 'appointment.edit_event' | translate}}</ion-button>
+    
+      <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+        {{ 'appointment.delete_event' | translate}}</ion-button>
     </div>
   </ng-template>
   

@@ -71,10 +71,10 @@ export class LandingPage implements OnInit {
     // if(this.pushNotification){
     //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
     // }
-    this.loginForm.clearValidators()
     this.loginForm.get('username').setValue('')
     this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')
+    this.loginForm.clearValidators()
     this.getStoredValues()
     this.blockedLogin()
   }
@@ -116,18 +116,18 @@ export class LandingPage implements OnInit {
           let message = error
           if(message.status === 500)
           this.dooleService.presentAlert(this.translate.instant('landing.message_error_serve'))
-          if(message.status === 403 && message?.error?.message)
-          //this.dooleService.presentAlert(message.error.message)
-          this.appBlockedByUser(message.error.message)
+          if(message.status === 403 && message?.error?.message){
+            this.appBlockedByUser(message.error.message)
+            //Block login Button
+            this.authService.increaseNumloginFailed()
+            this.numFailLogin = this.authService.getNumloginFailed();
+            if(this.numFailLogin >= this.NUM_FAIL_LOGIN){
+              //alert('La APP se ha bloqueado')
+              this.appBlocked()
+            }
+          }
           else
           this.dooleService.presentAlert(message?.message? message?.message: message)
-
-          this.authService.increaseNumloginFailed()
-          this.numFailLogin = this.authService.getNumloginFailed();
-          if(this.numFailLogin >= this.NUM_FAIL_LOGIN){
-            //alert('La APP se ha bloqueado')
-            this.appBlocked()
-          }
 
         }else{
           this.loginForm.get('username').setValue('')

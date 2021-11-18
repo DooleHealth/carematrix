@@ -77,22 +77,28 @@
     </ion-card>
 </div>
 
-<span *ngIf="this.normalValue || this.outRangeValue ||this.dangerValue">
+<span *ngIf="this.ranges.length > 0">
   <div class="main-container">
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
   </div>
   <ion-card class="cardProfilePadding">
     <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
-    <div *ngIf="description">{{description}}</div>
+    <div *ngIf="description" [innerHtml]="this.description"></div>
     <!-- <ion-item-divider></ion-item-divider> -->
-    <div *ngIf="this.normalValue">
-      <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{this.normalValue}} {{this.units}}</ion-col>
+    <div *ngIf="this.normalValue.length > 0">
+      <div *ngFor="let range of this.normalValue">
+        <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+      </div>
     </div>
-    <div *ngIf="this.outRangeValue">
-      <ion-col class="txtTitleWarning">{{ 'activity_goal.out_range_value' | translate}}</ion-col><ion-col>{{this.outRangeValue}} {{this.units}}</ion-col>
+    <div *ngIf="this.outRangeValue.length > 0">
+      <div *ngFor="let range of this.outRangeValue">
+        <ion-col class="txtTitleWarning">{{ 'activity_goal.out_range_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+      </div>
     </div>
-    <div *ngIf="this.dangerValue">
-      <ion-col class="txtTitleDanger">{{ 'activity_goal.danger_value' | translate}}</ion-col><ion-col>{{this.dangerValue}} {{this.units}}</ion-col>
+    <div *ngIf="this.dangerValue.length > 0">
+      <div *ngFor="let range of this.dangerValue">
+        <ion-col class="txtTitleDanger">{{ 'activity_goal.danger_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+      </div>
     </div>
     <br>
   </ion-card>

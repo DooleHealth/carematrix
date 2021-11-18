@@ -119,12 +119,16 @@ export class DocumentsFilterPage implements OnInit {
 
   submit(){
       let filter = this.isEmptyForm()? undefined:  this.form.value
+      if(filter){
+        this.changeFormatFromDate()
+        this.changeFormatToDate()
+      }
       this.modalCtrl.dismiss({error:null, action: 'add', filter: filter});
   }
 
   isEmptyForm(){
-    let start_date = (this.form.get('start_date').value === null ||  this.form.get('start_date').value === null)? true:false
-    let end_date = (this.form.get('end_date').value === null ||  this.form.get('end_date').value === null)? true:false
+    let start_date = (this.form.get('start_date').value === null ||  this.form.get('start_date').value === '')? true:false
+    let end_date = (this.form.get('end_date').value === null ||  this.form.get('end_date').value === '')? true:false
     if(start_date && end_date && this.diagnosticTestTypes.length == 0)
       return true
     else return false

@@ -13,7 +13,8 @@
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
         "message_wrong_credentials": "El usuario o la contraseñas no son correctas",
-        "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos."
+        "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
+        "message_error_serve":"Error del servidor"
       },
       "legal": {
         "header": "Condiciones de uso",
@@ -341,6 +342,7 @@
         "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
         "days": ["L", "M", "X", "J", "V", "S", "D"],
         "appointment_by_user": "Cita añadida por el usuario",
+        "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",
         "error_alert_message_get_agenda":"Error al obtener la agenda"
       },
@@ -422,7 +424,7 @@
         "field_attached_files": "Archivos Adjuntos",
         "online": "Online",
         "face_to_face": "Presencial",
-        "button_delete": "Eliminar Cita",
+        "button_delete": "Eliminar cita",
         "message_deleted_appointment":"Se ha eliminado la cita con éxito",
         "confirmation_delete_appointment":"¿Estás seguro de eliminar la cita?",
         "no_files":"No existen archivos",
@@ -433,7 +435,8 @@
         "edit_appointment": "Editar cita",
         "add_appointment": "Añadir cita",
         "edit_event": "Editar evento",
-        "add_event": "Añadir evento"
+        "add_event": "Añadir evento",
+        "delete_event": "Eliminar evento"
       },
       "doctor":{
         "header_doctor": "Detall Médico",
@@ -715,12 +718,15 @@
         "drug":"Medicamento",
         "videocall":"Videollamada",
         "open":"Abrir",
-        "close":"Cerrar"
-      
+        "close":"Cerrar"     
       },
       "security":{
         "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",
         "alert_security": "Alerta de Seguridad"
+      },
+      "commons":{
+        "error-network": "Se ha perdido la conexión con Internet",
+        "error-timeout": "Se ha superado el tiempo de espera, por favor intentelo de nuevo"
       }
 
       

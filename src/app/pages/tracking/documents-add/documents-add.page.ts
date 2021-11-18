@@ -16,7 +16,9 @@ import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.
   styleUrls: ['./documents-add.page.scss'],
 })
 export class DocumentsAddPage implements OnInit {
+  NUM_YEAR = 10
   @Input() test: any;
+  dateMax:any;
   isEdit = false;
   diagnosticTest;
   media: any = [];
@@ -46,6 +48,7 @@ export class DocumentsAddPage implements OnInit {
 
   ngOnInit() {
     console.log("[DocumentsAddPage] ngOnInit()");
+    this.dateMax = (new Date(Date.now()).getFullYear()) + this.NUM_YEAR
     this.currentDate = new Date().toISOString()
     this.form = this.fb.group({
       private: [+false, [Validators.required]],

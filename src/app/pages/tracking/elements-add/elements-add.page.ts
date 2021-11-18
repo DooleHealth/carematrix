@@ -24,6 +24,7 @@ export class ElementsAddPage implements OnInit {
   date: any;
   isNewValueElement = false
   isLoading = false
+  placeholderRange
   //id:any
   // nameElement: any
   // units:any
@@ -169,6 +170,11 @@ export class ElementsAddPage implements OnInit {
       });
   }
 
+  placeholderRangeElement(){
+    if(this.min !== undefined && this.max != undefined)
+    this.placeholderRange= this.min + ' - ' + this.max
+  }
+
   async getElementAvailable(){
     this.dooleService.getAPIelementAvailableID(this.id).subscribe(
       async (res: any) =>{
@@ -179,6 +185,7 @@ export class ElementsAddPage implements OnInit {
           this.units = this.element.units
           this.min = this.element.min
           this.max = this.element.max
+          this.placeholderRangeElement()
           if(this.isNewValueElement){
             this.form.get('data').setValue(this.nameElement)
             this.form.get('category').setValue(this.nameElement)
@@ -205,8 +212,9 @@ export class ElementsAddPage implements OnInit {
       this.id = this.element.id
       this.units = this.element?.element_unit?.abbreviation
       this.form.get('units').setValue( this.units)
-      // this.min = this.element.min
-      // this.max = this.element.max
+      this.min = this.element.min
+      this.max = this.element.max
+      this.placeholderRangeElement()
       //this.getElementAvailable()
     }
   }

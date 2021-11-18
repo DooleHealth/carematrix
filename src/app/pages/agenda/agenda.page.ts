@@ -146,7 +146,20 @@ export class AgendaPage implements OnInit {
 
   formatDate(d){
     var auxdate = d.split(' ')
-    let date = new Date(auxdate[0]);
+    //let date = new Date(auxdate[0]);
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toISOString();
+    let date = new Date(date0);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date;
+  }
+
+  formatDate2(d){
+    var auxdate = d.split('T')
+    let date0 = new Date(d).toISOString();
+    let date = new Date(date0);
     let time = auxdate[1];
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));
@@ -158,12 +171,12 @@ export class AgendaPage implements OnInit {
     appointments.forEach((e) =>{
       let isAllDay = false
       if(e.start_date !== undefined && e.end_date !== undefined ){
-        var startTime =   new Date(e.start_date_iso8601)
+        var startTime =   this.formatDate2(e.start_date_iso8601)
         var endTime = this.transformDate(e)
       }else{
         isAllDay = true
       }
-        let type = this.translate.instant('agenda.appointment_by_user')
+        let type = this.translate.instant((e?.staff?.length > 0)?'agenda.appointment_by_user': 'agenda.event_by_user')
         events.push({
           id: e.id, 
           title:  e.title,

@@ -32,7 +32,7 @@ body{
     border: 0px !important;
     border-bottom:  0.7px solid #BDC3C7  !important;
     max-height: 60px!important;
-   
+    color: black;
   }
   
   ion-icon {
@@ -68,6 +68,10 @@ body{
     }
     .monthview-eventdetail-timecolumn{
       color: #7f8c8d!important;
+    }
+
+    .monthview-selected  {
+      background-color: rgba(255, 255, 255, 0) !important;
     }
    
     .monthview-selected   .dayWeek  {

@@ -34,7 +34,7 @@ export class NotificationService {
   showError(error: string): void {
     
     let message:string;
-      if(error.includes('ERR_INTERNET_DISCONNECTED') || error.toLowerCase().includes('network error'))
+    if(error.includes('ERR_INTERNET_DISCONNECTED') || error.toLowerCase().includes('network error') || error.toLowerCase().includes('unknown error'))
         message = this.translate.instant('commons.error-network');
       else if(error.includes('Timeout has occurred'))
         message = this.translate.instant('commons.error-timeout');
