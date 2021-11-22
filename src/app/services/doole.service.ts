@@ -982,27 +982,40 @@ export class DooleService {
     );
   }
     /** get news  **/
-    getAPIlistNews(): Observable<any> {
-      let path = 'user/news';
-      const endpoint = this.api.getEndpoint(path);
-      return this.http.get(endpoint).pipe(
-        map((res: any) => {
-          //console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
-          return res;
-        })
-      );
-    }
+  getAPIlistNews(): Observable<any> {
+    let path = 'user/news';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
-    getAPIdetailNew(id: any): Observable<any> {
-      let path = `user/new/${id}`;
-      const endpoint = this.api.getEndpoint(path);
-      return this.http.get(endpoint).pipe(
-        map((res: any) => {
-          //console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
-          return res;
-        })
-      );
-    } 
+  getAPIdetailNew(id: any): Observable<any> {
+    let path = `user/new/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
+        return res;
+      })
+    );
+  } 
+
+  getAPISearchNews(query: any): Observable<any> {
+    let path = 'news';
+    let httpParams = new HttpParams();
+    httpParams = (query) ? httpParams.append('search', query) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPISearchNews(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   getAPIdetailAdvices(id: any): Observable<any> {
     let path = `advice/${id}`;

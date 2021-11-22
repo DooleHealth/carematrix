@@ -107,22 +107,39 @@ export class AdvicesPage implements OnInit {
     }
   }
 
+  filterListNews(event){
+    var query = event //.target.value;
+    this.isLoading = true
+    this.dooleService.getAPISearchNews(query).subscribe(res=>{
+      console.log('[DiaryPage] filterListNews()', res); 
+      this.items = []
+      if(res.success)
+        this.addItems(res.news)
+      this.isLoading = false
+    },err => {
+      console.log('[DiaryPage] filterListNews() ERROR(' + err.code + '): ' + err.message); 
+    });
+  };
+
   async filterList(evt) {
     console.log('[AdvicePage] filterList()');
 
     this.items = this.itemsBackup;
     const searchTerm = evt.srcElement.value;
     if (!searchTerm) {
+      //this.items = []
+      this.segmentChanged();
       return;
     }
 
     switch (this.segment) {
       case 'news':
-        this.items = this.items.filter(element => {
-          if (element.item.subject && searchTerm) {
-            return (element.item.subject .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-          }
-        });
+        // this.items = this.items.filter(element => {
+        //   if (element.item.subject && searchTerm) {
+        //     return (element.item.subject .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        //   }
+        // });
+        this.filterListNews(searchTerm)
         break;
 
       case 'advices':

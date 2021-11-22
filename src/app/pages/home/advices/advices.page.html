@@ -42,7 +42,8 @@
         <ion-card  routerLink="/new-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
           <img *ngIf="item.item?.cover !== null"[src]='item.item?.cover'/>
           <ion-item lines="none" >
-            <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.subject}}</ion-label>
+            <ion-label *ngIf="item.item?.subject" style="color:#141414"> &nbsp;&nbsp; {{item.item.subject}}</ion-label>
+            <ion-label *ngIf="item.item?.title" style="color:#141414"> &nbsp;&nbsp; {{item.item.title}}</ion-label>
             <div>
               <ion-icon name="chevron-forward-outline"></ion-icon>
             </div>
