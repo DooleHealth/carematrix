@@ -21,8 +21,9 @@ export class FormPage implements OnInit {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log(`[FamilyUnitPage] FormPage(), user_auth: ${this.auth.id_user}, user_id: ${this.auth.user.idUser}`);
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/formAnswer/fill/' + this.id + '?user_id=' + this.auth.user.idUser + '&user_auth=' + this.auth.user.idUser + '&secret=' + this.auth.getAuthToken());
+    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/formAnswer/fill/' + this.id + '?user_auth=' + this.auth.id_user + '&user_id=' + this.auth.user.idUser + '&secret=' + this.auth.getAuthToken());
   }
 
   backButton(){

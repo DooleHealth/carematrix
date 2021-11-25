@@ -154,6 +154,7 @@ export class AuthenticationService {
   }
 
   setUserLocalstorage(user) {
+    console.log(`[AuthenticationService] setUserLocalstorage()`, user);
     Storage.set({
       key: 'user',
       value: JSON.stringify(user)
