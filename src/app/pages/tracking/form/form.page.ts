@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class FormPage implements OnInit {
   private data: any = history.state?.data;
+  private temporaryUrl
   public id;
   public url;
   constructor(private auth: AuthenticationService,
@@ -21,7 +22,7 @@ export class FormPage implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/formAnswer/fill/' + this.id + '?user_id=' + this.auth.user.idUser + '&secret=' + this.auth.getAuthToken());
+    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/formAnswer/fill/' + this.id + '?user_id=' + this.auth.user.idUser + '&user_auth=' + this.auth.user.idUser + '&secret=' + this.auth.getAuthToken());
   }
 
   backButton(){
