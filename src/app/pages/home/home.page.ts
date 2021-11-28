@@ -205,12 +205,12 @@ export class HomePage implements OnInit {
         this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
         this.searchIndexDiet()
         this.slideDietChange()
-        this.sliderDiet.slideTo(this.currentIndexDiet)
+        this.sliderDiet?.slideTo(this.currentIndexDiet)
 
         let elements = res?.data.elements
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
-          this.sliderPhysical.slideTo(0)
+          this.sliderPhysical?.slideTo(0)
           this.slideActivityChange()
         }
 
@@ -221,7 +221,7 @@ export class HomePage implements OnInit {
           })
           this.searchIndexDGame()
           this.slideGamesChange()
-          this.sliderGames.slideTo(this.currentIndexDrug)
+          this.sliderGames?.slideTo(this.currentIndexDrug)
         }
         //this.drugs = res.data.drugIntakes.drugIntakes
         this.getDrugIntake()
@@ -492,7 +492,7 @@ export class HomePage implements OnInit {
       this.filterDrugsByStatus()
       this.searchIndexDrug()
       this.slideDrugChange()
-      this.sliderDrug.slideTo(this.currentIndexDrug)
+      this.sliderDrug?.slideTo(this.currentIndexDrug)
     })
   }
 
@@ -628,7 +628,7 @@ export class HomePage implements OnInit {
 
   slideGoalChange() {
     if(this.goals !== undefined && this.goals?.length > 0)
-		this.sliderGoals.getActiveIndex().then(index => {
+		this.sliderGoals?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideGoalChange()', index);
       let slider = this.goals[index]
          console.log('[HomePage] slideGoalChange()', slider);
@@ -640,7 +640,7 @@ export class HomePage implements OnInit {
 
   slideDietChange(){
     if(this.diets !== undefined && this.diets?.length > 0)
-		this.sliderDiet.getActiveIndex().then(index => {
+		this.sliderDiet?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
       let hour = slider?.date.split(' ')[1]
@@ -653,7 +653,7 @@ export class HomePage implements OnInit {
 
   slideDrugChange(){
     if(this.drugs !== undefined && this.drugs?.length > 0){
-      this.sliderDrug.getActiveIndex().then(index => {
+      this.sliderDrug?.getActiveIndex().then(index => {
         //console.log('[HomePage] slideDrugChange()', index);
         let slider = this.drugs[index]
         this.infoDrugs = {
@@ -669,7 +669,7 @@ export class HomePage implements OnInit {
 
   slideGamesChange(){
     if(this.games !== undefined && this.games?.length > 0)
-    this.sliderGames.getActiveIndex().then(index => {
+    this.sliderGames?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideGamesChange()', index);
       let slider = this.games[index]
       let hour = slider?.scheduled_date.split(' ')[1]
@@ -681,7 +681,7 @@ export class HomePage implements OnInit {
   }
 
   slideActivityChange(){
-    this.sliderPhysical.getActiveIndex().then(index => {
+    this.sliderPhysical?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
       this.infoActivity = {

@@ -502,6 +502,28 @@ margin-bottom: -3%;
   color: #3498db;
 }
 
+ @media (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
+  ion-footer{
+    height: 18%;
+    app-tabs{
+      ion-tab-button{
+        --padding-bottom: 32% !important;
+      }
+    }
+  }
+ }
+
+ @media (min-width: 1024px) and (orientation: landscape) {
+  ion-footer{
+    height: 15%;
+    app-tabs{
+      ion-tab-button{
+        --padding-bottom: 30% !important;
+      }
+    }
+  }
+ }
+
 /* .md ion-header ion-title{
   text-align: center !important;
  } */
