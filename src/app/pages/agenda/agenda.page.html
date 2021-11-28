@@ -42,10 +42,9 @@
     <ion-row class="rowPadding">
       <ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text>
     </ion-row>
-   
     <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
       <ion-item class="rowPadding2">
-        <ion-list>
+        <ion-list class="list" *ngIf="selectedDate?.events.length >0">
           <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco"
             *ngFor="let event of selectedDate?.events; let i = index"
             [routerLink]="(event?.is_reminder)? 'reminder':'detail'" [state]="{id:event.id, event: event}">
@@ -80,7 +79,7 @@
             </ion-grid>
           </ion-item>
         </ion-list>
-        <ion-spinner *ngIf="this.isLoading" name="bubbles" class="spinnerCenter"></ion-spinner>
+        <ion-spinner *ngIf="this.isLoading && selectedDate?.events.length==0" name="bubbles" class="spinnerCenter"></ion-spinner>
         <div *ngIf="!this.isLoading && selectedDate?.events.length==0">
           <ion-grid>
             <ion-row>

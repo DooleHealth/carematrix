@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
   userDoole : any = {}
   goals: any =[]
   diets: any =[]
-  drugs: Drug[] =[]
+  drugs: any =[]
   games =[]
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
@@ -61,6 +61,7 @@ export class HomePage implements OnInit {
   advices: any =[]
   date
   loading:boolean = true;
+  isFirstTime = true;
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
@@ -109,7 +110,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    //this.getUserInformation()
+    this.getUserInformation()
     this.checkHealthAccess();
     //setTimeout(()=>this.confirmAllNotification(), 2000);
     this.activateAllNotifications(1)
@@ -118,6 +119,12 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter(){
       this.getUserInformation()
+  }
+
+  ionViewDidEnter(){
+    if(!this.isFirstTime)
+    this.getUserInformation()
+    this.isFirstTime = false
   }
 
   checkHealthAccess(){
@@ -167,7 +174,6 @@ export class HomePage implements OnInit {
   }
   async getUserInformation(){
     this.isLoading = true
-    this.activity = []
     let date2= this.transformDate(this.date, 'dd-MM-yyyy')
     let date = {date: date2, from_date: this.date, to_date: this.date}
 
@@ -206,7 +212,9 @@ export class HomePage implements OnInit {
         this.searchIndexDiet()
         this.slideDietChange()
         this.sliderDiet?.slideTo(this.currentIndexDiet)
-
+        
+        //Elements
+        this.activity = []
         let elements = res?.data.elements
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
@@ -214,6 +222,7 @@ export class HomePage implements OnInit {
           this.slideActivityChange()
         }
 
+        //Games
         if(res.data.gamePlays){
           this.games = res.data.gamePlays
           this.games.sort(function(a,b){
