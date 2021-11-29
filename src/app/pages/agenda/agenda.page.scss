@@ -153,10 +153,13 @@ ion-segment {
 }
 /*remove item native padding*/
 ion-list {
+  ion-item {
+  --padding-start: 0px;
+  --inner-padding-end: 0px;
+  }
  
-ion-item {
---padding-start: 0px;
---inner-padding-end: 0px;
 }
- 
+
+.list{
+  width: 100%;
 }

@@ -130,6 +130,31 @@ ion-img{
  height: 220px;
  width: 300px;
 }
+
+@media (min-width: 640px) and (max-width: 1024px) {
+
+  .vertical-card2{
+    background-color: rgb(255, 255, 255)!important;
+    width: 100%;
+    min-height: 115px;
+    ion-img{
+        height: 18px;
+        width: 18px;
+    }
+  
+    ion-card-content{
+        height: 110px;
+        margin-top: 0%;
+        ion-progress-bar {
+            height: 10px;
+            width: 85%
+        }
+        p{
+            width: 85%
+        }
+    }
+  }
+ }
 /*MEDIA QUERIES FOR IPAD*/
 
 @media only screen 

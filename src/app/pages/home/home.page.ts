@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
   userDoole : any = {}
   goals: any =[]
   diets: any =[]
-  drugs: Drug[] =[]
+  drugs: any =[]
   games =[]
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
@@ -61,6 +61,7 @@ export class HomePage implements OnInit {
   advices: any =[]
   date
   loading:boolean = true;
+  isFirstTime = true;
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
@@ -109,7 +110,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    //this.getUserInformation()
+    this.getUserInformation()
     this.checkHealthAccess();
     //setTimeout(()=>this.confirmAllNotification(), 2000);
     this.activateAllNotifications(1)
@@ -118,6 +119,12 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter(){
       this.getUserInformation()
+  }
+
+  ionViewDidEnter(){
+    if(!this.isFirstTime)
+    this.getUserInformation()
+    this.isFirstTime = false
   }
 
   checkHealthAccess(){
@@ -167,7 +174,6 @@ export class HomePage implements OnInit {
   }
   async getUserInformation(){
     this.isLoading = true
-    this.activity = []
     let date2= this.transformDate(this.date, 'dd-MM-yyyy')
     let date = {date: date2, from_date: this.date, to_date: this.date}
 
@@ -205,15 +211,18 @@ export class HomePage implements OnInit {
         this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
         this.searchIndexDiet()
         this.slideDietChange()
-        this.sliderDiet.slideTo(this.currentIndexDiet)
-
+        this.sliderDiet?.slideTo(this.currentIndexDiet)
+        
+        //Elements
+        this.activity = []
         let elements = res?.data.elements
         if(elements?.eg){
           this.treeIterate(elements?.eg, '');
-          this.sliderPhysical.slideTo(0)
+          this.sliderPhysical?.slideTo(0)
           this.slideActivityChange()
         }
 
+        //Games
         if(res.data.gamePlays){
           this.games = res.data.gamePlays
           this.games.sort(function(a,b){
@@ -221,7 +230,7 @@ export class HomePage implements OnInit {
           })
           this.searchIndexDGame()
           this.slideGamesChange()
-          this.sliderGames.slideTo(this.currentIndexDrug)
+          this.sliderGames?.slideTo(this.currentIndexDrug)
         }
         //this.drugs = res.data.drugIntakes.drugIntakes
         this.getDrugIntake()
@@ -492,7 +501,7 @@ export class HomePage implements OnInit {
       this.filterDrugsByStatus()
       this.searchIndexDrug()
       this.slideDrugChange()
-      this.sliderDrug.slideTo(this.currentIndexDrug)
+      this.sliderDrug?.slideTo(this.currentIndexDrug)
     })
   }
 
@@ -628,7 +637,7 @@ export class HomePage implements OnInit {
 
   slideGoalChange() {
     if(this.goals !== undefined && this.goals?.length > 0)
-		this.sliderGoals.getActiveIndex().then(index => {
+		this.sliderGoals?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideGoalChange()', index);
       let slider = this.goals[index]
          console.log('[HomePage] slideGoalChange()', slider);
@@ -640,7 +649,7 @@ export class HomePage implements OnInit {
 
   slideDietChange(){
     if(this.diets !== undefined && this.diets?.length > 0)
-		this.sliderDiet.getActiveIndex().then(index => {
+		this.sliderDiet?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideDietChange()', index);
       let slider = this.diets[index]
       let hour = slider?.date.split(' ')[1]
@@ -653,7 +662,7 @@ export class HomePage implements OnInit {
 
   slideDrugChange(){
     if(this.drugs !== undefined && this.drugs?.length > 0){
-      this.sliderDrug.getActiveIndex().then(index => {
+      this.sliderDrug?.getActiveIndex().then(index => {
         //console.log('[HomePage] slideDrugChange()', index);
         let slider = this.drugs[index]
         this.infoDrugs = {
@@ -669,7 +678,7 @@ export class HomePage implements OnInit {
 
   slideGamesChange(){
     if(this.games !== undefined && this.games?.length > 0)
-    this.sliderGames.getActiveIndex().then(index => {
+    this.sliderGames?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideGamesChange()', index);
       let slider = this.games[index]
       let hour = slider?.scheduled_date.split(' ')[1]
@@ -681,7 +690,7 @@ export class HomePage implements OnInit {
   }
 
   slideActivityChange(){
-    this.sliderPhysical.getActiveIndex().then(index => {
+    this.sliderPhysical?.getActiveIndex().then(index => {
       //console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
       this.infoActivity = {
