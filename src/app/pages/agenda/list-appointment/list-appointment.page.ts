@@ -121,11 +121,15 @@ export class ListAppointmentPage implements OnInit {
   filterMonth(){
     this.dayEvents = []
     var date = new Date();
-    let month = date.getMonth() + this.month
-    date.setMonth(month);
+    date.setDate(1);
+    date.setMonth(date.getMonth() + this.month);
     this.onViewTitleChanged(date)
-    this.eventMonth = this.listAppointment.filter( event => 
-      new Date(event.startTime).getMonth() === month
+    let year = date.getFullYear()
+    let month = date.getMonth()
+    console.log('[ListAppointmentPage] filteMonth()', date.toDateString() );
+    this.eventMonth = this.listAppointment?.filter( event => 
+      (new Date(event.startTime).getMonth() === month 
+      && new Date(event.startTime).getFullYear() === year)
       )
     //console.log('[ListAppointmentPage] filteMonth()', this.eventMonth );
      this.sortAppointment()
