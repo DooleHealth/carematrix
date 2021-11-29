@@ -65,6 +65,7 @@ export class ActivityGoalPage implements OnInit {
   ionViewDidEnter() {
     if (this.id)
       this.loadData('1d');
+    else this.isLoading = false;
   }
 
   setLocale(){
@@ -289,28 +290,28 @@ export class ActivityGoalPage implements OnInit {
     console.log('[ActivityGoalPage] filter()', data);
     switch (this.segmentFilter) {
       case '1d': {
-        data = data.filter( value =>(this.formatDate(value.date_value).getDate() == this.min.getDate() && 
+        data = data?.filter( value =>(this.formatDate(value.date_value).getDate() == this.min.getDate() && 
         this.formatDate(value.date_value).getMonth() == this.min.getMonth() && 
         this.formatDate(value.date_value).getFullYear() == this.min.getFullYear() ))
         break;
       }
       case '1w': {
         //console.log('[ActivityGoalPage] filter()', this.min , this.max);
-        data = data.filter( value =>(this.formatDate(value.date_value) >= this.min && this.formatDate(value.date_value) <= this.max || this.getMinWeekFilter(value.date_value)))
+        data = data?.filter( value =>(this.formatDate(value.date_value) >= this.min && this.formatDate(value.date_value) <= this.max || this.getMinWeekFilter(value.date_value)))
         break;
       }
       case '1m': {
-        data = data.filter( value =>(this.formatDate(value.date_value).getMonth() == this.min.getMonth()  && 
+        data = data?.filter( value =>(this.formatDate(value.date_value).getMonth() == this.min.getMonth()  && 
         this.formatDate(value.date_value).getFullYear() == this.min.getFullYear()))
         break;
       }
       case '1y': {
-        data = data.filter( value =>(this.formatDate(value.date_value).getFullYear() == this.min.getFullYear() ))
+        data = data?.filter( value =>(this.formatDate(value.date_value).getFullYear() == this.min.getFullYear() ))
         break;
       }
       default: {
         //statements; 
-        data = data.filter( value =>(this.formatDate(value.date_value) == this.min))
+        data = data?.filter( value =>(this.formatDate(value.date_value) == this.min))
         break;
       }
     }
