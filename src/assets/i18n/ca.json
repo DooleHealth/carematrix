@@ -15,7 +15,9 @@
         "message_email_sent":"El correu ha estat enviat",
         "message_wrong_credentials": "L'usuari o la contrasenyes no són correctes",
         "blocked_login": "L'APP s'ha bloquejat pel fet que s'ha excesido el nombre d'intents, intenta despues de 2 minuts.",
-        "message_error_serve":"Error del servidor"
+        "message_error_serve":"Error del servidor",
+        "message_failure_response":"Ha passat un error inesperat intenta una altra vegada",
+        "message_error_internet_disconnected":"No hi ha connexió a Internet. Connecta't a Internet i torna a intentar-ho"
       },    
       "legal": {
         "header": "Condicions d'ús",

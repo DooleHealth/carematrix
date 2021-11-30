@@ -12,6 +12,7 @@ import { LoginPage } from '../login.page';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { Device } from '@ionic-native/device/ngx';
+import { Constants } from 'src/app/config/constants';
 const { Storage } = Plugins;
 
 
@@ -45,7 +46,8 @@ export class LandingPage implements OnInit {
     private modalCtrl: ModalController,
     private faio: FingerprintAIO,
     private analyticsService: AnalyticsService,
-    private device: Device
+    private device: Device,
+    private constants: Constants
   ) {
     // this.analyticsService.setScreenName('[LandingPage]')
    }
@@ -117,7 +119,7 @@ export class LandingPage implements OnInit {
           let message = error
           if(message.status === 500)
           this.dooleService.presentAlert(this.translate.instant('landing.message_error_serve'))
-          if(message.status === 403 && message?.error?.message){
+          else if(message.status === 403 && message?.error?.message){
             this.appBlockedByUser(message.error.message)
             //Block login Button
             this.authService.increaseNumloginFailed()
@@ -127,6 +129,10 @@ export class LandingPage implements OnInit {
               this.appBlocked()
             }
           }
+          else if(message?.message == 'ERR_INTERNET_DISCONNECTED')
+          this.dooleService.presentAlert(this.translate.instant('landing.message_error_internet_disconnected'))
+          else if(message == 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error' || message?.message == 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error')
+          this.dooleService.presentAlert(this.translate.instant('landing.message_failure_response'))
           else
           this.dooleService.presentAlert(message?.message? message?.message: message)
 

@@ -79,7 +79,11 @@ export class LoginPage implements OnInit {
       }
     
     }, async (error) => { 
-     //console.log('doDooleAppLogin() ERROR', await error?.message);
+     console.log('doDooleAppLogin() ERROR', await error?.message);
+     if(error?.message == 'ERR_INTERNET_DISCONNECTED'){
+        setTimeout(()=>this.modalCtrl.dismiss({error:error}), 500);
+     }
+     else
      this.modalCtrl.dismiss({error:error});
      throw error;
    });
