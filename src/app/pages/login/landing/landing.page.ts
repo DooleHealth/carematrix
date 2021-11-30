@@ -12,6 +12,7 @@ import { LoginPage } from '../login.page';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { Device } from '@ionic-native/device/ngx';
+import { Constants } from 'src/app/config/constants';
 const { Storage } = Plugins;
 
 
@@ -45,7 +46,8 @@ export class LandingPage implements OnInit {
     private modalCtrl: ModalController,
     private faio: FingerprintAIO,
     private analyticsService: AnalyticsService,
-    private device: Device
+    private device: Device,
+    private constants: Constants
   ) {
     // this.analyticsService.setScreenName('[LandingPage]')
    }
@@ -127,6 +129,9 @@ export class LandingPage implements OnInit {
               this.appBlocked()
             }
           }
+          let unknown = 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error'
+          if(message == unknown || message?.message == unknown)
+          this.dooleService.presentAlert(this.translate.instant('landing.message_failure_response'))
           else
           this.dooleService.presentAlert(message?.message? message?.message: message)
 
