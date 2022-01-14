@@ -824,7 +824,7 @@ export class DooleService {
   //graphics-Tracking
 
   getAPIelementsList(): Observable<any> {
-    let path = 'user/elementsList/v2?filter=1'  /* 'user/elementsList'  */
+    let path = 'user/elementsList/v2'  /* 'user/elementsList'  */
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -835,7 +835,7 @@ export class DooleService {
   }
   /** get elements with query by parameter date  */
   getAPIelementsListByDate(params: Object): Observable<any> {
-    let path = 'user/elementsList/v2?filter=1'  /* 'user/elementsList'  */
+    let path = 'user/elementsList/v2'  /* 'user/elementsList'  */
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
