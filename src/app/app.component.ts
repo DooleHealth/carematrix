@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
 
     this.platform.ready().then(() => {
       // Secutity - Rooted
-      this.isDeviceRooted()
+      //this.isDeviceRooted()
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         // Push
