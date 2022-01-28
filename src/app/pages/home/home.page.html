@@ -141,7 +141,7 @@
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
             <img class="sliderImage" routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}" [src]="slide?.cover" />
             <br /><br />
-            <ion-card-title class="txtTitleHome" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.subject}}</ion-card-title>
+            <ion-card-title class="txtTitleHome" routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.subject}}</ion-card-title>
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
             </ion-card-subtitle>
           </ion-card>
