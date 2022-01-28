@@ -10,6 +10,13 @@
     margin: 4%;
     text-align: left;
   }
+  .txtTitleHome1{
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0%;
+    padding:0% !important; //padding: 0px 0px 8px 0px;
+    text-align: left;
+  }
   .txtSubTitleHome{
     font-size: 14px;
     font-weight: 500;
@@ -130,8 +137,41 @@ ion-img{
  height: 220px;
  width: 300px;
 }
+.sliderImage img{
+  width: 100%;
+  height: auto;
+}
+@supports(object-fit: cover){
+  .sliderImage img{
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
 
 @media (min-width: 640px) and (max-width: 1024px) {
+
+  .card{
+    width: 400px;
+  }
+
+    .sliderImage{
+      height: 220px;
+      width: 400px;
+    }
+
+    .sliderImage img{
+      height: 100%;
+      width: auto;
+    }
+
+    @supports(object-fit: cover){
+      .sliderImage img{
+        width: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+    }
 
   .vertical-card2{
     background-color: rgb(255, 255, 255)!important;
@@ -161,10 +201,24 @@ ion-img{
   and (min-device-width: 768px) 
   and (max-device-width: 1024px) 
   and (-webkit-min-device-pixel-ratio: 1) {
+    .card{
+      width: 500px;
+    }
     .sliderImage
     {
      height: 420px;
      width: 500px;
+    }
+    .sliderImage img{
+      height: 100%;
+      width: auto;
+    }
+    @supports(object-fit: cover){
+      .sliderImage img{
+        width: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
     }
     .noMargin {
       margin-bottom: -2%;
