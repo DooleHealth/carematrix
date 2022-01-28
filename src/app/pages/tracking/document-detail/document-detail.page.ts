@@ -26,6 +26,8 @@ export class DocumentDetailPage implements OnInit {
   elementValues: any = [];
   mediaFiles: any = [];
   isLoading = false
+  expandDescription = false
+  expandDiagnostic = false
   constructor(
     private dooleService: DooleService,
     private modalCtrl: ModalController,
@@ -114,6 +116,7 @@ export class DocumentDetailPage implements OnInit {
               this.treeIterate(obj[property], stack + '.' + property);
             } else {
                 if(property=="group")
+                  if(obj?.elements?.length>0)
                   this.groupedElements.push(obj);
             }
         }
