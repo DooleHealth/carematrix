@@ -124,7 +124,13 @@ export class BookingsPage implements OnInit {
 
     modal.onDidDismiss()
       .then((result) => {
+        if(result.data['duration']){
+          this.duration = result.data['duration']
+          this.form.get('duration').setValue(this.duration)
+          console.log("openCalendarModal() selectedDate: ", result.data);
+        }
         if(result.data['date']){
+          this.duration = result.data['duration']
           this.selectedDate = result.data['date']; 
           this.form.patchValue({date: this.transformDate(this.selectedDate)})
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);

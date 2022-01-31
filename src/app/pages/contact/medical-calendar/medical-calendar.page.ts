@@ -58,6 +58,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   routeResolveData: ShowcaseShellModel;
   modalReady = false;
   selectedDate : Date;
+  duration:string = "40"
   calendar = {
     mode: 'month',
     currentDate: new Date(),
@@ -127,7 +128,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
                 this.addScheduleToCalendar(dataObservable.slots)
                 
               this.routeResolveData = dataObservable;
-            
+              this.duration = res?.duration? res.duration: this.duration;
           }else{
             console.log('[MedicalCalendarPage] getSlots() !', res);
           }
@@ -265,7 +266,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
           handler: () => {
             console.log('Confirm Okay');
             this.dooleService.selectedDate = date;
-            this.modalCtrl.dismiss({date:date});
+            this.modalCtrl.dismiss({date:date, duration: this.duration});
            
           }
         }
@@ -309,6 +310,6 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   save(){
     console.log('Confirm Okay');
-    this.modalCtrl.dismiss({date:this.selectedDate});
+    this.modalCtrl.dismiss({date:this.selectedDate, duration: this.duration});
   }
 }
