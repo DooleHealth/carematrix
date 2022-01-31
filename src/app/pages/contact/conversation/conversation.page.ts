@@ -297,7 +297,10 @@ export class ConversationPage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source
-    });
+    })
+    .catch((err)=>{
+      console.log('error addImage', err);
+    })
 
     if(image){
       var filename = new Date().getTime();
@@ -313,6 +316,9 @@ export class ConversationPage implements OnInit {
   addAudio(){
     this.mediaCapture.captureAudio().then(res=>{
        console.log("AUDIO: ",  res);
+    })
+    .catch((err)=>{
+      console.log('error AUDIO', err);
     })
   }
 

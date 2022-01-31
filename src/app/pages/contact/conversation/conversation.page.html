@@ -62,9 +62,9 @@
          <ion-button (click)="this.addImage()">
           <ion-icon name="camera-outline"></ion-icon>
         </ion-button>
-        <ion-button  (click)="this.addAudio()">
+        <!-- <ion-button  (click)="this.addAudio()">
           <ion-icon name="mic-outline"></ion-icon>
-        </ion-button>
+        </ion-button> -->
         <ion-button [disabled]="txtChat.content.trim().length<1 || !btnEnabled" slot="end" (click)="this.send()">
           <ion-icon name="send"></ion-icon>
         </ion-button>
