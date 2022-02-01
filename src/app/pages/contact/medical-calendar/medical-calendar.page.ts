@@ -128,7 +128,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
                 this.addScheduleToCalendar(dataObservable.slots)
                 
               this.routeResolveData = dataObservable;
-              this.duration = res?.duration? res.duration: this.duration;
+              
           }else{
             console.log('[MedicalCalendarPage] getSlots() !', res);
           }
@@ -165,7 +165,8 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
       title: 'Day - ' + from_date.toDateString(),
       startTime:  from_date,
       endTime: to_date,
-      allDay: isAllDay
+      allDay: isAllDay,
+      duration: e.duration
     });
   })
       console.log('[HomePage] addScheduleToCalendar()',events )
@@ -275,13 +276,14 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
     await alert.present();
   }
-  changeTagColor(i:number, date :Date) {
+  changeTagColor(i:number, date :Date, duration?: any) {
 
-    console.log('Selected date: ' + date);
+    console.log('Selected date: ' + date + ' duration: ' +duration);
     this.selectedDate = date;
     this.tagDefaultColor[this.currentSelection] = "secondary";
     this.tagDefaultColor[i] = "warning";
     this.currentSelection = i;
+    this.duration = duration
   }
   
   onCurrentDateChanged(event:Date) {

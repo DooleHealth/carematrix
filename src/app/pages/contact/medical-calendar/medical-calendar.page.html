@@ -96,7 +96,7 @@
         >
         
           <ion-chip 
-            (click)="changeTagColor(i, item.startTime )"
+            (click)="changeTagColor(i, item.startTime, item.duration )"
             [color]="tagDefaultColor[i]"
           >
             <ion-label>{{ item.startTime | date:'HH:mm' }} </ion-label>
