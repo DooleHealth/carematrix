@@ -133,11 +133,11 @@ export class SettingsPage implements OnInit {
       value: this.medication
     }
     this.sendConfigution(params)
-    // let params2 = {
-    //   name: 'drugIntakeNotificationMail',
-    //   value: this.medication
-    // }
-    // this.sendConfigution(params2)
+    let params2 = {
+      name: 'drugIntakeNotificationMail',
+      value: this.medication
+    }
+    this.sendConfigution(params2)
   }
 
   changeAdvices(){
@@ -183,7 +183,7 @@ export class SettingsPage implements OnInit {
   changeReminders(){
     let params = {
       name: 'reminderNotificationApp',
-      value: this.medication
+      value: this.reminder
     }
     this.sendConfigution(params)
     // let params2 = {
@@ -196,7 +196,7 @@ export class SettingsPage implements OnInit {
   changeNews(){
     let params = {
       name: 'newsNotificationApp',
-      value: this.medication
+      value: this.news
     }
     this.sendConfigution(params)
     // let params2 = {
