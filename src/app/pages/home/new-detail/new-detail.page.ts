@@ -55,16 +55,12 @@ export class NewDetailPage implements OnInit {
 
         //Refresh only status content
         if(onlyStatus){
-          let news =json.news;
-          let status = this.getStatusable(news?.statusable)
-          this.like = (status?.liked_at)? true:false
-          this.favourite = status?.favourited_at? true:false
-          this.hide = (status?.hided_at != null)? true:false
+          this.like = this.getStatusable(json.news?.statusable, 'like')
+          this.favourite = this.getStatusable(json.news?.statusable, 'favourite')
+          this.hide = this.getStatusable(json.news?.statusable, 'hide')
           return
         }
-
         this.new=json.news;
-        this.isLoading = false
         if(this.new.content){
           this.new.content=this.new.content.replace('"//www.','"https://www.');
           this.new.content=this.sanitizer.bypassSecurityTrustHtml(this.new.content);
@@ -93,10 +89,9 @@ export class NewDetailPage implements OnInit {
           }
         });
 
-        let status = this.getStatusable(this.new?.statusable)
-        this.like = (status?.liked_at)? true:false
-        this.favourite = status?.favourited_at? true:false
-        this.hide = (status?.hided_at != null)? true:false
+        this.like = this.getStatusable(this.new?.statusable, 'like')
+        this.favourite = this.getStatusable(this.new?.statusable, 'favourite')
+        this.hide = this.getStatusable(this.new?.statusable, 'hide')
     
         this.isLoading = false
        },(err) => { 
@@ -123,10 +118,12 @@ export class NewDetailPage implements OnInit {
     window.open(this.video, "");
   }
 
-  getStatusable(list){
-    if(list?.length >0)
-      return list.find(status => (this.auth.user.idUser == status.user_id))
-    else return null
+  getStatusable(list, type){
+    if(list?.length >0){
+      let statu = list.find(status => (status?.type == type));
+      return statu? true:false
+    }
+    else return false
   }
 
   setContentStatus(type){

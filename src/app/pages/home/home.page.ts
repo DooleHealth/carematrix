@@ -190,7 +190,7 @@ export class HomePage implements OnInit {
           this.advices.push(element)
         });
         console.log('[HomePage] getUserInformation()',  this.advices);
-        this.advices = this.advices.filter(advice => ( this.getStatusable(advice?.statusable) == null || this.getStatusable(advice?.statusable)?.hided_at == null))
+        this.advices = this.advices.filter(advice => ( !this.getStatusable(advice?.statusable, 'hide')))
 
         if(res.data?.goals){
           this.goals = res.data?.goals
@@ -281,12 +281,12 @@ export class HomePage implements OnInit {
     }
   }
 
-  getStatusable(list){
-    if(list?.length >0)
-      return list.find(status => (this.auth.user.idUser == status?.user_id))
-    else if(this.auth.user.idUser == list?.user_id)
-      return list
-    else return null
+  getStatusable(list, type){
+    if(list?.length >0){
+      let statu = list.find(status => (status?.type == type));
+      return statu? true:false
+    }
+    else return false
   }
 
   getGoalLastValue(element_goal, goal){

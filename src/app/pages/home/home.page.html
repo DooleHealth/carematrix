@@ -126,9 +126,9 @@
     </ion-row>
     <ion-row *ngIf="this.advices.length != 0">
       <ion-slides #slider pager="false" [options]="sliderConfigHorizontal">
-        <ion-slide *ngFor="let slide of this.advices">
+        <ion-slide [ngClass]="(this.advices.length >1)? 'slide':'slide1'" *ngFor="let slide of this.advices">
            <!-- Concejos -->
-          <ion-card *ngIf="!slide.new" class="cardProfilePaddingBottomMinHeight">
+          <ion-card *ngIf="!slide.new" class="cardProfilePaddingBottomMinHeight card">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
             <img class="sliderImage" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}" [src]="slide.image?.temporaryUrl" />
             <br /><br />
@@ -149,7 +149,7 @@
           </ion-card>
           
           <!-- Noticias -->
-          <ion-card *ngIf="slide.new" class="cardProfilePaddingBottomMinHeight">
+          <ion-card *ngIf="slide.new" class="cardProfilePaddingBottomMinHeight card">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
             <img class="sliderImage" routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}" [src]="slide?.cover" />
             <br /><br />
