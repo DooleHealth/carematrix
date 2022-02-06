@@ -56,14 +56,11 @@ export class AdvicesDetailPage implements OnInit {
     this.dooleService.getAPIdetailAdvices( this.id).subscribe(
       async (json: any) =>{
         console.log('[DiaryPage] getDetailAdvices()', await json);
-
         //Refresh only status content
         if(onlyStatus){
-          let advice =json.advice;
-          let status = this.getStatusable(advice?.statusable)
-          this.like = (status?.liked_at)? true:false
-          this.favourite = status?.favourited_at? true:false
-          this.hide = (status?.hided_at != null)? true:false
+          this.like = this.getStatusable(json.advice?.statusable, 'like')
+          this.favourite = this.getStatusable(json.advice?.statusable, 'favourite')
+          this.hide = this.getStatusable(json.advice?.statusable, 'hide')
           return
         }
 
@@ -97,11 +94,10 @@ export class AdvicesDetailPage implements OnInit {
           }
         });
 
-        let status = this.getStatusable(this.advice?.statusable)
-        this.like = (status?.liked_at)? true:false
-        this.favourite = status?.favourited_at? true:false
-        this.hide = (status?.hided_at != null)? true:false
-    
+        this.like = this.getStatusable(this.advice?.statusable, 'like')
+        this.favourite = this.getStatusable(this.advice?.statusable, 'favourite')
+        this.hide = this.getStatusable(this.advice?.statusable, 'hide')
+   
         this.isLoading = false
        },(err) => { 
           console.log('[DiaryPage] getDetailAdvices() ERROR(' + err.code + '): ' + err.message); 
@@ -133,10 +129,12 @@ export class AdvicesDetailPage implements OnInit {
     this.router.navigate([`/home`]);
   }
 
-  getStatusable(list){
-    if(list?.length >0)
-      return list.find(status => (this.auth.user.idUser == status.user_id))
-    else return null
+  getStatusable(list, type){
+    if(list?.length >0){
+      let statu = list.find(status => (status?.type == type));
+      return statu? true:false
+    }
+    else return false
   }
 
   setContentStatus(type){
