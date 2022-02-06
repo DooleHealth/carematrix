@@ -132,18 +132,29 @@ ion-img{
   min-height: 17px;
   
 }
+.slide{
+  width: 90% !important;
+}
+.slide1{
+  width: 100% !important;
+}
+
+.card{
+  width: 300px;
+}
+
 .sliderImage
 {
  height: 220px;
  width: 300px;
 }
 .sliderImage img{
-  width: 100%;
-  height: auto;
+  height: 100%;
+  width: auto;
 }
 @supports(object-fit: cover){
   .sliderImage img{
-    height: 100%;
+    width: 100%;
     object-fit: cover;
     object-position: center center;
   }
