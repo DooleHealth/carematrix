@@ -915,9 +915,15 @@ export class HomePage implements OnInit {
     }
 
     activateAllNotifications(factor){
+      const notification = localStorage.getItem('allNotification');
+      if(JSON.parse(notification))
+      return
+      
       console.log('[HomePage] activateAllNotifications()');
       let params = { active: 'all', value: factor }
-      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{ })
+      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{ 
+        localStorage.setItem('allNotification', 'true');
+      })
 
     }
 }
