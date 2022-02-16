@@ -8,6 +8,7 @@ import { AdvicesDetailPageRoutingModule } from './advices-detail-routing.module'
 
 import { AdvicesDetailPage } from './advices-detail.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     AdvicesDetailPageRoutingModule
   ],
   providers: [ InAppBrowser],

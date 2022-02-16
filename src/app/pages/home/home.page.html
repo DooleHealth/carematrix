@@ -137,14 +137,11 @@
             </ion-card-subtitle> -->
             <!-- <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button> -->
             <ion-item lines="none" style="margin: 0%;">
-              <ion-textarea
+              <ion-text
               routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}"
-              class="txtTitleHome1"
-              disabled="false"
-              rows="2"
-              readonly="true"
-              [value]="(slide?.name.length > 55)? (slide?.name.slice(0,52)+'...'):  slide?.name">
-              </ion-textarea>
+              class="txtTitleHome1 text2line">
+              {{slide.name}}
+              </ion-text>
             </ion-item>
           </ion-card>
           
@@ -157,14 +154,11 @@
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
             </ion-card-subtitle> -->
             <ion-item lines="none" style="margin: 0%;">
-              <ion-textarea
+              <ion-text
               routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}"
-              class="txtTitleHome1"
-              disabled="false" 
-              rows="2"
-              readonly="true"
-              [value]="(slide?.subject.length > 55)? (slide?.subject.slice(0,52)+'...'):  slide?.subject">
-              </ion-textarea>
+              class="txtTitleHome1 text2line">
+              {{slide.subject}}
+              </ion-text>
             </ion-item>
           </ion-card>
         </ion-slide>

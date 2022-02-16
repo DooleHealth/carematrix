@@ -588,7 +588,9 @@
         "header":"Novedades y Consejos",
         "tag_news": "Novedades",
         "tag_advices": "Consejos",
-        "searchbar":"Buscar"
+        "searchbar":"Buscar",
+        "detail_news": "Detalle Novedades",
+        "detail_advices": "Detalle Consejos"
       },
       "contact":{
         "header": "Contacta",

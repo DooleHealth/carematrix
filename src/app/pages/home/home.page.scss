@@ -143,6 +143,14 @@ ion-img{
   width: 300px;
 }
 
+.text2line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
 .sliderImage
 {
  height: 220px;

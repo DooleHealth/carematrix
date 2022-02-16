@@ -8,12 +8,14 @@ import { NewDetailPageRoutingModule } from './new-detail-routing.module';
 
 import { NewDetailPage } from './new-detail.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     NewDetailPageRoutingModule
   ],
   providers: [ InAppBrowser],

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{new.subject}}</ion-title>
+    <ion-title>{{'advices.tag_news' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,6 +11,9 @@
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
+  <ion-row style="margin-top:5%; margin-bottom: 5%;">
+    <ion-text  class="txtTitleBlueDark">{{new?.subject}}</ion-text>
+  </ion-row>
 
   <ion-card class="cardProfile">
     <img *ngIf="new.cover" [src]="new.cover">
@@ -21,7 +24,7 @@
       <ion-icon [color]="(this.favourite)? 'primary':'secundary' "name="star" slot="end" (click)= "setContentStatus('favourite')"></ion-icon>
     </ion-item>
     <ion-item lines="none">
-      <ion-label style="color:#141414; font-weight: bold;"> {{new.subject}}</ion-label>
+      <ion-text style="color:#141414; font-weight: bold;"> {{new.subject}}</ion-text>
     </ion-item>
     <ion-item lines="none" *ngIf="new.content" padding>
       <span [innerHTML]="new.content"></span>
