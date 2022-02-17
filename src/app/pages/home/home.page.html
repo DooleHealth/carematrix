@@ -85,8 +85,8 @@
     </ion-row>
     <!-- Agendas -->
     <ion-row >
-      <ion-slides #slider pager="false" [options]="sliderConfigHorizontal">
-        <ion-slide *ngFor="let slide of this.appointment">
+      <ion-slides style="width: 100%;" #slider pager="false" [options]="sliderConfigHorizontal">
+        <ion-slide  *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
             <div class="txtTitleGoalsLittle3" *ngIf="!this.appointment || this.appointment.length == 0 ">
               {{ 'no_data' | translate}}
@@ -101,11 +101,14 @@
                 <ion-col size="3">
                   <ion-img src="assets/icons/agenda2.svg"></ion-img>
                 </ion-col>
-                <ion-col size="9" class="alingLeft">
-                  <p>{{slide.doctor}}</p>
+                <ion-col size="9" class="alingLeft zeroMarginPadding">
+                  <p class="text1line"><b>{{slide?.staff[0]?.name}}</b></p>
                   <ion-text>{{ formatSelectedDate(slide.start_date_iso8601)  | titlecase }}</ion-text>
-                  <ion-button size="small" fill="clear">
-                    {{ 'home.detail_button' | translate }}</ion-button>
+                  <ion-row class="zeroMarginPadding">
+                    <ion-button size="small" fill="clear">
+                      {{ 'home.detail_button' | translate }}
+                    </ion-button>
+                  </ion-row>
                 </ion-col>
               </ion-row>
             </ion-card-content>
