@@ -134,7 +134,7 @@ export class HomePage implements OnInit {
             //console.log(available);
             this.showGoogleFit = !available;
             this.health.requestAuthorization([
-              'distance', 'steps', 'heart_rate', 'activity', 'weight'  //read and write permissions
+              'distance', 'steps', 'heart_rate', 'activity', 'weight' // 'body_temperature','oxygen_saturation','blood_glucose','blood_pressure'  read and write permissions
             ])
                 .then(res => {
                   //console.log(res);
@@ -550,7 +550,7 @@ export class HomePage implements OnInit {
       endDate,
       dataType: 'heart_rate',
     }).then(data => {
-      //this.postHealth('heart_rate', data);
+      this.postHealth('heart_rate', data);
     }).catch(error => {
       console.error(error);
       throw error;
@@ -562,23 +562,60 @@ export class HomePage implements OnInit {
       endDate,
       dataType: 'weight',
     }).then(data => {
-      //this.postHealth('weight', data);
+      this.postHealth('weight', data);
     }).catch(error => {
       console.error(error);
       throw error;
     });
 
-    console.log('dataType: temperature');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'temperature',
-    // }).then(data => {
-    //   //this.postHealth('temperature', data);
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error;
-    // });
+    console.log('dataType: body_temperature');
+     this.health.query({
+       startDate,
+       endDate,
+       dataType: 'body_temperature',
+     }).then(data => {
+       this.postHealth('temperature', data);
+     }).catch(error => {
+       console.error(error);
+      throw error;
+    });
+
+    console.log('dataType: oxygen_saturation');
+    this.health.query({
+      startDate,
+      endDate,
+      dataType: 'oxygen_saturation',
+    }).then(data => {
+      this.postHealth('oxygen_saturation', data);
+      
+    }).catch(error => {
+      console.error(error);
+      throw error;
+    });
+
+    console.log('dataType: blood_glucose');
+    this.health.query({
+      startDate,
+      endDate,
+      dataType: 'blood_glucose',
+    }).then(data => {
+      this.postHealth('blood_glucose', data);
+    }).catch(error => {
+      console.error(error);
+      throw error;
+    });
+
+    console.log('dataType: blood_pressure');
+    this.health.query({
+      startDate,
+      endDate,
+      dataType: 'blood_pressure',
+    }).then(data => {
+      this.postHealth('blood_pressure', data);
+    }).catch(error => {
+      console.error(error);
+      throw error;
+    });
 
   }
 
