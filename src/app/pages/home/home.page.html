@@ -96,18 +96,16 @@
               <!-- <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon>  -->
             </ion-item>
 
-            <ion-card-content class="strechCardContent" routerLink="/agenda/reminder/detail" routerLinkActive='active-item' [state]="{ event: slide}">
-              <ion-row>
-                <ion-col size="3">
+            <ion-card-content mode="md" class="strechCardContent" routerLink="/agenda/reminder/detail" routerLinkActive='active-item' [state]="{ event: slide}">
+              <ion-row class="alingLeft zeroMarginPadding">
+                <ion-col size="2.5" class="alingLeft zeroMarginPadding">
                   <ion-img src="assets/icons/agenda2.svg"></ion-img>
                 </ion-col>
-                <ion-col size="9" class="alingLeft zeroMarginPadding">
+                <ion-col size="9.5" class="alingLeft zeroMarginPadding">
                   <p class="text1line"><b>{{slide?.staff[0]?.name}}</b></p>
-                  <ion-text>{{ formatSelectedDate(slide.start_date_iso8601)  | titlecase }}</ion-text>
-                  <ion-row class="zeroMarginPadding">
-                    <ion-button size="small" fill="clear">
-                      {{ 'home.detail_button' | translate }}
-                    </ion-button>
+                  <p>{{ formatSelectedDate(slide.start_date_iso8601)  | titlecase }}</p>
+                  <ion-row>
+                    <p><a>{{ 'home.detail_button' | translate }}</a></p>
                   </ion-row>
                 </ion-col>
               </ion-row>
