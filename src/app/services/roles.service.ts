@@ -39,9 +39,9 @@ export class RolesService {
   userType: any;
   isProfessional: boolean;
   constructor() { 
-    this.setProfessional(true)
-    //this.activatedAllComponents(true)
-    this.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
+    this.setProfessional(false)
+    this.activatedAllComponents(true)
+    //this.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
   }
 
   activatedAllComponents(enable: boolean){
