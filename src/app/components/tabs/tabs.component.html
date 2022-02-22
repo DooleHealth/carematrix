@@ -6,11 +6,11 @@
           <ion-icon class="eee" name="home"></ion-icon>
           <ion-label>{{ 'tab.home' | translate }}</ion-label>
         </ion-tab-button>
-        <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/agenda']">
+        <ion-tab-button *ngIf="role?.component?.agenda" [routerLinkActive]="['tab-selected']" [routerLink]="['/agenda']">
           <ion-icon name="calendar"></ion-icon>
           <ion-label>{{ 'tab.agenda' | translate }}</ion-label>
         </ion-tab-button>
-        <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/contact']">
+        <ion-tab-button *ngIf="role?.component?.contacta" [routerLinkActive]="['tab-selected']" [routerLink]="['/contact']">
           <ion-icon name="chatbubble"></ion-icon>
           <ion-label>{{ 'tab.contact' | translate  }}</ion-label>
         </ion-tab-button>

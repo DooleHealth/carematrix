@@ -19,6 +19,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { group } from '@angular/animations';
 import { stringify } from 'querystring';
 import { Observable } from 'rxjs';
+import { RolesService } from 'src/app/services/roles.service';
 
 export interface UserInformation {
   title?: string;
@@ -104,6 +105,7 @@ export class HomePage implements OnInit {
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
     private nav: NavController,
+    private role: RolesService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }
@@ -184,7 +186,9 @@ export class HomePage implements OnInit {
         console.log('[HomePage] getUserInformation()',  res);
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
+        if(this.role.component.advices)
         this.advices = res.data?.advices;
+        if(this.role.component.news)
         res.data.news.forEach(element => {
           element['new'] = true
           this.advices.push(element)
@@ -293,7 +297,7 @@ export class HomePage implements OnInit {
 
 
     goal.last_value = parseFloat(element_goal?.value);
-    goal.value1 = parseFloat(goal.value1)
+    goal.value1 = parseFloat(goal?.value1)
     goal.last_value_date = element_goal?.date_value;
 
     switch(goal.goalType){

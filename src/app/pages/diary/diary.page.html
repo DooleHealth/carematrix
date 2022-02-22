@@ -43,16 +43,16 @@
   <!-- SegmentBar -->
   <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
-    <ion-segment-button value="diets">
+    <ion-segment-button *ngIf="role?.component?.diet" value="diets">
       <ion-label>{{'diary.field_diet' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="medication">
+    <ion-segment-button *ngIf="role?.component?.drug" value="medication">
       <ion-label>{{'diary.field_drug' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="games">
+    <ion-segment-button *ngIf="role?.component?.game" value="games">
       <ion-label>{{'diary.field_game' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="health">
+    <ion-segment-button *ngIf="role?.component?.element" value="health">
       <ion-label>{{'diary.field_health' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>

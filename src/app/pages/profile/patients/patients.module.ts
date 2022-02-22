@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SettingsPageRoutingModule } from './settings-routing.module';
+import { PatientsPageRoutingModule } from './patients-routing.module';
 
-import { SettingsPage } from './settings.page';
+import { PatientsPage } from './patients.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { PasswordPageModule } from './password/password.module';
 
 @NgModule({
   imports: [
@@ -16,9 +15,8 @@ import { PasswordPageModule } from './password/password.module';
     FormsModule,
     IonicModule,
     TranslateModule,
-    SettingsPageRoutingModule,
-    PasswordPageModule
+    PatientsPageRoutingModule
   ],
-  declarations: [SettingsPage],
+  declarations: [PatientsPage]
 })
-export class SettingsPageModule {}
+export class PatientsPageModule {}

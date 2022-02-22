@@ -12,6 +12,7 @@ import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { DrugAddPage } from './drug-add/drug-add.page';
 import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
 import { StorageService } from 'src/app/services/storage.service'; 
+import { RolesService } from 'src/app/services/roles.service';
 import { isEqual } from 'lodash';
 export interface ItemDiary {
   expanded?: boolean;
@@ -65,9 +66,11 @@ export class DiaryPage implements OnInit {
     public authService: AuthenticationService,
     private storageService: StorageService,
     private nav: NavController,
+    private role: RolesService
   ) {}
 
   ngOnInit() {
+    this.setSegment()
     this.items = []
     console.log('[DiaryPage] ngOnInit()');
     // let state = history.state?.segment;
@@ -85,9 +88,6 @@ export class DiaryPage implements OnInit {
     }
   }
     
-  ionViewDidLeave(){
-   
-  }
   load(){
     this.firstTime = true;
     this.storageService.saveFirstTimeLoad(false);
@@ -444,6 +444,21 @@ export class DiaryPage implements OnInit {
       default:
         console.log('Segment not found');
         break;
+    }
+  }
+
+  setSegment(){
+    if(!this.role?.component?.diet){
+      this.segment = 'medication'
+      if(!this.role?.component?.drug){
+          this.segment = 'games'
+          if(!this.role?.component?.game){
+            this.segment = 'health'
+            if(!this.role?.component?.element){
+              this.segment = ''
+            }
+          }
+      }
     }
   }
 

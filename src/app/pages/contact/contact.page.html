@@ -9,13 +9,13 @@
 <!-- SegmentBar -->
 
 <ion-segment [(ngModel)]="segment">
-  <ion-segment-button value="video">
+  <ion-segment-button *ngIf="role?.component?.agenda" value="video">
     <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="appointment">
+  <ion-segment-button *ngIf="role?.component?.agenda" value="appointment">
     <ion-label>{{ 'contact.tap_appointment' | translate}}</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="chat">
+  <ion-segment-button *ngIf="role?.component?.chat" value="chat">
     <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
   </ion-segment-button>
 </ion-segment>

@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>{{header}}</ion-title>
     <ion-buttons slot="end" >
-      <ion-button color="primary" (click)="this.addReminder()" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
-      <ion-icon slot="icon-only" name="add" color="primary"
+      <ion-button *ngIf="role?.component?.reminder" color="primary" (click)="this.addReminder()" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
+      <ion-icon *ngIf="role?.component?.element" slot="icon-only" name="add" color="primary"
       (click)="this.addElement()"></ion-icon>
     </ion-buttons>
    
@@ -62,7 +62,7 @@
 
 <div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
 
-<div *ngIf="goals !== undefined &&  goals.length >0"> 
+<div *ngIf="goals !== undefined &&  goals.length >0 && role?.component?.goal"> 
   <div class="main-container">
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_reward' | translate}}</ion-text>
   </div>

@@ -126,6 +126,12 @@
           "your_goals": "Els teus Objectius",
           "payment_method": "Mètode de pagament"
         },
+        "professional": {
+          "title_professional": "Professionals",
+          "patiens":"Pacients",
+          "request": "Peticions",
+          "medical_history": "Antecedents"
+        },
         "configuration": {
           "title_setting": "Configuració",
           "linked_accounts":"Comptes Vinculades",
@@ -727,6 +733,9 @@
       "commons":{
         "error-network": "S'ha perdut la connexió amb Internet",
         "error-timeout": "S'ha superat el temps d'espera, si us plau intenteu de nou"
+      },
+      "patient":{
+        "title": "Pacients"
       }
       
 }

@@ -79,7 +79,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return postAPIaddReminder();
                 case url.includes('user/reminder/id') && method === 'GET':
                     return getAPIreminderID(); */
-
+                case url.includes('user/patients') && method === 'GET':
+                    return getAPIpatients();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -1110,6 +1111,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             title: "Paso 4000 diarios"
                         }
                     }
+                ]
+            })
+        }
+
+        function getAPIpatients(){
+            return ok({
+                success: true,
+                status: 200,
+                patients: [
+                    {name: 'David Valarezo león'},
+                    {name: 'Fernando Roque'},
+                    {name: 'María Mendoza Salcedo'},
                 ]
             })
         }

@@ -7,6 +7,7 @@ import { element } from 'protractor';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { RolesService } from 'src/app/services/roles.service';
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 
@@ -52,6 +53,7 @@ export class ActivityGoalPage implements OnInit {
     private modalCtrl: ModalController,
     private translate : TranslateService,
     private notification: NotificationService,
+    private role: RolesService
   ) { }
 
   ngOnInit() {
