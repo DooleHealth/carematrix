@@ -1448,6 +1448,17 @@ export class DooleService {
     );
   }
 
+  getAPIpatients(): Observable<any> {
+    let path = 'user/patients';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

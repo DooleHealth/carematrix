@@ -6,6 +6,7 @@ import { IonSlides, LoadingController} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { RolesService } from 'src/app/services/roles.service';
 export interface ItemAdvice {
   expanded?: boolean;
   item?: any;
@@ -29,6 +30,7 @@ export class AdvicesPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
+    private role: RolesService
   ) { }
 
   ngOnInit() {

@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { RolesService } from 'src/app/services/roles.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class TabsComponent implements OnInit {
 
   constructor(
      private router: Router , 
+     private role: RolesService,
      private authService: AuthenticationService)  {
     { this.user = this.authService?.user?.familyUnit}
   }

@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { DocumentsAddPage } from './documents-add/documents-add.page';
 import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
+import { RolesService } from 'src/app/services/roles.service';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -52,8 +53,8 @@ export class TrackingPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    private domSanitizer: DomSanitizer
-
+    private domSanitizer: DomSanitizer,
+    private role: RolesService
   ) { }
 
 
@@ -61,8 +62,8 @@ export class TrackingPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.setSegment()
     this.segmentChanged();
-    //this.getFormList();
     this.fireEvent(null, 0) 
   }
 
@@ -218,6 +219,18 @@ export class TrackingPage implements OnInit {
       default:
         this.getDiagnosticTestsList()
         break;
+    }
+  }
+
+  setSegment(){
+    if(!this.role?.component?.doc_diagnostic){
+      this.segment = 'forms'
+      if(!this.role?.component?.form){
+          this.segment = 'graphics'
+          if(!this.role?.component?.element){
+          this.segment = ''
+      }
+      }
     }
   }
 

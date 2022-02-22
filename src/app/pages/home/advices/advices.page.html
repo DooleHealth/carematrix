@@ -16,10 +16,10 @@
   (ionChange)="segmentChanged($event)"
   [(ngModel)]="segment" 
   scrollable>
-    <ion-segment-button value="news">
+    <ion-segment-button *ngIf="role?.component?.news" value="news">
       <ion-label>{{ 'advices.tag_news' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="advices">
+    <ion-segment-button *ngIf="role?.component?.advices" value="advices">
       <ion-label>{{ 'advices.tag_advices' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>

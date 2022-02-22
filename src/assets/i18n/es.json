@@ -132,6 +132,12 @@
           "videocall_test": "Test de Conectividad",
           "videocall_open":"Abrir"
         },
+        "professional": {
+          "title_professional": "Profesionales",
+          "patiens":"Pacientes",
+          "request": "Peticiones",
+          "medical_history": "Antecedentes"
+        },
         "help": {
           "title_help":  "Ayuda",
           "frequent_questions": "Preguntas Frecuentes",
@@ -731,6 +737,9 @@
       "commons":{
         "error-network": "Se ha perdido la conexión con Internet",
         "error-timeout": "Se ha superado el tiempo de espera, por favor intentelo de nuevo"
+      },
+      "patient":{
+        "title": "Pacientes"
       }
 
       

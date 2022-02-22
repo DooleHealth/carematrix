@@ -4,6 +4,7 @@ import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { RolesService } from 'src/app/services/roles.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PasswordPage } from './password/password.page';
@@ -43,6 +44,7 @@ export class SettingsPage implements OnInit {
     private translate: TranslateService, 
     private platform: Platform,
     private faio: FingerprintAIO,
+    private role: RolesService
     ) {}
   ngOnInit() {
     this.isAvailableFaID()
@@ -71,7 +73,7 @@ export class SettingsPage implements OnInit {
   getConfigurationParams(params: any){
     this.authentication = (params?.two_factor_authentication== "1")? true:false
     this.faceId = JSON.parse(localStorage.getItem('settings-bio'))
-    console.log('[SettingsPage] getConfigurationParams()', this.faceId, localStorage.getItem('settings-bio'));
+    //console.log('[SettingsPage] getConfigurationParams()', this.faceId, localStorage.getItem('settings-bio'));
     this.communications = (params?.communicationsNotificaton== "1")? true:false
     this.appointment = (params?.appointmentNotificaton== "1")? true:false
     this.diets = (params?.dietsNotificaton== "1")? true:false
@@ -186,11 +188,11 @@ export class SettingsPage implements OnInit {
       value: this.reminder
     }
     this.sendConfigution(params)
-    // let params2 = {
-    //   name: 'reminderNotificationMail',
-    //   value: this.reminder
-    // }
-    // this.sendConfigution(params2)
+    let params2 = {
+      name: 'reminderNotificationMail',
+      value: this.reminder
+    }
+    this.sendConfigution(params2)
   }
 
   changeNews(){
@@ -199,11 +201,11 @@ export class SettingsPage implements OnInit {
       value: this.news
     }
     this.sendConfigution(params)
-    // let params2 = {
-    //   name: 'newsNotificationMail',
-    //   value: this.reminder
-    // }
-    // this.sendConfigution(params2)
+    let params2 = {
+      name: 'newsNotificationMail',
+      value: this.news
+    }
+    this.sendConfigution(params2)
   }
 
   changeRelease(){

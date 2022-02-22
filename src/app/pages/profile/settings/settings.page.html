@@ -48,31 +48,31 @@
               <ion-label >{{'setting.subtitle_communications' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="communications" (ionChange)="changeCommunications()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.agenda">
               <ion-label >{{'setting.subtitle_appointment' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="appointment" (ionChange)="changeAppointment()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.agenda && role?.component?.reminder">
               <ion-label >{{'setting.subtitle_reminders' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="reminder" (ionChange)="changeReminders()" checked></ion-toggle>
             </ion-item>         
-            <ion-item>
+            <ion-item *ngIf="role?.component?.diet">
               <ion-label >{{'setting.subtitle_diets' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="diets" (ionChange)="changeDiets()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.drug">
               <ion-label >{{'setting.subtitle_medication' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="medication" (ionChange)="changeMedication()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.goal">
               <ion-label >{{'setting.subtitle_goals' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="goals" (ionChange)="changeGoals()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.advices">
               <ion-label >{{'setting.subtitle_advices' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="advices" (ionChange)="changeAdvices()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.news">
               <ion-label >{{'setting.subtitle_news' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="news" (ionChange)="changeNews()" checked></ion-toggle>
             </ion-item>          
@@ -80,11 +80,11 @@
               <ion-label >{{'setting.subtitle_offers' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="offers" (ionChange)="changeOffers()" checked></ion-toggle>
             </ion-item>
-             <ion-item>
+             <ion-item *ngIf="role?.component?.form">
               <ion-label >{{'setting.subtitle_form' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="form" (ionChange)="changeForm()" checked></ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="role?.component?.chat">
               <ion-label>{{'setting.subtitle_messages' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="messages" (ionChange)="changeMessages()" checked></ion-toggle>
             </ion-item>

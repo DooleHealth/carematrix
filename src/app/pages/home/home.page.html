@@ -37,12 +37,12 @@
   </ion-grid>
 
   <ion-grid>
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row *ngIf="role?.component?.goal" class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'home.goals_title' | translate | titlecase}}</ion-text>
     </ion-row>
 
     <!-- Goals  --> 
-    <ion-row >
+    <ion-row *ngIf="role?.component?.goal">
         <ion-card class="vertical-card2">  
             <ion-item lines="none" class="noMargin" routerLink="/profile/goals" routerLinkActive='active-item'>
               <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
@@ -59,8 +59,7 @@
                       
                       <ion-progress-bar [class]="slide.progress_bar_color" [value]="slide?.progress_bar_value" [reversed]="slide?.reversed" ></ion-progress-bar>
                       <p class="txtContactLittle"><b>{{slide?.element?.name}}: {{ (slide?.last_value_text)? slide?.last_value_text:'No data' }}</b> <br> {{ 'element.field_date' | translate }}: {{ formatDate(slide?.last_value_date)  }}</p>
-                    
-                    
+                                      
                     </ion-row>
                   </ion-grid>
                  </ion-slide>
@@ -80,11 +79,11 @@
     </ion-row>
 
     <!-- Reminders -->
-    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment">
+    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment && role?.component?.agenda">
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
     <!-- Agendas -->
-    <ion-row >
+    <ion-row *ngIf="role?.component?.agenda">
       <ion-slides style="width: 100%;" #slider pager="false" [options]="sliderConfigHorizontal">
         <ion-slide  *ngFor="let slide of this.appointment">
           <ion-card class="customCardAppointment">
@@ -116,16 +115,16 @@
     </ion-row>
 
     <!-- Advices -->
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row *ngIf="role?.component?.advices || role?.component?.news" class="paddingTopNoMarginBottom">
       <!-- News and Advices -->
 
       <ion-text class="txtTitle" style="white-space: nowrap">
         {{ 'home.advices_title' | translate}}</ion-text>
         <app-info info="{{'info.news' | translate}}"></app-info>
-      <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}
-      </ion-text>
+        <ion-text lines="none" class="textBluePadding" routerLink="/advices">{{ 'home.see_all_button' | translate}}
+        </ion-text>
     </ion-row>
-    <ion-row *ngIf="this.advices.length != 0">
+    <ion-row *ngIf="this.advices.length != 0 && (role?.component?.advices || role?.component?.news) ">
       <ion-slides #slider pager="false" [options]="sliderConfigHorizontal">
         <ion-slide [ngClass]="(this.advices.length >1)? 'slide':'slide1'" *ngFor="let slide of this.advices">
            <!-- Concejos -->
@@ -173,7 +172,7 @@
     </ion-row>
     <!-- Diets -->
 
-    <ion-row >
+    <ion-row *ngIf="role?.component?.diet">
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin" routerLink="/journal"  routerLinkActive='active-item' [state]="{segment: 'diets'}">
             <ion-img slot="start" src='assets/icons/apple-diet.svg'></ion-img>
@@ -207,7 +206,7 @@
       </ion-card>
     </ion-row>
     <!-- Drugs -->
-    <ion-row class="narRow">
+    <ion-row class="narRow" *ngIf="role?.component?.drug">
 
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive='active-item' [state]="{segment: 'medication'}">
@@ -251,7 +250,7 @@
       </ion-card>
     </ion-row>
     <!-- Games -->
-    <ion-row class="narRow">
+    <ion-row class="narRow" *ngIf="role?.component?.game">
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin"  routerLink="/journal" routerLinkActive='active-item' [state]="{segment: 'games'}">
             <ion-img slot="start" src='assets/icons/game.svg'></ion-img>
@@ -278,7 +277,7 @@
       </ion-card>
     </ion-row>
     <!-- Physical Activity -->
-    <ion-row class="narRow">
+    <ion-row class="narRow" *ngIf="role?.component?.element">
 
       <ion-card class="vertical-card">       
           <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive='active-item' [state]="{segment: 'health'}">

@@ -11,6 +11,8 @@ import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 import { TranslateService } from '@ngx-translate/core';
 import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe.page';
+import { PatientsPage } from './patients/patients.page';
+import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +34,9 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     private iab: InAppBrowser,
     private dooleService: DooleService,
-    private opentokService: OpentokService, private translate : TranslateService,) { }
+    private opentokService: OpentokService, 
+    private translate : TranslateService,
+    private role: RolesService) { }
 
   ngOnInit() {
     this.getUserProfile();
@@ -179,6 +183,16 @@ export class ProfilePage implements OnInit {
   async openVideocallModal(){
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
+      componentProps: {},
+    });
+    await modal.present();
+
+  }
+
+  async openPatientsModal(){
+    console.log('openPatientsModal()', ); 
+    const modal = await this.modalCtrl.create({
+      component: PatientsPage,
       componentProps: {},
     });
     await modal.present();
