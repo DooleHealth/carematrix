@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { Network } from '@ionic-native/network/ngx';
+import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginPage implements OnInit {
     public platform: Platform,
     private device: Device,
     private network: Network,
+    private role: RolesService
     ) { }
 
   ngOnInit() {
@@ -58,6 +60,8 @@ export class LoginPage implements OnInit {
         // this.analyticsService.logEvent('login', res)
         // this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         // this.analyticsService.logEvent('user_doole', {userId: res.idUser})
+        RolesService.Professional = false
+        this.role.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
         this.setLocalLanguages(res.language)
 
         console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);
