@@ -37,11 +37,9 @@ export class ComponentsApp {
 export class RolesService {
   component: ComponentsApp;
   isProfessional: boolean;
-  static Professional: boolean;
   userType: any;
   constructor() { 
-    //this.setProfessional(false)
-    this.getProfessional()
+    this.setProfessional(false)
     this.activatedAllComponents(true)
     //this.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
   }
@@ -57,9 +55,5 @@ export class RolesService {
   setProfessional(professional){
     this.isProfessional = professional? true: false
     
-  }
-  
-  getProfessional(){
-    this.isProfessional =  RolesService.Professional
   }
 }

@@ -60,8 +60,10 @@ export class LoginPage implements OnInit {
         // this.analyticsService.logEvent('login', res)
         // this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         // this.analyticsService.logEvent('user_doole', {userId: res.idUser})
-        RolesService.Professional = false
-        this.role.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
+
+        
+        // this.role.setProfessional(false)
+        // this.role.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
         this.setLocalLanguages(res.language)
 
         console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);

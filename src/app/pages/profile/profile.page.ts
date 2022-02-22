@@ -39,7 +39,6 @@ export class ProfilePage implements OnInit {
     private role: RolesService) { }
 
   ngOnInit() {
-    this.role = new RolesService()
     this.getUserProfile();
   }
 
