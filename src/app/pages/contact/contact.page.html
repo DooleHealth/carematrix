@@ -8,7 +8,7 @@
  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
 <!-- SegmentBar -->
 
-<ion-segment [(ngModel)]="segment">
+<ion-segment [(ngModel)]="segment" scrollable>
   <ion-segment-button *ngIf="role?.component?.agenda" value="video">
     <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
   </ion-segment-button>
@@ -19,7 +19,7 @@
     <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
   </ion-segment-button>
   <ion-segment-button value="puscher">
-    <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
+    <ion-label>{{ 'contact.tap_pusher' | translate}}</ion-label>
   </ion-segment-button>
 </ion-segment>
 <!-- videocall-->

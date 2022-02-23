@@ -1,20 +1,27 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Constants } from '../config/constants';
+import { AuthenticationService } from './authentication.service';
 declare const Pusher: any;
 @Injectable({
   providedIn: 'root'
 })
 export class PusherService {
-
+  app_id = "1287332"
+  key = "d560960f0cc446a18c95"
+  secret = "63522acb9ee1832855a4"
+  cluster = "eu"
+  nameChanel = 'private-LevelAccomplishmentCompleted.15189' //+ this.authService?.user?.idUser
   channel;
-  constructor(public http: HttpClient) {
-    var pusher = new Pusher('f89e2ed013b43522069e', {
-      cluster: 'eu',
+  constructor(
+    private constants: Constants, 
+    private authService: AuthenticationService,) {
+    var pusher = new Pusher(this.key, {
+      cluster: this.cluster,
+      authEndpoint: this.constants.API_DOOLE_ENDPOINT + '/broadcasting/auth',
       encrypted: true,
-      // secret: "e23e0b09095890bdac73",
-      // app_id: "1287334"
     });
-    this.channel = pusher.subscribe('push-channel');
+    this.channel = pusher.subscribe(this.nameChanel);
+    console.log('[PusherService] constructor()', pusher, this.nameChanel);
   }
 
   public init(){
