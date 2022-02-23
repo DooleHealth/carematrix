@@ -278,8 +278,7 @@
       <ng-template #second>
         <ng-container *ngIf="this.listGames.length > 0;else third">
           <ion-list>
-            <ion-card class="cardProfile" *ngFor="let item of this.listGamePlays" routerLink="games-detail"
-              [state]="{game: item.item, id:item.item.id}" routerLinkActive="active-item">
+            <ion-card class="cardProfile" *ngFor="let item of this.listGamePlays" >
               <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)"
                 [src]="item?.item?.file?.temporaryUrl" />
               <ion-item lines="none" (click)="openGames(item.item)">
@@ -300,7 +299,7 @@
               </ion-item>
               <ion-card-content [innerHtml]="item.item?.description">
               </ion-card-content>
-              <ion-button size="small" color="transparent" class="buttonLink">{{'button.detail' | translate}}
+              <ion-button size="small" color="transparent" class="buttonLink" (click)="openGames(item.item)">{{'button.detail' | translate}}
               </ion-button>
               &nbsp;
             </ion-card>
