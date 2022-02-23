@@ -15,9 +15,15 @@ export class PusherService {
   constructor(
     private constants: Constants, 
     private authService: AuthenticationService,) {
+    const TOKEN = authService.getAuthToken() 
     var pusher = new Pusher(this.key, {
       cluster: this.cluster,
       authEndpoint: this.constants.API_DOOLE_ENDPOINT + '/broadcasting/auth',
+      auth: {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`
+        }
+      },
       encrypted: true,
     });
     this.channel = pusher.subscribe(this.nameChanel);

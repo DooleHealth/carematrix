@@ -105,7 +105,7 @@ export class HomePage implements OnInit {
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
     private nav: NavController,
-    private role: RolesService
+    public role: RolesService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }

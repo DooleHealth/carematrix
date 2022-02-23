@@ -66,7 +66,7 @@ export class DiaryPage implements OnInit {
     public authService: AuthenticationService,
     private storageService: StorageService,
     private nav: NavController,
-    private role: RolesService
+    public role: RolesService
   ) {}
 
   ngOnInit() {

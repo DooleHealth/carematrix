@@ -53,7 +53,7 @@ export class ActivityGoalPage implements OnInit {
     private modalCtrl: ModalController,
     private translate : TranslateService,
     private notification: NotificationService,
-    private role: RolesService
+    public role: RolesService
   ) { }
 
   ngOnInit() {

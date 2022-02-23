@@ -27,7 +27,7 @@ export class TabsComponent implements OnInit {
 
   constructor(
      private router: Router , 
-     private role: RolesService,
+     public role: RolesService,
      private authService: AuthenticationService)  {
     { this.user = this.authService?.user?.familyUnit}
   }

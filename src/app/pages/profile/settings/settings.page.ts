@@ -44,7 +44,7 @@ export class SettingsPage implements OnInit {
     private translate: TranslateService, 
     private platform: Platform,
     private faio: FingerprintAIO,
-    private role: RolesService
+    public role: RolesService
     ) {}
   ngOnInit() {
     this.isAvailableFaID()

@@ -55,7 +55,7 @@ export class AgendaDetailPage implements OnInit {
     public notification: NotificationService,
     private languageService: LanguageService,
     public platform: Platform,
-    private role: RolesService
+    public role: RolesService
   ) { }
 
   ngOnInit() {

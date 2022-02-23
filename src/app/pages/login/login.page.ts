@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
     public platform: Platform,
     private device: Device,
     private network: Network,
-    private role: RolesService
+    public role: RolesService
     ) { }
 
   ngOnInit() {

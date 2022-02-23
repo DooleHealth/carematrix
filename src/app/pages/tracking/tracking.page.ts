@@ -54,7 +54,7 @@ export class TrackingPage implements OnInit {
     private modalCtrl: ModalController,
     private notification: NotificationService,
     private domSanitizer: DomSanitizer,
-    private role: RolesService
+    public role: RolesService
   ) { }
 
 
