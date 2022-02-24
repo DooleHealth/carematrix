@@ -14,6 +14,7 @@ import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
 import { StorageService } from 'src/app/services/storage.service'; 
 import { RolesService } from 'src/app/services/roles.service';
 import { isEqual } from 'lodash';
+import { Router } from '@angular/router';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -66,7 +67,8 @@ export class DiaryPage implements OnInit {
     public authService: AuthenticationService,
     private storageService: StorageService,
     private nav: NavController,
-    private role: RolesService
+    private role: RolesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -326,46 +328,14 @@ export class DiaryPage implements OnInit {
 
   async openGames(item){
     var browser : any;
-    if(item.type=="html5"){
-      const iosoption: InAppBrowserOptions = {
-        zoom: 'no',
-        location:'yes',
-        toolbar:'yes',
-        clearcache: 'yes',
-        clearsessioncache: 'yes',
-        disallowoverscroll: 'yes',
-        enableViewportScale: 'yes'
-      }
-
-      await this.auth.getUserLocalstorage().then(value =>{
-        this.auth.user = value
-      })
-      
-      if(item.url.startsWith("http")){
-        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
-        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
-      }
-      else
-        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+    if(item.game_type=="html5"){
+      console.log('[DiaryPage] openGames()', 'html5');
+      this.router.navigate([`/journal/games-detail`],{state:{ id:item.id}});
     }
 
-    if(item.type=="form") {
-      const options: InAppBrowserOptions = {
-        location: 'no',
-        toolbar: 'yes'
-      };
-
-      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+item.form_id+'" method="post" enctype="multipart/form-data">' +
-        '<input type="hidden" name="idForm" value="'+item.form_id+'">' +
-        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
-        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
-        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
-      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-      var browserRef = this.iab.create(
-        pageContentUrl,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
+    if(item.game_type=="form") {
+      console.log('[DiaryPage] openGames()', 'form');
+      this.router.navigate([`/journal/games-detail`],{state:{ id:item.id, form_id: item.form_id}});
     }
 
   }
