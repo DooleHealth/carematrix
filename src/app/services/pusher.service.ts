@@ -6,9 +6,9 @@ declare const Pusher: any;
   providedIn: 'root'
 })
 export class PusherService {
-  app_id = "1287332"
-  key = "d560960f0cc446a18c95"
-  secret = "63522acb9ee1832855a4"
+  app_id = "1287334"
+  key = "f89e2ed013b43522069e"
+  secret = "e23e0b09095890bdac73"
   cluster = "eu"
   nameChanel = 'private-LevelAccomplishmentCompleted.15189' //+ this.authService?.user?.idUser
   channel;

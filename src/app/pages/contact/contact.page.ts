@@ -9,7 +9,7 @@ import { RolesService } from 'src/app/services/roles.service';
   styleUrls: ['./contact.page.scss'],
 })
 export class ContactPage implements OnInit {
-  NAME_BIND = 'LevelAccomplishmentCompleted'
+  NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted'
   segment = 'video';
   constructor(
     public authService: AuthenticationService,
