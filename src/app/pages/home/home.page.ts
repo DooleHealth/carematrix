@@ -20,6 +20,7 @@ import { group } from '@angular/animations';
 import { stringify } from 'querystring';
 import { Observable } from 'rxjs';
 import { RolesService } from 'src/app/services/roles.service';
+import { PusherService } from 'src/app/services/pusher.service';
 
 export interface UserInformation {
   title?: string;
@@ -105,12 +106,14 @@ export class HomePage implements OnInit {
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
     private nav: NavController,
-    public role: RolesService
+    public role: RolesService,
+    private pusher: PusherService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() {
+    this.pusher.init()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.getUserInformation()
     this.checkHealthAccess();

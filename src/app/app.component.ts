@@ -19,6 +19,8 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
+import { PusherService } from './services/pusher.service';
+import { NotificationService } from './services/notification.service';
 const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
@@ -59,6 +61,7 @@ export class AppComponent implements OnInit {
     private modalCtrl: ModalController,
     private dooleService: DooleService,
     private faio : FingerprintAIO,
+    private pusher: PusherService,
   ) {
 
 
@@ -74,6 +77,7 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       // Secutity - Rooted
       //this.isDeviceRooted()
+      this.appPusherEvent();
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         // Push
@@ -100,6 +104,11 @@ export class AppComponent implements OnInit {
       }
 
     });
+  }
+
+  appPusherEvent(){
+    console.log('[AppComponent] getPusher()');
+    
   }
 
   isDeviceRooted(){

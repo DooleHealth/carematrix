@@ -76,5 +76,24 @@ export class NotificationService {
     });
   }
 
+  displayToastPusher() { 
+    try {
+      this.toastController.dismiss().then(() => {
+      }).catch(() => {
+      }).finally(() => {
+        console.log('Closed')
+      });
+    } catch(e) {}
+    
+    this.toastController.create({
+      position: 'middle', //'middle', 'bottom'
+      cssClass: 'toast-custom-class',
+      animated: true,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
+  }
+
 }
 

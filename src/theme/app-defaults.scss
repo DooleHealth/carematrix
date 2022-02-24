@@ -466,6 +466,19 @@ ion-spinner {
   top: 35%;
 }
 
+.toast-pusher-class {
+
+  --border-style:solid;
+  --border-width:3px;    
+  --background: url("/assets/images/cheque.svg");
+  --height: 3.5em;
+  --width: 3.5em;
+  --start: left;
+  animation: draw 3s 1;
+  animation-direction: normal;
+  top: 35%;
+}
+
 @keyframes draw {
   0%  {left: -1000px; opacity: 0.2}
   25%  {left: 0px; opacity: 0.75}

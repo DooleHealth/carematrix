@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Constants } from '../config/constants';
 import { AuthenticationService } from './authentication.service';
+import { NotificationService } from './notification.service';
 declare const Pusher: any;
+const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted' 
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +16,7 @@ export class PusherService {
   channel;
   constructor(
     private constants: Constants, 
+    private notification: NotificationService,
     private authService: AuthenticationService,) {
     const TOKEN = authService.getAuthToken() 
     var pusher = new Pusher(this.key, {
@@ -31,6 +34,10 @@ export class PusherService {
   }
 
   public init(){
-    return this.channel;
+   
+     this.channel.bind(NAME_BIND, (data) => {
+          console.log('[AppComponent] getPusher()' ,  data);
+          this.notification.displayToastSuccessful()
+        });
   }
 }

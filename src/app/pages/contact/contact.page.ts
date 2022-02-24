@@ -14,10 +14,9 @@ export class ContactPage implements OnInit {
   constructor(
     public authService: AuthenticationService,
     public role: RolesService,
-    private pusher: PusherService) { }
+    ) { }
   ngOnInit() {
     this.setSegment()
-    this.getPusher()
   }
 
   setSegment(){
@@ -29,12 +28,5 @@ export class ContactPage implements OnInit {
     }
   }
 
-  getPusher(){
-    console.log('[ContactPage] getPusher()');
-    const channel = this.pusher.init();
-        channel.bind(this.NAME_BIND, (data) => {
-          console.log('[ContactPage] getPusher()' ,  data);
-        });
-  }
 
 }
