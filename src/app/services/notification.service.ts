@@ -76,7 +76,7 @@ export class NotificationService {
     });
   }
 
-  displayToastPusher() { 
+  displayToastPusher(message) { 
     try {
       this.toastController.dismiss().then(() => {
       }).catch(() => {
@@ -87,9 +87,19 @@ export class NotificationService {
     
     this.toastController.create({
       position: 'middle', //'middle', 'bottom'
-      cssClass: 'toast-custom-class',
+      cssClass: 'toast-pusher-class',
+      message: message,
       animated: true,
-      duration: 2000,
+      duration: 30000,
+      buttons: [{
+          text: 'Cerrar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     }).then((toast) => {
       toast.present();
     });

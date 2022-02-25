@@ -37,7 +37,7 @@ export class PusherService {
    
      this.channel.bind(NAME_BIND, (data) => {
           console.log('[AppComponent] getPusher()' ,  data);
-          this.notification.displayToastSuccessful()
+          this.notification.displayToastPusher(data.message)
         });
   }
 }
