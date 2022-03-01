@@ -20,6 +20,8 @@ import { group } from '@angular/animations';
 import { stringify } from 'querystring';
 import { Observable } from 'rxjs';
 import { RolesService } from 'src/app/services/roles.service';
+import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
+import { NotificationService } from 'src/app/services/notification.service';
 
 export interface UserInformation {
   title?: string;
@@ -105,6 +107,8 @@ export class HomePage implements OnInit {
     private analyticsService: AnalyticsService,
     private languageService: LanguageService,
     private nav: NavController,
+    private modalCtrl: ModalController,
+    private notification: NotificationService,
     private role: RolesService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
@@ -973,4 +977,27 @@ export class HomePage implements OnInit {
       })
 
     }
+
+    async addElement(slide){
+      console.log('addElement()', slide);
+      const modal = await this.modalCtrl.create({
+        component:  ElementsAddPage,
+        componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
+      });
+    
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('addElement()', result);
+         
+          if(result?.data?.error){
+           // let message = this.translate.instant('landing.message_wrong_credentials')
+            //this.dooleService.presentAlert(message)
+          }else if(result?.data?.action == 'add'){
+            this.notification.displayToastSuccessful()
+            this.getUserInformation()
+          }
+        });
+    
+        await modal.present(); 
+      }
 }

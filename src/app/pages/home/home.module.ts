@@ -11,6 +11,7 @@ import { HomePage } from './home.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     IonicModule,
     ComponentsModule,
     TranslateModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    ElementsAddPageModule
   ],
   providers: [DatePipe, InAppBrowser] ,
   declarations: [HomePage,
