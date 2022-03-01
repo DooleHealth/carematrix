@@ -58,7 +58,7 @@
                     <ion-row ><ion-slide>&nbsp;</ion-slide>
                       
                       <ion-progress-bar [class]="slide.progress_bar_color" [value]="slide?.progress_bar_value" [reversed]="slide?.reversed" ></ion-progress-bar>
-                      <p class="txtContactLittle"><b>{{slide?.element?.name}}: {{ (slide?.last_value_text)? slide?.last_value_text:'No data' }}</b> <br> {{ 'element.field_date' | translate }}: {{ formatDate(slide?.last_value_date)  }}</p>
+                      <p class="txtContactLittle"><b>{{slide?.element?.name}}: {{ (slide?.last_value_text)? slide?.last_value_text:'No data' }}</b> <br> {{ getDateElementGoal(slide?.last_value_date)  }}</p>
                                       
                     </ion-row>
                   </ion-grid>
@@ -228,7 +228,7 @@
                 <ion-row routerLink="/journal" [state]="{segment: 'medication'}">
                   <p style="text-align: left">
                     {{(slide.alias !== null)? slide.alias:
-                    (slide?.name.substring(25,-1) + '...') }}
+                    (slide?.name?.substring(25,-1) + '...') }}
                   </p>
                 </ion-row>
                 <ion-row>

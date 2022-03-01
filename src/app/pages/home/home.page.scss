@@ -118,6 +118,10 @@ ion-img{
     font-weight: 900;
     overflow: hidden;
   }
+  ion-progress-bar{
+    border-radius: 20px;
+    min-height: 17px;
+  }
   .my-buffer-progress_red{
     --background:#82F038;
     --buffer-background:#facdcc;

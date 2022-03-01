@@ -205,7 +205,7 @@ export class HomePage implements OnInit {
           // Get the latest value of the element-goal
           this.goals.forEach(goal => {
             let element_last_value = goal?.element?.element_last_value // Get the element group
-            if(element_last_value)
+            if(element_last_value.value)
               this.getGoalLastValue(element_last_value, goal)
             else
               goal.last_value_text = this.translate.instant('home.goals_no_data');
@@ -503,6 +503,12 @@ export class HomePage implements OnInit {
       return 'my-buffer-progress_orange'
     else
       return 'my-buffer-progress_green'
+  }
+
+  getDateElementGoal(last_value_date){
+    if(last_value_date)
+      return this.translate.instant('element.field_date')+': '+this.formatDate(last_value_date)
+    else ''
   }
 
 
@@ -907,8 +913,8 @@ export class HomePage implements OnInit {
         let date0 = new Date(d).toUTCString();
         let date = new Date(date0);
         let time = auxdate[1];
-        date.setHours(time.substring(0,2));
-        date.setMinutes(time.substring(3,5));
+        date.setHours(time?.substring(0,2));
+        date.setMinutes(time?.substring(3,5));
         return this.transformDate(date, 'dd/MM/yyyy HH:mm')
       }
     }
