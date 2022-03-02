@@ -209,7 +209,7 @@ export class HomePage implements OnInit {
           // Get the latest value of the element-goal
           this.goals.forEach(goal => {
             let element_last_value = goal?.element?.element_last_value // Get the element group
-            if(element_last_value.value)
+            if(element_last_value?.value)
               this.getGoalLastValue(element_last_value, goal)
             else
               goal.last_value_text = this.translate.instant('home.goals_no_data');
