@@ -110,7 +110,8 @@
         "element":"Elementos",
         "enable_notifications": "Activar Notificaciones",
         "message_enable_notifications": "¿Deseas activar todas las notificaciones?",
-        "close_app": "¿Deseas cerrar la aplicación?"
+        "close_app": "¿Deseas cerrar la aplicación?",
+        "get_firts_data": "Introduce tu primer dato"
       },
       "profile":{
         "title_profile": "Mi Perfil",

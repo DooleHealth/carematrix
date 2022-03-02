@@ -60,7 +60,7 @@
                       <ion-progress-bar *ngIf="slide?.progress_bar_value" [class]="slide.progress_bar_color" [value]="slide?.progress_bar_value" [reversed]="slide?.reversed" routerLink="/activity-goal"  routerLinkActive='active-item' [state]="{ id: slide?.element_id, header:slide?.element?.name}"></ion-progress-bar>
                       <p *ngIf="slide?.progress_bar_value" class="txtContactLittle" routerLink="/activity-goal"  routerLinkActive='active-item' [state]="{ id: slide?.element_id, header:slide?.element?.name}"><b>{{slide?.element?.name}}: {{ (slide?.last_value_text)? slide?.last_value_text:'No data' }}</b> <br> {{ getDateElementGoal(slide?.last_value_date)  }}</p>
 
-                      <p *ngIf="!slide?.progress_bar_value" class="txtContactLittle"><b>{{slide?.element?.name}}: </b> <ion-text color="primary" (click)="addElement(slide)"> {{ 'Introduce tu primer dato'  }}</ion-text > </p>
+                      <p *ngIf="!slide?.progress_bar_value" class="txtContactLittle"><b>{{slide?.element?.name}}: </b> <ion-text color="primary" (click)="addElement(slide)"> {{ 'home.get_firts_data' | translate }}</ion-text > </p>
                                       
                     </ion-row>
                   </ion-grid>
