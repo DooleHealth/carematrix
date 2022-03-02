@@ -1314,7 +1314,9 @@ export class DooleService {
   getAPIallowedContacts(): Observable<any> {
     let path = `user/allowedContacts`;
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('withDepartments', '1') 
+    return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         let allowed = res.allowed

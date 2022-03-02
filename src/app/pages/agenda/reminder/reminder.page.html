@@ -83,8 +83,8 @@
 
       <!-- ACORDION -->
       <app-expandable expandHeight="400px" [expanded]="this.expanded">
-        <ion-list *ngFor="let e of days;let i= index">
-          <ion-item [lines]="(i==7)? 'none':'full' " *ngIf="setDay(e, i)">
+        <ion-list mode="ios" *ngFor="let e of days;let i= index">
+          <ion-item [lines]="(i==6)? 'none':'full' " *ngIf="setDay(e, i)">
            <!--  <ion-checkbox color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox> -->
             <ion-text>
               <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>
