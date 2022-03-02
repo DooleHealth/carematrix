@@ -3,7 +3,7 @@
     <ion-buttons slot="start" [class.isDisabled]="this.isSaving">
       <ion-back-button text=""  (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title style="font-size: medium;" *ngIf="this.event?.origin == 1 && !this.event?.staff">{{ 'appointment.header_event' | translate}}</ion-title>
+    <ion-title style="font-size: medium; padding-left: 0%;" *ngIf="this.event?.origin == 1 && !this.event?.staff">{{ 'appointment.header_event' | translate}}</ion-title>
     <ion-title *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
     <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
       <ion-button *ngIf="this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
