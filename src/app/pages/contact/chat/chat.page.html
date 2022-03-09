@@ -54,7 +54,7 @@
       </span>
       <span *ngIf="post?.recipients?.length >= 3">
         <div *ngFor="let item of post?.recipients; let i = index">
-          <span *ngIf="i === 0">
+          <span *ngIf="i === (post?.recipients?.length - 1)">
             <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation"
               [state]="{staff:item, chat: post.message?.message_header_id }" routerLinkActive='active-item'>
               <ion-thumbnail slot="start">
