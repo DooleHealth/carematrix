@@ -59,7 +59,7 @@ isLoading = false
   }
 
     redirect(staff){
-
+      console.log('[MedicalDirectoryPage] redirect() ', staff); 
       if(this.isChat){
         this.router.navigate(['/contact/chat/conversation'],{state:{staff:staff, chat:staff.message_header_id}})
       }else{

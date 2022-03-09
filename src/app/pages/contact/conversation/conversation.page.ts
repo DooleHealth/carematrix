@@ -79,7 +79,7 @@ export class ConversationPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("message_header_id: ", this.id);
+    console.log("[ConversationPage] ionViewWillEnter() message_header_id: ", this.id);
     console.log("[ConversationPage] ngOnInit()", this.staff);
     if(this.staff)
       this.to.push(this.staff?.id);
@@ -184,11 +184,15 @@ export class ConversationPage implements OnInit {
     this.btnImageEnabled = false;
 
     const postData = {
-      id: this.id,
       content: message,
       to: this.to,
-      type: this.type
+      type: this.type? this.type:this.staff.type
     };
+    if(this.id)
+    postData['id'] = this.id
+
+    console.log('send()', postData);
+
     this.dooleService.post('message', postData).subscribe(
         async (data) => {
           if (this.id != data.idMessageHeader){
@@ -432,10 +436,10 @@ export class ConversationPage implements OnInit {
         }else if(snapshot.numChildren()>0){
 
             //$("#isTyping").show();
-            self.title=this.translate.instant("Escribiendo...");
+            self.title=self.translate.instant("chat.writting");
         }else{
             //$("#isTyping").hide();
-            self.title=this.translate.instant("Chat");
+            self.title=self.translate.instant("chat.header");
         }
     });
   }

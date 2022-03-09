@@ -648,7 +648,8 @@
         "error_upload_files": "Error al adjuntar los archivos"
       },      
       "chat":{
-        "header":"Chat"
+        "header":"Chat",
+        "writting":"Escribiendo..."
       },
       "payment":{
         "header":"Método de pago",

@@ -21,6 +21,38 @@
   <ion-list *ngIf="this.data && this.data?.length > 0; else noData">
     <div *ngFor="let post of this.data; let i = index" >
 
+      <span *ngIf="post?.recipients?.length == 1">
+        <div *ngFor="let item of post?.recipients; let i = index">
+          <ion-item *ngIf="item.id == this.authService?.user.idUser" lines="full" routerLink="conversation"
+            [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
+            <ion-thumbnail slot="start">
+              <app-aspect-ratio [ratio]="{w:1, h:1}">
+                <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
+                  class="img-wrapper-doctors"></app-image-shell>
+              </app-aspect-ratio>
+            </ion-thumbnail>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="strech" size=8 class="user-name">
+                  <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
+                </ion-col>
+                <ion-col class="strech" size=4>
+                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) != myDate.slice(0, 10)">
+                    {{post?.message?.updated_at.slice(0, 10)}}</p>
+                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) == myDate.slice(0, 10)">
+                    {{post?.message?.updated_at.slice(11, 16)}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p class="strech txtTitleGoals">{{post?.message?.content}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </div>
+      </span>
+
       <span *ngIf="post?.recipients?.length == 2">
         <div *ngFor="let item of post?.recipients; let i = index">
           <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" routerLink="conversation"

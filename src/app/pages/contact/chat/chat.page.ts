@@ -71,7 +71,11 @@ export class ChatPage implements OnInit {
   private translate: TranslateService, 
   private languageService: LanguageService,) { }
 
-  ngOnInit() {
+  ngOnInit(){
+
+  }
+
+  ionViewWillEnter() {
 
     const dataSource = this.dooleService.getAPIUserMessages();
      // Initialize the model specifying that it is a shell model
