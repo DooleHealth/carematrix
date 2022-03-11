@@ -79,6 +79,10 @@
               <ion-label lines="none">{{ 'profile.configuration.settings' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
+            <ion-item routerLink="devices" detail="false" routerLinkActive='active-item'>
+              <ion-label lines="none">{{ 'profile.configuration.bluetooth' | translate}}</ion-label>
+              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+            </ion-item>
             <ion-item (click)="this.startVideoCall()" detail="false">
               <ion-label>{{'contact.tap_video' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>

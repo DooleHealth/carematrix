@@ -138,7 +138,8 @@
           "linked_accounts":"Comptes Vinculades",
           "settings": "Ajustos",
           "videocall_test": "Test de Connectivitat",
-          "videocall_open":"Obrir"
+          "videocall_open":"Obrir",
+          "bluetooth": "Bluetooth"
         },
         "help": {
           "title_help":  "Ajuda",

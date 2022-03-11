@@ -55,7 +55,11 @@ const routes: Routes = [
   {
     path: 'patients',
     loadChildren: () => import('./patients/patients.module').then( m => m.PatientsPageModule)
-  }
+  },
+  {
+    path: 'devices',
+    loadChildren: () => import('../bluetooth/devices/devices.module').then( m => m.DevicesPageModule)
+  },
 ];
 
 @NgModule({
