@@ -30,20 +30,20 @@ environment.ts
 https://ionicframework.com/docs/angular/pwa
 
 1. Ejecutar npm install para instalar @angular/pwa y firebase-tools
-2. Compilar con ionic build --prod
-3. Autenticarse (cuenta de google configurada en firebase) ejecutando **firebase login** 
+2. Compilar con **ionic build --prod**
+3. Autenticarse (cuenta de google configurada en firebase) ejecutando: **firebase login** 
 4. Iniciar con **firebase init** y configurar:  
 
 >"Which Firebase CLI features do you want to set up for this folder?" Choose "Hosting: Configure and deploy Firebase Hosting sites."
 >"Select a default Firebase project for this directory:" Choose the project you created on the Firebase website. (deneb-65a05)
 >"What do you want to use as your public directory?" Enter "www".
 
-5. Hacer el deploy con **firebase deploy**
+5. Deploy: **firebase deploy**
 ## Desactivar el deploy: 
-firebase hosting:disable deneb-65a05
+```firebase hosting:disable deneb-65a05```
 
-## En caso de reinstalar los plugins de capacitor:
-###### Reemplazar el codigo en node_modules/@capacitor/android/capacitor/src/main/java/com/getcapacitor/CapacitorFirebaseMessagingService.java para poder recibir llamadas aun cuando la app este cerrada
+## En caso de reinstalar los plugins de capacitor
+###### Reemplazar el código en node_modules/@capacitor/android/capacitor/src/main/java/com/getcapacitor/CapacitorFirebaseMessagingService.java para poder recibir llamadas aún cuando la app este cerrada:
 ```
 package com.getcapacitor;
 import android.content.ComponentName;
