@@ -11,7 +11,7 @@ export class ContactPage implements OnInit {
   segment = 'video';
   constructor(
     public authService: AuthenticationService,
-    private role: RolesService) { }
+    public role: RolesService) { }
   ngOnInit() {
     this.setSegment()
   }

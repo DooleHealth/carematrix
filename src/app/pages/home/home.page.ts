@@ -109,7 +109,7 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    private role: RolesService
+    public role: RolesService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }

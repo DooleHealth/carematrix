@@ -30,7 +30,7 @@ export class AdvicesPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
-    private role: RolesService
+    public role: RolesService
   ) { }
 
   ngOnInit() {

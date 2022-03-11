@@ -36,7 +36,7 @@ export class ProfilePage implements OnInit {
     private dooleService: DooleService,
     private opentokService: OpentokService, 
     private translate : TranslateService,
-    private role: RolesService) { }
+    public role: RolesService) { }
 
   ngOnInit() {
     this.getUserProfile();
