@@ -25,3 +25,7 @@ environment.ts
 npm install jetifier
 npx jetify
 npx cap sync android
+
+## Deploy APP en Firebase:
+https://ionicframework.com/docs/angular/pwa
+# Para apagar el servidor: firebase hosting:disable deneb-65a05
