@@ -40,10 +40,10 @@ https://ionicframework.com/docs/angular/pwa
 
 5. Deploy: **firebase deploy**
 ## Desactivar el deploy: 
-```firebase hosting:disable deneb-65a05```
+**firebase hosting:disable deneb-65a05**
 
-## En caso de reinstalar los plugins de capacitor
-###### Reemplazar el código en node_modules/@capacitor/android/capacitor/src/main/java/com/getcapacitor/CapacitorFirebaseMessagingService.java para poder recibir llamadas aún cuando la app este cerrada:
+## En caso de reinstalar los plugins de Capacitor
+###### Reemplazar el código en node_modules/@capacitor/android/capacitor/src/main/java/com/getcapacitor/CapacitorFirebaseMessagingService.java para poder recibir llamadas aún con la app cerrada:
 ```
 package com.getcapacitor;
 import android.content.ComponentName;
