@@ -22,15 +22,15 @@ npm run build;npx cap sync; npx cap copy android;npx cap open android
 environment.ts
 
 ## Error Android “error: package android.support.v4.content does not exist”
-npm install jetifier
-npx jetify
-npx cap sync android
+1. npm install jetifier
+2. npx jetify
+3. npx cap sync android
 
 ## Deploy APP en Firebase:
 https://ionicframework.com/docs/angular/pwa
 
-npm install
-firebase init 
+1. npm install
+2. firebase init 
 
 "Which Firebase CLI features do you want to set up for this folder?" Choose "Hosting: Configure and deploy Firebase Hosting sites."
 "Select a default Firebase project for this directory:" Choose the project you created on the Firebase website. (deneb-65a05)
