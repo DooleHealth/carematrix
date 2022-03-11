@@ -159,6 +159,10 @@ const routes: Routes = [
     path: 'medication',
     loadChildren: () => import('./pages/diary/medication/medication.module').then( m => m.MedicationPageModule)
   },
+  {
+    path: 'scan',
+    loadChildren: () => import('./pages/bluetooth/scan/scan.module').then( m => m.ScanPageModule)
+  }
 
 
 ];
