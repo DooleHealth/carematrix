@@ -140,7 +140,7 @@ export class HomePage implements OnInit {
             //console.log(available);
             this.showGoogleFit = !available;
             this.health.requestAuthorization([
-              'distance', 'steps', 'heart_rate', 'activity', 'weight' // 'body_temperature','oxygen_saturation','blood_glucose','blood_pressure'  read and write permissions
+              'distance', 'steps', 'heart_rate', 'activity', 'weight','blood_glucose','blood_pressure','oxygen_saturation'//, read and write permissions
             ])
                 .then(res => {
                   //console.log(res);
@@ -582,17 +582,17 @@ export class HomePage implements OnInit {
       throw error;
     });
 
-    console.log('dataType: body_temperature');
-     this.health.query({
-       startDate,
-       endDate,
-       dataType: 'body_temperature',
-     }).then(data => {
-       this.postHealth('temperature', data);
-     }).catch(error => {
-       console.error(error);
-      throw error;
-    });
+    // console.log('dataType: body_temperature');
+    //  this.health.query({
+    //    startDate,
+    //    endDate,
+    //    dataType: 'body_temperature',
+    //  }).then(data => {
+    //    this.postHealth('temperature', data);
+    //  }).catch(error => {
+    //    console.error(error);
+    //   throw error;
+    // });
 
     console.log('dataType: oxygen_saturation');
     this.health.query({
