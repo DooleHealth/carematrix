@@ -590,7 +590,9 @@
         "reject": "Rechazar"
       },
       "conversation":{
-        "placeholder":"Escribe un mensaje"
+        "placeholder":"Escribe un mensaje.",
+        "warning":"Advertencia: ",
+        "warning_text":"Este no es un chat en tiempo real"
       },
       "advices":{
         "header":"Novedades y Consejos",

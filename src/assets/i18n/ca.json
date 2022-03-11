@@ -588,7 +588,9 @@
         "reject": "Rebutjar"
       },
       "conversation":{
-        "placeholder":"Escriu un missatge"
+        "placeholder":"Escriu un missatge",
+        "warning":"Advertència: ",
+        "warning_text":"Aquest no és un xat en temps real"
       },
       "advices":{
         "header":"Novetats i Consells",
