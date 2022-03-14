@@ -607,6 +607,7 @@
         "tap_video": "Videoconsulta",
         "tap_appointment": "Cita Presencial",
         "tap_chat": "Chat",
+        "tap_pusher": "Pusher",
         "text_video": "Habla directamente con tu profesional habitual o un especialista desde donde tú quieras.Te atenderán en el horario seleccionado",
         "regular_professional": "Profesional Habitual",
         "text_regular_professional": "Reserva una cita con tu médico o profesional de siempre para realizar la videoconsulta",

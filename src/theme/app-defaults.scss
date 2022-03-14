@@ -466,6 +466,17 @@ ion-spinner {
   top: 35%;
 }
 
+.toast-pusher-class {   
+  --background: url("https://acegif.com/wp-content/uploads/balloon-3.gif");
+  --height: 100%;
+  --width: 100%;
+  --button-color: rgb(255, 0, 0);
+  --color: rgb(70, 68, 68);
+  font-size: large;
+  font-weight: bolder;
+  top: 35%;
+}
+
 @keyframes draw {
   0%  {left: -1000px; opacity: 0.2}
   25%  {left: 0px; opacity: 0.75}
