@@ -15,9 +15,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ContactPageRoutingModule,
     TranslateModule,
-    ComponentsModule
+    ComponentsModule,
+    ContactPageRoutingModule
   ],
   declarations: [ContactPage]
 })

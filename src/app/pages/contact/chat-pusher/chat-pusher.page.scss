@@ -98,3 +98,27 @@
       }
     }
   }
+
+
+  .yellow-box {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    padding: 5px;
+    /* margin-bottom: 20px; */
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: small;
+}
+
+ion-footer{
+
+ 
+    ion-item {
+    --padding-start: 0px;
+    --ion-background-color: #fafafa !important;
+    color: #3498DB;
+ 
+    }
+     
+    }

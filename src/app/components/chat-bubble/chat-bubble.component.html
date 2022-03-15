@@ -1,7 +1,7 @@
 <!-- Generated template for the ChatBubbleComponent component -->
 <ng-content></ng-content>
 <div>
-  <div class="chat-bubble {{message.from == 'message_response' ? 'right' : 'left'}} {{message.mediaType == 'UPLOADING' ? 'uploading' : ''}}"   >
+  <div class="chat-bubble {{message?.from == 'message_response' ? 'right' : 'left'}} {{message.mediaType == 'UPLOADING' ? 'uploading' : ''}}"   >
     <div>
       <div class="message">{{message.fromName}}</div>
     </div>
