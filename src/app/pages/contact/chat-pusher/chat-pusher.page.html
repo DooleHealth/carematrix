@@ -9,6 +9,13 @@
 
 <ion-content>
   <div  #contentArea>
+    <ion-infinite-scroll threshold="10px" position="top" (ionInfinite)="getMessagesList(this.lastPage)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
     <ion-list no-lines>
       <ion-item *ngFor="let message of this.messagesList">
         <ion-label>
@@ -17,8 +24,7 @@
       </ion-item>
       <ion-item *ngFor="let message of this.messageUploadList">
         <chat-bubble [chatMessage]="message"></chat-bubble>
-      </ion-item>
-      
+      </ion-item>    
     </ion-list>
   </div>
 

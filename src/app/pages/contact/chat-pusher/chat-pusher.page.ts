@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { PusherMessageService } from 'src/app/services/pusher/pusher-message.service';
@@ -28,10 +28,10 @@ export class ChatPusherPage implements OnInit {
   private data: any = history.state?.data;
   public name: string = this.staff?.name;
 
-/*   messages: Array<Message> = [];
-  message: string = ''; */
   lastMessageId = -1;
-  
+  lastPage = 0
+  currentPage = 0
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('txtChat') txtChat: any;
   loading: any;
   public messageUploadList=[];
@@ -94,6 +94,8 @@ export class ChatPusherPage implements OnInit {
       async (res: any) =>{
         console.log('[ChatPusherPage] getAPImessage()', await res);
         if (res.success) {
+          this.currentPage = res.currentPage
+          this.lastPage = (this.currentPage < res.lastPage)? (this.currentPage) + 1: 0
           let list = []
           this.lastMessageId = res.messages[0]?.id? res.messages[0]?.id: this.lastMessageId
           res.messages.forEach(msg =>{
@@ -108,16 +110,54 @@ export class ChatPusherPage implements OnInit {
               fromName: msg.user?.name,
             };
             list.push(message);
-            console.log('[ChatPusherPage] getAPImessage() messages' ,message);
+            //console.log('[ChatPusherPage] getAPImessage() messages' ,message);
           })
           if(page == 0){
             this.messagesList = list.reverse()
             this.scrollToBottom()
-          }else
-          this.messagesList = this.messagesList.concat(list.reverse());
+          }else{
+            list = list.reverse()
+            this.messagesList = list.concat(this.messagesList);
+          }
+
         }
 
         this.loading = false
+       },(err) => { 
+        this.loading = false
+          console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
+      }) ,() => {
+        // Called when operation is complete (both success and error)
+        this.loading = false
+      };
+  }
+
+  getLastMessage() {
+
+    this.dooleService.getAPImessage(this.id).subscribe(
+      async (res: any) =>{
+        console.log('[ChatPusherPage] getAPImessage()', await res);
+        if (res.success) {
+          this.lastMessageId = res.messages[0]?.id? res.messages[0]?.id: this.lastMessageId
+          let msg = res.messages[0];
+            const message: Message = {
+              id: msg?.id,
+              message: msg?.content,
+              idUser: msg?.user_id,
+              timestamp: new Date(msg?.created_at).getTime() ,
+              mediaType: msg?.mime.toUpperCase(),
+              fileUrl: msg?.file,
+              from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
+              fromName: msg.user?.name,
+            };
+            console.log('[ChatPusherPage] getAPImessage() messages' ,message);
+
+          this.messagesList.push(message);
+          if(this.messagesList.length > 10)
+           this.messagesList.splice(0,this.messagesList.length-10 )
+        }
+        this.scrollToBottom()
        },(err) => { 
         this.loading = false
           console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
@@ -168,7 +208,8 @@ export class ChatPusherPage implements OnInit {
             // this.observeTyping();
             //this.getMessagesList(0)
           }
-          this.getMessagesList(0)
+          //this.getMessagesList(0)
+          this.getLastMessage()
           this.txtChat.clearInput();
           this.btnEnabled = true;
           this.btnImageEnabled = true;
