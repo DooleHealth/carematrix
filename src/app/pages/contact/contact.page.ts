@@ -12,6 +12,7 @@ export class ContactPage implements OnInit {
   constructor(
     public authService: AuthenticationService,
     public role: RolesService) { }
+    
   ngOnInit() {
     this.setSegment()
   }
@@ -24,5 +25,6 @@ export class ContactPage implements OnInit {
       }
     }
   }
+
 
 }

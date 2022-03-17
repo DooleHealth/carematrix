@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ContactPageRoutingModule } from './contact-routing.module';
+import { ChatPusherPageRoutingModule } from './chat-pusher-routing.module';
 
-import { ContactPage } from './contact.page';
+import { ChatPusherPage } from './chat-pusher.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
 
@@ -15,10 +15,10 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule,
     ComponentsModule,
-    ContactPageRoutingModule
+    TranslateModule,
+    ChatPusherPageRoutingModule
   ],
-  declarations: [ContactPage]
+  declarations: [ChatPusherPage]
 })
-export class ContactPageModule {}
+export class ChatPusherPageModule {}

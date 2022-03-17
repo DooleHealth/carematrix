@@ -1461,6 +1461,19 @@ export class DooleService {
     );
   }
 
+  getAPImessage(id, params?): Observable<any> {
+    let path = 'user/message/'+ id
+    let httpParams = new HttpParams();
+    httpParams = httpParams? httpParams.append('page', params) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIelementsList(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

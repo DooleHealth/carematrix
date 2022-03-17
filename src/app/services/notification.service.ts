@@ -76,5 +76,34 @@ export class NotificationService {
     });
   }
 
+  displayToastPusher(message) { 
+    try {
+      this.toastController.dismiss().then(() => {
+      }).catch(() => {
+      }).finally(() => {
+        console.log('Closed')
+      });
+    } catch(e) {}
+    
+    this.toastController.create({
+      position: 'middle', //'middle', 'bottom'
+      cssClass: 'toast-pusher-class',
+      message: message,
+      animated: true,
+      duration: 30000,
+      buttons: [{
+          text: 'Cerrar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }).then((toast) => {
+      toast.present();
+    });
+  }
+
 }
 
