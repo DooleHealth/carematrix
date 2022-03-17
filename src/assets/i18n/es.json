@@ -653,7 +653,8 @@
       },      
       "chat":{
         "header":"Chat",
-        "writting":"Escribiendo..."
+        "writting":"Escribiendo...",
+        "loading":"Cargando más datos..."
       },
       "payment":{
         "header":"Método de pago",

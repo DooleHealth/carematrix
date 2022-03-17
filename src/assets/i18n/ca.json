@@ -649,7 +649,8 @@
       },
       "chat":{
         "header":"Chat",
-        "writting":"Escrivint..."
+        "writting":"Escrivint...",
+        "loading":"Carregant més dades..."
       },
       "payment":{
         "header":"Mètode de pagament",

@@ -37,6 +37,7 @@
 
       <ion-list no-lines>
         <div  *ngFor="let message of this.messagesList; let i = index">
+          <ion-badge mode="ios" *ngIf="this.currentPage == this.lastPage && i==0" color="primary">{{'Fin'}}</ion-badge>
           <!-- <ion-badge mode="ios" *ngIf="printDate(message)" color="primary">{{message?.date}}</ion-badge> -->
           <ion-item >
             <ion-label>

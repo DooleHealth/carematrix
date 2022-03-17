@@ -136,7 +136,7 @@ export class ConversationPage implements OnInit {
               from:  (data?.output?.user.id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
               fromName: data?.output?.user.name,
               mediaType: data?.output?.mime,
-              date:this.formatDate(data?.output?.created_at),
+              date:this.formatDate(data?.output?.created_at, ' '),
             };
             this.messagesList = this.messagesList.concat(message);
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
@@ -176,7 +176,7 @@ export class ConversationPage implements OnInit {
                   fileUrl: msg?.file, //image/jpeg
                   from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
                   fromName: msg.user?.name,
-                  date: this.formatDate(msg?.created_at),
+                  date: this.formatDate(msg?.created_at, 'T'),
                 };
                 list.push(message);
                 //console.log('[ChatPusherPage] getAPImessage() Elemento Repetido: messages' ,message);
@@ -186,8 +186,9 @@ export class ConversationPage implements OnInit {
                 this.messagesList = list.reverse()
                 this.scrollToBottom()
               }else{
-                list = list.reverse()
-                this.messagesList = list.concat(this.messagesList);
+                this.addMessageToList(list)
+/*                 list = list.reverse()
+                this.messagesList = list.concat(this.messagesList); */
 
               }
               //this.toggleInfiniteScroll()
@@ -207,8 +208,14 @@ export class ConversationPage implements OnInit {
           this.toggleInfiniteScroll()
   }
 
-  formatDate(d){
-    var auxdate = d.split('T')
+  addMessageToList(list){
+    list.forEach(msg =>{
+      this.messagesList.unshift(msg)
+    })
+  }
+
+  formatDate(d, param){
+    var auxdate = d.split(param)
     d = auxdate[0];
     let date0 = new Date(d).toISOString();
      let date = new Date(date0);
