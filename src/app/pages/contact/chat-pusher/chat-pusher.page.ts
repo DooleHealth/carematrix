@@ -30,6 +30,7 @@ export class ChatPusherPage implements OnInit {
 
   lastMessageId = -1;
   lastPage = 0
+  nextPage = 0
   currentPage = 0
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('txtChat') txtChat: any;
@@ -62,10 +63,9 @@ export class ChatPusherPage implements OnInit {
     this.getPusher()
   }
 
-
   getPusher() {
     const NAME_BIND = 'App\\Events\\MessageCreated' 
-    const channel = this.pusherMessage.init('353');
+    const channel = this.pusherMessage.init(this.id); //'353'
         channel.bind(NAME_BIND, (data) => {
           console.log('[ChatPusherPage] getPusher() data' , data);
           if (data.id !== this.lastMessageId) {
@@ -81,6 +81,8 @@ export class ChatPusherPage implements OnInit {
             };
             this.messagesList = this.messagesList.concat(message);
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
+
+            this.scrollToBottom()
           }
         })
 
@@ -89,48 +91,53 @@ export class ChatPusherPage implements OnInit {
 
   getMessagesList(pagination?) {
     this.loading = true
-    const page = pagination? pagination:0
-    this.dooleService.getAPImessage(this.id, page).subscribe(
-      async (res: any) =>{
-        console.log('[ChatPusherPage] getAPImessage()', await res);
-        if (res.success) {
-          this.currentPage = res.currentPage
-          this.lastPage = (this.currentPage < res.lastPage)? (this.currentPage) + 1: 0
-          let list = []
-          this.lastMessageId = res.messages[0]?.id? res.messages[0]?.id: this.lastMessageId
-          res.messages.forEach(msg =>{
-            const message: Message = {
-              id: msg?.id,
-              message: msg?.content,
-              idUser: msg?.user_id,
-              timestamp: new Date(msg?.created_at).getTime() ,
-              mediaType: msg?.mime.toUpperCase(),
-              fileUrl: msg?.file,
-              from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
-              fromName: msg.user?.name,
-            };
-            list.push(message);
-            //console.log('[ChatPusherPage] getAPImessage() messages' ,message);
-          })
-          if(page == 0){
-            this.messagesList = list.reverse()
-            this.scrollToBottom()
-          }else{
-            list = list.reverse()
-            this.messagesList = list.concat(this.messagesList);
-          }
+    const page = pagination? pagination:0;
+    if(this.nextPage <= this.lastPage || this.lastPage == 0)
+        this.dooleService.getAPImessage(this.id, page).subscribe(
+          async (res: any) =>{
+            console.log('[ChatPusherPage] getAPImessage()', await res);
+            if (res.success) {
+              this.currentPage = res.currentPage
+              this.nextPage =  (this.currentPage) + 1
+              this.lastPage =  res.lastPage
+              let list = []
+              this.lastMessageId = res.messages[0]?.id? res.messages[0]?.id: this.lastMessageId
+              res.messages.forEach(msg =>{
+                const message: Message = {
+                  id: msg?.id,
+                  message: msg?.content,
+                  idUser: msg?.user_id,
+                  timestamp: new Date(msg?.created_at).getTime() ,
+                  mediaType: msg?.mime.toUpperCase(),
+                  fileUrl: msg?.file,
+                  from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
+                  fromName: msg.user?.name,
+                };
+                list.push(message);
+                //console.log('[ChatPusherPage] getAPImessage() messages' ,message);
+              })
+              this.infiniteScroll.complete()
+              if(page == 0){
+                this.messagesList = list.reverse()
+                this.scrollToBottom()
+              }else{
+                list = list.reverse()
+                this.messagesList = list.concat(this.messagesList);
+              }
+              //this.toggleInfiniteScroll()
+            }
 
-        }
-
-        this.loading = false
-       },(err) => { 
-        this.loading = false
-          console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
-      }) ,() => {
-        // Called when operation is complete (both success and error)
-        this.loading = false
-      };
+            this.loading = false
+          },(err) => { 
+            this.loading = false
+              console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
+              throw err; 
+          }) ,() => {
+            // Called when operation is complete (both success and error)
+            this.loading = false
+          };
+      else 
+          this.toggleInfiniteScroll()
   }
 
   getLastMessage() {
@@ -139,8 +146,8 @@ export class ChatPusherPage implements OnInit {
       async (res: any) =>{
         console.log('[ChatPusherPage] getAPImessage()', await res);
         if (res.success) {
-          this.lastMessageId = res.messages[0]?.id? res.messages[0]?.id: this.lastMessageId
           let msg = res.messages[0];
+          if(this.lastMessageId != msg.id){
             const message: Message = {
               id: msg?.id,
               message: msg?.content,
@@ -151,13 +158,19 @@ export class ChatPusherPage implements OnInit {
               from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
               fromName: msg.user?.name,
             };
+            
             console.log('[ChatPusherPage] getAPImessage() messages' ,message);
 
-          this.messagesList.push(message);
-          if(this.messagesList.length > 10)
-           this.messagesList.splice(0,this.messagesList.length-10 )
+            this.lastMessageId = msg?.id? msg?.id: this.lastMessageId
+            this.messagesList.push(message);
+            if(this.messagesList.length > 10)
+              this.messagesList.splice(0,this.messagesList.length-10 )
+            
+            this.scrollToBottom()
+          }
+
         }
-        this.scrollToBottom()
+
        },(err) => { 
         this.loading = false
           console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
@@ -173,17 +186,6 @@ export class ChatPusherPage implements OnInit {
         this.contentArea.scrollToBottom(200);
 }, 200);
 }
-
-  formatDate(d){
-    var auxdate = d.split('T')
-    d = auxdate[0];
-    let date0 = new Date(d).toISOString();
-    let date = new Date(date0);
-    let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    return date;
-  }
 
   send(){
     const message = this.txtChat.content;
@@ -224,42 +226,10 @@ export class ChatPusherPage implements OnInit {
           // Called when operation is complete (both success and error)
           // loading.dismiss();
         });
-
-
   }
 
-  sendMessage() {
-/*     if (this.message !== '') {
-      // Assign an id to each outgoing message. It aids in the process of differentiating between outgoing and incoming messages
-      this.lastMessageId = v4();
-      const data = {
-        id: this.lastMessageId,
-        text: this.message,
-      }; */
-      
-/*       this.http
-        .post(`http://localhost:4000/messages`, data)
-        .subscribe((res: Message) => {
-          const message = {
-            ...res,
-            // The message type is added to distinguish between incoming and outgoing             messages. It also aids with styling of each message type
-            type: 'outgoing',
-          };
-          this.messages = this.messages.concat(message);
-          this.message = '';
-        }); */
-        
-  //  }
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
-
-
-    // This method adds classes to the element based on the message type
-/*     getClasses(messageType) {
-      return {
-        incoming: messageType === 'incoming',
-        outgoing: messageType === 'outgoing',
-      };
-    } */
-
 
 }

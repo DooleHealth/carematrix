@@ -9,7 +9,7 @@
 
 <ion-content>
   <div  #contentArea>
-    <ion-infinite-scroll threshold="10px" position="top" (ionInfinite)="getMessagesList(this.lastPage)">
+    <ion-infinite-scroll threshold="10px" position="top" (ionInfinite)="getMessagesList(this.nextPage)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Loading more data...">
