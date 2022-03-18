@@ -654,7 +654,8 @@
       "chat":{
         "header":"Chat",
         "writting":"Escribiendo...",
-        "loading":"Cargando más datos..."
+        "loading":"Cargando más datos...",
+        "end":"Fin"
       },
       "payment":{
         "header":"Método de pago",

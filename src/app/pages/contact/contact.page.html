@@ -18,9 +18,6 @@
   <ion-segment-button *ngIf="role?.component?.chat" value="chat">
     <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="puscher">
-    <ion-label>{{ 'contact.tap_pusher' | translate}}</ion-label>
-  </ion-segment-button>
 </ion-segment>
 <!-- videocall-->
 
@@ -249,11 +246,6 @@
       </ion-list>
   </div> 
 
-  <div *ngSwitchCase="'puscher'">
-    <ion-button routerLink="chat-pusher" routerLinkActive='active-item'>
-      CHAT PUSHER
-    </ion-button>
-  </div>
 </div>
 </ion-content>
 

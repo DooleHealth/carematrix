@@ -63,6 +63,7 @@ export class ConversationPage implements OnInit {
   family_name:any;
   address:any;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+  footerHidden: boolean;
   private images : any = [];
   private mimes : any = [];
   private imagesTemp : any = [];
@@ -147,10 +148,25 @@ export class ConversationPage implements OnInit {
 
   }
 
+  onScroll(event) {
+    // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
+    if (event.detail.deltaY > 0 && this.footerHidden) return;
+    if (event.detail.deltaY < 0 && !this.footerHidden) return;
+    if (event.detail.deltaY > 0) {
+      console.log("scrolling down, hiding footer...");
+      this.footerHidden = true;
+    } else {
+      console.log("scrolling up, revealing footer...");
+      this.footerHidden = false;
+    };
+  };
+  
+
   scrollToBottom() {
+    console.log('[ChatPusherPage] getPusher() contentArea' ,   this.contentArea);
       setTimeout(() => {  
-          this.contentArea.scrollToBottom(200);
-    }, 200);
+          this.contentArea.scrollToBottom(250);
+    }, 300);
   }
 
   getMessagesList(pagination?) {
@@ -181,7 +197,7 @@ export class ConversationPage implements OnInit {
                 list.push(message);
                 //console.log('[ChatPusherPage] getAPImessage() Elemento Repetido: messages' ,message);
               })
-              this.infiniteScroll.complete()
+
               if(page == 0){
                 this.messagesList = list.reverse()
                 this.scrollToBottom()
@@ -189,9 +205,8 @@ export class ConversationPage implements OnInit {
                 this.addMessageToList(list)
 /*                 list = list.reverse()
                 this.messagesList = list.concat(this.messagesList); */
-
               }
-              //this.toggleInfiniteScroll()
+              this.infiniteScroll.complete()
               console.log('[ChatPusherPage] getAPImessage() size messages' , this.messagesList.length);
             }
 

@@ -30,3 +30,12 @@ ion-footer{
     margin-right: auto;
     display: block;
  }
+
+ ion-fab{
+    width: 30px;
+    height: 30px;
+    ion-fab-button{
+        width: 24px;
+        height: 24px;
+    }
+ }

@@ -650,7 +650,8 @@
       "chat":{
         "header":"Chat",
         "writting":"Escrivint...",
-        "loading":"Carregant més dades..."
+        "loading":"Carregant més dades...",
+        "end":"Fi"
       },
       "payment":{
         "header":"Mètode de pagament",
