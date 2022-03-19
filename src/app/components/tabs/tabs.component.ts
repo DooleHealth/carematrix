@@ -24,7 +24,7 @@ export class TabsComponent implements OnInit {
   contact= 'Contacto'
   tracking= 'Seguimiento'
   journal= 'Mi diario'
-
+  pusherNotification = false;
   constructor(
      private router: Router , 
      public role: RolesService,

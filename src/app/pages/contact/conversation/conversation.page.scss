@@ -19,4 +19,23 @@ ion-footer{
  
     }
      
+ }
+
+ ion-badge{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: max-content;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+ }
+
+ ion-fab{
+    width: 30px;
+    height: 30px;
+    ion-fab-button{
+        width: 24px;
+        height: 24px;
     }
+ }

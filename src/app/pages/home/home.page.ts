@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { RolesService } from 'src/app/services/roles.service';
 import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { NotificationService } from 'src/app/services/notification.service';
+import { PusherService } from 'src/app/services/pusher.service';
 
 export interface UserInformation {
   title?: string;
@@ -109,12 +110,14 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    public role: RolesService
+    public role: RolesService,
+    private pusher: PusherService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() {
+    this.pusher.init()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.getUserInformation()
     this.checkHealthAccess();
@@ -221,7 +224,7 @@ export class HomePage implements OnInit {
         this.searchIndexDiet()
         this.slideDietChange()
         this.sliderDiet?.slideTo(this.currentIndexDiet)
-        
+
         //Elements
         this.activity = []
         let elements = res?.data.elements
@@ -601,7 +604,7 @@ export class HomePage implements OnInit {
       dataType: 'oxygen_saturation',
     }).then(data => {
       this.postHealth('oxygen_saturation', data);
-      
+
     }).catch(error => {
       console.error(error);
       throw error;
@@ -663,7 +666,7 @@ export class HomePage implements OnInit {
       id: slide.id,
       type: 'hide',
       status: 1
-    }   
+    }
     this.dooleService.postAPIContentStatus(params).subscribe(
       async (res: any) =>{
           if(res.success){
@@ -867,7 +870,7 @@ export class HomePage implements OnInit {
         browser = this.iab.create(item.url, '_system', iosoption);
       }
     }
-    
+
     if(item.game_type=="form") {
       // const options: InAppBrowserOptions = {
       //   location: 'no',
@@ -969,10 +972,10 @@ export class HomePage implements OnInit {
       const notification = localStorage.getItem('allNotification');
       if(JSON.parse(notification))
       return
-      
+
       console.log('[HomePage] activateAllNotifications()');
       let params = { active: 'all', value: factor }
-      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{ 
+      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{
         localStorage.setItem('allNotification', 'true');
       })
 
@@ -984,11 +987,11 @@ export class HomePage implements OnInit {
         component:  ElementsAddPage,
         componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
       });
-    
+
       modal.onDidDismiss()
         .then((result) => {
           console.log('addElement()', result);
-         
+
           if(result?.data?.error){
            // let message = this.translate.instant('landing.message_wrong_credentials')
             //this.dooleService.presentAlert(message)
@@ -997,7 +1000,7 @@ export class HomePage implements OnInit {
             this.getUserInformation()
           }
         });
-    
-        await modal.present(); 
+
+        await modal.present();
       }
 }
