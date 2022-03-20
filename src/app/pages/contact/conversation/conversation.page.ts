@@ -140,12 +140,16 @@ export class ConversationPage implements OnInit {
 
   }
 
- async onScroll(event: any) {
+  async onScroll(event: any) {
     const scrollElement = await this.content.getScrollElement(); // get scroll element
     // calculate if max bottom was reached
-    this.footerHidden = (scrollElement.scrollTop === 
-      scrollElement.scrollHeight - scrollElement.clientHeight)? false:true;
+    let height = scrollElement.scrollHeight - scrollElement.clientHeight
+    let total = Math.abs(scrollElement.scrollTop - height) 
+    //Android is not accurate
+    this.footerHidden = ( total <= 5 )? false:true;
   }
+
+  
   
 
   scrollToBottom() {

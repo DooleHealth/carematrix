@@ -27,13 +27,13 @@
 
 <ion-content  #content  [scrollEvents]="true" (ionScroll)="onScroll($event)" >
  
-    <ion-fab *ngIf="this.footerHidden" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab [ngClass]="(this.footerHidden)? 'scrollHiden':'slideNone'" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="scrollToBottom()" mode="ios" translucent="true" color="secondary" size="small" >
         <ion-icon name="chevron-down-sharp"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 
-    <div  #contentArea>
+    <div #contentArea>
       <ion-infinite-scroll threshold="0px" position="top" (ionInfinite)="getMessagesList(this.nextPage)">
         <ion-infinite-scroll-content
           loadingSpinner="bubbles"
