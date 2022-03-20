@@ -35,6 +35,7 @@ interface Message {
 })
 export class ConversationPage implements OnInit {
   @ViewChild(IonContent, {read: IonContent, static: false}) contentArea: IonContent;
+  @ViewChild(IonContent) content: IonContent;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   private data: any = history.state?.data;
@@ -62,6 +63,7 @@ export class ConversationPage implements OnInit {
   tutor:any;
   family_name:any;
   address:any;
+  bander = 0;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   footerHidden: boolean;
   private images : any = [];
@@ -111,17 +113,6 @@ export class ConversationPage implements OnInit {
       console.log('no id');
   }
 
-  private findUser(id){
-    const result = null;
-    for (let i = 0; i < this.users.length; i++){
-      if (this.users[i].id == id) {
-        return this.users[i];
-      }
-    }
-    const u = {name: '', image: ''};
-    return u;
-  }
-
   getPusher() {
     const NAME_BIND = 'App\\Events\\MessageCreated' 
     const channel = this.pusherMessage.init(this.id);
@@ -137,9 +128,10 @@ export class ConversationPage implements OnInit {
               from:  (data?.output?.user.id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
               fromName: data?.output?.user.name,
               mediaType: data?.output?.mime,
-              date:this.formatDate(data?.output?.created_at, ' '),
+              date: this.getCalendarDay(new Date(data?.output?.created_at).getTime()),
             };
             this.messagesList = this.messagesList.concat(message);
+            this.setShowDay(this.messagesList)
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
             this.scrollToBottom()
           }
@@ -148,34 +140,33 @@ export class ConversationPage implements OnInit {
 
   }
 
-  onScroll(event) {
-    // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
-    if (event.detail.deltaY > 0 && this.footerHidden) return;
-    if (event.detail.deltaY < 0 && !this.footerHidden) return;
-    if (event.detail.deltaY > 0) {
-      console.log("scrolling down, hiding footer...");
-      this.footerHidden = true;
-    } else {
-      console.log("scrolling up, revealing footer...");
-      this.footerHidden = false;
-    };
-  };
+  async onScroll(event: any) {
+    const scrollElement = await this.content.getScrollElement(); // get scroll element
+    // calculate if max bottom was reached
+    let height = scrollElement.scrollHeight - scrollElement.clientHeight
+    let total = Math.abs(scrollElement.scrollTop - height) 
+    //Android is not accurate
+    this.footerHidden = ( total <= 5 )? false:true;
+  }
+
+  
   
 
   scrollToBottom() {
     console.log('[ChatPusherPage] getPusher() contentArea' ,   this.contentArea);
       setTimeout(() => {  
-          this.contentArea.scrollToBottom(250);
+          this.contentArea.scrollToBottom(300);
     }, 300);
   }
 
   getMessagesList(pagination?) {
     this.loading = true
+    console.log('[ChatPusherPage] getMessagesList() bander:' ,   ++this.bander);
     const page = pagination? pagination:0;
     if(this.nextPage <= this.lastPage)
         this.dooleService.getAPImessage(this.id, page).subscribe(
           async (res: any) =>{
-            console.log('[ChatPusherPage] getAPImessage()', await res);
+           // console.log('[ChatPusherPage] getAPImessage()', await res);
             if (res.success) {
               this.currentPage = res.currentPage
               this.nextPage =  (this.currentPage) + 1
@@ -192,7 +183,7 @@ export class ConversationPage implements OnInit {
                   fileUrl: msg?.file, //image/jpeg
                   from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
                   fromName: msg.user?.name,
-                  date: this.formatDate(msg?.created_at, 'T'),
+                  date: this.getCalendarDay(new Date(msg?.created_at).getTime())// this.formatDate(msg?.created_at, 'T'),
                 };
                 list.push(message);
                 //console.log('[ChatPusherPage] getAPImessage() Elemento Repetido: messages' ,message);
@@ -206,8 +197,9 @@ export class ConversationPage implements OnInit {
 /*                 list = list.reverse()
                 this.messagesList = list.concat(this.messagesList); */
               }
+              this.setShowDay(this.messagesList)
               this.infiniteScroll.complete()
-              console.log('[ChatPusherPage] getAPImessage() size messages' , this.messagesList.length);
+              console.log('[ChatPusherPage] getAPImessage() size messages' , this.messagesList);
             }
 
             this.loading = false
@@ -229,46 +221,28 @@ export class ConversationPage implements OnInit {
     })
   }
 
-  formatDate(d, param){
-    var auxdate = d.split(param)
-    d = auxdate[0];
-    let date0 = new Date(d).toISOString();
-     let date = new Date(date0);
-    const datePipe: DatePipe = new DatePipe('es')
-    return datePipe.transform(date,  'dd/MM/yyyy');
- /*    let date0 = new Date(d).getTime();
-    return this.getCalendarDay(date0) */
-  }
-
-  printDate(message){
-    if(message?.date != this.lastDate)
-      return this.lastDate = message.date
-    else return false
-  }
-
-  returnDay(d){
-    let date = new Date(d);
-
-    let today = new Date()
-    if(date.getDay() == today.getDay())
-      return 'Hoy'
-    else if(date.getDay() == today.getDay()-1)
-      return 'Ayer'
-    else{
-      const datePipe: DatePipe = new DatePipe('es')
-      return datePipe.transform(date,  'dd/MM/yyyy');
-    }
+  setShowDay(messagesList){
+    messagesList.forEach(message => {
+      if(message?.date != this.lastDate){
+        message['showDay'] = true
+        this.lastDate = message.date
+      }
+      else message['showDay'] = false
+    });
   }
 
   getCalendarDay(epoch: number): string {
     if (!epoch) {
       return null;
     }
-
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
     return moment(epoch).calendar(null, {
-      sameDay: '[Hoy]',
-      lastDay: '[Ayer]',
-      sameElse: 'DD/MM/YY'
+      sameDay: `[${today}]`,
+      lastDay: `[${yesterday}]`,
+      sameElse: 'DD/MM/YY',
+      lastWeek : 'DD/MM/YY',
+      nextDay : 'DD/MM/YY'
     });
   }
 

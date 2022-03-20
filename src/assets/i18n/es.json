@@ -351,6 +351,8 @@
         "no_events": "No hay eventos",
         "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
         "days": ["L", "M", "X", "J", "V", "S", "D"],
+        "today": "Hoy",
+        "yesterday": "Ayer",
         "appointment_by_user": "Cita añadida por el usuario",
         "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",

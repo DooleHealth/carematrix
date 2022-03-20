@@ -35,7 +35,15 @@ ion-footer{
     width: 30px;
     height: 30px;
     ion-fab-button{
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
     }
+ }
+
+ .scrollHiden{
+    display: block;
+ }
+
+ .slideNone{
+    display: none;
  }

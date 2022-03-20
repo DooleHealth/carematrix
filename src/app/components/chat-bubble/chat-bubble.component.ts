@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import moment from 'moment';
 import { DooleService } from 'src/app/services/doole.service';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -27,9 +28,10 @@ export class ChatBubbleComponent implements OnInit {
   target:number;
   public lat: string;
   public lon: string;
+  static translate: any;
 
-  constructor(private dooleService : DooleService, private document: DocumentViewer) { 
-    
+  constructor(private dooleService : DooleService, private document: DocumentViewer, private  translate : TranslateService,) { 
+    ChatBubbleComponent.translate = this.translate
   }
 
   ngOnInit() {
@@ -84,11 +86,14 @@ export class ChatBubbleComponent implements OnInit {
       return null;
     }
     let timeString = 'h:mm A';
-
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
     return moment(epoch).calendar(null, {
-      sameDay: '[Hoy] ' + timeString,
-      lastDay: '[Ayer] ' + timeString,
-      sameElse: 'DD/MM/YY ' + timeString
+      sameDay: `[${today}] ` + timeString,
+      lastDay: `[${yesterday}] ` + timeString,
+      lastWeek : 'DD/MM/YY ' + timeString,
+      sameElse: 'DD/MM/YY ' + timeString,
+      nextDay : 'DD/MM/YY ' + timeString,
     });
   }
 
