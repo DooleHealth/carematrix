@@ -217,23 +217,6 @@ export class ConversationPage implements OnInit {
     })
   }
 
-  formatDate(d, param){
-    var auxdate = d.split(param)
-    d = auxdate[0];
-    let date0 = new Date(d).toISOString();
-    let date = new Date(date0);
-    let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    return this.getCalendarDay(date.getTime())
-  }
-
-/*   printDate(message){
-    if(message?.date != this.lastDate)
-      return this.lastDate = message.date
-    else return false
-  } */
-
   setShowDay(messagesList){
     messagesList.forEach(message => {
       if(message?.date != this.lastDate){
