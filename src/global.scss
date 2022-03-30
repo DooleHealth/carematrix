@@ -38,3 +38,8 @@
     //--backdrop-opacity: 0.2;
     --background: white;
 }
+
+// los elemento en el DOM con la etiqueta <hr> no se visualizan en el froala
+hr{
+    background: black !important;
+}
