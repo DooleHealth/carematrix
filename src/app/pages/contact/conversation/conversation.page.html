@@ -25,7 +25,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  #content  [scrollEvents]="true" (ionScroll)="onScroll($event)" >
+<ion-content #content  [scrollEvents]="true" (ionScroll)="onScroll($event)" >
  
     <ion-fab [ngClass]="(this.footerHidden)? 'scrollHiden':'slideNone'" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="scrollToBottom()" mode="ios" translucent="true" color="secondary" size="small" >
@@ -34,7 +34,7 @@
     </ion-fab>
 
     <div #contentArea>
-      <ion-infinite-scroll threshold="0px" position="top" (ionInfinite)="getMessagesList(this.nextPage)">
+      <ion-infinite-scroll threshold="50px" position="top" (ionInfinite)="getMessagesList(true,$event)">
         <ion-infinite-scroll-content
           loadingSpinner="bubbles"
           loadingText="{{'chat.loading'| translate}}">

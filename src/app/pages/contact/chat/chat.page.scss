@@ -14,6 +14,14 @@
       --padding-start: 0px;
     }
   }
+
+  ion-item {
+    border-bottom: 1pt solid #ced6d6;
+    ion-thumbnail{
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+  }
   
   .user-name > app-text-shell {
     --text-shell-line-height: 17px;

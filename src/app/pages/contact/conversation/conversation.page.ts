@@ -34,19 +34,17 @@ interface Message {
   styleUrls: ['./conversation.page.scss'],
 })
 export class ConversationPage implements OnInit {
-  @ViewChild(IonContent, {read: IonContent, static: false}) contentArea: IonContent;
-  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   private data: any = history.state?.data;
-  public name: string = this.staff?.name;
 
   lastMessageId = -1;
   lastPage = 0
   nextPage = 0
   currentPage = 0
   lastDate: string = ''
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   public messageUploadList=[];
   public messagesList = [];
@@ -66,16 +64,8 @@ export class ConversationPage implements OnInit {
   bander = 0;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   footerHidden: boolean;
-  private images : any = [];
-  private mimes : any = [];
-  private imagesTemp : any = [];
-  private commentsRef;
-  private loadingShow = false;
   private btnImageEnabled = true;
-  private title : string;
-  private isTyping: Boolean = false;
 
-  
   constructor(
               private authService: AuthenticationService,
               public _zone: NgZone,
@@ -96,19 +86,22 @@ export class ConversationPage implements OnInit {
 
   ngOnInit() {
     if(this.id)
-    this.getMessagesList()  
+    this.getMessagesList(false)
   }
 
   ionViewWillEnter(){
-    console.log("[ConversationPage] ionViewWillEnter() message_header_id: ", this.id);
-    console.log("[ConversationPage] ngOnInit()", this.staff);
-    if(this.staff)
-      this.to.push(this.staff?.id);
-    else 
-      console.log("staff is undefined, post message without staff id");
 
-    if(this.id)
+    // console.log("[ConversationPage] ionViewWillEnter() message_header_id: ", JSON.stringify(this.id));
+    // console.log("[ConversationPage] ionViewWillEnter() staff", JSON.stringify(this.staff) );
+    // console.log("[ConversationPage] ionViewWillEnter() data", JSON.stringify(this.data) );
+    // if(this.staff)
+    //   this.to.push(this.staff?.id);
+    // else 
+    //   console.log("staff is undefined, post message without staff id");
+
+    if(this.id){
       this.getPusher()
+    }
     else
       console.log('no id');
   }
@@ -133,7 +126,9 @@ export class ConversationPage implements OnInit {
             this.messagesList = this.messagesList.concat(message);
             this.setShowDay(this.messagesList)
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
-            this.scrollToBottom()
+            this._zone.run(() => {
+              this.scrollToBottom();      
+            });
           }
         })
 
@@ -153,21 +148,48 @@ export class ConversationPage implements OnInit {
   
 
   scrollToBottom() {
-    console.log('[ChatPusherPage] getPusher() contentArea' ,   this.contentArea);
+    console.log('[ChatPusherPage] getPusher() contentArea' ,   this.content);
       setTimeout(() => {  
-          this.contentArea.scrollToBottom(300);
+          this.content.scrollToBottom(300);
     }, 300);
   }
 
-  getMessagesList(pagination?) {
+  getRecipients(recipients){
+      recipients.forEach(r => {
+       if(r.messageable_id != this.authService?.user.idUser){
+
+          if(r.messageable_type == 'App\\Department'){
+              this.staff = {
+                name: r.messageable.name,
+                image: r.messageable.temporaryUrl,
+                type: 'department'
+              }
+          }
+          else{
+            this.staff = {
+              name: r.messageable.name,
+              image: r.messageable.temporaryUrl,
+              type: 'user'
+            }
+          }
+          this.to.push(this.staff?.id);
+       }
+      })
+  }
+
+  getMessagesList(isFirstLoad, event?) {
     this.loading = true
     console.log('[ChatPusherPage] getMessagesList() bander:' ,   ++this.bander);
-    const page = pagination? pagination:0;
+    const page = this.nextPage;
     if(this.nextPage <= this.lastPage)
         this.dooleService.getAPImessage(this.id, page).subscribe(
           async (res: any) =>{
-           // console.log('[ChatPusherPage] getAPImessage()', await res);
+            console.log('[ChatPusherPage] getAPImessage()', await res);
             if (res.success) {
+
+              if(!isFirstLoad)
+              this.getRecipients(res.recipients)
+
               this.currentPage = res.currentPage
               this.nextPage =  (this.currentPage) + 1
               this.lastPage =  res.lastPage
@@ -191,13 +213,17 @@ export class ConversationPage implements OnInit {
 
               if(page == 0){
                 this.messagesList = list.reverse()
-                this.scrollToBottom()
+                this._zone.run(() => {
+                  this.scrollToBottom();
+          
+                });
               }else{
                 this.addMessageToList(list)
 /*                 list = list.reverse()
                 this.messagesList = list.concat(this.messagesList); */
               }
               this.setShowDay(this.messagesList)
+              if(isFirstLoad)
               this.infiniteScroll.complete()
               console.log('[ChatPusherPage] getAPImessage() size messages' , this.messagesList);
             }
@@ -251,11 +277,11 @@ export class ConversationPage implements OnInit {
     const message = this.txtChat.content;
     this.btnEnabled = false;
     this.btnImageEnabled = false;
-
+    let type = this.type? this.type:this.staff.type
     const postData = {
       content: message,
       to: this.to,
-      type: this.type? this.type:this.staff.type
+      type: type.toLowerCase()
     };
     if(this.id)
     postData['id'] = this.id
@@ -512,5 +538,4 @@ export class ConversationPage implements OnInit {
     if(this.data)
     this.router.navigate([`/home`]);
   }
-
 }
