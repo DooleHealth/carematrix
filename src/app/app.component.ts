@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
@@ -59,6 +59,7 @@ export class AppComponent implements OnInit {
     private modalCtrl: ModalController,
     private dooleService: DooleService,
     private faio : FingerprintAIO,
+    private _zone: NgZone,
   ) {
 
 
@@ -385,31 +386,50 @@ export class AppComponent implements OnInit {
           }
         }
         console.log('staff: ', staff);
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        this._zone.run(()=>{
+          this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        });
         break;
       case "FORM":
-        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        this._zone.run(()=>{
+          this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        });
         break;
       case "DRUGINTAKE":
-        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        this._zone.run(()=>{
+          this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        });
         break;
       case "VIDEOCALL":
-        this.redirecToVideocall(notification)
+        this._zone.run(()=>{
+          this.redirecToVideocall(notification)
+        });
         break;
       case "ADVICE":
-        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        });
         break;
       case "DIET":
-        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        });
         break;
       case "AGENDA":
-        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        });
         break;
       case "REMINDER":
-        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        });
         break;
       case "GAME":
-        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+        case "REMINDER":
+          this._zone.run(()=>{
+            this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+          });
         break;
       default:
         console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
