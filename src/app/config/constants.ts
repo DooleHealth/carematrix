@@ -16,13 +16,13 @@ export class Constants {
 
     public setEndPoint(isDev){
         if(isDev){
-          this.API_ENDPOINT = 'https://deneb.doole.io/api'
-          this.API_DOOLE_ENDPOINT = 'https://deneb.doole.io/api'
-          this.DOOLE_ENDPOINT = 'https://deneb.doole.io/api'
+          this.API_ENDPOINT = 'https://deneb-qa.doole.io/api'
+          this.API_DOOLE_ENDPOINT = 'https://deneb-qa.doole.io/api'
+          this.DOOLE_ENDPOINT = 'https://deneb-qa.doole.io'
         }else{
           this.API_ENDPOINT = 'https://deneb.doole.io/api'
           this.API_DOOLE_ENDPOINT = 'https://deneb.doole.io/api'
-          this.DOOLE_ENDPOINT = 'https://deneb.doole.io/api'
+          this.DOOLE_ENDPOINT = 'https://deneb.doole.io'
         }
     }
 }
