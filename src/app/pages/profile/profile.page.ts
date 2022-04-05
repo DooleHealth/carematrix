@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe.page';
 import { PatientsPage } from './patients/patients.page';
 import { RolesService } from 'src/app/services/roles.service';
+import { Constants } from 'src/app/config/constants';
 
 @Component({
   selector: 'app-profile',
@@ -36,6 +37,7 @@ export class ProfilePage implements OnInit {
     private dooleService: DooleService,
     private opentokService: OpentokService, 
     private translate : TranslateService,
+    public contant: Constants,
     public role: RolesService) { }
 
   ngOnInit() {
@@ -197,6 +199,12 @@ export class ProfilePage implements OnInit {
     });
     await modal.present();
 
+  }
+
+
+  changeEndPoint(isDev){
+    this.contant.setEndPoint(isDev)
+    this.signOut()
   }
 
 
