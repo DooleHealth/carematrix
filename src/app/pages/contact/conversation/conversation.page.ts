@@ -112,6 +112,7 @@ export class ConversationPage implements OnInit {
         channel.bind(NAME_BIND, (data) => {
           console.log('[ChatPusherPage] getPusher() data' , data);
           if (data.id !== this.lastMessageId) {
+            let date = this.getCalendarDay(new Date().getTime())
             const message: Message = {
               id: data?.output?.id,
               message: data?.output?.content,
@@ -121,14 +122,12 @@ export class ConversationPage implements OnInit {
               from:  (data?.output?.user.id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
               fromName: data?.output?.user.name,
               mediaType: data?.output?.mime,
-              date: this.getCalendarDay(new Date(data?.output?.created_at).getTime()),
+              date: date + 'Hola- Hoy',
             };
             this.messagesList = this.messagesList.concat(message);
             this.setShowDay(this.messagesList)
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
-            this._zone.run(() => {
-              this.scrollToBottom();      
-            });
+            this.scrollToBottom(); 
           }
         })
 
