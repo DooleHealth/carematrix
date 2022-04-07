@@ -18,7 +18,7 @@ export interface ListDiagnosticTests {
 }
 export interface Filter {
   start_date?: string,
-  end_date?: number,
+  end_date?: string,
   testTypes?: [],
   profesional?: [],
   sources?: [],
@@ -299,6 +299,10 @@ async addDocument(){
           if(result?.data?.error){
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
+            if(this.filter?.start_date)
+            this.filter.start_date = this.filter?.start_date?.split('T')[0]
+            if(this.filter?.end_date)
+            this.filter.end_date = this.filter?.end_date?.split('T')[0]
             this.getDiagnosticTestsList()
           }
         });
