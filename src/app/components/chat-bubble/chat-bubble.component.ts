@@ -125,9 +125,38 @@ export class ChatBubbleComponent implements OnInit {
         //this.document.viewDocument(this.localfile, 'application/pdf',null);
       });
     });
+    
+  }
 
-    
-    
+  openMedia(message){
+    window.open(message.fileUrl, "");
+  }
+
+  mediaTypeImg(type){
+    let image = type.toUpperCase()
+    if(image === 'PHOTO'){
+        return true
+    }
+    let image2 = image.split('/')[0]
+    if(image2 === 'IMAGE')
+        return true
+  }
+
+  mediaTypeApp(type){
+    let opt =  type.split('/')[0]
+    if(opt === 'APPLICATION'){
+      return true
+    }
+    if(opt === 'FILE')
+      return true
+  }
+
+  mediaType(type){
+    let opt = type.toUpperCase().split('/')[0]
+    if(opt === 'VIDEO')
+      return true
+    else
+      return false
   }
 
 }
