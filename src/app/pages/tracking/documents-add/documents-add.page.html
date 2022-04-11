@@ -22,11 +22,14 @@
         <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
+      <ion-item lines="none">
+        <ion-text style="width: fit-content; margin-right: 20px;" >{{ 'documents_add.field_title' | translate }}</ion-text>
+      <!--         <ion-input formControlName="title" (ionInput)="isSubmittedTitle = false"></ion-input>
+        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
+      </ion-item>
       <ion-item>
-        <ion-text style="width: fit-content; margin-right: 20px;">{{ 'documents_add.field_title' | translate }}</ion-text>
-        <ion-input formControlName="title" (ionInput)="isSubmittedTitle = false"></ion-input>
-        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
-        
+        <ion-textarea formControlName="title" (ionInput)="isSubmittedTitle = false" maxlength="100"></ion-textarea>
+        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>        
       </ion-item>
       <ion-item>
         <ion-label>{{ 'documents_add.field_date' | translate }}</ion-label>
@@ -38,7 +41,7 @@
         <ion-label>{{ 'documents_add.field_description' | translate }}</ion-label>       
       </ion-item>
       <ion-item>
-        <ion-textarea formControlName="description"></ion-textarea>       
+        <ion-textarea rows="8" formControlName="description"></ion-textarea>       
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.field_private' | translate }}</ion-label>
