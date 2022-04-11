@@ -201,7 +201,7 @@ export class ConversationPage implements OnInit {
                   idUser: msg?.user_id,
                   timestamp: new Date(msg?.created_at).getTime() ,
                   mediaType: msg?.mime.toUpperCase(),
-                  fileUrl: msg?.file, //image/jpeg
+                  fileUrl: msg?.temporaryUrl, //image/jpeg
                   from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
                   fromName: msg.user?.name,
                   date: this.getCalendarDay(new Date(msg?.created_at).getTime())// this.formatDate(msg?.created_at, 'T'),
