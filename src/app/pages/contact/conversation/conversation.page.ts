@@ -122,7 +122,7 @@ export class ConversationPage implements OnInit {
               from:  (data?.output?.user.id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
               fromName: data?.output?.user.name,
               mediaType: data?.output?.mime,
-              date: date + 'Hola- Hoy',
+              date: date,
             };
             this.messagesList = this.messagesList.concat(message);
             this.setShowDay(this.messagesList)
