@@ -20,7 +20,7 @@
       </ion-item>
       <ion-item>
         <ion-label floating>{{ 'medications.telephone' | translate}}</ion-label>
-        <ion-input formControlName="phone" type="text" required (ionFocus)="this.isSubmittedTelephone = false" maxlength="18"></ion-input>
+        <ion-input formControlName="phone" type="tel" required (ionFocus)="this.isSubmittedTelephone = false" maxlength="18"></ion-input>
         <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedTelephone && this.form.get('phone').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
       <ion-item>
@@ -40,7 +40,7 @@
       </ion-item>
       <ion-item>
         <ion-label floating>{{ 'medications.postal_code' | translate}}</ion-label>
-        <ion-input formControlName="postal_code" type="numeric" (ionFocus)="this.isSubmittedPostalCode = false" maxlength="10"></ion-input>
+        <ion-input formControlName="postal_code" type="tel" (ionFocus)="this.isSubmittedPostalCode = false" maxlength="10"></ion-input>
         <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedPostalCode && this.form.get('postal_code').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
     </form>

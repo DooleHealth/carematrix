@@ -112,6 +112,7 @@ export class ConversationPage implements OnInit {
         channel.bind(NAME_BIND, (data) => {
           console.log('[ChatPusherPage] getPusher() data' , data);
           if (data.id !== this.lastMessageId) {
+            let date = this.getCalendarDay(new Date().getTime())
             const message: Message = {
               id: data?.output?.id,
               message: data?.output?.content,
@@ -121,14 +122,12 @@ export class ConversationPage implements OnInit {
               from:  (data?.output?.user.id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
               fromName: data?.output?.user.name,
               mediaType: data?.output?.mime,
-              date: this.getCalendarDay(new Date(data?.output?.created_at).getTime()),
+              date: date,
             };
             this.messagesList = this.messagesList.concat(message);
             this.setShowDay(this.messagesList)
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
-            this._zone.run(() => {
-              this.scrollToBottom();      
-            });
+            this.scrollToBottom(); 
           }
         })
 
@@ -151,7 +150,7 @@ export class ConversationPage implements OnInit {
     console.log('[ChatPusherPage] getPusher() contentArea' ,   this.content);
       setTimeout(() => {  
           this.content.scrollToBottom(300);
-    }, 300);
+    }, 1000);
   }
 
   getRecipients(recipients){
@@ -202,7 +201,7 @@ export class ConversationPage implements OnInit {
                   idUser: msg?.user_id,
                   timestamp: new Date(msg?.created_at).getTime() ,
                   mediaType: msg?.mime.toUpperCase(),
-                  fileUrl: msg?.file, //image/jpeg
+                  fileUrl: msg?.temporaryUrl, //image/jpeg
                   from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
                   fromName: msg.user?.name,
                   date: this.getCalendarDay(new Date(msg?.created_at).getTime())// this.formatDate(msg?.created_at, 'T'),

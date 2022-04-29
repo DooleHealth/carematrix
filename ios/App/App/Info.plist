@@ -55,10 +55,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>To find bluetooth medical devices</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>To find bluetooth medical devices</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>To store events in Calendar</string>
 	<key>NSCameraUsageDescription</key>
-	<string>To Take Photos and Video</string>
+	<string>Se utiliza la cámara para poder subir imágenes de pruebas diagnósticas y enviar imágenes a tu médico</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Allow to read user's contacts </string>
 	<key>NSFaceIDUsageDescription</key>
@@ -91,10 +95,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-    <string>To find bluetooth medical devices</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>To find bluetooth medical devices</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

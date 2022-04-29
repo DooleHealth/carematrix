@@ -251,6 +251,9 @@ export class FileUploadComponent implements OnInit {
           name: 'filename',
           type: 'text',
           placeholder: this.translate.instant('documents_add.name'),
+          attributes: {
+            maxlength: 30
+          }
         }
       ],
         buttons: [

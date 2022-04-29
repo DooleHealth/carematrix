@@ -72,7 +72,8 @@
         <ion-col size="2">
           <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
         </ion-col>
-        <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col>
+        <!-- <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col> -->
+        <ion-col size="10" class="txtTitleGoals2">{{'goals.description1' | translate}} {{header?.toLowerCase()}} {{goal?.typeString?.toLowerCase()}} {{this.units}} {{'goals.description2' | translate}} {{'puntos:'}} {{goal.score}} 'Puntos'<br></ion-col>
       </ion-row>
     </ion-card>
 </div>

@@ -27,7 +27,7 @@ export class ActivityGoalPage implements OnInit {
   dangerValue= []
   description
   graphics = []
-  header = []
+  header = ''
   values = []
   goals = [];
   ranges = [];
