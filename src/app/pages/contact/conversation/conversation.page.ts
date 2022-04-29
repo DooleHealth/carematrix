@@ -150,7 +150,7 @@ export class ConversationPage implements OnInit {
     console.log('[ChatPusherPage] getPusher() contentArea' ,   this.content);
       setTimeout(() => {  
           this.content.scrollToBottom(300);
-    }, 300);
+    }, 1000);
   }
 
   getRecipients(recipients){
