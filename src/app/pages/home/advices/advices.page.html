@@ -58,7 +58,7 @@
   <ion-list *ngIf="items.length > 0; else noData">   
     <ion-card routerLink="advices-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile"  routerLinkActive='active-item'  routerLinkActive='active-item'>
       <div class="sliderImage">
-        <img *ngIf="item.item.image !== null" [src]='item.item.image.thumbnailTemporaryUrl'/>
+        <img *ngIf="item.item.image !== null" [src]='item.item?.image?.thumbnailTemporaryUrl'/>
       </div>
       <ion-item lines="none" >
         <ion-label style="color:#141414"> &nbsp;&nbsp; {{item.item.name}}</ion-label>

@@ -9,6 +9,9 @@ import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PasswordPage } from './password/password.page';
 import { Md5 } from 'ts-md5/dist/md5';
+import { Constants } from 'src/app/config/constants';
+import { Router } from '@angular/router';
+import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 
 @Component({
   selector: 'app-settings',
@@ -35,6 +38,7 @@ export class SettingsPage implements OnInit {
   reminder = false
   news = false
   release = false
+  listEndPoint = []
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
@@ -44,12 +48,17 @@ export class SettingsPage implements OnInit {
     private translate: TranslateService, 
     private platform: Platform,
     private faio: FingerprintAIO,
-    public role: RolesService
+    public role: RolesService,
+    public contant: Constants,
+    private router: Router,
+    private endPoint: ApiEndpointsService
     ) {}
   ngOnInit() {
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
+
+    this.getEndPoint()
   }
 
   ionViewDidEnter(){
@@ -59,7 +68,7 @@ export class SettingsPage implements OnInit {
   getNotificationConfiguration(){
     this.dooleService.getAPInotificationConfigurations().subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] getNotificationConfiguration()', await res);
+       //console.log('[SettingsPage] getNotificationConfiguration()', await res);
        if(res){
         this.getConfigurationParams(res)
        }
@@ -239,7 +248,7 @@ export class SettingsPage implements OnInit {
     let params = {language_id: id}
     this.dooleService.updateAPIuser(params).subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] sendConfigution()', await res);
+       //console.log('[SettingsPage] updateLanguage()', await res);
        if(res.success){
         if(id == res.user.language_id){
           this.languageService.setLenguageLocalstorage(this.language.code)
@@ -255,7 +264,7 @@ export class SettingsPage implements OnInit {
   }
 
   changeLanguages(){
-    console.log('[SettingsPage] changeLanguages()', this.language);
+    //console.log('[SettingsPage] changeLanguages()', this.language);
     if(this.language.code.split('-')[0] == 'es') this.language.code = 'es';
     this.updateLanguage(this.language.id)
   }
@@ -264,13 +273,13 @@ export class SettingsPage implements OnInit {
     let language = this.languageService.getCurrent()
     this.language = this.listLanguage.find(lang => lang.code.split('-')[0] == language )
     if(this.language.code.split('-')[0] == 'es') this.language.code = 'es';
-    console.log('[SettingsPage] getLocalLanguages()', this.language);
+    //console.log('[SettingsPage] getLocalLanguages()', this.language);
   }
 
   getCenterLanguages(){
     this.dooleService.getAPIlanguagesCenter().subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] getCenterLanguages()', await res);
+       //console.log('[SettingsPage] getCenterLanguages()', await res);
        if(res){
         this.listLanguage = []
         this.listLanguage = res
@@ -419,6 +428,26 @@ export class SettingsPage implements OnInit {
 
     isAvailableTwoFactor(){
       this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center')) 
+    }
+
+    changeEndPoint(event){
+      console.log('[SettingsPage] changeEndPoint()', event.detail.value)
+      let index = event.detail.value
+      this.endPoint.setIndexEndPointLocalstorage(index)
+      this.signOut()
+    }
+
+    getEndPoint(){
+      //this.contant.addEndPoint()
+      this.listEndPoint =  this.contant.LIST_ENPOINT
+      this.listEndPoint.forEach( (e,index)=> e['id']=index)
+      console.log('[SettingsPage] getEndPoint()', this.listEndPoint)
+    }
+
+    async signOut() {
+      await this.authService.logout().then(res=>{
+        this.router.navigateByUrl('/landing');
+      });
     }
 
 }

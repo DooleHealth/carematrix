@@ -123,6 +123,20 @@ export class AdvicesPage implements OnInit {
     });
   };
 
+  filterListAdvices(event){
+    var query = event //.target.value;
+    this.isLoading = true
+    this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
+      console.log('[DiaryPage] filterListAdvices()', res); 
+      this.items = []
+      if(res.success)
+        this.addItems(res.news)
+      this.isLoading = false
+    },err => {
+      console.log('[DiaryPage] filterListAdvices() ERROR(' + err.code + '): ' + err.message); 
+    });
+  };
+
   async filterList(evt) {
     console.log('[AdvicePage] filterList()');
 
@@ -150,6 +164,7 @@ export class AdvicesPage implements OnInit {
             return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
           }
         });
+        //this.filterListAdvices(searchTerm)
         break;
     }
   }

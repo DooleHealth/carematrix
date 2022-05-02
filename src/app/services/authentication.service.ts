@@ -95,7 +95,7 @@ export class AuthenticationService {
       map((res: any) => {
 
         console.log("[AuthService] login() OK ");
-
+        console.log("[AuthService] endpoint", endpoint);
         if (!res.success) {
           return res
         }

@@ -19,6 +19,7 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
+import { ApiEndpointsService } from './services/api-endpoints.service';
 const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
@@ -60,6 +61,7 @@ export class AppComponent implements OnInit {
     private dooleService: DooleService,
     private faio : FingerprintAIO,
     private _zone: NgZone,
+    private endPoind: ApiEndpointsService
   ) {
 
 
@@ -69,7 +71,7 @@ export class AppComponent implements OnInit {
     this.setLanguage();
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
-
+    this.endPoind.loadEndPoints()
     FirebaseAnalytics.initializeFirebase(environment.firebase);
 
     this.platform.ready().then(() => {
