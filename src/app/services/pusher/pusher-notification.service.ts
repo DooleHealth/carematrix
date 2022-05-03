@@ -9,16 +9,33 @@ const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted'
   providedIn: 'root'
 })
 export class PusherNotificationService {
+  public  LIST_APP_KEY: Array<any> = [
+    {
+      name: 'Producción', 
+      app_id: "1287334",
+      key: "f89e2ed013b43522069e",
+      secret: "e23e0b09095890bdac73",
+      cluster: "eu"
+    },
+    {
+      name: 'Calidad', 
+      app_id: "1287332",
+      key: "d560960f0cc446a18c95",
+      secret: "63522acb9ee1832855a4",
+      cluster: "eu"
+    }
+  ]
   app_id = "1287334"
   key = "f89e2ed013b43522069e"
   secret = "e23e0b09095890bdac73"
   cluster = "eu"
-  nameChanel = 'private-LevelAccomplishmentCompleted.15189' //+ this.authService?.user?.idUser
+  nameChanel = 'private-App.User.' + this.authService?.user?.idUser
   channel;
   constructor(
     private constants: Constants, 
     private notification: NotificationService,
     private authService: AuthenticationService,) {
+    this.setEndPoint()
     const TOKEN = authService.getAuthToken() 
     var pusher = new Pusher(this.key, {
       cluster: this.cluster,
@@ -30,6 +47,7 @@ export class PusherNotificationService {
       },
       encrypted: true,
     });
+    //this.nameChanel = this.nameChanel + this.authService?.user?.idUser 
     this.channel = pusher.subscribe(this.nameChanel);
     console.log('[PusherService] constructor()', pusher, this.nameChanel);
   }
@@ -41,5 +59,16 @@ export class PusherNotificationService {
           this.notification.displayToastPusher(data.message)
         });
   }
+
+  public setEndPoint(){
+    let index = this.constants?.INDEX
+    let opt = this.LIST_APP_KEY[index]
+    console.log('[AppComponent] setEndPoint() ' ,  opt);
+    this.app_id = opt.app_id
+    this.key = opt.key
+    this.secret = opt.secret
+    this.cluster = opt.cluster
+  }
+
 }
 
