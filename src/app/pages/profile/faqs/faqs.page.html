@@ -12,7 +12,7 @@
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
   
-  <div *ngIf="this.faq !== undefined; else noData" [innerHtml]="this.faq"></div>
+  <div  class="main-container" *ngIf="this.faq !== undefined; else noData" [innerHtml]="this.faq"></div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
       <ion-grid>
