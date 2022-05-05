@@ -596,7 +596,8 @@
       "conversation":{
         "placeholder":"Escribe un mensaje.",
         "warning":"Advertencia: ",
-        "warning_text":"Este no es un chat en tiempo real"
+        "warning_text":"Este no es un chat en tiempo real",
+        "open_file": "Abrir archivo"
       },
       "advices":{
         "header":"Novedades y Consejos",

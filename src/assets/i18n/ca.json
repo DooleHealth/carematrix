@@ -594,7 +594,8 @@
       "conversation":{
         "placeholder":"Escriu un missatge",
         "warning":"Advertència: ",
-        "warning_text":"Aquest no és un xat en temps real"
+        "warning_text":"Aquest no és un xat en temps real",
+        "open_file": "Obrir arxiu"
       },
       "advices":{
         "header":"Novetats i Consells",
