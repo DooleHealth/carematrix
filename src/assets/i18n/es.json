@@ -660,7 +660,8 @@
         "header":"Chat",
         "writting":"Escribiendo...",
         "loading":"Cargando más datos...",
-        "end":"Fin"
+        "end":"Fin",
+        "attached_file": "Archivo adjunto"
       },
       "payment":{
         "header":"Método de pago",

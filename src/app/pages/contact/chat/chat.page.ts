@@ -101,4 +101,12 @@ export class ChatPage implements OnInit {
     });
 
      }
+
+    showMessage(message){
+        if(message?.content)
+         return message.content
+        else if(message?.file)
+          return this.translate.instant('chat.attached_file')
+        else return ''
+    }
 }

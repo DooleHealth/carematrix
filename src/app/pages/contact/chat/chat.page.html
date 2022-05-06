@@ -23,7 +23,7 @@
 
       <span *ngIf="post?.recipients?.length == 1">
         <div *ngFor="let item of post?.recipients; let i = index">
-          <ion-item *ngIf="item.id == this.authService?.user.idUser" lines="full" md="ios" routerLink="conversation"
+          <ion-item *ngIf="item.id == this.authService?.user.idUser" lines="none" md="ios" routerLink="conversation"
             [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
             <ion-thumbnail slot="start">
               <app-aspect-ratio [ratio]="{w:1, h:1}">
@@ -45,7 +45,7 @@
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <p class="strech txtTitleGoals">{{post?.message?.content}}</p>
+                  <p class="strech txtTitleGoals">{{ showMessage(post?.message)}}</p>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -55,7 +55,7 @@
 
       <span *ngIf="post?.recipients?.length == 2">
         <div *ngFor="let item of post?.recipients; let i = index">
-          <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" md="ios" routerLink="conversation"
+          <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="none" md="ios" routerLink="conversation"
             [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
             <ion-thumbnail slot="start">
               <app-aspect-ratio [ratio]="{w:1, h:1}">
@@ -77,7 +77,7 @@
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <p class="strech txtTitleGoals">{{post?.message?.content}}</p>
+                  <p class="strech txtTitleGoals">{{ showMessage(post?.message)}}</p>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -87,7 +87,7 @@
       <span *ngIf="post?.recipients?.length >= 3">
         <div *ngFor="let item of post?.recipients; let i = index">
           <span *ngIf="i === (post?.recipients?.length - 1)">
-            <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" md="ios" routerLink="conversation"
+            <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="none" md="ios" routerLink="conversation"
               [state]="{staff:item, chat: post.message?.message_header_id }" routerLinkActive='active-item'>
               <ion-thumbnail slot="start">
                 <app-aspect-ratio [ratio]="{w:1, h:1}">
@@ -118,7 +118,7 @@
                 </ion-row>
                 <ion-row>
                   <ion-col>
-                    <p class="strech txtTitleGoals">{{post?.message?.content}}</p>
+                    <p class="strech txtTitleGoals">{{ showMessage(post?.message)}}</p>
                   </ion-col>
                 </ion-row>
               </ion-grid>
