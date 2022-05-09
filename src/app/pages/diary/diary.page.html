@@ -297,7 +297,7 @@
                   {{formatHourGamePlay(item?.item?.scheduled_date)}}
                 </ion-label>
               </ion-item>
-              <ion-card-content [innerHtml]="item.item?.description">
+              <ion-card-content *ngIf="item.item?.description" [innerHtml]="item.item?.description">
               </ion-card-content>
               <ion-button size="small" color="transparent" class="buttonLink" (click)="openGames(item.item)">{{'button.detail' | translate}}
               </ion-button>

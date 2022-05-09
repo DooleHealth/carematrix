@@ -69,6 +69,7 @@ export class ChatPage implements OnInit {
   public authService: AuthenticationService, 
   @Inject(LOCALE_ID) private locale: string,
   private translate: TranslateService, 
+  private datePipe: DatePipe,
   private languageService: LanguageService,) { }
 
   ngOnInit(){
@@ -108,5 +109,31 @@ export class ChatPage implements OnInit {
         else if(message?.file)
           return this.translate.instant('chat.attached_file')
         else return ''
+    }
+
+    formatDate(d){
+      if(d){
+        var auxdate = d.split('T')
+        let date0 = new Date(d).toISOString();
+        let date = new Date(date0);
+        let time = auxdate[1];
+        date.setHours(time.substring(0,2));
+        date.setMinutes(time.substring(3,5));
+        if(this.isToday(date))
+        return this.transformDate(date, 'HH:mm')
+        else
+        return this.transformDate(date, 'dd/MM/yyyy')
+      }
+    }
+
+    transformDate(date, format) {
+      return this.datePipe.transform(date, format);
+    }
+
+    isToday(mDate: Date){
+      let date = new Date()
+      if(date.getDate() === mDate.getDate() && date.getMonth() === mDate.getMonth() && date.getFullYear() === mDate.getFullYear())
+        return true
+      return false
     }
 }

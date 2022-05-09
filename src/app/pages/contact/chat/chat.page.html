@@ -37,10 +37,8 @@
                   <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
                 </ion-col>
                 <ion-col class="strech" size=4>
-                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) != myDate.slice(0, 10)">
-                    {{post?.message?.updated_at.slice(0, 10)}}</p>
-                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) == myDate.slice(0, 10)">
-                    {{post?.message?.updated_at.slice(11, 16)}}</p>
+                  <p class="txtTitleChatDate" *ngIf="post?.message?.updated_at">
+                    {{ formatDate(post?.message?.updated_at) }}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -69,10 +67,8 @@
                   <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
                 </ion-col>
                 <ion-col class="strech" size=4>
-                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) != myDate.slice(0, 10)">
-                    {{post?.message?.updated_at.slice(0, 10)}}</p>
-                  <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) == myDate.slice(0, 10)">
-                    {{post?.message?.updated_at.slice(11, 16)}}</p>
+                  <p class="txtTitleChatDate" *ngIf="post?.message?.updated_at">
+                    {{ formatDate(post?.message?.updated_at) }}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -110,10 +106,8 @@
                       [data]="post?.recipients?.length-1"></app-text-shell>
                   </ion-col>
                   <ion-col class="strech" size=4>
-                    <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) != myDate.slice(0, 10)">
-                      {{post?.message?.updated_at.slice(0, 10)}}</p>
-                    <p class="txtTitleChatDate" *ngIf=" post?.message?.updated_at.slice(0, 10) == myDate.slice(0, 10)">
-                      {{post?.message?.updated_at.slice(11, 16)}}</p>
+                    <p class="txtTitleChatDate" *ngIf="post?.message?.updated_at">
+                      {{ formatDate(post?.message?.updated_at) }}</p>
                   </ion-col>
                 </ion-row>
                 <ion-row>
