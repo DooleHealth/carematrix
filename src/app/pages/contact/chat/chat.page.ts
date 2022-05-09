@@ -113,12 +113,13 @@ export class ChatPage implements OnInit {
 
     formatDate(d){
       if(d){
-        var auxdate = d.split('T')
+/*         var auxdate = d.split('T')
         let date0 = new Date(d).toISOString();
         let date = new Date(date0);
         let time = auxdate[1];
         date.setHours(time.substring(0,2));
-        date.setMinutes(time.substring(3,5));
+        date.setMinutes(time.substring(3,5)); */
+        let date = new Date(d)
         if(this.isToday(date))
         return this.transformDate(date, 'HH:mm')
         else
