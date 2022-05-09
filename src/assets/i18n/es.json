@@ -570,7 +570,10 @@
           "placeholder_chosse":"Selecciona",
           "placeholder_dose":"Nº de dosis",
           "placeholder_alias":"Nombre alternativo",
-          "placeholder_search":"Busca por nombre o código"
+          "placeholder_search":"Busca por nombre o código",
+
+          "snapshot_medication":"Toma instantanea",
+          "medication_plan":"Plan de Medicación"
       },
       "button":{
         "detail": "Detalle",

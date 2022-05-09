@@ -42,13 +42,12 @@ export class DrugsDetailPage implements OnInit {
     this.form = this.fb.group({
       from_date: ['', [Validators.required]],
       to_date: ['', [Validators.required]],
-      //from_time: ['', [Validators.required]],
       alias: [''],
       dose: ['', [Validators.required]],
       drug: [],
       time: [''],
       addedByUser: ["1"],
-      frequency: ['daily'],
+      frequency: ['instant'],
       day1: [1],
       day2: [1],
       day3: [1],
@@ -129,6 +128,45 @@ export class DrugsDetailPage implements OnInit {
     },err => {
       alert(`Error: ${err.code }, Message: ${err.message}`)
       console.log('[DrugsDetailPage] saveDrug() ERROR(' + err.code + '): ' + err.message); 
+      throw err; 
+    });
+
+  }
+
+  snapshot(){
+    const date = new Date()
+    let form = {
+      from_date: this.transformDate(date),
+      to_date: this.transformDate(date),
+      //from_time: ['', [Validators.required]],
+      alias: '',
+      dose: '1',
+      drug: this.drug.id,
+      time: [this.transformHour(date)],
+      addedByUser: '1',
+      frequency: 'daily',
+      day1: 1,
+      day2: 1,
+      day3: 1,
+      day4: 1,
+      day5: 1,
+      day6: 1,
+      day7: 1,
+    }
+    
+    console.log('[DrugsDetailPage] snapshot()', form);
+
+    this.dooleService.postAPImedicationPlan(form).subscribe(async json=>{
+      console.log('[DrugsDetailPage] snapshot()', await json);
+      if(json.success){
+        this.modalCtrl.dismiss({error:null, action: 'add'});
+      }else{
+        let message = this.translate.instant('medication.error_message_add_medication')
+        alert(message)
+      }
+    },err => {
+      alert(`Error: ${err.code }, Message: ${err.message}`)
+      console.log('[DrugsDetailPage] snapshot() ERROR(' + err.code + '): ' + err.message); 
       throw err; 
     });
 

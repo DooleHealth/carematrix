@@ -486,7 +486,10 @@
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosi",
         "placeholder_alias":"Nom alternatiu",
-        "placeholder_search":"Cerca per nom o codi"
+        "placeholder_search":"Cerca per nom o codi",
+
+        "snapshot_medication":"Presa instantània",
+        "medication_plan":"Pla de Medicació"
       },
       "tracking":{
         "header": "Seguiment",
