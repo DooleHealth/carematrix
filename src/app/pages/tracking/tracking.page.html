@@ -182,7 +182,7 @@
                 <ion-col size="12" *ngIf="event.description != '' ">
                   <ion-card-title
                     class="txtTracking"
-                    [innerHtml]="event.description"
+                    [innerHtml]="event.description? event.description: '' "
                   >
                   </ion-card-title>
                 </ion-col>

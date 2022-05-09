@@ -656,7 +656,8 @@
         "header":"Chat",
         "writting":"Escrivint...",
         "loading":"Carregant més dades...",
-        "end":"Fi"
+        "end":"Fi",
+        "attached_file": "Arxiu adjunt"
       },
       "payment":{
         "header":"Mètode de pagament",

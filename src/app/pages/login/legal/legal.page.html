@@ -14,7 +14,7 @@
   </div>
 
   <div class="main-container" *ngIf="this.legal !== undefined">
-    <div [innerHtml]="this.legal?.legal_text"></div>
+    <div [innerHtml]="this.legal?.legal_text? this.legal?.legal_text:'' "></div>
 <!--         <ion-item lines="none">
         <ion-checkbox color="primary" [(ngModel)]="this.isChecked" style="margin-right: 5px;"></ion-checkbox>
         <ion-label>{{ 'legal.acept_conditions_label' | translate}}</ion-label>

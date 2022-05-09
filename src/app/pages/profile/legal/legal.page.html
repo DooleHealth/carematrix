@@ -12,7 +12,7 @@
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
   <div class="main-container" *ngIf="this.legal !== undefined">
-    <div [innerHtml]="this.legal.legal_text"></div>
+    <div [innerHtml]="this.legal?.legal_text? this.legal?.legal_text:'' "></div>
   </div>
 
   <div class="buttonContainer">

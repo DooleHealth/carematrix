@@ -165,9 +165,13 @@ export class DocumentsFilterPage implements OnInit {
   }
 
   changeToggleTestType(event){
-    console.log('[DocumentsFilterPage] changeToggleTestType()', event);
-    if(!event.detail.checked){
+    //console.log('[DocumentsFilterPage] changeToggleTestType()', event);
+    if(event.detail.checked === false){
+      this.listTestType.forEach(test => {
+        test.checked = false
+      });
       this.diagnosticTestTypes = []
+      this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
       console.log('[DocumentsFilterPage] changeToggleTestType', this.diagnosticTestTypes);
     }
   }
