@@ -633,7 +633,9 @@
       },
       "medical_calendar":{
         "header":"Seleccionar Data",
-        "no_slot_available":"No hi ha slots disponibles per a aquest dia"
+        "no_slot_available":"No hi ha slots disponibles per a aquest dia",
+        "previousLabel": "Previ ",
+        "nextLabel":"Següent"
       }, 
       "specialist_finder":{
         "header":"Reservar",

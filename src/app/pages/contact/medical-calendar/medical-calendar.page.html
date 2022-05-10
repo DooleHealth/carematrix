@@ -104,11 +104,13 @@
         </ng-container>
       </ng-template>
         <div *ngIf="this.timeSlots.length > 0" class="blanco">
-          <ion-row style="margin-top: -4%; margin-left: 2%; margin-right: 2%">
+          <ion-row style="margin-top: -3%; margin-left: 2%; margin-right: 2%">
             <div class="clearfix">
               <ion-col size="12" style="text-align: left">
                 <pagination-controls
                   (pageChange)="page = $event"
+                  previousLabel="{{'medical_calendar.previousLabel' | translate}}"
+                  nextLabel="{{'medical_calendar.nextLabel' | translate}}"
                  
                 ></pagination-controls>
               </ion-col>
