@@ -89,7 +89,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   submit(){
-    console.log('[DrugsDetailPage] submit()',this.form.value);
+    //console.log('[DrugsDetailPage] submit()',this.form.value);
 
     if(this.isInstant){
       this.isSubmittedDosis = true;
@@ -182,11 +182,10 @@ export class DrugsDetailPage implements OnInit {
   }
 
   updateDrug(){
-    this.setFields()
+    const form = this.setFields()
+    console.log('[DrugsDetailPage] updateDrug()', form);
 
-    console.log('[DrugsDetailPage] updateDrug()', this.form.value);
-
-    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id ,this.form.value).subscribe(async json=>{
+    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id , form).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
       if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'update'});
