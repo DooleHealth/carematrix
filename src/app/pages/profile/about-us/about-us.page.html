@@ -11,7 +11,7 @@
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
-  <div class="main-container about-us" *ngIf="this.information; else noData" [innerHtml]="this.information? this.information:'' "></div>
+  <div class="main-container" *ngIf="this.information; else noData" [innerHtml]="this.information? this.information:'' "></div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
       <ion-grid>
