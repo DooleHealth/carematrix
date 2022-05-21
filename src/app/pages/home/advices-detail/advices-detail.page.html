@@ -29,7 +29,7 @@
       <ion-text style="color:#141414; font-weight: bold;"> {{advice?.name}}</ion-text>
     </ion-item>
     <ion-item lines="none" *ngIf="advice.description" padding>
-      <span [innerHTML]="advice.description"></span>
+      <span [innerHTML]="advice.description  | safeHtml"></span>
     </ion-item>
   </ion-card>
 

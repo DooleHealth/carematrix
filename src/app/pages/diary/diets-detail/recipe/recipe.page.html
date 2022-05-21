@@ -29,7 +29,7 @@
     </div>
 
     <div style="padding: 15px;">
-      <span *ngIf="recipe?.description" [innerHTML]="recipe?.description"></span>
+      <span *ngIf="recipe?.description" [innerHTML]="recipe?.description | safeHtml"></span>
     </div>
 
   </ion-card>

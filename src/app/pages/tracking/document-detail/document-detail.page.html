@@ -68,7 +68,7 @@
           readonly
           [value]="diagnosticTest?.description">
           </ion-textarea> -->
-          <div class="textMedium1" [innerHtml]="diagnosticTest?.description? diagnosticTest?.description:'' "></div>
+          <div class="textMedium1" [innerHtml]="diagnosticTest?.description? (diagnosticTest?.description | safeHtml):'' "></div>
         </ion-item>
 
         <!-- ACORDION -->
@@ -93,7 +93,7 @@
           readonly
           [value]="diagnosticTest?.diagnostic">
           </ion-textarea> -->
-          <div class="textMedium1" [innerHtml]="diagnosticTest?.diagnostic? diagnosticTest?.diagnostic:'' "></div>
+          <div class="textMedium1" [innerHtml]="diagnosticTest?.diagnostic? (diagnosticTest?.diagnostic  | safeHtml):'' "></div>
         </ion-item>
 
         <!-- ACORDION -->

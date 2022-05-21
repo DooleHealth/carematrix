@@ -27,7 +27,7 @@
       <ion-text style="color:#141414; font-weight: bold;"> {{new.subject}}</ion-text>
     </ion-item>
     <ion-item lines="none" *ngIf="new.content" padding>
-      <span [innerHTML]="new.content"></span>
+      <span [innerHTML]="new.content | safeHtml"></span>
     </ion-item>
   </ion-card>
 

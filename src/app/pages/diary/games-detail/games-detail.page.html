@@ -26,7 +26,7 @@
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </ion-item>
-      <ion-card-content [innerHtml]="game?.description? game?.description:'' ">
+      <ion-card-content [innerHtml]="game?.description? (game?.description | safeHtml):'' ">
 
       </ion-card-content>
     </ion-card>
