@@ -37,19 +37,19 @@
   </div>
   <ion-card class="cardProfilePadding">
     <ion-grid>
-      <ion-item>
+      <ion-item lines="full">
         <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
         <ion-text  slot="start" class="txtTitleGoals2">{{ 'goals.goals' | translate}} de {{game?.title}}</ion-text >
       </ion-item>
       <ion-row>
-        <ion-progress-bar  class="my-buffer-progress" [value]="score/100"></ion-progress-bar>
+        <!-- <ion-progress-bar  class="my-buffer-progress" [value]="score/100"></ion-progress-bar> -->
       </ion-row>
-        <p class="txtTitleGoalsLittle">{{'game.description_score' | translate}} {{score}} {{'game.points' | translate}}</p>
+        <p style="margin-left: 10px;" class="txtTitleGoalsLittle">{{'game.description_score' | translate}} {{score}} {{'game.points' | translate}}</p>
       <ion-row>
         <ion-col size="2">
           <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
         </ion-col>
-        <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{score}} Healthies<br></ion-col>
+        <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{score}} {{'game.points' | translate}}<br></ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
