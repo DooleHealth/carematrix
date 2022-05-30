@@ -11,6 +11,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
 const { Storage } = Plugins;
 const TOKEN_KEY = 'token';
+const TOKEN_KEY_DEV = 'token_dev';
 const INTRO_KEY = 'intro';
 
 export class User {

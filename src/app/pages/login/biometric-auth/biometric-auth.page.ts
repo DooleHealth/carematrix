@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -14,6 +15,8 @@ import { Md5 } from 'ts-md5/dist/md5';
 export class BiometricAuthPage implements OnInit {
   @Input() isModal: boolean;
   showDialog = true
+  biometric_list = []
+  environment = 0
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
@@ -23,12 +26,20 @@ export class BiometricAuthPage implements OnInit {
     public alertCtrl: AlertController, 
     private faio: FingerprintAIO,
     private notification: NotificationService,
+    private constants: Constants
   ) {
     localStorage.setItem('show-bio-dialog','false');
     localStorage.setItem('settings-bio','false');
   }
 
   ngOnInit() {
+    this.getListBiometric()
+  }
+
+  getListBiometric(){
+    this.biometric_list = Array(JSON.parse(localStorage.getItem('biometric_list')));
+    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
   }
 
   async showBioAuthDlg() {

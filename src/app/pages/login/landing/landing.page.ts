@@ -294,8 +294,6 @@ export class LandingPage implements OnInit {
   }
 
   isAvailableFaID(): Promise<any>{
-    const showDialog = localStorage.getItem('show-bio-dialog');
-    console.log('[LandingPage] isAvailableFaID() showDialog:', showDialog);
    return this.faio.isAvailable().then((result: any)  =>{
       console.log(result)
       const showDialog = localStorage.getItem('show-bio-dialog');
