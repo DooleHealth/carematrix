@@ -752,6 +752,13 @@
       },
       "patient":{
         "title": "Pacientes"
+      },
+      "mode_development":{
+        "mode_activate": "Modo desarrollador activado",
+        "mode_desactivate": "Modo desarrollador desactivado",
+        "mode_0":"Producción",
+        "mode_1": "Calidad",
+        "mode_2": "Desarrollo"
       }
 
       

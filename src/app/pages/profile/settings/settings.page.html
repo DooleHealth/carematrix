@@ -95,18 +95,20 @@
           </ion-list>
     </ion-card>
 
-    <ion-text class="txtTitle2">{{ 'Desarrollador' | translate}}</ion-text>
-    <ion-card class="cardProfile">
-          <ion-list>
-            <ion-item lines="none">
-              <ion-label>{{ 'BO'}}</ion-label>
-              <ion-select [(ngModel)]="this.contant.INDEX" (ionChange)="changeEndPoint($event)" interface="action-sheet"  okText="{{ 'button.ok' | translate}}" cancelText="{{ 'button.cancel' | translate}}" placeholder="{{'add_health_card.placeholder_select' | translate}}">
-                <ion-select-option *ngFor="let api of listEndPoint; let index = i" [value]="api.id">{{api.name}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-       
-          </ion-list>
-    </ion-card>
+    <div *ngIf="this.modeDevelop">
+      <ion-text class="txtTitle2">{{ 'Desarrollador' | translate}}</ion-text>
+      <ion-card class="cardProfile">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label>{{ 'BO'}}</ion-label>
+                <ion-select [(ngModel)]="this.contant.INDEX" (ionChange)="changeEndPoint($event)" interface="action-sheet"  okText="{{ 'button.ok' | translate}}" cancelText="{{ 'button.cancel' | translate}}" placeholder="{{'add_health_card.placeholder_select' | translate}}">
+                  <ion-select-option *ngFor="let api of listEndPoint; let index = i" [value]="api.id">{{api.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+         
+            </ion-list>
+      </ion-card>
+    </div>
    
 
 </ion-content>

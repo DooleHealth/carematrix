@@ -39,6 +39,7 @@ export class SettingsPage implements OnInit {
   news = false
   release = false
   listEndPoint = []
+  modeDevelop = false;
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
@@ -57,12 +58,16 @@ export class SettingsPage implements OnInit {
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
-
+    this.getModeDevelopmne()
     this.getEndPoint()
   }
 
   ionViewDidEnter(){
     this.getNotificationConfiguration()
+  }
+
+  getModeDevelopmne(){
+    this.modeDevelop = JSON.parse(localStorage.getItem('modeActivate'));
   }
 
   getNotificationConfiguration(){
@@ -253,6 +258,7 @@ export class SettingsPage implements OnInit {
         if(id == res.user.language_id){
           this.languageService.setLenguageLocalstorage(this.language.code)
           //this.notification.displayToastSuccessful()
+          this.getEndPoint()
         }
        }else{
          alert(this.translate.instant('setting.error_changed_language'))
@@ -440,7 +446,10 @@ export class SettingsPage implements OnInit {
     getEndPoint(){
       //this.contant.addEndPoint()
       this.listEndPoint =  this.contant.LIST_ENPOINT
-      this.listEndPoint.forEach( (e,index)=> e['id']=index)
+      this.listEndPoint.forEach( (e,index)=>{
+        e['id']=index
+        e.name = this.translate.instant(`mode_development.mode_${index}`)
+      })
       console.log('[SettingsPage] getEndPoint()', this.listEndPoint)
     }
 

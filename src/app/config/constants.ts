@@ -27,12 +27,14 @@ export class Constants {
     public addEndPoint(){   
       this.LIST_ENPOINT = []  
       this.LIST_ENPOINT.push({ //Por defecto index 0
+        id:0,
         name: 'Producción', 
         api: 'https://deneb.doole.io/api', 
         endpoint: 'https://deneb.doole.io'
       })
 
       this.LIST_ENPOINT.push({
+        id:1,
         name: 'Calidad', 
         api: 'https://deneb-qa.doole.io/api', 
         endpoint: 'https://deneb-qa.doole.io'

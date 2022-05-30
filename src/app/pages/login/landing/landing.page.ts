@@ -33,6 +33,7 @@ export class LandingPage implements OnInit {
   biometricAuth: any;
   numFailLogin = 0;
   numFailFingerP = 0;
+  public isProd: boolean = true
   constructor(
     private router: Router,
     public route: ActivatedRoute,
@@ -68,6 +69,7 @@ export class LandingPage implements OnInit {
   }
 
   ionViewDidEnter(){
+    this.getIndexEndPoint()
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
     console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
@@ -80,6 +82,11 @@ export class LandingPage implements OnInit {
     this.loginForm.clearValidators()
     this.getStoredValues()
     this.blockedLogin()
+  }
+
+  getIndexEndPoint(){
+    this.isProd = Number(localStorage.getItem('endpoint')) === 0? true:false
+    console.log("[AuthService] indexEndPoint: ", this.isProd);
   }
   
   async dismissLoading() {

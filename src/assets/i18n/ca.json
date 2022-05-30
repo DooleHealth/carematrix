@@ -748,6 +748,13 @@
       },
       "patient":{
         "title": "Pacients"
+      },
+      "mode_development":{
+        "mode_activate": "Manera desenvolupador activat",
+        "mode_desactivate": "Manera desenvolupador desactivat",
+        "mode_0":"Producció",
+        "mode_1": "Qualitat",
+        "mode_2": "Desenvolupament"
       }
       
 }

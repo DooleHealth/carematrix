@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ReportProblemPage } from './report-problem/report-problem.page';
@@ -20,11 +20,13 @@ import { RolesService } from 'src/app/services/roles.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  private readonly  NUM_CLICK_AVATAR = 10;
   userDoole : any
   isLoading: boolean;
   userImage:string = history.state?.user ?  history.state?.user.temporaryUrl : 'assets/icons/user_icon.svg'
   version:string = "";
   tokboxSession: any;
+  modeNumDev: number = 0
   constructor( 
     public authService: AuthenticationService,
     public appVersion: AppVersion,
@@ -36,6 +38,7 @@ export class ProfilePage implements OnInit {
     private dooleService: DooleService,
     private opentokService: OpentokService, 
     private translate : TranslateService,
+    private toastController: ToastController,
     public role: RolesService) { }
 
   ngOnInit() {
@@ -43,6 +46,7 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.modeNumDev = 0
     this.getPersonalInformation()
    
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
@@ -197,6 +201,51 @@ export class ProfilePage implements OnInit {
     });
     await modal.present();
 
+  }
+
+  modeDevelopment(){
+    this.modeNumDev = ++this.modeNumDev;
+    console.log('modeDevelopment()', this.modeNumDev); 
+    if(this.modeNumDev >= this.NUM_CLICK_AVATAR){
+        let modeActivate = JSON.parse(localStorage.getItem('modeActivate'));
+        if(!modeActivate){
+          localStorage.setItem('modeActivate', 'true');
+        }else localStorage.setItem('modeActivate', 'false');
+        modeActivate = !modeActivate
+        console.log('modeDevelopment()', modeActivate); 
+        let message =  this.translate.instant(modeActivate? 'mode_development.mode_activate':'mode_development.mode_desactivate')
+        this.displayToastPusher(message)
+        this.modeNumDev = 0;
+    }
+    
+  }
+
+  displayToastPusher(message) { 
+    try {
+      this.toastController.dismiss().then(() => {
+      }).catch(() => {
+      }).finally(() => {
+        console.log('Closed')
+      });
+    } catch(e) {}
+    
+    this.toastController.create({
+      position: 'bottom', //'middle', 'bottom'
+      /* cssClass: 'toast-pusher-class', */
+      message: message,
+      animated: true,
+      duration: 4000,
+      buttons: [{
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }).then((toast) => {
+      toast.present();
+    });
   }
 
 
