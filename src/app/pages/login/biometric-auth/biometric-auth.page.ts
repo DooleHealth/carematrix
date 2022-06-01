@@ -25,8 +25,7 @@ export class BiometricAuthPage implements OnInit {
     public platform: Platform, 
     public alertCtrl: AlertController, 
     private faio: FingerprintAIO,
-    private notification: NotificationService,
-    private constants: Constants
+    private notification: NotificationService
   ) {
     localStorage.setItem('show-bio-dialog','false');
     localStorage.setItem('settings-bio','false');
@@ -37,7 +36,8 @@ export class BiometricAuthPage implements OnInit {
   }
 
   getListBiometric(){
-    this.biometric_list = Array(JSON.parse(localStorage.getItem('biometric_list')));
+    let list = JSON.parse(localStorage.getItem('biometric_list'))
+    this.biometric_list = list? list:[];
     this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
     console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
   }
@@ -85,10 +85,11 @@ export class BiometricAuthPage implements OnInit {
         async (data) => {
           console.log(data);
           if(data.success){
-            let e = {hash: hash, id: data.id}
+            let e = {hash: hash, id: data.id, endpoint: this.environment}
             localStorage.setItem('bio-auth', JSON.stringify(e));
             localStorage.setItem('show-bio-dialog', 'false');
             localStorage.setItem('settings-bio', 'true');
+            this.addBiometricToList(e)
             this.notification.displayToastSuccessful()
             this.dismissLockScreen()
           }  
@@ -97,6 +98,12 @@ export class BiometricAuthPage implements OnInit {
           // Called when error
           alert(this.translate.instant(error?.message));
         });
+  }
+
+  addBiometricToList(value){
+    this.biometric_list = this.biometric_list.filter(bio => bio.endpoint !== this.environment);
+    this.biometric_list.push(value)
+    localStorage.setItem('biometric_list', JSON.stringify(this.biometric_list));
   }
 
   async dismissLockScreen() {

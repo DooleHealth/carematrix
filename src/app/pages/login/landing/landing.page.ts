@@ -34,6 +34,8 @@ export class LandingPage implements OnInit {
   numFailLogin = 0;
   numFailFingerP = 0;
   public isProd: boolean = true
+  biometric_list = []
+  environment = 0
   constructor(
     private router: Router,
     public route: ActivatedRoute,
@@ -69,6 +71,7 @@ export class LandingPage implements OnInit {
   }
 
   ionViewDidEnter(){
+    this.getListBiometric()
     this.getIndexEndPoint()
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
@@ -272,17 +275,16 @@ export class LandingPage implements OnInit {
     return 
 
     const biometricsEnabled = localStorage.getItem('settings-bio');
-    const biometricToken =  localStorage.getItem('bio-auth');
-    
+    const biometricToken =  this.getBiometric(); //localStorage.getItem('bio-auth');
+    console.log('[LandingPage] getStoredValues() 1 biometricsEnabled: ', biometricsEnabled, JSON.stringify(biometricToken));
     if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
       this.hasBiometricAuth = true;
-      this.biometricAuth = JSON.parse(biometricToken) ;
-      //this.loginForm.get('hash').setValue(this.biometricAuth.hash)
+      this.biometricAuth = biometricToken; //JSON.parse(biometricToken) ;
     }else{
       this.hasBiometricAuth = false;
     }
     const showDialog = localStorage.getItem('show-bio-dialog');
-
+    console.log('[LandingPage] getStoredValues() 2 showDialog: ', showDialog, this.hasBiometricAuth);
     if(showDialog!== 'false'){
       console.log('showDialog: ', showDialog !== 'false');
       this.showBiometricDialog = true;
@@ -293,18 +295,41 @@ export class LandingPage implements OnInit {
       
   }
 
+  getBiometric(){
+    return this.biometric_list.find(bio => bio.endpoint === this.environment);
+  }
+
   isAvailableFaID(): Promise<any>{
    return this.faio.isAvailable().then((result: any)  =>{
       console.log(result)
       const showDialog = localStorage.getItem('show-bio-dialog');
-      console.log('[LandingPage] isAvailableFaID() showDialog:', showDialog);
+      console.log('[LandingPage] isAvailableFaID() 1 showDialog:', showDialog);
       if(showDialog === undefined || showDialog === null)
         localStorage.setItem('show-bio-dialog','true');
+      else if(!this.isBiometric())
+        localStorage.setItem('show-bio-dialog','true');
+      else
+        localStorage.setItem('show-bio-dialog','false');
+
+        console.log('[LandingPage] isAvailableFaID() 2 showDialog:', localStorage.getItem('show-bio-dialog'));
       return true
     }).catch(async (error: any) => {
         localStorage.setItem('show-bio-dialog','false');
       return false
     });
+  }
+
+  getListBiometric(){
+    let list = JSON.parse(localStorage.getItem('biometric_list'))
+    this.biometric_list = list? list:[];
+    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
+  }
+
+  isBiometric(){
+    const bio = this.biometric_list.find(bio => bio.endpoint === this.environment);
+    if(bio) return true;
+    else return false
   }
 
 

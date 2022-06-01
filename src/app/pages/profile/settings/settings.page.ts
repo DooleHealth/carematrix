@@ -39,7 +39,9 @@ export class SettingsPage implements OnInit {
   news = false
   release = false
   listEndPoint = []
+  biometric_list = []
   modeDevelop = false;
+  environment = 0
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
@@ -59,11 +61,12 @@ export class SettingsPage implements OnInit {
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
     this.getModeDevelopmne()
-    this.getEndPoint()
   }
 
   ionViewDidEnter(){
+    this.getEndPoint()
     this.getNotificationConfiguration()
+    this.getListBiometric()
   }
 
   getModeDevelopmne(){
@@ -347,7 +350,7 @@ export class SettingsPage implements OnInit {
               return
             }
 
-             let biometric: any = this.getStorageBiometric()
+             let biometric: any =  this.getBiometric()//this.getStorageBiometric()
              if(biometric?.id)
              await this.updateBiometrics(faceId)
              else
@@ -380,10 +383,11 @@ export class SettingsPage implements OnInit {
           async (data) => {
             console.log(data);
             if(data.success){
-              let e = {hash: hash, id: data.id}
+              let e = {hash: hash, id: data.id, endpoint: this.environment}
               localStorage.setItem('bio-auth', JSON.stringify(e));
               localStorage.setItem('show-bio-dialog', 'false');
               localStorage.setItem('settings-bio', 'true');
+              this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
             }  
           },
@@ -400,10 +404,11 @@ export class SettingsPage implements OnInit {
           async (data) => {
             console.log(data);
             if(data.success){
-              let e = {hash: hash, id: data.id}
+              let e = {hash: hash, id: data.id, endpoint: this.environment}
               localStorage.setItem('bio-auth', JSON.stringify(e));
               localStorage.setItem('show-bio-dialog', 'false');
               localStorage.setItem('settings-bio', 'true');
+              this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
             }  
           },
@@ -413,10 +418,27 @@ export class SettingsPage implements OnInit {
           });
     }
 
+    addBiometricToList(value){
+      this.biometric_list = this.biometric_list.filter(bio => bio.endpoint !== this.environment);
+      this.biometric_list.push(value)
+      localStorage.setItem('biometric_list', JSON.stringify(this.biometric_list));
+    }
+
     getStorageBiometric(): Promise<any> {
       const bio = localStorage.getItem('bio-auth')
       console.log(`[SettingsPage] getStorageBiometric()`, JSON.parse(bio));
       return JSON.parse(bio);
+    }
+
+    getListBiometric(){
+      let list = JSON.parse(localStorage.getItem('biometric_list'))
+      this.biometric_list = list? list:[];
+      this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+      console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", JSON.stringify(this.biometric_list) , this.environment);
+    }
+
+    getBiometric(){
+      return this.biometric_list.find(bio => bio.endpoint === this.environment);
     }
 
     isAvailableFaID(){
