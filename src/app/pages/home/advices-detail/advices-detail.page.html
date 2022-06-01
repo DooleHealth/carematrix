@@ -18,7 +18,7 @@
 
   <ion-card class="cardProfile">
 <!--     <ion-card-header>    </ion-card-header> -->
-    <img *ngIf="advice.image" [src]="advice.image.temporaryUrl">
+    <img *ngIf="advice.image" class="imagefit" [src]="advice.image.temporaryUrl">
     <ion-item lines="none">
       <ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
@@ -29,7 +29,7 @@
       <ion-text style="color:#141414; font-weight: bold;"> {{advice?.name}}</ion-text>
     </ion-item>
     <ion-item lines="none" *ngIf="advice.description" padding>
-      <span [innerHTML]="advice.description  | safeHtml"></span>
+      <span [innerHTML]="advice.description"></span>
     </ion-item>
   </ion-card>
 
