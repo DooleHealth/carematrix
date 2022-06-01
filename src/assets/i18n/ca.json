@@ -486,7 +486,10 @@
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosi",
         "placeholder_alias":"Nom alternatiu",
-        "placeholder_search":"Cerca per nom o codi"
+        "placeholder_search":"Cerca per nom o codi",
+
+        "snapshot_medication":"Presa instantània",
+        "medication_plan":"Pla de Medicació"
       },
       "tracking":{
         "header": "Seguiment",
@@ -630,7 +633,9 @@
       },
       "medical_calendar":{
         "header":"Seleccionar Data",
-        "no_slot_available":"No hi ha slots disponibles per a aquest dia"
+        "no_slot_available":"No hi ha slots disponibles per a aquest dia",
+        "previousLabel": "Previ ",
+        "nextLabel":"Següent"
       }, 
       "specialist_finder":{
         "header":"Reservar",

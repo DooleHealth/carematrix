@@ -13,6 +13,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ElementsAddPageModule } from './elements-add/elements-add.module';
 import { DocumentsAddPageModule } from './documents-add/documents-add.module';
 import { DocumentsFilterPageModule } from './documents-filter/documents-filter.module';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { DocumentsFilterPageModule } from './documents-filter/documents-filter.m
     ReactiveFormsModule,
     IonicModule,
     TranslateModule,
+    ShareModule,
     ComponentsModule,
     TrackingPageRoutingModule,
     ElementsAddPageModule,

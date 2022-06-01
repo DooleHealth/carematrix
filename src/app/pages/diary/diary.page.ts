@@ -458,20 +458,21 @@ export class DiaryPage implements OnInit {
 
   selectMealTime(time){
     let h =  time.split(':')  //new Date(time).getHours()
-    let hour = Number(h[0])
-    if(hour >= 6  && hour < 10){
+    let minute = Number(h[1])
+    let hour = Number(h[0]) + minute/60
+    if(hour >= 6  && hour <= 10){
       return this.translate.instant('diet.breakfast')
     }
     if(hour >= 11 && hour < 13){
       return this.translate.instant('diet.brunch')
     }
-    if(hour >= 14 && hour <= 16){
+    if(hour >= 13 && hour <= 16){
       return this.translate.instant('diet.lunch')
     }
-    if(hour >=18 && hour <= 19){
+    if(hour >=17 && hour <= 19){
       return this.translate.instant('diet.afternoon_snack')
     }
-    if(hour >=20 && hour <= 22){
+    if(hour >19 && hour <= 22){
       return this.translate.instant('diet.dinner')
     }
   }

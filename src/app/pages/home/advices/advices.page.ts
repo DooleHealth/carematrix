@@ -123,6 +123,20 @@ export class AdvicesPage implements OnInit {
     });
   };
 
+  filterListAdvices(event){
+    var query = event //.target.value;
+    this.isLoading = true
+    this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
+      console.log('[AdvicePage] filterListAdvices()', res); 
+      this.items = []
+      if(res.success)
+        this.addItems(res.advice)
+      this.isLoading = false
+    },err => {
+      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message); 
+    });
+  };
+
   async filterList(evt) {
     console.log('[AdvicePage] filterList()');
 
@@ -145,11 +159,12 @@ export class AdvicesPage implements OnInit {
         break;
 
       case 'advices':
-        this.items = this.items.filter(element => {
-          if (element.item.name && searchTerm) {
-            return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-          }
-        });
+        // this.items = this.items.filter(element => {
+        //   if (element.item.name && searchTerm) {
+        //     return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        //   }
+        // });
+        this.filterListAdvices(searchTerm)
         break;
     }
   }

@@ -81,3 +81,12 @@
     padding-bottom: 20%;
     background-position: center;
     }
+
+    .imagefit{
+      width: 100%;
+      height:auto;
+      margin: 0px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+    }

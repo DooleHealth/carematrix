@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReminderAddPageModule } from '../../agenda/reminder-add/reminder-add.module';
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.module';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.
     ActivityGoalPageRoutingModule,
     ReactiveFormsModule,
     TranslateModule,
+    ShareModule,
     ElementsAddPageModule,
   ],
   declarations: [ActivityGoalPage],
