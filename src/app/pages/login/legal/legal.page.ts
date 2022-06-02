@@ -66,7 +66,11 @@ export class LegalPage implements OnInit {
         this.redirectBiometric()
         //this.showIntro()
       }
-      else this.dooleService.presentAlert("legal.error_post_conditions_label")
+      else {
+        let message = this.translate.instant("legal.error_post_conditions_label");
+        this.dooleService.presentAlert(message)
+      }
+
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
         this.dooleService.presentAlert(err.message)
@@ -102,7 +106,10 @@ export class LegalPage implements OnInit {
       if(res.success){
         this.signOut()
       }
-      else this.dooleService.presentAlert("legal.error_post_conditions_label")
+      else {
+        let message = this.translate.instant("legal.error_post_conditions_label");
+        this.dooleService.presentAlert(message)
+      }
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
         this.dooleService.presentAlert(err.message)
@@ -111,9 +118,6 @@ export class LegalPage implements OnInit {
   }
 
   async confirmLegalTerms() {
-    const notification = localStorage.getItem('allNotification');
-    if(JSON.parse(notification))
-    return
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',

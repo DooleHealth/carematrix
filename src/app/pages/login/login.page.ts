@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
 
   async ionViewDidEnter(){
     // this.analyticsService.setScreenName('login','LoginPage')
-    console.log('[LoginPage] ionViewDidEnter() Device: ',  JSON.stringify(this.device));
+    //console.log('[LoginPage] ionViewDidEnter() Device: ',  JSON.stringify(this.device));
   }
 
 
@@ -163,6 +163,7 @@ export class LoginPage implements OnInit {
 
   redirectBiometric(){
     let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
+    console.log('[LoginPage] redirectBiometric() condicion: ',condicion);
     if(condicion){
       this.ngZone.run(() => {      
         this.router.navigate(['/login/biometric-auth'])
@@ -176,6 +177,7 @@ export class LoginPage implements OnInit {
       this.showIntro()
     }      
   }
+
 
   redirecPushNotification(data){
     switch (data.action) {

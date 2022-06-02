@@ -9,6 +9,9 @@ import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PasswordPage } from './password/password.page';
 import { Md5 } from 'ts-md5/dist/md5';
+import { Constants } from 'src/app/config/constants';
+import { Router } from '@angular/router';
+import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 
 @Component({
   selector: 'app-settings',
@@ -35,6 +38,12 @@ export class SettingsPage implements OnInit {
   reminder = false
   news = false
   release = false
+  listEndPoint = []
+  biometric_list = []
+  modeDevelop = false;
+  environment = 0
+  isSelectEndPoint = false;
+  api: any;
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
@@ -44,22 +53,32 @@ export class SettingsPage implements OnInit {
     private translate: TranslateService, 
     private platform: Platform,
     private faio: FingerprintAIO,
-    public role: RolesService
+    public role: RolesService,
+    public contant: Constants,
+    private router: Router,
+    private endPoint: ApiEndpointsService
     ) {}
   ngOnInit() {
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
+    this.getModeDevelopmne()
   }
 
   ionViewDidEnter(){
+    this.getEndPoint()
     this.getNotificationConfiguration()
+    this.getListBiometric()
+  }
+
+  getModeDevelopmne(){
+    this.modeDevelop = JSON.parse(localStorage.getItem('modeActivate'));
   }
 
   getNotificationConfiguration(){
     this.dooleService.getAPInotificationConfigurations().subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] getNotificationConfiguration()', await res);
+       //console.log('[SettingsPage] getNotificationConfiguration()', await res);
        if(res){
         this.getConfigurationParams(res)
        }
@@ -239,11 +258,12 @@ export class SettingsPage implements OnInit {
     let params = {language_id: id}
     this.dooleService.updateAPIuser(params).subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] sendConfigution()', await res);
+       //console.log('[SettingsPage] updateLanguage()', await res);
        if(res.success){
         if(id == res.user.language_id){
           this.languageService.setLenguageLocalstorage(this.language.code)
           //this.notification.displayToastSuccessful()
+          this.getEndPoint()
         }
        }else{
          alert(this.translate.instant('setting.error_changed_language'))
@@ -255,7 +275,7 @@ export class SettingsPage implements OnInit {
   }
 
   changeLanguages(){
-    console.log('[SettingsPage] changeLanguages()', this.language);
+    //console.log('[SettingsPage] changeLanguages()', this.language);
     if(this.language.code.split('-')[0] == 'es') this.language.code = 'es';
     this.updateLanguage(this.language.id)
   }
@@ -264,13 +284,13 @@ export class SettingsPage implements OnInit {
     let language = this.languageService.getCurrent()
     this.language = this.listLanguage.find(lang => lang.code.split('-')[0] == language )
     if(this.language.code.split('-')[0] == 'es') this.language.code = 'es';
-    console.log('[SettingsPage] getLocalLanguages()', this.language);
+    //console.log('[SettingsPage] getLocalLanguages()', this.language);
   }
 
   getCenterLanguages(){
     this.dooleService.getAPIlanguagesCenter().subscribe(
       async (res: any) =>{
-       console.log('[SettingsPage] getCenterLanguages()', await res);
+       //console.log('[SettingsPage] getCenterLanguages()', await res);
        if(res){
         this.listLanguage = []
         this.listLanguage = res
@@ -332,7 +352,7 @@ export class SettingsPage implements OnInit {
               return
             }
 
-             let biometric: any = this.getStorageBiometric()
+             let biometric: any =  this.getBiometric()//this.getStorageBiometric()
              if(biometric?.id)
              await this.updateBiometrics(faceId)
              else
@@ -365,10 +385,11 @@ export class SettingsPage implements OnInit {
           async (data) => {
             console.log(data);
             if(data.success){
-              let e = {hash: hash, id: data.id}
+              let e = {hash: hash, id: data.id, endpoint: this.environment}
               localStorage.setItem('bio-auth', JSON.stringify(e));
               localStorage.setItem('show-bio-dialog', 'false');
               localStorage.setItem('settings-bio', 'true');
+              this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
             }  
           },
@@ -385,10 +406,11 @@ export class SettingsPage implements OnInit {
           async (data) => {
             console.log(data);
             if(data.success){
-              let e = {hash: hash, id: data.id}
+              let e = {hash: hash, id: data.id, endpoint: this.environment}
               localStorage.setItem('bio-auth', JSON.stringify(e));
               localStorage.setItem('show-bio-dialog', 'false');
               localStorage.setItem('settings-bio', 'true');
+              this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
             }  
           },
@@ -398,10 +420,27 @@ export class SettingsPage implements OnInit {
           });
     }
 
+    addBiometricToList(value){
+      this.biometric_list = this.biometric_list.filter(bio => bio.endpoint !== this.environment);
+      this.biometric_list.push(value)
+      localStorage.setItem('biometric_list', JSON.stringify(this.biometric_list));
+    }
+
     getStorageBiometric(): Promise<any> {
       const bio = localStorage.getItem('bio-auth')
       console.log(`[SettingsPage] getStorageBiometric()`, JSON.parse(bio));
       return JSON.parse(bio);
+    }
+
+    getListBiometric(){
+      let list = JSON.parse(localStorage.getItem('biometric_list'))
+      this.biometric_list = list? list:[];
+      this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+      console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", JSON.stringify(this.biometric_list) , this.environment);
+    }
+
+    getBiometric(){
+      return this.biometric_list.find(bio => bio.endpoint === this.environment);
     }
 
     isAvailableFaID(){
@@ -419,6 +458,33 @@ export class SettingsPage implements OnInit {
 
     isAvailableTwoFactor(){
       this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center')) 
+    }
+
+    changeEndPoint(event){
+      console.log('[SettingsPage] changeEndPoint()', event.detail.value.id)
+      let index = event.detail.value.id
+      this.endPoint.setIndexEndPointLocalstorage(index)
+      if(this.isSelectEndPoint)
+      this.signOut()
+      this.isSelectEndPoint = true
+    }
+
+    getEndPoint(){
+      //this.contant.addEndPoint()
+      this.listEndPoint =  this.contant.LIST_ENPOINT
+      this.listEndPoint.forEach( (e,index)=>{
+        e['id']=index
+        e.name = this.translate.instant(`mode_development.mode_${index}`)
+        if(index == this.contant.INDEX)
+        this.api = e
+      })
+      console.log('[SettingsPage] getEndPoint()', this.listEndPoint, this.api)
+    }
+
+    async signOut() {
+      await this.authService.logout().then(res=>{
+        this.router.navigateByUrl('/landing');
+      });
     }
 
 }

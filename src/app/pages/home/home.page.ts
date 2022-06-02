@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
 import { RolesService } from 'src/app/services/roles.service';
 import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { NotificationService } from 'src/app/services/notification.service';
-import { PusherService } from 'src/app/services/pusher.service';
+import { PusherNotificationService } from 'src/app/services/pusher/pusher-notification.service';
 
 export interface UserInformation {
   title?: string;
@@ -113,7 +113,7 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private notification: NotificationService,
     public role: RolesService,
-    private pusher: PusherService
+    private pusher: PusherNotificationService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }

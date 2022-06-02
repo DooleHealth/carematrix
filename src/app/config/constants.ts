@@ -5,12 +5,39 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
   })
 export class Constants {
+    public  LIST_ENPOINT: Array<any> = []
+    public  INDEX:number = 0
 
-    public readonly API_ENDPOINT: string = 'https://deneb.doole.io/api';
-    public readonly API_DOOLE_ENDPOINT: string = 'https://deneb.doole.io/api';
-    public readonly DOOLE_ENDPOINT: string = 'https://deneb.doole.io';
+    // public  API_ENDPOINT: string = 'https://deneb.doole.io/api';
+    // public  API_DOOLE_ENDPOINT: string = 'https://deneb.doole.io/api';
+    // public  DOOLE_ENDPOINT: string = 'https://deneb.doole.io';
 
-    // public readonly API_ENDPOINT: string = 'http://192.168.0.158:8000/api';
-    // public readonly API_DOOLE_ENDPOINT: string = 'http://192.168.0.158:8000/api';
-    // public readonly DOOLE_ENDPOINT: string = 'http://192.168.0.158:8000/api';
+    public API_ENDPOINT = 'https://deneb-qa.doole.io/api'
+    public API_DOOLE_ENDPOINT = 'https://deneb-qa.doole.io/api'
+    public DOOLE_ENDPOINT = 'https://deneb-qa.doole.io'
+
+
+    public setEndPoint(index){
+      let opt = this.LIST_ENPOINT[index]
+      this.API_ENDPOINT = opt.api
+      this.API_DOOLE_ENDPOINT = opt.api
+      this.DOOLE_ENDPOINT = opt.endpoint
+    }
+
+    public addEndPoint(){   
+      this.LIST_ENPOINT = []  
+      this.LIST_ENPOINT.push({ //Por defecto index 0
+        id:0,
+        name: 'Producción', 
+        api: 'https://deneb.doole.io/api', 
+        endpoint: 'https://deneb.doole.io'
+      })
+
+      this.LIST_ENPOINT.push({
+        id:1,
+        name: 'Calidad', 
+        api: 'https://deneb-qa.doole.io/api', 
+        endpoint: 'https://deneb-qa.doole.io'
+      })
+    }
 }

@@ -16,7 +16,9 @@ export class ApiEndpointsService {
   /* #region URL CREATOR */
   // URL
   private createUrl( action: string, isDooleAPI: boolean = false): string {
-    
+    //Change EndPoind
+    this.setEndPoint()
+
     const urlBuilder: UrlBuilder = new UrlBuilder(
       isDooleAPI ? this.constants.API_DOOLE_ENDPOINT : this.constants.API_ENDPOINT,
       action
@@ -29,6 +31,8 @@ export class ApiEndpointsService {
     queryStringHandler?: 
       (queryStringParameters: QueryStringParameters) => void
   ): string {
+    //Change EndPoind
+    this.setEndPoint()
     const urlBuilder: UrlBuilder = new UrlBuilder(
       this.constants.API_ENDPOINT, 
       action
@@ -63,6 +67,31 @@ export class ApiEndpointsService {
     return urlBuilder.toString();
   }
   /* #endregion */
+
+  setIndexEndPointLocalstorage(endpoint) {
+    console.log(`[AuthenticationService] setEndPointLocalstorage()`, endpoint);
+    localStorage.setItem('endpoint', JSON.stringify(endpoint));
+  }
+
+  getIndexEndPointLocalstorage() {
+    let endpoint = localStorage.getItem('endpoint');
+    console.log(`[AuthenticationService] setEndPointLocalstorage()`, endpoint);
+    if(endpoint) return Number(JSON.parse(endpoint))
+    return undefined
+  }
+
+  setEndPoint(){
+    let indexEndPoint = this.getIndexEndPointLocalstorage()
+    let index = indexEndPoint? indexEndPoint:0
+    this.constants.setEndPoint(index)
+    this.constants.INDEX = index
+  }
+
+  loadEndPoints(){
+    this.constants.addEndPoint()
+  }
+
+
 
 
 }

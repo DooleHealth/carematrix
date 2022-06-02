@@ -56,9 +56,6 @@ export class LegalPage implements OnInit {
   }
 
   async confirmLegalTerms() {
-    const notification = localStorage.getItem('allNotification');
-    if(JSON.parse(notification))
-    return
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',

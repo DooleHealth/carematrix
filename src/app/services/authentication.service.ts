@@ -11,6 +11,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
 const { Storage } = Plugins;
 const TOKEN_KEY = 'token';
+const TOKEN_KEY_DEV = 'token_dev';
 const INTRO_KEY = 'intro';
 
 export class User {
@@ -54,14 +55,21 @@ export class AuthenticationService {
   public dietsAndAdvices: [];
   public deviceVoipToken: any;
   public isFamily:boolean;
+  private indexEndPoint: number;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   constructor(private http: HttpClient,
     private api: ApiEndpointsService,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
     public router: Router,
+    private constants: Constants,
     @Inject(PLATFORM_ID) private platformId: object) {
     this.setUser();
+  }
+
+  getIndexEndPoint(){
+    this.indexEndPoint = Number(localStorage.getItem('endpoint'))
+    console.log("[AuthService] indexEndPoint: ", this.indexEndPoint);
   }
 
   getAuthToken() {
@@ -95,16 +103,17 @@ export class AuthenticationService {
       map((res: any) => {
 
         console.log("[AuthService] login() OK ");
-
+        console.log("[AuthService] endpoint", endpoint);
         if (!res.success) {
           return res
         }
         // save user's token
         if (res.token)
           this.setAuthToken(res.token);
-
-        if (res.firebaseToken) {
-          this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
+        // Set indexEndPoint ios_dev if it is QA
+          this.getIndexEndPoint()
+        // if (res.firebaseToken) {
+        //   this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
               //console.log(data);
               let access = true;
@@ -113,18 +122,18 @@ export class AuthenticationService {
               
               if (this.platform.is('ios')){
                 if(this.voipDeviceToken) 
-                  this.registerDevice(this.voipDeviceToken,'iosvoip');        
+                  this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip');        
                 
               }
                
               
             }
 
-          }, (error) => {
-            console.log("[signInWithCustomToken] error", error);
-            throw error;
-          });
-        }
+        //   }, (error) => {
+        //     console.log("[signInWithCustomToken] error", error);
+        //     throw error;
+        //   });
+        // }
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
@@ -347,7 +356,9 @@ export class AuthenticationService {
      if(platform == 'FCM')
       platform = 'android';
      if(platform == 'APNS')
-      platform = 'ios';
+      platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
+     if(platform == 'ios')
+      platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
 
      const postData = {
       token: token,
