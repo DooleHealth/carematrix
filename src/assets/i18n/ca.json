@@ -486,7 +486,10 @@
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosi",
         "placeholder_alias":"Nom alternatiu",
-        "placeholder_search":"Cerca per nom o codi"
+        "placeholder_search":"Cerca per nom o codi",
+
+        "snapshot_medication":"Presa instantània",
+        "medication_plan":"Pla de Medicació"
       },
       "tracking":{
         "header": "Seguiment",
@@ -594,7 +597,8 @@
       "conversation":{
         "placeholder":"Escriu un missatge",
         "warning":"Advertència: ",
-        "warning_text":"Aquest no és un xat en temps real"
+        "warning_text":"Aquest no és un xat en temps real",
+        "open_file": "Obrir arxiu"
       },
       "advices":{
         "header":"Novetats i Consells",
@@ -629,7 +633,9 @@
       },
       "medical_calendar":{
         "header":"Seleccionar Data",
-        "no_slot_available":"No hi ha slots disponibles per a aquest dia"
+        "no_slot_available":"No hi ha slots disponibles per a aquest dia",
+        "previousLabel": "Previ ",
+        "nextLabel":"Següent"
       }, 
       "specialist_finder":{
         "header":"Reservar",
@@ -655,7 +661,8 @@
         "header":"Chat",
         "writting":"Escrivint...",
         "loading":"Carregant més dades...",
-        "end":"Fi"
+        "end":"Fi",
+        "attached_file": "Arxiu adjunt"
       },
       "payment":{
         "header":"Mètode de pagament",

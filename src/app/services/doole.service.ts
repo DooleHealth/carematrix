@@ -1040,6 +1040,19 @@ export class DooleService {
       })
     );
   }
+
+  getAPISearchAdvices(query: any): Observable<any> {
+    let path = 'advices';
+    let httpParams = new HttpParams();
+    httpParams = (query) ? httpParams.append('search', query) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPISearchAdvices(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
   
   getAPIdrugsList(query: any): Observable<any> {
     let path = `drugIntake/list`;

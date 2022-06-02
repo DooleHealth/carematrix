@@ -891,18 +891,15 @@ export class AppComponent implements OnInit {
         .catch(async (error: any) => {
           console.log(error);
           if(error.code == -102){
-            //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-            let secondsPassed = ((new Date).getTime() - this.lastResume?.getTime()) / 1000;
-            if (secondsPassed >= 120) {
-/*               let num = this.authService.getNumloginFailed()
-              if(num >=3){
-                await this.authService.logout();
-                this.router.navigateByUrl('/landing');
-              }
-              else */
-              // Must implement lock-screen
-              setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-            }
+          // let num = this.authService.getNumloginFailed()
+          // if(num >=3){
+          //   await this.authService.logout();
+          //   this.router.navigateByUrl('/landing');
+          // }
+          // else
+          // Must implement lock-screen
+            setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+
           }else{
             // if error.code == -108 user cancel prompt
             // if error.code == -111 too many attempts

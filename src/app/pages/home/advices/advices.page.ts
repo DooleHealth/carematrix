@@ -127,13 +127,13 @@ export class AdvicesPage implements OnInit {
     var query = event //.target.value;
     this.isLoading = true
     this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
-      console.log('[DiaryPage] filterListAdvices()', res); 
+      console.log('[AdvicePage] filterListAdvices()', res); 
       this.items = []
       if(res.success)
-        this.addItems(res.news)
+        this.addItems(res.advice)
       this.isLoading = false
     },err => {
-      console.log('[DiaryPage] filterListAdvices() ERROR(' + err.code + '): ' + err.message); 
+      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message); 
     });
   };
 
@@ -159,12 +159,12 @@ export class AdvicesPage implements OnInit {
         break;
 
       case 'advices':
-        this.items = this.items.filter(element => {
-          if (element.item.name && searchTerm) {
-            return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-          }
-        });
-        //this.filterListAdvices(searchTerm)
+        // this.items = this.items.filter(element => {
+        //   if (element.item.name && searchTerm) {
+        //     return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        //   }
+        // });
+        this.filterListAdvices(searchTerm)
         break;
     }
   }

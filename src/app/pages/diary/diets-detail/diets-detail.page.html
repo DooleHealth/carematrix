@@ -20,7 +20,7 @@
           </ion-item>
     
           <ion-item lines="none" *ngIf="diet.description" padding>
-            <span [innerHTML]="diet.description"></span>
+            <span [innerHTML]="diet.description | safeHtml "></span>
           </ion-item>
 
   </ion-card>

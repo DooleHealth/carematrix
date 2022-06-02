@@ -71,17 +71,17 @@
         <ion-label text-wrap class="textMediumLeft">{{instruction.title}}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-      <ion-item *ngIf="this.event?.origin == 1">
+      <ion-item *ngIf="this.event?.origin == 1 && event?.user_comments">
         <ion-label>{{ 'appointment.field_description' | translate}}</ion-label>
-        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments"></ion-textarea>
+        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments? (event?.user_comments | safeHtml):'' "></ion-textarea>
       </ion-item>
       <ion-item *ngIf="this.event?.origin == 0 && event?.user_comments">
         <ion-label>{{ 'appointment.field_information' | translate}}</ion-label>
-        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments"></ion-textarea>
+        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments? (event?.user_comments | safeHtml):'' "></ion-textarea>
       </ion-item>
-      <ion-item *ngIf="this.event?.origin == 0">
+      <ion-item *ngIf="this.event?.origin == 0 && event?.description">
         <ion-label>{{ 'appointment.field_description' | translate}}</ion-label>
-        <ion-textarea class="textMedium" [innerHtml]="event?.description"></ion-textarea>
+        <ion-textarea class="textMedium" [innerHtml]="event?.description? (event?.description | safeHtml):''"></ion-textarea>
       </ion-item>
       <ion-item >
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>

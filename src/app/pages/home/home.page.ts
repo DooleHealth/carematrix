@@ -93,6 +93,8 @@ export class HomePage implements OnInit {
    infoGames: UserInformation
    infoActivity: UserInformation
    infoGoals: UserInformation
+
+   showDrugPager = true
   constructor(
     public router:Router,
     public platform: Platform,
@@ -119,21 +121,21 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     this.pusher.init()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    this.getUserInformation()
+    //this.getUserInformation()
     this.checkHealthAccess();
     //setTimeout(()=>this.confirmAllNotification(), 2000);
     this.activateAllNotifications(1)
+
   }
 
 
   ionViewWillEnter(){
-      this.getUserInformation()
+    this.getUserInformation()
   }
 
   ionViewDidEnter(){
-    if(!this.isFirstTime)
-    this.getUserInformation()
-    this.isFirstTime = false
+    setTimeout(()=> this.setTimerSlider(), 3000);
+   
   }
 
   checkHealthAccess(){
@@ -247,6 +249,7 @@ export class HomePage implements OnInit {
         //this.drugs = res.data.drugIntakes.drugIntakes
         this.getDrugIntake()
         this.isLoading = false
+
         //Analytics
         //console.log('[HomePage] getUserInformation()', this.userDoole);
         //this.setAnalyticsUserProperty()
@@ -258,6 +261,21 @@ export class HomePage implements OnInit {
 
       });
   }
+
+  setTimerSlider(){
+    this.slideGamesChange()
+    this.searchIndexDGame()
+    this.slideDrugChange()
+    this.searchIndexDrug()
+    this.slideDietChange()
+    this.searchIndexDiet()
+    this.slideActivityChange()
+    this.sliderDiet?.slideTo(this.currentIndexDiet)
+    this.sliderGames?.slideTo(this.currentIndexDrug)
+    this.sliderPhysical?.slideTo(this.currentIndexDiet)
+    this.sliderDrug?.slideTo(this.currentIndexDrug)
+  }
+
   treeIterateDiets(obj) {
     this.diets = []
     for (var property in obj) {
@@ -330,13 +348,13 @@ export class HomePage implements OnInit {
       default:
         break;
     }
-    console.log("** Goal: ", goal );
-    console.log("** goalType: ", goal.goalType );
-    console.log("**  element.last value: ", element_goal?.value);
-    console.log("**  element.reversed: ", goal.reversed);
-    console.log("**  element.goal_percentage: ", goal.goal_percentage);
-    console.log("**  element.progress_bar_value: ",  goal.progress_bar_value);
-    console.log("**  element.progress_bar_color: ",  goal.progress_bar_color);
+    // console.log("** Goal: ", goal );
+    // console.log("** goalType: ", goal.goalType );
+    // console.log("**  element.last value: ", element_goal?.value);
+    // console.log("**  element.reversed: ", goal.reversed);
+    // console.log("**  element.goal_percentage: ", goal.goal_percentage);
+    // console.log("**  element.progress_bar_value: ",  goal.progress_bar_value);
+    // console.log("**  element.progress_bar_color: ",  goal.progress_bar_color);
     goal.last_value_text = goal.last_value + ' ' + goal.element?.element_unit?.abbreviation
 
   }
@@ -526,8 +544,8 @@ export class HomePage implements OnInit {
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus()
       this.searchIndexDrug()
-      this.slideDrugChange()
       this.sliderDrug?.slideTo(this.currentIndexDrug)
+      this.slideDrugChange()
     })
   }
 
@@ -723,7 +741,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  slideDrugChange(){
+  slideDrugChange(event?){
+    console.log('[HomePage] slideDrugChange()', event);
     if(this.drugs !== undefined && this.drugs?.length > 0){
       this.sliderDrug?.getActiveIndex().then(index => {
         //console.log('[HomePage] slideDrugChange()', index);
@@ -736,6 +755,10 @@ export class HomePage implements OnInit {
     }else{
       this.infoDrugs = null;
     }
+
+/*     event.target.isEnd().then(isEnd => {
+      this.showDrugPager = !isEnd;
+    }); */
 
   }
 
@@ -754,7 +777,7 @@ export class HomePage implements OnInit {
 
   slideActivityChange(){
     this.sliderPhysical?.getActiveIndex().then(index => {
-      //console.log('[HomePage] slideActivityChange()', index);
+      console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
       this.infoActivity = {
         title: slider?.group

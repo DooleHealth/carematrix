@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.module';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.
     ElementsAddPageModule,
     ReactiveFormsModule,
     TranslateModule,
+    ShareModule
   ],
   providers: [InAppBrowser],
   declarations: [AgendaDetailPage]

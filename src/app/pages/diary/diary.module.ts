@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DrugsDetailPageModule } from './drugs-detail/drugs-detail.module';
 import { DrugAddPageModule } from './drug-add/drug-add.module';
 import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.mod
     IonicModule,
     ComponentsModule,
     TranslateModule,
+    ShareModule,
     DiaryPageRoutingModule,
     DrugsDetailPageModule,
     DrugAddPageModule,
