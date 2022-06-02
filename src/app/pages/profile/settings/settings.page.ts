@@ -42,6 +42,8 @@ export class SettingsPage implements OnInit {
   biometric_list = []
   modeDevelop = false;
   environment = 0
+  isSelectEndPoint = false;
+  api: any;
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService, 
@@ -459,10 +461,12 @@ export class SettingsPage implements OnInit {
     }
 
     changeEndPoint(event){
-      console.log('[SettingsPage] changeEndPoint()', event.detail.value)
-      let index = event.detail.value
+      console.log('[SettingsPage] changeEndPoint()', event.detail.value.id)
+      let index = event.detail.value.id
       this.endPoint.setIndexEndPointLocalstorage(index)
+      if(this.isSelectEndPoint)
       this.signOut()
+      this.isSelectEndPoint = true
     }
 
     getEndPoint(){
@@ -471,8 +475,10 @@ export class SettingsPage implements OnInit {
       this.listEndPoint.forEach( (e,index)=>{
         e['id']=index
         e.name = this.translate.instant(`mode_development.mode_${index}`)
+        if(index == this.contant.INDEX)
+        this.api = e
       })
-      console.log('[SettingsPage] getEndPoint()', this.listEndPoint)
+      console.log('[SettingsPage] getEndPoint()', this.listEndPoint, this.api)
     }
 
     async signOut() {
