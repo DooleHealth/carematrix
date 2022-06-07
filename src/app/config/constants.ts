@@ -8,13 +8,9 @@ export class Constants {
     public  LIST_ENPOINT: Array<any> = []
     public  INDEX:number = 0
 
-    // public  API_ENDPOINT: string = 'https://deneb.doole.io/api';
-    // public  API_DOOLE_ENDPOINT: string = 'https://deneb.doole.io/api';
-    // public  DOOLE_ENDPOINT: string = 'https://deneb.doole.io';
-
-    public API_ENDPOINT = 'https://deneb-qa.doole.io/api'
-    public API_DOOLE_ENDPOINT = 'https://deneb-qa.doole.io/api'
-    public DOOLE_ENDPOINT = 'https://deneb-qa.doole.io'
+    public  API_ENDPOINT: string = 'https://deneb.doole.io/api';
+    public  API_DOOLE_ENDPOINT: string = 'https://deneb.doole.io/api';
+    public  DOOLE_ENDPOINT: string = 'https://deneb.doole.io';
 
 
     public setEndPoint(index){

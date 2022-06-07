@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ReportProblemPage } from './report-problem/report-problem.page';
@@ -39,6 +39,7 @@ export class ProfilePage implements OnInit {
     private opentokService: OpentokService, 
     private translate : TranslateService,
     private toastController: ToastController,
+    private alertController: AlertController,
     public role: RolesService) { }
 
   ngOnInit() {
@@ -79,11 +80,26 @@ export class ProfilePage implements OnInit {
     }
 
 
-  async signOut() {
-    await this.authService.logout().then(res=>{
-      this.router.navigateByUrl('/landing');
-    });
-  }
+    async signOut(confirm) {
+      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+        
+        this.authService.logout(confirm).subscribe(
+          async (res: any)=>{
+          await res
+          console.log('[ProfilePage] signOut()', JSON.stringify(res))
+          if(res.success)
+          this.router.navigateByUrl('/landing');
+          else{
+            let message = this.translate.instant('setting.error_message_sign_off')
+            this.dooleService.showAlertAndReturn('Error',message, false,'/landing')
+          }
+        });
+      }else{
+        await this.authService.logout1().then(res=>{
+          this.router.navigateByUrl('/landing');
+        });
+      }
+    }
 
   async sendReportProblem(){
     const modal = await this.modalCtrl.create({
@@ -248,6 +264,30 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  async confirmCloseAllDevices() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('setting.sign_off'),
+      message: this.translate.instant('setting.message_sign_off'),
+        buttons: [
+          {
+            text: this.translate.instant("button.no"),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('[LandingPage] AlertConfirm Cancel');
+              this.signOut(false)
+            }
+          }, {
+            text: this.translate.instant("button.yes"),
+            handler: (data) => {
+              this.signOut(true)
+            }
+          }
+        ]
+    });
 
+    await alert.present();
+  }
 
 }

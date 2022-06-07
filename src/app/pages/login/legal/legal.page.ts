@@ -144,7 +144,7 @@ export class LegalPage implements OnInit {
   }
 
   async signOut() {
-    await this.authService.logout().then(res=>{
+    await this.authService.logout(true).subscribe(res=>{
       this.router.navigateByUrl('/landing');
     });
   }

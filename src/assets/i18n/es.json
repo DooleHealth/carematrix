@@ -252,9 +252,11 @@
           "title_family_unit":"Unidad Familiar",
           "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?",
           "canAccess":"Estás a cargo de",
-          "othersCanAccess":"Tu tutor es:"
-        
-        }
+          "othersCanAccess":"Tu tutor es:"      
+        },
+        "sign_off": "Cerrar sesión",
+        "message_sign_off": "¿Deseas cerrar sesión en todos los dispositivos?",
+        "error_message_sign_off": "Ha ocurrido un error al cerrar sesión"
 
       },
       "report_problem":{
@@ -594,7 +596,9 @@
         "perfil":"Perfil",
         "open": "Abrir",
         "exit": "Salir",
-        "reject": "Rechazar"
+        "reject": "Rechazar",
+        "yes": "Si",
+        "no": "No"
       },
       "conversation":{
         "placeholder":"Escribe un mensaje.",
