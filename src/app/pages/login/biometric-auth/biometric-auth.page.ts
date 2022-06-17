@@ -17,6 +17,7 @@ export class BiometricAuthPage implements OnInit {
   showDialog = true
   biometric_list = []
   environment = 0
+  settingsBio = '';
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
@@ -28,7 +29,6 @@ export class BiometricAuthPage implements OnInit {
     private notification: NotificationService
   ) {
     localStorage.setItem('show-bio-dialog','false');
-    localStorage.setItem('settings-bio','false');
   }
 
   ngOnInit() {
@@ -39,6 +39,8 @@ export class BiometricAuthPage implements OnInit {
     let list = JSON.parse(localStorage.getItem('biometric_list'))
     this.biometric_list = list? list:[];
     this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    this.settingsBio = 'settings-bio' + this.environment
+    localStorage.setItem(this.settingsBio,'false');
     console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
   }
 
@@ -88,7 +90,7 @@ export class BiometricAuthPage implements OnInit {
             let e = {hash: hash, id: data.id, endpoint: this.environment}
             localStorage.setItem('bio-auth', JSON.stringify(e));
             localStorage.setItem('show-bio-dialog', 'false');
-            localStorage.setItem('settings-bio', 'true');
+            localStorage.setItem(this.settingsBio, 'true');
             this.addBiometricToList(e)
             this.notification.displayToastSuccessful()
             this.dismissLockScreen()

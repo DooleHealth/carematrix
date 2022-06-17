@@ -29,7 +29,8 @@ declare let IRoot: any;
   templateUrl: 'app.component.html',
 })
 export class AppComponent implements OnInit {
-  public selectedIndex = 0;
+  settingsBio = '';
+  selectedIndex = 0;
   previousUrl: string = null;
   currentUrl: string = null;
   textDir = 'ltr';
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
   isNotification: any;
   lastPause: Date;
   translationsForNotifications:any;
+  environment = 0
   // Inject HistoryHelperService in the app.components.ts so its available app-wide
   constructor(
     private router: Router,
@@ -72,6 +74,8 @@ export class AppComponent implements OnInit {
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
     this.endPoind.loadEndPoints()
+    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    this.settingsBio = 'settings-bio' + this.environment
     FirebaseAnalytics.initializeFirebase(environment.firebase);
 
     this.platform.ready().then(() => {
@@ -848,9 +852,7 @@ export class AppComponent implements OnInit {
 
   public async showFingerprintAuthDlg(data?) {
     console.log("[AppComponent] showFingerprintAuthDlg(), data", data);
-    if(!JSON.parse(localStorage.getItem('settings-bio')) || 
-        JSON.parse(localStorage.getItem('settings-bio')) == null || 
-        JSON.parse(localStorage.getItem('settings-bio')) == undefined || 
+    if(!JSON.parse(localStorage.getItem(this.settingsBio)) || 
         this.lastPause == undefined || !this.authService?.user ){
 
       if(data){

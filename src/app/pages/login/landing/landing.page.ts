@@ -22,6 +22,7 @@ const { Storage } = Plugins;
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
+  settingsBio = '';
   NUM_FAIL_LOGIN = 4;
   NUM_SECONDS = 120
   pushNotification: any;
@@ -274,7 +275,7 @@ export class LandingPage implements OnInit {
     if(!this.isAvailableFaID())
     return 
 
-    const biometricsEnabled = localStorage.getItem('settings-bio');
+    const biometricsEnabled = localStorage.getItem(this.settingsBio);
     const biometricToken =  this.getBiometric(); //localStorage.getItem('bio-auth');
     console.log('[LandingPage] getStoredValues() 1 biometricsEnabled: ', biometricsEnabled, JSON.stringify(biometricToken));
     if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
@@ -323,6 +324,7 @@ export class LandingPage implements OnInit {
     let list = JSON.parse(localStorage.getItem('biometric_list'))
     this.biometric_list = list? list:[];
     this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    this.settingsBio = 'settings-bio' + this.environment
     console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
   }
 
