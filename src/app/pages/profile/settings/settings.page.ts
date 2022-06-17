@@ -19,6 +19,7 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
+  settingsBio = '';
   authentication = false
   faceId = false
   communications = false
@@ -59,6 +60,7 @@ export class SettingsPage implements OnInit {
     private endPoint: ApiEndpointsService
     ) {}
   ngOnInit() {
+    this.getListBiometric()
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
@@ -66,9 +68,9 @@ export class SettingsPage implements OnInit {
   }
 
   ionViewDidEnter(){
+    this.getListBiometric()
     this.getEndPoint()
     this.getNotificationConfiguration()
-    this.getListBiometric()
   }
 
   getModeDevelopmne(){
@@ -91,7 +93,7 @@ export class SettingsPage implements OnInit {
 
   getConfigurationParams(params: any){
     this.authentication = (params?.two_factor_authentication== "1")? true:false
-    this.faceId = JSON.parse(localStorage.getItem('settings-bio'))
+    this.faceId = JSON.parse(localStorage.getItem(this.settingsBio))
     //console.log('[SettingsPage] getConfigurationParams()', this.faceId, localStorage.getItem('settings-bio'));
     this.communications = (params?.communicationsNotificaton== "1")? true:false
     this.appointment = (params?.appointmentNotificaton== "1")? true:false
@@ -119,7 +121,7 @@ export class SettingsPage implements OnInit {
   }
 
   changeFaceId(){
-    if(this.faceId == JSON.parse(localStorage.getItem('settings-bio')))
+    if(this.faceId == JSON.parse(localStorage.getItem(this.settingsBio)))
       return
     this.showBioAuthDlg(this.faceId)
   }
@@ -348,7 +350,7 @@ export class SettingsPage implements OnInit {
             }
 
             if(!faceId){
-              localStorage.setItem('settings-bio', 'false');
+              localStorage.setItem(this.settingsBio, 'false');
               return
             }
 
@@ -388,7 +390,7 @@ export class SettingsPage implements OnInit {
               let e = {hash: hash, id: data.id, endpoint: this.environment}
               localStorage.setItem('bio-auth', JSON.stringify(e));
               localStorage.setItem('show-bio-dialog', 'false');
-              localStorage.setItem('settings-bio', 'true');
+              localStorage.setItem(this.settingsBio, 'true');
               this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
             }  
@@ -409,7 +411,7 @@ export class SettingsPage implements OnInit {
               let e = {hash: hash, id: data.id, endpoint: this.environment}
               localStorage.setItem('bio-auth', JSON.stringify(e));
               localStorage.setItem('show-bio-dialog', 'false');
-              localStorage.setItem('settings-bio', 'true');
+              localStorage.setItem(this.settingsBio, 'true');
               this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
             }  
@@ -436,6 +438,7 @@ export class SettingsPage implements OnInit {
       let list = JSON.parse(localStorage.getItem('biometric_list'))
       this.biometric_list = list? list:[];
       this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+      this.settingsBio = 'settings-bio' + this.environment
       console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", JSON.stringify(this.biometric_list) , this.environment);
     }
 
@@ -446,11 +449,11 @@ export class SettingsPage implements OnInit {
     isAvailableFaID(){
       this.faio.isAvailable().then((result: any)  =>{
         console.log(`[SettingsPage] isAvailableFaID()`,result)
-        if(JSON.parse(localStorage.getItem('settings-bio')) === undefined)
-        localStorage.setItem('settings-bio','false');
+        if(JSON.parse(localStorage.getItem(this.settingsBio)) === undefined)
+        localStorage.setItem(this.settingsBio,'false');
       }).catch(async (error: any) => {
         localStorage.setItem('show-bio-dialog','false');
-        localStorage.setItem('settings-bio','false');
+        localStorage.setItem(this.settingsBio,'false');
         this.isFaID = false
         this.faceId = false
       });
