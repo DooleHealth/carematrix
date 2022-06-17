@@ -1017,17 +1017,6 @@ export class DooleService {
     );
   }
 
-  getAPIdetailAdvices(id: any): Observable<any> {
-    let path = `advice/${id}`;
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] getAPIdetailAdvices(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
-
   getAPISearchAdvices(query: any): Observable<any> {
     let path = 'advices';
     let httpParams = new HttpParams();
@@ -1036,6 +1025,17 @@ export class DooleService {
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPISearchAdvices(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIdetailAdvices(id: any): Observable<any> {
+    let path = `advice/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailAdvices(${path}) res: `, res);
         return res;
       })
     );
