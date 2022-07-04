@@ -254,7 +254,10 @@
           "msg_alert_change_perfil": "Vols canviar a aquest perfil?",
           "canAccess":"Estàs a càrrec de:",
           "othersCanAccess":"El teu tutor és:"
-        }
+        },
+        "sign_off": "Tancar sessió",
+        "message_sign_off": "Vols tancar sessió a tots els dispositius?",
+        "error_message_sign_off": "Ha passat un error en tancar sessió"
 
       },
       "report_problem":{
@@ -592,7 +595,9 @@
         "perfil":"Perfil",
         "open": "Obrir",
         "exit": "Sortir",
-        "reject": "Rebutjar"
+        "reject": "Rebutjar",
+        "yes": "Si",
+        "no": "No"
       },
       "conversation":{
         "placeholder":"Escriu un missatge",

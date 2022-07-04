@@ -11,7 +11,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
 const { Storage } = Plugins;
 const TOKEN_KEY = 'token';
-const TOKEN_KEY_DEV = 'token_dev';
+const TOKENS = 'tokens';
 const INTRO_KEY = 'intro';
 
 export class User {
@@ -56,6 +56,7 @@ export class AuthenticationService {
   public deviceVoipToken: any;
   public isFamily:boolean;
   private indexEndPoint: number;
+  private tokens = []
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   constructor(private http: HttpClient,
     private api: ApiEndpointsService,
@@ -64,7 +65,7 @@ export class AuthenticationService {
     public router: Router,
     private constants: Constants,
     @Inject(PLATFORM_ID) private platformId: object) {
-    this.setUser();
+      this.setUser();
   }
 
   getIndexEndPoint(){
@@ -95,7 +96,7 @@ export class AuthenticationService {
   }
 
   login(credentials: { username, password, hash }): Observable<any> {
-
+    this.tokens = []
     const endpoint = this.api.getEndpoint('patient/login');
 
     console.log('credentials: ', credentials);
@@ -242,27 +243,32 @@ export class AuthenticationService {
     localStorage.setItem('two-factor-center', tfCenter);
   }
 
-  async logout(): Promise<void> {
+  async logout1(): Promise<void>{
     console.log('logout');
     this.isAuthenticated.next(false);
     await Storage.remove({ key: 'user' }).then((val) => { });
     return Storage.remove({ key: TOKEN_KEY });
   }
 
-/*   logout(params): Observable<any>  {
-    console.log('logout');
-    const endpoint = this.api.getEndpoint('patient/login');
-    return this.http.post(endpoint, params).pipe(
-      map(async (res: any) => {
-        //console.log(`[DooleService] postAPIaddAgenda(${path}) res: `, res);
-        this.isAuthenticated.next(false);
-        await Storage.remove({ key: 'user' }).then((val) => { });
-        await Storage.remove({ key: TOKEN_KEY });
-        return res;
-      })
-    );
-
-  } */
+  logout(allDevices?): Observable<any>  {  
+      this.getAllTokenDevices()
+      let params = {
+        tokens: this.tokens,
+        allDevices: allDevices? allDevices: false
+      }
+      console.log('logout', params );
+      let path = 'patient/logout'
+      const endpoint = this.api.getEndpoint(path);
+      return this.http.post(endpoint, params).pipe(
+        map( (res: any) => {
+          console.log(`[AuthenticationService] logout(${path}) res: `, JSON.stringify(res) );
+          this.isAuthenticated.next(false);
+           Storage.remove({ key: 'user' }).then((val) => { });
+           Storage.remove({ key: TOKEN_KEY });
+          return res;
+        })
+      );
+  }
 
   increaseNumloginFailed(){
     let numFailLogin = 0
@@ -372,7 +378,7 @@ export class AuthenticationService {
         let response=data;
         console.log("response user/device/register");
         console.log(response);
-      
+        this.saveAllTokenDevices(postData)
         return response;
       },
       (error) => {
@@ -380,6 +386,16 @@ export class AuthenticationService {
         console.log('error user/device/register: ', error);
         throw error;
       });
+  }
+
+  saveAllTokenDevices(token){
+    this.tokens.push(token)
+    localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
+  }
+
+  getAllTokenDevices(){
+    let list = JSON.parse(localStorage.getItem(TOKENS))
+    this.tokens = list? list:[]
   }
 
   async showIntro() {

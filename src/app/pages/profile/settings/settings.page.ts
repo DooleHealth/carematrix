@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
-import { ModalController, Platform } from '@ionic/angular';
+import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -12,6 +12,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { Constants } from 'src/app/config/constants';
 import { Router } from '@angular/router';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-settings',
@@ -57,7 +58,8 @@ export class SettingsPage implements OnInit {
     public role: RolesService,
     public contant: Constants,
     private router: Router,
-    private endPoint: ApiEndpointsService
+    private endPoint: ApiEndpointsService,
+    private alertController: AlertController,
     ) {}
   ngOnInit() {
     this.getListBiometric()
@@ -466,9 +468,9 @@ export class SettingsPage implements OnInit {
     changeEndPoint(event){
       console.log('[SettingsPage] changeEndPoint()', event.detail.value.id)
       let index = event.detail.value.id
-      this.endPoint.setIndexEndPointLocalstorage(index)
       if(this.isSelectEndPoint)
-      this.signOut()
+      //this.signOut(true, index)
+      this.confirmCloseAllDevices(index)
       this.isSelectEndPoint = true
     }
 
@@ -484,10 +486,51 @@ export class SettingsPage implements OnInit {
       console.log('[SettingsPage] getEndPoint()', this.listEndPoint, this.api)
     }
 
-    async signOut() {
-      await this.authService.logout().then(res=>{
-        this.router.navigateByUrl('/landing');
+
+    async signOut(confirm, index) {
+      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+        await this.authService.logout(confirm).subscribe(res=>{
+          console.log('[SettingsPage] signOut()', JSON.stringify(res))
+          if(res.success)
+          this.router.navigateByUrl('/landing');
+          else{
+            let message = this.translate.instant('setting.error_message_sign_off')
+            this.dooleService.showAlertAndReturn('Error',message, false,'/landing')
+          }
+          this.endPoint.setIndexEndPointLocalstorage(index)
+        });
+      }else{
+        await this.authService.logout1().then(res=>{
+          this.router.navigateByUrl('/landing');
+        });
+      }
+    }
+
+
+    async confirmCloseAllDevices(index) {
+      const alert = await this.alertController.create({
+        cssClass: 'my-alert-class',
+        subHeader: this.translate.instant('setting.sign_off'),
+        message: this.translate.instant('setting.message_sign_off'),
+          buttons: [
+            {
+              text: this.translate.instant("button.no"),
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {
+                console.log('[LandingPage] AlertConfirm Cancel');
+                this.signOut(false, index)
+              }
+            }, {
+              text: this.translate.instant("button.yes"),
+              handler: (data) => {
+                this.signOut(true, index)
+              }
+            }
+          ]
       });
+
+      await alert.present();
     }
 
 }
