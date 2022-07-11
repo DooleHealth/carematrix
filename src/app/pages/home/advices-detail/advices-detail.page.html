@@ -25,9 +25,9 @@
       <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>
       <ion-icon [color]="(this.favourite)? 'primary':'secundary' "name="star" slot="end" (click)= "setContentStatus('favourite')"></ion-icon>
     </ion-item>
-    <ion-item lines="none">
+    <!-- <ion-item lines="none">
       <ion-text style="color:#141414; font-weight: bold;"> {{advice?.name}}</ion-text>
-    </ion-item>
+    </ion-item> -->
     <ion-item lines="none" *ngIf="advice.description" padding>
       <span [innerHTML]="advice.description"></span>
     </ion-item>

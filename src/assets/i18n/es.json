@@ -612,7 +612,8 @@
         "tag_advices": "Consejos",
         "searchbar":"Buscar",
         "detail_news": "Detalle Novedades",
-        "detail_advices": "Detalle Consejos"
+        "detail_advices": "Detalle Consejos",
+        "links": "Enlaces directos"
       },
       "contact":{
         "header": "Contacta",

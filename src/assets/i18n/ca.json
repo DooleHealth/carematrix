@@ -609,7 +609,8 @@
         "header":"Novetats i Consells",
         "tag_news": "Novetats",
         "tag_advices": "Consells",
-        "searchbar":"Cercar"
+        "searchbar":"Cercar",
+        "links": "Enllaços directes"
       },
       "contact":{
         "header": "Contacta",
