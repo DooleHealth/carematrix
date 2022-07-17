@@ -88,6 +88,10 @@
               <ion-label>{{'setting.subtitle_messages' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="messages" (ionChange)="changeMessages()" checked></ion-toggle>
             </ion-item>
+            <ion-item>
+              <ion-label>{{'setting.subtitle_games' | translate}}</ion-label>
+              <ion-toggle slot="end" color="success" [(ngModel)]="games" (ionChange)="changeGames()" checked></ion-toggle>
+            </ion-item>
             <ion-item lines="none">
               <ion-label>{{'setting.subtitle_release' | translate}}</ion-label>
               <ion-toggle slot="end" color="success" [(ngModel)]="release" (ionChange)="changeRelease()" checked></ion-toggle>

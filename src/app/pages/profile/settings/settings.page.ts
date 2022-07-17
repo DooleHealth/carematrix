@@ -45,6 +45,7 @@ export class SettingsPage implements OnInit {
   modeDevelop = false;
   environment = 0
   isSelectEndPoint = false;
+  games = false
   api: any;
   constructor(
     private dooleService: DooleService,
@@ -109,7 +110,7 @@ export class SettingsPage implements OnInit {
     this.reminder = (params?.reminderNotificationApp== "1")? true:false
     this.release = (params?.promoteContentNotification== "1")? true:false
     this.news = (params?.newsNotificationApp== "1")? true:false
-
+    this.games = (params?.gamePlayNotificationApp== "1")? true:false
   }
 
   changeAuthentication(){
@@ -163,6 +164,16 @@ export class SettingsPage implements OnInit {
       value: this.medication
     }
     this.sendConfigution(params2)
+    let params3 = {
+      name: 'medicationPlanExpiredNotificationApp',
+      value: this.medication
+    }
+    this.sendConfigution(params3)
+    let params4 = {
+      name: 'medicationPlanExpiredNotificationEmail',
+      value: this.medication
+    }
+    this.sendConfigution(params4)
   }
 
   changeAdvices(){
@@ -237,6 +248,20 @@ export class SettingsPage implements OnInit {
       value: this.release
     }
     this.sendConfigution(params)
+  }
+
+  changeGames(){
+    let params = {
+      name: 'gamePlayNotificationApp',
+      value: this.games
+    }
+    this.sendConfigution(params)
+
+    let params2 = {
+      name: 'gamePlayNotificationMail',
+      value: this.games
+    }
+    this.sendConfigution(params2)
   }
 
 
