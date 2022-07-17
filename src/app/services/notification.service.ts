@@ -105,5 +105,23 @@ export class NotificationService {
     });
   }
 
+
+  async confirmAllNotification(message) {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-alert-class',
+      message: message ,
+        buttons: [
+         {
+            text: this.translate.instant("button.ok"),
+            handler: (data) => {
+    
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+  }
+
 }
 
