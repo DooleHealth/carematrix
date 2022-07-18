@@ -33,7 +33,7 @@ export class PusherMessageService {
   secret = "e23e0b09095890bdac73"
   cluster = "eu"
   nameChanel = 'presence-MessageCreated.' //+ this.authService?.user?.idUser
-  channel;
+  //channel;
   pusher
   constructor(
     private constants: Constants,
@@ -55,9 +55,9 @@ export class PusherMessageService {
    }
 
    public init(idChannel: String){
-    this.channel = this.pusher.subscribe(this.nameChanel + idChannel);
+    var channel = this.pusher.subscribe(this.nameChanel + idChannel);
     console.log('[PusherMessageService] init()', this.pusher, this.nameChanel);
-    return this.channel;
+    return channel;
  }
 
  public setEndPoint(){
@@ -69,5 +69,9 @@ export class PusherMessageService {
   this.secret = opt.secret
   this.cluster = opt.cluster
 }
+
+public end(){
+  this.pusher.unsubscribe()
+ }
 
 }

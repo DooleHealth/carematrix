@@ -91,14 +91,6 @@ export class ConversationPage implements OnInit {
 
   ionViewWillEnter(){
 
-    // console.log("[ConversationPage] ionViewWillEnter() message_header_id: ", JSON.stringify(this.id));
-    // console.log("[ConversationPage] ionViewWillEnter() staff", JSON.stringify(this.staff) );
-    // console.log("[ConversationPage] ionViewWillEnter() data", JSON.stringify(this.data) );
-    // if(this.staff)
-    //   this.to.push(this.staff?.id);
-    // else 
-    //   console.log("staff is undefined, post message without staff id");
-
     if(this.id){
       this.getPusher()
     }
@@ -106,9 +98,14 @@ export class ConversationPage implements OnInit {
       console.log('no id');
   }
 
+  ionViewWillLeave(){
+    this.pusherMessage.end()
+  }
+
   getPusher() {
     const NAME_BIND = 'App\\Events\\MessageCreated' 
     const channel = this.pusherMessage.init(this.id);
+    console.log('[ChatPusherPage] getPusher() channel' , channel);
         channel.bind(NAME_BIND, (data) => {
           console.log('[ChatPusherPage] getPusher() data' , data);
           if (data.id !== this.lastMessageId) {

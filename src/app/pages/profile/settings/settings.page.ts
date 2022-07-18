@@ -516,16 +516,18 @@ export class SettingsPage implements OnInit {
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         await this.authService.logout(confirm).subscribe(res=>{
           console.log('[SettingsPage] signOut()', JSON.stringify(res))
-          if(res.success)
-          this.router.navigateByUrl('/landing');
+          if(res.success){
+            this.endPoint.setIndexEndPointLocalstorage(index)
+            this.router.navigateByUrl('/landing');
+          }
           else{
             let message = this.translate.instant('setting.error_message_sign_off')
             this.dooleService.showAlertAndReturn('Error',message, false,'/landing')
           }
-          this.endPoint.setIndexEndPointLocalstorage(index)
         });
       }else{
         await this.authService.logout1().then(res=>{
+          this.endPoint.setIndexEndPointLocalstorage(index)
           this.router.navigateByUrl('/landing');
         });
       }
