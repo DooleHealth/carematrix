@@ -423,7 +423,8 @@
           "month1": "1 mes",
           "month2": "2 meses",
           "month3": "3 meses"
-        }
+        },
+        "error_end_date": "La fecha de término debe ser mayor que la fecha de empieza"
       },
       "appointment":{
         "header_appointment": "Detalle cita",

@@ -420,7 +420,8 @@
           "month2": "2 mesos",
           "month3": "3 mesos"
           
-        }
+        },
+        "error_end_date": "La data de terme ha de ser més gran que la data de comença"
       },
       "appointment":{
         "header_appointment": "Detall cita",

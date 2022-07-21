@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -63,7 +63,7 @@ export class ReminderAddPage implements OnInit {
       title: [''],
       start_date: ['', [Validators.required]],
       time: [''],
-      end_date: ['', [Validators.required]],
+      end_date: ['', [Validators.required, this.checkDate.bind(this)]],
       description: [],
      /*  days: [this.days], */
      /*   origin: [1], */
@@ -84,6 +84,29 @@ export class ReminderAddPage implements OnInit {
 
   expandItem(): void {
     this.expanded = !this.expanded
+  }
+
+  private checkDate(group: FormControl) {
+    if(this.form !== null && this.form !== undefined) {
+      const start_date = this.form.get('start_date').value;
+      const end_date = group.value;
+      console.log(`[ReminderAddPage] checkDate(${start_date}, ${end_date})`);
+      if(start_date && end_date){
+        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+          NotLess: true
+      };
+      }
+    }
+ }
+
+  getErrorEndDate() {
+    if (this.form.get('end_date').hasError('required')) {
+      return this.translate.instant("error_required");
+    }
+    if (this.form.get('end_date').hasError('NotLess')) {
+      return this.translate.instant("reminder.error_end_date");
+    }
+    return '';
   }
 
   getReminder(){
