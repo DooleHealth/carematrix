@@ -31,7 +31,7 @@ export class PusherAlarmService {
   key = "f89e2ed013b43522069e"
   secret = "e23e0b09095890bdac73"
   cluster = "eu"
-  nameChanel = 'presence-MessageCreated.' //+ this.authService?.user?.idUser
+  nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser //'private-LevelAccomplishmentCompleted.15189' //
   channel;
 
  constructor(
