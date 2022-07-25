@@ -537,6 +537,7 @@
           "all_day": "todo el día"
       },
       "diet":{
+          "detail": "Dieta",
           "breakfast": "Desayuno",
           "brunch": "Almuerzo",
           "lunch": "Comida",

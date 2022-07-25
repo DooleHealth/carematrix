@@ -572,6 +572,7 @@
           "all_day": "tot el dia"
       },
       "diet":{
+        "detail": "Dieta",
         "breakfast": "Esmorzar",
         "brunch": "Mig Matí",
         "lunch": "Dinar",
