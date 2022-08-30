@@ -182,6 +182,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   updateDrug(){
+    this.isLoading = true;
     const form = this.setFields()
     console.log('[DrugsDetailPage] updateDrug()', form);
 
@@ -193,7 +194,9 @@ export class DrugsDetailPage implements OnInit {
         let message = this.translate.instant('medication.error_message_edit_medication')
         alert(message)
       }
+      this.isLoading = false
     },err => {
+      this.isLoading = false
       alert(`Error: ${err.code }, Message: ${err.message}`)
       console.log('[DrugsDetailPage] updateDrug() ERROR(' + err.code + '): ' + err.message); 
       throw err; 

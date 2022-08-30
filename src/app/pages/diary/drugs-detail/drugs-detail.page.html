@@ -91,7 +91,7 @@
 </form>
   <div class="buttonContainer">
   <ion-button *ngIf="!isEditDrug" expand="block" (click)="snapshot()" [color]="isInstant? 'tertiary':'primary'">{{isInstant? ('medication.medication_plan' | translate):('medication.snapshot_medication' | translate) }}</ion-button><br>
-  <ion-button  expand="block" (click)="submit()" color="primary" >{{'medication.save_medication' | translate}}</ion-button><br>
+  <ion-button [disabled]="this.isLoading" expand="block" (click)="submit()" color="primary" >{{'medication.save_medication' | translate}}</ion-button><br>
   <ion-button *ngIf="isEditDrug" (click)="presentAlertConfirm()" class="buttonClose" color="transparent" expand="block">{{'medication.delete_medication' | translate}}</ion-button>
 </div>
 </ion-content>

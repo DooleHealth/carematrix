@@ -122,18 +122,6 @@ export class DiaryPage implements OnInit {
   expandItem(item): void {
     console.log('[DiaryPage] expandItem()', item.expanded);
     item.expanded = !item.expanded;
-    // if (item.expanded) {
-    //   item.expanded = false;
-    // } else {
-    //   this.items.map(listItem => {
-    //     if (item == listItem) {
-    //       listItem.expanded = !listItem.expanded;
-    //     } else {
-    //       listItem.expanded = false;
-    //     }
-    //     return listItem;
-    //   });
-    // }
   }
 
   expandItemDiet(item){
