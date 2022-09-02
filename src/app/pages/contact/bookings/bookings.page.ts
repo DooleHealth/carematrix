@@ -21,6 +21,7 @@ export class BookingsPage implements OnInit {
   staff = history.state.staff;
   staffId = this.staff?.id
   selectedDate: string;
+  online// = history.state.isOnline;
   files: Array<{ name: string, file: any, type: string }> = [];
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   form: FormGroup;
@@ -46,10 +47,15 @@ export class BookingsPage implements OnInit {
       indications: [],
       // file:[this.images],
       staff_id:[this.staffId],
-      online:[history.state.isOnline]
+      online:[this.online]
     });
     this.setTitle()
     console.log(`[BookingsPage] ngOnInit() staffId: `, this.staffId );
+  }
+
+  ionViewDidEnter(){
+    this.online = JSON.parse(localStorage.getItem('isOnline-contact')) ;
+    console.log(`[BookingsPage] ionViewDidEnter() online: `, this.online);
   }
 
   setTitle(){
@@ -57,7 +63,7 @@ export class BookingsPage implements OnInit {
     this.form.get('title').setValue(messagge)
   }
 
-  transformDate(date) {
+  transformDate(date, format) {
     return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
   }
 
@@ -67,6 +73,12 @@ export class BookingsPage implements OnInit {
 
   async addAgenda(){
     console.log(`[BookingsPage] addAgenda()`, this.form.value );
+
+    this.form.get('online').setValue(this.online)
+    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
+
+    console.log(`[BookingsPage] addAgenda()1`, this.form.value );
+    //return
     this.isLoading = true
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
@@ -132,7 +144,7 @@ export class BookingsPage implements OnInit {
         if(result.data['date']){
           this.duration = result.data['duration']
           this.selectedDate = result.data['date']; 
-          this.form.patchValue({date: this.transformDate(this.selectedDate)})
+          this.form.patchValue({date: this.transformDate(this.selectedDate, 'dd/MM/yyyy HH:mm')})
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }
     });
@@ -147,6 +159,8 @@ export class BookingsPage implements OnInit {
     if(this.form.invalid)
       return 
   
+    this.form.get('online').setValue(this.online)
+    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
     this.files = this.uploadFile.files
 
     this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files}});
