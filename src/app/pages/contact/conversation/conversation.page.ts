@@ -262,9 +262,9 @@ export class ConversationPage implements OnInit {
     return moment(epoch).calendar(null, {
       sameDay: `[${today}]`,
       lastDay: `[${yesterday}]`,
-      sameElse: 'DD/MM/YY',
-      lastWeek : 'DD/MM/YY',
-      nextDay : 'DD/MM/YY'
+      sameElse: 'DD/MM/YYYY',
+      lastWeek : 'DD/MM/YYYY',
+      nextDay : 'DD/MM/YYYY'
     });
   }
 

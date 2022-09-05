@@ -64,7 +64,7 @@ export class BookingsPage implements OnInit {
   }
 
   transformDate(date, format) {
-    return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
+    return this.datepipe.transform(date, format);
   }
 
   trasnforHourToMinutes(time): any{
@@ -75,15 +75,18 @@ export class BookingsPage implements OnInit {
     console.log(`[BookingsPage] addAgenda()`, this.form.value );
 
     this.form.get('online').setValue(this.online)
-    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
 
-    console.log(`[BookingsPage] addAgenda()1`, this.form.value );
+    let params = this.form.value
+    params.date = this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss')
+
+    console.log(`[BookingsPage] addAgenda()1`, params);
     //return
     this.isLoading = true
-    this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
+    this.dooleService.postAPIaddAgenda(params).subscribe(
       async (res: any) =>{
         console.log('[BookingsPage] addAgenda()', await res);  
         if(res.success){
+          this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
           // this.analyticsService.logEvent('create_agenda', res)   
           if(!this.uploadFile.isEmptyFiles()){
             this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
