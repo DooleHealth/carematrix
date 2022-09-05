@@ -91,9 +91,9 @@ export class ChatBubbleComponent implements OnInit {
     return moment(epoch).calendar(null, {
       sameDay: `[${today}] ` + timeString,
       lastDay: `[${yesterday}] ` + timeString,
-      lastWeek : 'DD/MM/YYYY ' + timeString,
-      sameElse: 'DD/MM/YYYY ' + timeString,
-      nextDay : 'DD/MM/YYYY ' + timeString,
+      lastWeek : 'DD/MM/YY ' + timeString,
+      sameElse: 'DD/MM/YY ' + timeString,
+      nextDay : 'DD/MM/YY ' + timeString,
     });
   }
 
