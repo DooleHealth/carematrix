@@ -91,7 +91,7 @@ export class BookingsPage implements OnInit {
           if(!this.uploadFile.isEmptyFiles()){
             this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
               if(res.success){
-                this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+                this.nav.navigateForward('/agenda', { state: {date: params.date} });
                 this.notification.displayToastSuccessful()
               }
               else{
@@ -100,7 +100,7 @@ export class BookingsPage implements OnInit {
               }
             })
           } else{
-            this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+            this.nav.navigateForward('/agenda', { state: {date: params.date} });
             this.notification.displayToastSuccessful()
           }
         }
