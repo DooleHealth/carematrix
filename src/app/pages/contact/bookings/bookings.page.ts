@@ -163,10 +163,10 @@ export class BookingsPage implements OnInit {
       return 
   
     this.form.get('online').setValue(this.online)
-    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
+    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'dd/MM/yyyy HH:mm'))
     this.files = this.uploadFile.files
 
-    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files}});
+    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files, selectedDate: this.selectedDate}});
     
   }
 //  navigateDoctors() {

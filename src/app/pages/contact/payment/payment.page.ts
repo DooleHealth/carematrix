@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,9 +15,10 @@ export class PaymentPage implements OnInit {
   agenda= history.state?.agenda;
   staff = history.state?.staff;
   files = history.state?.files;
+  selectedDate = history.state?.selectedDate;
   add = this.agenda?.online ? 'contact.tap_video' : 'contact.tap_appointment';
   isLoading = false
-  constructor(private dooleService: DooleService, private translate: TranslateService, private loadingController: LoadingController,  private notification: NotificationService, private nav: NavController, ) { }
+  constructor(private dooleService: DooleService, private translate: TranslateService, private loadingController: LoadingController,  private notification: NotificationService, private nav: NavController, public datepipe: DatePipe) { }
 
   ngOnInit() {
     console.log('[PaymentPage] agenda = ', this.agenda);
@@ -24,7 +26,9 @@ export class PaymentPage implements OnInit {
 
   async addAgenda(){
     this.isLoading = true
-    this.dooleService.postAPIaddAgenda(this.agenda).subscribe(
+    let agenda = this.agenda;
+    if(agenda?.date) agenda.date = this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss')
+    this.dooleService.postAPIaddAgenda(agenda).subscribe(
       async (res: any) =>{
         console.log('[PaymentPage] addAgenda()', await res);
         if(res.success){
@@ -44,7 +48,7 @@ export class PaymentPage implements OnInit {
             }
             this.dooleService.postAPIAddMedia(params).subscribe(res =>{
               if(res.success){
-                let date = this.agenda.date
+                let date = agenda.date
                 this.nav.navigateForward('/agenda', { state: {date: date} });
                 this.notification.displayToastSuccessful()
               }else{
@@ -53,7 +57,7 @@ export class PaymentPage implements OnInit {
               }
             })
           }else{
-            let date = this.agenda.date
+            let date = agenda.date
             this.nav.navigateForward('/agenda', { state: {date: date} });
             this.notification.displayToastSuccessful()
           }
@@ -72,6 +76,10 @@ export class PaymentPage implements OnInit {
   showAlert(message){
     let header = this.translate.instant('alert.header_info')
     this.dooleService.showAlertAndReturn(header,message,false, '/contact')
+  }
+
+  transformDate(date, format) {
+    return this.datepipe.transform(date, format);
   }
 
 
