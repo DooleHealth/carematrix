@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { RolesService } from 'src/app/services/roles.service';
 
@@ -11,7 +12,8 @@ export class ContactPage implements OnInit {
   segment = 'video';
   constructor(
     public authService: AuthenticationService,
-    public role: RolesService) { }
+    public role: RolesService,
+    private router: Router,) { }
     
   ngOnInit() {
     this.setSegment()
@@ -24,6 +26,11 @@ export class ContactPage implements OnInit {
           this.segment = ''
       }
     }
+  }
+
+  goMedicalDirectory(isOnline){
+    localStorage.setItem('isOnline-contact', isOnline);
+    this.router.navigate([`medical-directory`],{state:{isOnline: isOnline}});
   }
 
 

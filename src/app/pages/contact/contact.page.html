@@ -44,7 +44,7 @@
 
       <ion-list>
         <ion-card class="cardProfile">
-          <ion-item lines="none" routerLink="medical-directory" [state]="{isOnline:true}" routerLinkActive='active-item'>
+          <ion-item lines="none" (click)="goMedicalDirectory(true)">
             <div class="verticalLine"></div>
             <ion-grid>
               <ion-row>
@@ -118,7 +118,7 @@
 
   <ion-list>
     <ion-card class="cardProfile">
-      <ion-item lines="none" routerLink="medical-directory" [state]="{isOnline:false}"  routerLinkActive='active-item'>
+      <ion-item lines="none" (click)="goMedicalDirectory(false)">
         <div class="verticalLine"></div>
         <ion-grid>
           <ion-row>
