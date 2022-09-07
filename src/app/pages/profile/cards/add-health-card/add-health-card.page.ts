@@ -1,7 +1,7 @@
 import { transition } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +21,7 @@ export class AddHealthCardPage implements OnInit {
   isSubmittedName = false;
   isSubmittedAffiliationNumber = false;
   isSubmittedModality = false;
+  isSubmittedExpiration = false;
   isAddCard = true;
   isSubmitted: boolean;
   constructor(
@@ -46,13 +47,26 @@ export class AddHealthCardPage implements OnInit {
       health_card_type_id: ['', [Validators.required]],
       name: ['', [Validators.required]],
       card_number: ['', [Validators.required]],
-      expiration_date: [''],
+      expiration_date: ['', [ this.checkDate.bind(this)]],
       issue_date: [''],
       /* description: ['description'], */
     
     })
   
   }
+
+  private checkDate(group: FormControl) {
+    if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
+      const start_date = this.formHealthCard.get('issue_date').value;
+      const end_date = group.value;
+      console.log(`[AddHealthCardPage] checkDate(${start_date}, ${end_date})`);
+      if(start_date && end_date && end_date !== ''){
+        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+          NotLess: true
+      };
+      }
+    }
+ }
 
   ionViewDidEnter(){
     console.log('[AddHealthCardPage] ionViewDidEnter()');
@@ -70,6 +84,12 @@ export class AddHealthCardPage implements OnInit {
     }
   }
 
+  getErrorEndDate() {
+    if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
+      return this.translate.instant("add_health_card.error_end_date");
+    }
+    return '';
+  }
 
   showDetailCard(){
     this.formHealthCard.get('id').setValue(this.card.id)
@@ -188,6 +208,7 @@ export class AddHealthCardPage implements OnInit {
     this.isSubmittedName = isSubmitted
     this.isSubmittedAffiliationNumber = isSubmitted;
     this.isSubmittedModality = isSubmitted;
+    this.isSubmittedExpiration = isSubmitted;
   }
 
   deleteHealthCard(){

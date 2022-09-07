@@ -293,7 +293,8 @@
         "alert_message_add_card": "La tarjeta ha sido añadida correctamente",
         "button_add": "Agregar",
         "error_alert_message_add_card": "Error: la tarjeta no ha podido ser añadida",
-        "placeholder_select":"Selecciona uno"
+        "placeholder_select":"Selecciona uno",
+        "error_end_date": "La fecha de caducidad debe ser mayor que la fecha de expedición"
       },
       "edit_health_card":{
         "header_edit_card": "Editar Tarjeta Sanitaria",
