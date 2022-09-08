@@ -163,7 +163,8 @@
         "description1": "Aconsegueix el teu objectiu",
         "description2": "i suma",
         "subtitle_information": "Informació",
-        "subtitle_advices": "Consells"
+        "subtitle_advices": "Consells",
+        "points": "Punts"
       },
       "activity_goal":{
         "definition": "Definició",

@@ -17,8 +17,16 @@
     <ion-grid class="paddingGrid">
       <ion-row>
         <ion-col size="12">
-          <ion-img *ngIf="this.userProfile as UserProfile"
+          <div>
+            <ion-img *ngIf="this.userProfile as UserProfile"
             [src]="this.userProfile?.temporaryUrl" class="img-wrapper"></ion-img>
+            <!-- <ion-fab-button class="img-wrapper2" size="small"> <ion-icon name="add"></ion-icon></ion-fab-button> -->
+            <ion-fab vertical="top" horizontal="center" edge slot="fixed" class="img-wrapper2">
+              <ion-fab-button>
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
