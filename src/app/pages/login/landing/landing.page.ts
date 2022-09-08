@@ -196,9 +196,21 @@ export class LandingPage implements OnInit {
     this.dooleService.postAPIpasswordRecovery(user) .subscribe(
       async (res: any) =>{
         console.log('[InitialPage] passwordRecovery()', await res);
-        if(res.message){
-          let message = this.translate.instant('landing.message_email_sent')
+        let message = ''
+        if(res?.error?.message){
+          message = this.translate.instant('landing.message_failure_response')
           this.dooleService.presentAlert(message)
+          return
+        }
+        if(res?.message && res.message !== ''){
+
+          if(res.message == 'Email sent'){
+            message = this.translate.instant('landing.message_email_sent')
+            this.dooleService.presentAlert(message)
+          }else{
+            message = res.message
+            this.dooleService.presentAlert(message)
+          }
         }
        },(err) => {
           console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message);

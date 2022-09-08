@@ -52,12 +52,13 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'health_card.expedition_date' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" displayFormat="DD/MM/YY" placeholder="Obligatorio" min="1990-01-01"></ion-datetime>
+        <ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" displayFormat="DD/MM/YY" placeholder="Obligatorio" min="1990-01-01"></ion-datetime>
+        <ion-note *ngIf="this.isSubmittedIssueDate && this.formHealthCard.get('issue_date').invalid" class="error ion-padding" color="danger" slot="end">{{ getErrorStartDate() }}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" displayFormat="DD/MM/YY" placeholder="Obligatorio" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
+        <ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" displayFormat="DD/MM/YY" placeholder="Obligatorio" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedExpiration && this.formHealthCard.get('expiration_date').invalid" class="error ion-padding" color="danger" slot="end">{{ getErrorEndDate() }}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
