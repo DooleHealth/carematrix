@@ -4,19 +4,18 @@ ion-back-button {
 }
 
 .img-wrapper {
-  height: 90px;
-  width: 90px;
+  height: 100px;
+  width: 100px;
   display: block;
   margin: auto;
   object-fit: cover;
 }
 
 .img-wrapper2 {
-  --height: 20px !important;
-  --width: 20px !important;
   display: block;
   margin: auto;
-  padding-left: 10px;
+  margin-top: 5px;
+  object-fit: cover;
 }
 
 .paddingGrid {
