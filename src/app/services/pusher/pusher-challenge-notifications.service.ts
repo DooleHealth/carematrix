@@ -29,7 +29,7 @@ export class PusherChallengeNotificationsService {
   key = "f89e2ed013b43522069e"
   secret = "e23e0b09095890bdac73"
   cluster = "eu"
-  nameChanel = 'private-App.User.' + this.authService?.user?.idUser
+  nameChanel = 'private-LevelAccomplishmentCompleted.' + this.authService?.user?.idUser
   channel;
   constructor(
     private constants: Constants, 
