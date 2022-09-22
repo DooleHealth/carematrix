@@ -18,6 +18,7 @@ import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PusherNotificationService } from 'src/app/services/pusher/pusher-notification.service';
 import { PusherAlarmService } from 'src/app/services/pusher/pusher-alarm.service';
+import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 
 export interface UserInformation {
   title?: string;
@@ -122,15 +123,17 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private notification: NotificationService,
     public role: RolesService,
-    private pusher: PusherNotificationService,
-    private pusherAlarms: PusherAlarmService
+    private pusherNotifications: PusherNotificationService,
+    private pusherAlarms: PusherAlarmService,
+    private pusherChallenge: PusherChallengeNotificationsService,
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() {
-    this.pusher.init()
+    this.pusherNotifications.init()
     this.pusherAlarms.init()
+    this.pusherChallenge.init()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     //this.getUserInformation()
     this.checkHealthAccess();

@@ -3,7 +3,8 @@ import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
 declare const Pusher: any;
-const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted' 
+//const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted' 
+const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
 
 @Injectable({
   providedIn: 'root'
