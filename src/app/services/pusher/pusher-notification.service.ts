@@ -3,7 +3,6 @@ import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
 declare const Pusher: any;
-//const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted' 
 const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
 
 @Injectable({
@@ -56,15 +55,15 @@ export class PusherNotificationService {
   public init(){
    
      this.channel.bind(NAME_BIND, (data) => {
-          console.log('[AppComponent] getPusher()' ,  data);
-          this.notification.displayToastPusher(data.message)
+          console.log('[PusherService] getPusher()' ,  data);
+          //this.notification.displayToastPusher(data.message)
         });
   }
 
   public setEndPoint(){
     let index = this.constants?.INDEX
     let opt = this.LIST_APP_KEY[index]
-    console.log('[AppComponent] setEndPoint() ' ,  opt);
+    //console.log('[PusherService] setEndPoint() ' ,  opt);
     this.app_id = opt.app_id
     this.key = opt.key
     this.secret = opt.secret
