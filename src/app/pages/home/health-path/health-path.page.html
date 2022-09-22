@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'health_path.title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="level-container">
+    <ion-row class="">
+      <ion-img src="assets/icons/IconGoal.svg" class="current-level"></ion-img>
+    </ion-row>
+    <ion-row class="level-text">
+      <ion-text> {{ this.currentPath.level}} </ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-progress-bar class="progress-bar" [value]="10"></ion-progress-bar>
+    </ion-row>
+    <ion-row class="level-text">
+      <ion-text> {{ this.currentPath.score}} </ion-text>
+    </ion-row>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeLg="4" sizeMd="4" sizeXs="4" *ngFor="let l of levels; let i = index">
+        <div>
+          <ion-img src="{{ l.completed ? 'assets/icons/IconGoal.svg' : 'assets/icons/candado.svg' }}"
+            (click)="presentAlert(l)" class="level-image">
+          </ion-img>
+          <div>
+            <ion-text> {{ i }} </ion-text>
+          </div>
+        </div>
+        <div>
+          <ion-row class="level-name">
+            <ion-text> {{ l?.name}} </ion-text>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

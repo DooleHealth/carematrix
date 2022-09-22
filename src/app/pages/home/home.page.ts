@@ -3,22 +3,16 @@ import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angul
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
 import { IonSlides, ModalController, NavController, Platform } from '@ionic/angular';
-import { catchError } from 'rxjs/operators';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
-import { VideoComponent } from 'src/app/components/video/video.component';
-import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice, FamilyUnit } from 'src/app/models/user';
+import { User, Agenda, FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
-import { OpentokService } from 'src/app/services/opentok.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { LanguageService } from 'src/app/services/language.service';
-import { group } from '@angular/animations';
-import { stringify } from 'querystring';
-import { Observable } from 'rxjs';
 import { RolesService } from 'src/app/services/roles.service';
 import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -56,6 +50,20 @@ export class HomePage implements OnInit {
   goals: any =[]
   diets: any =[]
   drugs: any =[]
+  healthPath: any =[
+    {
+        "game":"El camino a la salud",
+        "level":"nivel TRES",
+        "score":"Tienes 30 healthies consigue 15 más y pasa al siguiente nivel",
+        "goal":45
+    },
+    {
+        "game":"El camino a la salud",
+        "level":"nivel TRES",
+        "score":"Tienes 60 healthies consigue 10 más y pasa al siguiente nivel",
+        "goal":70
+    }
+];
   games =[]
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
@@ -205,7 +213,7 @@ export class HomePage implements OnInit {
           element['new'] = true
           this.advices.push(element)
         });
-        console.log('[HomePage] getUserInformation()',  this.advices);
+
         this.advices = this.advices.filter(advice => ( !this.getStatusable(advice?.statusable, 'hide')))
 
         if(res.data?.goals){

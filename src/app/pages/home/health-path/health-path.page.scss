@@ -1,0 +1,71 @@
+.img-wrapper {
+  min-height: 200px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.col-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.level-container{
+    background-color: lightgrey;
+}
+.current-level {
+  height: 30%;
+  width: 30%;
+  margin: auto;
+  border: 3px solid orange;
+  margin-top: 10%;
+  display: block;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.level-name{
+  display: block;/* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+font-size: smaller;
+  margin-top: 10%;
+  margin-left: 20%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+}
+
+.level-text{
+  text-align: center;
+  width: 80%;
+  align-content: center;
+  display: block;
+  padding: 4%;
+  margin: auto;
+}
+
+.level-image {
+  height: 60%;
+  width: 60%;
+  margin: auto;
+  border: 2px brown;
+  margin-top: 10%;
+  display: block;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.progress-bar{
+
+      border-radius: 100px;
+      height: 25px;
+      width: 80%;
+      align-content: center;
+      margin: auto;
+      --background: white;
+      --progress-background:orange;
+}
+  

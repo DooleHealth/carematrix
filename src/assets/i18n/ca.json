@@ -165,6 +165,18 @@
         "subtitle_information": "Informació",
         "subtitle_advices": "Consells"
       },
+      "health_path": {
+        "title":"Camí de la salut",
+        "card_title": "els meus reptes",
+        "goals": "Objectius",
+        "start": "Inici",
+        "detail":"¿Com assolir el meu objectiu?",
+        "weight":"Pren el teu pes ",
+        "form":"Respon al ",
+        "advice":"Llegeix el consell ",
+        "game":"Juga a ",
+        "blocked_level": "Aquest nivell està bloquejat"
+      },
       "activity_goal":{
         "definition": "Definició",
         "normal_value": "Valors normals:",

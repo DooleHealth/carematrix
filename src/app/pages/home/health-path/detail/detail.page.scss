@@ -1,0 +1,25 @@
+.level-image {
+    height: 60%;
+    width: 60%;
+    margin: auto;
+    border: 2px brown;
+    margin-top: 10%;
+    display: block;
+    border-radius: 15px;
+    background-color: white;
+  }
+
+  .level-card{
+    --ion-background-color: white !important;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .progress-bar{
+
+    border-radius: 100px;
+    height: 20px;
+    margin: auto;
+    --background: white;
+    --progress-background:orange;
+}

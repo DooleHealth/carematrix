@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'health_path.title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="level-card">
+    <ion-item lines="none" class="cardHeader">
+      <ion-icon slot="start" src="assets/icons/corazon.svg"></ion-icon>
+      <ion-text slot="start">{{(path?.game )? path?.game: ('home.health_path' |
+        translate)}}</ion-text>
+     
+    </ion-item>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+          </ion-col>
+          <ion-col size="9">
+            <p class="text1line"><b>{{path?.level}}</b></p>
+          </ion-col>
+          
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">
+            <ion-img src="assets/icons/IconGoal.svg"></ion-img>
+          </ion-col>
+          <ion-col size="9" >
+           
+            <p>{{ path?.score }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">
+          </ion-col>
+          <ion-col size="9">
+            <ion-progress-bar class="progress-bar" [value]="60" routerLinkActive="active-item">
+            </ion-progress-bar>
+          </ion-col>
+          
+        </ion-row>
+      </ion-grid>
+      <ion-item>
+        <ion-label style="margin-top: 10%;">{{ 'health_path.goals' | translate }}</ion-label>
+      </ion-item>
+
+      <ion-list *ngFor="let g of this.goalsText" style="background-color: white;">
+        <ion-item [routerLink]="g.link" detail="false" routerLinkActive='active-item' [state]="{id:g.id}">
+          <ion-label>{{g?.name}}</ion-label>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

@@ -164,6 +164,18 @@
         "subtitle_information": "Información",
         "subtitle_advices": "Consejos"
       },
+      "health_path": {
+        "title":"Camino de la salud",
+        "card_title": "Mis retos",
+        "goals": "Objetivos",
+        "start": "Inicio",
+        "detail":"¿Cómo alcanzar mi objetivo?",
+        "weight":"Toma tu peso",
+        "form":"Responde al ",
+        "advice":"Lee el consejo ",
+        "game":"Juega a ",
+        "blocked_level": "Este nivel todavía está bloqueado"
+      },
       "activity_goal":{
         "definition": "Definición",
         "normal_value": "Valores normales:",
