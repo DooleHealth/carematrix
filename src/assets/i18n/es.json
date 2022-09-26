@@ -170,11 +170,12 @@
         "goals": "Objetivos",
         "start": "Inicio",
         "detail":"¿Cómo alcanzar mi objetivo?",
-        "weight":"Toma tu peso",
-        "form":"Responde al ",
+        "weight":"Toma tu ",
+        "form":"Responde al Formulario",
         "advice":"Lee el consejo ",
         "game":"Juega a ",
-        "blocked_level": "Este nivel todavía está bloqueado"
+        "blocked_level": "Este nivel todavía está bloqueado",
+        "goal":"Tienes {{ total }} {{ coin}}, consigue {{ required }} más y pasa al siguiente nivel."
       },
       "activity_goal":{
         "definition": "Definición",

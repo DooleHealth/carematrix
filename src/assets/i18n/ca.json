@@ -175,7 +175,8 @@
         "form":"Respon al ",
         "advice":"Llegeix el consell ",
         "game":"Juga a ",
-        "blocked_level": "Aquest nivell està bloquejat"
+        "blocked_level": "Aquest nivell està bloquejat",
+        "goal":"Tens {{ total }} {{ coin }}, aconsegueix {{ required }} més i passa al següent nivell."
       },
       "activity_goal":{
         "definition": "Definició",

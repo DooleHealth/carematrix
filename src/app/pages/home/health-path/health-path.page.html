@@ -3,43 +3,67 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'health_path.title' | translate}}</ion-title>
+    <ion-title>{{ this.challenge?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="level-container">
-    <ion-row class="">
-      <ion-img src="assets/icons/IconGoal.svg" class="current-level"></ion-img>
+    <ion-row>
+
+      <ion-img
+        src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"
+        class="icon-box bigger"></ion-img>
     </ion-row>
-    <ion-row class="level-text">
-      <ion-text> {{ this.currentPath.level}} </ion-text>
+    <ion-row class="level-text ion-padding">
+      <ion-text> {{ this.challenge?.current_level?.name}} </ion-text>
     </ion-row>
     <ion-row>
-      <ion-progress-bar class="progress-bar" [value]="10"></ion-progress-bar>
+      <ion-progress-bar class="progress-bar" [value]="this.progressBarValue"></ion-progress-bar>
     </ion-row>
-    <ion-row class="level-text">
-      <ion-text> {{ this.currentPath.score}} </ion-text>
+    <ion-row class="level-text ion-padding">
+      <ion-text> {{ 'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required} }} </ion-text>
     </ion-row>
   </div>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col sizeLg="4" sizeMd="4" sizeXs="4" *ngFor="let l of levels; let i = index">
-        <div>
-          <ion-img src="{{ l.completed ? 'assets/icons/IconGoal.svg' : 'assets/icons/candado.svg' }}"
-            (click)="presentAlert(l)" class="level-image">
-          </ion-img>
-          <div>
-            <ion-text> {{ i }} </ion-text>
-          </div>
-        </div>
-        <div>
-          <ion-row class="level-name">
-            <ion-text> {{ l?.name}} </ion-text>
+ 
+
+  <div class="main-container">
+
+    <div class="spin" *ngIf="this.fetching;else showLevels">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+
+    <ng-template #showLevels>
+      <div class="wizard-container">
+        <ion-grid class="ion-no-padding">
+          <ion-row>
+            <ion-col sizeLg="4" sizeMd="4" sizeXs="4" *ngFor="let l of levels; let i = index" style="height:40vw">
+            
+                <div *ngIf="!l.completed" class="icon-box {{ l?.class }} ">
+                  <ion-icon name="lock-closed" (click)="presentAlert()" class=" level-icon "></ion-icon>
+                
+                </div>
+                <div *ngIf="l.completed" class="icon-box {{ l?.class }} ">
+                  <ion-icon name="medal-outline"  class="level-icon"></ion-icon>
+                 
+                  <!-- <ion-icon src="{{l?.cover}}" (click)="presentChallengeNotification({type:'level'})" ></ion-icon> -->
+                </div> 
+                
+             
+                 <ion-row class="level-text">
+                  <ion-label> {{ l?.name}} </ion-label>
+                </ion-row> 
+              
+            </ion-col>
+          
           </ion-row>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-grid>
+       
+      </div>
+     
+
+    </ng-template>
+
+  </div>
 </ion-content>

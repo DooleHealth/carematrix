@@ -30,19 +30,19 @@
   <ion-grid>
 
 
-    <!-- Healt PATH-->
-    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment && role?.component?.agenda">
+    <!-- Health PATH-->
+    <ion-row class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'health_path.card_title' | translate}}</ion-text>
     </ion-row>
     <ion-row class="">
       <ion-slides style="width: 100%" #slider pager="false" [options]="sliderConfigHorizontal">
-        <ion-slide *ngFor="let path of this.healthPath">
-          <ion-card class="customCardHealthPath">
+        <ion-slide *ngFor="let challenge of this.challenges">
+          <ion-card *ngIf="!challenge.completed" class="customCardHealthPath">
             <ion-item lines="none" class="cardHeader" routerLink="health-path" routerLinkActive="active-item"
-            [state]="{path: path}">
+            [state]="{challenge: challenge}">
             
               <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:purple" ></ion-icon>
-              <ion-text style="margin-left:10px; color:purple" slot="start" >{{(path?.game )? path?.game: ('home.health_path' |
+              <ion-text style="margin-left:10px; color:purple" slot="start" >{{(challenge?.name )? challenge?.name: ('home.health_path' |
                 translate)}}</ion-text>
               <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
             </ion-item>
@@ -53,23 +53,23 @@
                   <ion-col size="2" class="ion-no-padding">
                   </ion-col>
                   <ion-col size="10" class="ion-padding-start">
-                    <p class="text1line"><b>{{path?.level}}</b></p>
+                    <p class="text1line"><b>{{challenge?.current_level?.name}}</b></p>
                   </ion-col>
                   
                 </ion-row>
                 <ion-row>
                   <ion-col size="2">
-                    <ion-img src="assets/icons/IconGoal.svg"></ion-img>
+                    <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
                   </ion-col>
                   <ion-col size="10" class="ion-padding-start">
-                    <p>{{ path?.score }}</p>
+                    <p>{{ 'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required} }}</p>
                   </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col size="2" >
                   </ion-col>
                   <ion-col size="10" class="ion-padding-start" style="padding-top:8px" >
-                    <ion-progress-bar class="progress-bar" [value]="60">
+                    <ion-progress-bar class="progress-bar" value="{{ challenge?.current_level?.score_required > 0 ? challenge?.current_level?.score_required / 100 : 0 }}">
                     </ion-progress-bar>
                   </ion-col>
                   
@@ -77,7 +77,7 @@
                 <ion-row class="ion-text-center">
                   <ion-col size="12" class="ion-padding-vertical">
                     <a routerLink="health-path/detail" 
-                        routerLinkActive="active-item" [state]="{ path: path}">{{ 'health_path.detail' | translate }}</a>
+                        routerLinkActive="active-item" [state]="{ challenge: challenge}">{{ 'health_path.detail' | translate }}</a>
                   </ion-col>
                     </ion-row>
               </ion-grid>
@@ -87,45 +87,6 @@
         </ion-slide>
       </ion-slides>
     </ion-row>
-
-    <!-- Goals  -->
-    <!-- <ion-row *ngIf="role?.component?.goal">
-        <ion-card class="vertical-card2">  
-            <ion-item lines="none" class="noMargin" routerLink="/profile/goals" routerLinkActive='active-item'>
-              <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
-              <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
-              <ion-text *ngIf="this.goals?.length > 0" slot="end" class="txtTitleGoals2" >{{infoGoals?.title}}</ion-text>
-              <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>            
-            </ion-item>
-          <ion-card-content>
-            <div class="txtTitleGoalsLittle3" *ngIf="!this.goals || this.goals.length == 0 " ><br>{{ 'no_data' | translate}}</div>
-              <ion-slides #sliderGoals *ngIf="this.goals.length > 0" [pager]="(this.goals?.length === 1)? false:true" [options]="sliderConfig" (ionSlideDidChange)='slideGoalChange()'>
-                <ion-slide *ngFor="let slide of this.goals">
-                  <ion-grid>
-                    <ion-row ><ion-slide>&nbsp;</ion-slide>
-                      
-                      <ion-progress-bar *ngIf="slide?.progress_bar_value" [class]="slide.progress_bar_color" [value]="slide?.progress_bar_value" [reversed]="slide?.reversed" routerLink="/activity-goal"  routerLinkActive='active-item' [state]="{ id: slide?.element_id, header:slide?.element?.name}"></ion-progress-bar>
-                      <p *ngIf="slide?.progress_bar_value" class="txtContactLittle" routerLink="/activity-goal"  routerLinkActive='active-item' [state]="{ id: slide?.element_id, header:slide?.element?.name}"><b>{{slide?.element?.name}}: {{ (slide?.last_value_text)? slide?.last_value_text:'No data' }}</b> <br> {{ getDateElementGoal(slide?.last_value_date)  }}</p>
-
-                      <p *ngIf="!slide?.progress_bar_value" class="txtContactLittle"><b>{{slide?.element?.name}}: </b> <ion-text color="primary" (click)="addElement(slide)"> {{ 'home.get_firts_data' | translate }}</ion-text > </p>
-                                      
-                    </ion-row>
-                  </ion-grid>
-                 </ion-slide>
-              </ion-slides>
-            </ion-card-content>
-        </ion-card>
-         <ion-card class="vertical-card" *ngIf="!this.goals || this.goals.length == 0 ">  
-          <ion-item lines="none" class="noMargin">
-            <img style="margin-right: 3%;" slot="start"  src='assets/icons/goals.svg'>
-            <ion-text  slot="start" class="txtTitleGoals2">{{ 'home.daily_goal_title' | translate}}</ion-text>
-            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>            
-          </ion-item>
-        <ion-card-content>
-          <div class="txtTitleGoalsLittle3"  >{{ 'no_data' | translate}}</div>
-          </ion-card-content>
-      </ion-card> 
-    </ion-row> -->
 
     <!-- Reminders -->
     <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment && role?.component?.agenda">
@@ -353,7 +314,7 @@
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
         </ion-item>
 
-        <ion-card-content>
+        <ion-card-content >
           <div class="txtTitleGoalsLittle3" *ngIf="!this.activity|| this.activity.length == 0 ">
             {{ 'no_data' | translate}}
           </div>

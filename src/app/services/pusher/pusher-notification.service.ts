@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
@@ -31,10 +33,13 @@ export class PusherNotificationService {
   cluster = "eu"
   nameChanel = 'private-App.User.' + this.authService?.user?.idUser
   channel;
+  handlerMessage = '';
+  roleMessage = '';
   constructor(
     private constants: Constants, 
-    private notification: NotificationService,
-    private authService: AuthenticationService,) {
+    private alertController: AlertController,
+    private authService: AuthenticationService,
+    public translate: TranslateService,) {
     this.setEndPoint()
     const TOKEN = authService.getAuthToken() 
     var pusher = new Pusher(this.key, {
@@ -56,6 +61,7 @@ export class PusherNotificationService {
    
      this.channel.bind(NAME_BIND, (data) => {
           console.log('[PusherService] getPusher()' ,  data);
+          this.presentAlert();
           //this.notification.displayToastPusher(data.message)
         });
   }
@@ -68,6 +74,26 @@ export class PusherNotificationService {
     this.key = opt.key
     this.secret = opt.secret
     this.cluster = opt.cluster
+  }
+
+  async presentAlert() {
+
+      const alert = await this.alertController.create({
+        header: this.translate.instant('health_path.blocked_level'),
+        buttons: [
+          {
+            text: this.translate.instant('info.button'),
+            role: 'confirm',
+            handler: () => {
+              this.handlerMessage = 'Alert confirmed';
+            },
+          },
+        ],
+      });
+      await alert.present();
+
+      const { role } = await alert.onDidDismiss();
+      this.roleMessage = `Dismissed with role: ${role}`;
   }
 
 }

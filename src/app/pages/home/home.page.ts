@@ -64,7 +64,8 @@ export class HomePage implements OnInit {
         "score":"Tienes 60 healthies consigue 10 más y pasa al siguiente nivel",
         "goal":70
     }
-];
+  ];
+  challenges = [];
   games =[]
   header = false;
   listFamilyUnit:FamilyUnit[] = [];
@@ -105,6 +106,7 @@ export class HomePage implements OnInit {
    infoGoals: UserInformation
 
    showDrugPager = true
+   challengeProgressBarValue;
   constructor(
     public router:Router,
     public platform: Platform,
@@ -207,6 +209,8 @@ export class HomePage implements OnInit {
         await res;
 
         console.log('[HomePage] getUserInformation()',  res);
+
+        this.challenges = res.data?.challenges;
         this.userDoole = res.data?.profile;
         this.appointment = res.data?.agenda;
         if(this.role.component.advices)

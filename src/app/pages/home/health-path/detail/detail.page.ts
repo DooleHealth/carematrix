@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { ElementsAddPage } from 'src/app/pages/tracking/elements-add/elements-add.page';
+import { DooleService } from 'src/app/services/doole.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { AdvicesPage } from '../../advices/advices.page';
 
 @Component({
   selector: 'app-detail',
@@ -8,7 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DetailPage implements OnInit {
 
-  //path = history.state.path;
+  fetching = true;
+  challenge = history.state?.challenge;
+  progressBarValue = this.challenge?.current_level?.percentage_completed>0 ? this.challenge?.current_level?.percentage_completed/100:0;
   path = {
     "game": "El camino a la salud",
     "level": "nivel TRES",
@@ -16,145 +24,118 @@ export class DetailPage implements OnInit {
     "goal": 45
   };
   goalsText = [];
-  goals = [
-    {
-      "goalable_type": "App\\Form",
-      "goalable_id": 69,
-      "goalable_origin_type": null,
-      "goalable_origin_id": null,
-      "type": "fill",
-      "frequency": "every_time",
-      "form": {
-        "id": 69,
-        "title": "F69 ¿Qué síntomas tengo? C.Colon - diagnóstico Colon sin drenaje ni estoma",
-        "mode_wizard": 0
-      },
-      "completed": false
-    },
-    {
-      "id": 30,
-      "goalable_type": "App\\Drug",
-      "goalable_id": 7262,
-      "goalable_origin_type": null,
-      "goalable_origin_id": null,
-      "type": "take",
-      "frequency": "every_time",
-      "score": 1,
-      "frequencyString": "Cada vez",
-      "drug": {
-        "id": 7262,
-        "name": "A.A.S. 100 mg COMPRIMIDOS , 30 comprimidos"
-      },
-      "completed": true
-    },
-    {
-      "goalable_type": "App\\Form",
-      "goalable_id": 182,
-      "goalable_origin_type": null,
-      "goalable_origin_id": null,
-      "type": "fill",
-      "frequency": "every_time",
-      "form": {
-        "id": 182,
-        "title": "F182 ¿Qué síntomas tengo? C.Colon - diagnóstico Colon con drenaje",
-        "mode_wizard": 0
-      },
-      "completed": true
-    },
-    {
-      "id": 29,
-      "goalable_type": "App\\News",
-      "goalable_id": 49,
-      "goalable_origin_type": null,
-      "goalable_origin_id": null,
-      "type": "read",
-      "frequency": "every_time",
-      "score": 1,
-      "frequencyString": "Cada vez",
-      "news": {
-        "id": 49,
-        "subject": "TEST DOOLE Botón Shortcode"
-      },
-      "completed": false
-    },
-    {
-      "id": 28,
-      "goalable_type": "App\\Element",
-      "goalable_id": 13,
-      "goalable_origin_type": null,
-      "goalable_origin_id": null,
-      "type": "add",
-      "frequency": "every_time",
-      "score": 1,
-      "frequencyString": "Cada vez",
-      "element": {
-        "id": 13,
-        "name": "Deposicions vintiquatre hores"
-      },
-      "completed": true
-    },
-    {
-      "id": 31,
-      "goalable_type": "App\\Advice",
-      "goalable_id": 4,
-      "goalable_origin_type": null,
-      "goalable_origin_id": null,
-      "type": "read",
-      "frequency": "every_time",
-      "score": 1,
-      "frequencyString": "Cada vez",
-      "advice": {
-        "id": 4,
-        "name": "C4 No tomar sustancias excitantes como café, té, alcohol, tabaco, y similares"
-      },
-      "completed": false
-    }
-  ];
+  goals = [];
 
 
-  constructor(public translate: TranslateService,) { }
+  constructor(public translate: TranslateService, private dooleService:DooleService,  private modalCtrl: ModalController,  private notification: NotificationService,   private router: Router,) { }
 
   ngOnInit() {
     this.getGoals();
-    console.log(this.goalsText);
-
   }
+
 
   getGoals() {
     this.goalsText = [];
-    this.goals.forEach(element => {
-      switch (element.goalable_type) {
-        case "App\\Form":
-          
-          this.goalsText.push({name:element.form.title, link:'/form', id:element.id})
+    
+    this.dooleService.getAPILevelInfo(this.challenge?.id, this.challenge?.current_level?.id).subscribe(
+      async (res: any) => {
+        
+        console.log(await res)
+        this.goals=res?.goals;
+        let message = ''
+        let link = '';
+        this.goals.forEach(goal => {
+          switch (goal.goalable_type) {
+            case "App\\Form":
+              message = this.translate.instant("health_path.form") + '"' +goal?.goalable?.title +'"';
+              link = '/journal/add';
+              break;
+            case "App\\Drug":
+              message = this.translate.instant("health_path.drug") + '"' + goal.drug.name +'"';
+              link = '/form';
+              break;
+            case "App\\News":
+              message = this.translate.instant("health_path.news") + '"' + goal.news.subject +'"';
+              link = '/form';
+              break;
+            case "App\\Advice":
+              message = this.translate.instant("health_path.advice");
+              link = '/form';
+              break;
+            case "App\\Element":
+              message = this.translate.instant("health_path.weight") + '"' + goal.element.name +'"';
+              link = '/form';
+              break;
+            default:
+              message = ''
+              link = '';
+              console.error("goal.goalable_type not found: ", goal.goalable_type)
+              break;
+          }
+          this.goalsText.push({name:message, link:link, id:goal.id, goalable_type:goal.goalable_type})
 
-          break;
-        case "App\\Drug":
-          this.goalsText.push({name:element.drug.name, link:'/journal', id:element.id})
+    
+        });
+        this.fetching = false;
 
-          break;
-        case "App\\News":
-          
-          this.goalsText.push({name:element.news.subject, link:'/journal', id:element.id})
-          
-
-          break;
-        case "App\\Advice":
-          this.goalsText.push({name:element.advice.name, link:'/journal', id:element.id})
-         
-
-          break;
-        case "App\\Element":
-          this.goalsText.push({name:element.element.name, link:'/journal', id:element.id})
-          
-
-          break;
-
-        default:
-          break;
-      }
-
-    });
+      }, (err) => {
+        console.log('[HealthPathPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
+        throw err;
+      }), () => {
+        
+      };
+   
   }
 
+
+  async openGoal(goal){
+
+    console.log('goal', goal)
+    let message = ''
+    let link = '';
+    switch (goal?.goalable_type) {
+      case "App\\Form":
+        this.router.navigate(['/tracking/form', {id:goal.id}] );
+        break;
+      case "App\\Drug":
+        message = this.translate.instant("health_path.drug") + '"' + goal.drug.name +'"';
+        link = '/form';
+        break;
+      case "App\\News":
+        message = this.translate.instant("health_path.news") + '"' + goal.news.subject +'"';
+        link = '/form';
+        break;
+      case "App\\Advice":
+        this.openModal(AdvicesPage,{});
+        break;
+      case "App\\Element":
+       this.openModal(ElementsAddPage, {id:goal.id});
+        break;
+      default:
+        message = ''
+        link = '';
+        console.error("goal.goalable_type not found: ", goal.goalable_type)
+        break;
+    }
+    
+    }
+
+    async openModal(component, componentProps){
+      const modal = await this.modalCtrl.create({
+        component: component,
+        componentProps: componentProps,
+      });
+    
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('modal.onDidDismiss: ', result);
+          if(result?.data?.error){
+          }else if(result?.data?.action == 'add'){
+            this.notification.displayToastSuccessful()
+            
+          }
+        });
+    
+        await modal.present(); 
+    }
 }

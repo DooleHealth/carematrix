@@ -3,43 +3,44 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'health_path.title' | translate}}</ion-title>
+    <ion-title>{{ this.challenge?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+   
   <ion-card class="level-card">
     <ion-item lines="none" class="cardHeader">
-      <ion-icon slot="start" src="assets/icons/corazon.svg"></ion-icon>
-      <ion-text slot="start">{{(path?.game )? path?.game: ('home.health_path' |
-        translate)}}</ion-text>
+      <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
+      <ion-text  style="margin-left:10px; color:purple" slot="start">{{ this.challenge?.name }}</ion-text>
      
     </ion-item>
 
-    <ion-card-content>
+    <ion-card-content class="ion-no-padding">
       <ion-grid>
         <ion-row>
           <ion-col size="3">
           </ion-col>
           <ion-col size="9">
-            <p class="text1line"><b>{{path?.level}}</b></p>
+            <p class="text1line"><b>{{ this.challenge?.current_level?.name}}</b></p>
           </ion-col>
           
         </ion-row>
         <ion-row>
           <ion-col size="3">
-            <ion-img src="assets/icons/IconGoal.svg"></ion-img>
+            <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
           </ion-col>
           <ion-col size="9" >
            
-            <p>{{ path?.score }}</p>
+            <p>{{ 'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required} }}</p>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="3">
           </ion-col>
           <ion-col size="9">
-            <ion-progress-bar class="progress-bar" [value]="60" routerLinkActive="active-item">
+            <ion-progress-bar class="progress-bar" [value]="this.progressBarValue" routerLinkActive="active-item">
             </ion-progress-bar>
           </ion-col>
           
@@ -49,13 +50,22 @@
         <ion-label style="margin-top: 10%;">{{ 'health_path.goals' | translate }}</ion-label>
       </ion-item>
 
+      <div class="spin" *ngIf="this.fetching;else showGoals">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+    <ng-template #showGoals>
       <ion-list *ngFor="let g of this.goalsText" style="background-color: white;">
-        <ion-item [routerLink]="g.link" detail="false" routerLinkActive='active-item' [state]="{id:g.id}">
+        <ion-item detail="false" (click)="openGoal(g)">
           <ion-label>{{g?.name}}</ion-label>
           <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
         </ion-item>
       </ion-list>
+    </ng-template>
+      
+     
     </ion-card-content>
+   
   </ion-card>
+
   
 </ion-content>
