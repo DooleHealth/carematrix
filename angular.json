@@ -39,7 +39,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": ["src/assets/js/rss-parser.min.js","src/assets/js/leader-line.min.js"]
+            "scripts": ["src/assets/js/rss-parser.min.js"]
           },
           "configurations": {
             "production": {
