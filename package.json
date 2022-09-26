@@ -101,7 +101,6 @@
     "highcharts": "^9.0.1",
     "ionic2-calendar": "^0.6.7",
     "jetifier": "^1.6.8",
-    "leader-line": "^1.0.7",
     "moment": "^2.29.1",
     "ngx-pagination": "^5.0.0",
     "pusher-js": "^7.0.6",
