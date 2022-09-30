@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { AlertController, ModalController } from '@ionic/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ElementsAddPage } from 'src/app/pages/tracking/elements-add/elements-add.page';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { AdvicesDetailPage } from '../../advices-detail/advices-detail.page';
 import { AdvicesPage } from '../../advices/advices.page';
 
 @Component({
@@ -17,17 +18,11 @@ export class DetailPage implements OnInit {
   fetching = true;
   challenge = history.state?.challenge;
   progressBarValue = this.challenge?.current_level?.percentage_completed>0 ? this.challenge?.current_level?.percentage_completed/100:0;
-  path = {
-    "game": "El camino a la salud",
-    "level": "nivel TRES",
-    "score": "Tienes 30 healthies consigue 15 más y pasa al siguiente nivel",
-    "goal": 45
-  };
   goalsText = [];
   goals = [];
 
 
-  constructor(public translate: TranslateService, private dooleService:DooleService,  private modalCtrl: ModalController,  private notification: NotificationService,   private router: Router,) { }
+  constructor(public translate: TranslateService, private dooleService:DooleService,  private modalController: ModalController, private alertController: AlertController, private notification: NotificationService,   private router: Router,) { }
 
   ngOnInit() {
     this.getGoals();
@@ -42,37 +37,54 @@ export class DetailPage implements OnInit {
         
         console.log(await res)
         this.goals=res?.goals;
-        let message = ''
+        let name = '';
+        let message = '';
         let link = '';
+        let id = '';
         this.goals.forEach(goal => {
           switch (goal.goalable_type) {
             case "App\\Form":
+             
+              if (goal.hasOwnProperty("form")) {
+                id = goal?.form?.id;
+              message = this.translate.instant("health_path.form") + '"' +goal?.form?.title +'"';
+              }else{
+                id = goal?.goalable?.id;
               message = this.translate.instant("health_path.form") + '"' +goal?.goalable?.title +'"';
+              }
               link = '/journal/add';
               break;
             case "App\\Drug":
-              message = this.translate.instant("health_path.drug") + '"' + goal.drug.name +'"';
+              name = goal.drug.name;
+              message = this.translate.instant("health_path.drug") + '"' + goal?.drug?.name +'"';
               link = '/form';
               break;
             case "App\\News":
-              message = this.translate.instant("health_path.news") + '"' + goal.news.subject +'"';
+              id = goal?.news?.id;
+              name = goal.news.subject;
+              message = this.translate.instant("health_path.news") + '"' + goal?.news?.subject +'"';
               link = '/form';
               break;
             case "App\\Advice":
-              message = this.translate.instant("health_path.advice");
+              id = goal?.advice?.id;
+              name = '';
+              message = this.translate.instant("health_path.advice") + '"' + goal?.advice?.name +'"';
               link = '/form';
               break;
             case "App\\Element":
-              message = this.translate.instant("health_path.weight") + '"' + goal.element.name +'"';
+              id = goal?.element?.id;
+              name =  goal.element.name;
+              message = this.translate.instant("health_path.weight") + '"' + goal.element?.name +'"';
               link = '/form';
               break;
             default:
+              name = '';
               message = ''
               link = '';
               console.error("goal.goalable_type not found: ", goal.goalable_type)
               break;
           }
-          this.goalsText.push({name:message, link:link, id:goal.id, goalable_type:goal.goalable_type})
+          this.goalsText.push({name : name, message:message, link:link, id:id, goalable_type:goal.goalable_type})
 
     
         });
@@ -98,18 +110,19 @@ export class DetailPage implements OnInit {
         this.router.navigate(['/tracking/form', {id:goal.id}] );
         break;
       case "App\\Drug":
-        message = this.translate.instant("health_path.drug") + '"' + goal.drug.name +'"';
-        link = '/form';
+        this.router.navigate(['/journal'], {state:{segment:'medication'}});
         break;
       case "App\\News":
-        message = this.translate.instant("health_path.news") + '"' + goal.news.subject +'"';
-        link = '/form';
+        this.router.navigate(['/new-detail'], {state:{id:goal.id}} );
         break;
       case "App\\Advice":
-        this.openModal(AdvicesPage,{});
+        this.router.navigate(['/advices-detail'], {state:{id:goal.id}} );
+        //this.openModal(AdvicesDetailPage,{});
         break;
       case "App\\Element":
-       this.openModal(ElementsAddPage, {id:goal.id});
+        this.openModal(ElementsAddPage, {id:goal.id, nameElement:goal.name, units:''});
+        //this.presentAlert(goal);
+     
         break;
       default:
         message = ''
@@ -120,8 +133,12 @@ export class DetailPage implements OnInit {
     
     }
 
+    redirect(){
+
+    }
+
     async openModal(component, componentProps){
-      const modal = await this.modalCtrl.create({
+      const modal = await this.modalController.create({
         component: component,
         componentProps: componentProps,
       });
@@ -137,5 +154,36 @@ export class DetailPage implements OnInit {
         });
     
         await modal.present(); 
+    }
+
+    async presentAlert(goal) {
+      // inputs: []
+      // switch(type){
+      //   case 'string':
+      //     break;
+      //   case 'numeric':
+      //     let g = {
+      //       type: 'number',
+      //       placeholder: goal,
+      //       min: 1,
+      //       max: 100,
+      //     }
+         
+      //     break;
+      // }
+      const alert = await this.alertController.create({
+        header: goal?.name,
+        buttons: ['OK'],
+        inputs: [
+          {
+            type: 'number',
+            placeholder: '',
+            min: 1,
+            max: 1000,
+          }
+        ],
+      });
+  
+      await alert.present();
     }
 }

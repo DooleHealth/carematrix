@@ -81,15 +81,14 @@ export class PusherChallengeNotificationsService {
   async presentChallengeNotification(data) {
 
     console.log('data', data);
-    console.log('data.type', data.type);
     let message = '';
-    if(data.type == 'level')
-      message = `<img src="assets/icons/IconGoal.svg" class="card-alert">`;
-    else 
-      message =  `<img src="assets/images/trofeo.png" class="card-alert">`; 
 
-    const alert = await this.alertController.create({
+    if( data?.isChallengeCompleted)
+      message =  `<img src="assets/images/trofeo.png" class="card-alert">`; 
+    else
+      message = `<img src="assets/icons/IconGoal.svg" class="card-alert">`;
       
+    const alert = await this.alertController.create({
       message: message,
       buttons: [
         {

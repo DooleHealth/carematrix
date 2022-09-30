@@ -19,7 +19,7 @@
             android:launchMode="singleTask"
             android:showOnLockScreen="true"
             android:screenOrientation="portrait"
-            android:clearTaskOnLaunch="true">
+            android:clearTaskOnLaunch="true" android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,14 +62,14 @@
             android:launchMode="singleTask"
             android:directBootAware="true"
             android:showOnLockScreen="true"
-            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE">
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE" >
             <intent-filter>
                 <action android:name="com.google.firebase.FLAG_ACTIVITY_NEW_TASK" />
             </intent-filter>
         </service>
 
         <service android:name="com.doole.doole.DooleConnectionService"
-            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE">
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"  android:exported="false">
             <intent-filter>
                 <action android:name="android.telecom.ConnectionService" />
             </intent-filter>

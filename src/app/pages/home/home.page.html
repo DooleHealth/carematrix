@@ -12,7 +12,7 @@
   <ion-grid class="iosHeader">
     <ion-row>
       <ion-col size="8" class="alingLeftTop">
-        <ion-text class="txtTitleBig">Hola, {{this.userDoole?.first_name}}</ion-text>
+        <ion-text class="txtTitleBig"> {{ this.greeting }}</ion-text>
       </ion-col>
       <ion-col size="4">
         <!--         <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile"
@@ -31,65 +31,65 @@
 
 
     <!-- Health PATH-->
-    <ion-row class="paddingTopNoMarginBottom">
+    <ion-row *ngIf="this.challenges.length > 0" class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'health_path.card_title' | translate}}</ion-text>
-    </ion-row>
-    <ion-row class="">
-      <ion-slides style="width: 100%" #slider pager="false" [options]="sliderConfigHorizontal">
-        <ion-slide *ngFor="let challenge of this.challenges">
-          <ion-card *ngIf="!challenge.completed" class="customCardHealthPath">
-            <ion-item lines="none" class="cardHeader" routerLink="health-path" routerLinkActive="active-item"
-            [state]="{challenge: challenge}">
-            
-              <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:purple" ></ion-icon>
-              <ion-text style="margin-left:10px; color:purple" slot="start" >{{(challenge?.name )? challenge?.name: ('home.health_path' |
-                translate)}}</ion-text>
-              <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-            </ion-item>
 
-            <ion-card-content mode="md" class="ion-text-left">
-              <ion-grid class="ion-no-padding">
-                <ion-row>
-                  <ion-col size="2" class="ion-no-padding">
-                  </ion-col>
-                  <ion-col size="10" class="ion-padding-start">
-                    <p class="text1line"><b>{{challenge?.current_level?.name}}</b></p>
-                  </ion-col>
-                  
-                </ion-row>
-                <ion-row>
-                  <ion-col size="2">
-                    <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
-                  </ion-col>
-                  <ion-col size="10" class="ion-padding-start">
-                    <p>{{ 'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required} }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="2" >
-                  </ion-col>
-                  <ion-col size="10" class="ion-padding-start" style="padding-top:8px" >
-                    <ion-progress-bar class="progress-bar" value="{{ challenge?.current_level?.score_required > 0 ? challenge?.current_level?.score_required / 100 : 0 }}">
-                    </ion-progress-bar>
-                  </ion-col>
-                  
-                </ion-row>
-                <ion-row class="ion-text-center">
-                  <ion-col size="12" class="ion-padding-vertical">
-                    <a routerLink="health-path/detail" 
-                        routerLinkActive="active-item" [state]="{ challenge: challenge}">{{ 'health_path.detail' | translate }}</a>
-                  </ion-col>
-                    </ion-row>
-              </ion-grid>
-            
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
-    </ion-row>
+
+    <ion-slides #slider pager="false" [options]="sliderHealthPathConfig" class="ion-no-padding">
+      <ion-slide *ngFor="let challenge of this.challenges">
+        <ion-card class="customCardHealthPath">
+          <ion-item lines="none" class="cardHeader" routerLink="health-path" routerLinkActive="active-item"
+          [state]="{challenge: challenge}">
+          
+            <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:purple" ></ion-icon>
+            <ion-text style="margin-left:10px; color:purple" slot="start" >{{(challenge?.name )? challenge?.name: ('home.health_path' |
+              translate)}}</ion-text>
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+          </ion-item>
+
+          <ion-card-content mode="md" class="ion-text-left">
+            <ion-grid class="ion-no-padding">
+              <ion-row>
+                <ion-col size="2" class="ion-no-padding">
+                </ion-col>
+                <ion-col size="10" class="ion-padding-start">
+                  <p class="text1line"><b>{{challenge?.current_level?.name}}</b></p>
+                </ion-col>
+                
+              </ion-row>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
+                </ion-col>
+                <ion-col size="10" class="ion-padding-start">
+                  <p *ngIf="this.challenge?.current_level">{{ 'health_path.goal' | translate: {total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required} }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="2" >
+                </ion-col>
+                <ion-col size="10" class="ion-padding-start" style="padding-top:8px" >
+                  <ion-progress-bar class="progress-bar" value="{{ challenge?.current_level?.percentage_completed > 0 ? challenge?.current_level?.percentage_completed / 100 : 0 }}">
+                  </ion-progress-bar>
+                </ion-col>
+                
+              </ion-row>
+              <ion-row class="ion-text-center">
+                <ion-col size="12" class="ion-padding-vertical">
+                  <a routerLink="health-path/detail" 
+                      routerLinkActive="active-item" [state]="{ challenge: challenge}">{{ 'health_path.detail' | translate }}</a>
+                </ion-col>
+                  </ion-row>
+            </ion-grid>
+          
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
 
     <!-- Reminders -->
-    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment && role?.component?.agenda">
+    <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment?.length > 0 && role?.component?.agenda">
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
     </ion-row>
     <!-- Agendas -->
@@ -133,7 +133,7 @@
     </ion-row>
 
     <!-- Advices -->
-    <ion-row *ngIf="role?.component?.advices || role?.component?.news" class="paddingTopNoMarginBottom">
+    <ion-row *ngIf="(role?.component?.advices || role?.component?.news) && (this.advices.length != 0)" class="paddingTopNoMarginBottom">
       <!-- News and Advices -->
 
       <ion-text class="txtTitle" style="white-space: nowrap">
@@ -321,23 +321,38 @@
           <ion-slides #sliderPhysical *ngIf="this.activity?.length > 0"
             [pager]="(this.activity?.length === 1)? false:true" [options]="sliderConfig" class="slides"
             (ionSlideDidChange)="slideActivityChange()">
-            <ion-slide *ngFor="let slide of this.activity">
-              <ion-row *ngFor="let element of slide.elements; let i = index ">
-                <ion-row *ngIf="slide.elements.length > 2 && i == 0" class="textBlue" routerLink="/journal"
+            <ion-slide *ngFor="let slide of this.activity"  style="width:100%;">
+              <div *ngFor="let element of slide.elements; let i = index" style="width:50%">
+                <ion-row *ngIf="slide.elements.length > 2 && i == 0" class="textBlue" style="width:200%; display:inline-block;" routerLink="/journal"
                   [state]="{segment: 'health'}">{{ 'home.elements' | translate}}
                 </ion-row>
                 <div *ngIf="slide.elements.length <= 2">
-                  <ion-row class="ion-text-start">
-                    {{ element?.name}}
-                  </ion-row>
-                  <ion-row class="ion-text-start">
-                    <span style="font-weight: 800">{{ element.value }} </span>
-                    {{element.units}}
-                  </ion-row>
-                   
+                  <ion-grid class="ion-no-padding">
+                    <ion-row class="ion-no-padding">
+                      <ion-col size="12" size-sm>
+                        <div>{{ element?.name}}</div>
+                      </ion-col>
+                      <ion-col size="12" size-sm>
+                        <div style="font-weight: 800">{{ element.value }}
+                          {{element.units}}</div>
+                      </ion-col>
+                    
+                    </ion-row>
+                  </ion-grid>
+
+                  <ion-grid>
+                    <ion-row class="ion-justify-content-start">
+                      <ion-col size="3">
+                        
+                      </ion-col>
+                      <ion-col size="3">
+                        
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
                   
                 </div>
-              </ion-row>
+              </div>
             </ion-slide>
           </ion-slides>
         </ion-card-content>

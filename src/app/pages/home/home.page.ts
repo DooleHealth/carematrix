@@ -51,20 +51,6 @@ export class HomePage implements OnInit {
   goals: any =[]
   diets: any =[]
   drugs: any =[]
-  healthPath: any =[
-    {
-        "game":"El camino a la salud",
-        "level":"nivel TRES",
-        "score":"Tienes 30 healthies consigue 15 más y pasa al siguiente nivel",
-        "goal":45
-    },
-    {
-        "game":"El camino a la salud",
-        "level":"nivel TRES",
-        "score":"Tienes 60 healthies consigue 10 más y pasa al siguiente nivel",
-        "goal":70
-    }
-  ];
   challenges = [];
   games =[]
   header = false;
@@ -92,6 +78,16 @@ export class HomePage implements OnInit {
     centeredSlides: false,
    };
 
+
+   sliderConfigHorizontalOneSlide = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    spaceBetween: 0,
+    centeredSlides: true,
+   };
+
+   sliderHealthPathConfig = this.sliderConfigHorizontal;
+
    @ViewChild('sliderGoals') sliderGoals: IonSlides;
    @ViewChild('sliderDiet') sliderDiet: IonSlides;
    @ViewChild('sliderDrug') sliderDrug: IonSlides;
@@ -107,6 +103,7 @@ export class HomePage implements OnInit {
 
    showDrugPager = true
    challengeProgressBarValue;
+   public greeting = '';
   constructor(
     public router:Router,
     public platform: Platform,
@@ -209,9 +206,13 @@ export class HomePage implements OnInit {
         await res;
 
         console.log('[HomePage] getUserInformation()',  res);
+        if(res.data?.challenges.length == 1)
+          this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
 
         this.challenges = res.data?.challenges;
         this.userDoole = res.data?.profile;
+
+        this.greeting = 'Hola, '+ this.userDoole?.first_name;
         this.appointment = res.data?.agenda;
         if(this.role.component.advices)
         this.advices = res.data?.advices;
@@ -754,7 +755,7 @@ export class HomePage implements OnInit {
       let hour = slider?.date.split(' ')[1]
       this.infoDiet = {
         title: slider?.items,
-        hour: hour.split(':')[0]+':'+hour.split(':')[1]
+        hour: hour?.split(':')[0]+':'+hour.split(':')[1]
       }
     });
   }

@@ -80,45 +80,7 @@ export class HealthPathPage implements OnInit, AfterViewInit {
         if(res?.levels?.length > 0){
           console.log('levels', await res?.levels);
 
-          let dashboard = [];
-          const colRowNumber = 3;
-          for (let i = 0; i < res?.levels.length; i += colRowNumber) {
-  
-            const row = res?.levels.slice(i, i + colRowNumber);
-            if ((i % 2) == 0) {
-  
-              row.forEach((element, index) => {
-  
-                if (index == 0)
-                  element['class'] = 'pill-first-even';
-                else if (index == 2)
-                  element['class'] = 'pill-last-even';
-                else
-                  element['class'] = 'pill';
-  
-                console.log('push,index ', element, index);
-                dashboard.push(element);
-              })
-            } else {
-              const rowCopy = row;
-              let reversedRow = rowCopy.reverse();
-  
-              reversedRow.forEach((element, index) => {
-  
-                if (index == 0)
-                  element['class'] = 'pill-first-odd';
-                else if (index == 2)
-                  element['class'] = 'pill-last-odd';
-                else
-                  element['class'] = 'pill';
-  
-                console.log('push reversed ,index ', element, index);
-                dashboard.push(element);
-              })
-            }
-          }
-          console.log('levels fixed', dashboard);
-          this.levels = dashboard;
+         this.levels = res?.levels;
         }
         
         this.fetching = false;
@@ -129,6 +91,51 @@ export class HealthPathPage implements OnInit, AfterViewInit {
       }), () => {
 
       };
+  }
+
+  // TODO: DELETE IF NOT USED
+  changeColsOrder(res){
+
+    let dashboard = [];
+    const colRowNumber = 3;
+    for (let i = 0; i < res?.levels.length; i += colRowNumber) {
+
+      const row = res?.levels.slice(i, i + colRowNumber);
+      if ((i % 2) == 0) {
+
+        row.forEach((element, index) => {
+
+          if (index == 0)
+            element['class'] = 'pill-first-even';
+          else if (index == 2)
+            element['class'] = 'pill-last-even';
+          else
+            element['class'] = 'pill';
+
+          console.log('push,index ', element, index);
+          dashboard.push(element);
+        })
+      } else {
+        const rowCopy = row;
+        let reversedRow = rowCopy.reverse();
+
+        reversedRow.forEach((element, index) => {
+
+          if (index == 0)
+            element['class'] = 'pill-first-odd';
+          else if (index == 2)
+            element['class'] = 'pill-last-odd';
+          else
+            element['class'] = 'pill';
+
+          console.log('push reversed ,index ', element, index);
+          dashboard.push(element);
+        })
+      }
+    }
+    console.log('levels fixed', dashboard);
+    this.levels = dashboard;
+
   }
 
 }

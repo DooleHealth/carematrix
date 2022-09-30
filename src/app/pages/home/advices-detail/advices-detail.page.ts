@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 
@@ -33,8 +31,6 @@ export class AdvicesDetailPage implements OnInit {
   isLoading = false
   constructor(
     private router: Router,
-    private auth: AuthenticationService,
-    private iab: InAppBrowser, 
     public loadingController: LoadingController, 
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 

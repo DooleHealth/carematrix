@@ -54,9 +54,9 @@
         <ion-spinner name="bubbles"></ion-spinner>
     </div>
     <ng-template #showGoals>
-      <ion-list *ngFor="let g of this.goalsText" style="background-color: white;">
+      <ion-list *ngFor="let g of this.goalsText" style="background-color: white;" class="ion-no-padding">
         <ion-item detail="false" (click)="openGoal(g)">
-          <ion-label>{{g?.name}}</ion-label>
+          <ion-label>{{g?.message}}</ion-label>
           <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
         </ion-item>
       </ion-list>
