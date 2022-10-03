@@ -255,7 +255,6 @@
   width: 100%;
   align-content: center;
   display: block;
-
   margin: auto;
 }
 
@@ -276,9 +275,14 @@
   font-size: xxx-large;
 }
 
+.completed {
+  opacity: .5;
+}
+
+
 .icon-box {
-  background-color: white;
-  border: orange solid 2px;
+  background-color: lightgrey;
+  border: lightgrey solid 2px;
   border-radius: 10px;
   padding-top: 3vw;
   margin: auto;
@@ -286,7 +290,15 @@
   height: 20vw;
   vertical-align: middle;
 }
+
+.icon-box.highlight{
+  background-color: white;
+  border: orange solid 2px;
+}
+
 .icon-box.bigger {
+  background-color: white;
+  border: orange solid 2px;
   width: 30vw;
   height: 30vw;
   padding: 3vw;
@@ -308,7 +320,7 @@
 
 .spin {
   position: fixed;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

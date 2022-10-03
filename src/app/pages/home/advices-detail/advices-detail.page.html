@@ -19,7 +19,7 @@
   <ion-card class="cardProfile">
 <!--     <ion-card-header>    </ion-card-header> -->
     <img *ngIf="advice.image" class="imagefit" [src]="advice.image.temporaryUrl">
-    <ion-item lines="none">
+    <ion-item  *ngIf="advice.image" lines="none">
       <ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>

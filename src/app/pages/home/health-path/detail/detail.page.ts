@@ -89,6 +89,7 @@ export class DetailPage implements OnInit {
     
         });
         this.fetching = false;
+        console.log('FETCHED FALSe');
 
       }, (err) => {
         console.log('[HealthPathPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);

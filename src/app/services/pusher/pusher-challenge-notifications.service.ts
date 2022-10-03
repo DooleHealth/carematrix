@@ -62,7 +62,7 @@ export class PusherChallengeNotificationsService {
     console.log('[PusherChallengeNotificationsService] init()');
     this.channel.bind(NAME_BIND, (data) => {
       console.log('[PusherChallengeNotificationsService] getPusher()', data);
-      this.presentChallengeNotification(data);
+      //this.presentChallengeNotification(data);
 
     });
   }
@@ -83,7 +83,7 @@ export class PusherChallengeNotificationsService {
     console.log('data', data);
     let message = '';
 
-    if( data?.isChallengeCompleted)
+    if(data?.isChallengeCompleted)
       message =  `<img src="assets/images/trofeo.png" class="card-alert">`; 
     else
       message = `<img src="assets/icons/IconGoal.svg" class="card-alert">`;

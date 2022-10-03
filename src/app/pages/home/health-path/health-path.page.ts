@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
@@ -13,18 +13,11 @@ declare var LeaderLine: any;
 export class HealthPathPage implements OnInit, AfterViewInit {
   fetching = true;
   challenge = history.state?.challenge;
-  progressBarValue = this.challenge?.current_level?.percentage_completed>0 ? this.challenge?.current_level?.percentage_completed/100:0;
-  currentPath = {
-    "game": "El camino a la salud",
-    "level": "Aprend de la meva malaltia cardíaca",
-    "score": "Tienes 30 healthies consigue 15 más y pasa al siguiente nivel",
-    "goal": 40
-  };
-  public f = [2, 5, 8, 11];
+  progressBarValue = this.challenge?.current_level?.percentage_completed > 0 ? this.challenge?.current_level?.percentage_completed/100:0;
   levels = [];
   handlerMessage = '';
   roleMessage = '';
-  constructor(private alertController: AlertController, public translate: TranslateService, private dooleService: DooleService, @Inject(DOCUMENT) private document: Document,) { }
+  constructor(private alertController: AlertController, public translate: TranslateService, private dooleService: DooleService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
 
@@ -37,14 +30,12 @@ export class HealthPathPage implements OnInit, AfterViewInit {
   ionViewWillEnter() {
    
     this.getChallenge();
+    console.log('after getChallenge');
   }
 
   ionViewDidEnter() {
 
   }
-
-
-
 
   async presentAlert() {
 
@@ -81,9 +72,15 @@ export class HealthPathPage implements OnInit, AfterViewInit {
           console.log('levels', await res?.levels);
 
          this.levels = res?.levels;
+        
+      
         }
         
         this.fetching = false;
+        console.log('FETCHING: ', this.fetching);
+        this.changeDetectorRef.detectChanges();
+        
+       
 
       }, (err) => {
         console.log('[HealthPathPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
