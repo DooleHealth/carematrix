@@ -68,7 +68,7 @@ export class GamesDetailPage implements OnInit {
         this.auth.user = value
       })
       
-      if(item.url.startsWith("http")){
+      if(item.url?.startsWith("http")){
         item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
         browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
       }
