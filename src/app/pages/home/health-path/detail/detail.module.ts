@@ -8,6 +8,9 @@ import { DetailPageRoutingModule } from './detail-routing.module';
 
 import { DetailPage } from './detail.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { NewDetailPageModule } from '../../new-detail/new-detail.module';
+import { AdvicesDetailPageModule } from '../../advices-detail/advices-detail.module';
 
 @NgModule({
   imports: [
@@ -15,8 +18,14 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    DetailPageRoutingModule
+    ComponentsModule,
+    DetailPageRoutingModule,
+    NewDetailPageModule,
+    AdvicesDetailPageModule
+    
   ],
-  declarations: [DetailPage]
+  declarations: [DetailPage],
+  exports:[TranslateModule]
+  
 })
 export class DetailPageModule {}

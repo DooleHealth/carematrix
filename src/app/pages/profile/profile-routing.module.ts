@@ -60,6 +60,10 @@ const routes: Routes = [
     path: 'devices',
     loadChildren: () => import('../bluetooth/devices/devices.module').then( m => m.DevicesPageModule)
   },
+  {
+    path: 'challenges',
+    loadChildren: () => import('./challenges/challenges.module').then( m => m.ChallengesPageModule)
+  },
 ];
 
 @NgModule({

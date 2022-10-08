@@ -14,7 +14,7 @@ export class LegalPage implements OnInit {
   //KEY_LOCAL_STORAGE = 'showIntro';
   legal:any = {};
   isChecked = false;
-  isLoading = false
+  isLoading = false;
   constructor(
     public router: Router,    
     private translate: TranslateService,
@@ -31,7 +31,7 @@ export class LegalPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LegalPage] getAPILegalInformation()', await res);
-        if(res.success){
+        if(res?.success){
           this.legal = res.legalTerm
           if(this.legal === undefined || this.legal === null ){
             let message = this.translate.instant('legal.no_get_conditions_label')

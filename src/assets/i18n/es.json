@@ -124,7 +124,8 @@
           "emergency": "Contactos de Emergencia",
           "your_health_cards": "Tarjetas Sanitarias", 
           "your_goals": "Tus Objetivos",
-          "payment_method": "Método de Pago"
+          "payment_method": "Método de Pago",
+          "your_challenges":"Tus Retos"
         },
         "configuration": {
           "title_setting": "Configuración",
@@ -177,7 +178,10 @@
         "drug": "Tomar el medicamento ",
         "news":"Lee la notícia ",
         "blocked_level": "Este nivel todavía está bloqueado",
-        "goal":"Tienes {{ total }} {{ coin}}, consigue {{ required }} más y pasa al siguiente nivel."
+        "goal":"Tienes {{ total }} {{ coin }}, consigue {{ required }} más y pasa al siguiente nivel.",
+        "level_congratulations":"Felicitaciones!",
+        "level_accomplished":"Has avanzado de nivel",
+        "done":"Hecho!"
       },
       "activity_goal":{
         "definition": "Definición",

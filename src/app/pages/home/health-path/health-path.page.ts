@@ -70,18 +70,13 @@ export class HealthPathPage implements OnInit, AfterViewInit {
 
         if(res?.levels?.length > 0){
           console.log('levels', await res?.levels);
-
-         this.levels = res?.levels;
-        
-      
+          this.levels = res?.levels;
         }
         
         this.fetching = false;
         console.log('FETCHING: ', this.fetching);
         this.changeDetectorRef.detectChanges();
-        
-       
-
+      
       }, (err) => {
         console.log('[HealthPathPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
         throw err;

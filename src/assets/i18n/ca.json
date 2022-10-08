@@ -125,7 +125,8 @@
           "emergency": "Contactes d'Emergència",
           "your_health_cards": "Les teves Targetes Sanitàries",
           "your_goals": "Els teus Objectius",
-          "payment_method": "Mètode de pagament"
+          "payment_method": "Mètode de pagament",
+          "your_challenges": "Els teus reptes"
         },
         "professional": {
           "title_professional": "Professionals",
@@ -178,7 +179,10 @@
         "drug":"Prendre el medicament ",
         "news":"Llegeix la notícia ",
         "blocked_level": "Aquest nivell està bloquejat",
-        "goal":"Tens {{ total }} {{ coin }}, aconsegueix {{ required }} més i passa al següent nivell."
+        "goal":"Tens {{ total }} {{ coin }}, aconsegueix {{ required }} més i passa al següent nivell.",
+        "level_congratulations":"Felicitacions!",
+        "level_accomplished":"Has avançat de nivell",
+        "done":"Fet!"
       },
       "activity_goal":{
         "definition": "Definició",

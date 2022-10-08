@@ -11,10 +11,10 @@
 
   <ion-grid class="iosHeader">
     <ion-row>
-      <ion-col size="8" class="alingLeftTop">
+      <ion-col size="9" class="alingLeftTop">
         <ion-text class="txtTitleBig"> {{ this.greeting }}</ion-text>
       </ion-col>
-      <ion-col size="4">
+      <ion-col size="3">
         <!--         <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile"
           [state]="{user:this.authService?.user}"></ion-img> -->
 
@@ -28,7 +28,6 @@
     </ion-row>
   </ion-grid>
   <ion-grid>
-
 
     <!-- Health PATH-->
     <ion-row *ngIf="this.challenges.length > 0" class="paddingTopNoMarginBottom">
@@ -143,20 +142,19 @@
       </ion-text>
     </ion-row>
     <ion-row *ngIf="this.advices.length != 0 && (role?.component?.advices || role?.component?.news) ">
-      <ion-slides #slider pager="false" [options]="sliderConfigHorizontal">
+      <ion-slides #slider pager="false" [options]="sliderAdvicesConfig">
         <ion-slide [ngClass]="(this.advices.length >1)? 'slide':'slide1'" *ngFor="let slide of this.advices">
           <!-- Concejos -->
           <ion-card *ngIf="!slide.new" class="cardProfilePaddingBottomMinHeight card">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
-            <img class="sliderImage" routerLink="/advices-detail" routerLinkActive="active-item"
-              [state]="{id: slide.id}" [src]="slide.image?.temporaryUrl" />
+            <img class="sliderImage" (click)="openModal(slide,true)" [src]="slide.image?.temporaryUrl" />
             <br /><br />
             <!-- <ion-card-title class="txtTitleHome" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.name}}</ion-card-title>
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
             </ion-card-subtitle> -->
             <!-- <ion-button class="full-width" expand="block" (click)="actionRegisterAdvice(slide)">{{ 'home.register_button' | translate}}</ion-button> -->
             <ion-item lines="none" style="margin: 0%">
-              <ion-text routerLink="/advices-detail" routerLinkActive="active-item" [state]="{id: slide.id}"
+              <ion-text (click)="openModal(slide,true)"
                 class="txtTitleHome1 text2line">
                 {{slide.name}}
               </ion-text>
@@ -166,14 +164,14 @@
           <!-- Noticias -->
           <ion-card *ngIf="slide.new" class="cardProfilePaddingBottomMinHeight card">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
-            <img class="sliderImage" routerLink="/new-detail" routerLinkActive="active-item" [state]="{id: slide.id}"
+            <img class="sliderImage" (click)="openModal(slide,false)"
               [src]="slide?.cover" />
             <br /><br />
             <!-- <ion-card-title class="txtTitleHome" routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.subject}}</ion-card-title>
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
             </ion-card-subtitle> -->
             <ion-item lines="none" style="margin: 0%">
-              <ion-text routerLink="/new-detail" routerLinkActive="active-item" [state]="{id: slide.id}"
+              <ion-text (click)="openModal(slide,false)"
                 class="txtTitleHome1 text2line">
                 {{slide.subject}}
               </ion-text>

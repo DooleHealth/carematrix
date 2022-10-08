@@ -32,10 +32,12 @@ export class PusherChallengeNotificationsService {
   key = "f89e2ed013b43522069e"
   secret = "e23e0b09095890bdac73"
   cluster = "eu"
-  nameChanel = 'private-LevelAccomplishmentCompleted.' + this.authService?.user?.idUser
+  nameChanel = 'private-LevelAccomplishmentCompleted.' + this.authService?.user?.idUser;
   channel;
   handlerMessage = '';
   roleMessage = '';
+  isModalShowing: boolean;
+  pendingNotification:any;
   constructor(
     private constants: Constants,
     private alertController: AlertController,
@@ -62,7 +64,11 @@ export class PusherChallengeNotificationsService {
     console.log('[PusherChallengeNotificationsService] init()');
     this.channel.bind(NAME_BIND, (data) => {
       console.log('[PusherChallengeNotificationsService] getPusher()', data);
-      //this.presentChallengeNotification(data);
+      this.pendingNotification = data;
+      if(!this.isModalShowing)
+        this.presentChallengeNotification();
+      else
+        this.pendingNotification = data;
 
     });
   }
@@ -77,33 +83,42 @@ export class PusherChallengeNotificationsService {
     this.cluster = opt.cluster
   }
 
+async presentChallengeNotification() {
 
-  async presentChallengeNotification(data) {
-
-    console.log('data', data);
-    let message = '';
-
-    if(data?.isChallengeCompleted)
-      message =  `<img src="assets/images/trofeo.png" class="card-alert">`; 
-    else
-      message = `<img src="assets/icons/IconGoal.svg" class="card-alert">`;
-      
-    const alert = await this.alertController.create({
-      message: message,
-      buttons: [
-        {
-          text: this.translate.instant('info.button'),
-          role: 'confirm',
-          handler: () => {
-            this.handlerMessage = 'Alert confirmed';
-          },
+  let message = '';
+  if(this.pendingNotification?.isChallengeCompleted)
+    message =  `<div class="pyro">
+    <div class="before"></div>
+    <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_campeon.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
+    <div class="after"></div>
+  </div>`; 
+  else
+    message = `<div class="pyro">
+    <div class="before"></div>
+    <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_campeon.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
+    <div class="after"></div>
+  </div>`;
+    
+  const alert = await this.alertController.create({
+    header: this.translate.instant('health_path.level_congratulations'),
+    cssClass:'challenge-alert',
+    message: message,
+    buttons: [
+      {
+        text: this.translate.instant('info.button'),
+        role: 'confirm',
+        handler: () => {
+          this.handlerMessage = 'Alert confirmed';
+          this.pendingNotification = null;
         },
-      ],
-    });
-    await alert.present();
+      },
+    ],
+  });
+  await alert.present();
 
-    const { role } = await alert.onDidDismiss();
+  const { role } = await alert.onDidDismiss();
     this.roleMessage = `Dismissed with role: ${role}`;
   
+
 }
 }

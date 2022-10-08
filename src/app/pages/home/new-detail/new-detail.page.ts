@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./new-detail.page.scss'],
 })
 export class NewDetailPage implements OnInit {
-  id : any;
+  @Input()id: any;
   isLoading = false
   new : any = {};
   videoThumbnail: any = null;
@@ -28,8 +28,7 @@ export class NewDetailPage implements OnInit {
   favourite = false;
   hide = false;
   constructor(
-    private iab: InAppBrowser, 
-    private auth: AuthenticationService,
+    private modalCtrl: ModalController,
     public loadingController: LoadingController, 
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
@@ -41,7 +40,6 @@ export class NewDetailPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.id = history.state.id;
     if(this.id)
     this.getDetailNew();
   }
@@ -154,6 +152,10 @@ export class NewDetailPage implements OnInit {
           }
       }
     )
+  }
+
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 
   

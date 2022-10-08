@@ -19,6 +19,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { PusherNotificationService } from 'src/app/services/pusher/pusher-notification.service';
 import { PusherAlarmService } from 'src/app/services/pusher/pusher-alarm.service';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
+import { AdvicesDetailPage } from './advices-detail/advices-detail.page';
+import { NewDetailPage } from './new-detail/new-detail.page';
 
 export interface UserInformation {
   title?: string;
@@ -47,65 +49,67 @@ export class HomePage implements OnInit {
     return (this.data && this.data.isShell) ? true : false;
   }
   WAIT_TIME = 10 //10 minutes
-  userDoole : any = {}
-  goals: any =[]
-  diets: any =[]
-  drugs: any =[]
+  userDoole: any = {}
+  goals: any = []
+  diets: any = []
+  drugs: any = []
   challenges = [];
-  games =[]
+  games = []
   header = false;
-  listFamilyUnit:FamilyUnit[] = [];
+  listFamilyUnit: FamilyUnit[] = [];
   isLoading = false
-  activity: any =[]
-  appointment: Agenda[] =[]
+  activity: any = []
+  appointment: Agenda[] = []
   showGoogleFit = false;
-  advices: any =[]
+  advices: any = []
   date
-  loading:boolean = true;
+  loading: boolean = true;
   isFirstTime = true;
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
-   sliderConfig = {
+  sliderConfig = {
     slidesPerView: 1,
     direction: 'vertical',
     centeredSlides: false,
-   };
-   sliderConfigHorizontal = {
+  };
+  sliderConfigHorizontal = {
     initialSlide: 0,
     slidesPerView: 1.1,
     spaceBetween: 0,
     centeredSlides: false,
-   };
+  };
 
 
-   sliderConfigHorizontalOneSlide = {
+  sliderConfigHorizontalOneSlide = {
     initialSlide: 0,
     slidesPerView: 1,
     spaceBetween: 0,
     centeredSlides: true,
-   };
+  };
 
-   sliderHealthPathConfig = this.sliderConfigHorizontal;
+  sliderHealthPathConfig = this.sliderConfigHorizontal;
+  sliderAdvicesConfig = this.sliderConfigHorizontal;
 
-   @ViewChild('sliderGoals') sliderGoals: IonSlides;
-   @ViewChild('sliderDiet') sliderDiet: IonSlides;
-   @ViewChild('sliderDrug') sliderDrug: IonSlides;
-   @ViewChild('sliderGames') sliderGames: IonSlides;
-   @ViewChild('sliderPhysical') sliderPhysical: IonSlides;
-   @ViewChild('tabs') tabs: TabsComponent;
+  @ViewChild('sliderGoals') sliderGoals: IonSlides;
+  @ViewChild('sliderDiet') sliderDiet: IonSlides;
+  @ViewChild('sliderDrug') sliderDrug: IonSlides;
+  @ViewChild('sliderGames') sliderGames: IonSlides;
+  @ViewChild('sliderPhysical') sliderPhysical: IonSlides;
+  @ViewChild('tabs') tabs: TabsComponent;
 
-   infoDiet: UserInformation
-   infoDrugs: UserInformation
-   infoGames: UserInformation
-   infoActivity: UserInformation
-   infoGoals: UserInformation
+  infoDiet: UserInformation
+  infoDrugs: UserInformation
+  infoGames: UserInformation
+  infoActivity: UserInformation
+  infoGoals: UserInformation
 
-   showDrugPager = true
-   challengeProgressBarValue;
-   public greeting = '';
+  showDrugPager = true
+  challengeProgressBarValue;
+  public greeting = '';
+  userInfo: any;
   constructor(
-    public router:Router,
+    public router: Router,
     public platform: Platform,
     private dooleService: DooleService,
     public authService: AuthenticationService,
@@ -116,7 +120,6 @@ export class HomePage implements OnInit {
     private ngZone: NgZone,
     public translate: TranslateService,
     public alertController: AlertController,
-    private analyticsService: AnalyticsService,
     private languageService: LanguageService,
     private nav: NavController,
     private modalCtrl: ModalController,
@@ -142,42 +145,42 @@ export class HomePage implements OnInit {
   }
 
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getUserInformation()
   }
 
-  ionViewDidEnter(){
-    setTimeout(()=> this.setTimerSlider(), 3000);
-   
+  ionViewDidEnter() {
+    setTimeout(() => this.setTimerSlider(), 3000);
+
   }
 
-  checkHealthAccess(){
+  checkHealthAccess() {
     if (this.platform.is('cordova')) {
       this.health.isAvailable()
-          .then((available: boolean) => {
-            //console.log(available);
-            this.showGoogleFit = !available;
-            this.health.requestAuthorization([
-              'distance', 'steps', 'heart_rate', 'activity', 'weight' //,'blood_glucose','blood_pressure','oxygen_saturation'//, read and write permissions
-            ])
-                .then(res => {
-                  //console.log(res);
-                  this.syncData(30);
-                  //setTimeout(()=>this.confirmAllNotification(), 500);
-                })
-                .catch(e => {
-                  console.log(e)
-                  //setTimeout(()=>this.confirmAllNotification(), 100);
-                });
-          })
-          .catch(e => {
-            console.log(e)
-            //setTimeout(()=>this.confirmAllNotification(), 500);
-          });
+        .then((available: boolean) => {
+          //console.log(available);
+          this.showGoogleFit = !available;
+          this.health.requestAuthorization([
+            'distance', 'steps', 'heart_rate', 'activity', 'weight' //,'blood_glucose','blood_pressure','oxygen_saturation'//, read and write permissions
+          ])
+            .then(res => {
+              //console.log(res);
+              this.syncData(30);
+              //setTimeout(()=>this.confirmAllNotification(), 500);
+            })
+            .catch(e => {
+              console.log(e)
+              //setTimeout(()=>this.confirmAllNotification(), 100);
+            });
+        })
+        .catch(e => {
+          console.log(e)
+          //setTimeout(()=>this.confirmAllNotification(), 500);
+        });
     }
   }
 
-  setAnalyticsUserProperty(){
+  setAnalyticsUserProperty() {
     // if(this.userDoole?.age)
     // this.analyticsService.setProperty('Edad', this.userDoole.age)
     // if(this.userDoole?.language?.name)
@@ -185,55 +188,74 @@ export class HomePage implements OnInit {
     // this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
-   getValue(object, key) {
+  getValue(object, key) {
     var k, temp;
     if (key in object) return object[key];                // if found return value
     for (k in object) {                                   // iterate keys
-        if (object[k] && typeof object[k] === 'object') { // check not null and object
-            temp = this.getValue(object[k], key);              // get sub value, if exists
-            if (temp !== null) return temp;               // if not null return value
-        }
+      if (object[k] && typeof object[k] === 'object') { // check not null and object
+        temp = this.getValue(object[k], key);              // get sub value, if exists
+        if (temp !== null) return temp;               // if not null return value
+      }
     }
     return null;
   }
-  async getUserInformation(){
+  async getUserInformation() {
     this.isLoading = true
-    let date2= this.transformDate(this.date, 'dd-MM-yyyy')
-    let date = {date: date2, from_date: this.date, to_date: this.date}
-
+    let date2 = this.transformDate(this.date, 'dd-MM-yyyy')
+    let date = { date: date2, from_date: this.date, to_date: this.date }
+    let tempAdvices;
+    let tempChallenges;
     this.dooleService.getAPIinformationSummary(date).subscribe(
-      async (res: any) =>{
+      async (res: any) => {
         await res;
 
-        console.log('[HomePage] getUserInformation()',  res);
-        if(res.data?.challenges.length == 1)
-          this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
+        console.log('[HomePage] getUserInformation()', res);
+       
+        tempChallenges = res.data?.challenges;
+        tempChallenges = tempChallenges.filter(function( obj ) {
+          return !obj.completed;
+      });
+      console.log('obj.completed', this.challenges.length)
+      if ( tempChallenges.length == 1)
+        this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
 
-        this.challenges = res.data?.challenges;
+      this.challenges = tempChallenges;
+      
         this.userDoole = res.data?.profile;
+        
 
-        this.greeting = 'Hola, '+ this.userDoole?.first_name;
+        this.greeting = 'Hola, ' + this.userDoole?.first_name;
         this.appointment = res.data?.agenda;
-        if(this.role.component.advices)
-        this.advices = res.data?.advices;
-        if(this.role.component.news)
-        res.data.news.forEach(element => {
-          element['new'] = true
-          this.advices.push(element)
-        });
 
-        this.advices = this.advices.filter(advice => ( !this.getStatusable(advice?.statusable, 'hide')))
+        if (this.role.component.advices)
+          tempAdvices = res.data?.advices;
+        
+        if (this.role.component.news)
+          res.data.news.forEach(element => {
+            element['new'] = true
+            tempAdvices.push(element)
+          });
 
-        if(res.data?.goals){
+        tempAdvices = tempAdvices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
+
+        if(tempAdvices.length == 1){
+         
+          this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
+          console.log(' this.sliderAdvicesConfig ',  this.sliderAdvicesConfig);
+        }
+        
+        this.advices = tempAdvices;
+        
+        if (res.data?.goals) {
           this.goals = res.data?.goals
-           this.infoGoals = {
-            title: this.goals[0]?.typeString +' '+this.goals[0]?.element?.element_unit?.abbreviation
+          this.infoGoals = {
+            title: this.goals[0]?.typeString + ' ' + this.goals[0]?.element?.element_unit?.abbreviation
           }
 
           // Get the latest value of the element-goal
           this.goals.forEach(goal => {
             let element_last_value = goal?.element?.element_last_value // Get the element group
-            if(element_last_value?.value)
+            if (element_last_value?.value)
               this.getGoalLastValue(element_last_value, goal)
             else
               goal.last_value_text = this.translate.instant('home.goals_no_data');
@@ -249,16 +271,16 @@ export class HomePage implements OnInit {
         //Elements
         this.activity = []
         let elements = res?.data.elements
-        if(elements?.eg){
+        if (elements?.eg) {
           this.treeIterate(elements?.eg, '');
           this.sliderPhysical?.slideTo(0)
           this.slideActivityChange()
         }
 
         //Games
-        if(res.data.gamePlays){
+        if (res.data.gamePlays) {
           this.games = res.data.gamePlays
-          this.games.sort(function(a,b){
+          this.games.sort(function (a, b) {
             return a.scheduled_date.localeCompare(b.scheduled_date);
           })
           this.searchIndexDGame()
@@ -267,21 +289,22 @@ export class HomePage implements OnInit {
         }
         //this.drugs = res.data.drugIntakes.drugIntakes
         this.getDrugIntake()
+        this.userInfo = res?.data;
         this.isLoading = false
 
         //Analytics
         //console.log('[HomePage] getUserInformation()', this.userDoole);
         //this.setAnalyticsUserProperty()
-       },(err) => {
-          console.log('***** ERROR ' + err);
-          this.isLoading = false
+      }, (err) => {
+        console.log('***** ERROR ' + err);
+        this.isLoading = false
 
-          throw err;
+        throw err;
 
       });
   }
 
-  setTimerSlider(){
+  setTimerSlider() {
     this.slideGamesChange()
     this.searchIndexDGame()
     this.slideDrugChange()
@@ -302,7 +325,7 @@ export class HomePage implements OnInit {
       if (obj.hasOwnProperty(property)) {
         if (typeof obj[property] == "object") {
           //console.log('[DiaryPage] treeIterateDiets()', obj[property]);
-          this.diets.push({date: property, items: obj[property]})
+          this.diets.push({ date: property, items: obj[property] })
           //this.treeIterate(obj[property], stack + '.' + property);
         }
       }
@@ -317,10 +340,10 @@ export class HomePage implements OnInit {
 
           this.treeIterate(obj[property], stack + '.' + property);
         } else {
-          if(property=="group"){
+          if (property == "group") {
             obj['is_child'] = stack.includes('childs');
-            if(obj?.elements.length>0)
-            this.activity.push(obj);
+            if (obj?.elements.length > 0)
+              this.activity.push(obj);
 
           }
 
@@ -329,22 +352,22 @@ export class HomePage implements OnInit {
     }
   }
 
-  getStatusable(list, type){
-    if(list?.length >0){
+  getStatusable(list, type) {
+    if (list?.length > 0) {
       let statu = list.find(status => (status?.type == type));
-      return statu? true:false
+      return statu ? true : false
     }
     else return false
   }
 
-  getGoalLastValue(element_goal, goal){
+  getGoalLastValue(element_goal, goal) {
 
 
     goal.last_value = parseFloat(element_goal?.value);
     goal.value1 = parseFloat(goal?.value1)
     goal.last_value_date = element_goal?.date_value;
 
-    switch(goal.goalType){
+    switch (goal.goalType) {
 
       case '=':
         goal = this.equal(goal);
@@ -367,32 +390,25 @@ export class HomePage implements OnInit {
       default:
         break;
     }
-    // console.log("** Goal: ", goal );
-    // console.log("** goalType: ", goal.goalType );
-    // console.log("**  element.last value: ", element_goal?.value);
-    // console.log("**  element.reversed: ", goal.reversed);
-    // console.log("**  element.goal_percentage: ", goal.goal_percentage);
-    // console.log("**  element.progress_bar_value: ",  goal.progress_bar_value);
-    // console.log("**  element.progress_bar_color: ",  goal.progress_bar_color);
     goal.last_value_text = goal.last_value + ' ' + goal.element?.element_unit?.abbreviation
 
   }
 
-  inBetween(goal){
+  inBetween(goal) {
     goal.value2 = parseFloat(goal?.value2);
     goal.reversed = false;
-      if(goal.last_value >= goal.value1 && goal.last_value <= goal.value2){
-        goal = this.goalAchieved(goal);
-      }else if(goal.last_value >= goal.value1 && goal.last_value >= goal.value2){
-        goal.reversed = true;
-        goal = this.getGoalProgress(goal, goal.value2)
-      }else if(goal.last_value <= goal.value1 && goal.last_value >= goal.value2){
-        goal = this.getGoalProgress(goal, goal.value1)
-      }
+    if (goal.last_value >= goal.value1 && goal.last_value <= goal.value2) {
+      goal = this.goalAchieved(goal);
+    } else if (goal.last_value >= goal.value1 && goal.last_value >= goal.value2) {
+      goal.reversed = true;
+      goal = this.getGoalProgress(goal, goal.value2)
+    } else if (goal.last_value <= goal.value1 && goal.last_value >= goal.value2) {
+      goal = this.getGoalProgress(goal, goal.value1)
+    }
     return goal;
   }
 
-  goalAchieved(goal){
+  goalAchieved(goal) {
     goal.goal_percentage = 100;
     goal.progress_bar_value = 1;
     goal.progress_bar_color = this.getProgressBarClass(goal.progress_bar_value, goal.reversed);
@@ -400,11 +416,11 @@ export class HomePage implements OnInit {
     return goal
   }
 
-  getGoalProgress(goal, target){
-    if(goal.last_value <= target){
+  getGoalProgress(goal, target) {
+    if (goal.last_value <= target) {
       goal.goal_percentage = this.getGoalPercentage(goal.last_value, target);
       goal.progress_bar_value = this.convertToDecimal(goal.goal_percentage);
-    }else if(goal.last_value > target){
+    } else if (goal.last_value > target) {
       goal.goal_percentage = this.getGoalPercentage(goal.last_value, target);
       goal.progress_bar_value = this.getProgressBarValue(goal);
     }
@@ -414,113 +430,113 @@ export class HomePage implements OnInit {
     return goal;
   }
 
-  getProgressBarValue(goal){
+  getProgressBarValue(goal) {
     let progress_bar_value;
-    if(goal.goalType == 'a<x<b'){
+    if (goal.goalType == 'a<x<b') {
       let percentage = 100 - (parseFloat(goal.goal_percentage) - 100);
       progress_bar_value = this.convertToDecimal(percentage)
-    }else if(goal.goalType == '>' || goal.goalType == '=>' )
+    } else if (goal.goalType == '>' || goal.goalType == '=>')
       progress_bar_value = this.convertToDecimal(goal.goal_percentage)
-    else if(goal.goalType == '<' || goal.goalType == '<=' ){
+    else if (goal.goalType == '<' || goal.goalType == '<=') {
       let percentage = 100 - (parseFloat(goal.goal_percentage) - 100);
       progress_bar_value = this.convertToDecimal(percentage)
-    }else if(goal.goalType == '='){
-      if(goal.last_value > goal.value1){
+    } else if (goal.goalType == '=') {
+      if (goal.last_value > goal.value1) {
         goal.reversed = true;
         let percentage = 100 - (parseFloat(goal.goal_percentage) - 100);
         progress_bar_value = this.convertToDecimal(percentage)
-      }else{
+      } else {
         goal.reversed = false;
         progress_bar_value = this.convertToDecimal(goal.goal_percentage)
       }
 
-    }else
+    } else
       progress_bar_value = this.convertToDecimal(goal.goal_percentage);
 
     return progress_bar_value;
 
   }
 
-  getGoalPercentage(last_value, value){
-    return (last_value*100)/value;
+  getGoalPercentage(last_value, value) {
+    return (last_value * 100) / value;
 
   }
 
-  getProgress(goal){
+  getProgress(goal) {
     return goal.last_value <= goal.value1 ? 1 : this.convertToDecimal(goal.goal_percentage);
   }
 
-  equal(goal){
+  equal(goal) {
     console.log("** equal() goalType: ", goal.goalType);
-    if(goal.last_value == goal.value1){
+    if (goal.last_value == goal.value1) {
       goal = this.goalAchieved(goal);
-    }else{
+    } else {
       goal = this.getGoalProgress(goal, goal.value1)
     }
     return goal;
   }
 
-  lessThan(goal){
-    console.log("** lessThan() goalType: ", goal.goalType);
+  lessThan(goal) {
+
     goal.reversed = true;
-    if(goal.last_value < goal.value1){
+    if (goal.last_value < goal.value1) {
       goal = this.goalAchieved(goal);
-    }else{
+    } else {
       goal = this.getGoalProgress(goal, goal.value1)
     }
     return goal;
   }
 
-  greaterOrEqualThan(goal){
+  greaterOrEqualThan(goal) {
     console.log("** greaterThan() goalType: ", goal.goalType);
     goal.reversed = false;
-    if(goal.last_value >= goal.value1){
+    if (goal.last_value >= goal.value1) {
       goal = this.goalAchieved(goal);
-    }else{
+    } else {
       goal = this.getGoalProgress(goal, goal.value1)
     }
 
     return goal;
   }
 
-  lessOrEqualThan(goal){
+  lessOrEqualThan(goal) {
     console.log("** lessThan() goalType: ", goal.goalType);
     goal.reversed = true;
-    if(goal.last_value <= goal.value1){
+    if (goal.last_value <= goal.value1) {
       goal = this.goalAchieved(goal);
-    }else{
+    } else {
       goal = this.getGoalProgress(goal, goal.value1)
     }
     return goal;
   }
 
-  greaterThan(goal){
+  greaterThan(goal) {
     console.log("** greaterThan() goalType: ", goal.goalType);
     goal.reversed = false;
-    if(goal.last_value > goal.value1){
+    if (goal.last_value > goal.value1) {
       goal = this.goalAchieved(goal);
-    }else{
+    } else {
       goal = this.getGoalProgress(goal, goal.value1)
     }
 
     return goal;
   }
 
-   convertToDecimal(numberVal){
-    if(numberVal<10)
+  convertToDecimal(numberVal) {
+    if (numberVal < 10)
       return (numberVal / 10).toFixed(2);
-    else if(numberVal<100)
+    else if (numberVal < 100)
       return (numberVal / 100).toFixed(2);
     else
       return (numberVal / 1000).toFixed(2);
 
- }
+  }
 
 
-  getProgressBarClass(percentage, isReversed){
+  getProgressBarClass(percentage, isReversed) {
 
     let cssClass: string;
-    if(isReversed)
+    if (isReversed)
       cssClass = this.reversedProgressBarClass(percentage);
     else
       cssClass = this.progressBarClass(percentage);
@@ -528,37 +544,37 @@ export class HomePage implements OnInit {
     return cssClass
   }
 
-  progressBarClass(value){
-    console.log("** progressBarClass(): ", value);
-    if(value<0.50)
+  progressBarClass(value) {
+
+    if (value < 0.50)
       return 'my-buffer-progress_red'
-    else if(value>0.49 && value<0.75)
+    else if (value > 0.49 && value < 0.75)
       return 'my-buffer-progress_orange'
     else
       return 'my-buffer-progress_green'
 
   }
 
-  reversedProgressBarClass(value){
-    console.log("** reversedProgressBarClass(): ", value);
-    if(1 > value && value < 0.50)
+  reversedProgressBarClass(value) {
+
+    if (1 > value && value < 0.50)
       return 'my-buffer-progress_red'
-    else if(value >= 0.50 && value <= 0.75)
+    else if (value >= 0.50 && value <= 0.75)
       return 'my-buffer-progress_orange'
     else
       return 'my-buffer-progress_green'
   }
 
-  getDateElementGoal(last_value_date){
-    if(last_value_date)
-      return this.translate.instant('element.field_date')+': '+this.formatDate(last_value_date)
+  getDateElementGoal(last_value_date) {
+    if (last_value_date)
+      return this.translate.instant('element.field_date') + ': ' + this.formatDate(last_value_date)
     else ''
   }
 
 
 
-  getDrugIntake(){
-    this.dooleService.getAPIdrugIntakeByDate({date: this.date}).subscribe((res)=>{
+  getDrugIntake() {
+    this.dooleService.getAPIdrugIntakeByDate({ date: this.date }).subscribe((res) => {
       console.log('[HomePage] getDrugIntake()', res);
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus()
@@ -570,10 +586,10 @@ export class HomePage implements OnInit {
 
 
 
-  syncData(days){
+  syncData(days) {
 
-    let startDate =  new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000);
-    let endDate =  new Date(); // now
+    let startDate = new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000);
+    let endDate = new Date(); // now
     console.log('dataType: steps');
     this.health.queryAggregated({
       startDate,
@@ -673,31 +689,31 @@ export class HomePage implements OnInit {
 
   }
 
-    //envia post amb dades de salut a api
-    postHealth(type, data){
-      const postData = {
-        type: type,
-        vals: JSON.stringify(data),
-      };
-      this.dooleService.post('user/element/sync', postData).subscribe(
-          async (data) => {
-            console.log("postHealth: ", data);
-           },
+  //envia post amb dades de salut a api
+  postHealth(type, data) {
+    const postData = {
+      type: type,
+      vals: JSON.stringify(data),
+    };
+    this.dooleService.post('user/element/sync', postData).subscribe(
+      async (data) => {
+        console.log("postHealth: ", data);
+      },
 
-          (error) => {
-            // Called when error
-            console.log('error: ', error);
-            throw error;
-          },
-          () => {
-            // Called when operation is complete (both success and error)
-            // loading.dismiss();
-          });
-    }
+      (error) => {
+        // Called when error
+        console.log('error: ', error);
+        throw error;
+      },
+      () => {
+        // Called when operation is complete (both success and error)
+        // loading.dismiss();
+      });
+  }
 
-  actionCloseAdvice(slide){
+  actionCloseAdvice(slide) {
     console.log('[HomePage] actionCloseAdvice()', slide.name);
-    let model = (slide.new)? 'News':'Advice'
+    let model = (slide.new) ? 'News' : 'Advice'
     let params = {
       model: model,
       id: slide.id,
@@ -705,64 +721,64 @@ export class HomePage implements OnInit {
       status: 1
     }
     this.dooleService.postAPIContentStatus(params).subscribe(
-      async (res: any) =>{
-          if(res.success){
-            this.advices = this.advices.filter(advice => (advice?.id != slide.id))
-          }
+      async (res: any) => {
+        if (res.success) {
+          this.advices = this.advices.filter(advice => (advice?.id != slide.id))
+        }
       }
     )
   }
 
-  actionSeeAllAdvices(){
+  actionSeeAllAdvices() {
     //console.log('[HomePage] actionCloseAdvice()');
   }
 
-  actionRegisterAdvice(slide){
+  actionRegisterAdvice(slide) {
     //console.log('[HomePage] actionRegisterAdvice()', slide.name);
   }
 
-  actionCloseAppointment(slide){
+  actionCloseAppointment(slide) {
     //console.log('[HomePage] actionCloseAppointment()', slide.title);
     slide.hide = true
-    this.appointment = this.appointment.filter( slide => slide.hide == false)
+    this.appointment = this.appointment.filter(slide => slide.hide == false)
   }
 
-  actionDetailAppointment(slide){
+  actionDetailAppointment(slide) {
     //console.log('[HomePage] actionDetailAppointment()', slide.name);
   }
 
-  actionButtonDrugs(slide){
+  actionButtonDrugs(slide) {
     //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
   slideGoalChange() {
-    if(this.goals !== undefined && this.goals?.length > 0)
-		this.sliderGoals?.getActiveIndex().then(index => {
-      //console.log('[HomePage] slideGoalChange()', index);
-      let slider = this.goals[index]
-         console.log('[HomePage] slideGoalChange()', slider);
-      this.infoGoals = {
-        title: slider?.typeString +' '+slider?.element?.element_unit?.abbreviation
-      }
-    });
+    if (this.goals !== undefined && this.goals?.length > 0)
+      this.sliderGoals?.getActiveIndex().then(index => {
+        //console.log('[HomePage] slideGoalChange()', index);
+        let slider = this.goals[index]
+        console.log('[HomePage] slideGoalChange()', slider);
+        this.infoGoals = {
+          title: slider?.typeString + ' ' + slider?.element?.element_unit?.abbreviation
+        }
+      });
   }
 
-  slideDietChange(){
-    if(this.diets !== undefined && this.diets?.length > 0)
-		this.sliderDiet?.getActiveIndex().then(index => {
-      //console.log('[HomePage] slideDietChange()', index);
-      let slider = this.diets[index]
-      let hour = slider?.date.split(' ')[1]
-      this.infoDiet = {
-        title: slider?.items,
-        hour: hour?.split(':')[0]+':'+hour.split(':')[1]
-      }
-    });
+  slideDietChange() {
+    if (this.diets !== undefined && this.diets?.length > 0)
+      this.sliderDiet?.getActiveIndex().then(index => {
+        //console.log('[HomePage] slideDietChange()', index);
+        let slider = this.diets[index]
+        let hour = slider?.date.split(' ')[1]
+        this.infoDiet = {
+          title: slider?.items,
+          hour: hour?.split(':')[0] + ':' + hour.split(':')[1]
+        }
+      });
   }
 
-  slideDrugChange(event?){
+  slideDrugChange(event?) {
     console.log('[HomePage] slideDrugChange()', event);
-    if(this.drugs !== undefined && this.drugs?.length > 0){
+    if (this.drugs !== undefined && this.drugs?.length > 0) {
       this.sliderDrug?.getActiveIndex().then(index => {
         //console.log('[HomePage] slideDrugChange()', index);
         let slider = this.drugs[index]
@@ -771,30 +787,30 @@ export class HomePage implements OnInit {
           hour: slider?.hour_intake
         }
       });
-    }else{
+    } else {
       this.infoDrugs = null;
     }
 
-/*     event.target.isEnd().then(isEnd => {
-      this.showDrugPager = !isEnd;
-    }); */
+    /*     event.target.isEnd().then(isEnd => {
+          this.showDrugPager = !isEnd;
+        }); */
 
   }
 
-  slideGamesChange(){
-    if(this.games !== undefined && this.games?.length > 0)
-    this.sliderGames?.getActiveIndex().then(index => {
-      //console.log('[HomePage] slideGamesChange()', index);
-      let slider = this.games[index]
-      let hour = slider?.scheduled_date.split(' ')[1]
-      this.infoGames = {
-        title: slider?.name,
-        hour: hour.split(':')[0] + ':' + hour.split(':')[1]
-      }
-    });
+  slideGamesChange() {
+    if (this.games !== undefined && this.games?.length > 0)
+      this.sliderGames?.getActiveIndex().then(index => {
+        //console.log('[HomePage] slideGamesChange()', index);
+        let slider = this.games[index]
+        let hour = slider?.scheduled_date.split(' ')[1]
+        this.infoGames = {
+          title: slider?.name,
+          hour: hour.split(':')[0] + ':' + hour.split(':')[1]
+        }
+      });
   }
 
-  slideActivityChange(){
+  slideActivityChange() {
     this.sliderPhysical?.getActiveIndex().then(index => {
       console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
@@ -805,63 +821,63 @@ export class HomePage implements OnInit {
     });
   }
 
-  changeTake(id,taked){
-    taked=(taked=="0") ? "1" : "0";
+  changeTake(id, taked) {
+    taked = (taked == "0") ? "1" : "0";
     var dict = [];
     dict.push({
-        key:   "date",
-        value: ""
+      key: "date",
+      value: ""
     });
-    this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
+    this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
       //console.log('[HomePage] changeTake()',  json);
       this.getDrugIntake()
-    },(err) => {
+    }, (err) => {
       //console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message);
-      alert( 'ERROR(' + err.code + '): ' + err.message)
+      alert('ERROR(' + err.code + '): ' + err.message)
       throw err;
     });
   }
 
-  filterDrugsByStatus(){
-    if(this.drugs !== undefined && this.drugs?.length > 0){
-      this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+  filterDrugsByStatus() {
+    if (this.drugs !== undefined && this.drugs?.length > 0) {
+      this.drugs = this.drugs.filter(drug => drug.forgotten != 0)
     }
   }
 
-  searchIndexDrug(){
-    if(this.drugs !== undefined && this.drugs?.length > 0){
+  searchIndexDrug() {
+    if (this.drugs !== undefined && this.drugs?.length > 0) {
       let drug = this.drugs?.find(element =>
-        ((this.hourToMinutes(element.hour_intake) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
-        )
+        ((this.hourToMinutes(element.hour_intake) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+      )
       let index = this.drugs.indexOf(drug);
-        //console.log('[HomePage] searchIndexDrug()', drug, index);
-        this.currentIndexDrug = (index > -1)? index: 0
+      //console.log('[HomePage] searchIndexDrug()', drug, index);
+      this.currentIndexDrug = (index > -1) ? index : 0
     }
   }
 
-  searchIndexDGame(){
-    if(this.games !== undefined && this.games?.length > 0){
+  searchIndexDGame() {
+    if (this.games !== undefined && this.games?.length > 0) {
       let game = this.games?.find(element =>
-        ((this.hourToMinutes(element.scheduled_date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
-        )
+        ((this.hourToMinutes(element.scheduled_date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+      )
       let index = this.games.indexOf(game);
-      this.currentIndexDrug = (index > -1)? index: 0
+      this.currentIndexDrug = (index > -1) ? index : 0
     }
   }
 
-  searchIndexDiet(){
-    if(this.diets !== undefined && this.diets?.length > 0){
+  searchIndexDiet() {
+    if (this.diets !== undefined && this.diets?.length > 0) {
       let diet = this.diets?.find(element =>
-        ((this.hourToMinutes(element.date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours()*60 + new Date().getMinutes()))
-        )
+        ((this.hourToMinutes(element.date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+      )
       let index = this.diets.indexOf(diet);
-      this.currentIndexDiet = (index > -1)? index: 0
+      this.currentIndexDiet = (index > -1) ? index : 0
     }
   }
 
-  hourToMinutes(hour){
+  hourToMinutes(hour) {
     let minutes = hour.split(':')
-    return (Number(minutes[0]))*60 + (Number(minutes[1]))
+    return (Number(minutes[0])) * 60 + (Number(minutes[1]))
   }
 
   doRefresh(event) {
@@ -873,47 +889,47 @@ export class HomePage implements OnInit {
     }, 2000);
   }
 
-  isLess(value){
-    if(value <= 3)
+  isLess(value) {
+    if (value <= 3)
       return true
     return false
   }
 
-  async actionButtonGames(item){
-    var browser : any;
-    if(item.game_type=="html5"){
+  async actionButtonGames(item) {
+    var browser: any;
+    if (item.game_type == "html5") {
       const iosoption: InAppBrowserOptions = {
         zoom: 'no',
-        location:'no',
-        toolbar:'yes',
+        location: 'no',
+        toolbar: 'yes',
         clearcache: 'yes',
         clearsessioncache: 'yes',
         disallowoverscroll: 'yes',
         enableViewportScale: 'yes',
-        hidden:'no',
+        hidden: 'no',
       }
 
-      await this.auth.getUserLocalstorage().then(value =>{
+      await this.auth.getUserLocalstorage().then(value => {
         this.auth.user = value
       })
 
-      if(item.url.startsWith("http")){
+      if (item.url.startsWith("http")) {
         this.header = true
-        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
+        item.url = item.url + "?user=" + this.auth.user.idUser + "&game=" + item.id;
         browser = this.iab.create(item.url, '_blank', iosoption);
         browser.on('exit').subscribe(event => {
           this.ngZone.run(() => {
             //console.log("anim complete");
-                this.header = false
+            this.header = false
           });
         });
       }
-      else{
+      else {
         browser = this.iab.create(item.url, '_system', iosoption);
       }
     }
 
-    if(item.game_type=="form") {
+    if (item.game_type == "form") {
       // const options: InAppBrowserOptions = {
       //   location: 'no',
       //   toolbar: 'yes'
@@ -931,118 +947,142 @@ export class HomePage implements OnInit {
       //   "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
       // );
       //this.nav.navigateForward('/tracking/form', { state: {id: item.id} });
-      this.nav.navigateForward(['/tracking/form', {id: item.form_id}] );
+      this.nav.navigateForward(['/tracking/form', { id: item.form_id }]);
     }
 
   }
 
-    sortDate(games){
-      //console.log('Async operation has ended' ,games);
-      return games.sort( function (a, b) {
-        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])> this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
-          return 1;
-        if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1])< this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
-          return -1;
-        return 0;
-      })
+  sortDate(games) {
+    //console.log('Async operation has ended' ,games);
+    return games.sort(function (a, b) {
+      if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1]) > this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
+        return 1;
+      if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1]) < this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
+        return -1;
+      return 0;
+    })
 
+  }
+
+  formatSelectedDate(date) {
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+  }
+
+  formatDate(d) {
+    if (d) {
+      var auxdate = d.split(' ')
+      //let date = new Date(auxdate[0]);
+      d = d.replace(' ', 'T')
+      let date0 = new Date(d).toUTCString();
+      let date = new Date(date0);
+      let time = auxdate[1];
+      date.setHours(time?.substring(0, 2));
+      date.setMinutes(time?.substring(3, 5));
+      return this.transformDate(date, 'dd/MM/yyyy HH:mm')
     }
+  }
 
-    formatSelectedDate(date){
-      let language = this.languageService.getCurrent();
-      const datePipe: DatePipe = new DatePipe(language);
-      return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
-    }
+  transformDate(date, format) {
+    return this.datePipe.transform(date, format);
+  }
 
-    formatDate(d){
-      if(d){
-        var auxdate = d.split(' ')
-        //let date = new Date(auxdate[0]);
-        d = d.replace(' ', 'T')
-        let date0 = new Date(d).toUTCString();
-        let date = new Date(date0);
-        let time = auxdate[1];
-        date.setHours(time?.substring(0,2));
-        date.setMinutes(time?.substring(3,5));
-        return this.transformDate(date, 'dd/MM/yyyy HH:mm')
-      }
-    }
+  goDetailRecipe(e) {
+    let id = e.item.id
+    if (e.item_type === 'App\\Receipt')
+      this.nav.navigateForward("/journal/diets-detail/recipe", { state: { id: id } });
+  }
 
-    transformDate(date, format) {
-      return this.datePipe.transform(date, format);
-    }
-
-    goDetailRecipe(e){
-      let id = e.item.id
-      if(e.item_type === 'App\\Receipt')
-      this.nav.navigateForward("/journal/diets-detail/recipe", { state: {id:id} });
-    }
-
-    async confirmAllNotification() {
-      const notification = localStorage.getItem('allNotification');
-      if(JSON.parse(notification))
+  async confirmAllNotification() {
+    const notification = localStorage.getItem('allNotification');
+    if (JSON.parse(notification))
       return
 
-      const alert = await this.alertController.create({
-        cssClass: 'my-alert-class',
-        subHeader: this.translate.instant('home.enable_notifications'),
-        message: this.translate.instant('home.message_enable_notifications'),
-          buttons: [
-            {
-              text: this.translate.instant("button.cancel"),
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: (blah) => {
-                console.log('[LandingPage] AlertConfirm Cancel');
-                localStorage.setItem('allNotification', 'true');
-                this.activateAllNotifications(0)
-              }
-            }, {
-              text: this.translate.instant("button.ok"),
-              handler: (data) => {
-                localStorage.setItem('allNotification', 'true')
-                this.activateAllNotifications(1)
-              }
-            }
-          ]
-      });
-
-      await alert.present();
-    }
-
-    activateAllNotifications(factor){
-      const notification = localStorage.getItem('allNotification');
-      if(JSON.parse(notification))
-      return
-
-      console.log('[HomePage] activateAllNotifications()');
-      let params = { active: 'all', value: factor }
-      this.dooleService.postAPIConfiguration(params).subscribe((res)=>{
-        localStorage.setItem('allNotification', 'true');
-      })
-
-    }
-
-    async addElement(slide){
-      console.log('addElement()', slide);
-      const modal = await this.modalCtrl.create({
-        component:  ElementsAddPage,
-        componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
-      });
-
-      modal.onDidDismiss()
-        .then((result) => {
-          console.log('addElement()', result);
-
-          if(result?.data?.error){
-           // let message = this.translate.instant('landing.message_wrong_credentials')
-            //this.dooleService.presentAlert(message)
-          }else if(result?.data?.action == 'add'){
-            this.notification.displayToastSuccessful()
-            this.getUserInformation()
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('home.enable_notifications'),
+      message: this.translate.instant('home.message_enable_notifications'),
+      buttons: [
+        {
+          text: this.translate.instant("button.cancel"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('[LandingPage] AlertConfirm Cancel');
+            localStorage.setItem('allNotification', 'true');
+            this.activateAllNotifications(0)
           }
-        });
+        }, {
+          text: this.translate.instant("button.ok"),
+          handler: (data) => {
+            localStorage.setItem('allNotification', 'true')
+            this.activateAllNotifications(1)
+          }
+        }
+      ]
+    });
 
-        await modal.present();
-      }
+    await alert.present();
+  }
+
+  activateAllNotifications(factor) {
+    const notification = localStorage.getItem('allNotification');
+    if (JSON.parse(notification))
+      return
+
+    console.log('[HomePage] activateAllNotifications()');
+    let params = { active: 'all', value: factor }
+    this.dooleService.postAPIConfiguration(params).subscribe((res) => {
+      localStorage.setItem('allNotification', 'true');
+    })
+
+  }
+
+  async addElement(slide) {
+    console.log('addElement()', slide);
+    const modal = await this.modalCtrl.create({
+      component: ElementsAddPage,
+      componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addElement()', result);
+
+        if (result?.data?.error) {
+          // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        } else if (result?.data?.action == 'add') {
+          this.notification.displayToastSuccessful()
+          this.getUserInformation()
+        }
+      });
+
+    await modal.present();
+  }
+
+  async openModal(slide, isAdvice) {
+    console.log('AdviceDEtailModal()', slide);
+    const modal = await this.modalCtrl.create({
+      component: isAdvice ? AdvicesDetailPage : NewDetailPage,
+      componentProps: { id: slide?.id },
+    });
+
+    this.pusherChallenge.isModalShowing = true;
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('showAdvices()', result);
+        console.log('modal.onDidDismiss: ', this.pusherChallenge.pendingNotification);
+        if (this.pusherChallenge.pendingNotification) {
+          this.pusherChallenge.presentChallengeNotification();
+          this.getUserInformation();
+        } 
+        this.pusherChallenge.isModalShowing = false;
+      });
+
+    await modal.present();
+  }
+
+  
 }

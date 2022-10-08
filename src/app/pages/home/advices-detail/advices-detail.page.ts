@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 
 
@@ -12,7 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class AdvicesDetailPage implements OnInit {
   private data: any = history.state?.data;
-  id : any;
+  @Input()id: any;
   loading : any;
   advice : any = [];
   like = false;
@@ -35,13 +35,14 @@ export class AdvicesDetailPage implements OnInit {
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
+    private modalCtrl: ModalController,
     public sanitizer: DomSanitizer) {
   }
   ngOnInit() {
   }
 
   ionViewWillEnter(){
-    this.id = history.state.id;
+    
     if(this.id)
     this.getDetailAdvices();
   }
@@ -123,6 +124,10 @@ export class AdvicesDetailPage implements OnInit {
   backButton(){
     if(this.data)
     this.router.navigate([`/home`]);
+  }
+
+  close() {
+    this.modalCtrl.dismiss({error:null});
   }
 
   getStatusable(list, type){

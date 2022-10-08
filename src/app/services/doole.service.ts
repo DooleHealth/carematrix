@@ -1498,6 +1498,19 @@ export class DooleService {
     );
   }
 
+  getAPIChallenges( params?): Observable<any> {
+    let path = 'user/challenges'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+
   
 
   getAPImessage(id, params?): Observable<any> {
