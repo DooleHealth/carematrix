@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
-
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-advices-detail',
@@ -35,16 +36,17 @@ export class AdvicesDetailPage implements OnInit {
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
+    public translate: TranslateService,
     private modalCtrl: ModalController,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,private location: Location) {
   }
   ngOnInit() {
   }
 
   ionViewWillEnter(){
-    
+    console.log('[DiaryPage] ionViewWillEnter ID:', this.id);
     if(this.id)
-    this.getDetailAdvices();
+      this.getDetailAdvices();
   }
 
   async getDetailAdvices(onlyStatus?){
@@ -103,8 +105,6 @@ export class AdvicesDetailPage implements OnInit {
       });
   }
 
-
-
   openFile(media?){
     console.log("media", this.advice.media);
     // console.log("video", this.video);
@@ -126,8 +126,13 @@ export class AdvicesDetailPage implements OnInit {
     this.router.navigate([`/home`]);
   }
 
-  close() {
-    this.modalCtrl.dismiss({error:null});
+  async close() {
+    const modal = await this.modalCtrl.getTop();
+    if (modal)
+      await modal.dismiss({error:null});
+    else
+      this.location.back();    
+
   }
 
   getStatusable(list, type){
@@ -165,6 +170,35 @@ export class AdvicesDetailPage implements OnInit {
           }
       }
     )
+  }
+
+  async presentChallengeNotification() {
+
+    let message = '';
+   
+      message =  `<div class="pyro">
+      <div class="before"></div>
+      <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_campeon.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
+      <div class="after"></div>
+    </div>`; 
+    
+      
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('health_path.level_congratulations'),
+      cssClass:'challenge-alert',
+      message: message,
+      buttons: [
+        {
+          text: this.translate.instant('info.button'),
+          role: 'confirm',
+          handler: () => {
+           
+          },
+        },
+      ],
+    });
+    await alert.present();
+  
   }
 }
 

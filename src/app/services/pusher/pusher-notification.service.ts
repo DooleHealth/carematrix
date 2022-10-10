@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Injectable, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/config/constants';
+import { AdvicesDetailPage } from 'src/app/pages/home/advices-detail/advices-detail.page';
+import { NewDetailPage } from 'src/app/pages/home/new-detail/new-detail.page';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
+import { PusherChallengeNotificationsService } from './pusher-challenge-notifications.service';
 declare const Pusher: any;
 const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
 
@@ -39,7 +43,10 @@ export class PusherNotificationService {
     private constants: Constants, 
     private alertController: AlertController,
     private authService: AuthenticationService,
-    public translate: TranslateService,) {
+    public translate: TranslateService,private router: Router,
+    private modalCtrl: ModalController,
+    private pusherChallenge: PusherChallengeNotificationsService,
+    private _zone: NgZone) {
     this.setEndPoint()
     const TOKEN = authService.getAuthToken() 
     var pusher = new Pusher(this.key, {
@@ -61,8 +68,12 @@ export class PusherNotificationService {
    
      this.channel.bind(NAME_BIND, (data) => {
           console.log('[PusherService] getPusher()' ,  data);
-          this.presentAlert();
-          //this.notification.displayToastPusher(data.message)
+
+          if(data.type == "App\\Notifications\\AdviceCreated"){
+            this.presentPromoteNotification(data);
+            //this.notification.displayToastPusher(data.message)
+          }
+         
         });
   }
 
@@ -76,25 +87,62 @@ export class PusherNotificationService {
     this.cluster = opt.cluster
   }
 
-  async presentAlert() {
 
-      const alert = await this.alertController.create({
-        header: this.translate.instant('health_path.blocked_level'),
-        buttons: [
-          {
-            text: this.translate.instant('info.button'),
-            role: 'confirm',
-            handler: () => {
-              this.handlerMessage = 'Alert confirmed';
-            },
-          },
-        ],
-      });
-      await alert.present();
+async presentPromoteNotification(data) {
 
-      const { role } = await alert.onDidDismiss();
-      this.roleMessage = `Dismissed with role: ${role}`;
-  }
+  let message = '';
 
+  message = `<ion-row><ion-col class="text-align-center"><img src="assets/images/duly_reading.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.advice')+`</ion-text></ion-col></ion-row>`;
+    
+  const alert = await this.alertController.create({
+    header: this.translate.instant('alert.header_info'),
+    cssClass:'challenge-alert',
+    message: message,
+    buttons: [
+      {
+        text: this.translate.instant('alert.button_acept'),
+        role: 'confirm',
+        handler: () => {
+          this.openModal(data, true);
+        },
+      },
+      {
+        text: this.translate.instant('alert.button_cancel'),
+        role: 'confirm',
+        handler: () => {
+          this.handlerMessage = 'Alert canceled';
+          
+        },
+      }
+    ],
+  });
+  await alert.present();
+
+  const { role } = await alert.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`;
+
+}
+
+async openModal(data, isAdvice) {
+  console.log('AdviceDEtailModal()', data);
+  const modal = await this.modalCtrl.create({
+    component: isAdvice ? AdvicesDetailPage : NewDetailPage,
+    componentProps: { id: data?.advice?.id },
+  });
+
+  // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown
+  this.pusherChallenge.isModalShowing = true;
+  modal.onDidDismiss()
+    .then((result) => {
+      console.log('showAdvices()', result);
+      console.log('modal.onDidDismiss: ', this.pusherChallenge.pendingNotification);
+      if (this.pusherChallenge.pendingNotification) {
+        this.pusherChallenge.presentChallengeNotification();
+      } 
+      this.pusherChallenge.isModalShowing = false;
+    });
+
+  await modal.present();
+}
 }
 

@@ -108,6 +108,7 @@ export class HomePage implements OnInit {
   challengeProgressBarValue;
   public greeting = '';
   userInfo: any;
+  pushNotification:any = history.state?.push
   constructor(
     public router: Router,
     public platform: Platform,
@@ -146,7 +147,12 @@ export class HomePage implements OnInit {
 
 
   ionViewWillEnter() {
+    if(this.pushNotification)
+      this.openModal(this.pushNotification, true);
+    
     this.getUserInformation()
+
+
   }
 
   ionViewDidEnter() {
@@ -1069,6 +1075,7 @@ export class HomePage implements OnInit {
       componentProps: { id: slide?.id },
     });
 
+    // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown
     this.pusherChallenge.isModalShowing = true;
     modal.onDidDismiss()
       .then((result) => {

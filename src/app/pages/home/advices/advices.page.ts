@@ -18,6 +18,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items: ItemAdvice[] = [];
+  pushNotification:any = history.state.data; 
   itemsBackup= []
   news = []
   advices = []
@@ -34,7 +35,7 @@ export class AdvicesPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.segmentChanged()
+    this.segmentChanged();
   }
 
 
