@@ -293,7 +293,9 @@
         "alert_message_add_card": "La targeta s'ha afegit correctament",
         "button_add": "Afegir",
         "error_alert_message_add_card": "Error: la targeta no ha pogut ser afegida",
-        "placeholder_select":"Selecciona un"
+        "placeholder_select":"Selecciona un",
+        "error_end_date": "La data de caducitat ha de ser major que la data d'expedició",
+        "error_start_date": "La data d'expedició ha de ser menor que la data de caducitat"
       },
       "edit_health_card":{
         "header_edit_card": "Edita Targeta Sanitària",
