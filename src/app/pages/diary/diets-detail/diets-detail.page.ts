@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { Location } from "@angular/common";
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { Constants } from 'src/app/config/constants';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -13,7 +13,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class DietsDetailPage implements OnInit {
   private data: any = history.state?.data;
-  id : any;
+  @Input()id: any;
   loading : any;
   isLoading = false
   diet : any = [];
@@ -28,18 +28,22 @@ export class DietsDetailPage implements OnInit {
   thumbnail : any = null;
   constructor(
     private router: Router,
-    private iab: InAppBrowser, 
+    private location: Location,
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
     private constants: Constants,
+    private modalCtrl: ModalController,
     public sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
-    this.id = history.state.id;
+
+    if(history.state?.id)
+      this.id = history.state.id;
+
     if(this.id)
-    this.getDetailDiet();
+      this.getDetailDiet();
 
   }
 
@@ -101,9 +105,15 @@ export class DietsDetailPage implements OnInit {
     window.open(this.video, "");
   }
 
-  backButton(){
-    if(this.data)
-    this.router.navigate([`/home`]);
+  async backButton(){
+
+    const modal = await this.modalCtrl.getTop();
+    if (modal)
+      await modal.dismiss({error:null});
+    else if(this.data)
+      this.router.navigate([`/home`]);
+    else
+      return this.location.back();    
   }
 
 }

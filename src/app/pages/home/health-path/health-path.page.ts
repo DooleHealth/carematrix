@@ -13,6 +13,7 @@ declare var LeaderLine: any;
 export class HealthPathPage implements OnInit, AfterViewInit {
   fetching = true;
   challenge = history.state?.challenge;
+  current_level:any;
   progressBarValue = this.challenge?.current_level?.percentage_completed > 0 ? this.challenge?.current_level?.percentage_completed/100:0;
   levels = [];
   handlerMessage = '';
@@ -30,7 +31,7 @@ export class HealthPathPage implements OnInit, AfterViewInit {
   ionViewWillEnter() {
    
     this.getChallenge();
-    console.log('after getChallenge');
+
   }
 
   ionViewDidEnter() {
@@ -67,7 +68,9 @@ export class HealthPathPage implements OnInit, AfterViewInit {
       async (res: any) => {
 
         await res;
+        console.log('getAPIChallenge: ', res);
 
+        this.current_level= res?.current_level;
         if(res?.levels?.length > 0){
           console.log('levels', await res?.levels);
           this.levels = res?.levels;

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {Constants} from "../../../config/constants";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
+import { ModalController } from '@ionic/angular';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-form',
@@ -12,23 +14,31 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class FormPage implements OnInit {
   private data: any = history.state?.data;
   private temporaryUrl
-  public id;
+  @Input()id: any;
   public url;
   constructor(private auth: AuthenticationService,
               private constants: Constants,
               private router: Router,
               private sanitizer: DomSanitizer,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private modalCtrl: ModalController, private location: Location) { }
 
   ngOnInit() {
     console.log(`[FamilyUnitPage] FormPage(), user_auth: ${this.auth.id_user}, user_id: ${this.auth.user.idUser}`);
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/formAnswer/fill/' + this.id + '?user_auth=' + this.auth.id_user + '&user_id=' + this.auth.user.idUser + '&secret=' + this.auth.getAuthToken());
+    if(this.activatedRoute.snapshot.paramMap.get('id'))
+      this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/formAnswer/fill/' + this.id + '?user_auth=' + this.auth.id_user + '&user_id=' + this.auth.user.idUser + '&secret=' + this.auth.getAuthToken());
   }
 
-  backButton(){
-    if(this.data)
-    this.router.navigate([`/home`]);
-  }
+  async backButton(){
 
+    const modal = await this.modalCtrl.getTop();
+    if (modal)
+      await modal.dismiss({error:null});
+    else if(this.data)
+      this.router.navigate([`/home`]);
+    else
+      this.location.back();    
+  }
 }

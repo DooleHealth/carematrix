@@ -44,7 +44,9 @@ export class AdvicesDetailPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log('[DiaryPage] ionViewWillEnter ID:', this.id);
+    if(history.state?.id)
+      this.id = history.state.id;
+
     if(this.id)
       this.getDetailAdvices();
   }
@@ -121,9 +123,14 @@ export class AdvicesDetailPage implements OnInit {
     window.open(this.video, "");
   }
 
-  backButton(){
-    if(this.data)
-    this.router.navigate([`/home`]);
+  async backButton(){
+    const modal = await this.modalCtrl.getTop();
+    if (modal)
+      await modal.dismiss({error:null});
+    else if(this.data)
+      this.router.navigate([`/home`]);
+    else
+      this.location.back(); 
   }
 
   async close() {

@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { NewDetailPageModule } from '../../new-detail/new-detail.module';
 import { AdvicesDetailPageModule } from '../../advices-detail/advices-detail.module';
+import { DietsDetailPageModule } from 'src/app/pages/diary/diets-detail/diets-detail.module';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { AdvicesDetailPageModule } from '../../advices-detail/advices-detail.mod
     ComponentsModule,
     DetailPageRoutingModule,
     NewDetailPageModule,
-    AdvicesDetailPageModule
+    AdvicesDetailPageModule,
+    DietsDetailPageModule
     
   ],
   declarations: [DetailPage],

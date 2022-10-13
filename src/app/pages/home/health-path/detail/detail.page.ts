@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DietsDetailPage } from 'src/app/pages/diary/diets-detail/diets-detail.page';
 import { ElementsAddPage } from 'src/app/pages/tracking/elements-add/elements-add.page';
+import { FormPage } from 'src/app/pages/tracking/form/form.page';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
@@ -26,7 +28,7 @@ export class DetailPage {
   goalsList = [];
   goals = [];
 
-  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,) { }
+  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef) { }
 
   ionViewWillEnter() {
 
@@ -36,14 +38,14 @@ export class DetailPage {
 
 
   getChallenge() {
-    this.goalsList = [];
+
     this.dooleService.getAPIChallenge(this.id).subscribe(
       async (res: any) => {
 
         await res;
         console.log(await res)
         this.setChallenge(res);
-        
+       
 
       }, (err) => {
         console.log('[HealthPathPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
@@ -92,24 +94,31 @@ export class DetailPage {
           message = this.translate.instant("health_path.advice") + '"' + goal?.advice?.name + '"';
           link = '/form';
           break;
+        case "App\\Diet":
+          id = goal?.diet?.id;
+          name = '';
+          message = this.translate.instant("health_path.diet") + '"' + goal?.diet?.name + '"';
+          link = '/form';
+          break;
         case "App\\Element":
           id = goal?.element?.id;
           name = goal?.element?.name;
-          message = this.translate.instant("health_path.weight") + '"' + goal?.element?.name + '"';
+          message = this.translate.instant("health_path.measure") + '"' + goal?.element?.name + '"';
           link = '/form';
           break;
         default:
           name = '';
           message = ''
           link = '';
-          console.error("goal.goalable_type not found: ", goal.goalable_type)
+          console.error("goal.goalable_type not found: ", goal)
           break;
       }
       tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed })
     });
     this.goalsList = tempGoals;
-    this.fetching = false;
     this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0
+    this.changeDetectorRef.detectChanges();
+    this.fetching = false;
   }
 
 
@@ -120,7 +129,8 @@ export class DetailPage {
     let link = '';
     switch (goal?.goalable_type) {
       case "App\\Form":
-        this.router.navigate(['/tracking/form', { id: goal.id }]);
+        this.openModal(FormPage,{ id: goal.id });
+        //this.router.navigate(['/tracking/form', { id: goal.id }]);
         break;
       case "App\\Drug":
         this.router.navigate(['/journal'], { state: { segment: 'medication' } });
@@ -133,6 +143,10 @@ export class DetailPage {
         //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
         this.openModal(AdvicesDetailPage,{ id: goal.id });
         break;
+      case "App\\Diet":
+        //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
+        this.openModal(DietsDetailPage,{ id: goal.id });
+        break;
       case "App\\Element":
         this.openModal(ElementsAddPage, { id: goal.id, nameElement: goal.name, units: '' });
         //this.presentAlert(goal);
@@ -141,13 +155,9 @@ export class DetailPage {
       default:
         message = ''
         link = '';
-        console.error("goal.goalable_type not found: ", goal.goalable_type)
+        console.error("goal.goalable_type not found: ", goal)
         break;
     }
-
-  }
-
-  redirect() {
 
   }
 
@@ -164,8 +174,8 @@ export class DetailPage {
         console.log('modal.onDidDismiss: ', this.pusher.pendingNotification);
         if (this.pusher.pendingNotification) {
           this.pusher.presentChallengeNotification();
-          this.getChallenge();
         } 
+        this.getChallenge();
         this.pusher.isModalShowing = false;
         
       });
@@ -174,20 +184,6 @@ export class DetailPage {
   }
 
   async presentAlert(goal) {
-    // inputs: []
-    // switch(type){
-    //   case 'string':
-    //     break;
-    //   case 'numeric':
-    //     let g = {
-    //       type: 'number',
-    //       placeholder: goal,
-    //       min: 1,
-    //       max: 100,
-    //     }
-
-    //     break;
-    // }
     const alert = await this.alertController.create({
       header: goal?.name,
       buttons: ['OK'],

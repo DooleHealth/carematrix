@@ -67,12 +67,9 @@ export class PusherNotificationService {
   public init(){
    
      this.channel.bind(NAME_BIND, (data) => {
-          console.log('[PusherService] getPusher()' ,  data);
+          console.log('[PusherService] getPusher()',  data);
 
-          if(data.type == "App\\Notifications\\AdviceCreated"){
-            this.presentPromoteNotification(data);
-            //this.notification.displayToastPusher(data.message)
-          }
+          this.presentPromoteNotification(data);
          
         });
   }
@@ -90,28 +87,27 @@ export class PusherNotificationService {
 
 async presentPromoteNotification(data) {
 
-  let message = '';
+  let message = this.getNotificationMessage(data)
 
-  message = `<ion-row><ion-col class="text-align-center"><img src="assets/images/duly_reading.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.advice')+`</ion-text></ion-col></ion-row>`;
+  message = `<ion-row><ion-col class="text-align-center"><img src="assets/images/duly_reading.gif" class="card-alert"></img><ion-text>`+ message +`</ion-text></ion-col></ion-row>`;
     
   const alert = await this.alertController.create({
-    header: this.translate.instant('alert.header_info'),
     cssClass:'challenge-alert',
     message: message,
     buttons: [
       {
-        text: this.translate.instant('alert.button_acept'),
-        role: 'confirm',
-        handler: () => {
-          this.openModal(data, true);
-        },
-      },
-      {
-        text: this.translate.instant('alert.button_cancel'),
+        text: this.translate.instant('alert.button_not_now'),
         role: 'confirm',
         handler: () => {
           this.handlerMessage = 'Alert canceled';
           
+        },
+      },
+      {
+        text: this.translate.instant('alert.button_ok'),
+        role: 'confirm',
+        handler: () => {
+          this.openModal(data, true);
         },
       }
     ],
@@ -121,6 +117,27 @@ async presentPromoteNotification(data) {
   const { role } = await alert.onDidDismiss();
     this.roleMessage = `Dismissed with role: ${role}`;
 
+}
+
+public getNotificationMessage(data){
+
+  let message = '';
+  switch (data?.type){
+    case "App\\Notifications\\AdviceCreated":
+      message = this.translate.instant('health_path.advice') + '<b>' + data?.advice?.name + '</b>'
+    break;
+    case " App\\Notifications\\DietCreated":
+      message = this.translate.instant('health_path.diet') + '<b>' + data?.diet?.name+ '</b>'
+    break;
+    case "App\\Notifications\\GameCreated":
+      message = this.translate.instant('health_path.game') + '<b>' + data?.game?.name+ '</b>'
+    break;
+    default:
+      message = '';
+    break;
+  }
+  return message;
+  
 }
 
 async openModal(data, isAdvice) {

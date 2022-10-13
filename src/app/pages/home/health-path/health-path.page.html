@@ -8,41 +8,42 @@
 </ion-header>
 
 <ion-content>
-  <div class="level-container">
+  <div class="spin" *ngIf="this.fetching;else showLevels">
+    <ion-spinner name="bubbles"></ion-spinner>
+</div>
+<ng-template #showLevels>
+  <div class="level-container" *ngIf="this.current_level">
     <ion-row>
 
       <ion-img
-        src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"
+        src="{{this.current_level?.cover ? this.current_level.cover : 'assets/icons/IconGoal.svg'}}"
         class="icon-box bigger"></ion-img>
     </ion-row>
     <ion-row class="level-text ion-padding">
-      <ion-text> {{ this.challenge?.current_level?.name}} </ion-text>
+      <ion-text> {{ this.current_level?.name}} </ion-text>
     </ion-row>
     <ion-row>
       <ion-progress-bar class="progress-bar" [value]="this.progressBarValue"></ion-progress-bar>
     </ion-row>
     <ion-row class="level-text ion-padding">
-      <ion-text> {{ 'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required - this.challenge?.current_level?.current_score} }} </ion-text>
+      <ion-text> {{ 'health_path.goal' | translate:{total:this.current_level?.current_score, coin:this.current_level?.coin_name, required:this.current_level?.score_required - this.current_level?.current_score} }} </ion-text>
     </ion-row>
   </div>
-
- 
-
   <div class="main-container">
-
-    <div class="spin" *ngIf="this.fetching;else showLevels">
-        <ion-spinner name="bubbles"></ion-spinner>
-    </div>
-
-    <ng-template #showLevels>
       <div class="wizard-container">
         <ion-grid class="ion-no-padding">
           <ion-row>
             <ion-col sizeLg="4" sizeMd="4" sizeXs="4" *ngFor="let l of levels; let i = index" style="height:40vw">
             
+
                 <div *ngIf="!l.completed" class="{{ l?.isNextLevelToCompleted ? 'icon-box highlight':'icon-box' }}">
+                  <div *ngIf="l?.isNextLevelToCompleted;else showLock">
+                    <ion-img src="{{l?.cover ? l.cover : 'assets/icons/IconGoal.svg'}}" class="level-icon completed"></ion-img> 
+                </div>
+            
+                <ng-template #showLock>
                   <ion-icon name="lock-closed" (click)="presentAlert()" class="level-icon"></ion-icon>
-                
+                </ng-template>
                 </div>
                 <div *ngIf="l.completed" class="icon-box"> 
                   <ion-img src="{{l?.cover ? l.cover : 'assets/icons/medal-outline.svg'}}" class="level-icon completed"></ion-img> 
@@ -58,9 +59,6 @@
         </ion-grid>
        
       </div>
-     
-
-    </ng-template>
-
   </div>
+</ng-template>
 </ion-content>
