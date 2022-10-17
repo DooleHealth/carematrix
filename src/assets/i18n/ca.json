@@ -125,7 +125,8 @@
           "emergency": "Contactes d'Emergència",
           "your_health_cards": "Les teves Targetes Sanitàries",
           "your_goals": "Els teus Objectius",
-          "payment_method": "Mètode de pagament"
+          "payment_method": "Mètode de pagament",
+          "your_challenges": "Els teus reptes"
         },
         "professional": {
           "title_professional": "Professionals",
@@ -165,6 +166,26 @@
         "subtitle_information": "Informació",
         "subtitle_advices": "Consells"
       },
+      "health_path": {
+        "title":"Camí de la salut",
+        "card_title": "Els meus reptes",
+        "goals": "Objectius",
+        "start": "Inici",
+        "detail":"¿Com assolir el meu objectiu?",
+        "weight":"Pren el teu ",
+        "measure":"Introdueix la mesura: ",
+        "form":"Respon al formulari ",
+        "advice":"Llegeix el consell ",
+        "game":"Juga a ",
+        "drug":"Prendre el medicament ",
+        "news":"Llegeix la notícia ",
+        "diet":"Llegeix la dieta ",
+        "blocked_level": "Aquest nivell està bloquejat",
+        "goal":"Tens <strong>{{ total }} {{ coin }}</strong>, aconsegueix {{ required }} més i passa al següent nivell.",
+        "level_congratulations":"Felicitats!",
+        "level_accomplished":"Has avançat de nivell",
+        "done":"Fet!"
+      },
       "activity_goal":{
         "definition": "Definició",
         "normal_value": "Valors normals:",
@@ -202,6 +223,7 @@
         "button_acept": "Acceptar",
         "button_apply": "Aplicar",
         "button_cancel": "Cancel·lar",
+        "button_not_now": "Ara no, gràcies",
         "button_change": "Canviar",
         "button_send": "Enviar",
         "header_error": "Error",
@@ -690,7 +712,8 @@
         "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil",
         "family":"En aquest apartat podràs loguearte amb l'usuari del qual siguis tutor o cuidador, podent accedir a les seves dades de salut. T'advertirem en cada pàgina que actues en nom d'un altre amb un signe d'exclamació (!). Pots tornar al teu perfil sempre que ho desitgis prement damunt d'aquest mateix signe.",
         "medication":"Pots canviar l'estat de la medicació (prendre, presa o oblidada) punxant damunt d'aquest botó",
-        "chat":"Recorda que el teu doctor pot trigar un temps a contestar-te, depenent de la seva càrrega de treball. Gràcies per ser pacient!"
+        "chat":"Recorda que el teu doctor pot trigar un temps a contestar-te, depenent de la seva càrrega de treball. Gràcies per ser pacient!",
+        "show_advice":""
       },
       "face-id": {
         "description": "Aquesta aplicació es bloca automàticament per garantir-ne la seguretat",

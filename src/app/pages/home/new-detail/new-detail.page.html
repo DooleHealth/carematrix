@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
-    </ion-buttons>
+    <ion-button slot="start" fill="clear" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
     <ion-title>{{'advices.tag_news' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +17,7 @@
 
   <ion-card class="cardProfile">
     <img *ngIf="new.cover" class="imagefit" [src]="new.cover">
-    <ion-item lines="none">
+    <ion-item *ngIf="new.cover" lines="none">
       <ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>

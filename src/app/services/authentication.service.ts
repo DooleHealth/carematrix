@@ -251,13 +251,13 @@ export class AuthenticationService {
   }
 
   logout(allDevices?): Observable<any>  {  
+    let path = 'patient/logout'
       this.getAllTokenDevices()
       let params = {
         tokens: this.tokens,
         allDevices: allDevices? allDevices: false
       }
       console.log('logout', params );
-      let path = 'patient/logout'
       const endpoint = this.api.getEndpoint(path);
       return this.http.post(endpoint, params).pipe(
         map( (res: any) => {

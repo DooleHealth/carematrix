@@ -16,11 +16,12 @@ import { ShareModule } from 'src/app/shared/share/share.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     ShareModule,
     NewDetailPageRoutingModule
   ],
   providers: [ InAppBrowser],
-  declarations: [NewDetailPage]
+  declarations: [NewDetailPage],
+  exports:[TranslateModule]
 })
 export class NewDetailPageModule {}
