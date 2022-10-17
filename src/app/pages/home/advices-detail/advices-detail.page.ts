@@ -137,9 +137,10 @@ export class AdvicesDetailPage implements OnInit {
     const modal = await this.modalCtrl.getTop();
     if (modal)
       await modal.dismiss({error:null});
+    else if(this.data)
+      this.router.navigate([`/home`]);
     else
-      this.location.back();    
-
+      this.router.navigate([`/advices`]);
   }
 
   getStatusable(list, type){

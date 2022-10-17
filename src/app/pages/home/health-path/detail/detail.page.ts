@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -28,12 +28,10 @@ export class DetailPage {
   goalsList = [];
   goals = [];
 
-  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef,  private ngZone: NgZone) { }
 
   ionViewWillEnter() {
-
     this.getChallenge();
-    console.log('after getChallenge');
   }
 
 
@@ -43,12 +41,11 @@ export class DetailPage {
       async (res: any) => {
 
         await res;
-        console.log(await res)
+        console.log('[DetailPage] getAPIChallenge()', res);
         this.setChallenge(res);
-       
 
       }, (err) => {
-        console.log('[HealthPathPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
+        console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
         throw err;
       });
   }
@@ -116,9 +113,10 @@ export class DetailPage {
       tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed })
     });
     this.goalsList = tempGoals;
-    this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0
-    this.changeDetectorRef.detectChanges();
+    this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
     this.fetching = false;
+    this.changeDetectorRef.detectChanges();
+  
   }
 
 
@@ -170,12 +168,14 @@ export class DetailPage {
     this.pusher.isModalShowing = true;
 
     modal.onDidDismiss()
-      .then((result) => {
-        console.log('modal.onDidDismiss: ', this.pusher.pendingNotification);
-        if (this.pusher.pendingNotification) {
+      .then(async (result) => {
+        console.log('modal.onDidDismiss: ', this.pusher?.pendingNotification);
+        if (this.pusher?.pendingNotification) {
           this.pusher.presentChallengeNotification();
         } 
+        this.ngZone.run(() => {
         this.getChallenge();
+      });
         this.pusher.isModalShowing = false;
         
       });

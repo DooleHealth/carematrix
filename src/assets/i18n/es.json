@@ -180,7 +180,7 @@
         "news":"Lee la notícia ",
         "diet":"Lee la dieta ",
         "blocked_level": "Este nivel todavía está bloqueado",
-        "goal":"Tienes {{ total }} {{ coin }}, consigue {{ required }} más y pasa al siguiente nivel.",
+        "goal":"Tienes <strong>{{ total }} {{ coin }}</strong>, consigue {{ required }} más y pasa al siguiente nivel.",
         "level_congratulations":"Felicitaciones!",
         "level_accomplished":"Has avanzado de nivel",
         "done":"Hecho!"

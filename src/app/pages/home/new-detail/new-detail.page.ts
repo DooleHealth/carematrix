@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-detail',
@@ -12,6 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class NewDetailPage implements OnInit {
   @Input()id: any;
+  data:any;
   isLoading = false
   new : any = {};
   videoThumbnail: any = null;
@@ -33,15 +35,18 @@ export class NewDetailPage implements OnInit {
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer, private router: Router) {
   }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
+    if(history.state?.id)
+      this.id = history.state.id;
+    
     if(this.id)
-    this.getDetailNew();
+      this.getDetailNew();
   }
 
   async getDetailNew(onlyStatus?){
@@ -154,8 +159,14 @@ export class NewDetailPage implements OnInit {
     )
   }
 
-  close() {
-    this.modalCtrl.dismiss({error:null});
+  async close() {
+    const modal = await this.modalCtrl.getTop();
+    if (modal)
+      await modal.dismiss({error:null});
+    else if(this.data)
+      this.router.navigate([`/home`]);
+    else
+      this.router.navigate([`/advices`]);
   }
 
   

@@ -34,7 +34,7 @@
               <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
             </ion-col>
             <ion-col size="9" >
-              <p>{{ 'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required - this.challenge?.current_level?.current_score} }}</p>
+              <p [innerHtml]="'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required - this.challenge?.current_level?.current_score}"></p>
             </ion-col>
           </ion-row>
           <ion-row>

@@ -39,6 +39,6 @@ export class FormPage implements OnInit {
     else if(this.data)
       this.router.navigate([`/home`]);
     else
-      this.location.back();    
+      this.router.navigate([`/tracking`]);
   }
 }

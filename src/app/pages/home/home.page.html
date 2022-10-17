@@ -33,41 +33,41 @@
     <ion-row *ngIf="this.challenges.length > 0" class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'health_path.card_title' | translate}}</ion-text>
 
-
     <ion-slides #slider pager="false" [options]="sliderHealthPathConfig" class="ion-no-padding">
       <ion-slide *ngFor="let challenge of this.challenges">
         <ion-card class="customCardHealthPath">
           <ion-item lines="none" class="cardHeader" routerLink="health-path" routerLinkActive="active-item"
           [state]="{challenge: challenge}">
-          
             <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:purple" ></ion-icon>
             <ion-text style="margin-left:10px; color:purple" slot="start" >{{(challenge?.name )? challenge?.name: ('home.health_path' |
               translate)}}</ion-text>
             <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
           </ion-item>
 
-          <ion-card-content mode="md" class="ion-text-left">
+          <ion-card-content mode="md" class="ion-text-left" >
             <ion-grid class="ion-no-padding">
               <ion-row>
-                <ion-col size="2" class="ion-no-padding">
+                <ion-col size="3" class="ion-no-padding" style="font-size: medium;">
                 </ion-col>
-                <ion-col size="10" class="ion-padding-start">
+                <ion-col size="9" class="ion-no-padding">
                   <p class="text1line"><b>{{challenge?.current_level?.name}}</b></p>
                 </ion-col>
-                
               </ion-row>
               <ion-row>
-                <ion-col size="2">
-                  <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
+                <ion-col size="3" class="ion-no-padding" style="  height: 100%;
+                width: auto;
+                display: block;
+                margin: auto;">
+                  <ion-img class="ion-text-center" style="margin: auto;" src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
                 </ion-col>
-                <ion-col size="10" class="ion-padding-start">
-                  <p *ngIf="this.challenge?.current_level">{{ 'health_path.goal' | translate: {total:challenge?.current_level?.current_score, coin: challenge?.current_level?.coin_name, required: challenge?.current_level?.score_required - challenge?.current_level?.current_score} }}</p>
+                <ion-col size="9" >
+                  <p *ngIf="this.challenge?.current_level" [innerHtml]="'health_path.goal' | translate: {total:challenge?.current_level?.current_score, coin: challenge?.current_level?.coin_name, required: challenge?.current_level?.score_required - challenge?.current_level?.current_score}"></p>
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col size="2" >
+                <ion-col size="3" >
                 </ion-col>
-                <ion-col size="10" class="ion-padding-start" style="padding-top:8px" >
+                <ion-col size="9" class="ion-no-padding" style="padding-top:8px" >
                   <ion-progress-bar class="progress-bar" value="{{ challenge?.current_level?.percentage_completed > 0 ? challenge?.current_level?.percentage_completed / 100 : 0 }}">
                   </ion-progress-bar>
                 </ion-col>

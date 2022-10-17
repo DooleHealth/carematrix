@@ -181,7 +181,7 @@
         "news":"Llegeix la notícia ",
         "diet":"Llegeix la dieta ",
         "blocked_level": "Aquest nivell està bloquejat",
-        "goal":"Tens {{ total }} {{ coin }}, aconsegueix {{ required }} més i passa al següent nivell.",
+        "goal":"Tens <strong>{{ total }} {{ coin }}</strong>, aconsegueix {{ required }} més i passa al següent nivell.",
         "level_congratulations":"Felicitats!",
         "level_accomplished":"Has avançat de nivell",
         "done":"Fet!"

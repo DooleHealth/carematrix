@@ -12,21 +12,21 @@
     <ion-spinner name="bubbles"></ion-spinner>
 </div>
 <ng-template #showLevels>
-  <div class="level-container" *ngIf="this.current_level">
+  <div class="level-container" *ngIf="this.current_level" routerLink="/home/health-path/detail" routerLinkActive="active-item" [state]="{ challenge: this.challenge}">
     <ion-row>
 
       <ion-img
         src="{{this.current_level?.cover ? this.current_level.cover : 'assets/icons/IconGoal.svg'}}"
         class="icon-box bigger"></ion-img>
     </ion-row>
-    <ion-row class="level-text ion-padding">
+    <ion-row class="level-text ion-padding" style="font-size: larger; font-weight: bold;">
       <ion-text> {{ this.current_level?.name}} </ion-text>
     </ion-row>
     <ion-row>
       <ion-progress-bar class="progress-bar" [value]="this.progressBarValue"></ion-progress-bar>
     </ion-row>
-    <ion-row class="level-text ion-padding">
-      <ion-text> {{ 'health_path.goal' | translate:{total:this.current_level?.current_score, coin:this.current_level?.coin_name, required:this.current_level?.score_required - this.current_level?.current_score} }} </ion-text>
+    <ion-row class="level-text ion-padding" style="font-size:smaller; width: 80%;padding: 0;">
+      <p [innerHtml]="'health_path.goal' | translate:{total:this.current_level?.current_score, coin:this.current_level?.coin_name, required:this.current_level?.score_required - this.current_level?.current_score}"></p>
     </ion-row>
   </div>
   <div class="main-container">
@@ -37,7 +37,7 @@
             
 
                 <div *ngIf="!l.completed" class="{{ l?.isNextLevelToCompleted ? 'icon-box highlight':'icon-box' }}">
-                  <div *ngIf="l?.isNextLevelToCompleted;else showLock">
+                  <div *ngIf="l?.isNextLevelToCompleted;else showLock" routerLink="/home/health-path/detail" routerLinkActive="active-item" [state]="{ challenge: this.challenge}">
                     <ion-img src="{{l?.cover ? l.cover : 'assets/icons/IconGoal.svg'}}" class="level-icon completed"></ion-img> 
                 </div>
             
