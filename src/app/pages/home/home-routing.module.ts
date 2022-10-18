@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: HomePage,
   },
+  {
+    path: 'health-path',
+    loadChildren: () => import('./health-path/health-path.module').then( m => m.HealthPathPageModule)
+  },
 
 
 ];

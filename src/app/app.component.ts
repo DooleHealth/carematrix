@@ -262,23 +262,22 @@ export class AppComponent implements OnInit {
         if(action == "VIDEOCALL"){
           this.redirecToVideocall(notification)
           return
+        }else{
+          let secondsLastPause =  (this.lastPause)? this.lastPause.getTime() : 0
+          let secondsNow = (new Date).getTime()
+          // App will lock after 2 minutes
+          let secondsPassed = (secondsNow - secondsLastPause) / 1000;
+          console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
+          if(this.router.url.includes('landing')){
+            this.dooleService.setPushNotification(data)
+            this.router.navigate([`/landing`],{state:{pushNotification: data}});
+          }else if (secondsPassed >= 120) {
+            // Must implement lock-screen
+            this.showFingerprintAuthDlg(data)
+            //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
+          }else
+            this.redirectPushNotification(data, notification);
         }
-      
-        let secondsLastPause =  (this.lastPause)? this.lastPause.getTime() : 0
-        let secondsNow = (new Date).getTime()
-        // App will lock after 2 minutes
-        let secondsPassed = (secondsNow - secondsLastPause) / 1000;
-        console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
-        if(this.router.url.includes('landing')){
-          this.dooleService.setPushNotification(data)
-          this.router.navigate([`/landing`],{state:{pushNotification: data}});
-        }else if (secondsPassed >= 120) {
-          // Must implement lock-screen
-          this.showFingerprintAuthDlg(data)
-          //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
-        }else
-          this.redirecPushNotification(data, notification);
-        
       }
     );
 
@@ -289,7 +288,7 @@ export class AppComponent implements OnInit {
     });
 
     this.translate.get(['notifications.chat','notifications.form','notifications.drug','notifications.videocall','notifications.open','notifications.close']).subscribe(async translations=> {
-      console.log('translations',  translations['notifications.videocall']);
+
       await LocalNotifications.registerActionTypes({
         types:[{
           id:'MESSAGE',
@@ -343,6 +342,8 @@ export class AppComponent implements OnInit {
 
     LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
       console.log('localNotificationReceived received:', notification);
+
+
     })
 
     LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
@@ -365,7 +366,7 @@ export class AppComponent implements OnInit {
       }
       else if(this.authService?.user?.idUser){
         console.log('localNotificationActionPerformed idUser: ', this.authService?.user?.idUser)
-        this.redirecPushNotification(f.data, notification)
+        this.redirectPushNotification(f.data, notification)
       }
       else{
         this.redirecToVideocall(notification)
@@ -375,9 +376,8 @@ export class AppComponent implements OnInit {
     })
   }
 
-  redirecPushNotification(data, notification?){
+  redirectPushNotification(data, notification?){
 
-    
     switch (data.action) {
       case "MESSAGE":
         let staff;
@@ -413,7 +413,7 @@ export class AppComponent implements OnInit {
         break;
       case "ADVICE":
         this._zone.run(()=>{
-          this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+          this.router.navigate([`/home`],{state:{push:data, id:data.id}});
         });
         break;
       case "DIET":
@@ -438,7 +438,6 @@ export class AppComponent implements OnInit {
           });
         break;
       default:
-        console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
         this.redirecToVideocall(notification)
         break;
     }
@@ -531,11 +530,6 @@ export class AppComponent implements OnInit {
         throw error;
       });
 
-  }
-
-  async openVideocallModal(){
-   
-   
   }
 
   async openVideocallIframeModal(agenda){
@@ -882,7 +876,7 @@ export class AppComponent implements OnInit {
             this.lastResume = new Date;
             this.authService.removeNumloginFailed()
             if(data){
-              setTimeout(()=>this.redirecPushNotification(data), 500);
+              setTimeout(()=>this.redirectPushNotification(data), 500);
             }
           }else{
             //setTimeout(()=>this.showFingerprintAuthDlg(), 500);

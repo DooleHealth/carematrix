@@ -12,6 +12,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
+import { AdvicesDetailPageModule } from './advices-detail/advices-detail.module';
+import { NewDetailPageModule } from './new-detail/new-detail.module';
 
 @NgModule({
   imports: [
@@ -21,7 +23,9 @@ import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.mod
     ComponentsModule,
     TranslateModule,
     HomePageRoutingModule,
-    ElementsAddPageModule
+    ElementsAddPageModule,
+    AdvicesDetailPageModule,
+    NewDetailPageModule
   ],
   providers: [DatePipe, InAppBrowser] ,
   declarations: [HomePage,

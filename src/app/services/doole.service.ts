@@ -1474,6 +1474,45 @@ export class DooleService {
     );
   }
 
+  getAPILevelInfo(challengeId, levelId, params?): Observable<any> {
+    let path = 'user/challenge/'+challengeId+'/level/'+ levelId+'/goals'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPILevelInfo(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIChallenge(challengeId, params?): Observable<any> {
+    let path = 'user/challenge/'+challengeId
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenge(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIChallenges( params?): Observable<any> {
+    let path = 'user/challenges'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+
+  
+
   getAPImessage(id, params?): Observable<any> {
     let path = 'user/message/'+ id
     let httpParams = new HttpParams();

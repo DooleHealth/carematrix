@@ -124,7 +124,8 @@
           "emergency": "Contactos de Emergencia",
           "your_health_cards": "Tarjetas Sanitarias", 
           "your_goals": "Tus Objetivos",
-          "payment_method": "Método de Pago"
+          "payment_method": "Método de Pago",
+          "your_challenges":"Tus Retos"
         },
         "configuration": {
           "title_setting": "Configuración",
@@ -164,6 +165,26 @@
         "subtitle_information": "Información",
         "subtitle_advices": "Consejos"
       },
+      "health_path": {
+        "title":"Camino de la salud",
+        "card_title": "Mis retos",
+        "goals": "Objetivos",
+        "start": "Inicio",
+        "detail":"¿Cómo alcanzar mi objetivo?",
+        "weight":"Toma tu ",
+        "measure":"Introduce la medida: ",
+        "form":"Responde al formulario ",
+        "advice":"Lee el consejo ",
+        "game":"Juega a ",
+        "drug": "Tomar el medicamento ",
+        "news":"Lee la notícia ",
+        "diet":"Lee la dieta ",
+        "blocked_level": "Este nivel todavía está bloqueado",
+        "goal":"Tienes <strong>{{ total }} {{ coin }}</strong>, consigue {{ required }} más y pasa al siguiente nivel.",
+        "level_congratulations":"Felicitaciones!",
+        "level_accomplished":"Has avanzado de nivel",
+        "done":"Hecho!"
+      },
       "activity_goal":{
         "definition": "Definición",
         "normal_value": "Valores normales:",
@@ -201,6 +222,7 @@
         "button_apply": "Aplicar",
         "button_cancel": "Cancelar",
         "button_change": "Cambiar",
+        "button_not_now": "Ahora no, gracias",
         "button_send": "Enviar",
         "header_error": "Error",
         "header_info": "Información",
