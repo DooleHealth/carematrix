@@ -19,7 +19,7 @@
           <ion-row>
             <ion-col size="2"><ion-img  src='assets/icons/goals.svg' style="margin-right: 5px;"></ion-img></ion-col>
             <ion-col size="6"><ion-card-title class="txtTitleGoals">{{'goals.goals' | translate}} de {{goal.element.name}}</ion-card-title></ion-col>
-            <ion-col size="4"><ion-text class="textMediumGreen">{{goal.score}} Healthies</ion-text></ion-col>
+            <ion-col size="4"><ion-text class="textMediumGreen">{{goal?.score}} {{goal?.coin?.name? (goal?.coin?.name):('goals.points' | translate ) }}</ion-text></ion-col>
           </ion-row>
         </ion-grid>
         <!-- <ion-img  src='assets/icons/goals.svg' style="margin-right: 5px;"></ion-img>

@@ -163,7 +163,8 @@
         "description1": "Alcanza tu objetivo",
         "description2": "y suma",
         "subtitle_information": "Información",
-        "subtitle_advices": "Consejos"
+        "subtitle_advices": "Consejos",
+        "points": "Puntos"
       },
       "health_path": {
         "title":"Camino de la salud",

@@ -164,7 +164,8 @@
         "description1": "Aconsegueix el teu objectiu",
         "description2": "i suma",
         "subtitle_information": "Informació",
-        "subtitle_advices": "Consells"
+        "subtitle_advices": "Consells",
+        "points": "Punts"
       },
       "health_path": {
         "title":"Camí de la salut",
@@ -252,6 +253,7 @@
         "subtitle_form": "Formularis",
         "subtitle_games": "Jocs",
         "subtitle_messages": "Missatges",
+        "subtitle_release": "Novetats",
         "lenguage_ca": "Català",
         "lenguage_es": "Castellà",
         "error_changed_language": "Error a l'actualitzar l'idioma!",

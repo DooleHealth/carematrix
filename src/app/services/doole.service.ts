@@ -1452,6 +1452,18 @@ export class DooleService {
     );
   }
 
+  updateAPIImageuser(params: Object): Observable<any> {
+    let path = `user/image`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
   postAPIContentStatus(params: Object): Observable<any> {
     let path = 'content/status'
     const endpoint = this.api.getEndpoint(path);
