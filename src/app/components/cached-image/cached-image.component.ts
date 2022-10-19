@@ -3,7 +3,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FilesystemDirectory, Plugins } from '@capacitor/core';
 const { Filesystem } = Plugins;
 
-
 @Component({
   selector: 'cached-image',
   templateUrl: './cached-image.component.html',
@@ -66,17 +65,13 @@ export class CachedImageComponent {
     });
 
     return savedFile;
-
   }
-
 
   private getFileReader(): FileReader {
     const fileReader = new FileReader();
     const zoneOriginalInstance = (fileReader as any)["__zone_symbol__originalInstance"];
     return zoneOriginalInstance || fileReader;
 }
-
-
 
   convertBlobToBase64(blob: Blob){
   
