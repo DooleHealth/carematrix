@@ -216,8 +216,9 @@
 
         "male":"Home",
         "feminine": "Femení",
-        "non-binary":"No binari"
-
+        "non-binary":"No binari",
+        "delete_pictures": "Eliminar imatge",
+        "delete_photo": "Vols eliminar la foto de perfil?"
       },
       "alert": {
         "button_ok": "D'acord",

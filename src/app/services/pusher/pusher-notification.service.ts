@@ -58,9 +58,9 @@ export class PusherNotificationService {
         });
   }
 
-  public subscribePusher(){
+  public subscribePusher(token?){
     this.setEndPoint()
-    const TOKEN = this.authService.getAuthToken() 
+    const TOKEN = token? token:this.authService.getAuthToken() 
     this.pusher = new Pusher(this.key, {
       cluster: this.cluster,
       authEndpoint: this.constants.API_DOOLE_ENDPOINT + '/broadcasting/auth',
