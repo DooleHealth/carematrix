@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
+import { Filesystem, FilesystemDirectory, LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -104,8 +104,19 @@ export class AppComponent implements OnInit {
         //this.backgroundMode.enable();
 
         this.backButton();
+
+        //this.createCacheFolder();
       }
 
+    });
+  }
+
+  async createCacheFolder(){
+    await Filesystem.mkdir({
+      directory:FilesystemDirectory.Cache,
+      path: `CACHED-IMG`
+    }).then(()=>{
+      console.log('** MKDIR OK **');
     });
   }
 

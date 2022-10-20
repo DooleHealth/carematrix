@@ -243,9 +243,8 @@ export class HomePage implements OnInit {
           });
 
         tempAdvices = tempAdvices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
-
+        console.log(' this.tempAdvices ', tempAdvices.length);
         if(tempAdvices.length == 1){
-         
           this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
           console.log(' this.sliderAdvicesConfig ',  this.sliderAdvicesConfig);
         }
@@ -336,7 +335,6 @@ export class HomePage implements OnInit {
         }
       }
     }
-    console.log('[DiaryPage] treeIterateDiets()', this.diets);
   }
 
   treeIterate(obj, stack) {
@@ -473,7 +471,6 @@ export class HomePage implements OnInit {
   }
 
   equal(goal) {
-    console.log("** equal() goalType: ", goal.goalType);
     if (goal.last_value == goal.value1) {
       goal = this.goalAchieved(goal);
     } else {
@@ -494,7 +491,7 @@ export class HomePage implements OnInit {
   }
 
   greaterOrEqualThan(goal) {
-    console.log("** greaterThan() goalType: ", goal.goalType);
+    
     goal.reversed = false;
     if (goal.last_value >= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -506,7 +503,7 @@ export class HomePage implements OnInit {
   }
 
   lessOrEqualThan(goal) {
-    console.log("** lessThan() goalType: ", goal.goalType);
+ 
     goal.reversed = true;
     if (goal.last_value <= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -517,7 +514,7 @@ export class HomePage implements OnInit {
   }
 
   greaterThan(goal) {
-    console.log("** greaterThan() goalType: ", goal.goalType);
+  
     goal.reversed = false;
     if (goal.last_value > goal.value1) {
       goal = this.goalAchieved(goal);
@@ -818,7 +815,6 @@ export class HomePage implements OnInit {
 
   slideActivityChange() {
     this.sliderPhysical?.getActiveIndex().then(index => {
-      console.log('[HomePage] slideActivityChange()', index);
       let slider = this.activity[index]
       this.infoActivity = {
         title: slider?.group

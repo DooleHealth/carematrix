@@ -15,9 +15,6 @@
         <ion-text class="txtTitleBig"> {{ this.greeting }}</ion-text>
       </ion-col>
       <ion-col size="3">
-        <!--         <ion-img class="img-wrapper3" [src]="this.authService?.user?.image" routerLink="/profile"
-          [state]="{user:this.authService?.user}"></ion-img> -->
-
         <ion-thumbnail class="img-wrapper3" routerLink="/profile" [state]="{user:this.userDoole}">
           <app-aspect-ratio [ratio]="{w:1, h:1}">
             <app-image-shell animation="spinner" [src]="this.userDoole?.temporaryUrl" [alt]="'Profile Image'">
@@ -54,10 +51,7 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col size="3" class="ion-no-padding" style="  height: 100%;
-                width: auto;
-                display: block;
-                margin: auto;">
+                <ion-col size="3" class="ion-no-padding" style="  height: 100%; width: auto;display: block;margin: auto;">
                   <ion-img class="ion-text-center" style="margin: auto;" src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
                 </ion-col>
                 <ion-col size="9" >
@@ -86,7 +80,6 @@
       </ion-slide>
     </ion-slides>
   </ion-row>
-
     <!-- Reminders -->
     <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment?.length > 0 && role?.component?.agenda">
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
@@ -130,11 +123,9 @@
         </ion-slide>
       </ion-slides>
     </ion-row>
-
     <!-- Advices -->
     <ion-row *ngIf="(role?.component?.advices || role?.component?.news) && (this.advices.length != 0)" class="paddingTopNoMarginBottom">
       <!-- News and Advices -->
-
       <ion-text class="txtTitle" style="white-space: nowrap">
         {{ 'home.advices_title' | translate}}</ion-text>
       <app-info info="{{'info.news' | translate}}"></app-info>
@@ -145,9 +136,9 @@
       <ion-slides #slider pager="false" [options]="sliderAdvicesConfig">
         <ion-slide [ngClass]="(this.advices.length >1)? 'slide':'slide1'" *ngFor="let slide of this.advices">
           <!-- Concejos -->
-          <ion-card *ngIf="!slide.new" class="cardProfilePaddingBottomMinHeight card">
+          <ion-card *ngIf="!slide.new" [class]="this.advices.length == 1 ? 'cardProfilePaddingBottomMinHeight':'cardProfilePaddingBottomMinHeight card'" >
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
-            <img class="sliderImage" (click)="openModal(slide,true)" [src]="slide.image?.temporaryUrl" />
+            <cached-image class="sliderImage" (click)="openModal(slide,true)"  [filename]="slide?.image?.file_name" [src]="slide.image?.temporaryUrl" [spinner]="false" ></cached-image>
             <br /><br />
             <!-- <ion-card-title class="txtTitleHome" routerLink="/advices-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.name}}</ion-card-title>
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}
@@ -162,10 +153,9 @@
           </ion-card>
 
           <!-- Noticias -->
-          <ion-card *ngIf="slide.new" class="cardProfilePaddingBottomMinHeight card">
+          <ion-card *ngIf="slide.new" [class]="this.advices.length == 1 ? 'cardProfilePaddingBottomMinHeight':'cardProfilePaddingBottomMinHeight card'">
             <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
-            <img class="sliderImage" (click)="openModal(slide,false)"
-              [src]="slide?.cover" />
+            <cached-image class="sliderImage" (click)="openModal(slide,false)" [filename]="slide?.files[0]?.file_name" [src]="slide?.cover" [spinner]="false"></cached-image>
             <br /><br />
             <!-- <ion-card-title class="txtTitleHome" routerLink="/new-detail"  routerLinkActive='active-item' [state]="{id: slide.id}">{{slide?.subject}}</ion-card-title>
             <ion-card-subtitle *ngIf="slide.description" class="txtSubTitleHome">{{slide.description}}

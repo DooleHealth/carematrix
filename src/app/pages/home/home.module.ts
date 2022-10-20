@@ -15,6 +15,7 @@ import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.mod
 import { AdvicesDetailPageModule } from './advices-detail/advices-detail.module';
 import { NewDetailPageModule } from './new-detail/new-detail.module';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +26,7 @@ import { NewDetailPageModule } from './new-detail/new-detail.module';
     HomePageRoutingModule,
     ElementsAddPageModule,
     AdvicesDetailPageModule,
-    NewDetailPageModule
+    NewDetailPageModule,
   ],
   providers: [DatePipe, InAppBrowser] ,
   declarations: [HomePage,
