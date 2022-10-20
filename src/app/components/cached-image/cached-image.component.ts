@@ -17,33 +17,37 @@ export class CachedImageComponent {
   @Input()filename = '';
   @Input()
   set src(imageUrl:string){ 
-    const imageName = this.filename.split('/').pop();
-    const fileType = imageName.split('.').pop();
-   
-    Filesystem.readFile({
-      directory: FilesystemDirectory.Cache,
-      path: `${imageName}`
-    }).then(readFile=>{
-      console.log('Cached image exists... ');
-      console.log('_src ... ', this._src);
-      this._src =  this.domSanitizer.sanitize(SecurityContext.URL, this.domSanitizer.bypassSecurityTrustUrl(`data:image/${fileType};base64,${readFile.data}`));
-   
-        
-    }).catch(async e => {
-      await this.storeImage(imageUrl, imageName);
+
+    if(imageUrl && this.filename){
+      const imageName = this.filename?.split('/').pop();
+      const fileType = imageName?.split('.').pop();
+     
       Filesystem.readFile({
-        directory:FilesystemDirectory.Cache,
-        path:`${imageName}`
-
-      }).then( readFile => {
-        this._src = this.domSanitizer.sanitize(SecurityContext.URL, this.domSanitizer.bypassSecurityTrustUrl(`data:image/${fileType};base64,${readFile.data}`));
-        console.log('(Read Image OK): ');
-
+        directory: FilesystemDirectory.Cache,
+        path: `${imageName}`
+      }).then(readFile=>{
+        console.log('Cached image exists... ');
+        console.log('_src ... ', this._src);
+        this._src =  this.domSanitizer.sanitize(SecurityContext.URL, this.domSanitizer.bypassSecurityTrustUrl(`data:image/${fileType};base64,${readFile.data}`));
+     
+          
       }).catch(async e => {
-        console.log('STORE FILE ERROR');
-       })
+        await this.storeImage(imageUrl, imageName);
+        Filesystem.readFile({
+          directory:FilesystemDirectory.Cache,
+          path:`${imageName}`
+  
+        }).then( readFile => {
+          this._src = this.domSanitizer.sanitize(SecurityContext.URL, this.domSanitizer.bypassSecurityTrustUrl(`data:image/${fileType};base64,${readFile.data}`));
+          console.log('(Read Image OK): ');
+  
+        }).catch(async e => {
+          console.log('STORE FILE ERROR');
+         })
+  
+      })
+    }
 
-    })
   }
 
   async storeImage(url, path){
@@ -54,7 +58,6 @@ export class CachedImageComponent {
     // convert to blob 
     const blob = await response.blob();
     console.log('blob....');
-
     // convert to base64 
     const base64data = await this.convertBlobToBase64(blob) as string;
     console.log('base64data....');
