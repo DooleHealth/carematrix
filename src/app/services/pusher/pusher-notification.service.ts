@@ -39,6 +39,7 @@ export class PusherNotificationService {
   channel;
   handlerMessage = '';
   roleMessage = '';
+  pusher
   constructor(
     private constants: Constants, 
     private alertController: AlertController,
@@ -47,9 +48,20 @@ export class PusherNotificationService {
     private modalCtrl: ModalController,
     private pusherChallenge: PusherChallengeNotificationsService,
     private _zone: NgZone) {
+
+  }
+
+  public init(){ 
+     this.channel.bind(NAME_BIND, (data) => {
+          console.log('[PusherNotificationService] getPusher()',  data);
+          this.presentPromoteNotification(data);
+        });
+  }
+
+  public subscribePusher(){
     this.setEndPoint()
-    const TOKEN = authService.getAuthToken() 
-    var pusher = new Pusher(this.key, {
+    const TOKEN = this.authService.getAuthToken() 
+    this.pusher = new Pusher(this.key, {
       cluster: this.cluster,
       authEndpoint: this.constants.API_DOOLE_ENDPOINT + '/broadcasting/auth',
       auth: {
@@ -59,29 +71,18 @@ export class PusherNotificationService {
       },
       encrypted: true,
     });
-    //this.nameChanel = this.nameChanel + this.authService?.user?.idUser 
-    this.channel = pusher.subscribe(this.nameChanel);
-    console.log('[PusherService] constructor()', pusher, this.nameChanel);
-  }
-
-  public init(){
-   
-     this.channel.bind(NAME_BIND, (data) => {
-          console.log('[PusherService] getPusher()',  data);
-
-          this.presentPromoteNotification(data);
-         
-        });
+    this.channel = this.pusher.subscribe(this.nameChanel);
+    console.log('[PusherNotificationService] constructor()', this.pusher, this.nameChanel);
   }
 
   public setEndPoint(){
     let index = this.constants?.INDEX
     let opt = this.LIST_APP_KEY[index]
-    //console.log('[PusherService] setEndPoint() ' ,  opt);
     this.app_id = opt.app_id
     this.key = opt.key
     this.secret = opt.secret
     this.cluster = opt.cluster
+    console.log('[PusherNotificationService] setEndPoint() ' ,  opt);
   }
 
 
