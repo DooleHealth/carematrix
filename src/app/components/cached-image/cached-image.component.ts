@@ -46,6 +46,8 @@ export class CachedImageComponent {
          })
   
       })
+    }else{
+      this._src = 'assets/images/no-image-icon-23492.png';
     }
 
   }
@@ -53,21 +55,27 @@ export class CachedImageComponent {
   async storeImage(url, path){
 
     console.log('Saving Image....');
-    const response = await fetch(url)
-    console.log('fetch image....');
-    // convert to blob 
-    const blob = await response.blob();
-    console.log('blob....');
-    // convert to base64 
-    const base64data = await this.convertBlobToBase64(blob) as string;
-    console.log('base64data....');
-    const savedFile = await Filesystem.writeFile({
-      path: `${path}`,
-      data: base64data,
-      directory: FilesystemDirectory.Cache
-    });
+    await fetch(url).then(async (response)=>{
+      console.log('fetch image....');
+      // convert to blob 
+      const blob = await response.blob();
+      console.log('blob....');
+      // convert to base64 
+      const base64data = await this.convertBlobToBase64(blob) as string;
+      console.log('base64data....');
+      const savedFile = await Filesystem.writeFile({
+        path: `${path}`,
+        data: base64data,
+        directory: FilesystemDirectory.Cache
+      });
+  
+      return savedFile;
 
-    return savedFile;
+    }).catch(()=>{
+      this._src = 'assets/images/no-image-icon-23492.png';
+      return;
+    });
+   
   }
 
   private getFileReader(): FileReader {
