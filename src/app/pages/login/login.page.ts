@@ -9,6 +9,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { Network } from '@ionic-native/network/ngx';
 import { RolesService } from 'src/app/services/roles.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginPage implements OnInit {
     public platform: Platform,
     private device: Device,
     private network: Network,
-    public role: RolesService
+    public role: RolesService,
+    private pusherConnection: PusherConnectionService,
     ) { }
 
   ngOnInit() {
@@ -64,7 +66,7 @@ export class LoginPage implements OnInit {
         // this.role.setProfessional(false)
         // this.role.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
         this.setLocalLanguages(res.language)
-
+        this.pusherConnection.subscribePusher(res.token)
         console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);
         if(this.pushNotification){
           this.redirecPushNotification(this.pushNotification)

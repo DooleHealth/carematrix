@@ -99,7 +99,6 @@ export class ConversationPage implements OnInit {
   }
 
   ionViewWillLeave(){
-    this.pusherMessage.end()
   }
 
   getPusher() {
