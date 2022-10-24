@@ -43,9 +43,9 @@ export class PusherConnectionService {
     this.setPusher(token)
     //Subscribo todos los pusher excepto los de mensajería 
     //porque se requiere el id del canal de mensajería y no el id del usuario
-    this.pusherNotification.subscribeChannel(this.setChannel(this.pusherNotification.nameChanel)) 
-    this.pusherAlarm.subscribeChannel(this.setChannel(this.pusherAlarm.nameChanel)) 
-    this.pusherChallenge.subscribeChannel(this.setChannel(this.pusherChallenge.nameChanel)) 
+    this.pusherNotification.subscribeChannel(this.pusher) 
+    this.pusherAlarm.subscribeChannel(this.pusher)
+    this.pusherChallenge.subscribeChannel(this.pusher) 
   }
 
   public setPusher(token){

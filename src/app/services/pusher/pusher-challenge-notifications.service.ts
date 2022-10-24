@@ -27,10 +27,11 @@ export class PusherChallengeNotificationsService {
     private router: Router,
     private _zone: NgZone) {}
 
-  public subscribeChannel(channel){
-    this.channel = channel
-    console.log('[PusherChallengeNotificationsService] subscribeChannel()',  this.channel);
-  }
+    public subscribeChannel(pusherService){
+      const pusher = pusherService
+      this.channel = pusher.subscribe(this.nameChanel)
+      console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+    }
 
   public init() {
     console.log('[PusherChallengeNotificationsService] init()');

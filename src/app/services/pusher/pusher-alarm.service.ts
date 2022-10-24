@@ -20,9 +20,10 @@ export class PusherAlarmService {
     private authService: AuthenticationService,
   ) {}
 
-  public subscribeChannel(channel){
-    this.channel = channel
-    console.log('[PusherAlarmService] subscribeChannel()',  this.channel);
+  public subscribeChannel(pusherService){
+    const pusher = pusherService
+    this.channel = pusher.subscribe(this.nameChanel)
+    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
   }
 
    public init(){
