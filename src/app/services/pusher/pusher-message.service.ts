@@ -11,19 +11,19 @@ export class PusherMessageService {
 
   nameChanel = 'presence-MessageCreated.'
   pusher
+  channel
   constructor(
     private pusherConnection: PusherConnectionService
   ) {}
 
-  // public subscribeChannel(channel){
-  //   this.channel = channel
-  //   console.log('[PusherMessageService] subscribeChannel()',  this.channel);
-  // }
-
    public init(idChannel: String){
-    var channel = this.pusherConnection.setChannel(this.nameChanel + idChannel)
-    console.log('[PusherMessageService] init()', channel);
-    return channel;
+    this.channel = this.pusherConnection.setChannel(this.nameChanel + idChannel)
+    console.log('[PusherMessageService] init()', this.channel);
+    return this.channel;
  }
+
+ public unsubscribePusher(idChannel){
+  this.channel.unsubscribe(this.nameChanel + idChannel)
+}
 
 }

@@ -99,6 +99,8 @@ export class ConversationPage implements OnInit {
   }
 
   ionViewWillLeave(){
+    if(this.id)
+    this.pusherMessage.unsubscribePusher(this.id);
   }
 
   getPusher() {

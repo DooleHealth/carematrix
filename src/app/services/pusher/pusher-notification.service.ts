@@ -20,6 +20,7 @@ export class PusherNotificationService {
   channel;
   handlerMessage = '';
   roleMessage = '';
+  pusher
   constructor(
     private alertController: AlertController,
     private authService: AuthenticationService,
@@ -31,9 +32,13 @@ export class PusherNotificationService {
   }
 
   public subscribeChannel(pusherService){
-    const pusher = pusherService
-    this.channel = pusher.subscribe(this.nameChanel)
+    this.pusher = pusherService
+    this.channel = this.pusher.subscribe(this.nameChanel)
     console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+  }
+
+  public unsubscribePusher(){
+    this.channel = this.pusher.unsubscribe(this.nameChanel)
   }
 
   public init(){ 
