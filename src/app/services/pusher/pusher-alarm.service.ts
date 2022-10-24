@@ -13,7 +13,7 @@ export class PusherAlarmService {
 
   nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser //'private-LevelAccomplishmentCompleted.15189' //
   channel;
-
+  pusher
  constructor(
     private constants: Constants, 
     private notification: NotificationService,
@@ -21,8 +21,8 @@ export class PusherAlarmService {
   ) {}
 
   public subscribeChannel(pusherService){
-    const pusher = pusherService
-    this.channel = pusher.subscribe(this.nameChanel)
+    this.pusher = pusherService
+    this.channel = this.pusher.subscribe(this.nameChanel)
     console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
   }
 
@@ -33,4 +33,12 @@ export class PusherAlarmService {
          this.notification.confirmAllNotification(data?.message)
        });
    }
+
+   public unsubscribeChannel(pusherService){
+    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+  }
+
+  public unsubscribePusher(){
+    this.channel = this.pusher.unsubscribe(this.nameChanel)
+  }
 }

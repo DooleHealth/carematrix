@@ -13,6 +13,7 @@ import { Constants } from 'src/app/config/constants';
 import { Router } from '@angular/router';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 import { ThrowStmt } from '@angular/compiler';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({
   selector: 'app-settings',
@@ -61,6 +62,7 @@ export class SettingsPage implements OnInit {
     private router: Router,
     private endPoint: ApiEndpointsService,
     private alertController: AlertController,
+    private pusherConnection: PusherConnectionService
     ) {}
   ngOnInit() {
     this.getListBiometric()
@@ -518,6 +520,7 @@ export class SettingsPage implements OnInit {
           console.log('[SettingsPage] signOut()', JSON.stringify(res))
           if(res.success){
             this.endPoint.setIndexEndPointLocalstorage(index)
+            this.pusherConnection.unsubscribePusher()
             this.router.navigateByUrl('/landing');
           }
           else{
@@ -528,7 +531,8 @@ export class SettingsPage implements OnInit {
       }else{
         await this.authService.logout1().then(res=>{
           this.endPoint.setIndexEndPointLocalstorage(index)
-          this.router.navigateByUrl('/landing');
+          this.pusherConnection.unsubscribePusher()
+          this.router.navigate(['/landing'], { replaceUrl: true });
         });
       }
     }

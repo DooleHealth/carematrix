@@ -19,6 +19,7 @@ export class PusherChallengeNotificationsService {
   roleMessage = '';
   isModalShowing: boolean;
   pendingNotification:any;
+  pusher
   constructor(
     private constants: Constants,
     private alertController: AlertController,
@@ -28,9 +29,13 @@ export class PusherChallengeNotificationsService {
     private _zone: NgZone) {}
 
     public subscribeChannel(pusherService){
-      const pusher = pusherService
-      this.channel = pusher.subscribe(this.nameChanel)
+      this.pusher = pusherService
+      this.channel = this.pusher.subscribe(this.nameChanel)
       console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+    }
+
+    public unsubscribePusher(){
+      this.channel = this.pusher.unsubscribe(this.nameChanel)
     }
 
   public init() {

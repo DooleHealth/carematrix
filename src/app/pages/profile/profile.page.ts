@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe.page';
 import { PatientsPage } from './patients/patients.page';
 import { RolesService } from 'src/app/services/roles.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ export class ProfilePage implements OnInit {
     private translate : TranslateService,
     private toastController: ToastController,
     private alertController: AlertController,
+    private pusherConnection: PusherConnectionService,
     public role: RolesService) { }
 
   ngOnInit() {
@@ -87,6 +89,7 @@ export class ProfilePage implements OnInit {
           async (res: any)=>{
           await res
           console.log('[ProfilePage] signOut()', JSON.stringify(res))
+          this.pusherConnection.unsubscribePusher()
           if(res.success)
           this.router.navigateByUrl('/landing');
           else{
@@ -96,6 +99,7 @@ export class ProfilePage implements OnInit {
         });
       }else{
         await this.authService.logout1().then(res=>{
+          this.pusherConnection.unsubscribePusher()
           this.router.navigateByUrl('/landing');
         });
       }
