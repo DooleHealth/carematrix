@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
-    </ion-buttons>
+    <ion-button slot="start" fill="clear" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
     <ion-title>{{'advices.tag_news' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,16 +16,16 @@
   </ion-row>
 
   <ion-card class="cardProfile">
-    <img *ngIf="new.cover" [src]="new.cover">
-    <ion-item lines="none">
+    <img *ngIf="new.cover" class="imagefit" [src]="new.cover">
+    <ion-item *ngIf="new.cover" lines="none">
       <ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>
       <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>
       <ion-icon [color]="(this.favourite)? 'primary':'secundary' "name="star" slot="end" (click)= "setContentStatus('favourite')"></ion-icon>
     </ion-item>
-    <ion-item lines="none">
+    <!-- <ion-item lines="none">
       <ion-text style="color:#141414; font-weight: bold;"> {{new.subject}}</ion-text>
-    </ion-item>
+    </ion-item> -->
     <ion-item lines="none" *ngIf="new.content" padding>
       <span [innerHTML]="new.content"></span>
     </ion-item>
@@ -36,7 +36,7 @@
   <iframe [src]="link" class="iframe" scrolling="yes"></iframe>
 </div>
 <div class="main-container" *ngIf="linkpdf2 || video">
-  <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
+  <ion-text class="txtTitleNoMargin">{{'advices.links' | translate}}</ion-text>
 </div>
 <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo()">
   <ion-row>

@@ -110,7 +110,8 @@
         "element":"Elementos",
         "enable_notifications": "Activar Notificaciones",
         "message_enable_notifications": "¿Deseas activar todas las notificaciones?",
-        "close_app": "¿Deseas cerrar la aplicación?"
+        "close_app": "¿Deseas cerrar la aplicación?",
+        "get_firts_data": "Introduce tu primer dato"
       },
       "profile":{
         "title_profile": "Mi Perfil",
@@ -123,14 +124,22 @@
           "emergency": "Contactos de Emergencia",
           "your_health_cards": "Tarjetas Sanitarias", 
           "your_goals": "Tus Objetivos",
-          "payment_method": "Método de Pago"
+          "payment_method": "Método de Pago",
+          "your_challenges":"Tus Retos"
         },
         "configuration": {
           "title_setting": "Configuración",
           "linked_accounts":"Cuentas Vinculadas",
           "settings": "Ajustes",
           "videocall_test": "Test de Conectividad",
-          "videocall_open":"Abrir"
+          "videocall_open":"Abrir",
+          "bluetooth": "Bluetooth"
+        },
+        "professional": {
+          "title_professional": "Profesionales",
+          "patiens":"Pacientes",
+          "request": "Peticiones",
+          "medical_history": "Antecedentes"
         },
         "help": {
           "title_help":  "Ayuda",
@@ -150,9 +159,32 @@
         "end": "Fin",
         "button_go_profile": "Perfil",
         "subtitle_reward": "Recompensa",
-        "description_reward": "Alcanza tu objetivo y suma Healthies:",
+        "description_reward": "Alcanza tu objetivo y suma puntos:",
+        "description1": "Alcanza tu objetivo",
+        "description2": "y suma",
         "subtitle_information": "Información",
-        "subtitle_advices": "Consejos"
+        "subtitle_advices": "Consejos",
+        "points": "Puntos"
+      },
+      "health_path": {
+        "title":"Camino de la salud",
+        "card_title": "Mis retos",
+        "goals": "Objetivos",
+        "start": "Inicio",
+        "detail":"¿Cómo alcanzar mi objetivo?",
+        "weight":"Toma tu ",
+        "measure":"Introduce la medida: ",
+        "form":"Responde al formulario ",
+        "advice":"Lee el consejo ",
+        "game":"Juega a ",
+        "drug": "Tomar el medicamento ",
+        "news":"Lee la notícia ",
+        "diet":"Lee la dieta ",
+        "blocked_level": "Este nivel todavía está bloqueado",
+        "goal":"Tienes <strong>{{ total }} {{ coin }}</strong>, consigue {{ required }} más y pasa al siguiente nivel.",
+        "level_congratulations":"Felicitaciones!",
+        "level_accomplished":"Has avanzado de nivel",
+        "done":"Hecho!"
       },
       "activity_goal":{
         "definition": "Definición",
@@ -183,7 +215,9 @@
 
         "male":"Masculino",
         "feminine": "Femenino",
-        "non-binary":"No binario"
+        "non-binary":"No binario",
+        "delete_pictures": "Eliminar Imagen",
+        "delete_photo": "¿Quieres eliminar la foto de perfil?"
       },
       "alert": {
         "button_ok": "Ok", 
@@ -191,6 +225,7 @@
         "button_apply": "Aplicar",
         "button_cancel": "Cancelar",
         "button_change": "Cambiar",
+        "button_not_now": "Ahora no, gracias",
         "button_send": "Enviar",
         "header_error": "Error",
         "header_info": "Información",
@@ -218,6 +253,7 @@
         "subtitle_offers": "Promociones",
         "subtitle_form": "Formularios",
         "subtitle_messages": "Mensajes",
+        "subtitle_games": "Juegos",
         "subtitle_release": "Novedades",
         "lenguage_ca": "Catalán",
         "lenguage_es": "Castellano",
@@ -242,9 +278,11 @@
           "title_family_unit":"Unidad Familiar",
           "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?",
           "canAccess":"Estás a cargo de",
-          "othersCanAccess":"Tu tutor es:"
-        
-        }
+          "othersCanAccess":"Tu tutor es:"      
+        },
+        "sign_off": "Cerrar sesión",
+        "message_sign_off": "¿Deseas cerrar sesión en todos los dispositivos?",
+        "error_message_sign_off": "Ha ocurrido un error al cerrar sesión"
 
       },
       "report_problem":{
@@ -280,7 +318,9 @@
         "alert_message_add_card": "La tarjeta ha sido añadida correctamente",
         "button_add": "Agregar",
         "error_alert_message_add_card": "Error: la tarjeta no ha podido ser añadida",
-        "placeholder_select":"Selecciona uno"
+        "placeholder_select":"Selecciona uno",
+        "error_end_date": "La fecha de caducidad debe ser mayor que la fecha de expedición",
+        "error_start_date": "La fecha de expedición debe ser menor que la fecha de caducidad"
       },
       "edit_health_card":{
         "header_edit_card": "Editar Tarjeta Sanitaria",
@@ -343,6 +383,8 @@
         "no_events": "No hay eventos",
         "month": ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ag", "Set", "Oct", "Nov", "Dic"],
         "days": ["L", "M", "X", "J", "V", "S", "D"],
+        "today": "Hoy",
+        "yesterday": "Ayer",
         "appointment_by_user": "Cita añadida por el usuario",
         "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",
@@ -408,7 +450,8 @@
           "month1": "1 mes",
           "month2": "2 meses",
           "month3": "3 meses"
-        }
+        },
+        "error_end_date": "La fecha de término debe ser mayor que la fecha de empieza"
       },
       "appointment":{
         "header_appointment": "Detalle cita",
@@ -521,6 +564,7 @@
           "all_day": "todo el día"
       },
       "diet":{
+          "detail": "Dieta",
           "breakfast": "Desayuno",
           "brunch": "Almuerzo",
           "lunch": "Comida",
@@ -558,7 +602,10 @@
           "placeholder_chosse":"Selecciona",
           "placeholder_dose":"Nº de dosis",
           "placeholder_alias":"Nombre alternativo",
-          "placeholder_search":"Busca por nombre o código"
+          "placeholder_search":"Busca por nombre o código",
+
+          "snapshot_medication":"Toma instantanea",
+          "medication_plan":"Plan de Medicación"
       },
       "button":{
         "detail": "Detalle",
@@ -579,10 +626,15 @@
         "perfil":"Perfil",
         "open": "Abrir",
         "exit": "Salir",
-        "reject": "Rechazar"
+        "reject": "Rechazar",
+        "yes": "Si",
+        "no": "No"
       },
       "conversation":{
-        "placeholder":"Escribe un mensaje"
+        "placeholder":"Escribe un mensaje.",
+        "warning":"Advertencia: ",
+        "warning_text":"Este no es un chat en tiempo real",
+        "open_file": "Abrir archivo"
       },
       "advices":{
         "header":"Novedades y Consejos",
@@ -590,13 +642,15 @@
         "tag_advices": "Consejos",
         "searchbar":"Buscar",
         "detail_news": "Detalle Novedades",
-        "detail_advices": "Detalle Consejos"
+        "detail_advices": "Detalle Consejos",
+        "links": "Enlaces directos"
       },
       "contact":{
         "header": "Contacta",
         "tap_video": "Videoconsulta",
         "tap_appointment": "Cita Presencial",
         "tap_chat": "Chat",
+        "tap_pusher": "Pusher",
         "text_video": "Habla directamente con tu profesional habitual o un especialista desde donde tú quieras.Te atenderán en el horario seleccionado",
         "regular_professional": "Profesional Habitual",
         "text_regular_professional": "Reserva una cita con tu médico o profesional de siempre para realizar la videoconsulta",
@@ -618,7 +672,9 @@
       }, 
       "medical_calendar":{
         "header":"Seleccionar Fecha",
-        "no_slot_available":"No hay slots disponibles para este día"
+        "no_slot_available":"No hay slots disponibles para este día",
+        "previousLabel": "Previo ",
+        "nextLabel":"Siguiente"
       },     
       "specialist_finder":{
         "header":"Reservar",
@@ -641,7 +697,11 @@
         "error_upload_files": "Error al adjuntar los archivos"
       },      
       "chat":{
-        "header":"Chat"
+        "header":"Chat",
+        "writting":"Escribiendo...",
+        "loading":"Cargando más datos...",
+        "end":"Fin",
+        "attached_file": "Archivo adjunto"
       },
       "payment":{
         "header":"Método de pago",
@@ -731,6 +791,16 @@
       "commons":{
         "error-network": "Se ha perdido la conexión con Internet",
         "error-timeout": "Se ha superado el tiempo de espera, por favor intentelo de nuevo"
+      },
+      "patient":{
+        "title": "Pacientes"
+      },
+      "mode_development":{
+        "mode_activate": "Modo desarrollador activado",
+        "mode_desactivate": "Modo desarrollador desactivado",
+        "mode_0":"Producción",
+        "mode_1": "Calidad",
+        "mode_2": "Desarrollo"
       }
 
       

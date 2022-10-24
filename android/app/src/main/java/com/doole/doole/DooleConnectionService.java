@@ -11,7 +11,7 @@ import android.util.Log;
 
 
 public class DooleConnectionService extends ConnectionService {
-
+    public String app_name = "Doole";
     private static String TAG = "DooleConnectionService";
     private static Connection conn;
     Connection mConnection;
@@ -27,11 +27,11 @@ public class DooleConnectionService extends ConnectionService {
         incomingCallConnection.setRinging();
         incomingCallConnection.setInitializing();
         incomingCallConnection.setConnectionProperties(Connection.PROPERTY_SELF_MANAGED);
-        incomingCallConnection.setCallerDisplayName("Doole", TelecomManager.PRESENTATION_ALLOWED);
+        incomingCallConnection.setCallerDisplayName(app_name, TelecomManager.PRESENTATION_ALLOWED);
 
         Bundle extras = new Bundle();
         extras.putBoolean(Connection.EXTRA_ANSWERING_DROPS_FG_CALL, true);
-        extras.putString(Connection.EXTRA_CALL_SUBJECT, "Doole");
+        extras.putString(Connection.EXTRA_CALL_SUBJECT, app_name);
         incomingCallConnection.putExtras(extras);
 
         return incomingCallConnection;

@@ -24,6 +24,7 @@ import { VideoComponent } from './video/video.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfoComponent } from './info/info.component';
 import { ChangeUserComponent } from './change-user/change-user.component';
+import { CachedImageComponent } from './cached-image/cached-image.component';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { ChangeUserComponent } from './change-user/change-user.component';
     TabsComponent,
     VideoComponent,
     InfoComponent,
-    ChangeUserComponent
+    ChangeUserComponent,
+    CachedImageComponent
   ],
   exports: [
     ShellModule,
@@ -70,8 +72,8 @@ import { ChangeUserComponent } from './change-user/change-user.component';
     ExpandableComponent,
     TabsComponent,
     InfoComponent,
-    ChangeUserComponent
-
+    ChangeUserComponent,
+    CachedImageComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

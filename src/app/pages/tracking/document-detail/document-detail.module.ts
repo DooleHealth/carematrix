@@ -10,6 +10,7 @@ import { DocumentDetailPage } from './document-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { DocumentsAddPageModule } from '../documents-add/documents-add.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     IonicModule,
     ComponentsModule,
     TranslateModule,
+    ShareModule,
     DocumentDetailPageRoutingModule,
     DocumentsAddPageModule
   ],

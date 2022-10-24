@@ -1,11 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { IonSlides, LoadingController} from '@ionic/angular'; 
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { IonSlides} from '@ionic/angular'; 
 import { DooleService } from 'src/app/services/doole.service';
+import { RolesService } from 'src/app/services/roles.service';
 export interface ItemAdvice {
   expanded?: boolean;
   item?: any;
@@ -17,6 +15,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items: ItemAdvice[] = [];
+  pushNotification:any = history.state.data; 
   itemsBackup= []
   news = []
   advices = []
@@ -29,10 +28,11 @@ export class AdvicesPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
+    public role: RolesService
   ) { }
 
   ngOnInit() {
-    this.segmentChanged()
+    this.segmentChanged();
   }
 
 
@@ -121,6 +121,20 @@ export class AdvicesPage implements OnInit {
     });
   };
 
+  filterListAdvices(event){
+    var query = event //.target.value;
+    this.isLoading = true
+    this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
+      console.log('[AdvicePage] filterListAdvices()', res); 
+      this.items = []
+      if(res.success)
+        this.addItems(res.advice)
+      this.isLoading = false
+    },err => {
+      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message); 
+    });
+  };
+
   async filterList(evt) {
     console.log('[AdvicePage] filterList()');
 
@@ -143,11 +157,12 @@ export class AdvicesPage implements OnInit {
         break;
 
       case 'advices':
-        this.items = this.items.filter(element => {
-          if (element.item.name && searchTerm) {
-            return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-          }
-        });
+        // this.items = this.items.filter(element => {
+        //   if (element.item.name && searchTerm) {
+        //     return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        //   }
+        // });
+        this.filterListAdvices(searchTerm)
         break;
     }
   }

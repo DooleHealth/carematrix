@@ -35,9 +35,6 @@ export class ElementsAddPage implements OnInit {
     private fb: FormBuilder,
     private dooleService: DooleService,
     private translate : TranslateService,
-    private navController: NavController,
-    private alertController: AlertController,
-    private notification: NotificationService,
     private modalCtrl: ModalController,
   ) { 
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds

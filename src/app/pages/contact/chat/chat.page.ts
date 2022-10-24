@@ -69,9 +69,14 @@ export class ChatPage implements OnInit {
   public authService: AuthenticationService, 
   @Inject(LOCALE_ID) private locale: string,
   private translate: TranslateService, 
+  private datePipe: DatePipe,
   private languageService: LanguageService,) { }
 
-  ngOnInit() {
+  ngOnInit(){
+
+  }
+
+  ionViewWillEnter() {
 
     const dataSource = this.dooleService.getAPIUserMessages();
      // Initialize the model specifying that it is a shell model
@@ -97,4 +102,33 @@ export class ChatPage implements OnInit {
     });
 
      }
+
+    showMessage(message){
+        if(message?.content)
+         return message.content
+        else if(message?.file)
+          return this.translate.instant('chat.attached_file')
+        else return ''
+    }
+
+    formatDate(d){
+      if(d){
+        let date = new Date(d)
+        if(this.isToday(date))
+        return this.transformDate(date, 'HH:mm')
+        else
+        return this.transformDate(date, 'dd/MM/yyyy')
+      }
+    }
+
+    transformDate(date, format) {
+      return this.datePipe.transform(date, format);
+    }
+
+    isToday(mDate: Date){
+      let date = new Date()
+      if(date.getDate() === mDate.getDate() && date.getMonth() === mDate.getMonth() && date.getFullYear() === mDate.getFullYear())
+        return true
+      return false
+    }
 }

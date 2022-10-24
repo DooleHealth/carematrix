@@ -7,6 +7,7 @@ import { element } from 'protractor';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { RolesService } from 'src/app/services/roles.service';
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 
@@ -26,7 +27,7 @@ export class ActivityGoalPage implements OnInit {
   dangerValue= []
   description
   graphics = []
-  header = []
+  header = ''
   values = []
   goals = [];
   ranges = [];
@@ -52,6 +53,7 @@ export class ActivityGoalPage implements OnInit {
     private modalCtrl: ModalController,
     private translate : TranslateService,
     private notification: NotificationService,
+    public role: RolesService
   ) { }
 
   ngOnInit() {
@@ -85,107 +87,109 @@ export class ActivityGoalPage implements OnInit {
 
     this.dooleService.getAPIgraphicsElement(this.id, interval).subscribe(async json => {
       console.log('[ActivityGoalPage] loadData()', await json);
-      this.title = json.name;
-      this.description = json?.description
-      this.units = json.units;
-      this.values = json.values;
-      this.goals = json.goals;
-      this.graphData = [];
-      var min = null, max = null;
-      min =0; max = 300
-      this.values = this.filterDate(this.values)
-      numDay = this.returnNumDays(this.values)
-
-      this.values.forEach(element => {
-        if (min == null || min > element.value)
-          min = element.value;
-
-        if (max == null || max < element.value)
-          max = element.value;
-
-        vArray.push(element.value);
-        var mydate = new Date(element.date_value.replace(' ', 'T'));
-        var d = mydate.getDate();
-        var m = mydate.getMonth();
-        m += 1;  // JavaScript months are 0-11
-        var y = mydate.getFullYear();
-        element.date = d + "-" + m + "-" + y;
-        var k = [];
-
-        if(interval == '1d'){
-          this.typeChart = 'category'
-          let time = element.date_value.split(' ')[1]
-          let hour = time.split(':')[0]+':'+time.split(':')[1]
-          k.push(hour);
-        }
-        else if(interval == '1w'){
-          this.typeChart = 'category'
-          let date = this.formatSelectedDate2(element.date_value, 'd MMM')
-          k.push(date);
-        }
-        else if(this.values.length >= 1 && this.values.length < 4 || numDay<4){
-          this.typeChart = 'category'
-          let date = this.formatSelectedDate2(element.date_value, 'd. MMM')
-          k.push(date);
-        }
-        else{
-          this.typeChart = 'datetime'
-          k.push(element.timestamp * 1000);
-        }
-        k.push(element.valueNumeric);
-        this.graphData.push(k);
-        dArray.push(y + "-" + m + "-" + d + " " + element.time);
-        //console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
-      });
-
-      this.minY = Math.min.apply(null,vArray)
-      this.minY = (this.minY)?(this.minY - this.minY/50):0
-      min = this.minY
-      max = Math.max.apply(null,vArray)
-      max = (max)? (max+max/2): 0
-
-      json.ranges.forEach(range => {
-        var r = [];
-        var color;
-
-        if (range.rangeCondition == '>' || range.rangeCondition == '=>') {
-          r["from"] = range.value1;
-          r["to"] = max;
-        }
-
-        if (range.rangeCondition == '<' || range.rangeCondition == '<=') {
-          r["from"] = min;
-          r["to"] = range.value1;
-        }
-
-        if (range.rangeCondition == 'a<x<b') {
-          r["from"] = range.value1;
-          r["to"] = range.value2;
-        }
-
-        if (range.rangeType == "success")
-          color = 'rgba(96, 173, 121, 0.1)';
-        else if (range.rangeType == "warning")
-          color = 'rgba(245, 157, 24, 0.1)'; //'rgb(243, 156, 18, 0.1)'
-        else if (range.rangeType == "danger")
-          color = 'rgba(245, 46, 24, 0.1)'; //'rgb(231, 76, 60, 0.1)'
-
-        r["color"] = color;
-        this.ranges.push(r);
-        if (range.rangeType === "success")
-          this.normalValue.push(range.conditionString)
+      if(json){
+        this.title = json.name;
+        this.description = json?.description
+        this.units = json.units;
+        this.values = json.values;
+        this.goals = json.goals;
+        this.graphData = [];
+        var min = null, max = null;
+        min =0; max = 300
+        this.values = this.filterDate(this.values)
+        numDay = this.returnNumDays(this.values)
+  
+        this.values.forEach(element => {
+          if (min == null || min > element.value)
+            min = element.value;
+  
+          if (max == null || max < element.value)
+            max = element.value;
+  
+          vArray.push(element.value);
+          var mydate = new Date(element.date_value.replace(' ', 'T'));
+          var d = mydate.getDate();
+          var m = mydate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          var y = mydate.getFullYear();
+          element.date = d + "-" + m + "-" + y;
+          var k = [];
+  
+          if(interval == '1d'){
+            this.typeChart = 'category'
+            let time = element.date_value.split(' ')[1]
+            let hour = time.split(':')[0]+':'+time.split(':')[1]
+            k.push(hour);
+          }
+          else if(interval == '1w'){
+            this.typeChart = 'category'
+            let date = this.formatSelectedDate2(element.date_value, 'd MMM')
+            k.push(date);
+          }
+          else if(this.values.length >= 1 && this.values.length < 4 || numDay<4){
+            this.typeChart = 'category'
+            let date = this.formatSelectedDate2(element.date_value, 'd. MMM')
+            k.push(date);
+          }
+          else{
+            this.typeChart = 'datetime'
+            k.push(element.timestamp * 1000);
+          }
+          k.push(element.valueNumeric);
+          this.graphData.push(k);
+          dArray.push(y + "-" + m + "-" + d + " " + element.time);
+          //console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
+        });
+  
+        this.minY = Math.min.apply(null,vArray)
+        this.minY = (this.minY)?(this.minY - this.minY/50):0
+        min = this.minY
+        max = Math.max.apply(null,vArray)
+        max = (max)? (max+max/2): 0
+  
+        json.ranges.forEach(range => {
+          var r = [];
+          var color;
+  
+          if (range.rangeCondition == '>' || range.rangeCondition == '=>') {
+            r["from"] = range.value1;
+            r["to"] = max;
+          }
+  
+          if (range.rangeCondition == '<' || range.rangeCondition == '<=') {
+            r["from"] = min;
+            r["to"] = range.value1;
+          }
+  
+          if (range.rangeCondition == 'a<x<b') {
+            r["from"] = range.value1;
+            r["to"] = range.value2;
+          }
+  
+          if (range.rangeType == "success")
+            color = 'rgba(96, 173, 121, 0.1)';
           else if (range.rangeType == "warning")
-          this.outRangeValue.push(range.conditionString)
+            color = 'rgba(245, 157, 24, 0.1)'; //'rgb(243, 156, 18, 0.1)'
           else if (range.rangeType == "danger")
-          this.dangerValue.push(range.conditionString)
-      });
-
-      this.graphValues = vArray;
-      this.graphDates = dArray;
-      this.values = this.values.reverse();
-
-      console.log(this.graphData)
-      this.generateChart();
+            color = 'rgba(245, 46, 24, 0.1)'; //'rgb(231, 76, 60, 0.1)'
+  
+          r["color"] = color;
+          this.ranges.push(r);
+          if (range.rangeType === "success")
+            this.normalValue.push(range.conditionString)
+            else if (range.rangeType == "warning")
+            this.outRangeValue.push(range.conditionString)
+            else if (range.rangeType == "danger")
+            this.dangerValue.push(range.conditionString)
+        });
+  
+        this.graphValues = vArray;
+        this.graphDates = dArray;
+        this.values = this.values.reverse();
+  
+        console.log(this.graphData)
+        this.generateChart();
+      }
       this.isLoading = false
     }, error => {
       this.isLoading = false

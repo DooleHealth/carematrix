@@ -8,30 +8,20 @@
 </ion-header>
 
 <ion-content fullscreen>
-
-  <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
-  </div>
-
-  <div class="main-container" *ngIf="this.legal !== undefined">
-    <div [innerHtml]="this.legal?.legal_text"></div>
-<!--         <ion-item lines="none">
-        <ion-checkbox color="primary" [(ngModel)]="this.isChecked" style="margin-right: 5px;"></ion-checkbox>
-        <ion-label>{{ 'legal.acept_conditions_label' | translate}}</ion-label>
-        </ion-item>
-        <ion-button type="button" color="primary" expand="block" class="enter-btn" (click)="acceptLegalConditions()" [disabled]="!this.isChecked">
-            {{ 'button.continue' | translate}}
-        </ion-button> -->
-  </div>
-
   <div class="main-container">
-    <ion-row style="margin-top:0%; margin-left: 2%; margin-right: 2%;">
-      <ion-col size="6">
-        <ion-button expand="block" color="primary" (click)="rejectLegalConditions()">{{ 'button.reject' | translate | uppercase}}</ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button expand="block" color="primary" (click)="acceptLegalConditions()">{{ 'button.accept' | translate | uppercase}}</ion-button>
-      </ion-col>
-    </ion-row>
+    <div class="spin" *ngIf="this.isLoading; else showLegal">
+      <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+    <ng-template #showLegal>
+      <div [innerHtml]="this.legal?.legal_text? (this.legal?.legal_text | safeHtml):'' "></div>
+      <ion-row style="margin-top:0%; margin-left: 2%; margin-right: 2%;">
+        <ion-col size="6">
+          <ion-button expand="block" color="primary" (click)="confirmLegalTerms()">{{ 'button.reject' | translate | uppercase}}</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" color="primary" (click)="acceptLegalConditions()">{{ 'button.accept' | translate | uppercase}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-template>
   </div>
 </ion-content>

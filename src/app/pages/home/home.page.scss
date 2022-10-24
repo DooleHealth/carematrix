@@ -1,155 +1,187 @@
-.imgProfile{
-    width: 30px;
+.imgProfile {
+  width: 30px;
 }
 .active-item {
   --color: var(--ion-color-primary);
 }
-.txtTitleHome{
-    font-size: 18px;
-    font-weight: 700;
-    margin: 4%;
-    text-align: left;
-  }
-  .txtTitleHome1{
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0%;
-    padding:0% !important; //padding: 0px 0px 8px 0px;
-    text-align: left;
-  }
-  .txtSubTitleHome{
-    font-size: 14px;
-    font-weight: 500;
-    margin: 4%;
-    text-align: left;
-  }
-ion-img{
-    height: 50px;
-    width: 50px;
+.txtTitleHome {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 4%;
+  text-align: left;
+}
+.txtTitleHome1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0%;
+  padding: 0% !important; //padding: 0px 0px 8px 0px;
+  text-align: left;
+}
+.txtSubTitleHome {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 4%;
+  text-align: left;
+}
+ion-img {
+  height: 50px;
+  width: 50px;
 }
 
-.vertical-card{
-    background-color: white!important;
-    width: 100%;
-    max-height: 115px;
-    ion-img{
-        height: 18px;
-        width: 18px;
-    }
-
-    ion-card-content{
-        height: 90px;
-        ion-progress-bar {
-            height: 10px;
-            width: 85%
-        }
-        p{
-            width: 85%
-        }
-    }
+.level-image {
+  height: 60%;
+  width: 60%;
+  margin: auto;
+  border: 2px brown;
+  margin-top: 10%;
+  display: block;
+  border-radius: 15px;
+  background-color: white;
 }
 
-.vertical-card2{
-  background-color: rgb(255, 255, 255)!important;
+.level-card {
+  --ion-background-color: white !important;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.progress-bar {
+  width: 100%;
+  border-radius: 100px;
+  height: 20px;
+  margin: auto;
+  --background: #f5f5f5;
+  --progress-background: purple;
+}
+
+
+.vertical-card {
+  background-color: white !important;
+  width: 100%;
+  max-height: 115px;
+  ion-img {
+    height: 18px;
+    width: 18px;
+  }
+
+  ion-card-content {
+    height: 90px;
+    ion-progress-bar {
+      height: 10px;
+      width: 85%;
+    }
+    p {
+      width: 85%;
+    }
+  }
+}
+
+.vertical-card2 {
+  background-color: rgb(255, 255, 255) !important;
   width: 100%;
   min-height: 115px;
-  ion-img{
-      height: 18px;
-      width: 18px;
+  ion-img {
+    height: 18px;
+    width: 18px;
   }
 
-  ion-card-content{
-      height: 110px;
-      margin-top: -10%;
-      ion-progress-bar {
-          height: 10px;
-          width: 85%
-      }
-      p{
-          width: 85%
-      }
+  ion-card-content {
+    height: 110px;
+    margin-top: -10%;
+    ion-progress-bar {
+      height: 10px;
+      width: 85%;
+    }
+    p {
+      width: 85%;
+    }
   }
 }
-.customCardAppointment{
-    background-color: white;
-    /* width: 100%; */
-    height: 123px;
+.customCardAppointment {
+  background-color: white;
+  width: 100%;
+  height: 123px;
 }
-.strechCardContent{
+
+.customCardHealthPath {
+  background-color: white;
+  width: 100%;
+}
+.strechCardContent {
   min-width: 300px !important;
   padding-top: 0%;
 }
 
-.zeroMarginPadding{
+.zeroMarginPadding {
   padding: 0%;
   margin: 0%;
 }
 
-.cardHeader{
-  --background: #ffffff!important;
+.cardHeader {
+  --background: #ffffff !important;
   max-height: 41px;
   text-overflow: ellipsis;
 }
 .customCardAdvices {
-    background-color: white;
-    width: 100%;
-    height: 300px;
+  background-color: white;
+  width: 100%;
+  height: 300px;
 
-    ion-icon{
-        padding: 5%;
-    }
+  ion-icon {
+    padding: 5%;
   }
-
-  .close-card {
-    float:right; 
-    font-size: 20px;
-  }
-
-  .full-width {
-    padding: 0px 10px 0px 10px;
-  }
-
-
-.close-card{
-    position: absolute;
-    top:10px;
-    right: 13px;
-    color: black;
-    font-weight: 900;
-    overflow: hidden;
-  }
-  .my-buffer-progress_red{
-    --background:#82F038;
-    --buffer-background:#facdcc;
-    --progress-background:#f31212;
-    border-radius: 20px;
-    min-height: 17px;
-    
 }
-.my-buffer-progress_orange{
-  --background:#82F038;
-  --buffer-background:#faeacc;
-  --progress-background:#F39C12;
+
+.close-card {
+  float: right;
+  font-size: 20px;
+}
+
+.full-width {
+  padding: 0px 10px 0px 10px;
+}
+
+.close-card {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  color: black;
+  font-weight: 900;
+  overflow: hidden;
+}
+ion-progress-bar {
   border-radius: 20px;
   min-height: 17px;
-  
 }
-.my-buffer-progress_green{
-  --background:#82F038;
-  --buffer-background:#cdfacc;
-  --progress-background:#048b22;
+.my-buffer-progress_red {
+  --background: #82f038;
+  --buffer-background: #facdcc;
+  --progress-background: #f31212;
   border-radius: 20px;
   min-height: 17px;
-  
 }
-.slide{
+.my-buffer-progress_orange {
+  --background: #82f038;
+  --buffer-background: #faeacc;
+  --progress-background: #f39c12;
+  border-radius: 20px;
+  min-height: 17px;
+}
+.my-buffer-progress_green {
+  --background: #82f038;
+  --buffer-background: #cdfacc;
+  --progress-background: #048b22;
+  border-radius: 20px;
+  min-height: 17px;
+}
+.slide {
   width: 90% !important;
 }
-.slide1{
+.slide1 {
   width: 100% !important;
 }
 
-.card{
+.card {
   width: 300px;
 }
 
@@ -168,17 +200,16 @@ ion-img{
   -webkit-box-orient: vertical;
 }
 
-.sliderImage
-{
- height: 220px;
- width: 300px;
+.sliderImage {
+  height: 220px;
+  width: 300px;
 }
-.sliderImage img{
+.sliderImage img {
   height: 100%;
   width: auto;
 }
-@supports(object-fit: cover){
-  .sliderImage img{
+@supports (object-fit: cover) {
+  .sliderImage img {
     width: 100%;
     object-fit: cover;
     object-position: center center;
@@ -186,113 +217,107 @@ ion-img{
 }
 
 @media (min-width: 640px) and (max-width: 1024px) {
-
-  .card{
+  .card {
     width: 400px;
   }
 
-  .strechCardContent{
-    min-width: 300px !important;
+  .strechCardContent {
+    min-width: 400px !important;
     padding-top: 0%;
   }
 
-    .sliderImage{
-      height: 220px;
-      width: 400px;
-    }
+  .sliderImage {
+    height: 220px;
+    width: 400px;
+  }
 
-    .sliderImage img{
-      height: 100%;
-      width: auto;
-    }
+  .sliderImage img {
+    height: 100%;
+    width: auto;
+  }
 
-    @supports(object-fit: cover){
-      .sliderImage img{
-        width: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-    }
-
-  .vertical-card2{
-    background-color: rgb(255, 255, 255)!important;
-    width: 100%;
-    min-height: 115px;
-    ion-img{
-        height: 18px;
-        width: 18px;
-    }
-  
-    ion-card-content{
-        height: 110px;
-        margin-top: 0%;
-        ion-progress-bar {
-            height: 10px;
-            width: 85%
-        }
-        p{
-            width: 85%
-        }
+  @supports (object-fit: cover) {
+    .sliderImage img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
   }
- }
+
+  .vertical-card2 {
+    background-color: rgb(255, 255, 255) !important;
+    width: 100%;
+    min-height: 115px;
+    ion-img {
+      height: 18px;
+      width: 18px;
+    }
+
+    ion-card-content {
+      height: 110px;
+      margin-top: 0%;
+      ion-progress-bar {
+        height: 10px;
+        width: 85%;
+      }
+      p {
+        width: 85%;
+      }
+    }
+  }
+}
 /*MEDIA QUERIES FOR IPAD*/
 
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (-webkit-min-device-pixel-ratio: 1) {
-    .strechCardContent{
-      min-width: 500px !important;
-      padding-top: 0%;
-    }
-    .card{
-      width: 500px;
-    }
-    .sliderImage
-    {
-     height: 420px;
-     width: 500px;
-    }
-    .sliderImage img{
-      height: 100%;
-      width: auto;
-    }
-    @supports(object-fit: cover){
-      .sliderImage img{
-        width: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-    }
-    .noMargin {
-      margin-bottom: -2%;
-      --background: #ffffff !important;
-    }
-    .ios .paddingTopNoMarginBottom{
-      padding-top: 3%;
-      margin-bottom: 0%;
-      }
-    .vertical-card2{
-      background-color: rgb(255, 255, 255)!important;
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .strechCardContent {
+    min-width: 500px !important;
+    padding-top: 0%;
+  }
+  .card {
+    width: 500px;
+  }
+  .sliderImage {
+    height: 420px;
+    width: 500px;
+  }
+  .sliderImage img {
+    height: 100%;
+    width: auto;
+  }
+  @supports (object-fit: cover) {
+    .sliderImage img {
       width: 100%;
-      min-height: 115px;
-      ion-img{
-          height: 18px;
-          width: 18px;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+  .noMargin {
+    margin-bottom: -2%;
+    --background: #ffffff !important;
+  }
+  .ios .paddingTopNoMarginBottom {
+    padding-top: 3%;
+    margin-bottom: 0%;
+  }
+  .vertical-card2 {
+    background-color: rgb(255, 255, 255) !important;
+    width: 100%;
+    min-height: 115px;
+    ion-img {
+      height: 18px;
+      width: 18px;
+    }
+
+    ion-card-content {
+      height: 110px;
+      margin-top: 0%;
+      ion-progress-bar {
+        height: 10px;
+        width: 85%;
       }
-    
-      ion-card-content{
-          height: 110px;
-          margin-top: 0%;
-          ion-progress-bar {
-              height: 10px;
-              width: 85%
-          }
-          p{
-              width: 85%
-          }
+      p {
+        width: 85%;
       }
     }
+  }
 }
-

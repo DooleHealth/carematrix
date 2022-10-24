@@ -41,13 +41,13 @@
     [(ngModel)]="segment"
     scrollable
   >
-    <ion-segment-button value="documents">
+    <ion-segment-button *ngIf="role?.component?.doc_diagnostic" value="documents">
       <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="forms">
+    <ion-segment-button *ngIf="role?.component?.form" value="forms">
       <ion-label>{{ 'tracking.tap_forms' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="graphics">
+    <ion-segment-button *ngIf="role?.component?.element" value="graphics">
       <ion-label>{{ 'tracking.tap_graphics' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -118,8 +118,9 @@
                   </ion-col>
                   <ion-col size="12">
                     <!-- <ion-card-title class="txtTitleTrackingLittle">{{doc.idDoctor}}</ion-card-title> -->
-                    <ion-card-title class="txtTitleTrackingLittle"
-                      >{{doc.description}}</ion-card-title
+                    <ion-card-title class="txtTitleTrackingLittle">
+                      {{doc.description}}
+                      </ion-card-title
                     >
                   </ion-col>
                   <ion-col size="12">
@@ -182,7 +183,7 @@
                 <ion-col size="12" *ngIf="event.description != '' ">
                   <ion-card-title
                     class="txtTracking"
-                    [innerHtml]="event.description"
+                    [innerHtml]="event?.description? (event.description | safeHtml): '' "
                   >
                   </ion-card-title>
                 </ion-col>

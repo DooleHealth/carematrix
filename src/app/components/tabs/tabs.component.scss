@@ -23,9 +23,21 @@ ion-tab-button{
       margin-bottom: 0%;
      
     }
-    ion-tab-bar {
+    .md ion-tab-bar {
       position: relative;
       width: 100%;
       height:100%;
       margin: 0 auto;
+    }
+
+    .ios ion-tab-bar {
+      position: relative;
+      width: 100%;
+      height:100%;
+      margin: 0 auto;
+      padding: 0%;
+    }
+
+    ion-badge{
+      font-weight: bolder;
     }

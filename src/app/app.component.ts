@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
+import { Filesystem, FilesystemDirectory, LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
+import { ApiEndpointsService } from './services/api-endpoints.service';
 const { PushNotifications, LocalNotifications } = Plugins;
 declare let VoIPPushNotification: any;
 declare let cordova: any;
@@ -28,7 +29,8 @@ declare let IRoot: any;
   templateUrl: 'app.component.html',
 })
 export class AppComponent implements OnInit {
-  public selectedIndex = 0;
+  settingsBio = '';
+  selectedIndex = 0;
   previousUrl: string = null;
   currentUrl: string = null;
   textDir = 'ltr';
@@ -40,6 +42,7 @@ export class AppComponent implements OnInit {
   isNotification: any;
   lastPause: Date;
   translationsForNotifications:any;
+  environment = 0
   // Inject HistoryHelperService in the app.components.ts so its available app-wide
   constructor(
     private router: Router,
@@ -59,6 +62,8 @@ export class AppComponent implements OnInit {
     private modalCtrl: ModalController,
     private dooleService: DooleService,
     private faio : FingerprintAIO,
+    private _zone: NgZone,
+    private endPoind: ApiEndpointsService
   ) {
 
 
@@ -68,7 +73,9 @@ export class AppComponent implements OnInit {
     this.setLanguage();
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
-
+    this.endPoind.loadEndPoints()
+    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    this.settingsBio = 'settings-bio' + this.environment
     FirebaseAnalytics.initializeFirebase(environment.firebase);
 
     this.platform.ready().then(() => {
@@ -97,8 +104,19 @@ export class AppComponent implements OnInit {
         //this.backgroundMode.enable();
 
         this.backButton();
+
+        //this.createCacheFolder();
       }
 
+    });
+  }
+
+  async createCacheFolder(){
+    await Filesystem.mkdir({
+      directory:FilesystemDirectory.Cache,
+      path: `CACHED-IMG`
+    }).then(()=>{
+      console.log('** MKDIR OK **');
     });
   }
 
@@ -255,23 +273,22 @@ export class AppComponent implements OnInit {
         if(action == "VIDEOCALL"){
           this.redirecToVideocall(notification)
           return
+        }else{
+          let secondsLastPause =  (this.lastPause)? this.lastPause.getTime() : 0
+          let secondsNow = (new Date).getTime()
+          // App will lock after 2 minutes
+          let secondsPassed = (secondsNow - secondsLastPause) / 1000;
+          console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
+          if(this.router.url.includes('landing')){
+            this.dooleService.setPushNotification(data)
+            this.router.navigate([`/landing`],{state:{pushNotification: data}});
+          }else if (secondsPassed >= 120) {
+            // Must implement lock-screen
+            this.showFingerprintAuthDlg(data)
+            //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
+          }else
+            this.redirectPushNotification(data, notification);
         }
-      
-        let secondsLastPause =  (this.lastPause)? this.lastPause.getTime() : 0
-        let secondsNow = (new Date).getTime()
-        // App will lock after 2 minutes
-        let secondsPassed = (secondsNow - secondsLastPause) / 1000;
-        console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow/1000}, secondsLastPause: ${secondsLastPause}`, );
-        if(this.router.url.includes('landing')){
-          this.dooleService.setPushNotification(data)
-          this.router.navigate([`/landing`],{state:{pushNotification: data}});
-        }else if (secondsPassed >= 120) {
-          // Must implement lock-screen
-          this.showFingerprintAuthDlg(data)
-          //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
-        }else
-          this.redirecPushNotification(data, notification);
-        
       }
     );
 
@@ -282,7 +299,7 @@ export class AppComponent implements OnInit {
     });
 
     this.translate.get(['notifications.chat','notifications.form','notifications.drug','notifications.videocall','notifications.open','notifications.close']).subscribe(async translations=> {
-      console.log('translations',  translations['notifications.videocall']);
+
       await LocalNotifications.registerActionTypes({
         types:[{
           id:'MESSAGE',
@@ -336,6 +353,8 @@ export class AppComponent implements OnInit {
 
     LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
       console.log('localNotificationReceived received:', notification);
+
+
     })
 
     LocalNotifications.addListener('localNotificationActionPerformed',( notification: LocalNotificationActionPerformed)=>{
@@ -358,7 +377,7 @@ export class AppComponent implements OnInit {
       }
       else if(this.authService?.user?.idUser){
         console.log('localNotificationActionPerformed idUser: ', this.authService?.user?.idUser)
-        this.redirecPushNotification(f.data, notification)
+        this.redirectPushNotification(f.data, notification)
       }
       else{
         this.redirecToVideocall(notification)
@@ -368,9 +387,8 @@ export class AppComponent implements OnInit {
     })
   }
 
-  redirecPushNotification(data, notification?){
+  redirectPushNotification(data, notification?){
 
-    
     switch (data.action) {
       case "MESSAGE":
         let staff;
@@ -385,34 +403,52 @@ export class AppComponent implements OnInit {
           }
         }
         console.log('staff: ', staff);
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        this._zone.run(()=>{
+          this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        });
         break;
       case "FORM":
-        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        this._zone.run(()=>{
+          this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
+        });
         break;
       case "DRUGINTAKE":
-        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        this._zone.run(()=>{
+          this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
+        });
         break;
       case "VIDEOCALL":
-        this.redirecToVideocall(notification)
+        this._zone.run(()=>{
+          this.redirecToVideocall(notification)
+        });
         break;
       case "ADVICE":
-        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/home`],{state:{push:data, id:data.id}});
+        });
         break;
       case "DIET":
-        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
+        });
         break;
       case "AGENDA":
-        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
+        });
         break;
       case "REMINDER":
-        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        this._zone.run(()=>{
+          this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
+        });
         break;
       case "GAME":
-        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+        case "REMINDER":
+          this._zone.run(()=>{
+            this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
+          });
         break;
       default:
-        console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
         this.redirecToVideocall(notification)
         break;
     }
@@ -505,11 +541,6 @@ export class AppComponent implements OnInit {
         throw error;
       });
 
-  }
-
-  async openVideocallModal(){
-   
-   
   }
 
   async openVideocallIframeModal(agenda){
@@ -826,9 +857,7 @@ export class AppComponent implements OnInit {
 
   public async showFingerprintAuthDlg(data?) {
     console.log("[AppComponent] showFingerprintAuthDlg(), data", data);
-    if(!JSON.parse(localStorage.getItem('settings-bio')) || 
-        JSON.parse(localStorage.getItem('settings-bio')) == null || 
-        JSON.parse(localStorage.getItem('settings-bio')) == undefined || 
+    if(!JSON.parse(localStorage.getItem(this.settingsBio)) || 
         this.lastPause == undefined || !this.authService?.user ){
 
       if(data){
@@ -858,7 +887,7 @@ export class AppComponent implements OnInit {
             this.lastResume = new Date;
             this.authService.removeNumloginFailed()
             if(data){
-              setTimeout(()=>this.redirecPushNotification(data), 500);
+              setTimeout(()=>this.redirectPushNotification(data), 500);
             }
           }else{
             //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
@@ -869,18 +898,15 @@ export class AppComponent implements OnInit {
         .catch(async (error: any) => {
           console.log(error);
           if(error.code == -102){
-            //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-            let secondsPassed = ((new Date).getTime() - this.lastResume?.getTime()) / 1000;
-            if (secondsPassed >= 120) {
-/*               let num = this.authService.getNumloginFailed()
-              if(num >=3){
-                await this.authService.logout();
-                this.router.navigateByUrl('/landing');
-              }
-              else */
-              // Must implement lock-screen
-              setTimeout(()=>this.showFingerprintAuthDlg(), 500);
-            }
+          // let num = this.authService.getNumloginFailed()
+          // if(num >=3){
+          //   await this.authService.logout();
+          //   this.router.navigateByUrl('/landing');
+          // }
+          // else
+          // Must implement lock-screen
+            setTimeout(()=>this.showFingerprintAuthDlg(), 500);
+
           }else{
             // if error.code == -108 user cancel prompt
             // if error.code == -111 too many attempts

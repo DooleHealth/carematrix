@@ -1,3 +1,14 @@
+.yellow-box {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    padding: 5px;
+    /* margin-bottom: 20px; */
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: small;
+}
+
 ion-footer{
 
  
@@ -8,4 +19,31 @@ ion-footer{
  
     }
      
+ }
+
+ ion-badge{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: max-content;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+ }
+
+ ion-fab{
+    width: 30px;
+    height: 30px;
+    ion-fab-button{
+        width: 28px;
+        height: 28px;
     }
+ }
+
+ .scrollHiden{
+    display: block;
+ }
+
+ .slideNone{
+    display: none;
+ }

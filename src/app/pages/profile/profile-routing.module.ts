@@ -51,7 +51,19 @@ const routes: Routes = [
   {
     path: 'videocall-test',
     loadChildren: () => import('../profile/videocall-test/videocall-test.module').then( m => m.VideocallTestPageModule)
-  }
+  },
+  {
+    path: 'patients',
+    loadChildren: () => import('./patients/patients.module').then( m => m.PatientsPageModule)
+  },
+  {
+    path: 'devices',
+    loadChildren: () => import('../bluetooth/devices/devices.module').then( m => m.DevicesPageModule)
+  },
+  {
+    path: 'challenges',
+    loadChildren: () => import('./challenges/challenges.module').then( m => m.ChallengesPageModule)
+  },
 ];
 
 @NgModule({

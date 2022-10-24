@@ -14,7 +14,7 @@ export class LegalPage implements OnInit {
   //KEY_LOCAL_STORAGE = 'showIntro';
   legal:any = {};
   isChecked = false;
-  isLoading = false
+  isLoading = false;
   constructor(
     public router: Router,    
     private translate: TranslateService,
@@ -31,7 +31,7 @@ export class LegalPage implements OnInit {
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         console.log('[LegalPage] getAPILegalInformation()', await res);
-        if(res.success){
+        if(res?.success){
           this.legal = res.legalTerm
           if(this.legal === undefined || this.legal === null ){
             let message = this.translate.instant('legal.no_get_conditions_label')
@@ -66,7 +66,11 @@ export class LegalPage implements OnInit {
         this.redirectBiometric()
         //this.showIntro()
       }
-      else this.dooleService.presentAlert("legal.error_post_conditions_label")
+      else {
+        let message = this.translate.instant("legal.error_post_conditions_label");
+        this.dooleService.presentAlert(message)
+      }
+
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
         this.dooleService.presentAlert(err.message)
@@ -102,7 +106,10 @@ export class LegalPage implements OnInit {
       if(res.success){
         this.signOut()
       }
-      else this.dooleService.presentAlert("legal.error_post_conditions_label")
+      else {
+        let message = this.translate.instant("legal.error_post_conditions_label");
+        this.dooleService.presentAlert(message)
+      }
      },(err) => { 
         console.log('getAll ERROR(' + err.code + '): ' + err.message); 
         this.dooleService.presentAlert(err.message)
@@ -111,9 +118,6 @@ export class LegalPage implements OnInit {
   }
 
   async confirmLegalTerms() {
-    const notification = localStorage.getItem('allNotification');
-    if(JSON.parse(notification))
-    return
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
@@ -140,7 +144,7 @@ export class LegalPage implements OnInit {
   }
 
   async signOut() {
-    await this.authService.logout().then(res=>{
+    await this.authService.logout(true).subscribe(res=>{
       this.router.navigateByUrl('/landing');
     });
   }

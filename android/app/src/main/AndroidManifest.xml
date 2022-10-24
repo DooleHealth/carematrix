@@ -18,7 +18,8 @@
             android:theme="@style/AppTheme.NoActionBarLaunch"
             android:launchMode="singleTask"
             android:showOnLockScreen="true"
-            android:clearTaskOnLaunch="true">
+            android:screenOrientation="portrait"
+            android:clearTaskOnLaunch="true" android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,14 +62,14 @@
             android:launchMode="singleTask"
             android:directBootAware="true"
             android:showOnLockScreen="true"
-            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE">
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE" >
             <intent-filter>
                 <action android:name="com.google.firebase.FLAG_ACTIVITY_NEW_TASK" />
             </intent-filter>
         </service>
 
         <service android:name="com.doole.doole.DooleConnectionService"
-            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE">
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"  android:exported="false">
             <intent-filter>
                 <action android:name="android.telecom.ConnectionService" />
             </intent-filter>
@@ -112,7 +113,9 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+<!--    <uses-permission android:name="android.permission.READ_CALL_LOG"/>-->
 </manifest>

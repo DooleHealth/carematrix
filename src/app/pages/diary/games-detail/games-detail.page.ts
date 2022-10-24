@@ -12,6 +12,7 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class GamesDetailPage implements OnInit {
   private data: any = history.state?.data;
+  private form_id = history.state?.form_id;
   game:any ={}
   id:any
   score = 0
@@ -67,7 +68,7 @@ export class GamesDetailPage implements OnInit {
         this.auth.user = value
       })
       
-      if(item.url.startsWith("http")){
+      if(item.url?.startsWith("http")){
         item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
         browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
       }
@@ -76,22 +77,8 @@ export class GamesDetailPage implements OnInit {
     }
 
     if(item.type=="form") {
-      const options: InAppBrowserOptions = {
-        location: 'no',
-        toolbar: 'yes'
-      };
-
-      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+item.form_id+'" method="post" enctype="multipart/form-data">' +
-        '<input type="hidden" name="idForm" value="'+item.form_id+'">' +
-        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
-        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
-        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
-      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-      var browserRef = this.iab.create(
-        pageContentUrl,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
+      item['form_id'] = item?.form_id? (item?.form_id):this.form_id
+      this.router.navigate(['/tracking/form', {id: item.form_id}] );
     }
 
   }

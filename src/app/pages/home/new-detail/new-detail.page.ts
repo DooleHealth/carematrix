@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-detail',
@@ -11,7 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./new-detail.page.scss'],
 })
 export class NewDetailPage implements OnInit {
-  id : any;
+  @Input()id: any;
+  data:any;
   isLoading = false
   new : any = {};
   videoThumbnail: any = null;
@@ -28,22 +30,23 @@ export class NewDetailPage implements OnInit {
   favourite = false;
   hide = false;
   constructor(
-    private iab: InAppBrowser, 
-    private auth: AuthenticationService,
+    private modalCtrl: ModalController,
     public loadingController: LoadingController, 
     public alertCtrl: AlertController,     
     public navCtrl: NavController, 
     private dooleService: DooleService,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer, private router: Router) {
   }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
-    this.id = history.state.id;
+    if(history.state?.id)
+      this.id = history.state.id;
+    
     if(this.id)
-    this.getDetailNew();
+      this.getDetailNew();
   }
 
   async getDetailNew(onlyStatus?){
@@ -154,6 +157,16 @@ export class NewDetailPage implements OnInit {
           }
       }
     )
+  }
+
+  async close() {
+    const modal = await this.modalCtrl.getTop();
+    if (modal)
+      await modal.dismiss({error:null});
+    else if(this.data)
+      this.router.navigate([`/home`]);
+    else
+      this.router.navigate([`/advices`]);
   }
 
   

@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { Network } from '@ionic-native/network/ngx';
+import { RolesService } from 'src/app/services/roles.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +32,8 @@ export class LoginPage implements OnInit {
     public platform: Platform,
     private device: Device,
     private network: Network,
+    public role: RolesService,
+    private pusherConnection: PusherConnectionService,
     ) { }
 
   ngOnInit() {
@@ -38,7 +42,7 @@ export class LoginPage implements OnInit {
 
   async ionViewDidEnter(){
     // this.analyticsService.setScreenName('login','LoginPage')
-    console.log('[LoginPage] ionViewDidEnter() Device: ',  JSON.stringify(this.device));
+    //console.log('[LoginPage] ionViewDidEnter() Device: ',  JSON.stringify(this.device));
   }
 
 
@@ -58,8 +62,11 @@ export class LoginPage implements OnInit {
         // this.analyticsService.logEvent('login', res)
         // this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
         // this.analyticsService.logEvent('user_doole', {userId: res.idUser})
-        this.setLocalLanguages(res.language)
 
+        // this.role.setProfessional(false)
+        // this.role.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
+        this.setLocalLanguages(res.language)
+        this.pusherConnection.subscribePusher(res.token)
         console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);
         if(this.pushNotification){
           this.redirecPushNotification(this.pushNotification)
@@ -157,6 +164,7 @@ export class LoginPage implements OnInit {
 
   redirectBiometric(){
     let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
+    console.log('[LoginPage] redirectBiometric() condicion: ',condicion);
     if(condicion){
       this.ngZone.run(() => {      
         this.router.navigate(['/login/biometric-auth'])
@@ -170,6 +178,7 @@ export class LoginPage implements OnInit {
       this.showIntro()
     }      
   }
+
 
   redirecPushNotification(data){
     switch (data.action) {

@@ -1,206 +1,295 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {ActionSheetController, Platform} from '@ionic/angular';
+import {ActionSheetController, IonInfiniteScroll, Platform} from '@ionic/angular';
 import {MediaCapture} from '@ionic-native/media-capture/ngx'
-import {Media} from '@ionic-native/media/ngx'
 import {HttpErrorResponse} from '@angular/common/http';
-import firebase from 'firebase';
 import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl } from '@angular/platform-browser'; 
 import { File } from '@ionic-native/file/ngx';
 import { Events } from 'src/app/services/events.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@ionic/storage'; // This line added manually.
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { IonContent } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { PusherMessageService } from 'src/app/services/pusher/pusher-message.service';
+import { DatePipe } from '@angular/common';
+import moment from 'moment';
 const { Camera } = Plugins;
+
+interface Message {
+  id: string;
+  message: string;
+  timestamp: number;
+  date?: string;
+  fileUrl?: string;
+  idUser?: any;
+  mediaType?:string;
+  from: string;
+  fromName?: string;
+}
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.page.html',
   styleUrls: ['./conversation.page.scss'],
 })
 export class ConversationPage implements OnInit {
-  @ViewChild(IonContent, {read: IonContent, static: false}) contentArea: IonContent;
+  @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   private data: any = history.state?.data;
-  public name: string = this.staff?.name;
 
+  lastMessageId = -1;
+  lastPage = 0
+  nextPage = 0
+  currentPage = 0
+  lastDate: string = ''
+
+  public messageUploadList=[];
   public messagesList = [];
   private users = [];
   private to = [];
   private type: string;
   @ViewChild('txtChat') txtChat: any;
   loading: any;
-  public messageUploadList=[];
-  private isTyping: Boolean = false;
   file64: SafeResourceUrl;
-  private commentsRef;
-  private loadingShow = false;
-  private btnImageEnabled = true;
+
   public  btnEnabled = true;
-  private title : string;
   private image : string = '';
   mediaFiles: any = [];
   tutor:any;
   family_name:any;
   address:any;
+  bander = 0;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
-  private images : any = [];
-  private mimes : any = [];
-  private imagesTemp : any = [];
+  footerHidden: boolean;
+  private btnImageEnabled = true;
 
-  
-  constructor(private firebaseAuth: AngularFireAuth,
-              private firebaseDB: AngularFireDatabase,
+  constructor(
               private authService: AuthenticationService,
               public _zone: NgZone,
               public actionSheetCtrl: ActionSheetController,
               public events: Events,
               public dooleService: DooleService,
-              public file: File, private translate : TranslateService,
+              public file: File, 
+              private translate : TranslateService,
               private chooser: Chooser,       
               public platform: Platform,
               private mediaCapture: MediaCapture,
-              private media: Media,
               private router: Router,
-              private storage: Storage) {
+              private pusherMessage: PusherMessageService,
+              ) {
 
    
   }
 
   ngOnInit() {
-    
+    if(this.id)
+    this.getMessagesList(false)
   }
 
   ionViewWillEnter(){
-    console.log("message_header_id: ", this.id);
-    console.log("[ConversationPage] ngOnInit()", this.staff);
-    if(this.staff)
-      this.to.push(this.staff?.id);
-    else 
-      console.log("staff is undefined, post message without staff id");
 
-    this.firebaseAuth.onAuthStateChanged( user => {
-      if (user) {
-        if (this.id != '')               // només observem missatges si tenim idHeader
-        {
-          console.log("[ConversationPage] ngOnInit() messagesList:", this.messagesList);
-          const dict = [];
-          dict.push({key: 'id', value: this.id });
-          console.log("[ConversationPage] ngOnInit() this.authService.user:", JSON.stringify(this.authService?.user) );
-          if(this.authService?.user && this.id){
-            this.observeMessages();
-          }
-        }else{
-          console.log('no id');
-        }
-      } 
-
-    });
-    this.scrollToBottom();
-  }
-
-  private findUser(id){
-    const result = null;
-    for (let i = 0; i < this.users.length; i++){
-      if (this.users[i].id == id) {
-        return this.users[i];
-      }
+    if(this.id){
+      this.getPusher()
     }
-    const u = {name: '', image: ''};
-    return u;
+    else
+      console.log('no id');
   }
+
+  ionViewWillLeave(){
+    if(this.id)
+    this.pusherMessage.unsubscribePusher(this.id);
+  }
+
+  getPusher() {
+    const NAME_BIND = 'App\\Events\\MessageCreated' 
+    const channel = this.pusherMessage.init(this.id);
+    console.log('[ChatPusherPage] getPusher() channel' , channel);
+        channel.bind(NAME_BIND, (data) => {
+          console.log('[ChatPusherPage] getPusher() data' , data);
+          if (data.id !== this.lastMessageId) {
+            let date = this.getCalendarDay(new Date().getTime())
+            const message: Message = {
+              id: data?.output?.id,
+              message: data?.output?.content,
+              timestamp: data?.output?.created_at,
+              idUser: data?.output?.user.id,
+              fileUrl: data?.output?.file,
+              from:  (data?.output?.user.id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
+              fromName: data?.output?.user.name,
+              mediaType: data?.output?.mime,
+              date: date,
+            };
+            this.messagesList = this.messagesList.concat(message);
+            this.setShowDay(this.messagesList)
+            console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
+            this.scrollToBottom(); 
+          }
+        })
+
+
+  }
+
+  async onScroll(event: any) {
+    const scrollElement = await this.content.getScrollElement(); // get scroll element
+    // calculate if max bottom was reached
+    let height = scrollElement.scrollHeight - scrollElement.clientHeight
+    let total = Math.abs(scrollElement.scrollTop - height) 
+    //Android is not accurate
+    this.footerHidden = ( total <= 5 )? false:true;
+  }
+
+  
+  
 
   scrollToBottom() {
+    console.log('[ChatPusherPage] getPusher() contentArea' ,   this.content);
       setTimeout(() => {  
-          this.contentArea.scrollToBottom(200);
-  }, 200);
+          this.content.scrollToBottom(300);
+    }, 1000);
   }
 
-  async observeMessages(){
+  getRecipients(recipients){
+      recipients.forEach(r => {
+       if(r.messageable_id != this.authService?.user.idUser){
 
-    console.log(this.id);
-    this.loadingShow = true;
-
-    this.commentsRef = this.firebaseDB.database.ref('room-messages').child(this.id).orderByChild('timestamp');
-    this.commentsRef.on('child_added', data => {
-      const user = this.findUser(data.val().userId);
-      const tmp = [];
-      tmp.push({
-        message: data.val().message,
-        idUser: data.val().userId,
-        timestamp: data.val().timestamp,
-        mediaType: data.val().mediaType,
-        fileUrl: data.val().fileUrl,
-        from: (data.val().userId === this.authService?.user.idUser) ? 'message_response' : 'message_request',
-        fromName: data.val().name
-      });
-      this.messagesList.push(tmp);
-      
-      
-      this._zone.run(() => {
-        this.scrollToBottom();
-
-      });
-      //si envia un altre, marquem com a rebut el missatge
-      if( (data.val().userId != this.authService?.user.idUser)){
-        var msg = this;
-      
-        //this.nativeAudio.play('received', () => console.log('uniqueId1 is done playing'));
-        firebase.database().ref('/room-messages/'+msg.id).child(data.key).child(msg.authService?.user.idUser).once('value').then(function(snapshot) {
-            //si no hem llegit
-            //console.log('force update 2');
-            if(snapshot?.numChildren()==0){
-                //marquem com a rebut
-                //this.nativeAudio.play('received', () => console.log('uniqueId1 is done playing'));
-                //console.log('force update 3');
-                var newPostKey = firebase.database().ref().child('room-messages').child(msg.id).child(data.key).child(msg.authService?.user.idUser).push().key;
-                var updates = {};
-                updates['/room-messages/'+msg.id+"/"+ data.key+"/"+msg.authService?.user.idUser] = {state:2};
-                firebase.database().ref().update(updates);
-
-                msg.dooleService.post("message/"+data.val().id+"/state/2",null).subscribe(data=>{
-                //console.log("marcat com a llegit")
-                });
-            }else{
-              //console.log('force update 4');
+          if(r.messageable_type == 'App\\Department'){
+              this.staff = {
+                name: r.messageable.name,
+                image: r.messageable.temporaryUrl,
+                type: 'department'
+              }
+          }
+          else{
+            this.staff = {
+              name: r.messageable.name,
+              image: r.messageable.temporaryUrl,
+              type: 'user'
             }
-        });
-    }
-
-    });
-  
+          }
+          this.to.push(this.staff?.id);
+       }
+      })
   }
+
+  getMessagesList(isFirstLoad, event?) {
+    this.loading = true
+    console.log('[ChatPusherPage] getMessagesList() bander:' ,   ++this.bander);
+    const page = this.nextPage;
+    if(this.nextPage <= this.lastPage)
+        this.dooleService.getAPImessage(this.id, page).subscribe(
+          async (res: any) =>{
+            console.log('[ChatPusherPage] getAPImessage()', await res);
+            if (res.success) {
+
+              if(!isFirstLoad)
+              this.getRecipients(res.recipients)
+
+              this.currentPage = res.currentPage
+              this.nextPage =  (this.currentPage) + 1
+              this.lastPage =  res.lastPage
+              let list = []
+              this.lastMessageId = res.messages[0]?.id? res.messages[0]?.id: this.lastMessageId
+              res.messages.forEach(msg =>{
+                const message: Message = {
+                  id: msg?.id,
+                  message: msg?.content,
+                  idUser: msg?.user_id,
+                  timestamp: new Date(msg?.created_at).getTime() ,
+                  mediaType: msg?.mime.toUpperCase(),
+                  fileUrl: msg?.temporaryUrl, //image/jpeg
+                  from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
+                  fromName: msg.user?.name,
+                  date: this.getCalendarDay(new Date(msg?.created_at).getTime())// this.formatDate(msg?.created_at, 'T'),
+                };
+                list.push(message);
+                //console.log('[ChatPusherPage] getAPImessage() Elemento Repetido: messages' ,message);
+              })
+
+              if(page == 0){
+                this.messagesList = list.reverse()
+                this._zone.run(() => {
+                  this.scrollToBottom();
+          
+                });
+              }else{
+                this.addMessageToList(list)
+/*                 list = list.reverse()
+                this.messagesList = list.concat(this.messagesList); */
+              }
+              this.setShowDay(this.messagesList)
+              if(isFirstLoad)
+              this.infiniteScroll.complete()
+              console.log('[ChatPusherPage] getAPImessage() size messages' , this.messagesList);
+            }
+
+            this.loading = false
+          },(err) => { 
+            this.loading = false
+              console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
+              throw err; 
+          }) ,() => {
+            // Called when operation is complete (both success and error)
+            this.loading = false
+          };
+      else
+          this.toggleInfiniteScroll()
+  }
+
+  addMessageToList(list){
+    list.forEach(msg =>{
+      this.messagesList.unshift(msg)
+    })
+  }
+
+  setShowDay(messagesList){
+    messagesList.forEach(message => {
+      if(message?.date != this.lastDate){
+        message['showDay'] = true
+        this.lastDate = message.date
+      }
+      else message['showDay'] = false
+    });
+  }
+
+  getCalendarDay(epoch: number): string {
+    if (!epoch) {
+      return null;
+    }
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
+    return moment(epoch).calendar(null, {
+      sameDay: `[${today}]`,
+      lastDay: `[${yesterday}]`,
+      sameElse: 'DD/MM/YYYY',
+      lastWeek : 'DD/MM/YYYY',
+      nextDay : 'DD/MM/YYYY'
+    });
+  }
+
 
   send(){
     const message = this.txtChat.content;
     this.btnEnabled = false;
     this.btnImageEnabled = false;
-
+    let type = this.type? this.type:this.staff.type
     const postData = {
-      id: this.id,
       content: message,
       to: this.to,
-      type: this.type
+      type: type.toLowerCase()
     };
+    if(this.id)
+    postData['id'] = this.id
+
+    console.log('send()', postData);
+
     this.dooleService.post('message', postData).subscribe(
         async (data) => {
-          if (this.id != data.idMessageHeader){
-            this.id = data.idMessageHeader;
-            this.observeMessages();
-            this.observeTyping();
-          }
-
           this.txtChat.clearInput();
           this.btnEnabled = true;
           this.btnImageEnabled = true;
-   
         },
         (error) => {
           // Called when error
@@ -211,8 +300,10 @@ export class ConversationPage implements OnInit {
           // Called when operation is complete (both success and error)
           // loading.dismiss();
         });
+  }
 
-
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
   async selectImageSource() {
@@ -416,7 +507,7 @@ export class ConversationPage implements OnInit {
      throw error;
   }
 
-  public observeTyping(){
+/*   public observeTyping(){
     console.log("observeTyping()");
     if(this.id.length==0) return;
 
@@ -432,17 +523,16 @@ export class ConversationPage implements OnInit {
         }else if(snapshot.numChildren()>0){
 
             //$("#isTyping").show();
-            self.title=this.translate.instant("Escribiendo...");
+            self.title=self.translate.instant("chat.writting");
         }else{
             //$("#isTyping").hide();
-            self.title=this.translate.instant("Chat");
+            self.title=self.translate.instant("chat.header");
         }
     });
-  }
+  } */
 
   backButton(){
     if(this.data)
     this.router.navigate([`/home`]);
   }
-
 }

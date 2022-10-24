@@ -137,7 +137,7 @@ export class AgendaPage implements OnInit {
   }
 
   transformDate(date) {
-    let auxDate = `${date.year}-${date.month}-${date.day}`
+    let auxDate = `${date.year}-${date.month}-${date.day}T${date.end_time}:00`
     let d = new Date(auxDate);
     d.setHours(date.end_time.substring(0,2));
     d.setMinutes(date.end_time.substring(3,5));

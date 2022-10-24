@@ -28,6 +28,7 @@ export class DrugsDetailPage implements OnInit {
   frequencySeleted = 'daily';
   isInit = true;
   expanded = true;
+  isInstant = false
   maxYear = (new Date()?.getFullYear() + 5);
   constructor(
     private dooleService: DooleService,
@@ -42,13 +43,12 @@ export class DrugsDetailPage implements OnInit {
     this.form = this.fb.group({
       from_date: ['', [Validators.required]],
       to_date: ['', [Validators.required]],
-      //from_time: ['', [Validators.required]],
       alias: [''],
       dose: ['', [Validators.required]],
       drug: [],
       time: [''],
       addedByUser: ["1"],
-      frequency: ['daily'],
+      frequency: ['instant'],
       day1: [1],
       day2: [1],
       day3: [1],
@@ -89,13 +89,26 @@ export class DrugsDetailPage implements OnInit {
   }
 
   submit(){
-    console.log('[DrugsDetailPage] submit()',this.form.value);
-    this.isSubmited = true
-    this.isSubmittedFields(true)
-    if(!this.form.valid || this.times.length <= 0){
-      this.isSubmited = false
-      return false;
+    //console.log('[DrugsDetailPage] submit()',this.form.value);
+
+    if(this.isInstant){
+      this.isSubmittedDosis = true;
+      let error = this.form.get('dose').errors
+      console.log('[DrugsDetailPage] saveDrug()', error);
+      if(error?.required)
+      return
     }
+    else{
+
+      this.isSubmited = true
+      this.isSubmittedFields(true)
+      if(!this.form.valid || this.times.length <= 0){
+        this.isSubmited = false
+        return false;
+      }
+    }
+    
+
     if(this.isEditDrug){
       this.updateDrug()
     }else{
@@ -103,22 +116,52 @@ export class DrugsDetailPage implements OnInit {
     }
   }
 
+  setFields(){
+    if(this.isInstant){ // Instant medication
+      const date = new Date()
+      return {
+        from_date: this.transformDate(date),
+        to_date: this.transformDate(date),
+        alias: '',
+        dose: this.form.get('dose').value,
+        drug: this.drug.id,
+        time: [this.transformHour(date)],
+        addedByUser: '1',
+        frequency: 'instant',
+        day1: 1,
+        day2: 1,
+        day3: 1,
+        day4: 1,
+        day5: 1,
+        day6: 1,
+        day7: 1,
+      }
+    }
+    else{ //Medication Plan
+      this.form.get('time').setValue(this.times)
+
+      let from_date = this.form.get('from_date').value
+      this.form.get('from_date').setValue(this.transformDate(from_date))
+  
+      let to_date = this.form.get('to_date').value
+      this.form.get('to_date').setValue(this.transformDate(to_date))
+  
+      let f = this.form.get('frequency').value
+      if(f !== 'daily')
+      this.form.get('frequency').setValue('daily');
+
+      return this.form.value
+    }
+
+  }
+
   saveDrug(){
-    //let times = this.form.get('time').value
-    this.form.get('time').setValue(this.times)
 
-    let from_date = this.form.get('from_date').value
-    this.form.get('from_date').setValue(this.transformDate(from_date))
-
-    let to_date = this.form.get('to_date').value
-    this.form.get('to_date').setValue(this.transformDate(to_date))
-
-    let f = this.form.get('frequency').value
-    if(f !== 'daily')
-    this.form.get('frequency').setValue('daily');
+    const form = this.setFields()
     
-    //console.log('[DrugsDetailPage] saveDrug()', this.form.value);
-    this.dooleService.postAPImedicationPlan(this.form.value).subscribe(async json=>{
+    console.log('[DrugsDetailPage] saveDrug()', form);
+
+    this.dooleService.postAPImedicationPlan(form).subscribe(async json=>{
       console.log('[DrugsDetailPage] saveDrug()', await json);
       if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'add'});
@@ -134,22 +177,16 @@ export class DrugsDetailPage implements OnInit {
 
   }
 
+  snapshot(){
+    this.isInstant = !this.isInstant
+  }
+
   updateDrug(){
-    this.form.get('time').setValue(this.times)
+    this.isLoading = true;
+    const form = this.setFields()
+    console.log('[DrugsDetailPage] updateDrug()', form);
 
-    let from_date = this.form.get('from_date').value
-    this.form.get('from_date').setValue(this.transformDate(from_date))
-
-    let to_date = this.form.get('to_date').value
-    this.form.get('to_date').setValue(this.transformDate(to_date))
-
-    let f = this.form.get('frequency').value
-    if(f !== 'daily')
-    this.form.get('frequency').setValue('daily');
-
-    console.log('[DrugsDetailPage] updateDrug()', this.form.value);
-
-    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id ,this.form.value).subscribe(async json=>{
+    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id , form).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
       if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'update'});
@@ -157,7 +194,9 @@ export class DrugsDetailPage implements OnInit {
         let message = this.translate.instant('medication.error_message_edit_medication')
         alert(message)
       }
+      this.isLoading = false
     },err => {
+      this.isLoading = false
       alert(`Error: ${err.code }, Message: ${err.message}`)
       console.log('[DrugsDetailPage] updateDrug() ERROR(' + err.code + '): ' + err.message); 
       throw err; 

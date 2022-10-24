@@ -1,7 +1,7 @@
 import { transition } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +21,8 @@ export class AddHealthCardPage implements OnInit {
   isSubmittedName = false;
   isSubmittedAffiliationNumber = false;
   isSubmittedModality = false;
+  isSubmittedExpiration = false;
+  isSubmittedIssueDate = false;
   isAddCard = true;
   isSubmitted: boolean;
   constructor(
@@ -46,13 +48,69 @@ export class AddHealthCardPage implements OnInit {
       health_card_type_id: ['', [Validators.required]],
       name: ['', [Validators.required]],
       card_number: ['', [Validators.required]],
-      expiration_date: [''],
-      issue_date: [''],
+      expiration_date: ['', [ this.checkDate.bind(this)]],
+      issue_date: ['', [ this.checkStartDate.bind(this)]],
       /* description: ['description'], */
     
     })
   
   }
+
+  private checkStartDate(group: FormControl) {
+    if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
+      const start_date = group.value;
+      const end_date = this.formHealthCard.get('expiration_date').value;
+      console.log(`[AddHealthCardPage] checkStartDate(${start_date}, ${end_date})`);
+      if(start_date && end_date && end_date !== ''){
+        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+          NotLess: true
+      };
+      }
+    }
+ }
+
+  private checkDate(group: FormControl) {
+    if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
+      const start_date = this.formHealthCard.get('issue_date').value;
+      const end_date = group.value;
+      console.log(`[AddHealthCardPage] checkDate(${start_date}, ${end_date})`);
+      if(start_date && end_date && end_date !== ''){
+        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+          NotLess: true
+      };
+      }
+    }
+ }
+
+ checkDateEvent(){
+  // if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
+  //   const start_date = this.formHealthCard.get('issue_date').value;
+  //   const end_date = this.formHealthCard.get('expiration_date').value;;
+  //   console.log(`[AddHealthCardPage] checkDate(${start_date}, ${end_date})`);
+  //   if(start_date && end_date && end_date !== '' && start_date !== ''){
+  //     return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+  //       NotLess: true
+  //   };
+  //   }
+  // }
+
+  if (this.formHealthCard.get('expiration_date').hasError('NotLess') && this.formHealthCard.get('issue_date').hasError('NotLess')) {
+    console.log('[AddHealthCardPage] checkDateEvent() End y Start Hay error');
+    this.formHealthCard.get('issue_date').setValue('');
+    this.formHealthCard.get('expiration_date').setValue('');
+  }
+
+  else if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
+    console.log('[AddHealthCardPage] checkDateEvent() End Hay error');
+    //this.formHealthCard.get('issue_date').setValue('');
+  }
+  else  if (this.formHealthCard.get('issue_date').hasError('NotLess')){
+    console.log('[AddHealthCardPage] checkDateEvent() Start Hay error');
+    //this.formHealthCard.get('expiration_date').setValue('');
+  }
+  else
+  console.log('[AddHealthCardPage] checkDateEvent() No Hay error');
+ }
 
   ionViewDidEnter(){
     console.log('[AddHealthCardPage] ionViewDidEnter()');
@@ -70,6 +128,19 @@ export class AddHealthCardPage implements OnInit {
     }
   }
 
+  getErrorEndDate() {
+    if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
+      return this.translate.instant("add_health_card.error_end_date");
+    }
+    return '';
+  }
+
+  getErrorStartDate() {
+    if (this.formHealthCard.get('issue_date').hasError('NotLess')) {
+      return this.translate.instant("add_health_card.error_start_date");
+    }
+    return '';
+  }
 
   showDetailCard(){
     this.formHealthCard.get('id').setValue(this.card.id)
@@ -188,6 +259,8 @@ export class AddHealthCardPage implements OnInit {
     this.isSubmittedName = isSubmitted
     this.isSubmittedAffiliationNumber = isSubmitted;
     this.isSubmittedModality = isSubmitted;
+    this.isSubmittedExpiration = isSubmitted;
+    this.isSubmittedIssueDate = isSubmitted;
   }
 
   deleteHealthCard(){

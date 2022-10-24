@@ -13,8 +13,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     return next.handle(request).pipe(
-      // TODO: SET RETRY TO 1
-      retry(0),
+      retry(1),
       timeout(30000),
       catchError((error) => {
         console.log('ServerErrorInterceptor -> ', error);

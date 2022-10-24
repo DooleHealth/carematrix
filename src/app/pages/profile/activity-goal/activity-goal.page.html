@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>{{header}}</ion-title>
     <ion-buttons slot="end" >
-      <ion-button color="primary" (click)="this.addReminder()" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
-      <ion-icon slot="icon-only" name="add" color="primary"
+      <ion-button *ngIf="role?.component?.reminder" color="primary" (click)="this.addReminder()" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
+      <ion-icon *ngIf="role?.component?.element" slot="icon-only" name="add" color="primary"
       (click)="this.addElement()"></ion-icon>
     </ion-buttons>
    
@@ -62,7 +62,7 @@
 
 <div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
 
-<div *ngIf="goals !== undefined &&  goals.length >0"> 
+<div *ngIf="goals !== undefined &&  goals.length >0 && role?.component?.goal"> 
   <div class="main-container">
     <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_reward' | translate}}</ion-text>
   </div>
@@ -72,7 +72,9 @@
         <ion-col size="2">
           <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
         </ion-col>
-        <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col>
+        <!-- <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col> -->
+        <ion-col size="10" class="txtTitleGoals2">{{'goals.description1' | translate}} {{header?.toLowerCase()}} {{goal?.typeString?.toLowerCase()}} {{this.units}} {{'goals.description2' | translate}} {{goal?.coin?.name?.toLowerCase()}}: 
+          <b>{{goal.score}} {{goal?.coin?.name?.toUpperCase()}}</b><br></ion-col>
       </ion-row>
     </ion-card>
 </div>
@@ -83,7 +85,7 @@
   </div>
   <ion-card class="cardProfilePadding">
     <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
-    <div *ngIf="description" [innerHtml]="this.description"></div>
+    <div *ngIf="description" [innerHtml]="this.description | safeHtml"></div>
     <!-- <ion-item-divider></ion-item-divider> -->
     <div *ngIf="this.normalValue.length > 0">
       <div *ngFor="let range of this.normalValue">

@@ -111,7 +111,8 @@
         "element":"Elements",
         "enable_notifications": "Activar Notificacions",
         "message_enable_notifications": "Voleu activar totes les notificacions?",
-        "close_app": "Vols tancar l'aplicació?"
+        "close_app": "Vols tancar l'aplicació?",
+        "get_firts_data": "Introdueix la teva primera dada"
       },
       "profile":{
         "title_profile": "El meu perfil",
@@ -124,14 +125,22 @@
           "emergency": "Contactes d'Emergència",
           "your_health_cards": "Les teves Targetes Sanitàries",
           "your_goals": "Els teus Objectius",
-          "payment_method": "Mètode de pagament"
+          "payment_method": "Mètode de pagament",
+          "your_challenges": "Els teus reptes"
+        },
+        "professional": {
+          "title_professional": "Professionals",
+          "patiens":"Pacients",
+          "request": "Peticions",
+          "medical_history": "Antecedents"
         },
         "configuration": {
           "title_setting": "Configuració",
           "linked_accounts":"Comptes Vinculades",
           "settings": "Ajustos",
           "videocall_test": "Test de Connectivitat",
-          "videocall_open":"Obrir"
+          "videocall_open":"Obrir",
+          "bluetooth": "Bluetooth"
         },
         "help": {
           "title_help":  "Ajuda",
@@ -152,8 +161,31 @@
         "button_go_profile": "Perfil",
         "subtitle_reward": "Recompensa",
         "description_reward": "Aconsegueix el teu objectiu i suma Healthies:",
+        "description1": "Aconsegueix el teu objectiu",
+        "description2": "i suma",
         "subtitle_information": "Informació",
-        "subtitle_advices": "Consells"
+        "subtitle_advices": "Consells",
+        "points": "Punts"
+      },
+      "health_path": {
+        "title":"Camí de la salut",
+        "card_title": "Els meus reptes",
+        "goals": "Objectius",
+        "start": "Inici",
+        "detail":"¿Com assolir el meu objectiu?",
+        "weight":"Pren el teu ",
+        "measure":"Introdueix la mesura: ",
+        "form":"Respon al formulari ",
+        "advice":"Llegeix el consell ",
+        "game":"Juga a ",
+        "drug":"Prendre el medicament ",
+        "news":"Llegeix la notícia ",
+        "diet":"Llegeix la dieta ",
+        "blocked_level": "Aquest nivell està bloquejat",
+        "goal":"Tens <strong>{{ total }} {{ coin }}</strong>, aconsegueix {{ required }} més i passa al següent nivell.",
+        "level_congratulations":"Felicitats!",
+        "level_accomplished":"Has avançat de nivell",
+        "done":"Fet!"
       },
       "activity_goal":{
         "definition": "Definició",
@@ -184,14 +216,16 @@
 
         "male":"Home",
         "feminine": "Femení",
-        "non-binary":"No binari"
-
+        "non-binary":"No binari",
+        "delete_pictures": "Eliminar imatge",
+        "delete_photo": "Vols eliminar la foto de perfil?"
       },
       "alert": {
         "button_ok": "D'acord",
         "button_acept": "Acceptar",
         "button_apply": "Aplicar",
         "button_cancel": "Cancel·lar",
+        "button_not_now": "Ara no, gràcies",
         "button_change": "Canviar",
         "button_send": "Enviar",
         "header_error": "Error",
@@ -218,7 +252,9 @@
         "subtitle_news": "Notícies",
         "subtitle_offers": "Promocions",
         "subtitle_form": "Formularis",
+        "subtitle_games": "Jocs",
         "subtitle_messages": "Missatges",
+        "subtitle_release": "Novetats",
         "lenguage_ca": "Català",
         "lenguage_es": "Castellà",
         "error_changed_language": "Error a l'actualitzar l'idioma!",
@@ -244,7 +280,10 @@
           "msg_alert_change_perfil": "Vols canviar a aquest perfil?",
           "canAccess":"Estàs a càrrec de:",
           "othersCanAccess":"El teu tutor és:"
-        }
+        },
+        "sign_off": "Tancar sessió",
+        "message_sign_off": "Vols tancar sessió a tots els dispositius?",
+        "error_message_sign_off": "Ha passat un error en tancar sessió"
 
       },
       "report_problem":{
@@ -279,7 +318,9 @@
         "alert_message_add_card": "La targeta s'ha afegit correctament",
         "button_add": "Afegir",
         "error_alert_message_add_card": "Error: la targeta no ha pogut ser afegida",
-        "placeholder_select":"Selecciona un"
+        "placeholder_select":"Selecciona un",
+        "error_end_date": "La data de caducitat ha de ser major que la data d'expedició",
+        "error_start_date": "La data d'expedició ha de ser menor que la data de caducitat"
       },
       "edit_health_card":{
         "header_edit_card": "Edita Targeta Sanitària",
@@ -338,6 +379,8 @@
         "no_events": "No hi ha esdeveniments",
         "month": ["Gen", "Febr", "Març", "Abr", "Maig", "Juny", "Jul", "Ag", "Set", "Oct", "Nov", "Des"],
         "days": ["DL", "DT", "DC", "DJ", "DV", "DS", "DG"],
+        "today": "Avui",
+        "yesterday": "Ahir",
         "appointment_by_user": "Cita afegida per l'usuari",
         "event_by_user": "Esdeveniment afegit per l'usuari",
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada",
@@ -404,7 +447,8 @@
           "month2": "2 mesos",
           "month3": "3 mesos"
           
-        }
+        },
+        "error_end_date": "La data de terme ha de ser més gran que la data de comença"
       },
       "appointment":{
         "header_appointment": "Detall cita",
@@ -474,7 +518,10 @@
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosi",
         "placeholder_alias":"Nom alternatiu",
-        "placeholder_search":"Cerca per nom o codi"
+        "placeholder_search":"Cerca per nom o codi",
+
+        "snapshot_medication":"Presa instantània",
+        "medication_plan":"Pla de Medicació"
       },
       "tracking":{
         "header": "Seguiment",
@@ -552,6 +599,7 @@
           "all_day": "tot el dia"
       },
       "diet":{
+        "detail": "Dieta",
         "breakfast": "Esmorzar",
         "brunch": "Mig Matí",
         "lunch": "Dinar",
@@ -577,22 +625,29 @@
         "perfil":"Perfil",
         "open": "Obrir",
         "exit": "Sortir",
-        "reject": "Rebutjar"
+        "reject": "Rebutjar",
+        "yes": "Si",
+        "no": "No"
       },
       "conversation":{
-        "placeholder":"Escriu un missatge"
+        "placeholder":"Escriu un missatge",
+        "warning":"Advertència: ",
+        "warning_text":"Aquest no és un xat en temps real",
+        "open_file": "Obrir arxiu"
       },
       "advices":{
         "header":"Novetats i Consells",
         "tag_news": "Novetats",
         "tag_advices": "Consells",
-        "searchbar":"Cercar"
+        "searchbar":"Cercar",
+        "links": "Enllaços directes"
       },
       "contact":{
         "header": "Contacta",
         "tap_video": "Videoconsulta",
         "tap_appointment": "Cita Presencial",
         "tap_chat": "Chat",
+        "tap_pusher": "Pusher",
         "text_video": "Parla directament amb el teu professional habitual o un especialista des d'on tu quieras.Te atendran en l'horari seleccionat",
         "regular_professional": "Professional Habitual",
         "text_regular_professional": "Reserva una cita amb el teu metge o professional de sempre per realitzar la videoconsulta",
@@ -614,7 +669,9 @@
       },
       "medical_calendar":{
         "header":"Seleccionar Data",
-        "no_slot_available":"No hi ha slots disponibles per a aquest dia"
+        "no_slot_available":"No hi ha slots disponibles per a aquest dia",
+        "previousLabel": "Previ ",
+        "nextLabel":"Següent"
       }, 
       "specialist_finder":{
         "header":"Reservar",
@@ -637,7 +694,11 @@
         "error_upload_files": "Error a l'adjuntar els arxius"
       },
       "chat":{
-        "header":"Chat"
+        "header":"Chat",
+        "writting":"Escrivint...",
+        "loading":"Carregant més dades...",
+        "end":"Fi",
+        "attached_file": "Arxiu adjunt"
       },
       "payment":{
         "header":"Mètode de pagament",
@@ -656,7 +717,8 @@
         "news":"En aquest apartat podràs trobar les notícies i consells que millor s'adapten al teu perfil",
         "family":"En aquest apartat podràs loguearte amb l'usuari del qual siguis tutor o cuidador, podent accedir a les seves dades de salut. T'advertirem en cada pàgina que actues en nom d'un altre amb un signe d'exclamació (!). Pots tornar al teu perfil sempre que ho desitgis prement damunt d'aquest mateix signe.",
         "medication":"Pots canviar l'estat de la medicació (prendre, presa o oblidada) punxant damunt d'aquest botó",
-        "chat":"Recorda que el teu doctor pot trigar un temps a contestar-te, depenent de la seva càrrega de treball. Gràcies per ser pacient!"
+        "chat":"Recorda que el teu doctor pot trigar un temps a contestar-te, depenent de la seva càrrega de treball. Gràcies per ser pacient!",
+        "show_advice":""
       },
       "face-id": {
         "description": "Aquesta aplicació es bloca automàticament per garantir-ne la seguretat",
@@ -727,6 +789,16 @@
       "commons":{
         "error-network": "S'ha perdut la connexió amb Internet",
         "error-timeout": "S'ha superat el temps d'espera, si us plau intenteu de nou"
+      },
+      "patient":{
+        "title": "Pacients"
+      },
+      "mode_development":{
+        "mode_activate": "Manera desenvolupador activat",
+        "mode_desactivate": "Manera desenvolupador desactivat",
+        "mode_0":"Producció",
+        "mode_1": "Qualitat",
+        "mode_2": "Desenvolupament"
       }
       
 }

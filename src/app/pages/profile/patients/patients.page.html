@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'patient.title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar 
+  [animated]="true" 
+  (ionInput)="filterList($event)" 
+  placeholder="{{ 'advices.searchbar' | translate}}">
+</ion-searchbar>
+
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
+  <div *ngIf="!this.isLoading && this.patients.length > 0 ; else noData">
+    <ion-list *ngFor="let person of patients">
+      <ion-item *ngIf="person !== undefined">
+        <ion-text class="txtPaddingLeft">
+          {{person.name}}
+        </ion-text>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="accessibility"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+   
+  </ng-template>
+</ion-content>

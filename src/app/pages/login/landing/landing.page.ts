@@ -22,6 +22,7 @@ const { Storage } = Plugins;
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
+  settingsBio = '';
   NUM_FAIL_LOGIN = 4;
   NUM_SECONDS = 120
   pushNotification: any;
@@ -33,6 +34,9 @@ export class LandingPage implements OnInit {
   biometricAuth: any;
   numFailLogin = 0;
   numFailFingerP = 0;
+  public isProd: boolean = true
+  biometric_list = []
+  environment = 0
   constructor(
     private router: Router,
     public route: ActivatedRoute,
@@ -68,18 +72,25 @@ export class LandingPage implements OnInit {
   }
 
   ionViewDidEnter(){
+    this.getListBiometric()
+    this.getIndexEndPoint()
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
     console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
     // if(this.pushNotification){
     //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
     // }
-    this.loginForm.get('username').setValue('')
-    this.loginForm.get('password').setValue('')
+    this.loginForm.get('username').setValue('akio.dhairya')
+    this.loginForm.get('password').setValue('ayriahd.oika')
     this.loginForm.get('hash').setValue('')
     this.loginForm.clearValidators()
     this.getStoredValues()
     this.blockedLogin()
+  }
+
+  getIndexEndPoint(){
+    this.isProd = Number(localStorage.getItem('endpoint')) === 0? true:false
+    console.log("[AuthService] indexEndPoint: ", this.isProd);
   }
   
   async dismissLoading() {
@@ -185,9 +196,21 @@ export class LandingPage implements OnInit {
     this.dooleService.postAPIpasswordRecovery(user) .subscribe(
       async (res: any) =>{
         console.log('[InitialPage] passwordRecovery()', await res);
-        if(res.message){
-          let message = this.translate.instant('landing.message_email_sent')
+        let message = ''
+        if(res?.error?.message){
+          message = this.translate.instant('landing.message_failure_response')
           this.dooleService.presentAlert(message)
+          return
+        }
+        if(res?.message && res.message !== ''){
+
+          if(res.message == 'Email sent'){
+            message = this.translate.instant('landing.message_email_sent')
+            this.dooleService.presentAlert(message)
+          }else{
+            message = res.message
+            this.dooleService.presentAlert(message)
+          }
         }
        },(err) => {
           console.log('[LandingPage] passwordRecovery() ERROR(' + err.code + '): ' + err.message);
@@ -264,18 +287,17 @@ export class LandingPage implements OnInit {
     if(!this.isAvailableFaID())
     return 
 
-    const biometricsEnabled = localStorage.getItem('settings-bio');
-    const biometricToken =  localStorage.getItem('bio-auth');
-    
+    const biometricsEnabled = localStorage.getItem(this.settingsBio);
+    const biometricToken =  this.getBiometric(); //localStorage.getItem('bio-auth');
+    console.log('[LandingPage] getStoredValues() 1 biometricsEnabled: ', biometricsEnabled, JSON.stringify(biometricToken));
     if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
       this.hasBiometricAuth = true;
-      this.biometricAuth = JSON.parse(biometricToken) ;
-      //this.loginForm.get('hash').setValue(this.biometricAuth.hash)
+      this.biometricAuth = biometricToken; //JSON.parse(biometricToken) ;
     }else{
       this.hasBiometricAuth = false;
     }
     const showDialog = localStorage.getItem('show-bio-dialog');
-
+    console.log('[LandingPage] getStoredValues() 2 showDialog: ', showDialog, this.hasBiometricAuth);
     if(showDialog!== 'false'){
       console.log('showDialog: ', showDialog !== 'false');
       this.showBiometricDialog = true;
@@ -286,20 +308,42 @@ export class LandingPage implements OnInit {
       
   }
 
+  getBiometric(){
+    return this.biometric_list.find(bio => bio.endpoint === this.environment);
+  }
+
   isAvailableFaID(): Promise<any>{
-    const showDialog = localStorage.getItem('show-bio-dialog');
-    console.log('[LandingPage] isAvailableFaID() showDialog:', showDialog);
    return this.faio.isAvailable().then((result: any)  =>{
       console.log(result)
       const showDialog = localStorage.getItem('show-bio-dialog');
-      console.log('[LandingPage] isAvailableFaID() showDialog:', showDialog);
+      console.log('[LandingPage] isAvailableFaID() 1 showDialog:', showDialog);
       if(showDialog === undefined || showDialog === null)
         localStorage.setItem('show-bio-dialog','true');
+      else if(!this.isBiometric())
+        localStorage.setItem('show-bio-dialog','true');
+      else
+        localStorage.setItem('show-bio-dialog','false');
+
+        console.log('[LandingPage] isAvailableFaID() 2 showDialog:', localStorage.getItem('show-bio-dialog'));
       return true
     }).catch(async (error: any) => {
         localStorage.setItem('show-bio-dialog','false');
       return false
     });
+  }
+
+  getListBiometric(){
+    let list = JSON.parse(localStorage.getItem('biometric_list'))
+    this.biometric_list = list? list:[];
+    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    this.settingsBio = 'settings-bio' + this.environment
+    console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
+  }
+
+  isBiometric(){
+    const bio = this.biometric_list.find(bio => bio.endpoint === this.environment);
+    if(bio) return true;
+    else return false
   }
 
 

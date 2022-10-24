@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item>
         <ion-label class="txtTitleGoals">{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-input class="textMedium" formControlName="phone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
+        <ion-input class="textMedium" inputmode="numeric" formControlName="phone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
         <ion-label class="textMedium" *ngIf="this.isSubmittedTelephone && this.formContact.get('phone').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
  
       </ion-item>

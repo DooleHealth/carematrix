@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { DocumentsAddPage } from './documents-add/documents-add.page';
 import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
+import { RolesService } from 'src/app/services/roles.service';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -17,7 +18,7 @@ export interface ListDiagnosticTests {
 }
 export interface Filter {
   start_date?: string,
-  end_date?: number,
+  end_date?: string,
   testTypes?: [],
   profesional?: [],
   sources?: [],
@@ -52,8 +53,8 @@ export class TrackingPage implements OnInit {
     private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    private domSanitizer: DomSanitizer
-
+    private domSanitizer: DomSanitizer,
+    public role: RolesService
   ) { }
 
 
@@ -61,8 +62,8 @@ export class TrackingPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.setSegment()
     this.segmentChanged();
-    //this.getFormList();
     this.fireEvent(null, 0) 
   }
 
@@ -221,6 +222,18 @@ export class TrackingPage implements OnInit {
     }
   }
 
+  setSegment(){
+    if(!this.role?.component?.doc_diagnostic){
+      this.segment = 'forms'
+      if(!this.role?.component?.form){
+          this.segment = 'graphics'
+          if(!this.role?.component?.element){
+          this.segment = ''
+      }
+      }
+    }
+  }
+
   fireEvent(e, i){
     this.listDiagnostic?.forEach( (diagnostic, index) =>{
       if(index == i)
@@ -286,7 +299,10 @@ async addDocument(){
           if(result?.data?.error){
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
-            this.filter.start_date = this.filter.start_date.split('T')[0]
+            if(this.filter?.start_date)
+            this.filter.start_date = this.filter?.start_date?.split('T')[0]
+            if(this.filter?.end_date)
+            this.filter.end_date = this.filter?.end_date?.split('T')[0]
             this.getDiagnosticTestsList()
           }
         });

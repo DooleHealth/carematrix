@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, Platform } from '@ionic/angular';
+import { AlertController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ReportProblemPage } from './report-problem/report-problem.page';
@@ -11,6 +11,9 @@ import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 import { TranslateService } from '@ngx-translate/core';
 import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe.page';
+import { PatientsPage } from './patients/patients.page';
+import { RolesService } from 'src/app/services/roles.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,11 +21,13 @@ import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  private readonly  NUM_CLICK_AVATAR = 10;
   userDoole : any
   isLoading: boolean;
   userImage:string = history.state?.user ?  history.state?.user.temporaryUrl : 'assets/icons/user_icon.svg'
   version:string = "";
   tokboxSession: any;
+  modeNumDev: number = 0
   constructor( 
     public authService: AuthenticationService,
     public appVersion: AppVersion,
@@ -32,13 +37,19 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     private iab: InAppBrowser,
     private dooleService: DooleService,
-    private opentokService: OpentokService, private translate : TranslateService,) { }
+    private opentokService: OpentokService, 
+    private translate : TranslateService,
+    private toastController: ToastController,
+    private alertController: AlertController,
+    private pusherConnection: PusherConnectionService,
+    public role: RolesService) { }
 
   ngOnInit() {
     this.getUserProfile();
   }
 
   ionViewWillEnter(){
+    this.modeNumDev = 0
     this.getPersonalInformation()
    
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
@@ -71,11 +82,28 @@ export class ProfilePage implements OnInit {
     }
 
 
-  async signOut() {
-    await this.authService.logout().then(res=>{
-      this.router.navigateByUrl('/landing');
-    });
-  }
+    async signOut(confirm) {
+      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+        
+        this.authService.logout(confirm).subscribe(
+          async (res: any)=>{
+          await res
+          console.log('[ProfilePage] signOut()', JSON.stringify(res))
+          this.pusherConnection.unsubscribePusher()
+          if(res.success)
+          this.router.navigateByUrl('/landing');
+          else{
+            let message = this.translate.instant('setting.error_message_sign_off')
+            this.dooleService.showAlertAndReturn('Error',message, false,'/landing')
+          }
+        });
+      }else{
+        await this.authService.logout1().then(res=>{
+          this.pusherConnection.unsubscribePusher()
+          this.router.navigateByUrl('/landing');
+        });
+      }
+    }
 
   async sendReportProblem(){
     const modal = await this.modalCtrl.create({
@@ -185,5 +213,85 @@ export class ProfilePage implements OnInit {
 
   }
 
+  async openPatientsModal(){
+    console.log('openPatientsModal()', ); 
+    const modal = await this.modalCtrl.create({
+      component: PatientsPage,
+      componentProps: {},
+    });
+    await modal.present();
+
+  }
+
+  modeDevelopment(){
+    this.modeNumDev = ++this.modeNumDev;
+    console.log('modeDevelopment()', this.modeNumDev); 
+    if(this.modeNumDev >= this.NUM_CLICK_AVATAR){
+        let modeActivate = JSON.parse(localStorage.getItem('modeActivate'));
+        if(!modeActivate){
+          localStorage.setItem('modeActivate', 'true');
+        }else localStorage.setItem('modeActivate', 'false');
+        modeActivate = !modeActivate
+        console.log('modeDevelopment()', modeActivate); 
+        let message =  this.translate.instant(modeActivate? 'mode_development.mode_activate':'mode_development.mode_desactivate')
+        this.displayToastPusher(message)
+        this.modeNumDev = 0;
+    }
+    
+  }
+
+  displayToastPusher(message) { 
+    try {
+      this.toastController.dismiss().then(() => {
+      }).catch(() => {
+      }).finally(() => {
+        console.log('Closed')
+      });
+    } catch(e) {}
+    
+    this.toastController.create({
+      position: 'bottom', //'middle', 'bottom'
+      /* cssClass: 'toast-pusher-class', */
+      message: message,
+      animated: true,
+      duration: 4000,
+      buttons: [{
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }).then((toast) => {
+      toast.present();
+    });
+  }
+
+  async confirmCloseAllDevices() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: this.translate.instant('setting.sign_off'),
+      message: this.translate.instant('setting.message_sign_off'),
+        buttons: [
+          {
+            text: this.translate.instant("button.no"),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('[LandingPage] AlertConfirm Cancel');
+              this.signOut(false)
+            }
+          }, {
+            text: this.translate.instant("button.yes"),
+            handler: (data) => {
+              this.signOut(true)
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+  }
 
 }

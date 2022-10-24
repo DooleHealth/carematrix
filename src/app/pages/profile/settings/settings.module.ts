@@ -19,6 +19,6 @@ import { PasswordPageModule } from './password/password.module';
     SettingsPageRoutingModule,
     PasswordPageModule
   ],
-  declarations: [SettingsPage]
+  declarations: [SettingsPage],
 })
 export class SettingsPageModule {}

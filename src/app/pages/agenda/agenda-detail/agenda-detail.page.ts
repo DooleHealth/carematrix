@@ -17,6 +17,7 @@ import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 import { VideocallIframePage } from '../videocall-iframe/videocall-iframe.page';
+import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -54,6 +55,7 @@ export class AgendaDetailPage implements OnInit {
     public notification: NotificationService,
     private languageService: LanguageService,
     public platform: Platform,
+    public role: RolesService
   ) { }
 
   ngOnInit() {

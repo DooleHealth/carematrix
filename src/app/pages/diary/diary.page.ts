@@ -12,7 +12,9 @@ import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { DrugAddPage } from './drug-add/drug-add.page';
 import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
 import { StorageService } from 'src/app/services/storage.service'; 
+import { RolesService } from 'src/app/services/roles.service';
 import { isEqual } from 'lodash';
+import { Router } from '@angular/router';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -65,9 +67,12 @@ export class DiaryPage implements OnInit {
     public authService: AuthenticationService,
     private storageService: StorageService,
     private nav: NavController,
+    public role: RolesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.setSegment()
     this.items = []
     console.log('[DiaryPage] ngOnInit()');
     // let state = history.state?.segment;
@@ -85,9 +90,6 @@ export class DiaryPage implements OnInit {
     }
   }
     
-  ionViewDidLeave(){
-   
-  }
   load(){
     this.firstTime = true;
     this.storageService.saveFirstTimeLoad(false);
@@ -120,18 +122,6 @@ export class DiaryPage implements OnInit {
   expandItem(item): void {
     console.log('[DiaryPage] expandItem()', item.expanded);
     item.expanded = !item.expanded;
-    // if (item.expanded) {
-    //   item.expanded = false;
-    // } else {
-    //   this.items.map(listItem => {
-    //     if (item == listItem) {
-    //       listItem.expanded = !listItem.expanded;
-    //     } else {
-    //       listItem.expanded = false;
-    //     }
-    //     return listItem;
-    //   });
-    // }
   }
 
   expandItemDiet(item){
@@ -326,46 +316,14 @@ export class DiaryPage implements OnInit {
 
   async openGames(item){
     var browser : any;
-    if(item.type=="html5"){
-      const iosoption: InAppBrowserOptions = {
-        zoom: 'no',
-        location:'yes',
-        toolbar:'yes',
-        clearcache: 'yes',
-        clearsessioncache: 'yes',
-        disallowoverscroll: 'yes',
-        enableViewportScale: 'yes'
-      }
-
-      await this.auth.getUserLocalstorage().then(value =>{
-        this.auth.user = value
-      })
-      
-      if(item.url.startsWith("http")){
-        item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
-        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
-      }
-      else
-        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+    if(item.game_type=="html5"){
+      console.log('[DiaryPage] openGames()', 'html5');
+      this.router.navigate([`/journal/games-detail`],{state:{ id:item.id}});
     }
 
-    if(item.type=="form") {
-      const options: InAppBrowserOptions = {
-        location: 'no',
-        toolbar: 'yes'
-      };
-
-      var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+item.form_id+'" method="post" enctype="multipart/form-data">' +
-        '<input type="hidden" name="idForm" value="'+item.form_id+'">' +
-        '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
-        '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
-        '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
-      var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-      var browserRef = this.iab.create(
-        pageContentUrl,
-        "_blank",
-        "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      );
+    if(item.game_type=="form") {
+      console.log('[DiaryPage] openGames()', 'form');
+      this.router.navigate([`/journal/games-detail`],{state:{ id:item.id, form_id: item.form_id}});
     }
 
   }
@@ -447,6 +405,21 @@ export class DiaryPage implements OnInit {
     }
   }
 
+  setSegment(){
+    if(!this.role?.component?.diet){
+      this.segment = 'medication'
+      if(!this.role?.component?.drug){
+          this.segment = 'games'
+          if(!this.role?.component?.game){
+            this.segment = 'health'
+            if(!this.role?.component?.element){
+              this.segment = ''
+            }
+          }
+      }
+    }
+  }
+
   selectDayPeriod(time){
     let h =  time.split(':')  //new Date(time).getHours()
     let hour = Number(h[0])
@@ -473,20 +446,21 @@ export class DiaryPage implements OnInit {
 
   selectMealTime(time){
     let h =  time.split(':')  //new Date(time).getHours()
-    let hour = Number(h[0])
-    if(hour >= 6  && hour < 10){
+    let minute = Number(h[1])
+    let hour = Number(h[0]) + minute/60
+    if(hour >= 6  && hour <= 10){
       return this.translate.instant('diet.breakfast')
     }
     if(hour >= 11 && hour < 13){
       return this.translate.instant('diet.brunch')
     }
-    if(hour >= 14 && hour <= 16){
+    if(hour >= 13 && hour <= 16){
       return this.translate.instant('diet.lunch')
     }
-    if(hour >=18 && hour <= 19){
+    if(hour >=17 && hour <= 19){
       return this.translate.instant('diet.afternoon_snack')
     }
-    if(hour >=20 && hour <= 22){
+    if(hour >19 && hour <= 22){
       return this.translate.instant('diet.dinner')
     }
   }

@@ -21,6 +21,7 @@ export class BookingsPage implements OnInit {
   staff = history.state.staff;
   staffId = this.staff?.id
   selectedDate: string;
+  online// = history.state.isOnline;
   files: Array<{ name: string, file: any, type: string }> = [];
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   form: FormGroup;
@@ -46,10 +47,15 @@ export class BookingsPage implements OnInit {
       indications: [],
       // file:[this.images],
       staff_id:[this.staffId],
-      online:[history.state.isOnline]
+      online:[this.online]
     });
     this.setTitle()
     console.log(`[BookingsPage] ngOnInit() staffId: `, this.staffId );
+  }
+
+  ionViewDidEnter(){
+    this.online = JSON.parse(localStorage.getItem('isOnline-contact')) ;
+    console.log(`[BookingsPage] ionViewDidEnter() online: `, this.online);
   }
 
   setTitle(){
@@ -57,8 +63,8 @@ export class BookingsPage implements OnInit {
     this.form.get('title').setValue(messagge)
   }
 
-  transformDate(date) {
-    return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
+  transformDate(date, format) {
+    return this.datepipe.transform(date, format);
   }
 
   trasnforHourToMinutes(time): any{
@@ -67,16 +73,25 @@ export class BookingsPage implements OnInit {
 
   async addAgenda(){
     console.log(`[BookingsPage] addAgenda()`, this.form.value );
+
+    this.form.get('online').setValue(this.online)
+
+    let params = this.form.value
+    params.date = this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss')
+
+    console.log(`[BookingsPage] addAgenda()1`, params);
+    //return
     this.isLoading = true
-    this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
+    this.dooleService.postAPIaddAgenda(params).subscribe(
       async (res: any) =>{
         console.log('[BookingsPage] addAgenda()', await res);  
         if(res.success){
+          this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
           // this.analyticsService.logEvent('create_agenda', res)   
           if(!this.uploadFile.isEmptyFiles()){
             this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
               if(res.success){
-                this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+                this.nav.navigateForward('/agenda', { state: {date: params.date} });
                 this.notification.displayToastSuccessful()
               }
               else{
@@ -85,7 +100,7 @@ export class BookingsPage implements OnInit {
               }
             })
           } else{
-            this.nav.navigateForward('/agenda', { state: {date: this.form.get('date').value} });
+            this.nav.navigateForward('/agenda', { state: {date: params.date} });
             this.notification.displayToastSuccessful()
           }
         }
@@ -132,7 +147,7 @@ export class BookingsPage implements OnInit {
         if(result.data['date']){
           this.duration = result.data['duration']
           this.selectedDate = result.data['date']; 
-          this.form.patchValue({date: this.transformDate(this.selectedDate)})
+          this.form.patchValue({date: this.transformDate(this.selectedDate, 'dd/MM/yyyy HH:mm')})
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }
     });
@@ -147,9 +162,11 @@ export class BookingsPage implements OnInit {
     if(this.form.invalid)
       return 
   
+    this.form.get('online').setValue(this.online)
+    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'dd/MM/yyyy HH:mm'))
     this.files = this.uploadFile.files
 
-    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files}});
+    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files, selectedDate: this.selectedDate}});
     
   }
 //  navigateDoctors() {

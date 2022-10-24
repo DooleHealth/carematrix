@@ -1,16 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons mode="ios" slot="start">
+  <ion-toolbar  mode="ios">
+    <ion-buttons slot="start">
       <ion-back-button text="" (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{diet.name}}</ion-title>
+    <ion-title>{{'diet.detail' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="spin" *ngIf="this.isLoading">
+  <div class="spin" *ngIf="this.isLoading;else showDiet">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
+  <ng-template #showDiet>
   <ion-card class="cardProfile">
      
         <img *ngIf="diet.image" [src]="diet.image.thumbnailTemporaryUrl">
@@ -56,5 +57,5 @@
         </ion-col>
       </ion-row>
     </ion-card>
-  
+  </ng-template>
   </ion-content>

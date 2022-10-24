@@ -1017,6 +1017,19 @@ export class DooleService {
     );
   }
 
+  getAPISearchAdvices(query: any): Observable<any> {
+    let path = 'advices';
+    let httpParams = new HttpParams();
+    httpParams = (query) ? httpParams.append('search', query) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPISearchAdvices(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIdetailAdvices(id: any): Observable<any> {
     let path = `advice/${id}`;
     const endpoint = this.api.getEndpoint(path);
@@ -1314,7 +1327,9 @@ export class DooleService {
   getAPIallowedContacts(): Observable<any> {
     let path = `user/allowedContacts`;
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('withDepartments', '1') 
+    return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         let allowed = res.allowed
@@ -1437,12 +1452,98 @@ export class DooleService {
     );
   }
 
+  updateAPIImageuser(params: Object): Observable<any> {
+    let path = `user/image`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIImageuser(): Observable<any> {
+    let path = `user/image`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
   postAPIContentStatus(params: Object): Observable<any> {
     let path = 'content/status'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
         //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIpatients(): Observable<any> {
+    let path = 'user/patients';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPILevelInfo(challengeId, levelId, params?): Observable<any> {
+    let path = 'user/challenge/'+challengeId+'/level/'+ levelId+'/goals'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPILevelInfo(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIChallenge(challengeId, params?): Observable<any> {
+    let path = 'user/challenge/'+challengeId
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenge(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIChallenges( params?): Observable<any> {
+    let path = 'user/challenges'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+
+  
+
+  getAPImessage(id, params?): Observable<any> {
+    let path = 'user/message/'+ id
+    let httpParams = new HttpParams();
+    httpParams = httpParams? httpParams.append('page', params) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIelementsList(${path}) res: `, res);
         return res;
       })
     );

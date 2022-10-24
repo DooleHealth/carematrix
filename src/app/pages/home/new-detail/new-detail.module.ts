@@ -9,16 +9,19 @@ import { NewDetailPageRoutingModule } from './new-detail-routing.module';
 import { NewDetailPage } from './new-detail.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TranslateModule } from '@ngx-translate/core';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule,
+    TranslateModule.forChild(),
+    ShareModule,
     NewDetailPageRoutingModule
   ],
   providers: [ InAppBrowser],
-  declarations: [NewDetailPage]
+  declarations: [NewDetailPage],
+  exports:[TranslateModule]
 })
 export class NewDetailPageModule {}
