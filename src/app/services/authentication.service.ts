@@ -109,8 +109,10 @@ export class AuthenticationService {
           return res
         }
         // save user's token
-        if (res.token)
+        if (res.token){
           this.setAuthToken(res.token);
+        }
+
         // Set indexEndPoint ios_dev if it is QA
           this.getIndexEndPoint()
         // if (res.firebaseToken) {

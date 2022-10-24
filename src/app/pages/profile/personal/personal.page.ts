@@ -78,6 +78,13 @@ export class PersonalPage implements OnInit {
           this.addImage(CameraSource.Photos);
         }
       },
+      {
+        text: this.translate.instant('personal.delete_pictures'),
+        icon: 'trash',
+        handler: () => {
+          this.alertDeletePhoto();
+        }
+      },
       // {
       //   text: this.translate.instant('documents_add.file'),
       //   icon: 'document',
@@ -103,6 +110,17 @@ export class PersonalPage implements OnInit {
       buttons
     });
     await actionSheet.present();
+  }
+  deleteImage() {
+    this.dooleService.deleteAPIImageuser().subscribe(
+      async (res: any) =>{
+        console.log('[PersonalPage] getPersonalInformation()', res);
+        this.isLoading = false
+       },(err) => { 
+          console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
+          this.isLoading = false 
+          throw err; 
+      });
   }
 
   async addImage(source: CameraSource) {
@@ -161,6 +179,30 @@ export class PersonalPage implements OnInit {
         text: this.translate.instant("alert.button_ok"),
         handler: () => {
           console.log('Confirm Okay');
+        }
+      }],
+      backdropDismiss: false
+    });
+
+    await alert.present();
+  }
+
+  async alertDeletePhoto() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      message: this.translate.instant('personal.delete_photo'),
+      buttons: [
+        {
+          text: this.translate.instant("button.cancel"),
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        },
+        {
+        text: this.translate.instant("alert.button_ok"),
+        handler: () => {
+          console.log('Confirm Okay');
+          this.deleteImage()
         }
       }],
       backdropDismiss: false

@@ -10,27 +10,7 @@ const NAME_BIND = 'App\\Events\\ScreenMessage'
   providedIn: 'root'
 })
 export class PusherAlarmService {
-  public  LIST_APP_KEY: Array<any> = [
-    {
-      name: 'Producción', 
-      app_id: "1287334",
-      key: "f89e2ed013b43522069e",
-      secret: "e23e0b09095890bdac73",
-      cluster: "eu"
-    },
-    {
-      name: 'Calidad', 
-      app_id: "1287332",
-      key: "d560960f0cc446a18c95",
-      secret: "63522acb9ee1832855a4",
-      cluster: "eu"
-    }
-  ]
 
-  app_id = "1287334"
-  key = "f89e2ed013b43522069e"
-  secret = "e23e0b09095890bdac73"
-  cluster = "eu"
   nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser //'private-LevelAccomplishmentCompleted.15189' //
   channel;
 
@@ -38,22 +18,13 @@ export class PusherAlarmService {
     private constants: Constants, 
     private notification: NotificationService,
     private authService: AuthenticationService,
-  ) {
-    this.setEndPoint()
-    const TOKEN = authService.getAuthToken() 
-    var pusher = new Pusher(this.key, {
-      cluster: this.cluster,
-      authEndpoint: this.constants.API_DOOLE_ENDPOINT + '/broadcasting/auth',
-      auth: {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`
-        }
-      },
-      encrypted: true,
-    });
-    this.channel = pusher.subscribe(this.nameChanel);
-    console.log('[PusherService] constructor()', pusher, this.nameChanel);
-   }
+  ) {}
+
+  public subscribeChannel(pusherService){
+    const pusher = pusherService
+    this.channel = pusher.subscribe(this.nameChanel)
+    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+  }
 
    public init(){
     this.channel.bind(NAME_BIND, (data) => {
@@ -62,14 +33,4 @@ export class PusherAlarmService {
          this.notification.confirmAllNotification(data?.message)
        });
    }
-
-   public setEndPoint(){
-    let index = this.constants?.INDEX
-    let opt = this.LIST_APP_KEY[index]
-    console.log('[PusherMessageService] setEndPoint() ' ,  opt);
-    this.app_id = opt.app_id
-    this.key = opt.key
-    this.secret = opt.secret
-    this.cluster = opt.cluster
-  }
 }
