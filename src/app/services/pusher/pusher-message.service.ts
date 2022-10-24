@@ -22,8 +22,8 @@ export class PusherMessageService {
     return this.channel;
  }
 
- public unsubscribePusher(idChannel){
-  this.channel.unsubscribe(this.nameChanel + idChannel)
-}
+  public unsubscribePusher(idChannel){
+    this.channel.unsubscribe(this.nameChanel + idChannel)
+  }
 
 }

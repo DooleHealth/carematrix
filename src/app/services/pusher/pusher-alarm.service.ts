@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
 
@@ -15,7 +14,6 @@ export class PusherAlarmService {
   channel;
   pusher
  constructor(
-    private constants: Constants, 
     private notification: NotificationService,
     private authService: AuthenticationService,
   ) {}
@@ -33,10 +31,6 @@ export class PusherAlarmService {
          this.notification.confirmAllNotification(data?.message)
        });
    }
-
-   public unsubscribeChannel(pusherService){
-    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
-  }
 
   public unsubscribePusher(){
     this.channel = this.pusher.unsubscribe(this.nameChanel)
