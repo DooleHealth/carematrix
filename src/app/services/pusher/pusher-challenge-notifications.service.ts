@@ -13,6 +13,7 @@ const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted'
   providedIn: 'root'
 })
 export class PusherChallengeNotificationsService {
+  idUser:string;
   nameChanel:string;
   channel;
   handlerMessage = '';
@@ -24,10 +25,13 @@ export class PusherChallengeNotificationsService {
     private alertController: AlertController,
     private authService: AuthenticationService,
     public translate: TranslateService) {
-      this.nameChanel = 'private-LevelAccomplishmentCompleted.' + this.authService?.user?.idUser;
+
     }
 
-    public subscribeChannel(pusherService){
+    public subscribeChannel(pusherService, idUser:string){
+      this.idUser = idUser
+      this.nameChanel = 'private-LevelAccomplishmentCompleted.' + this.idUser;
+      console.log('[PusherNotificationService] this.nameChanel()',  this.nameChanel);
       this.pusher = pusherService
       this.channel = this.pusher.subscribe(this.nameChanel)
       console.log('[PusherNotificationService] subscribeChannel()',  this.channel);

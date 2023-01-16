@@ -15,7 +15,7 @@ const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCrea
   providedIn: 'root'
 })
 export class PusherNotificationService {
-
+  idUser:string;
   nameChanel:string;
   channel;
   handlerMessage = '';
@@ -28,11 +28,14 @@ export class PusherNotificationService {
     private modalCtrl: ModalController,
     private pusherChallenge: PusherChallengeNotificationsService,
     private _zone: NgZone) {
-      this.nameChanel = 'private-App.User.' + this.authService?.user?.idUser
+
 
   }
 
-  public subscribeChannel(pusherService){
+  public subscribeChannel(pusherService, idUser:string){
+    this.idUser = idUser
+    this.nameChanel = 'private-App.User.' + this.idUser
+    console.log('[PusherNotificationService] this.nameChanel ()', this.nameChanel);
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
     console.log('[PusherNotificationService] subscribeChannel()',  this.channel);

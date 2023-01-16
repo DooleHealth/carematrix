@@ -10,7 +10,7 @@ const NAME_BIND = 'App\\Events\\ScreenMessage'
   providedIn: 'root'
 })
 export class PusherAlarmService {
-
+  idUser:string;
   nameChanel:string; //'private-LevelAccomplishmentCompleted.15189' //
   channel;
   pusher
@@ -19,10 +19,13 @@ export class PusherAlarmService {
     private notification: NotificationService,
     private authService: AuthenticationService,
   ) {
-    this.nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser
+
   }
 
-  public subscribeChannel(pusherService){
+  public subscribeChannel(pusherService, idUser:string){
+    this.idUser = idUser;
+    console.log('[PusherNotificationService] idUser()',  this.idUser);
+    this.nameChanel = 'private-ScreenMessage.User.' + this.idUser
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
     console.log('[PusherNotificationService] subscribeChannel()',  this.channel);

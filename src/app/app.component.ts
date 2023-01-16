@@ -178,7 +178,7 @@ export class AppComponent implements OnInit {
 
    // Notifications has different Payloads: iOS = data.aps, Android = data
    var push = this.getPushData(notification);
-   
+
     await LocalNotifications.schedule({
       notifications:[
         {
@@ -190,7 +190,7 @@ export class AppComponent implements OnInit {
           },
           iconColor: push?.color ? push?.color : '#109DB0',
           actionTypeId: push?.actionType,
-        
+
         }
       ]
     }).then((data)=>{
@@ -214,7 +214,7 @@ export class AppComponent implements OnInit {
       async (token: PushNotificationToken) => {
 
         console.log('My token: ' + JSON.stringify(token));
-        
+
         let platform = 'ios';
         if (this.platform.is('android')) {
           platform = 'android';
@@ -241,7 +241,7 @@ export class AppComponent implements OnInit {
         if (voip == "true") {
           // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
           let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data.isCancelPush;
-          
+
           if(cancel == "false"){
             const caller = JSON.parse(notification.data.Caller);
             this.opentokService.agendaId$ = caller.callId;
@@ -252,7 +252,7 @@ export class AppComponent implements OnInit {
         }else{
           console.log("is notification: ", notification);
           this.showNotification(notification);
-        
+
         }
       }
     );
@@ -349,7 +349,7 @@ export class AppComponent implements OnInit {
         }
       ]});
     });
-   
+
 
     LocalNotifications.addListener('localNotificationReceived',( notification: LocalNotification)=>{
       console.log('localNotificationReceived received:', notification);
@@ -468,7 +468,7 @@ export class AppComponent implements OnInit {
     this.opentokService.agendaId$ = caller?.callId;
 
     console.log('caller',  caller);
-  
+
     this.startVideocallAndroid(caller.callId)
   }
 
@@ -482,13 +482,13 @@ export class AppComponent implements OnInit {
           this.opentokService.token$ = tokboxSession.token;
           this.opentokService.sessionId$ = tokboxSession.sessionId;
           this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-      
+
             // iOS fires call automatically on devices when receives voIP push
             const modal = await this.modalCtrl.create({
               component: VideoComponent,
               componentProps: {},
             });
-            
+
             await modal.present();
             cordova.plugins.CordovaCall.endCall();
 
@@ -517,17 +517,17 @@ export class AppComponent implements OnInit {
           this.opentokService.token$ = tokboxSession.token;
           this.opentokService.sessionId$ = tokboxSession.sessionId;
           this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-      
+
           // iOS fires call automatically on devices when receives voIP push
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
           });
-          
+
           await modal.present();
           cordova.plugins.CordovaCall.endCall();
-        
-          
+
+
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
           throw message;
@@ -549,7 +549,7 @@ export class AppComponent implements OnInit {
       component: VideocallIframePage,
       componentProps: {"id": agenda}
     });
-    
+
     await modal.present();
 
   }
@@ -589,7 +589,7 @@ export class AppComponent implements OnInit {
 
       const extra = JSON.parse(notification.extra);
       console.log("extra: ", extra);
-     
+
       if(extra){
         let cancel = extra.Caller.CancelPush;
         if(cancel == "false"){
@@ -645,10 +645,10 @@ export class AppComponent implements OnInit {
             component: VideoComponent,
             componentProps: {},
           });
-          
+
           await modal.present();
           cordova.plugins.CordovaCall.endCall();
-          return data; 
+          return data;
 
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
@@ -679,9 +679,9 @@ export class AppComponent implements OnInit {
             component: VideoComponent,
             componentProps: {},
           });
-          
+
           await modal.present();
-          return data; 
+          return data;
 
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
@@ -713,7 +713,7 @@ export class AppComponent implements OnInit {
         self.getAgenda();
       else
         self.startVideocall(self.opentokService.agendaId$)
-    
+
     });
 
    //reject de videocall
@@ -786,12 +786,13 @@ export class AppComponent implements OnInit {
     // this language will be used as a fallback when a translation isn't found in the current language
     //this.translate.setDefaultLang('ca');
     let lang = this.translate.getBrowserLang();
-    if(lang !== 'ca' && lang !== 'es')
+    console.log("BROWSER LANG: ", lang );
+    if(lang !== 'ca' && lang !== 'es' && lang !== 'en')
       lang = 'es'
 
 
     this.translate.setDefaultLang(lang);
-    console.log("BROWSER LANG: ", lang );
+    console.log("APP LANG: ", lang );
     //this.translate.getBrowserLang()
     // the lang to use, if the lang isn't available, it will use the current loader to get them
 
@@ -857,7 +858,7 @@ export class AppComponent implements OnInit {
 
   public async showFingerprintAuthDlg(data?) {
     console.log("[AppComponent] showFingerprintAuthDlg(), data", data);
-    if(!JSON.parse(localStorage.getItem(this.settingsBio)) || 
+    if(!JSON.parse(localStorage.getItem(this.settingsBio)) ||
         this.lastPause == undefined || !this.authService?.user ){
 
       if(data){
