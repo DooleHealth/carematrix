@@ -13,20 +13,19 @@ const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted'
   providedIn: 'root'
 })
 export class PusherChallengeNotificationsService {
-  nameChanel = 'private-LevelAccomplishmentCompleted.' + this.authService?.user?.idUser;
+  nameChanel:string;
   channel;
   handlerMessage = '';
   roleMessage = '';
-  isModalShowing: boolean;
+  isModalShowing: boolean = false;
   pendingNotification:any;
   pusher
   constructor(
-    private constants: Constants,
     private alertController: AlertController,
     private authService: AuthenticationService,
-    public translate: TranslateService,
-    private router: Router,
-    private _zone: NgZone) {}
+    public translate: TranslateService) {
+      this.nameChanel = 'private-LevelAccomplishmentCompleted.' + this.authService?.user?.idUser;
+    }
 
     public subscribeChannel(pusherService){
       this.pusher = pusherService
@@ -58,14 +57,14 @@ async presentChallengeNotification() {
     <div class="before"></div>
     <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_champ.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
     <div class="after"></div>
-  </div>`; 
+  </div>`;
   else
     message = `<div class="pyro">
     <div class="before"></div>
     <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_champ.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
     <div class="after"></div>
   </div>`;
-    
+
   const alert = await this.alertController.create({
     header: this.translate.instant('health_path.level_congratulations'),
     cssClass:'challenge-alert',

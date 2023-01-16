@@ -13,14 +13,14 @@
     <ion-spinner name="bubbles"></ion-spinner>
 </div>
 <ng-template #showChallenge>
-   
+
   <ion-card class="level-card" *ngIf="this.current_level">
     <ion-item lines="none" class="cardHeader">
       <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
       <ion-text  style="margin-left:10px; color:purple" slot="start">{{ this.challenge?.name }}</ion-text>
-     
+
     </ion-item>
-    
+
     <ion-card-content class="ion-no-padding">
       <ion-grid >
         <ion-row class="ion-no-padding">
@@ -29,14 +29,18 @@
           <ion-col size="9" class="ion-no-padding">
             <p style="font-size: medium;"><b>{{ this.current_level?.name}}</b></p>
           </ion-col>
-          
+
         </ion-row>
         <ion-row>
           <ion-col size="3">
             <ion-img src="{{this.current_level?.cover ? this.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
           </ion-col>
           <ion-col size="9" style="margin:auto">
-            <p [innerHtml]="'health_path.goal' | translate:{total:this.current_level?.current_score, coin:this?.current_level?.coin_name, required:this?.current_level?.score_required - this?.current_level?.current_score}"></p>
+            <ion-row style="display: inline-flex !important">
+              {{'health_path.goal_txt1' | translate}}&nbsp;<strong>{{ current_level?.current_score }}  {{'game.points' | translate}}</strong>
+              <div *ngIf="current_level?.percentage_completed <= 100">, {{'health_path.goal_txt2' | translate}} {{ current_level?.score_required - current_level?.current_score }} {{'health_path.goal_txt3' | translate}}</div>
+              <div *ngIf="current_level?.percentage_completed <= 100">{{'health_path.goal_txt4' | translate}}</div>
+          </ion-row>
           </ion-col>
         </ion-row>
         <ion-row >
@@ -46,7 +50,7 @@
             <ion-progress-bar class="progress-bar" [value]="this.progressBarValue" routerLinkActive="active-item">
             </ion-progress-bar>
           </ion-col>
-          
+
         </ion-row>
       </ion-grid>
       <ion-item>
@@ -58,12 +62,12 @@
           <ion-label>{{g?.message}}</ion-label>
           <ion-text *ngIf="g?.completed;else showArrow" class="goal-done">{{ 'health_path.done'| translate  }}</ion-text>
           <ng-template #showArrow><ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon></ng-template>
-          
+
         </ion-item>
       </ion-list>
     </ion-card-content>
 
   </ion-card>
 </ng-template>
-  
+
 </ion-content>

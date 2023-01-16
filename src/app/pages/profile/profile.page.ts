@@ -28,7 +28,7 @@ export class ProfilePage implements OnInit {
   version:string = "";
   tokboxSession: any;
   modeNumDev: number = 0
-  constructor( 
+  constructor(
     public authService: AuthenticationService,
     public appVersion: AppVersion,
     private notification: NotificationService,
@@ -37,7 +37,7 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     private iab: InAppBrowser,
     private dooleService: DooleService,
-    private opentokService: OpentokService, 
+    private opentokService: OpentokService,
     private translate : TranslateService,
     private toastController: ToastController,
     private alertController: AlertController,
@@ -51,20 +51,20 @@ export class ProfilePage implements OnInit {
   ionViewWillEnter(){
     this.modeNumDev = 0
     this.getPersonalInformation()
-   
+
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
     this.appVersion.getVersionNumber().then((version)=>{
       this.version = version;
     });
     }
-    
+
   }
 
-  getUserProfile(){   
+  getUserProfile(){
     if(history.state?.user){
       this.userDoole = history.state.user;
-      console.log('[ProfilePage] getUserProfile()' ,  this.userDoole); 
-    }  
+      console.log('[ProfilePage] getUserProfile()' ,  this.userDoole);
+    }
   }
 
   getPersonalInformation(){
@@ -74,22 +74,23 @@ export class ProfilePage implements OnInit {
         console.log('[ProfilePage] getPersonalInformation()', res);
         this.userDoole = res.user;
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
           console.log('[ProfilePage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
-          this.isLoading = false 
-          throw err; 
+          this.isLoading = false
+          throw err;
       });
     }
 
 
     async signOut(confirm) {
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
-        
+
         this.authService.logout(confirm).subscribe(
           async (res: any)=>{
           await res
           console.log('[ProfilePage] signOut()', JSON.stringify(res))
-          this.pusherConnection.unsubscribePusher()
+          if(this.authService.user.idUser)
+            this.pusherConnection.unsubscribePusher()
           if(res.success)
           this.router.navigateByUrl('/landing');
           else{
@@ -99,7 +100,8 @@ export class ProfilePage implements OnInit {
         });
       }else{
         await this.authService.logout1().then(res=>{
-          this.pusherConnection.unsubscribePusher()
+          if(this.authService?.user?.idUser)
+            this.pusherConnection.unsubscribePusher()
           this.router.navigateByUrl('/landing');
         });
       }
@@ -111,49 +113,49 @@ export class ProfilePage implements OnInit {
       componentProps: { },
       cssClass: "modal-custom-class"
     });
-  
+
     modal.onDidDismiss()
       .then((result) => {
-        console.log('sendReportProblem()', result);     
+        console.log('sendReportProblem()', result);
         if(result?.data?.error){
 
         }else if(result?.data?.action == 'add'){
           this.notification.displayToastSuccessful()
         }
       });
-  
+
       await modal.present();
-  
+
     }
 
     public openWithInAppBrowser(){
       let url: string;
-      if (this.platform.is('ios')) 
+      if (this.platform.is('ios'))
          url = 'https://freeconferencing.vonage.com';
       else
          url = 'https://opentokdemo.tokbox.com';
-      
+
       let options : InAppBrowserOptions = {
-        location : 'yes',//Or 'no' 
+        location : 'yes',//Or 'no'
         hideurlbar:'yes',
         hidden : 'no', //Or  'yes'
         clearcache : 'yes',
         clearsessioncache : 'yes',
         enableViewPortScale: 'yes',
-        zoom : 'yes',//Android only ,shows browser zoom controls 
+        zoom : 'yes',//Android only ,shows browser zoom controls
         hardwareback : 'yes',
         mediaPlaybackRequiresUserAction : 'yes',
-        shouldPauseOnSuspend : 'no', //Android only 
+        shouldPauseOnSuspend : 'no', //Android only
         closebuttoncaption : 'Close', //iOS only
-        disallowoverscroll : 'no', //iOS only 
-        toolbar : 'yes', //iOS only 
-        enableViewportScale : 'no', //iOS only 
-        allowInlineMediaPlayback : 'yes',//iOS only 
-        presentationstyle : 'pagesheet',//iOS only 
-        fullscreen : 'yes',//Windows only    
+        disallowoverscroll : 'no', //iOS only
+        toolbar : 'yes', //iOS only
+        enableViewportScale : 'no', //iOS only
+        allowInlineMediaPlayback : 'yes',//iOS only
+        presentationstyle : 'pagesheet',//iOS only
+        fullscreen : 'yes',//Windows only
     };
       let target = "_blank";
-   
+
       this.iab.create(url,target, options);
   }
 
@@ -161,7 +163,7 @@ export class ProfilePage implements OnInit {
     // VOIP calls for IOS
     let agenda = "1281";
     this.getTokboxSession(agenda);
-   
+
   }
 
   async getTokboxSession(agenda) {
@@ -199,7 +201,7 @@ export class ProfilePage implements OnInit {
       component: VideocallIframePage,
       componentProps: {"id":agenda}
     });
-   
+
     await modal.present();
 
   }
@@ -214,7 +216,7 @@ export class ProfilePage implements OnInit {
   }
 
   async openPatientsModal(){
-    console.log('openPatientsModal()', ); 
+    console.log('openPatientsModal()', );
     const modal = await this.modalCtrl.create({
       component: PatientsPage,
       componentProps: {},
@@ -225,22 +227,22 @@ export class ProfilePage implements OnInit {
 
   modeDevelopment(){
     this.modeNumDev = ++this.modeNumDev;
-    console.log('modeDevelopment()', this.modeNumDev); 
+    console.log('modeDevelopment()', this.modeNumDev);
     if(this.modeNumDev >= this.NUM_CLICK_AVATAR){
         let modeActivate = JSON.parse(localStorage.getItem('modeActivate'));
         if(!modeActivate){
           localStorage.setItem('modeActivate', 'true');
         }else localStorage.setItem('modeActivate', 'false');
         modeActivate = !modeActivate
-        console.log('modeDevelopment()', modeActivate); 
+        console.log('modeDevelopment()', modeActivate);
         let message =  this.translate.instant(modeActivate? 'mode_development.mode_activate':'mode_development.mode_desactivate')
         this.displayToastPusher(message)
         this.modeNumDev = 0;
     }
-    
+
   }
 
-  displayToastPusher(message) { 
+  displayToastPusher(message) {
     try {
       this.toastController.dismiss().then(() => {
       }).catch(() => {
@@ -248,7 +250,7 @@ export class ProfilePage implements OnInit {
         console.log('Closed')
       });
     } catch(e) {}
-    
+
     this.toastController.create({
       position: 'bottom', //'middle', 'bottom'
       /* cssClass: 'toast-pusher-class', */

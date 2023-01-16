@@ -16,7 +16,7 @@ const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCrea
 })
 export class PusherNotificationService {
 
-  nameChanel = 'private-App.User.' + this.authService?.user?.idUser
+  nameChanel:string;
   channel;
   handlerMessage = '';
   roleMessage = '';
@@ -28,6 +28,7 @@ export class PusherNotificationService {
     private modalCtrl: ModalController,
     private pusherChallenge: PusherChallengeNotificationsService,
     private _zone: NgZone) {
+      this.nameChanel = 'private-App.User.' + this.authService?.user?.idUser
 
   }
 
@@ -41,7 +42,7 @@ export class PusherNotificationService {
     this.channel = this.pusher.unsubscribe(this.nameChanel)
   }
 
-  public init(){ 
+  public init(){
      this.channel.bind(NAME_BIND, (data) => {
           console.log('[PusherNotificationService] getPusher()',  data);
           this.presentPromoteNotification(data);
@@ -56,7 +57,7 @@ async presentPromoteNotification(data) {
   let message = this.getNotificationMessage(data)
 
   message = `<ion-row><ion-col class="text-align-center"><img src="assets/images/duly_reading.gif" class="card-alert"></img><ion-text>`+ message +`</ion-text></ion-col></ion-row>`;
-    
+
   const alert = await this.alertController.create({
     cssClass:'challenge-alert',
     message: message,
@@ -66,7 +67,7 @@ async presentPromoteNotification(data) {
         role: 'confirm',
         handler: () => {
           this.handlerMessage = 'Alert canceled';
-          
+
         },
       },
       {
@@ -103,7 +104,7 @@ public getNotificationMessage(data){
     break;
   }
   return message;
-  
+
 }
 
 async openModal(data, isAdvice) {
@@ -121,7 +122,7 @@ async openModal(data, isAdvice) {
       console.log('modal.onDidDismiss: ', this.pusherChallenge.pendingNotification);
       if (this.pusherChallenge.pendingNotification) {
         this.pusherChallenge.presentChallengeNotification();
-      } 
+      }
       this.pusherChallenge.isModalShowing = false;
     });
 

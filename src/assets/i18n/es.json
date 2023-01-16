@@ -123,7 +123,7 @@
           "data": "Tus Datos",
           "family_unit": "Unidad Familiar",
           "emergency": "Contactos de Emergencia",
-          "your_health_cards": "Tarjetas Sanitarias", 
+          "your_health_cards": "Tarjetas Sanitarias",
           "your_goals": "Tus Objetivos",
           "payment_method": "Método de Pago",
           "your_challenges":"Tus Retos"
@@ -182,9 +182,15 @@
         "news":"Lee la notícia ",
         "diet":"Lee la dieta ",
         "blocked_level": "Este nivel todavía está bloqueado",
-        "goal":"Tienes <strong>{{ total }} {{ coin }}</strong>, consigue {{ required }} más y pasa al siguiente nivel.",
+        "goal_txt1": "Tienes",
+        "goal_txt2": "consigue",
+        "goal_txt3":"más",
+        "goal_txt4":" y pasa al siguiente nivel.",
+        "goal":"<p>Tienes <strong>{{ total }} Puntos</strong>.</p>",
+        "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
         "level_congratulations":"Felicitaciones!",
         "level_accomplished":"Has avanzado de nivel",
+        "goal_note":"<p>* Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
         "done":"Hecho!"
       },
       "activity_goal":{
@@ -221,7 +227,7 @@
         "delete_photo": "¿Quieres eliminar la foto de perfil?"
       },
       "alert": {
-        "button_ok": "Ok", 
+        "button_ok": "Ok",
         "button_acept": "Aceptar",
         "button_apply": "Aplicar",
         "button_cancel": "Cancelar",
@@ -279,7 +285,7 @@
           "title_family_unit":"Unidad Familiar",
           "msg_alert_change_perfil": "¿Quieres cambiar a este perfil?",
           "canAccess":"Estás a cargo de",
-          "othersCanAccess":"Tu tutor es:"      
+          "othersCanAccess":"Tu tutor es:"
         },
         "sign_off": "Cerrar sesión",
         "message_sign_off": "¿Deseas cerrar sesión en todos los dispositivos?",
@@ -665,18 +671,18 @@
         "text_recent_conversations":"Accede a tus últimas conversaciones con tus profesionales habituales",
         "new_conversation":"Nueva conversación",
         "text_new_conversation":"Abre una nueva conversación con tus profesionales habituales"
-      },      
+      },
       "medical_directory":{
         "header":"Seleccionar",
         "your_professionals":"Tus profesionales habituales",
         "no_professionals":"No tienes profesionales asignados"
-      }, 
+      },
       "medical_calendar":{
         "header":"Seleccionar Fecha",
         "no_slot_available":"No hay slots disponibles para este día",
         "previousLabel": "Previo ",
         "nextLabel":"Siguiente"
-      },     
+      },
       "specialist_finder":{
         "header":"Reservar",
         "field_date": "Fecha",
@@ -696,7 +702,7 @@
         "button_videocall": "Confirmar cita",
         "button_videocall_charge": "Confirmar cita con pago",
         "error_upload_files": "Error al adjuntar los archivos"
-      },      
+      },
       "chat":{
         "header":"Chat",
         "writting":"Escribiendo...",
@@ -783,7 +789,7 @@
         "drug":"Medicamento",
         "videocall":"Videollamada",
         "open":"Abrir",
-        "close":"Cerrar"     
+        "close":"Cerrar"
       },
       "security":{
         "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",
@@ -804,5 +810,5 @@
         "mode_2": "Desarrollo"
       }
 
-      
+
 }
