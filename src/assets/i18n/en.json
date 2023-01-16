@@ -56,7 +56,7 @@
       "error_no_numeric": "Error: Entering numbers only"
     },
     "tab": {
-      "home": "Beginning",
+      "home": "Home",
       "agenda": "Agenda",
       "contact": "Contact",
       "tracking": "Tracking",
@@ -84,6 +84,7 @@
       "slider7_text1": "Set your data and notification preferences so you can always be informed. Enjoy your experience at Doole Health!"
     },
     "home": {
+      "hello": "Hello",
       "goals_title": "Your goal",
       "goals_no_data": "No data",
       "advices_title": "News & Tips",
@@ -643,7 +644,7 @@
     "advices": {
       "header": "News & Tips",
       "tag_news": "News",
-      "tag_advices": "Councils",
+      "tag_advices": "Advices",
       "searchbar": "To find",
       "detail_news": "Detail News",
       "detail_advices": "Detail Tips",

@@ -80,8 +80,8 @@ export class LandingPage implements OnInit {
     // if(this.pushNotification){
     //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
     // }
-    this.loginForm.get('username').setValue('akio.dhairya')
-    this.loginForm.get('password').setValue('ayriahd.oika')
+    this.loginForm.get('username').setValue('')
+    this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')
     this.loginForm.clearValidators()
     this.getStoredValues()
