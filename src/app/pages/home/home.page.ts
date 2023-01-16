@@ -233,7 +233,7 @@ export class HomePage implements OnInit {
         this.userDoole = res.data?.profile;
 
 
-        this.greeting = 'Hola, ' + this.userDoole?.first_name;
+        this.greeting = this.translate.instant('home.hello') +', ' + this.userDoole?.first_name;
         this.appointment = res.data?.agenda;
 
         if (this.role.component.advices)
