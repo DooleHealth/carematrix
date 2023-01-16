@@ -56,37 +56,37 @@
       "error_no_numeric": "Error: Entering numbers only"
     },
     "tab": {
-      "home": "Beginning",
+      "home": "Home",
       "agenda": "Agenda",
       "contact": "Contact",
       "tracking": "Tracking",
-      "journal": "My Diary"
+      "journal": "Journal"
     },
     "intro": {
       "title1": "Welcome to",
       "slider1_text1": "All-in-one",
       "slider1_text2": "All your medical information in one app",
       "slider1_text3": "Contact your doctor",
-      "slider1_text4": "Talk to your specialist directly or request a face-to-face consultation",
+      "slider1_text4": "Talk directly with your specialist or request a face-to-face consultation",
       "slider1_text5": "Health and sport",
-      "slider1_text6": "Connect your health apps to see your progress",
+      "slider1_text6": "Connect other health apps to measure your progress",
       "title2": "Agenda",
       "slider2_text1": "The Doole Health agenda allows you to include all your appointments and medical reminders. You won't be able to live without it!",
       "title3": "Contact",
-      "slider3_text1": "Talk to your doctor and specialist via video call or chat and request an appointment in person It's never been so fast and comfortable!",
+      "slider3_text1": "Talk to your doctor and specialist through video or chat and request a face to face appointment. It's never been so fast and comfortable!",
       "title4": "Tracking",
       "slider4_text1": "Review clinical results, answer forms or check the evolution of your constants. Now you can review them whenever you want!",
-      "title5": "My Diary",
+      "title5": "Journal",
       "slider5_text1": "At a glance review your diet, medication, games and health information for the day. Taking care of your health has never been easier!",
-      "title6": "News & Tips",
+      "title6": "News & Advices",
       "slider6_text1": "Have the latest health news and advice from the medical team Stay updated at all times!",
-      "title7": "My Profile",
+      "title7": "Profile",
       "slider7_text1": "Set your data and notification preferences so you can always be informed. Enjoy your experience at Doole Health!"
     },
     "home": {
       "goals_title": "Your goal",
       "goals_no_data": "No data",
-      "advices_title": "News & Tips",
+      "advices_title": "News & Advices",
       "today_title": "Your Day",
       "reminders_title": "Reminders",
       "daily_goal_title": "Your Daily Goal",
@@ -109,7 +109,7 @@
     },
     "profile": {
       "title_profile": "My Profile",
-      "button_go_init": "Beginning",
+      "button_go_init": "Home",
       "button_go_back": "Back to my profile",
       "information": {
         "title_information": "Information",
@@ -142,13 +142,13 @@
         "legal_warning": "Legal Notice",
         "us": "We"
       },
-      "button_sign_off": "Log off",
+      "button_sign_off": "Log out",
       "version": "Version"
     },
     "goals": {
       "your_goals": "Your goals",
       "goals": "Objectives",
-      "start": "Beginning",
+      "start": "Start",
       "achieve": "Reach",
       "end": "End",
       "button_go_profile": "Profile",
@@ -157,14 +157,14 @@
       "description1": "Reach your goal",
       "description2": "and sum",
       "subtitle_information": "Information",
-      "subtitle_advices": "Councils",
+      "subtitle_advices": "Advices",
       "points": "Points"
     },
     "health_path": {
       "title": "Health Path",
       "card_title": "My challenges",
       "goals": "Objectives",
-      "start": "Beginning",
+      "start": "Start",
       "detail": "How to reach my goal?",
       "weight": "Take your ",
       "measure": "Enter the measurement: ",
@@ -172,13 +172,19 @@
       "advice": "Read the advice ",
       "game": "Play ",
       "drug": "Taking the medicine ",
-      "news": "Lee the news ",
-      "diet": "Lee the diet ",
+      "news": "Read the news ",
+      "diet": "Read the diet ",
       "blocked_level": "This level is still locked",
-      "goal": "You have {{ total }} {{ <strong>coin</strong> }}, get {{ required }} more and move to the next level.",
+      "goal":"<p>You have <strong>{{ total }} points</strong>.</p>",
+      "goal1":"<div>Get {{ required }} more and move to the next level.</div>",
+
+      "goal_txt1": "You have",
+      "goal_txt2": "get",
+      "goal_txt3":"more",
+      "goal_txt4":" and move to the next level.",
       "level_congratulations": "Congratulations!",
-      "level_accomplished": "You've advanced in level",
-      "done": "Fact!"
+      "level_accomplished": "You have reached the next level",
+      "done": "done!"
     },
     "activity_goal": {
       "definition": "Definition",
@@ -193,7 +199,7 @@
       "steps": "Steps"
     },
     "personal": {
-      "button_back": "Beginning",
+      "button_back": "Home",
       "header": "Your Data",
       "first_name": "Number",
       "last_name": "Surname",
@@ -234,13 +240,13 @@
       "subtitle_languages": "User language",
       "subtitle_authentication": "Two-factor authentication",
       "subtitle_face_id": "Face ID/Huella",
-      "subtitle_communications": "Medical Releases",
+      "subtitle_communications": "Medical Announcements",
       "subtitle_appointment": "Dating",
       "subtitle_reminders": "Reminders",
       "subtitle_diets": "Diets",
       "subtitle_medication": "Medication",
       "subtitle_goals": "Objectives and Challenges",
-      "subtitle_advices": "Councils",
+      "subtitle_advices": "Advices",
       "subtitle_news": "News",
       "subtitle_offers": "Promotions",
       "subtitle_form": "Forms",
@@ -271,7 +277,7 @@
         "canAccess": "You are in charge of",
         "othersCanAccess": "Your tutor is:"
       },
-      "sign_off": "Log off",
+      "sign_off": "Log out",
       "message_sign_off": "Want to sign out on all devices?",
       "error_message_sign_off": "An error occurred while logging out"
     },
@@ -298,7 +304,7 @@
       "expedition_date": "Date of Issue",
       "Optional": "Optional",
       "error_required": "Required",
-      "button_return": "Beginning"
+      "button_return": "Home"
     },
     "placeholder_select": "Select one",
     "add_health_card": {
@@ -553,13 +559,13 @@
       "error_alert_message_add_element": "An error occurred while adding the value",
       "value_invalid": "The value is invalid. Enter a value of"
     },
-    "no_data": "At this time there is no data to display",
+    "no_data": "No data to display",
     "diary": {
-      "header_diary": "My Diary",
+      "header_diary": "Journal",
       "field_diet": "Diet",
       "field_drug": "Medication",
       "field_game": "Games",
-      "field_health": "Bless you",
+      "field_health": "Health",
       "description": "Description",
       "dose": "Doses",
       "morning": "tomorrow",
@@ -641,38 +647,38 @@
       "open_file": "Open File"
     },
     "advices": {
-      "header": "News & Tips",
+      "header": "News & Advices",
       "tag_news": "News",
-      "tag_advices": "Councils",
-      "searchbar": "To find",
+      "tag_advices": "Advices",
+      "searchbar": "Search",
       "detail_news": "Detail News",
-      "detail_advices": "Detail Tips",
+      "detail_advices": "Detail Advice",
       "links": "Direct links"
     },
     "contact": {
       "header": "Contact",
-      "tap_video": "Videoconsulta",
+      "tap_video": "Video Consultation",
       "tap_appointment": "Face-to-face appointment",
       "tap_chat": "Chat",
       "tap_pusher": "Pusher",
-      "text_video": "Talk directly to your regular professional or a specialist from wherever you want. You will be attended at the selected time",
-      "regular_professional": "Regular Professional",
-      "text_regular_professional": "Book an appointment with your doctor or usual professional to make the video consultation",
+      "text_video": "Talk directly to your regular doctor or a specialist from wherever you want. You will be attended at the selected time",
+      "regular_professional": "Regular Doctor",
+      "text_regular_professional": "Book an appointment with your doctor or usual healthcare professional to make a video consultation",
       "other_specialists": "Other specialists",
-      "text_other_specialists": "Book an appointment with a specialist to make the video consultation",
-      "text_appointment_in_person": "Book a face-to-face appointment with your regular professional or a specialist when you need it. You will be attended at the selected time",
+      "text_other_specialists": "Book an appointment with a specialist to make a video consultation",
+      "text_appointment_in_person": "Book a face-to-face appointment with your regular doctor or a specialist when you need it. You will be attended at the selected time",
       "text_appointment_regular_professional": "Book your face-to-face appointment with the usual doctor",
       "text_appointment_other_specialists": "Book your face-to-face appointment with another specialist",
       "text_chat": "Now you can talk via chat with your regular doctor or a specialist. They will attend you as soon as possible.",
       "recent_conversations": "Recent conversations",
-      "text_recent_conversations": "Access your latest conversations with your regular professionals",
+      "text_recent_conversations": "Access your latest conversations with your regular doctors",
       "new_conversation": "New conversation",
-      "text_new_conversation": "Open a new conversation with your regular professionals"
+      "text_new_conversation": "Open a new conversation with your regular doctors"
     },
     "medical_directory": {
       "header": "Select",
-      "your_professionals": "Your regular professionals",
-      "no_professionals": "You don't have assigned professionals"
+      "your_professionals": "Your regular doctor",
+      "no_professionals": "You don't have doctor assigned"
     },
     "medical_calendar": {
       "header": "Select Date",
@@ -719,7 +725,7 @@
       "button_payment": "Confirm Payment"
     },
     "info": {
-      "button": "I agree",
+      "button": "Ok",
       "title": "Information",
       "news": "In this section you can find the news and advice that best suits your profile",
       "family": "In this section you can log in with the user of whom you are a guardian or caregiver, being able to access their health data. We will warn you on each page that you are acting on behalf of another with an exclamation point (!). You can return to your profile whenever you want by clicking on this same sign",

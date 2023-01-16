@@ -55,7 +55,11 @@
                   <ion-img class="ion-text-center" style="margin: auto;" src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
                 </ion-col>
                 <ion-col size="9" >
-                  <p *ngIf="this.challenge?.current_level" [innerHtml]="'health_path.goal' | translate: {total:challenge?.current_level?.current_score, coin: challenge?.current_level?.coin_name, required: challenge?.current_level?.score_required - challenge?.current_level?.current_score}"></p>
+                  <ion-row style="display: inline-flex !important">
+                    {{'health_path.goal_txt1' | translate}}&nbsp;<strong>{{ challenge?.current_level?.current_score }}  {{'game.points' | translate}}</strong>
+                    <div *ngIf="challenge?.current_level?.percentage_completed <= 100">, {{'health_path.goal_txt2' | translate}} {{ challenge?.current_level?.score_required - challenge?.current_level?.current_score }} {{'health_path.goal_txt3' | translate}}</div>
+                    <div *ngIf="challenge?.current_level?.percentage_completed <= 100">{{'health_path.goal_txt4' | translate}}</div>
+                </ion-row>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -65,16 +69,16 @@
                   <ion-progress-bar class="progress-bar" value="{{ challenge?.current_level?.percentage_completed > 0 ? challenge?.current_level?.percentage_completed / 100 : 0 }}">
                   </ion-progress-bar>
                 </ion-col>
-                
+
               </ion-row>
               <ion-row class="ion-text-center">
                 <ion-col size="12" class="ion-padding-vertical">
-                  <a routerLink="health-path/detail" 
+                  <a routerLink="health-path/detail"
                       routerLinkActive="active-item" [state]="{ challenge: challenge}">{{ 'health_path.detail' | translate }}</a>
                 </ion-col>
                   </ion-row>
             </ion-grid>
-          
+
           </ion-card-content>
         </ion-card>
       </ion-slide>
@@ -94,7 +98,7 @@
             </div>
             <ion-item class="cardHeader">
               <ion-text slot="start" >{{slide.title | uppercase }}</ion-text>
-             
+
               <!-- <ion-icon slot="end" name="close" class="close-card" (click)="actionCloseAppointment(slide)"></ion-icon>  -->
             </ion-item>
 
@@ -117,7 +121,7 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-              
+
             </ion-card-content>
           </ion-card>
         </ion-slide>
@@ -324,21 +328,21 @@
                         <div style="font-weight: 800">{{ element.value }}
                           {{element.units}}</div>
                       </ion-col>
-                    
+
                     </ion-row>
                   </ion-grid>
 
                   <ion-grid>
                     <ion-row class="ion-justify-content-start">
                       <ion-col size="3">
-                        
+
                       </ion-col>
                       <ion-col size="3">
-                        
+
                       </ion-col>
                     </ion-row>
                   </ion-grid>
-                  
+
                 </div>
               </div>
             </ion-slide>

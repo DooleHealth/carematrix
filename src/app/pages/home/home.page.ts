@@ -108,7 +108,7 @@ export class HomePage implements OnInit {
   challengeProgressBarValue;
   public greeting = '';
   userInfo: any;
-  pushNotification:any = history.state?.push
+  pushNotification: any = history.state?.push
   constructor(
     public router: Router,
     public platform: Platform,
@@ -134,22 +134,25 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() {
-    this.pusherNotifications.init()
-    this.pusherAlarms.init()
-    this.pusherChallenge.init()
+    setTimeout(() => {
+      this.pusherNotifications.init()
+      this.pusherAlarms.init()
+      this.pusherChallenge.init()
+    }, 1000)
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     //this.getUserInformation()
     this.checkHealthAccess();
     //setTimeout(()=>this.confirmAllNotification(), 2000);
     this.activateAllNotifications(1)
 
+
   }
 
 
   ionViewWillEnter() {
-    if(this.pushNotification)
+    if (this.pushNotification)
       this.openModal(this.pushNotification, true);
-    
+
     this.getUserInformation()
 
 
@@ -216,26 +219,26 @@ export class HomePage implements OnInit {
         await res;
 
         console.log('[HomePage] getUserInformation()', res);
-       
-        tempChallenges = res.data?.challenges;
-        tempChallenges = tempChallenges.filter(function( obj ) {
-          return !obj.completed;
-      });
-      console.log('obj.completed', this.challenges.length)
-      if ( tempChallenges.length == 1)
-        this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
 
-      this.challenges = tempChallenges;
-      
+        tempChallenges = res.data?.challenges;
+        tempChallenges = tempChallenges.filter(function (obj) {
+          return !obj.completed;
+        });
+        console.log('obj.completed', this.challenges.length)
+        if (tempChallenges.length == 1)
+          this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
+
+        this.challenges = tempChallenges;
+
         this.userDoole = res.data?.profile;
-        
+
 
         this.greeting = 'Hola, ' + this.userDoole?.first_name;
         this.appointment = res.data?.agenda;
 
         if (this.role.component.advices)
           tempAdvices = res.data?.advices;
-        
+
         if (this.role.component.news)
           res.data.news.forEach(element => {
             element['new'] = true
@@ -244,13 +247,13 @@ export class HomePage implements OnInit {
 
         tempAdvices = tempAdvices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
         console.log(' this.tempAdvices ', tempAdvices.length);
-        if(tempAdvices.length == 1){
+        if (tempAdvices.length == 1) {
           this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
-          console.log(' this.sliderAdvicesConfig ',  this.sliderAdvicesConfig);
+          console.log(' this.sliderAdvicesConfig ', this.sliderAdvicesConfig);
         }
-        
+
         this.advices = tempAdvices;
-        
+
         if (res.data?.goals) {
           this.goals = res.data?.goals
           this.infoGoals = {
@@ -491,7 +494,7 @@ export class HomePage implements OnInit {
   }
 
   greaterOrEqualThan(goal) {
-    
+
     goal.reversed = false;
     if (goal.last_value >= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -503,7 +506,7 @@ export class HomePage implements OnInit {
   }
 
   lessOrEqualThan(goal) {
- 
+
     goal.reversed = true;
     if (goal.last_value <= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -514,7 +517,7 @@ export class HomePage implements OnInit {
   }
 
   greaterThan(goal) {
-  
+
     goal.reversed = false;
     if (goal.last_value > goal.value1) {
       goal = this.goalAchieved(goal);
@@ -1080,12 +1083,12 @@ export class HomePage implements OnInit {
         if (this.pusherChallenge.pendingNotification) {
           this.pusherChallenge.presentChallengeNotification();
           this.getUserInformation();
-        } 
+        }
         this.pusherChallenge.isModalShowing = false;
       });
 
     await modal.present();
   }
 
-  
+
 }

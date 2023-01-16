@@ -44,7 +44,7 @@ export class LandingPage implements OnInit {
     public loadingController: LoadingController,
     public location: Location,
     public alertController: AlertController,
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController,
@@ -80,8 +80,8 @@ export class LandingPage implements OnInit {
     // if(this.pushNotification){
     //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
     // }
-    this.loginForm.get('username').setValue('akio.dhairya')
-    this.loginForm.get('password').setValue('ayriahd.oika')
+    this.loginForm.get('username').setValue('')
+    this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')
     this.loginForm.clearValidators()
     this.getStoredValues()
@@ -92,7 +92,7 @@ export class LandingPage implements OnInit {
     this.isProd = Number(localStorage.getItem('endpoint')) === 0? true:false
     console.log("[AuthService] indexEndPoint: ", this.isProd);
   }
-  
+
   async dismissLoading() {
     if (this.redirectLoader) {
       console.log("dismissLoading");
@@ -254,12 +254,12 @@ export class LandingPage implements OnInit {
   public doBiometricLogin() {
 
     this.faio.isAvailable().then((result: any) => {
-    
+
       this.faio.show({
         cancelButtonTitle: this.translate.instant('button.cancel'),
         title: this.translate.instant('face-id.title'),
       })
-        .then(async (result: any) => { 
+        .then(async (result: any) => {
           console.log("[LandingPage] doBiometricLogin()", result);
           this.loginForm.get('hash').setValue(this.biometricAuth.hash)
           this.doDooleAppLogin()
@@ -285,7 +285,7 @@ export class LandingPage implements OnInit {
 
   async getStoredValues() {
     if(!this.isAvailableFaID())
-    return 
+    return
 
     const biometricsEnabled = localStorage.getItem(this.settingsBio);
     const biometricToken =  this.getBiometric(); //localStorage.getItem('bio-auth');
@@ -305,7 +305,7 @@ export class LandingPage implements OnInit {
       console.log('showDialog: ', showDialog !== 'false');
       this.showBiometricDialog = false;
     }
-      
+
   }
 
   getBiometric(){

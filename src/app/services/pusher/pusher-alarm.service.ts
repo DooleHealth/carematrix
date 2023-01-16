@@ -11,14 +11,16 @@ const NAME_BIND = 'App\\Events\\ScreenMessage'
 })
 export class PusherAlarmService {
 
-  nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser //'private-LevelAccomplishmentCompleted.15189' //
+  nameChanel:string; //'private-LevelAccomplishmentCompleted.15189' //
   channel;
   pusher
  constructor(
-    private constants: Constants, 
+    private constants: Constants,
     private notification: NotificationService,
     private authService: AuthenticationService,
-  ) {}
+  ) {
+    this.nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser
+  }
 
   public subscribeChannel(pusherService){
     this.pusher = pusherService

@@ -20,12 +20,12 @@ export class LoginPage implements OnInit {
   @Input()credentials: {username, password, hash};
   @Input()pushNotification: any;
   language: any;
-  constructor( 
-    private authService: AuthenticationService, 
-    private dooleService: DooleService, 
-    private router: Router, 
-    private ngZone: NgZone, 
-    public languageService: LanguageService, 
+  constructor(
+    private authService: AuthenticationService,
+    private dooleService: DooleService,
+    private router: Router,
+    private ngZone: NgZone,
+    public languageService: LanguageService,
     private translate: TranslateService,
     private modalCtrl: ModalController,
     private analyticsService: AnalyticsService,
@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials).subscribe(async (res) => {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;
-      if(res.success){ 
+      if(res.success){
         // this.analyticsService.setUser(res.idUser)
         // this.analyticsService.logEvent('login', res)
         // this.analyticsService.logEvent('sign_in_doole', {user_doole: res.idUser})
@@ -84,8 +84,8 @@ export class LoginPage implements OnInit {
         let message = this.translate.instant('landing.message_wrong_credentials')
         this.modalCtrl.dismiss({error: message});
       }
-    
-    }, async (error) => { 
+
+    }, async (error) => {
      console.log('doDooleAppLogin() ERROR', await error?.message);
      if(error?.message == 'ERR_INTERNET_DISCONNECTED'){
         setTimeout(()=>this.modalCtrl.dismiss({error:error}), 500);
@@ -113,12 +113,12 @@ export class LoginPage implements OnInit {
           this.redirectPage(res.accepted_last)
         else
           this.modalCtrl.dismiss({error:res.message});
-       },(err) => { 
-          console.log('[LoginPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[LoginPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message);
           this.modalCtrl.dismiss({error:err.message});
-          throw err; 
+          throw err;
       });
-     
+
   }
 
   redirectPage(condicion){
@@ -128,7 +128,7 @@ export class LoginPage implements OnInit {
       this.modalCtrl.dismiss({error:null});
     }else{
       this.redirectBiometric()
-    }      
+    }
   }
 
   showIntro(){
@@ -140,7 +140,7 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/intro']).then(()=>{
           this.modalCtrl.dismiss({error:null});
         });
-        
+
       }
     })
   }
@@ -152,13 +152,13 @@ export class LoginPage implements OnInit {
     //this.dismissLoading();
     // As we are calling the Angular router navigation inside a subscribe method, the navigation will be triggered outside Angular zone.
     // That's why we need to wrap the router navigation call inside an ngZone wrapper
-    this.ngZone.run(() => {      
+    this.ngZone.run(() => {
       this.router.navigate(['home']);
       setTimeout(() => {
         // Close modal
         this.modalCtrl.dismiss({date:null});
     }, 500);
-      
+
     });
   }
 
@@ -166,17 +166,17 @@ export class LoginPage implements OnInit {
     let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
     console.log('[LoginPage] redirectBiometric() condicion: ',condicion);
     if(condicion){
-      this.ngZone.run(() => {      
+      this.ngZone.run(() => {
         this.router.navigate(['/login/biometric-auth'])
         setTimeout(() => {
           // Close modal
           this.modalCtrl.dismiss({error:null});
       }, 500);
-        
+
       });
     } else{
       this.showIntro()
-    }      
+    }
   }
 
 
