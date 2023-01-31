@@ -89,19 +89,19 @@ export class ProfilePage implements OnInit {
           async (res: any)=>{
           await res
           console.log('[ProfilePage] signOut()', JSON.stringify(res))
-          if(this.authService.user.idUser)
-            this.pusherConnection.unsubscribePusher()
+
+          this.pusherConnection.unsubscribePusher()
+
           if(res.success)
-          this.router.navigateByUrl('/landing');
+            this.router.navigateByUrl('/landing');
           else{
             let message = this.translate.instant('setting.error_message_sign_off')
-            this.dooleService.showAlertAndReturn('Error',message, false,'/landing')
+              this.dooleService.showAlertAndReturn('Error',message, false,'/landing')
           }
         });
       }else{
         await this.authService.logout1().then(res=>{
-          if(this.authService?.user?.idUser)
-            this.pusherConnection.unsubscribePusher()
+          this.pusherConnection.unsubscribePusher()
           this.router.navigateByUrl('/landing');
         });
       }

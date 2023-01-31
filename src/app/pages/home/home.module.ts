@@ -14,6 +14,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
 import { AdvicesDetailPageModule } from './advices-detail/advices-detail.module';
 import { NewDetailPageModule } from './new-detail/new-detail.module';
+import { DietsDetailPageModule } from '../diary/diets-detail/diets-detail.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NewDetailPageModule } from './new-detail/new-detail.module';
     ElementsAddPageModule,
     AdvicesDetailPageModule,
     NewDetailPageModule,
+    DietsDetailPageModule
   ],
   providers: [DatePipe, InAppBrowser] ,
   declarations: [HomePage,

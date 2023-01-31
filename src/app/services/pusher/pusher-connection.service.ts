@@ -35,7 +35,7 @@ export class PusherConnectionService {
   public setEndPoint(){
     let index = this.constants?.INDEX
     let params = this.LIST_APP_KEY[index]
-    console.log('[PusherChallengeNotificationsService] setEndPoint() ' ,  params);
+    console.log('[PusherConnectionService] setEndPoint() ' ,  params);
     return params
   }
 

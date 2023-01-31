@@ -134,11 +134,11 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() {
-    setTimeout(() => {
+
       this.pusherNotifications.init()
       this.pusherAlarms.init()
       this.pusherChallenge.init()
-    }, 1000)
+
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     //this.getUserInformation()
     this.checkHealthAccess();
@@ -1080,11 +1080,13 @@ export class HomePage implements OnInit {
       .then((result) => {
         console.log('showAdvices()', result);
         console.log('modal.onDidDismiss: ', this.pusherChallenge.pendingNotification);
-        if (this.pusherChallenge.pendingNotification) {
+
+        this.pusherChallenge.isModalShowing = false;
+        if (this.pusherChallenge?.pendingNotification?.show) {
           this.pusherChallenge.presentChallengeNotification();
           this.getUserInformation();
         }
-        this.pusherChallenge.isModalShowing = false;
+
       });
 
     await modal.present();
