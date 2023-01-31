@@ -8,6 +8,25 @@ import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
 declare const Pusher: any;
 const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted'
+export interface challengeNotification
+{
+  "user": {
+      "id": string,
+      "name": string
+  },
+  "levelDetail": {
+      "id": string,
+      "name": string
+  },
+  "coin": {
+      "id":string,
+      "name": string,
+      "icon": string
+  },
+  "message": string,
+  "action": string,
+  "isChallengeCompleted": boolean
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +38,7 @@ export class PusherChallengeNotificationsService {
   handlerMessage = '';
   roleMessage = '';
   isModalShowing: boolean = false;
-  pendingNotification:any;
+  pendingNotification:{show:boolean, data:challengeNotification};
   pusher
   constructor(
     private alertController: AlertController,
@@ -38,32 +57,28 @@ export class PusherChallengeNotificationsService {
     }
 
     public unsubscribePusher(){
-      this.channel = this.pusher.unsubscribe(this.nameChanel)
+      this.channel = this.pusher?.unsubscribe(this.nameChanel)
     }
 
   public init() {
     console.log('[PusherChallengeNotificationsService] init()');
-    this.channel.bind(NAME_BIND, (data) => {
+    this.channel?.bind(NAME_BIND, (data) => {
       console.log('[PusherChallengeNotificationsService] getPusher()', data);
 
       if(!this.isModalShowing){
         this.presentChallengeNotification();
-      }else
-        this.pendingNotification = data;
+      }else{
+        this.pendingNotification = {show:true, data:data}
+      }
+
     });
   }
 
 async presentChallengeNotification() {
 
   let message = '';
-  if(this.pendingNotification?.isChallengeCompleted)
+
     message =  `<div class="pyro">
-    <div class="before"></div>
-    <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_champ.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
-    <div class="after"></div>
-  </div>`;
-  else
-    message = `<div class="pyro">
     <div class="before"></div>
     <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_champ.gif" class="card-alert"></img><ion-text>`+this.translate.instant('health_path.level_accomplished')+`</ion-text></ion-col></ion-row>
     <div class="after"></div>
@@ -79,11 +94,13 @@ async presentChallengeNotification() {
         role: 'confirm',
         handler: () => {
           this.handlerMessage = 'Alert confirmed';
-          this.pendingNotification = null;
+
         },
       },
     ],
   });
+  this.pendingNotification = {show:false, data:null};
+
   await alert.present();
 
   const { role } = await alert.onDidDismiss();

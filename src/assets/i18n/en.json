@@ -141,7 +141,7 @@
         "frequent_questions": "Frequently asked questions",
         "report_problem": "Report a problem",
         "legal_warning": "Legal Notice",
-        "us": "We"
+        "us": "About Us"
       },
       "button_sign_off": "Log out",
       "version": "Version"
@@ -202,7 +202,7 @@
     "personal": {
       "button_back": "Home",
       "header": "Your Data",
-      "first_name": "Number",
+      "first_name": "Name",
       "last_name": "Surname",
       "birthdate": "Date of birth",
       "gender": "Gender",
@@ -338,7 +338,7 @@
       "button_perfil": "Profile"
     },
     "about_us": {
-      "header": "We",
+      "header": "About us",
       "button_perfil": "Profile"
     },
     "profile_legal": {
@@ -400,7 +400,7 @@
       ],
       "today": "Today",
       "yesterday": "Yesterday",
-      "appointment_by_user": "Citation added by the user",
+      "appointment_by_user": "Appointment added by the user",
       "event_by_user": "User-added event",
       "error_alert_message_get_token": "Error getting video call token",
       "error_alert_message_get_agenda": "Error getting calendar"
@@ -492,8 +492,8 @@
       "message_added_appointment": "Added a new appointment",
       "message_updated_appointment": "The appointment has been successfully updated",
       "error_message_added_appointment": "An error occurred while saving data",
-      "edit_appointment": "Edit citation",
-      "add_appointment": "Add citation",
+      "edit_appointment": "Edit appointment",
+      "add_appointment": "Add appointment",
       "edit_event": "Edit Event",
       "add_event": "Add Event",
       "delete_event": "Delete Event"
@@ -688,7 +688,7 @@
       "nextLabel": "Following"
     },
     "specialist_finder": {
-      "header": "Reserve",
+      "header": "Booking",
       "field_date": "Date",
       "field_professional": "Professional",
       "field_specially": "Speciality",
@@ -698,7 +698,7 @@
       "button_videocall": "Confirm appointment"
     },
     "bookings": {
-      "header": "Reserve",
+      "header": "Booking",
       "field_date": "Date",
       "reason_appointment": "Reason for appointment",
       "attachments": "Attachments",
@@ -743,7 +743,7 @@
       "activate": "Biometric access",
       "auth": "Biometric authentication",
       "login": "Biometrics",
-      "active": "ACTÍVALO",
+      "active": "TURN IT ON",
       "dismiss": "NOT NOW",
       "text1": "Biometric access allows you to access the app using your fingerprint, facial recognition or any system you have defined on this device to identify yourself safely.",
       "text2": "Do you want to activate biometric access now?",

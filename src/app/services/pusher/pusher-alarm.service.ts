@@ -32,7 +32,7 @@ export class PusherAlarmService {
   }
 
    public init(){
-    this.channel.bind(NAME_BIND, (data) => {
+    this.channel?.bind(NAME_BIND, (data) => {
          console.log('[PusherAlarmService] getPusherAlarm()' ,  data);
          if(data?.message)
          this.notification.confirmAllNotification(data?.message)
