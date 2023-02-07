@@ -11,13 +11,33 @@ import { RolesService } from 'src/app/services/roles.service';
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 
-
+export interface serie {
+  name: string,
+  type?: string,
+  colorKey?: string,
+  pointWidth?: number,
+  colorByPoint?: boolean,
+  color?: string,
+  data: Array<any>,
+  lineWidth?: number,
+  marker?: {
+    radius: number
+  }
+}
+export interface Interval {
+  interval?: string,
+  from_date?: string,
+  to_date?: string,
+}
 @Component({
   selector: 'app-activity-goal',
   templateUrl: './activity-goal.page.html',
   styleUrls: ['./activity-goal.page.scss'],
 })
 export class ActivityGoalPage implements OnInit {
+  series: any[] = []
+  last_value:any
+  isDiastoleAndSystole:boolean
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
   private id;
@@ -38,15 +58,15 @@ export class ActivityGoalPage implements OnInit {
   private title: any;
   units: any = [];
   graphData = [];
-  interval = '';
+  interval: Interval;
   min: Date = new Date();
   max: Date = new Date();
   curr: Date = new Date();
   segmentFilter = "1d";
   times = []
   typeChart
-  minY = 0;
-  
+  minY = 0
+  maxY = 0
   constructor(
     private dooleService: DooleService,
     private languageService: LanguageService,
@@ -65,17 +85,22 @@ export class ActivityGoalPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    if (this.id)
-      this.loadData('1d');
-    else this.isLoading = false;
+    if (this.id){
+      this.interval = {
+        from_date: this.formatSelectedDate(this.min,'yyyy/MM/dd'), 
+        to_date: this.formatSelectedDate(this.min,'yyyy/MM/dd')
+      }
+      this.loadData(this.interval);
+    }
   }
 
   setLocale(){
     return this.languageService.getCurrent();
   }
 
-  async loadData(interval) {
-    console.log('[ActivityGoalPage] loadData()', interval); 
+  async loadData(params) {
+    console.log('[ActivityGoalPage] loadData()', params); 
+    const interval = params.interval
     this.isLoading = true
     let vArray = [];
     let dArray = [];
@@ -83,42 +108,64 @@ export class ActivityGoalPage implements OnInit {
     this.normalValue = [];
     this.outRangeValue = [];
     this.dangerValue = [];
-    this.ranges = []
+    this.ranges = [];
+    this.series = []
 
-    this.dooleService.getAPIgraphicsElement(this.id, interval).subscribe(async json => {
+
+    this.dooleService.getAPIelementID(this.id, params).subscribe(async json => {
       console.log('[ActivityGoalPage] loadData()', await json);
-      if(json){
+      this.isDiastoleAndSystole = json?.isDiastoleAndSystole
+      if(json?.isDiastoleAndSystole){
+        this.goals = []
+        this.ranges = [];
+        //this.header =   json?.blood_pressure_systolic.name +'/'+ json?.blood_pressure_diastolic.name
+        this.units = json?.blood_pressure_systolic?.units;
+        this.last_value = {value: (json?.blood_pressure_systolic.values[0]?.value)? json?.blood_pressure_systolic.values[0]?.value +'/'+ json?.blood_pressure_diastolic.values[0]?.value: undefined, 
+                            date: json?.blood_pressure_diastolic.values[0]?.date_value}
+        this.getdataElement(json?.blood_pressure_systolic, '#d12f96')
+        this.getdataElement(json?.blood_pressure_diastolic, '#009cb3')
+        this.getGoals(json?.blood_pressure_systolic)
+        this.getGoals(json?.blood_pressure_diastolic)
+        this.getMinMaxValues()
+        this.getRanges(json?.blood_pressure_systolic, this.minY, this.maxY)
+        this.getRanges(json?.blood_pressure_diastolic, this.minY, this.maxY)
+        this.generateMuiltiChart()
+      }
+      else{
         this.title = json.name;
-        this.description = json?.description
+        this.description = json?.description;
         this.units = json.units;
         this.values = json.values;
+        const index = json?.values?.length >0 ? json?.values?.length-1:0
+        this.last_value = {value: json?.values[index]?.value, date: json?.values[index]?.date_value}
         this.goals = json.goals;
         this.graphData = [];
         var min = null, max = null;
         min =0; max = 300
         this.values = this.filterDate(this.values)
         numDay = this.returnNumDays(this.values)
-  
+    
         this.values.forEach(element => {
           if (min == null || min > element.value)
             min = element.value;
-  
+    
           if (max == null || max < element.value)
             max = element.value;
-  
+    
           vArray.push(element.value);
-          var mydate = new Date(element.date_value.replace(' ', 'T'));
+          var mydate = new Date(element.date);
           var d = mydate.getDate();
           var m = mydate.getMonth();
           m += 1;  // JavaScript months are 0-11
           var y = mydate.getFullYear();
           element.date = d + "-" + m + "-" + y;
           var k = [];
-  
+    
           if(interval == '1d'){
             this.typeChart = 'category'
-            let time = element.date_value.split(' ')[1]
-            let hour = time.split(':')[0]+':'+time.split(':')[1]
+            let time = element.date_value?.split(' ')[1]
+            let hour = time?.split(':')[0]+':'+time?.split(':')[1]
+            console.log('[ActivityGoalPage] loadData() 1d element', element);
             k.push(hour);
           }
           else if(interval == '1w'){
@@ -138,57 +185,24 @@ export class ActivityGoalPage implements OnInit {
           k.push(element.valueNumeric);
           this.graphData.push(k);
           dArray.push(y + "-" + m + "-" + d + " " + element.time);
-          //console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
+          console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
         });
-  
+    
         this.minY = Math.min.apply(null,vArray)
         this.minY = (this.minY)?(this.minY - this.minY/50):0
         min = this.minY
         max = Math.max.apply(null,vArray)
         max = (max)? (max+max/2): 0
-  
-        json.ranges.forEach(range => {
-          var r = [];
-          var color;
-  
-          if (range.rangeCondition == '>' || range.rangeCondition == '=>') {
-            r["from"] = range.value1;
-            r["to"] = max;
-          }
-  
-          if (range.rangeCondition == '<' || range.rangeCondition == '<=') {
-            r["from"] = min;
-            r["to"] = range.value1;
-          }
-  
-          if (range.rangeCondition == 'a<x<b') {
-            r["from"] = range.value1;
-            r["to"] = range.value2;
-          }
-  
-          if (range.rangeType == "success")
-            color = 'rgba(96, 173, 121, 0.1)';
-          else if (range.rangeType == "warning")
-            color = 'rgba(245, 157, 24, 0.1)'; //'rgb(243, 156, 18, 0.1)'
-          else if (range.rangeType == "danger")
-            color = 'rgba(245, 46, 24, 0.1)'; //'rgb(231, 76, 60, 0.1)'
-  
-          r["color"] = color;
-          this.ranges.push(r);
-          if (range.rangeType === "success")
-            this.normalValue.push(range.conditionString)
-            else if (range.rangeType == "warning")
-            this.outRangeValue.push(range.conditionString)
-            else if (range.rangeType == "danger")
-            this.dangerValue.push(range.conditionString)
-        });
-  
+    
+        this.getRanges(json, min, max)
+    
         this.graphValues = vArray;
         this.graphDates = dArray;
         this.values = this.values.reverse();
-  
+    
         console.log(this.graphData)
         this.generateChart();
+  
       }
       this.isLoading = false
     }, error => {
@@ -219,6 +233,164 @@ export class ActivityGoalPage implements OnInit {
     return numDay
   }
 
+  getMinMaxValues(){
+    let min = 0,  max = 0
+    this.series.forEach((value, index) => {
+      if(value?.data?.length > 0){
+        min = Math.min.apply(null,value.data)
+        min = (this.minY)?(this.minY - this.minY/50):0
+
+        max = Math.max.apply(null,value.data)
+        max = (max)? (max+max/2): 0
+
+        if(index == 0){
+          this.minY = min
+          this.maxY = max
+        }
+        else if(min < this.minY){
+          this.minY = min
+        }
+        else if(max > this.maxY)
+          this.maxY = max
+      }
+    })
+
+  }
+
+  getGoals(element){
+    if(this.isDiastoleAndSystole && element?.goals?.length > 0){
+      let goalsElement = {
+        name: element.name,
+        goals: element.goals,
+      }
+      this.goals.push(goalsElement)
+      console.log('[ActivityGoalPage] getGoals()', this.goals);
+    }
+  }
+
+  getdataElement(json, color?){
+    var min = 0, max = 0;
+    //min =0; max = 300
+    let vArray = [];
+    let dArray = [];
+    let values = this.filterDate(json.values)
+    let numDay = 0;
+    values.forEach(element => {
+      if (min == null || min > element.value)
+        min = element.value;
+
+      if (max == null || max < element.value)
+        max = element.value;
+
+      vArray.push(element.value);
+      var mydate = new Date(element.date);
+      var d = mydate.getDate();
+      var m = mydate.getMonth();
+      m += 1;  // JavaScript months are 0-11
+      var y = mydate.getFullYear();
+      element.date = d + "-" + m + "-" + y;
+      var k = [];
+
+      if(this.segmentFilter == '1d'){
+        this.typeChart = 'category'
+        let time = element.date_value?.split(' ')[1]
+        let hour = time?.split(':')[0]+':'+time?.split(':')[1]
+        console.log('[ActivityGoalPage] loadData() 1d element', element);
+        k.push(hour);
+      }
+      else if(this.segmentFilter == '1w'){
+        this.typeChart = 'category'
+        let date = this.formatSelectedDate2(element.date_value, 'd MMM')
+        k.push(date);
+      }
+      else if(this.values.length >= 1 && this.values.length < 4 || numDay<4){
+        this.typeChart = 'category'
+        let date = this.formatSelectedDate2(element.date_value, 'd. MMM')
+        k.push(date);
+      }
+      else{
+        this.typeChart = 'datetime'
+        k.push(element.timestamp * 1000);
+      }
+
+      k.push(element.valueNumeric);
+      dArray.push(k);
+      //dArray.push(y + "-" + m + "-" + d + " " + element.time);
+      console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
+    });
+    let serie:serie = {name: json.name, data: dArray,lineWidth:3}
+    if(color)
+    serie['color'] = color
+    this.series.push(serie)
+  }
+
+  getRanges(element, min, max){
+    let normalValue = []
+    let outRangeValue = []
+    let dangerValue = []
+    let value = []
+    let ranges = element.ranges;
+
+    ranges.forEach(range => {
+      var r = [];
+      var color;
+
+      if (range.rangeCondition == '>' || range.rangeCondition == '=>') {
+        r["from"] = range.value1;
+        r["to"] = max;
+      }
+
+      if (range.rangeCondition == '<' || range.rangeCondition == '<=') {
+        r["from"] = min;
+        r["to"] = range.value1;
+      }
+
+      if (range.rangeCondition == 'a<x<b') {
+        r["from"] = range.value1;
+        r["to"] = range.value2;
+      }
+
+      if (range.rangeType == "success")
+        color = 'rgba(96, 173, 121, 0.1)';
+      else if (range.rangeType == "warning")
+        color = 'rgba(245, 157, 24, 0.1)'; //'rgb(243, 156, 18, 0.1)'
+      else if (range.rangeType == "danger")
+        color = 'rgba(245, 46, 24, 0.1)'; //'rgb(231, 76, 60, 0.1)'
+
+      r["color"] = color;
+
+      if(!this.isDiastoleAndSystole)
+      this.ranges.push(r);
+      value.push(r);
+      if (range.rangeType === "success"){
+        this.normalValue.push(range.conditionString)
+        normalValue.push(range.conditionString)
+      }
+      else if (range.rangeType == "warning"){
+        this.outRangeValue.push(range.conditionString)
+        outRangeValue.push(range.conditionString)
+      }
+      else if (range.rangeType == "danger"){
+        this.dangerValue.push(range.conditionString)
+        dangerValue.push(range.conditionString)
+      }
+
+
+    });
+    if(this.isDiastoleAndSystole && value?.length > 0){
+      let rangesElement = {
+        name: element.name,
+        description: element.description,
+        value: value,
+        normalValue: normalValue,
+        outRangeValue: outRangeValue,
+        dangerValue: dangerValue
+      }
+      this.ranges.push(rangesElement)
+      console.log('[ActivityGoalPage] getRanges()', this.ranges);
+    }
+  }
+
 
   generateChart() {
     console.log('[ActivityGoalPage] generateChart()', this.times);
@@ -232,10 +404,11 @@ export class ActivityGoalPage implements OnInit {
         text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
       },
       xAxis: {
-         type:  this.typeChart,
-         maxRange: this.min.getTime(),
-  
-      },   
+        type:  this.typeChart,
+        maxRange: this.min.getTime(),
+        tickWidth: 0,
+        gridLineWidth: 1
+     }, 
       yAxis: {
         min: this.minY,  
         title: {
@@ -323,6 +496,71 @@ export class ActivityGoalPage implements OnInit {
     return data
   }
 
+  generateMuiltiChart() {
+    HighCharts.chart('container', {
+      chart: {  
+        type: (this.series[0]?.data?.length > 4)? 'line':'column',
+        zoomType: 'x',          
+      },
+      title: {
+        text: (this.series[0]?.data?.length == 0)? this.translate.instant('activity_goal.no_data'):null
+      },
+      xAxis: {
+         type:  this.typeChart,
+         maxRange: this.min.getTime(),
+         //tickInterval: 7 * 24 * 3600 * 1000, // one week
+         tickWidth: 0,
+         gridLineWidth: 1
+      },   
+      yAxis: {
+        min: this.minY,  
+        title: {
+          text: this.units,
+          align: 'high'
+        },
+        opposite: true,
+        plotBands: this.ranges
+      },
+      rangeSelector: {
+        enabled: true
+    },
+
+/*       tooltip: {
+        valueSuffix: ' millions'
+      }, */
+      plotOptions: {        
+/*         bar: {
+          dataLabels: {
+            enabled: true
+          }
+        } */
+        series: {
+          borderWidth: 1,
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}'
+          }
+        }
+      },
+      legend: {
+        align: 'left',
+        verticalAlign: 'bottom',
+        borderWidth: 0
+      },
+      credits: {
+        enabled: false
+      },
+      series: this.series
+    });
+    
+    HighCharts.setOptions({
+      lang: {
+         /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
+          weekdays: (this.setLocale() == 'es')? this.es: this.ca
+      }
+  });
+  }
+
   getMinWeekFilter(value){
     if(this.formatDate(value).getDate() == this.min.getDate() && 
     this.formatDate(value).getMonth() == this.min.getMonth() && 
@@ -368,7 +606,12 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
     }
-    this.loadData(this.segmentFilter);
+
+    this.interval = {
+      from_date: this.formatSelectedDate(this.min,'yyyy/MM/dd'), 
+      to_date: this.formatSelectedDate(this.max,'yyyy/MM/dd')
+    }
+    this.loadData(this.interval);
   }
 
   setMaxDate(){
@@ -528,7 +771,11 @@ export class ActivityGoalPage implements OnInit {
           //this.dooleService.presentAlert(message)
         }else if(result?.data?.action == 'add'){
           this.notification.displayToastSuccessful()
-          this.loadData(this.segmentFilter);
+          this.interval = {
+            from_date: this.formatSelectedDate(this.min,'yyyy/MM/dd'), 
+            to_date: this.formatSelectedDate(this.max,'yyyy/MM/dd')
+          }
+          this.loadData(this.interval);
         }
       });
   

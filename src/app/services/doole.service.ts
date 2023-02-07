@@ -869,10 +869,14 @@ export class DooleService {
     );
   }
 
-  getAPIelementID(id: Object): Observable<any> {
-    let path = `user/element/${id}`;
+  getAPIelementID(id: Object, params?): Observable<any> {
+    let path = `v2/user/element/${id}`;
+    let httpParams = new HttpParams();
+    httpParams = (params?.interval) ? httpParams.append('interval', params?.interval) : httpParams
+    httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIgraphicsElement(${path}) res: `, res);
         return res;
