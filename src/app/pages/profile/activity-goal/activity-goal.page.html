@@ -54,67 +54,108 @@
        </ion-button>
      </ion-col>
    </ion-row>
-
-    <div class="main-container2">
-  <ion-row *ngIf="this.values && this.values.length > 0"><ion-col size="4" class="txtTitleGoalsGreenBig">{{ values[0].value }}&nbsp;<span style="color:black" class="txtTitleGoalsLittle2">{{units}}</span></ion-col></ion-row>
-  <ion-row *ngIf="this.values &&  this.values.length > 0"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatCurrentDate(values[0].date_value)}}</ion-col></ion-row>
- </div>
-
-<div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
-
-<div *ngIf="goals !== undefined &&  goals.length >0 && role?.component?.goal">
-  <div class="main-container">
-    <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_reward' | translate}}</ion-text>
+   <div class="main-container2">
+    <ion-row *ngIf="this.last_value?.value"><ion-col size="6" class="txtTitleGoalsGreenBig">{{this.last_value?.value}}&nbsp;<span style="color:black" class="txtTitleGoalsLittle2">{{units}}</span></ion-col></ion-row>
+    <ion-row *ngIf="this.last_value?.date"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatDate(this.last_value?.date) | date: 'dd/MM/y'}}</ion-col></ion-row>
+   </div>
+  
+  <div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
+  
+  <div *ngIf="goals !== undefined &&  goals.length >0"> 
+    <div *ngIf="!this.isDiastoleAndSystole; else multigoals">
+        <div class="main-container">
+          <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_reward' | translate}}</ion-text>
+        </div>
+        <ion-card  *ngFor="let goal of goals" class="cardProfilePadding">
+          <ion-row>
+            <ion-col size="2">
+              <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
+            </ion-col>
+            <ion-col size="10" class="txtTitleGoals2">{{'goals.description1' | translate}} {{header?.toLowerCase()}} {{goal?.typeString?.toLowerCase()}} {{this.units}} {{'goals.description2' | translate}} {{goal?.coin?.name?.toLowerCase()}}: 
+              <b>{{goal.score}} {{goal?.coin?.name?.toUpperCase()}}</b><br></ion-col>
+          </ion-row>
+        </ion-card>
+    </div>
+    <ng-template #multigoals>
+        <div class="main-container">
+          <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_reward' | translate}}</ion-text>
+        </div>
+        <div *ngFor="let element of this.goals;">
+          <ion-card  *ngFor="let goal of element.goals" class="cardProfilePadding">
+            <ion-row>
+              <ion-col size="2">
+                <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
+              </ion-col>
+              <ion-col size="10" class="txtTitleGoals2">{{'goals.description1' | translate}} {{element?.name?.toLowerCase()}} {{goal?.typeString?.toLowerCase()}} {{this.units}} {{'goals.description2' | translate}} {{goal?.coin?.name?.toLowerCase()}}: 
+                <b>{{goal?.score}} {{goal?.coin?.name?.toUpperCase()}}</b><br></ion-col>
+            </ion-row>
+          </ion-card>
+        </div>
+    </ng-template>
   </div>
 
-    <ion-card  *ngFor="let goal of goals" class="cardProfilePadding">
-      <ion-row>
-        <ion-col size="2">
-          <ion-img src='assets/icons/IconGoal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
-        </ion-col>
-        <!-- <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col> -->
-        <ion-col size="10" class="txtTitleGoals2">{{'goals.description1' | translate}} {{header?.toLowerCase()}} {{goal?.typeString?.toLowerCase()}} {{this.units}} {{'goals.description2' | translate}} {{goal?.coin?.name?.toLowerCase()}}:
-          <b>{{goal.score}} {{goal?.coin?.name?.toUpperCase()}}</b><br></ion-col>
-      </ion-row>
-    </ion-card>
-</div>
-
+<!-- Ranges -->
 <span *ngIf="this.ranges.length > 0">
-  <div class="main-container">
-    <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
+  <div *ngIf="!this.isDiastoleAndSystole; else multiranges">
+    <div class="main-container">
+      <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
+    </div>
+    <ion-card class="cardProfilePadding">
+      <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
+      <div *ngIf="description" [innerHtml]="this.description"></div>
+      <!-- <ion-item-divider></ion-item-divider> -->
+      <div *ngIf="this.normalValue.length > 0">
+        <div *ngFor="let range of this.normalValue">
+          <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+        </div>
+      </div>
+      <div *ngIf="this.outRangeValue.length > 0">
+        <div *ngFor="let range of this.outRangeValue">
+          <ion-col class="txtTitleWarning">{{ 'activity_goal.out_range_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+        </div>
+      </div>
+      <div *ngIf="this.dangerValue.length > 0">
+        <div *ngFor="let range of this.dangerValue">
+          <ion-col class="txtTitleDanger">{{ 'activity_goal.danger_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+        </div>
+      </div>
+      <br>
+    </ion-card>
   </div>
-  <ion-card class="cardProfilePadding">
-    <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
-    <div *ngIf="description" [innerHtml]="this.description | safeHtml"></div>
-    <!-- <ion-item-divider></ion-item-divider> -->
-    <div *ngIf="this.normalValue.length > 0">
-      <div *ngFor="let range of this.normalValue">
-        <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
+  
+  <ng-template #multiranges>
+    <div *ngIf="this.ranges?.length > 0">
+      <div class="main-container">
+        <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
+      </div>
+      <div *ngFor="let range of this.ranges;">
+        <ion-card class="cardProfilePadding">
+          <ion-card-title  *ngIf="range?.name" class="txtTitleGoals"><b>{{ range?.name}}</b></ion-card-title><br>
+          <ion-card-title  *ngIf="range?.description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title>
+          <div style="padding: 5% 0 5% 0" *ngIf="range?.description" [innerHtml]="range.description"></div>
+          
+          <div *ngIf="range?.normalValue?.length > 0">
+            <div *ngFor="let value of range.normalValue">
+              <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{value}} {{this.units}}</ion-col>
+            </div>
+          </div>
+          <div *ngIf="range?.outRangeValue?.length > 0">
+            <div *ngFor="let value of range.outRangeValue">
+              <ion-col class="txtTitleWarning">{{ 'activity_goal.out_range_value' | translate}}</ion-col><ion-col>{{value}} {{this.units}}</ion-col>
+            </div>
+          </div>
+          <div *ngIf="range?.dangerValue?.length > 0">
+            <div *ngFor="let value of range.dangerValue">
+              <ion-col class="txtTitleDanger">{{ 'activity_goal.danger_value' | translate}}</ion-col><ion-col>{{value}} {{this.units}}</ion-col>
+            </div>
+          </div>
+          <br>
+        </ion-card>
       </div>
     </div>
-    <div *ngIf="this.outRangeValue.length > 0">
-      <div *ngFor="let range of this.outRangeValue">
-        <ion-col class="txtTitleWarning">{{ 'activity_goal.out_range_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
-      </div>
-    </div>
-    <div *ngIf="this.dangerValue.length > 0">
-      <div *ngFor="let range of this.dangerValue">
-        <ion-col class="txtTitleDanger">{{ 'activity_goal.danger_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
-      </div>
-    </div>
-    <br>
-  </ion-card>
+  </ng-template>
 </span>
-<!--   <div class="main-container">
-    <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_advices' | translate}}</ion-text>
-  </div>
-  <ion-card class="cardProfilePadding">
-    <ion-row>
-      <ion-col size="4" class="imgCard">
-      </ion-col>
-      <ion-col size="8"><ion-card-title class="txtTitleGoals3">Controla tus niveles de glucosa</ion-card-title><p class="txtTitleGoals3">Descubre los mejores alimentos para mejorar tus niveles de glucosa </p></ion-col>
-    </ion-row>
-  </ion-card> -->
+<!-- End Ranges -->
 
   <ng-template #noData>
     <div *ngIf="!this.isLoading">

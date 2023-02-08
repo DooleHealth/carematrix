@@ -122,6 +122,6 @@ export class BiometricAuthPage implements OnInit {
         this.router.navigate(['/intro']);
       }
     })
-}
+  }
 
 }
