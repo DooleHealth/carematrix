@@ -54,7 +54,7 @@
         </ion-row>
       </ion-grid>
       <ion-item>
-        <ion-label style="margin-top: 10%;">{{ 'health_path.goals' | translate }}</ion-label>
+        <ion-label *ngIf=" this.goalsList?.length > 0" style="margin-top: 10%;">{{ 'health_path.goals' | translate }}</ion-label>
       </ion-item>
 
       <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">

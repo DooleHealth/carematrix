@@ -134,7 +134,8 @@
           "settings": "Ajustes",
           "videocall_test": "Test de Conectividad",
           "videocall_open":"Abrir",
-          "bluetooth": "Bluetooth"
+          "bluetooth": "Bluetooth",
+          "bluetooth_search": "Buscar dispositivos"
         },
         "professional": {
           "title_professional": "Profesionales",
@@ -808,6 +809,12 @@
         "mode_0":"Producción",
         "mode_1": "Calidad",
         "mode_2": "Desarrollo"
+      },
+      "date":{
+        "week_abbr": "S",
+        "day_abbr": "D",
+        "month_abbr":"M",
+        "year_abbr": "A"
       }
 
 

@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -37,6 +38,7 @@ export class DrugsDetailPage implements OnInit {
     private translate : TranslateService,
     public alertController: AlertController,
     private modalCtrl: ModalController,
+    public dateService: DateService
   ) { }
 
   ngOnInit() {
@@ -81,7 +83,7 @@ export class DrugsDetailPage implements OnInit {
     this.isSubmittedToDate = isSubmitted;
     this.isSubmittedDate= isSubmitted;
     this.isSubmittedDosis = isSubmitted;
-    this.isSubmittedTimes = isSubmitted;   
+    this.isSubmittedTimes = isSubmitted;
   }
 
   expandItem(): void {
@@ -107,7 +109,7 @@ export class DrugsDetailPage implements OnInit {
         return false;
       }
     }
-    
+
 
     if(this.isEditDrug){
       this.updateDrug()
@@ -142,10 +144,10 @@ export class DrugsDetailPage implements OnInit {
 
       let from_date = this.form.get('from_date').value
       this.form.get('from_date').setValue(this.transformDate(from_date))
-  
+
       let to_date = this.form.get('to_date').value
       this.form.get('to_date').setValue(this.transformDate(to_date))
-  
+
       let f = this.form.get('frequency').value
       if(f !== 'daily')
       this.form.get('frequency').setValue('daily');
@@ -158,7 +160,7 @@ export class DrugsDetailPage implements OnInit {
   saveDrug(){
 
     const form = this.setFields()
-    
+
     console.log('[DrugsDetailPage] saveDrug()', form);
 
     this.dooleService.postAPImedicationPlan(form).subscribe(async json=>{
@@ -171,8 +173,8 @@ export class DrugsDetailPage implements OnInit {
       }
     },err => {
       alert(`Error: ${err.code }, Message: ${err.message}`)
-      console.log('[DrugsDetailPage] saveDrug() ERROR(' + err.code + '): ' + err.message); 
-      throw err; 
+      console.log('[DrugsDetailPage] saveDrug() ERROR(' + err.code + '): ' + err.message);
+      throw err;
     });
 
   }
@@ -198,8 +200,8 @@ export class DrugsDetailPage implements OnInit {
     },err => {
       this.isLoading = false
       alert(`Error: ${err.code }, Message: ${err.message}`)
-      console.log('[DrugsDetailPage] updateDrug() ERROR(' + err.code + '): ' + err.message); 
-      throw err; 
+      console.log('[DrugsDetailPage] updateDrug() ERROR(' + err.code + '): ' + err.message);
+      throw err;
     });
 
   }
@@ -227,7 +229,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   inputDate(){
-    if(this.isSubmited) 
+    if(this.isSubmited)
     return
     let time = this.form.get('time').value
     this.form.get('time').setValue('')
@@ -298,11 +300,11 @@ export class DrugsDetailPage implements OnInit {
           alert(message)
         }
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
         alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[DrugsDetailPage] deleteDrug() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[DrugsDetailPage] deleteDrug() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
@@ -317,7 +319,7 @@ export class DrugsDetailPage implements OnInit {
         if(res.success){
           let medicationPlan = res.medicationPlan
           let from_date = medicationPlan.from_date
-          this.form.get('from_date').setValue(this.formatDate(from_date))     
+          this.form.get('from_date').setValue(this.formatDate(from_date))
           let to_date = medicationPlan.to_date
           this.form.get('to_date').setValue(this.formatDate(to_date))
           if(medicationPlan?.alias) this.form.get('alias').setValue(medicationPlan.alias)
@@ -336,16 +338,16 @@ export class DrugsDetailPage implements OnInit {
           this.gettingDay()
 
           let plan = medicationPlan.medication_plan_times
-          plan.forEach(element => {            
+          plan.forEach(element => {
             let hour = element.time.split(':')
             this.times.push(`${hour[0]}:${hour[1]}`)
           });
           this.isInit = false
         }
-       },(err) => { 
-          console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       });
   }
 
@@ -355,20 +357,20 @@ export class DrugsDetailPage implements OnInit {
     switch (fq) {
       case 'daily':
         if(this.isSubmited)
-        return 
+        return
         let dialy = [0,1,2,3,4,5,6]
         this.settingDayForm(dialy)
         this.frequencySeleted = fq
         break;
       case '1week':
         if(this.isSubmited)
-          return       
+          return
           this.settingBackupDay()
           this.frequencySeleted = fq
         break;
       case 'custom':
         if(this.isSubmited)
-          return       
+          return
           this.settingBackupDay()
           this.frequencySeleted = fq
         break;

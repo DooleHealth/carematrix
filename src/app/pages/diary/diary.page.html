@@ -65,7 +65,7 @@
       <ion-col size="8" class="textBlueCentered">
         <ion-slides #slides >
           <ion-slide>
-            <p>{{ formatSelectedDate(date) | titlecase}}</p>     
+            <p>{{ formatSelectedDate(date) | titlecase}}</p>
           </ion-slide>
         </ion-slides>
       </ion-col >
@@ -84,7 +84,7 @@
         <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>
       <ng-template #second>
-        <ng-container *ngIf="this.listDiets.length > 0 || this.diets ;else third">
+        <ng-container *ngIf="this.listDiets.length > 0 || this.diets?.length > 0  ;else third">
           <ion-list>
             <ion-card class="cardProfile" *ngIf="this.diets?.id">
               <ion-item lines="none" routerLink="diets-detail" [state]="{id: diets?.id}" routerLinkActive="active-item">
@@ -262,7 +262,7 @@
               <br>
               <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
             </ion-col>
-           
+
           </ion-row>
         </ion-grid>
       </ng-template>

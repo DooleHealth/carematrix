@@ -30,8 +30,6 @@ registerLocaleData(localeDe);
   ],
   declarations: [AgendaPage, AgendaEditPage],
   exports:[AgendaEditPage],
-  providers: [ DatePipe,
-    { provide: LOCALE_ID, useValue: 'ca-ES' }
-  ]
+  providers: [ DatePipe]
 })
 export class AgendaPageModule {}

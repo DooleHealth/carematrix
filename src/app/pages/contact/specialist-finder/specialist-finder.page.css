@@ -1,0 +1,36 @@
+#container * {
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  width: 100%;
+  padding: 10px;
+}
+
+.titule {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#left,
+#middle,
+#right {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  vertical-align: top;
+}
+
+#left {
+  width: 10%;
+}
+
+#middle {
+  width: 75%;
+}
+
+#right {
+  width: 10%;
+}/*# sourceMappingURL=specialist-finder.page.css.map */

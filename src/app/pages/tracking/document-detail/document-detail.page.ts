@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -33,6 +34,7 @@ export class DocumentDetailPage implements OnInit {
     private modalCtrl: ModalController,
     private notification: NotificationService,
     private languageService: LanguageService,
+    private dateService : DateService
   ) {
   }
 
@@ -69,9 +71,12 @@ export class DocumentDetailPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    let language = this.languageService.getCurrent()
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'dd MMM yyy');
+
+    if(date)
+      return this.dateService.ddMMMyyyformat(date);
+    // let language = this.languageService.getCurrent()
+    // const datePipe: DatePipe = new DatePipe(language);
+    // return datePipe.transform(date, 'dd MMM yyy');
   }
 
   async getDiagnosticData(){
@@ -99,10 +104,10 @@ export class DocumentDetailPage implements OnInit {
         }
 
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[TrackingPage] getDiagnosticData() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[TrackingPage] getDiagnosticData() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
@@ -193,23 +198,23 @@ export class DocumentDetailPage implements OnInit {
       componentProps: { test: this.document},
       cssClass: "modal-custom-class"
     });
-  
+
     modal.onDidDismiss()
       .then(async (result) => {
-        await result   
+        await result
         if(result?.data?.error){
-          console.log('[DocumentDetailPage] editDiagnosticTest() error'); 
+          console.log('[DocumentDetailPage] editDiagnosticTest() error');
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
         }else if(result?.data?.action == 'add' || result?.data?.action == 'update'){
           this.notification.displayToastSuccessful()
-          this.getDiagnosticData()    
+          this.getDiagnosticData()
         }else if(result?.data?.action == 'delete'){
           //this.router.navigateByUrl('/tracking')
           this.notification.displayToastSuccessful()
         }
       });
-  
+
       return await modal.present();
   }
 

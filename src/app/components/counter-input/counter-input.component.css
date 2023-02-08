@@ -1,0 +1,73 @@
+app-counter-input {
+  --counter-background: #000;
+  --counter-color: #FFF;
+  --counter-color-activated: #FFF;
+  --counter-border-color: #000;
+  --counter-border-radius-outer: 50%;
+  --counter-border-radius-inner: 50%;
+  --counter-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+app-counter-input ion-button.counter-icon {
+  margin: 0px;
+}
+app-counter-input ion-button.counter-icon.button-solid {
+  --background: var(--counter-background);
+  --background-activated: var(--counter-color);
+  --color: var(--counter-color);
+  --color-activated: var(--counter-color-activated);
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: var(--counter-border-color);
+  --box-shadow: none;
+  --border-radius: var(--counter-border-radius-outer) var(--counter-border-radius-inner) var(--counter-border-radius-inner) var(--counter-border-radius-outer);
+  --padding-bottom: 3px;
+  --padding-end: 3px;
+  --padding-start: 3px;
+  --padding-top: 3px;
+}
+app-counter-input .counter-value {
+  color: var(--counter-color);
+  margin: 0px 10px;
+  width: 2.2ch;
+  text-align: center;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+app-counter-input:not([basic]) .button-outer {
+  width: var(--counter-size);
+}
+app-counter-input:not([basic]) .button-outer .button-wrapper {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+}
+app-counter-input:not([basic]) .button-outer .button-wrapper .counter-icon {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: auto;
+  width: 100%;
+}
+app-counter-input[basic] {
+  --counter-border-radius-outer: 12px;
+  --counter-border-radius-inner: 0px;
+}
+app-counter-input[basic] .counter-value {
+  display: none;
+}
+app-counter-input[basic] .button-outer:first-child ion-button.counter-icon {
+  --border-radius: var(--counter-border-radius-outer) var(--counter-border-radius-inner) var(--counter-border-radius-inner) var(--counter-border-radius-outer);
+}
+app-counter-input[basic] .button-outer:last-child {
+  margin-left: -1px;
+}
+app-counter-input[basic] .button-outer:last-child ion-button.counter-icon {
+  --border-radius: var(--counter-border-radius-inner) var(--counter-border-radius-outer) var(--counter-border-radius-outer) var(--counter-border-radius-inner);
+}/*# sourceMappingURL=counter-input.component.css.map */

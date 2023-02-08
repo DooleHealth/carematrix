@@ -9,28 +9,28 @@
       <ion-icon *ngIf="role?.component?.element" slot="icon-only" name="add" color="primary"
       (click)="this.addElement()"></ion-icon>
     </ion-buttons>
-   
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  
-    <ion-segment 
-    value="day" 
-    [(ngModel)]="segmentFilter" 
+
+    <ion-segment
+    value="day"
+    [(ngModel)]="segmentFilter"
     (ionChange)="segmentChanged($event)"
     scrollable style="background-color: white;">
       <ion-segment-button value="1d" >
-        <ion-label>D</ion-label>
+        <ion-label>{{ 'date.day_abbr' | translate}}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1w">
-        <ion-label>S</ion-label>
+        <ion-label>{{ 'date.week_abbr' | translate}}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1m">
-        <ion-label>M</ion-label>
+        <ion-label>{{ 'date.month_abbr' | translate}}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1y">
-        <ion-label>A</ion-label>
+        <ion-label>{{ 'date.year_abbr' | translate}}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
@@ -54,7 +54,6 @@
        </ion-button>
      </ion-col>
    </ion-row>
-
    <div class="main-container2">
     <ion-row *ngIf="this.last_value?.value"><ion-col size="6" class="txtTitleGoalsGreenBig">{{this.last_value?.value}}&nbsp;<span style="color:black" class="txtTitleGoalsLittle2">{{units}}</span></ion-col></ion-row>
     <ion-row *ngIf="this.last_value?.date"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatDate(this.last_value?.date) | date: 'dd/MM/y'}}</ion-col></ion-row>
@@ -174,5 +173,5 @@
       </ion-grid>
   </div>
   </ng-template>
-  
+
 </ion-content>

@@ -16,35 +16,34 @@ export class CachedImageComponent {
 
   @Input()filename = '';
   @Input()
-  set src(imageUrl:string){ 
+  set src(imageUrl:string){
 
     if(imageUrl && this.filename){
       const imageName = this.filename?.split('/').pop();
       const fileType = imageName?.split('.').pop();
-     
+
       Filesystem.readFile({
         directory: FilesystemDirectory.Cache,
         path: `${imageName}`
       }).then(readFile=>{
-        console.log('Cached image exists... ');
-        console.log('_src ... ', this._src);
+
         this._src =  this.domSanitizer.sanitize(SecurityContext.URL, this.domSanitizer.bypassSecurityTrustUrl(`data:image/${fileType};base64,${readFile.data}`));
-     
-          
+
+
       }).catch(async e => {
         await this.storeImage(imageUrl, imageName);
         Filesystem.readFile({
           directory:FilesystemDirectory.Cache,
           path:`${imageName}`
-  
+
         }).then( readFile => {
           this._src = this.domSanitizer.sanitize(SecurityContext.URL, this.domSanitizer.bypassSecurityTrustUrl(`data:image/${fileType};base64,${readFile.data}`));
           console.log('(Read Image OK): ');
-  
+
         }).catch(async e => {
-          console.log('STORE FILE ERROR');
+          console.error('STORE FILE ERROR', e);
          })
-  
+
       })
     }else{
       this._src = 'assets/images/no-image-icon-23492.png';
@@ -57,10 +56,10 @@ export class CachedImageComponent {
     console.log('Saving Image....');
     await fetch(url).then(async (response)=>{
       console.log('fetch image....');
-      // convert to blob 
+      // convert to blob
       const blob = await response.blob();
       console.log('blob....');
-      // convert to base64 
+      // convert to base64
       const base64data = await this.convertBlobToBase64(blob) as string;
       console.log('base64data....');
       const savedFile = await Filesystem.writeFile({
@@ -68,14 +67,14 @@ export class CachedImageComponent {
         data: base64data,
         directory: FilesystemDirectory.Cache
       });
-  
+
       return savedFile;
 
     }).catch(()=>{
       this._src = 'assets/images/no-image-icon-23492.png';
       return;
     });
-   
+
   }
 
   private getFileReader(): FileReader {
@@ -85,7 +84,7 @@ export class CachedImageComponent {
 }
 
   convertBlobToBase64(blob: Blob){
-  
+
     return new Promise((resolve, reject)=>{
       const reader = this.getFileReader();
       console.log('convertBlobToBase64....');

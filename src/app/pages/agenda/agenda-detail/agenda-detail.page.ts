@@ -18,6 +18,7 @@ import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 import { VideocallIframePage } from '../videocall-iframe/videocall-iframe.page';
 import { RolesService } from 'src/app/services/roles.service';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -42,11 +43,11 @@ export class AgendaDetailPage implements OnInit {
     private router: Router,
     private dooleService: DooleService,
     private translate : TranslateService,
-    public datepipe: DatePipe, 
+    public datepipe: DatePipe,
     public alertController: AlertController,
     public nav: NavController,
-    private iab: InAppBrowser, 
-    private auth: AuthenticationService,
+    private iab: InAppBrowser,
+    private dateService: DateService,
     private opentokService: OpentokService,
     private modalCtrl: ModalController,
     private socialSharing: SocialSharing,
@@ -60,8 +61,8 @@ export class AgendaDetailPage implements OnInit {
 
   ngOnInit() {
     this.disabled = Capacitor.isNative? 'disabled': '';
-    this.event = history.state.event;  
-    this.id = (this.event)? history.state.event.id: history.state.id;  
+    this.event = history.state.event;
+    this.id = (this.event)? history.state.event.id: history.state.id;
     if(this.id)
       this.getDetailAgenda();
 
@@ -69,14 +70,14 @@ export class AgendaDetailPage implements OnInit {
   }
 
   // TODO: remove (agenda detail in state.event)
-  getDetailAgenda(){ 
+  getDetailAgenda(){
     this.isLoading = true;
-  
+
     this.dooleService.getAPIagendaID(this.id).subscribe(
       async (res: any) =>{
         console.log('[AgendaDetailPage] getDetailAgenda()', await res);
         if(res.agenda){
-         
+
           this.event = res.agenda
           this.coordenadas = this.event.center_location
           this.cord = this.coordenadas[0]
@@ -90,10 +91,10 @@ export class AgendaDetailPage implements OnInit {
           this.enableReminder = true
         }
 
-       },(err) => { 
-          console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[AgendaDetailPage] getDetailAgenda() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       },()=>{
         this.isLoading = false;
       });
@@ -112,7 +113,7 @@ export class AgendaDetailPage implements OnInit {
         }else{
           let message = this.translate.instant('agenda.error_alert_message_get_token')
           alert(message)
-        }       
+        }
       },
       (error) => {
         // Called when error
@@ -120,7 +121,7 @@ export class AgendaDetailPage implements OnInit {
         console.log("error: ", error);
         throw error;
       });
-    
+
   }
 
   async deleteReminder(){
@@ -138,11 +139,11 @@ export class AgendaDetailPage implements OnInit {
           alert(message)
         }
 
-       },(err) => { 
-       
-          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+
+          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isSaving = !this.isSaving;
@@ -210,7 +211,7 @@ export class AgendaDetailPage implements OnInit {
         id = instruction.reminderable_id
         this.nav.navigateForward("agenda/reminder", { state: {id:id} });
         break;
-    
+
       default:
         id = instruction.reminderable_id
         if(instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda"){
@@ -223,10 +224,9 @@ export class AgendaDetailPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    let language = this.languageService.getCurrent();
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
+    return this.dateService.formatDateLongFormat(date);
   }
+
 
   openFile(media){
     console.log("media", media);
@@ -260,7 +260,7 @@ export class AgendaDetailPage implements OnInit {
 
     var startDate = new Date(agenda.start_date_iso8601);
     var endDate = new Date(agenda.start_date_iso8601);
- 
+
     this.calendar.createEventInteractively(agenda.title,agenda.site,"",startDate,endDate).then(
       async (msg) => {
         console.log("msg: ", msg);
@@ -352,7 +352,7 @@ export class AgendaDetailPage implements OnInit {
       component: VideoComponent,
       componentProps: {},
     });
-   
+
     await modal.present();
 
   }
@@ -364,7 +364,7 @@ export class AgendaDetailPage implements OnInit {
       component: VideocallIframePage,
       componentProps: {"id": this.opentokService.agendaId$}
     });
-    
+
     return await modal.present();
 
   }
@@ -372,9 +372,9 @@ export class AgendaDetailPage implements OnInit {
 
   startVideoCall(){
     // VOIP calls for IOS
-   
+
     this.getVideocallToken();
-    
+
   }
 
    backButton(){

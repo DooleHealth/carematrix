@@ -4,6 +4,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as HighCharts from 'highcharts';
 import { element } from 'protractor';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -40,6 +41,7 @@ export class ActivityGoalPage implements OnInit {
   isDiastoleAndSystole:boolean
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
+  en =  ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   private id;
   viewTitle = ''
   normalValue = []
@@ -73,15 +75,16 @@ export class ActivityGoalPage implements OnInit {
     private modalCtrl: ModalController,
     private translate : TranslateService,
     private notification: NotificationService,
-    public role: RolesService
+    public role: RolesService,
+    private dateService: DateService,
   ) { }
 
   ngOnInit() {
     this.id = history.state.id;
     this.header = history.state.header;
-    console.log('[ActivityGoalPage] ngOnInit()', this.id); 
+    console.log('[ActivityGoalPage] ngOnInit()', this.id);
     //this.loadData('1m');
-    this.viewTitle = this.formatSelectedDate(this.min, 'EEEE, d MMMM')
+    this.viewTitle = this.dateService.selectedDateFormat(this.min.toISOString())
   }
 
   ionViewDidEnter() {
@@ -97,6 +100,7 @@ export class ActivityGoalPage implements OnInit {
   setLocale(){
     return this.languageService.getCurrent();
   }
+
 
   async loadData(params) {
     console.log('[ActivityGoalPage] loadData()', params); 
@@ -151,7 +155,7 @@ export class ActivityGoalPage implements OnInit {
     
           if (max == null || max < element.value)
             max = element.value;
-    
+   
           vArray.push(element.value);
           var mydate = new Date(element.date);
           var d = mydate.getDate();
@@ -160,7 +164,7 @@ export class ActivityGoalPage implements OnInit {
           var y = mydate.getFullYear();
           element.date = d + "-" + m + "-" + y;
           var k = [];
-    
+
           if(interval == '1d'){
             this.typeChart = 'category'
             let time = element.date_value?.split(' ')[1]
@@ -168,17 +172,20 @@ export class ActivityGoalPage implements OnInit {
             console.log('[ActivityGoalPage] loadData() 1d element', element);
             k.push(hour);
           }
-          else if(interval == '1w'){
+          else if(interval == '1w' || interval == '1m'){
             this.typeChart = 'category'
-            let date = this.formatSelectedDate2(element.date_value, 'd MMM')
+            let date = this.formatSelectedDate2(element.date_value, this.dateService.getDayDotMonthFormat())
+            console.log(`[ActivityGoalPage] 1w date ${date}`)
             k.push(date);
           }
           else if(this.values.length >= 1 && this.values.length < 4 || numDay<4){
             this.typeChart = 'category'
-            let date = this.formatSelectedDate2(element.date_value, 'd. MMM')
+            let date = this.formatSelectedDate2(element.date_value, this.dateService.getDayDotMonthFormat())
+            console.log(`[ActivityGoalPage] 1m date ${date}`)
             k.push(date);
           }
           else{
+            console.log(`[ActivityGoalPage] category ${element.timestamp * 1000}`)
             this.typeChart = 'datetime'
             k.push(element.timestamp * 1000);
           }
@@ -187,7 +194,7 @@ export class ActivityGoalPage implements OnInit {
           dArray.push(y + "-" + m + "-" + d + " " + element.time);
           console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
         });
-    
+
         this.minY = Math.min.apply(null,vArray)
         this.minY = (this.minY)?(this.minY - this.minY/50):0
         min = this.minY
@@ -218,7 +225,7 @@ export class ActivityGoalPage implements OnInit {
     let count = 0;
     let numDay = 0;
 
-    for(let i = 0 ; i < values.length; i ++){
+    for(let i = 0 ; i < values?.length; i ++){
       let date = values[i].date.split(' ')[0]
       if(newDate ===  date){
         count++
@@ -227,7 +234,7 @@ export class ActivityGoalPage implements OnInit {
         console.log(`[ActivityGoalPage] returnNumDays() newDate ${newDate} count ${numDay}`)
       }
       newDate =  date
-      if(numDay > 3) 
+      if(numDay > 3)
         break;
     }
     return numDay
@@ -395,22 +402,23 @@ export class ActivityGoalPage implements OnInit {
   generateChart() {
     console.log('[ActivityGoalPage] generateChart()', this.times);
     HighCharts.chart('container', {
-      chart: {  
-        type: (this.graphData.length > 4)? 'line':'column',  //'line' 'area'
+      chart: {
+        type: 'column',  //'line' 'area'
         zoomType: 'x',
-            
+
       },
       title: {
         text: (this.graphData.length == 0)? this.translate.instant('activity_goal.no_data'):null
       },
       xAxis: {
+
         type:  this.typeChart,
         maxRange: this.min.getTime(),
         tickWidth: 0,
         gridLineWidth: 1
      }, 
       yAxis: {
-        min: this.minY,  
+        min: this.minY,
         title: {
           text: this.units,
           align: 'high'
@@ -425,7 +433,7 @@ export class ActivityGoalPage implements OnInit {
 /*       tooltip: {
         valueSuffix: ' millions'
       }, */
-      plotOptions: {        
+      plotOptions: {
 /*         bar: {
           dataLabels: {
             enabled: true
@@ -454,11 +462,11 @@ export class ActivityGoalPage implements OnInit {
         name: this.units,
       }]
     });
-    
+
     HighCharts.setOptions({
       lang: {
          /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
-          weekdays: (this.setLocale() == 'es')? this.es: this.ca
+          weekdays: (this.setLocale() == 'es')? this.es:(this.setLocale() == 'ca')? this.ca : this.en
       }
   });
   }
@@ -467,8 +475,8 @@ export class ActivityGoalPage implements OnInit {
     console.log('[ActivityGoalPage] filter()', data);
     switch (this.segmentFilter) {
       case '1d': {
-        data = data?.filter( value =>(this.formatDate(value.date_value).getDate() == this.min.getDate() && 
-        this.formatDate(value.date_value).getMonth() == this.min.getMonth() && 
+        data = data?.filter( value =>(this.formatDate(value.date_value).getDate() == this.min.getDate() &&
+        this.formatDate(value.date_value).getMonth() == this.min.getMonth() &&
         this.formatDate(value.date_value).getFullYear() == this.min.getFullYear() ))
         break;
       }
@@ -478,7 +486,7 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       case '1m': {
-        data = data?.filter( value =>(this.formatDate(value.date_value).getMonth() == this.min.getMonth()  && 
+        data = data?.filter( value =>(this.formatDate(value.date_value).getMonth() == this.min.getMonth()  &&
         this.formatDate(value.date_value).getFullYear() == this.min.getFullYear()))
         break;
       }
@@ -487,7 +495,7 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       default: {
-        //statements; 
+        //statements;
         data = data?.filter( value =>(this.formatDate(value.date_value) == this.min))
         break;
       }
@@ -562,9 +570,9 @@ export class ActivityGoalPage implements OnInit {
   }
 
   getMinWeekFilter(value){
-    if(this.formatDate(value).getDate() == this.min.getDate() && 
-    this.formatDate(value).getMonth() == this.min.getMonth() && 
-    this.formatDate(value).getFullYear() == this.min.getFullYear()) 
+    if(this.formatDate(value).getDate() == this.min.getDate() &&
+    this.formatDate(value).getMonth() == this.min.getMonth() &&
+    this.formatDate(value).getFullYear() == this.min.getFullYear())
       return true
     return false
   }
@@ -602,7 +610,7 @@ export class ActivityGoalPage implements OnInit {
         break;
       }
       default: {
-        //statements; 
+        //statements;
         break;
       }
     }
@@ -631,14 +639,31 @@ export class ActivityGoalPage implements OnInit {
     let time = auxdate[1];
     date.setHours(time.substring(0, 2));
     date.setMinutes(time.substring(3, 5));
+
     return date;
+  }
+
+  formatCurrentDate(d) {
+    //let date = new Date(d.split(' ')[0]);
+    var auxdate = d.split(' ')
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toUTCString();
+    let date = new Date(date0);
+
+    let time = auxdate[1];
+    date.setHours(time.substring(0, 2));
+    date.setMinutes(time.substring(3, 5));
+
+    let formatedDate =this.dateService.ddMMyyyyFormat(date.toISOString());
+
+    return formatedDate;
   }
 
   lastDay(){
     let now = this.max
     now.setDate(this.max.getDate() - 1);
     this.min = now;
-    this.viewTitle = this.formatSelectedDate(this.min, 'EEEE, d MMMM')
+    this.viewTitle = this.dateService.formatSelectedDate(this.min.toISOString());
   }
 
   lasWeek() {
@@ -651,20 +676,19 @@ export class ActivityGoalPage implements OnInit {
     console.log('[ActivityGoalPage] lasWeek() next()', this.max , this.min);
     if(this.min.getDate() == this.max.getDate() && this.min.getMonth() == this.max.getMonth()){
       this.min.setHours(0)
-      this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM') }`
-    }
-    else
-    this.viewTitle = `${this.formatSelectedDate(this.min, 'E d MMM')} - ${this.formatSelectedDate(this.max, 'EEE d MMM')}`
+      this.viewTitle = `${this.dateService.getSelectedWeek(this.min.toISOString()) }`
+    }else
+      this.viewTitle = `${this.dateService.getSelectedWeek(this.min.toISOString())} - ${this.dateService.getSelectedWeekFullDay(this.max.toISOString())}`
   }
 
   lastMonth() {
     let now = this.max //new Date();
     now.setMonth(this.max.getMonth() - 1);
     this.min = now;
-    this.viewTitle = this.formatSelectedDate(this.min, 'MMMM yyyy')
+    this.viewTitle = this.dateService.MMMMyyyyFormat(this.min.toISOString());
   }
 
-  fullYear() {  
+  fullYear() {
     let now = this.max //new Date();
     now.setFullYear(this.max.getFullYear() - 1);
     this.min = now;
@@ -687,7 +711,8 @@ export class ActivityGoalPage implements OnInit {
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));
     let language = this.languageService.getCurrent();
-    const datePipe: DatePipe = new DatePipe('en');
+    const datePipe: DatePipe = new DatePipe(language);
+    console.log(`[ActivityGoalPage] transform ${format}`)
     return datePipe.transform(date, format);
   }
 
@@ -752,7 +777,7 @@ export class ActivityGoalPage implements OnInit {
     });
 
     await modal.present();
-   
+
   }
 
   async addElement(){
@@ -761,11 +786,11 @@ export class ActivityGoalPage implements OnInit {
       componentProps: { id: this.id, nameElement: this.header, units: this.units },
       //cssClass: "modal-custom-class"
     });
-  
+
     modal.onDidDismiss()
       .then((result) => {
         console.log('addElement()', result);
-       
+
         if(result?.data?.error){
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
@@ -778,8 +803,8 @@ export class ActivityGoalPage implements OnInit {
           this.loadData(this.interval);
         }
       });
-  
-      await modal.present(); 
+
+      await modal.present();
     }
 
 }

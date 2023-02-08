@@ -15,8 +15,8 @@
   </ion-toolbar>
 </ion-header>
 
- 
-<ion-content> 
+
+<ion-content>
    <ion-row class="textBlueCentered1, header-change-month">
      <!-- Move back one screen of the slides -->
     <ion-col size="2">
@@ -34,7 +34,7 @@
     </ion-col>
   </ion-row>
 
-  <calendar 
+  <calendar
   *ngIf="modalReady"
   [eventSource]="eventSource"
   [calendarMode]="calendar.mode"
@@ -45,18 +45,18 @@
   startHour="6"
   endHour="20"
   step="30"
-  startingDayWeek="1"
+  [startingDayWeek]="this.dateService.getStartingDayWeek()"
   [monthviewDisplayEventTemplate]="template"
   [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
-  [locale]="this.languageService.getCurrent()"
   [dateFormatter]="calendar.dateFormatter"
   (onTimeSelected)="onTimeSelected($event)"
   [markDisabled]="markDisabled"
-  startingDayMonth="1"
+  [startingDayMonth]="this.dateService.getStartingDayMonth()"
+
 >
 </calendar>
 
-  
+
     <ng-template #template let-view="view" let-row="row" let-col="col">
       <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">
         {{view.dates[row*7+col].label}}
@@ -64,13 +64,13 @@
     </ng-template>
 
     <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-      
+
       <ion-row class="rowPadding"><ion-text color="primary" class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text></ion-row>
 
       <ion-row class="blanco">
         <ng-container *ngIf="!routeResolveData">
           <div style="padding: 20px 40px; text-align: center;">
-            <ion-spinner name="bubbles"></ion-spinner>           
+            <ion-spinner name="bubbles"></ion-spinner>
           </div>
         </ng-container>
         <div *ngIf="routeResolveData">
@@ -89,17 +89,17 @@
               </ion-row>
             </ion-grid>
         </div>
-      
+
           <ng-template #slots class="blanco">
-          <ng-container 
+          <ng-container
           *ngFor="let item of this.eventSource | paginate: { itemsPerPage: 30, currentPage: page };let i = index"
         >
-        
-          <ion-chip 
+
+          <ion-chip
             (click)="changeTagColor(i, item.startTime, item.duration )"
             [color]="tagDefaultColor[i]"
           >
-            <ion-label>{{ item.startTime | date:'HH:mm' }} </ion-label>
+            <ion-label>{{ item.startTime | date:this.dateService.getTimeFormat() }} </ion-label>
           </ion-chip>
         </ng-container>
       </ng-template>
@@ -111,7 +111,7 @@
                   (pageChange)="page = $event"
                   previousLabel="{{'medical_calendar.previousLabel' | translate}}"
                   nextLabel="{{'medical_calendar.nextLabel' | translate}}"
-                 
+
                 ></pagination-controls>
               </ion-col>
             </div>
@@ -119,9 +119,9 @@
         </div>
         </div>
       </ion-row>
-     
+
   </ng-template>
- 
-  
+
+
 
 </ion-content>

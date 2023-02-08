@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -11,6 +11,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { Device } from '@ionic-native/device/ngx';
+import { LocalizedDatePipe } from 'src/app/utils/localized-date.pipe';
+
 
 const routes: Routes = [
   {
@@ -29,7 +31,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     LandingPageRoutingModule,
   ],
-  providers:[Device],
+  providers:[Device,LocalizedDatePipe],
   declarations: [LandingPage]
 })
 export class LandingPageModule {}

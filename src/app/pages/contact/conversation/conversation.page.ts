@@ -3,7 +3,7 @@ import {ActionSheetController, IonInfiniteScroll, Platform} from '@ionic/angular
 import {MediaCapture} from '@ionic-native/media-capture/ngx'
 import {HttpErrorResponse} from '@angular/common/http';
 import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { SafeResourceUrl } from '@angular/platform-browser'; 
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { File } from '@ionic-native/file/ngx';
 import { Events } from 'src/app/services/events.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 import { PusherMessageService } from 'src/app/services/pusher/pusher-message.service';
 import { DatePipe } from '@angular/common';
 import moment from 'moment';
+import { LanguageService } from 'src/app/services/language.service';
+import { DateService } from 'src/app/services/date.service';
 const { Camera } = Plugins;
 
 interface Message {
@@ -27,6 +29,7 @@ interface Message {
   mediaType?:string;
   from: string;
   fromName?: string;
+  created_at?: string;
 }
 @Component({
   selector: 'app-conversation',
@@ -72,19 +75,23 @@ export class ConversationPage implements OnInit {
               public actionSheetCtrl: ActionSheetController,
               public events: Events,
               public dooleService: DooleService,
-              public file: File, 
+              public file: File,
               private translate : TranslateService,
-              private chooser: Chooser,       
+              private chooser: Chooser,
               public platform: Platform,
               private mediaCapture: MediaCapture,
               private router: Router,
+
               private pusherMessage: PusherMessageService,
+              private dateService: DateService,
               ) {
 
-   
+
   }
 
   ngOnInit() {
+
+
     if(this.id)
     this.getMessagesList(false)
   }
@@ -104,7 +111,7 @@ export class ConversationPage implements OnInit {
   }
 
   getPusher() {
-    const NAME_BIND = 'App\\Events\\MessageCreated' 
+    const NAME_BIND = 'App\\Events\\MessageCreated'
     const channel = this.pusherMessage.init(this.id);
     console.log('[ChatPusherPage] getPusher() channel' , channel);
         channel.bind(NAME_BIND, (data) => {
@@ -121,11 +128,12 @@ export class ConversationPage implements OnInit {
               fromName: data?.output?.user.name,
               mediaType: data?.output?.mime,
               date: date,
+              created_at:data?.output?.created_at,
             };
             this.messagesList = this.messagesList.concat(message);
             this.setShowDay(this.messagesList)
             console.log('[ChatPusherPage] getPusher() messagesList' ,   this.messagesList);
-            this.scrollToBottom(); 
+            this.scrollToBottom();
           }
         })
 
@@ -136,17 +144,17 @@ export class ConversationPage implements OnInit {
     const scrollElement = await this.content.getScrollElement(); // get scroll element
     // calculate if max bottom was reached
     let height = scrollElement.scrollHeight - scrollElement.clientHeight
-    let total = Math.abs(scrollElement.scrollTop - height) 
+    let total = Math.abs(scrollElement.scrollTop - height)
     //Android is not accurate
     this.footerHidden = ( total <= 5 )? false:true;
   }
 
-  
-  
+
+
 
   scrollToBottom() {
     console.log('[ChatPusherPage] getPusher() contentArea' ,   this.content);
-      setTimeout(() => {  
+      setTimeout(() => {
           this.content.scrollToBottom(300);
     }, 1000);
   }
@@ -202,7 +210,8 @@ export class ConversationPage implements OnInit {
                   fileUrl: msg?.temporaryUrl, //image/jpeg
                   from:  (msg?.user_id === this.authService?.user.idUser) ? 'message_response' : 'message_request',
                   fromName: msg.user?.name,
-                  date: this.getCalendarDay(new Date(msg?.created_at).getTime())// this.formatDate(msg?.created_at, 'T'),
+                  date: this.getCalendarDay(new Date(msg?.created_at).getTime()),// this.formatDate(msg?.created_at, 'T'),
+                  created_at: msg?.created_at ,
                 };
                 list.push(message);
                 //console.log('[ChatPusherPage] getAPImessage() Elemento Repetido: messages' ,message);
@@ -212,7 +221,7 @@ export class ConversationPage implements OnInit {
                 this.messagesList = list.reverse()
                 this._zone.run(() => {
                   this.scrollToBottom();
-          
+
                 });
               }else{
                 this.addMessageToList(list)
@@ -226,10 +235,10 @@ export class ConversationPage implements OnInit {
             }
 
             this.loading = false
-          },(err) => { 
+          },(err) => {
             this.loading = false
-              console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message); 
-              throw err; 
+              console.log('[ChatPusherPage] getAPImessage() ERROR(' + err.code + '): ' + err.message);
+              throw err;
           }) ,() => {
             // Called when operation is complete (both success and error)
             this.loading = false
@@ -237,6 +246,8 @@ export class ConversationPage implements OnInit {
       else
           this.toggleInfiniteScroll()
   }
+
+
 
   addMessageToList(list){
     list.forEach(msg =>{
@@ -321,8 +332,8 @@ export class ConversationPage implements OnInit {
         handler: () => {
         }}
     ];
- 
-    // Only allow file selection inside a browser   
+
+    // Only allow file selection inside a browser
     if (!this.platform.is('hybrid')) {
       buttons.push({
         text:  'Choose a File',
@@ -337,16 +348,16 @@ export class ConversationPage implements OnInit {
       header: this.translate.instant('documents_add.select'),
       buttons
     });
-    await actionSheet.present();    
-    
+    await actionSheet.present();
+
   }
 
   // Used for browser direct file upload
   async uploadFileFromBrowser(event: EventTarget) {
-   
-    const eventObj: MSInputMethodContext = event as MSInputMethodContext;
+
+    const eventObj: any = event as any;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
-    
+
     const file: any = target.files[0];
     console.log("uploadFileFromBrowser file", file);
     const toBase64 = file => new Promise((resolve, reject) => {
@@ -364,15 +375,15 @@ export class ConversationPage implements OnInit {
   async saveFile(fileUri){
    //const loading = await this.loadingController.create();
     //await loading.present();
-    
+
   }
 
   async addFile(){
-    
+
     this.chooser.getFile().then(async file => {
-     
+
       if(file){
-        var filename=new Date().getTime(); 
+        var filename=new Date().getTime();
         this.saveBase64(file.dataURI, filename.toString(), file.mediaType).then(res => {
           this.uploadFile(res);
         });
@@ -466,8 +477,8 @@ export class ConversationPage implements OnInit {
     msg["percentage"]=0;
 
     this.messageUploadList.push(msg);
-  
-    
+
+
     this.events.subscribe('uploadMessageImage', (data:any) => {
       console.log("this.events.subscribe", data);
       for (var i = 0; i < this.messageUploadList.length; i++) {
@@ -476,7 +487,7 @@ export class ConversationPage implements OnInit {
         }
       }
     });
-    
+
     this.dooleService.uploadMessageImage(this.id,this.to,"",fileUri, this.authService?.user.idUser).then(data =>{
       console.log(" this.doole.uploadMessageImage", data);
       this.btnEnabled = true;
@@ -487,7 +498,7 @@ export class ConversationPage implements OnInit {
           }
         }
     }, (err) =>{
-      
+
       this.throwError(err);
       for (var i = 0; i < this.messageUploadList.length; i++) {
         if(this.messageUploadList[i]["fileUri"]==fileUri){
@@ -495,16 +506,21 @@ export class ConversationPage implements OnInit {
         }
       }
     });
-    
+
   }
 
   public throwError(error: any) {
     console.log("AuthenticationService throwError", error);
-    
+
     if(error instanceof HttpErrorResponse)
       throw new HttpErrorResponse(error);
-    else 
+    else
      throw error;
+  }
+
+  formatDate(date)
+  {
+    return this.dateService.formatDate(date);
   }
 
 /*   public observeTyping(){

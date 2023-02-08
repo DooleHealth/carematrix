@@ -19,14 +19,14 @@
           animation="bouncing"
         ></app-text-shell>
       </h3>
-      
+
     </ion-label>
-    
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content #content  [scrollEvents]="true" (ionScroll)="onScroll($event)" >
- 
+
     <ion-fab [ngClass]="(this.footerHidden)? 'scrollHiden':'slideNone'" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="scrollToBottom()" mode="ios" translucent="true" color="secondary" size="small" >
         <ion-icon name="chevron-down-sharp"></ion-icon>
@@ -44,7 +44,7 @@
       <ion-list no-lines>
         <div  *ngFor="let message of this.messagesList; let i = index">
           <ion-badge mode="ios" *ngIf="this.currentPage == this.lastPage && i==0" color="primary">{{'chat.end'| translate}}</ion-badge>
-          <ion-badge mode="ios" *ngIf="message.showDay" color="primary">{{message?.date}}</ion-badge>
+          <ion-badge mode="ios" *ngIf="message.showDay" color="primary">{{formatDate(message?.created_at)}}</ion-badge>
           <ion-item >
             <ion-label>
               <chat-bubble [chatMessage]="message"></chat-bubble>
@@ -66,7 +66,7 @@
       <ion-buttons >
         <ion-button (click)="selectImageSource()">
           <ion-icon icon-start name="add-outline"></ion-icon>
-          <input 
+          <input
             type="file"
             #fileInput
             (change)="uploadFileFromBrowser($event)"

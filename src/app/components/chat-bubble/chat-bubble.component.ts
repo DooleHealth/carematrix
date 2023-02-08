@@ -1,9 +1,11 @@
 import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import moment from 'moment';
+
 import { DooleService } from 'src/app/services/doole.service';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from 'src/app/services/language.service';
+import { DateService } from 'src/app/services/date.service';
 
 
 @Component({
@@ -30,7 +32,7 @@ export class ChatBubbleComponent implements OnInit {
   public lon: string;
   static translate: any;
 
-  constructor(private dooleService : DooleService, private document: DocumentViewer, private  translate : TranslateService,) { 
+  constructor(private dooleService : DooleService, private dateService: DateService, private  translate : TranslateService,) {
     ChatBubbleComponent.translate = this.translate
   }
 
@@ -64,42 +66,25 @@ export class ChatBubbleComponent implements OnInit {
 
     }else if(message.mediaType=="GEOLOCATION"){
 
-      
+
       var t = message.message;
-      var array_message = t.split (","); 
+      var array_message = t.split (",");
       this.lat = array_message[0].substring(5);
       this.lon = array_message[1].substring(4,array_message[1].length - 1);
-     
-     
+
+
       console.log(this.lat, this.lon);
     }
-  
+
 
   }
 
-  static getEpoch(): number {
-    return moment().unix();
+  formatDate(date){
+    let dateFormated = this.dateService.formatDate(date);
+
+    return dateFormated;
   }
 
-  static getCalendarDay(epoch: number): string {
-    if (!epoch) {
-      return null;
-    }
-    let timeString = 'h:mm A';
-    const today = this.translate.instant('agenda.today');
-    const yesterday = this.translate.instant('agenda.yesterday');
-    return moment(epoch).calendar(null, {
-      sameDay: `[${today}] ` + timeString,
-      lastDay: `[${yesterday}] ` + timeString,
-      lastWeek : 'DD/MM/YY ' + timeString,
-      sameElse: 'DD/MM/YY ' + timeString,
-      nextDay : 'DD/MM/YY ' + timeString,
-    });
-  }
-
-  formatEpoch(epoch): string {
-    return ChatBubbleComponent.getCalendarDay(epoch);
-  }
 
   openFile(message){
     this.target = message.timestamp;
@@ -121,11 +106,11 @@ export class ChatBubbleComponent implements OnInit {
         this.localfileNormalized = datad.fileNormalized;
         this.downloaded = datad.downloaded;
         window.open(this.temporaryUrl, "");
-        //window.open("data:application/pdf," + encodeURI(this.localfile)); 
+        //window.open("data:application/pdf," + encodeURI(this.localfile));
         //this.document.viewDocument(this.localfile, 'application/pdf',null);
       });
     });
-    
+
   }
 
   openMedia(message){

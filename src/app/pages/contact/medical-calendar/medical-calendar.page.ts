@@ -1,13 +1,12 @@
 import { CalendarComponent } from 'ionic2-calendar';
-import { Component, ViewChild, OnInit, Inject, LOCALE_ID, ApplicationInitStatus, Input, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Inject, LOCALE_ID, Input, AfterViewInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { ShellModel } from 'src/app/utils/shell/data-store';
+import { DateService } from 'src/app/services/date.service';
 
 
 export class slot {
@@ -62,47 +61,50 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   calendar = {
     mode: 'month',
     currentDate: new Date(),
-    locale: this.locale,
       dateFormatter: {
           formatMonthViewDay: function(date:Date) {
               return date.getDate().toString();
           },
-                    
+
           formatMonthViewDayHeader: function(date:Date) {
             let days = [ "D","L", "M", "X", "J", "V", "S"]
             if(this.locale === 'ca'){
               days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
-            }
+            }else if(this.locale === 'en')
+              days = [ "Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
             let num = date.getDay()
-            return days[num] 
+            return days[num]
           },
-          /* 
+          /*
            formatMonthViewTitle: function(date:Date) {
               return date.getMonth().toString();
           } */
       }
-     
+
   };
- 
+
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
-    private translate: TranslateService, 
+    private translate: TranslateService,
     public languageService: LanguageService,
     private dooleService: DooleService,
     private alertController: AlertController,
     public datepipe: DatePipe,
     private modalCtrl: ModalController,
-    
+    public dateService: DateService,
+
   ) {}
 
   ngOnInit() {
     //this.getSlots()
+    console.log('[MedicalCalendarPage] locale_ID', this.locale);
   }
   ngAfterViewInit() {
     setTimeout(() => {
-      this.modalReady = true;      
+      this.modalReady = true;
     }, 100);
   }
 
@@ -121,24 +123,24 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
       promiseObservable.subscribe(
         res =>{
           const dataObservable = res;
-        
+
           if(dataObservable){
             console.log('[MedicalCalendarPage] getSlots()', res);
               if(dataObservable.slots.length > 0)
                 this.addScheduleToCalendar(dataObservable.slots)
-                
+
               this.routeResolveData = dataObservable;
-              
+
           }else{
             console.log('[MedicalCalendarPage] getSlots() !', res);
           }
-         
-         },(err) => { 
-            console.log('[MedicalCalendarPage] getSlots() ERROR(' + err.code + '): ' + err.message); 
-            throw err; 
+
+         },(err) => {
+            console.log('[MedicalCalendarPage] getSlots() ERROR(' + err.code + '): ' + err.message);
+            throw err;
         });
     }
-      
+
   }
 
   getAppointment(){
@@ -146,17 +148,17 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
       async (res: any) =>{
         console.log('[AgendaPage] getAppointment()', await res);
         this.addScheduleToCalendar(res)
-       },(err) => { 
-          console.log('[AgendaPage] getAppointment() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[AgendaPage] getAppointment() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
- 
+
   addScheduleToCalendar(appointments: any[]){
     var events = [];
     this.eventSource = [];
-    appointments.forEach((e) =>{ 
+    appointments.forEach((e) =>{
 
     var from_date = this.formatDate(e.from_date);
     var to_date = this.formatDate(e.to_date);
@@ -173,7 +175,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
       this.eventSource = events;
   }
 
-  formatDate(d){ 
+  formatDate(d){
     var auxdate = d.split(' ')
     //let date = new Date(auxdate[0]);
     d = d.replace(' ', 'T')
@@ -181,7 +183,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     let date = new Date(date0);
     let time = auxdate[1];
     date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5)); 
+    date.setMinutes(time.substring(3,5));
     return date;
   }
 
@@ -198,11 +200,11 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
    next() {
     this.myCal.slideNext();
   }
-  
+
   back() {
     this.myCal.slidePrev();
-  } 
-  
+  }
+
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
     console.log("title", title);
@@ -223,34 +225,34 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   }
 
   formatSelectedDate(date){
-    const datePipe: DatePipe = new DatePipe(this.setLocale());
-    return datePipe.transform(date, 'EEEE, d MMMM');
+
+    return  this.dateService.formatSelectedDate(date);
+
   }
 
   async onEventSelected(event){
     this.event = event
   }
-  
- 
+
 
   eventSelected(event) {
     console.log('[HomePage] eventSelected()',event)
   }
 
   onTimeSelected(ev) {
-   
+
     console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
     (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
     this.onViewTitleChanged(ev);
-  
+
     this.timeSlots = (ev.events !== undefined && ev.events.length !== 0) ?  ev.events : [] ;
-    this.tagDefaultColor = Array(ev.events.length).fill("secondary"); 
+    this.tagDefaultColor = Array(ev.events.length).fill("secondary");
     this.currentSelection = -1; // Keep the index of selected timeslot, none for -1
-  
+
   }
 
   async presentAlertConfirm(date) {
-   
+
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
       message: "Confirmar", //this.translate.instant("sms.alert_message"),
@@ -268,7 +270,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
             console.log('Confirm Okay');
             this.dooleService.selectedDate = date;
             this.modalCtrl.dismiss({date:date, duration: this.duration});
-           
+
           }
         }
       ]
@@ -285,7 +287,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     this.currentSelection = i;
     this.duration = duration
   }
-  
+
   onCurrentDateChanged(event:Date) {
     console.log('[MedicalCalendarPage] onCurrentDateChanged()',event);
     this.timeSlots = [];
@@ -294,7 +296,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     event.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === event.getTime();
     this.page = 1;
-    
+
     let date =this.datepipe.transform(event, 'yyyy-MM-dd');
     this.isToday ? this.getSlots(): this.getSlots(date);
 
