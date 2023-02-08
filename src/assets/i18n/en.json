@@ -10,7 +10,7 @@
       "too": "Or:",
       "biometrics": "Biometric authentication",
       "header_message_password_recovery": "Enter your username",
-      "message_password_recovery": "If the user is correct, an email will be sent to recover your password",
+      "message_password_recovery": "If the username is correct, an email will be sent to recover your password",
       "message_email_sent": "The mail has been sent",
       "message_wrong_credentials": "Username or passwords are incorrect",
       "blocked_login": "The APP has crashed due to the number of attempts being exceeded, try after 2 minutes.",
@@ -59,8 +59,8 @@
       "home": "Home",
       "agenda": "Agenda",
       "contact": "Contact",
-      "tracking": "Tracking",
-      "journal": "Journal"
+      "tracking": "Follow up",
+      "journal": "My Journal"
     },
     "intro": {
       "title1": "Welcome to",
@@ -88,7 +88,7 @@
       "goals_title": "Your goal",
       "goals_no_data": "No data",
       "advices_title": "News & Advices",
-      "today_title": "Your Day",
+      "today_title": "Today",
       "reminders_title": "Reminders",
       "daily_goal_title": "Your Daily Goal",
       "lunch_subtitle": "Lunch",
@@ -123,12 +123,13 @@
         "your_challenges": "Your Challenges"
       },
       "configuration": {
-        "title_setting": "Configuration",
+        "title_setting": "Settings",
         "linked_accounts": "Linked Accounts",
         "settings": "Settings",
         "videocall_test": "Connectivity Test",
         "videocall_open": "Open",
-        "bluetooth": "Bluetooth"
+        "bluetooth": "Bluetooth",
+        "bluetooth_search": "Search devices"
       },
       "professional": {
         "title_professional": "Professional",
@@ -148,7 +149,7 @@
     },
     "goals": {
       "your_goals": "Your goals",
-      "goals": "Objectives",
+      "goals": "Goals",
       "start": "Start",
       "achieve": "Reach",
       "end": "End",
@@ -164,7 +165,7 @@
     "health_path": {
       "title": "Health Path",
       "card_title": "My challenges",
-      "goals": "Objectives",
+      "goals": "Goals",
       "start": "Start",
       "detail": "How to reach my goal?",
       "weight": "Take your ",
@@ -235,25 +236,25 @@
     "setting": {
       "title_setting": "Settings",
       "button_profile": "Profile",
-      "title_security": "Safety",
+      "title_security": "Security",
       "title_notification": "Notification",
       "title_languages": "Languages",
       "subtitle_languages": "User language",
       "subtitle_authentication": "Two-factor authentication",
-      "subtitle_face_id": "Face ID/Huella",
+      "subtitle_face_id": "Face ID/Fingerprint",
       "subtitle_communications": "Medical Announcements",
-      "subtitle_appointment": "Dating",
+      "subtitle_appointment": "Medical communications appointment",
       "subtitle_reminders": "Reminders",
       "subtitle_diets": "Diets",
       "subtitle_medication": "Medication",
-      "subtitle_goals": "Objectives and Challenges",
+      "subtitle_goals": "Goals and Challenges",
       "subtitle_advices": "Advices",
       "subtitle_news": "News",
       "subtitle_offers": "Promotions",
       "subtitle_form": "Forms",
       "subtitle_messages": "Messages",
       "subtitle_games": "Games",
-      "subtitle_release": "News",
+      "subtitle_release": "Updates",
       "lenguage_ca": "Catalan",
       "lenguage_es": "Spanish",
       "password": {
@@ -290,11 +291,11 @@
       "button_send": "Send",
       "subtitle_category": "Category",
       "subtitle_description": "Description",
-      "subtitle_screenshot": "Captura de pantall",
+      "subtitle_screenshot": "Screenshots",
       "description_screenshot": "You can attach screenshots to help us solve your problem",
       "button_add_file": "Add files",
       "placeholder": "You can attach screenshots to help us solve your problem",
-      "placeholderDescription": "Tell us here what your problem has been"
+      "placeholderDescription": "Let us know about your problem"
     },
     "health_card": {
       "header_card": "Your Health Cards",
@@ -400,7 +401,7 @@
       ],
       "today": "Today",
       "yesterday": "Yesterday",
-      "appointment_by_user": "Appointment added by the user",
+      "appointment_by_user": "Appointment added by user",
       "event_by_user": "User-added event",
       "error_alert_message_get_token": "Error getting video call token",
       "error_alert_message_get_agenda": "Error getting calendar"
@@ -413,7 +414,7 @@
       "header_add_reminder": "Add Reminder",
       "field_doctor": "Doctor",
       "field_notes": "Notes",
-      "field_type": "Guy",
+      "field_type": "Type",
       "field_title": "Title",
       "field_place": "Place",
       "field_all_day": "All day",
@@ -445,13 +446,14 @@
       "diet": "Diet",
       "week_day": "Days of the week",
       "day": {
-        "day1": "Monday",
-        "day2": "Tuesday",
-        "day3": "Wednesday",
-        "day4": "Thursday",
-        "day5": "Friday",
-        "day6": "Saturday",
-        "day7": "Sunday"
+        "day1": "Sunday",
+        "day2": "Monday",
+        "day3": "Tuesday",
+        "day4": "Wednesday",
+        "day5": "Thursday",
+        "day6": "Friday",
+        "day7": "Saturday"
+
       },
       "frequency": {
         "daily": "Daily",
@@ -469,7 +471,7 @@
       "error_end_date": "End date must be greater than start date"
     },
     "appointment": {
-      "header_appointment": "Detail quote",
+      "header_appointment": "Appointment",
       "header_event": "Event detail",
       "field_title": "Title",
       "field_modality": "Modality",
@@ -483,11 +485,11 @@
       "field_information": "Information",
       "field_attached_files": "Attachments",
       "online": "Online",
-      "face_to_face": "Face",
+      "face_to_face": "Face to face",
       "button_delete": "Delete appointment",
       "message_deleted_appointment": "The appointment has been successfully deleted",
       "confirmation_delete_appointment": "Are you sure to delete the appointment?",
-      "no_files": "No files exist",
+      "no_files": "No files attached",
       "error_message_delete_appointment": "An error occurred while deleting the appointment",
       "message_added_appointment": "Added a new appointment",
       "message_updated_appointment": "The appointment has been successfully updated",
@@ -505,7 +507,7 @@
       "button_chat": "Open Chat"
     },
     "tracking": {
-      "header": "Tracking",
+      "header": "Follow up",
       "tap_documents": "Documents",
       "tap_forms": "Forms",
       "tap_graphics": "Graphics",
@@ -552,7 +554,7 @@
     "element": {
       "elements_add": "Add Data",
       "field_category": "Category",
-      "field_data": "Datum",
+      "field_data": "Units",
       "field_measure": "Value",
       "field_units": "Units",
       "field_date": "Date",
@@ -562,7 +564,7 @@
     },
     "no_data": "No data to display",
     "diary": {
-      "header_diary": "Journal",
+      "header_diary": "My Journal",
       "field_diet": "Diet",
       "field_drug": "Medication",
       "field_game": "Games",
@@ -589,7 +591,7 @@
       "games": "Games",
       "reward": "Reward",
       "go_game": "Go to Game",
-      "description_score": "Your bookmark is",
+      "description_score": "Your score is",
       "points": "points"
     },
     "medication": {
@@ -606,8 +608,8 @@
       "error_message_add_medication": "An error occurred while adding the medicine",
       "error_message_edit_medication": "An error occurred while editing the medication",
       "error_message_deleted_medication": "An error occurred while deleting the drug",
-      "field_from_date": "Date of start of treatment",
-      "field_to_date": "End date of processing",
+      "field_from_date": "Start date of treatment",
+      "field_to_date": "End date of treatment",
       "field_dose": "Intake",
       "field_take_time": "Add shooting time",
       "field_alias": "Alternative name",
@@ -659,7 +661,7 @@
     "contact": {
       "header": "Contact",
       "tap_video": "Video Consultation",
-      "tap_appointment": "Face-to-face appointment",
+      "tap_appointment": "Face to face",
       "tap_chat": "Chat",
       "tap_pusher": "Pusher",
       "text_video": "Talk directly to your regular doctor or a specialist from wherever you want. You will be attended at the selected time",
@@ -668,7 +670,7 @@
       "other_specialists": "Other specialists",
       "text_other_specialists": "Book an appointment with a specialist to make a video consultation",
       "text_appointment_in_person": "Book a face-to-face appointment with your regular doctor or a specialist when you need it. You will be attended at the selected time",
-      "text_appointment_regular_professional": "Book your face-to-face appointment with the usual doctor",
+      "text_appointment_regular_professional": "Book your face-to-face appointment with your usual doctor",
       "text_appointment_other_specialists": "Book your face-to-face appointment with another specialist",
       "text_chat": "Now you can talk via chat with your regular doctor or a specialist. They will attend you as soon as possible.",
       "recent_conversations": "Recent conversations",
@@ -692,7 +694,7 @@
       "field_date": "Date",
       "field_professional": "Professional",
       "field_specially": "Speciality",
-      "reason_appointment": "Reason for appointment",
+      "reason_appointment": "Reason for the appointment",
       "attachments": "Attachments",
       "text_attachments": "You can attach files or images that help us make a better diagnosis",
       "button_videocall": "Confirm appointment"
@@ -700,7 +702,7 @@
     "bookings": {
       "header": "Booking",
       "field_date": "Date",
-      "reason_appointment": "Reason for appointment",
+      "reason_appointment": "Reason for the appointment",
       "attachments": "Attachments",
       "text_attachments": "You can attach files or images that help us make a better diagnosis",
       "button_videocall": "Confirm appointment",
@@ -812,5 +814,11 @@
       "mode_0": "Production",
       "mode_1": "Quality",
       "mode_2": "Development"
+    },
+    "date":{
+      "week_abbr": "W",
+      "day_abbr": "D",
+      "month_abbr":"M",
+      "year_abbr": "Y"
     }
   }

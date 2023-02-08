@@ -10,6 +10,7 @@ import { DocumentsAddPage } from './documents-add/documents-add.page';
 import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 import { RolesService } from 'src/app/services/roles.service';
+import { DateService } from 'src/app/services/date.service';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -30,15 +31,15 @@ export interface Filter {
 })
 export class TrackingPage implements OnInit {
   listDiagnostic:  ListDiagnosticTests[];
-  diagnosticTests : Array<any>; 
-  forms: Array<any>; 
+  diagnosticTests : Array<any>;
+  forms: Array<any>;
   public showingForm;
   public hasToShowForm;
   public active;
   public id;
   public url;
-  groupedElements: Array<any>; 
-  elementValues: Array<any>; 
+  groupedElements: Array<any>;
+  elementValues: Array<any>;
   isLoading = true
   loadingForms = false;
   loadingTests = false;
@@ -50,10 +51,9 @@ export class TrackingPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     public authService: AuthenticationService,
-    private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    private domSanitizer: DomSanitizer,
+    private dateService: DateService,
     public role: RolesService
   ) { }
 
@@ -64,7 +64,7 @@ export class TrackingPage implements OnInit {
   ionViewWillEnter(){
     this.setSegment()
     this.segmentChanged();
-    this.fireEvent(null, 0) 
+    this.fireEvent(null, 0)
   }
 
   getDiagnosticTestsList(){
@@ -77,10 +77,16 @@ export class TrackingPage implements OnInit {
   }
 
   formatSelectedDate(date , format){
-    let language = this.languageService.getCurrent()
-    const datePipe: DatePipe = new DatePipe(language);
-    let day = datePipe.transform(date, format);
-    return day[0].toUpperCase() + day.slice(1);
+    return this.dateService.selectedDateFormat(date);
+  }
+
+  ddMMyFormat(date){
+    return this.dateService.ddMMyFormat(date);
+  }
+
+  setDayMonthYearTimeFormat(date){
+    return this.dateService.getDayMonthYearFormat(date);
+
   }
 
   async getFilteredDiagnosticTests(){
@@ -97,13 +103,13 @@ export class TrackingPage implements OnInit {
             //this.filter = null
           }
           this.loadingTests = false
-         },(err) => { 
+         },(err) => {
             alert(`Error: ${err.code }, Message: ${err.message}`)
-            console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+            console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
             this.loadingTests = false
-            throw err; 
+            throw err;
         });
-    
+
   }
 
   async getDiagnosticTests(){
@@ -116,18 +122,18 @@ export class TrackingPage implements OnInit {
             this.diagnosticTests =  res.diagnosticTests
             if(this.diagnosticTests?.length > 0 )
               this.groupDiagnosticsByDate(res)
-           
+
           }
-          
+
           this.loadingTests = false;
-         
-          
-         },(err) => { 
+
+
+         },(err) => {
             alert(`Error: ${err.code }, Message: ${err.message}`)
-            console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+            console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
             this.loadingTests = false
-            throw err; 
-        });   
+            throw err;
+        });
   }
 
   groupDiagnosticsByDate(list){
@@ -135,12 +141,12 @@ export class TrackingPage implements OnInit {
     diagnosticTests.forEach( (diagnostic, index) =>{
       let date = diagnostic.date_european
       if(index == 0 || date !== diagnosticTests[index-1].date_european){
-        let list = diagnosticTests.filter( event => 
+        let list = diagnosticTests.filter( event =>
           (event.date_european == date)
         )
         let color = (index == 0)? this.active_color: this.inactive_color
-        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color}) 
-      } 
+        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color})
+      }
     })
     this.loadingTests = false
   }
@@ -154,11 +160,11 @@ export class TrackingPage implements OnInit {
           //console.log('[TrackingPage] getDiagnosticTests()', await res);
           this.forms = res.forms
           this.loadingForms = false
-         },async (err) => { 
+         },async (err) => {
             alert(`Error: ${err.code }, Message: ${err.message}`)
-            console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message); 
+            console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
             this.loadingForms = false
-            throw err; 
+            throw err;
         });
   }
 
@@ -168,7 +174,7 @@ export class TrackingPage implements OnInit {
       this.elementValues = [];
       this.dooleService.getAPIelementsList().subscribe(
         async (data: any) =>{
-          console.log('[TrackingPage] getElementsList()', await data); 
+          console.log('[TrackingPage] getElementsList()', await data);
           if(data.eg){
             // Iterate elements in the tree searching for element groups
             this.treeIterate(data.eg, '');
@@ -179,13 +185,13 @@ export class TrackingPage implements OnInit {
             this.elementValues = data.elementValues;
           }
           this.loadingGraphics = false
-         },(err) => { 
+         },(err) => {
             alert(`Error: ${err.code }, Message: ${err.message}`)
-            console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+            console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
             this.loadingGraphics = false
-            throw err; 
+            throw err;
         });
-   
+
   }
 
   treeIterate(obj, stack) {
@@ -252,11 +258,11 @@ async addDocument(){
 
   modal.onDidDismiss()
     .then((result) => {
-      console.log('addDocument()', result);     
+      console.log('addDocument()', result);
       if(result?.data?.error){
       }else if(result?.data?.action == 'add'){
         this.notification.displayToastSuccessful()
-        this.getDiagnosticTestsList()     
+        this.getDiagnosticTestsList()
       }
     });
 
@@ -269,11 +275,11 @@ async addDocument(){
       component:  ElementsAddPage,
       componentProps: { },
     });
-  
+
     modal.onDidDismiss()
       .then((result) => {
         console.log('addElement()', result);
-       
+
         if(result?.data?.error){
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
@@ -282,8 +288,8 @@ async addDocument(){
           this.getElementsList()
         }
       });
-  
-      await modal.present(); 
+
+      await modal.present();
     }
 
     async addFilters(){
@@ -292,10 +298,10 @@ async addDocument(){
         componentProps: { filter: this.filter},
         cssClass: "modal-custom-class"
       });
-    
+
       modal.onDidDismiss()
         .then((result) => {
-          console.log('[TrackingPage] addFilters()', result);     
+          console.log('[TrackingPage] addFilters()', result);
           if(result?.data?.error){
           }else if(result?.data?.action == 'add'){
             this.filter = result?.data?.filter;
@@ -306,9 +312,9 @@ async addDocument(){
             this.getDiagnosticTestsList()
           }
         });
-    
+
         await modal.present();
-    
+
       }
 
 }

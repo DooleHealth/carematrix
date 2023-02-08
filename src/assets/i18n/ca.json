@@ -1,5 +1,5 @@
 {
-    
+
   "landing": {
         "login":"Verificant credencials...",
         "user_placeholder": "Usuari",
@@ -18,7 +18,7 @@
         "message_error_serve":"Error del servidor",
         "message_failure_response":"Ha passat un error inesperat intenta una altra vegada",
         "message_error_internet_disconnected":"No hi ha connexió a Internet. Connecta't a Internet i torna a intentar-ho"
-      },    
+      },
       "legal": {
         "header": "Condicions d'ús",
         "ok_button": "Les accepto",
@@ -141,7 +141,8 @@
           "settings": "Ajustos",
           "videocall_test": "Test de Connectivitat",
           "videocall_open":"Obrir",
-          "bluetooth": "Bluetooth"
+          "bluetooth": "Bluetooth",
+          "bluetooth_search": "Cercar dispositius"
         },
         "help": {
           "title_help":  "Ajuda",
@@ -342,7 +343,7 @@
       "faqs":{
         "header_faqs": "Preguntes Freqüents",
         "button_perfil": "Perfil"
-      },   
+      },
       "about_us":{
         "header": "Nosaltres",
         "button_perfil": "Perfil"
@@ -350,7 +351,7 @@
       "profile_legal":{
         "header": "Legal",
         "button_perfil": "Perfil"
-      },   
+      },
       "emergency_contact":{
         "header": "Contactes d'Emergència",
         "header_relationship":"Relació",
@@ -447,7 +448,7 @@
           "month1": "1 mes",
           "month2": "2 mesos",
           "month3": "3 mesos"
-          
+
         },
         "error_end_date": "La data de terme ha de ser més gran que la data de comença"
       },
@@ -564,7 +565,7 @@
         "delete_media_file": "Estàs segur d'eliminar l'arxiu?",
         "delete_document": "Estàs segur d'eliminar la prova diagnòstica?",
         "input_file_name": "Ingressa un nom per a l'arxiu",
-        "name": "Nom"      
+        "name": "Nom"
       },
       "documents_filter":{
         "header": "Filtre",
@@ -673,7 +674,7 @@
         "no_slot_available":"No hi ha slots disponibles per a aquest dia",
         "previousLabel": "Previ ",
         "nextLabel":"Següent"
-      }, 
+      },
       "specialist_finder":{
         "header":"Reservar",
         "field_date": "Data",
@@ -683,7 +684,7 @@
         "attachments": "Documents Adjunts",
         "text_attachments": "Pots adjuntar arxius o imatges que ens ajudin a realitzar un millor diagnòstic",
         "button_videocall": "Confirma Videotrucada"
-      }, 
+      },
       "bookings":{
         "header":"Reservar",
         "field_date": "Data",
@@ -800,6 +801,13 @@
         "mode_0":"Producció",
         "mode_1": "Qualitat",
         "mode_2": "Desenvolupament"
+      },
+      "date":{
+        "week_abbr": "S",
+        "day_abbr": "D",
+        "month_abbr":"M",
+        "year_abbr": "A"
       }
-      
+
+
 }

@@ -1,0 +1,68 @@
+.iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.files-section {
+  margin: calc(var(--page-margin) * 2) var(--page-margin) var(--page-margin);
+  padding-bottom: var(--page-margin);
+  border-bottom: 1px solid var(--ion-color-light-shade);
+}
+.files-section .heading-row {
+  margin-bottom: var(--page-margin);
+  justify-content: space-between;
+  align-items: center;
+}
+.files-section .files-row {
+  --ion-grid-columns: 7;
+  --ion-grid-column-padding: 0px;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  will-change: scroll-position;
+  margin-left: calc(var(--page-margin) * -1);
+  margin-right: calc(var(--page-margin) * -1);
+}
+.files-section .files-row::before, .files-section .files-row::after {
+  content: "";
+  flex: 0 0 calc(var(--page-margin) - var(--page-friends-gutter));
+}
+.files-section .files-row .file-item {
+  --col-item-width: 2;
+  flex: 0 0 calc(var(--col-item-width) / var(--ion-grid-columns, 12) * 100%);
+  width: calc(var(--col-item-width) / var(--ion-grid-columns, 12) * 100%);
+  max-width: calc(var(--col-item-width) / var(--ion-grid-columns, 12) * 100%);
+  padding: 2px var(--page-friends-gutter);
+}
+.files-section .files-row .file-item .file-name {
+  display: block;
+  text-align: center;
+  margin: var(--page-margin) 0px;
+  font-size: 14px;
+}
+
+.imgCardPdf {
+  background-image: url(/assets/images/pdf_image.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  background-position: center;
+}
+
+.imgCardMedia {
+  background-image: url(/assets/images/mov_image.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  background-position: center;
+}
+
+.imagefit {
+  width: 100%;
+  height: auto;
+  margin: 0px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}/*# sourceMappingURL=new-detail.page.css.map */

@@ -71,7 +71,7 @@
           <!-- <div class="dot" [ngStyle]="{'background': list.color}"></div>
        <div class="verticalLine2" [ngStyle]="{ 'border-left': '2px solid'+list.color}"> -->
           <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}"
-            >{{ formatSelectedDate(list.date, 'EEEE, d MMMM YYYY')}}</ion-label
+            >{{ setDayMonthYearTimeFormat(list.date)}}</ion-label
           >
           <ion-list *ngFor="let doc of list.diagnosticTests">
             <ion-card
@@ -99,7 +99,7 @@
                     </ion-col>
                     <ion-col size="3.5">
                       <ion-text class="txtTitleTrackingDate"
-                        >{{formatSelectedDate(doc.data, 'dd MMM y')}}</ion-text
+                        >{{ddMMyFormat(doc.data)}}</ion-text
                       >
                     </ion-col>
                     <ion-col size="0.5">
@@ -119,7 +119,10 @@
                   <ion-col size="12">
                     <!-- <ion-card-title class="txtTitleTrackingLittle">{{doc.idDoctor}}</ion-card-title> -->
                     <ion-card-title class="txtTitleTrackingLittle">
-                      {{doc.description}}
+                      <div [innerHtml]="doc.description | safeHtml">
+
+                      </div>
+
                       </ion-card-title
                     >
                   </ion-col>
@@ -287,7 +290,7 @@
                 <ion-icon *ngIf="group.group=='Actividad Física'  ||  group.group=='Actividad' "  style="align-items: left;margin-right: 5px;zoom: 2; color: #E74C3C;" name="walk-outline"></ion-icon>
                 <ion-icon *ngIf="group.group=='Bioquímica'"  style="align-items: left;margin-right: 5px;zoom: 2;color: #2ECC71;" name="water-outline"></ion-icon>
                 <ion-icon *ngIf="group.group=='Constantes'"  style="align-items: left;margin-right: 5px;zoom: 2;color: #9B59B6;" name="stats-chart-outline"></ion-icon>
-                
+
               </ion-col>
               <ion-col size="8">
                 <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
@@ -324,7 +327,7 @@
         </ion-row>
       </ion-grid>
     </div>
-   
+
   </ng-template>
 </ion-content>
 

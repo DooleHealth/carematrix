@@ -1,0 +1,34 @@
+.sliderImage {
+  height: 230px;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .sliderImage {
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .sliderImage {
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+.sliderImage img {
+  width: 100%;
+  height: auto;
+}
+
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  .sliderImage img {
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: center center;
+       object-position: center center;
+  }
+}/*# sourceMappingURL=advices.page.css.map */

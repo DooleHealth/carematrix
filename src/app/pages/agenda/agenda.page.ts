@@ -8,6 +8,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { AgendaEditPage } from './agenda-edit/agenda-edit.page';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-agenda',
@@ -25,8 +26,8 @@ export class AgendaPage implements OnInit {
   isLoading:boolean;
   calendar = {
     mode: 'month',
+    weekStart:0,
     currentDate: new Date(),
-    locale: this.setLocale(),
       dateFormatter: {
           formatMonthViewDay: function(date:Date) {
               return date.getDate().toString();
@@ -38,7 +39,7 @@ export class AgendaPage implements OnInit {
             if(this.locale === 'ca'){
               days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
             }else if(this.locale === 'en')
-            days = [ "Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
+              days = [ "Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
             let num = date.getDay()
             return days[num]
@@ -56,23 +57,24 @@ export class AgendaPage implements OnInit {
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
-    @Inject(LOCALE_ID) private locale: string,
+
     private translate: TranslateService,
     public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController,
     public authService: AuthenticationService,
-    private analyticsService: AnalyticsService
+    public dateService: DateService
   ) {
     // this.analyticsService.setScreenName('agenda','AgendaPage')
   }
 
   ngOnInit() {
-    console.log('[AgendaPage] locale()', this.locale);
+    console.log('[AgendaPage] this.languageService.getCurrent()', this.languageService.getCurrent());
 
   }
 
  async ionViewDidEnter(){
+
   let date = history.state.date;
     console.log('[AgendaPage] ionViewDidEnter()', date);
     if(date)
@@ -298,9 +300,7 @@ export class AgendaPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    let language = this.setLocale()
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM');
+    return this.dateService.selectedDateFormat(date);
   }
 
   async onEventSelected(event){

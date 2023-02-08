@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@ionic-native/health/ngx';
@@ -21,6 +21,7 @@ import { PusherAlarmService } from 'src/app/services/pusher/pusher-alarm.service
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 import { AdvicesDetailPage } from './advices-detail/advices-detail.page';
 import { NewDetailPage } from './new-detail/new-detail.page';
+import { DateService } from 'src/app/services/date.service';
 
 export interface UserInformation {
   title?: string;
@@ -129,17 +130,18 @@ export class HomePage implements OnInit {
     private pusherNotifications: PusherNotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
+    public dateService : DateService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() {
 
-      this.pusherNotifications.init()
-      this.pusherAlarms.init()
-      this.pusherChallenge.init()
-
+    this.pusherNotifications.init()
+    this.pusherAlarms.init()
+    this.pusherChallenge.init()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
+    //this.date = this.dateService.yyyyMMddFormat(Date.now());
     //this.getUserInformation()
     this.checkHealthAccess();
     //setTimeout(()=>this.confirmAllNotification(), 2000);
@@ -210,8 +212,10 @@ export class HomePage implements OnInit {
   }
   async getUserInformation() {
     this.isLoading = true
+    //let date2 = this.dateService.ddMMyyyy(Date.now());
     let date2 = this.transformDate(this.date, 'dd-MM-yyyy')
     let date = { date: date2, from_date: this.date, to_date: this.date }
+    console.log("DATE: ", date);
     let tempAdvices;
     let tempChallenges;
     this.dooleService.getAPIinformationSummary(date).subscribe(
@@ -221,11 +225,11 @@ export class HomePage implements OnInit {
         console.log('[HomePage] getUserInformation()', res);
 
         tempChallenges = res.data?.challenges;
-        tempChallenges = tempChallenges.filter(function (obj) {
+        tempChallenges = tempChallenges?.filter(function (obj) {
           return !obj.completed;
         });
         console.log('obj.completed', this.challenges.length)
-        if (tempChallenges.length == 1)
+        if (tempChallenges?.length == 1)
           this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
 
         this.challenges = tempChallenges;
@@ -970,9 +974,9 @@ export class HomePage implements OnInit {
   }
 
   formatSelectedDate(date) {
-    let language = this.languageService.getCurrent();
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+
+    return this.dateService.formatDateLongFormat(date);
+    //return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
   }
 
   formatDate(d) {
@@ -985,7 +989,8 @@ export class HomePage implements OnInit {
       let time = auxdate[1];
       date.setHours(time?.substring(0, 2));
       date.setMinutes(time?.substring(3, 5));
-      return this.transformDate(date, 'dd/MM/yyyy HH:mm')
+
+      return this.dateService.ddMMyyyyHHmm(date);
     }
   }
 

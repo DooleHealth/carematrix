@@ -188,7 +188,7 @@
           [state]="{segment: 'diets'}">
           <ion-img  class="ion-no-margin" slot="start" src="assets/icons/apple-diet.svg"></ion-img>
           <ion-text style="color: '#E67E22';padding-left: 10px;" slot="start">{{ 'home.diet' | translate}}</ion-text>
-          <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{infoDiet?.hour}}</ion-text>
+          <ion-text slot="end" *ngIf="infoDiet as UserInformation">{{this.dateService.format24h(infoDiet?.hour)}}</ion-text>
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
         </ion-item>
 
@@ -225,7 +225,7 @@
           [state]="{segment: 'medication'}">
           <ion-img slot="start"  class="ion-no-margin"  src="assets/icons/medication.svg"></ion-img>
           <ion-text style="color: '#2ECC71'; padding-left: 10px;" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
-          <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{infoDrugs?.hour}}</ion-text>
+          <ion-text slot="end" *ngIf="infoDrugs as UserInformation">{{this.dateService.format24h(infoDrugs?.hour)}}</ion-text>
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
         </ion-item>
 
@@ -268,7 +268,7 @@
           [state]="{segment: 'games'}">
           <ion-img  class="ion-no-margin" slot="start" src="assets/icons/game.svg"></ion-img>
           <ion-text style="color: '#9B59B6';padding-left: 10px;" slot="start">{{ 'home.plays_subtitle' | translate}}</ion-text>
-          <ion-text slot="end" *ngIf="infoGames">{{infoGames?.hour}}</ion-text>
+          <ion-text slot="end" *ngIf="infoGames">{{ this.dateService.format24h(infoGames?.hour) }}</ion-text>
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
         </ion-item>
 

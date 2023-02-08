@@ -5,6 +5,7 @@ import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 import { DatePipe, formatDate } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from 'src/app/services/date.service';
 
 
 
@@ -29,7 +30,7 @@ export class ShellMessageModel extends ShellModel {
   updated_at: string;
   user_id: number;
   recipients:ShellRecipientModel[];
-  
+
   constructor() {
     super();
   }
@@ -37,7 +38,7 @@ export class ShellMessageModel extends ShellModel {
 
 export class ShellChatModel extends ShellModel {
   messages: ShellMessageModel[];
- 
+
   constructor() {
     super();
   }
@@ -50,7 +51,7 @@ export class ShellChatModel extends ShellModel {
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
-  
+
   numMessages:number;
   chat: ShellChatModel[] & ShellModel;
   m:ShellChatModel;
@@ -65,12 +66,12 @@ export class ChatPage implements OnInit {
   }
 
   constructor(
-  private dooleService:DooleService, 
-  public authService: AuthenticationService, 
+  private dooleService:DooleService,
+  public authService: AuthenticationService,
   @Inject(LOCALE_ID) private locale: string,
-  private translate: TranslateService, 
+  private translate: TranslateService,
   private datePipe: DatePipe,
-  private languageService: LanguageService,) { }
+  private dateService: DateService,) { }
 
   ngOnInit(){
 
@@ -95,10 +96,10 @@ export class ChatPage implements OnInit {
         console.log(this.myDate);
       this.isLoading = false;
     },
-    (err) => { 
+    (err) => {
       this.isLoading = false;
-      console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message); 
-      throw err; 
+      console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message);
+      throw err;
     });
 
      }
@@ -111,14 +112,10 @@ export class ChatPage implements OnInit {
         else return ''
     }
 
-    formatDate(d){
-      if(d){
-        let date = new Date(d)
-        if(this.isToday(date))
-        return this.transformDate(date, 'HH:mm')
-        else
-        return this.transformDate(date, 'dd/MM/yyyy')
-      }
+    formatDate(date){
+
+      return this.dateService.formatDate(date)
+
     }
 
     transformDate(date, format) {

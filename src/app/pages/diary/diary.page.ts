@@ -14,6 +14,7 @@ import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
 import { StorageService } from 'src/app/services/storage.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { Router } from '@angular/router';
+import { DateService } from 'src/app/services/date.service';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -58,7 +59,7 @@ export class DiaryPage implements OnInit {
     private dooleService: DooleService,
     private datePipe: DatePipe,
     private iab: InAppBrowser,
-    private auth: AuthenticationService,
+    public dateService: DateService,
     private translate: TranslateService,
     private languageService: LanguageService,
     private modalCtrl: ModalController,
@@ -136,9 +137,7 @@ export class DiaryPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    let language = this.languageService.getCurrent();
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM');
+    return this.dateService.selectedDateFormat(date);
   }
 
   addItems(list){
@@ -162,9 +161,7 @@ export class DiaryPage implements OnInit {
         console.log('[DiaryPage] getDietList()', await res);
 
         if(res.diets){
-
           this.addItems(res.diets)
-
         }
 
 
@@ -548,7 +545,8 @@ export class DiaryPage implements OnInit {
       formatHourGamePlay(date){
         if(date){
           let time = date.split(' ')[1]
-          return this.formatHour(time)
+          let hour = this.formatHour(time)
+          this.dateService.format24h(hour);
         }else return ''
       }
 

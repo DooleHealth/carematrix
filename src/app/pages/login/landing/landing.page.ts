@@ -1,8 +1,8 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
@@ -13,6 +13,9 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { Device } from '@ionic-native/device/ngx';
 import { Constants } from 'src/app/config/constants';
+import { LocalizedDatePipe } from 'src/app/utils/localized-date.pipe';
+import moment from 'moment'
+
 const { Storage } = Plugins;
 
 
@@ -38,6 +41,7 @@ export class LandingPage implements OnInit {
   biometric_list = []
   environment = 0
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private router: Router,
     public route: ActivatedRoute,
     private translate: TranslateService,
@@ -51,12 +55,15 @@ export class LandingPage implements OnInit {
     private faio: FingerprintAIO,
     private analyticsService: AnalyticsService,
     private device: Device,
-    private constants: Constants
+    private constants: Constants,
+
+
   ) {
     // this.analyticsService.setScreenName('[LandingPage]')
    }
 
   ngOnInit() {
+    console.log('[MedicalCalendarPage] locale_ID', this.locale);
     this.loginForm = new FormGroup({
       username: new FormControl('',
       Validators.compose([
@@ -68,6 +75,13 @@ export class LandingPage implements OnInit {
       ),
       hash: new FormControl(''),
     });
+    var stringDate='20/11/2016';
+   let k =  moment(stringDate).format('DD/MM/YYYY');
+    //let k = this.localizedDatePipe.transform(stringDate, 'dd/MM/yyyy');
+    //var convertedDate= Date(stringDate);
+    // var datePiped = new DatePipe('es-ES');
+    //let d = this.ddd.transform('16-01-2023', 'M/d/yy, h:mm a')
+    console.log("transform: ", k)
 
   }
 

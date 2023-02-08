@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -29,7 +30,7 @@ export class ReminderPage implements OnInit {
   isElement = false
   constructor(
     private router: Router,
-    private loadingController: LoadingController,
+    private dateService: DateService,
     private dooleService: DooleService,
     private languageService: LanguageService,
     private translate : TranslateService,
@@ -75,10 +76,10 @@ export class ReminderPage implements OnInit {
           this.selectedFrequency(res.reminder?.frequency)
         }
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[ReminderPage] getReminderData() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[ReminderPage] getReminderData() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
@@ -86,10 +87,12 @@ export class ReminderPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    date = this.formatDate(date)
-    let language = this.languageService.getCurrent()
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
+
+    return this.dateService.formatDateLongFormat(date);
+    // date = this.formatDate(date)
+    // let language = this.languageService.getCurrent()
+    // const datePipe: DatePipe = new DatePipe(language);
+    // return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
   }
 
   selectedFrequency(frequency){
@@ -128,7 +131,7 @@ export class ReminderPage implements OnInit {
       let day = this.days[i]
       day['day'+(i +1)] = true
     });
-  
+
   }
 
   setDay( day, i){
@@ -177,7 +180,7 @@ export class ReminderPage implements OnInit {
     modal.onDidDismiss()
       .then((result) => {
         console.log('editReminder()', result);
-       
+
         if(result?.data?.error){
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
@@ -188,7 +191,7 @@ export class ReminderPage implements OnInit {
     });
 
     await modal.present();
-   
+
   }
 
   getReminderType(){
@@ -215,7 +218,7 @@ export class ReminderPage implements OnInit {
     console.log('[AgendaPage] selectType()',  instruction);
     //let type = ''
     switch (instruction?.reminderable_type) {
-      case "App\\Element": 
+      case "App\\Element":
         this.type = this.translate.instant('reminder.activity')
         this.isElement = true
         break;
@@ -233,7 +236,7 @@ export class ReminderPage implements OnInit {
         else
         this.type = this.translate.instant('reminder.personal')
         break;
-    
+
       default:
         this.type = this.translate.instant('reminder.personal')
         break;
@@ -255,7 +258,7 @@ export class ReminderPage implements OnInit {
         let agenda = instruction?.reminder_origin
         this.nav.navigateForward("agenda/detail", { state: {event: agenda} });
         break;
-    
+
       default:
         id = instruction.reminderable_id
         if(instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda"){

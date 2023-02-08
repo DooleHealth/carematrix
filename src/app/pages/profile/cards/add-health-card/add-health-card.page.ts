@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { HealthCard } from 'src/app/models/user';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -33,6 +34,7 @@ export class AddHealthCardPage implements OnInit {
     private translate: TranslateService,
     public datepipe: DatePipe,
     private modalCtrl: ModalController,
+    public dateService: DateService
   ) { }
 
   ngOnInit() {
@@ -51,9 +53,9 @@ export class AddHealthCardPage implements OnInit {
       expiration_date: ['', [ this.checkDate.bind(this)]],
       issue_date: ['', [ this.checkStartDate.bind(this)]],
       /* description: ['description'], */
-    
+
     })
-  
+
   }
 
   private checkStartDate(group: FormControl) {
@@ -155,21 +157,21 @@ export class AddHealthCardPage implements OnInit {
   }
 
   getHealthCardTypes(){
-    console.log('[AddHealthCardPage] getHealthCardTypes()'); 
+    console.log('[AddHealthCardPage] getHealthCardTypes()');
     this.dooleService.getAPIhealthCardTypes().subscribe(
       async (res: any) =>{
-        console.log('[AddHealthCardPage] getHealthCardTypes()', await res); 
+        console.log('[AddHealthCardPage] getHealthCardTypes()', await res);
         if(res.success ){
           this.healthCardTypes = res.healthCardTypes
           if(this.card?.type?.id){
             let type = this.healthCardTypes.find(type => (type.id === this.card.type.id))
-            this.formHealthCard.get('health_card_type_id').setValue(type.id) 
+            this.formHealthCard.get('health_card_type_id').setValue(type.id)
           }
         }
-       },(err) => { 
-          console.log('[AddHealthCardPage] getHealthCardTypes() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[AddHealthCardPage] getHealthCardTypes() ERROR(' + err.code + '): ' + err.message);
            this.presentAlert(err.messagge)
-          throw err; 
+          throw err;
       });
   }
 
@@ -178,7 +180,7 @@ export class AddHealthCardPage implements OnInit {
   }
 
   addCard(){
-    console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value); 
+    console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value);
     this.isSubmittedFields(true);
     if(this.formHealthCard.valid){
 
@@ -199,17 +201,17 @@ export class AddHealthCardPage implements OnInit {
             let messagge = this.translate.instant('add_health_card.error_alert_message_add_card')
             this.presentAlert(messagge)
           }
-         },(err) => { 
-            console.log('[AddHealthCardPage] addCard() ERROR(' + err.code + '): ' + err.message); 
+         },(err) => {
+            console.log('[AddHealthCardPage] addCard() ERROR(' + err.code + '): ' + err.message);
             let messagge = this.translate.instant('add_health_card.error_alert_message_add_card') + ', '+ err.message
              this.presentAlert(messagge)
-            throw err; 
+            throw err;
         });
     }
   }
 
   editCard(){
-    console.log('[AddHealthCardPage] editCard()' , this.formHealthCard.value); 
+    console.log('[AddHealthCardPage] editCard()' , this.formHealthCard.value);
     this.isSubmittedFields(true);
     if(this.formHealthCard.valid){
       let expiration_date = this.formHealthCard.get('expiration_date').value;
@@ -220,7 +222,7 @@ export class AddHealthCardPage implements OnInit {
       this.dooleService.putAPIhealthCard(this.formHealthCard.value).subscribe(
         async (res: any) =>{
           console.log('[AddHealthCardPage] editCard()', await res);
-          let  isSuccess = res.success 
+          let  isSuccess = res.success
           if(isSuccess){
             this.modalCtrl.dismiss({error:null, action: 'update'});
           }else{
@@ -228,11 +230,11 @@ export class AddHealthCardPage implements OnInit {
             let messagge = this.translate.instant('edit_health_card.error_alert_message_edit_card')
             this.presentAlert(messagge)
           }
-         },(err) => { 
-            console.log('[AddHealthCardPage] editCard() ERROR(' + err.code + '): ' + err.message); 
+         },(err) => {
+            console.log('[AddHealthCardPage] editCard() ERROR(' + err.code + '): ' + err.message);
             let messagge = this.translate.instant('edit_health_card.error_alert_message_edit_card')+', '+ err.message
              this.presentAlert(messagge)
-            throw err; 
+            throw err;
         });
     }
   }
@@ -300,19 +302,19 @@ export class AddHealthCardPage implements OnInit {
     this.dooleService.deleteAPIhealthCard( this.card).subscribe(
       async (res: any) =>{
         console.log('[DetailHealthCardPage] serviceDeleteHealthCard()', await res);
-        let  isSuccess = res.success 
-        if(isSuccess){   
-           this.modalCtrl.dismiss({error:null, action: 'delete'});     
+        let  isSuccess = res.success
+        if(isSuccess){
+           this.modalCtrl.dismiss({error:null, action: 'delete'});
         }else{
           console.log('[DetailHealthCardPage] serviceDeleteHealthCard() Unsuccessful response', await res);
           let messagge = this.translate.instant('delete_health_card.error_alert_message_delete_card')
           this.presentAlert(messagge)
         }
-       },(err) => { 
-          console.log('[DetailHealthCardPage] serviceDeleteHealthCard() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[DetailHealthCardPage] serviceDeleteHealthCard() ERROR(' + err.code + '): ' + err.message);
           let messagge = this.translate.instant('delete_health_card.error_alert_message_delete_card')+', '+err.message
           this.presentAlert(messagge)
-          throw err; 
+          throw err;
       });
   }
 

@@ -50,11 +50,11 @@ export class SettingsPage implements OnInit {
   api: any;
   constructor(
     private dooleService: DooleService,
-    public languageService: LanguageService, 
+    public languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
     private authService: AuthenticationService,
-    private translate: TranslateService, 
+    private translate: TranslateService,
     private platform: Platform,
     private faio: FingerprintAIO,
     public role: RolesService,
@@ -89,10 +89,10 @@ export class SettingsPage implements OnInit {
        if(res){
         this.getConfigurationParams(res)
        }
-  
-       },(err) => { 
-          console.log('[SettingsPage] getNotificationConfiguration() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+
+       },(err) => {
+          console.log('[SettingsPage] getNotificationConfiguration() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -279,9 +279,9 @@ export class SettingsPage implements OnInit {
           console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
           //alert(res.success)
         }
-       },(err) => { 
-          console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -299,9 +299,9 @@ export class SettingsPage implements OnInit {
        }else{
          alert(this.translate.instant('setting.error_changed_language'))
        }
-       },(err) => { 
-          console.log('[SettingsPage] updateLanguajes() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[SettingsPage] updateLanguajes() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -321,7 +321,7 @@ export class SettingsPage implements OnInit {
   getCenterLanguages(){
     this.dooleService.getAPIlanguagesCenter().subscribe(
       async (res: any) =>{
-       //console.log('[SettingsPage] getCenterLanguages()', await res);
+       console.log('[SettingsPage] getCenterLanguages()', await res);
        if(res){
         this.listLanguage = []
         this.listLanguage = res
@@ -329,9 +329,9 @@ export class SettingsPage implements OnInit {
        }else{
          //alert(this.translate.instant('setting.error_changed_language'))
        }
-       },(err) => { 
-          console.log('[SettingsPage] getCenterLanguages() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[SettingsPage] getCenterLanguages() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -341,10 +341,10 @@ export class SettingsPage implements OnInit {
       componentProps: { },
       cssClass: "modal-custom-class"
     });
-  
+
     modal.onDidDismiss()
       .then((result) => {
-        console.log('changePassword()', result);     
+        console.log('changePassword()', result);
         if(result?.data?.error){
          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
@@ -352,9 +352,9 @@ export class SettingsPage implements OnInit {
           this.notification.displayToastSuccessful()
         }
       });
-  
+
       await modal.present();
-  
+
     }
 
     async showBioAuthDlg(faceId: boolean) {
@@ -362,14 +362,14 @@ export class SettingsPage implements OnInit {
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         this.faio.isAvailable().then((result: any) => {
           console.log(result)
-  
+
           this.faio.show({
             cancelButtonTitle: this.translate.instant('button.cancel'),
             title: this.translate.instant('face-id.title'),
             fallbackButtonTitle: this.translate.instant('face-id.fallback'),
             subtitle: this.translate.instant('face-id.subtitle'),
             disableBackup: true,
-  
+
           })
             .then(async (result: any) => {
               console.log('[SettingsPage] registerBiometrics() result', result);
@@ -397,16 +397,16 @@ export class SettingsPage implements OnInit {
               this.faceId = !this.faceId
 
             });
-  
+
         }).catch(async (error: any) => {
           localStorage.setItem('show-bio-dialog','false');
         });
       } else {
         alert('only in device');
         //this.dismissLockScreen();
-  
+
       }
-  
+
     }
 
     async registerBiometrics(faceId) {
@@ -422,7 +422,7 @@ export class SettingsPage implements OnInit {
               localStorage.setItem(this.settingsBio, 'true');
               this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
-            }  
+            }
           },
           (error) => {
             // Called when error
@@ -443,7 +443,7 @@ export class SettingsPage implements OnInit {
               localStorage.setItem(this.settingsBio, 'true');
               this.addBiometricToList(e)
               this.notification.displayToastSuccessful()
-            }  
+            }
           },
           (error) => {
             // Called when error
@@ -489,7 +489,7 @@ export class SettingsPage implements OnInit {
     }
 
     isAvailableTwoFactor(){
-      this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center')) 
+      this.isTwoFactor = !JSON.parse(localStorage.getItem('two-factor-center'))
     }
 
     changeEndPoint(event){

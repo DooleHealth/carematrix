@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class DrugAddPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private modalCtrl: ModalController,
-    private translate : TranslateService,
+    public dateService : DateService,
   ) { }
 
   ngOnInit() {
@@ -25,7 +26,7 @@ export class DrugAddPage implements OnInit {
       if(json)
         this.drugs = json.drugs;
     },err => {
-      console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message); 
+      console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
     });
   };
 
@@ -36,10 +37,10 @@ export class DrugAddPage implements OnInit {
         console.log('[DrugAddPage] getDrugsList()', await res);
         if(res )
         this.drugs = res.drugs;
-       },(err) => { 
-          console.log('[DrugAddPage] getDrugsList() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[DrugAddPage] getDrugsList() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       });
   }
 

@@ -57,6 +57,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials).subscribe(async (res) => {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;
+      console.log('[LoginPage] loginUser()', res);
       if(res.success){
         // this.analyticsService.setUser(res.idUser)
         // this.analyticsService.logEvent('login', res)

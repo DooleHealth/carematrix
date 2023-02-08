@@ -7,6 +7,7 @@ import { CameraSource,CameraResultType, Plugins } from '@capacitor/core';
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DateService } from 'src/app/services/date.service';
 const { Camera } = Plugins;
 @Component({
   selector: 'app-personal',
@@ -21,7 +22,7 @@ export class PersonalPage implements OnInit {
     private dooleService: DooleService,
     private router: Router,
     public translate: TranslateService,
-    private platform: Platform,
+    public dateService: DateService,
     private actionSheetCtrl: ActionSheetController,
     private datepipe: DatePipe,
     private alertController: AlertController,
@@ -38,10 +39,10 @@ export class PersonalPage implements OnInit {
         console.log('[PersonalPage] getPersonalInformation()', res);
         this.userProfile = res.user;
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
           console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
-          this.isLoading = false 
-          throw err; 
+          this.isLoading = false
+          throw err;
       });
   }
 
@@ -116,10 +117,10 @@ export class PersonalPage implements OnInit {
       async (res: any) =>{
         console.log('[PersonalPage] getPersonalInformation()', res);
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
           console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
-          this.isLoading = false 
-          throw err; 
+          this.isLoading = false
+          throw err;
       });
   }
 

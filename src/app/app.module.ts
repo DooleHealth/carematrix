@@ -24,7 +24,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { ComponentsModule } from "./components/components.module";
-import { isPlatformServer } from "@angular/common";
+import { DatePipe, isPlatformServer } from "@angular/common";
 import { RESPONSE } from "@nguniversal/express-engine/tokens";
 import { registerLocaleData } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
@@ -41,7 +41,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Calendar } from '@ionic-native/calendar/ngx';
 import {IonicStorageModule} from '@ionic/storage';
 import localeCa from '@angular/common/locales/ca';
-import localeEs from '@angular/common/locales/es';AngularFireModule
+import localeEs from '@angular/common/locales/es';
+import localeEn from '@angular/common/locales/en';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@ionic-native/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
@@ -51,7 +52,7 @@ import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.
 import { BackgroundMode } from "@ionic-native/background-mode/ngx";
 import { BLE } from "@awesome-cordova-plugins/ble/ngx";
 
-
+registerLocaleData(localeEn);
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
 
@@ -124,10 +125,11 @@ export function createTranslateLoader(http: HttpClient) {
     Network,
     BackgroundMode,
     fakeBackendProvider,
+    DatePipe,
     {
       provide: APP_INITIALIZER,
       useFactory: (platformId: object, response: any) => {
-        return () => { 
+        return () => {
           // In the server.ts we added a custom response header with information about the device requesting the app
           if (isPlatformServer(platformId)) {
             if (response && response !== null) {
@@ -141,8 +143,8 @@ export function createTranslateLoader(http: HttpClient) {
       deps: [PLATFORM_ID, [new Optional(), RESPONSE]],
       multi: true
     },
-    
-   
+
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA],
