@@ -90,6 +90,18 @@ export class DateService {
     return day;
   }
 
+  'dd/MM/y'
+
+  public ddMMy(){
+    let lang =  this.translate.currentLang;
+    let format = 'dd/MM/y'
+
+    if(lang === 'en' )
+      format = 'MM/dd/y';
+
+    return format;
+  }
+
   public getShortDateFormat(){
     let lang =  this.translate.currentLang;
     let format = 'DD/MM/YY'
@@ -302,7 +314,36 @@ export class DateService {
       return day[0].toUpperCase() + day.slice(1)
   }
 
+  highchartsDatesFornmat(){
 
+  let lang =  this.translate.currentLang;
+    let format = {};
+  if(lang == 'en'){
+      // %b: Short month, like 'Jan',%e Day of the month, 1 through 31
+      format = {
+        millisecond: '%H:%M:%S.%L',
+        second: '%l:%M:%S %P',
+        minute: '%l:%M %p',
+        hour: '%l:%M %p',
+        day: '%b. %e',
+        week: '%b. %e',
+        month: '%b \'%y',
+        year: '%Y'
+      }
+    }else{
+      format = {
+        millisecond: '%H:%M:%S.%L',
+        second: '%H:%M:%S',
+        minute: '%H:%M',
+        hour: '%H:%M',
+        day: '%e. %b',
+        week: '%e. %b',
+        month: '%b \'%y',
+        year: '%Y'
+    }
+    }
+   return format;
+  }
 
   yyyyMMddFormat(date){
     console.log("DATE date: ", date);
@@ -339,8 +380,6 @@ export class DateService {
     return time;
 
   }
-
-
 
   getTimeFormat(){
     let lang =  this.translate.currentLang;
