@@ -225,7 +225,7 @@ export class DateService {
     let format = 'D MMM YYYY HH:mm'
 
     if(lang === 'en' )
-      format = 'MMM D YYYY hh:mm a';
+      format = 'MMM D YY hh:mm a';
 
       return format;
 

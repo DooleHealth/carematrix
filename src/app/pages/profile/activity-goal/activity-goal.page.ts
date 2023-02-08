@@ -21,6 +21,7 @@ import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 export class ActivityGoalPage implements OnInit {
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
+  en =  ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   private id;
   viewTitle = ''
   normalValue = []
@@ -123,24 +124,27 @@ export class ActivityGoalPage implements OnInit {
             let hour = time.split(':')[0]+':'+time.split(':')[1]
             k.push(hour);
           }
-          else if(interval == '1w'){
+          else if(interval == '1w' || interval == '1m'){
             this.typeChart = 'category'
-            let date = this.formatSelectedDate2(element.date_value, this.dateService.getDayMonthFormat())
+            let date = this.formatSelectedDate2(element.date_value, this.dateService.getDayDotMonthFormat())
+            console.log(`[ActivityGoalPage] 1w date ${date}`)
             k.push(date);
           }
           else if(this.values.length >= 1 && this.values.length < 4 || numDay<4){
             this.typeChart = 'category'
             let date = this.formatSelectedDate2(element.date_value, this.dateService.getDayDotMonthFormat())
+            console.log(`[ActivityGoalPage] 1m date ${date}`)
             k.push(date);
           }
           else{
+            console.log(`[ActivityGoalPage] category ${element.timestamp * 1000}`)
             this.typeChart = 'datetime'
             k.push(element.timestamp * 1000);
           }
           k.push(element.valueNumeric);
           this.graphData.push(k);
           dArray.push(y + "-" + m + "-" + d + " " + element.time);
-          //console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
+          console.log('[ActivityGoalPage] loadData() graphData', this.graphData, k);
         });
 
         this.minY = Math.min.apply(null,vArray)
@@ -206,7 +210,7 @@ export class ActivityGoalPage implements OnInit {
     let count = 0;
     let numDay = 0;
 
-    for(let i = 0 ; i < values.length; i ++){
+    for(let i = 0 ; i < values?.length; i ++){
       let date = values[i].date.split(' ')[0]
       if(newDate ===  date){
         count++
@@ -287,7 +291,7 @@ export class ActivityGoalPage implements OnInit {
     HighCharts.setOptions({
       lang: {
          /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
-          weekdays: (this.setLocale() == 'es')? this.es: this.ca
+          weekdays: (this.setLocale() == 'es')? this.es:(this.setLocale() == 'ca')? this.ca : this.en
       }
   });
   }
@@ -463,6 +467,7 @@ export class ActivityGoalPage implements OnInit {
     date.setMinutes(time.substring(3,5));
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
+    console.log(`[ActivityGoalPage] transform ${format}`)
     return datePipe.transform(date, format);
   }
 
