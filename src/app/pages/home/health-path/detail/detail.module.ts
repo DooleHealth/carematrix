@@ -12,6 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { NewDetailPageModule } from '../../new-detail/new-detail.module';
 import { AdvicesDetailPageModule } from '../../advices-detail/advices-detail.module';
 import { DietsDetailPageModule } from 'src/app/pages/diary/diets-detail/diets-detail.module';
+import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({
   imports: [
@@ -23,8 +24,8 @@ import { DietsDetailPageModule } from 'src/app/pages/diary/diets-detail/diets-de
     DetailPageRoutingModule,
     NewDetailPageModule,
     AdvicesDetailPageModule,
-    DietsDetailPageModule
-    
+    DietsDetailPageModule,
+    ShareModule
   ],
   declarations: [DetailPage],
   exports:[TranslateModule]

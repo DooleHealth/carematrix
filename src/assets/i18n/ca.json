@@ -187,6 +187,7 @@
         "goal":"Tens <strong>{{ total }} {{ coin }}</strong>, aconsegueix {{ required }} més i passa al següent nivell.",
         "level_congratulations":"Felicitats!",
         "level_accomplished":"Has avançat de nivell",
+        "goal_note":"<p>* Complir els <strong>objectius marcats amb un asterisc</strong> és <strong>indispensables</strong> per a passar al següent nivell.</p>",
         "done":"Fet!"
       },
       "activity_goal":{

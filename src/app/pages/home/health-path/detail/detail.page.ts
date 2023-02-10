@@ -18,7 +18,7 @@ import { NewDetailPage } from '../../new-detail/new-detail.page';
   styleUrls: ['./detail.page.scss'],
 })
 export class DetailPage {
-
+  note = ''
   fetching = true;
   id = history.state?.challenge?.id;
   title = history.state?.challenge?.name;
@@ -27,10 +27,11 @@ export class DetailPage {
   progressBarValue = 0;
   goalsList = [];
   goals = [];
-
+  isRequired = false
   constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef,  private ngZone: NgZone) { }
 
   ionViewWillEnter() {
+    this.note = this.translate.instant('health_path.goal_note')
     this.getChallenge();
   }
 
@@ -59,7 +60,10 @@ export class DetailPage {
     let link = '';
     let id = '';
     let tempGoals = [];
+    let type = ''
     this.goals?.forEach(goal => {
+      if(goal?.required)
+      this.isRequired = true
 
       switch (goal?.goalable_type) {
         case "App\\Form":
@@ -110,7 +114,7 @@ export class DetailPage {
           console.error("goal.goalable_type not found: ", goal)
           break;
       }
-      tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed })
+      tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed, required: goal?.required, type: type })
     });
     this.goalsList = tempGoals;
     this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;

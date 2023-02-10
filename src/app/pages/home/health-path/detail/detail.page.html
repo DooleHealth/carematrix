@@ -38,8 +38,8 @@
           <ion-col size="9" style="margin:auto">
             <ion-row style="display: inline-flex !important">
               {{'health_path.goal_txt1' | translate}}&nbsp;<strong>{{ current_level?.current_score }}  {{'game.points' | translate}}</strong>
-              <div *ngIf="current_level?.percentage_completed <= 100">, {{'health_path.goal_txt2' | translate}} {{ current_level?.score_required - current_level?.current_score }} {{'health_path.goal_txt3' | translate}}</div>
-              <div *ngIf="current_level?.percentage_completed <= 100">{{'health_path.goal_txt4' | translate}}</div>
+              <div *ngIf="current_level?.percentage_completed < 100">, {{'health_path.goal_txt2' | translate}} {{ current_level?.score_required - current_level?.current_score }} {{'health_path.goal_txt3' | translate}}</div>
+              <div *ngIf="current_level?.percentage_completed < 100">{{'health_path.goal_txt4' | translate}}</div>
           </ion-row>
           </ion-col>
         </ion-row>
@@ -50,8 +50,13 @@
             <ion-progress-bar class="progress-bar" [value]="this.progressBarValue" routerLinkActive="active-item">
             </ion-progress-bar>
           </ion-col>
-
         </ion-row>
+
+        <ion-row *ngIf="this.isRequired" style="margin: 7% 2.5% 0% 2.5%; font-size: small; display: inline-flex !important;">  
+          <ion-text [innerHtml]="this.note | safeHtml">
+          </ion-text>
+        </ion-row>
+
       </ion-grid>
       <ion-item>
         <ion-label *ngIf=" this.goalsList?.length > 0" style="margin-top: 10%;">{{ 'health_path.goals' | translate }}</ion-label>
@@ -59,6 +64,7 @@
 
       <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
         <ion-item detail="false" (click)="g?.completed ? false : openGoal(g)">
+          <p *ngIf="g?.required" color="danger" style="font-size: 20px; color:red; margin-top: 8px;">*&nbsp;</p>
           <ion-label>{{g?.message}}</ion-label>
           <ion-text *ngIf="g?.completed;else showArrow" class="goal-done">{{ 'health_path.done'| translate  }}</ion-text>
           <ng-template #showArrow><ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon></ng-template>
