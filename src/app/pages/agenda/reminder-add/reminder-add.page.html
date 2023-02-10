@@ -23,7 +23,7 @@
       <ion-list>
         <ion-item>
           <ion-label>{{'reminder.field_title' | translate}}</ion-label>
-          <ion-input formControlName="title" class="textMedium" required></ion-input>
+          <ion-input formControlName="title" class="textMedium" required  [placeholder]="this.titlePlaceholder"></ion-input>
           <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         </ion-item>
         <ion-item lines="none">

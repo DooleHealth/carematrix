@@ -116,7 +116,7 @@ export class DetailPage {
     this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
     this.fetching = false;
     this.changeDetectorRef.detectChanges();
-  
+
   }
 
 
@@ -169,15 +169,16 @@ export class DetailPage {
 
     modal.onDidDismiss()
       .then(async (result) => {
-        console.log('modal.onDidDismiss: ', this.pusher?.pendingNotification);
-        if (this.pusher?.pendingNotification) {
+
+        this.pusher.isModalShowing = false;
+        if (this.pusher?.pendingNotification?.show) {
           this.pusher.presentChallengeNotification();
-        } 
+        }
         this.ngZone.run(() => {
         this.getChallenge();
       });
-        this.pusher.isModalShowing = false;
-        
+
+
       });
 
     await modal.present();

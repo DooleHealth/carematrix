@@ -98,10 +98,13 @@ export class LoginPage implements OnInit {
   }
 
   setLocalLanguages(language){
+
     if(language == 'es-es')
     this.language = 'es'
     else
     this.language = language
+
+    console.log("language", language)
     this.languageService.setLenguageLocalstorage(this.language)
   }
 

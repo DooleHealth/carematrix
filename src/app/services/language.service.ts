@@ -19,6 +19,8 @@ export class LanguageService {
   }
 
   public changeLanguage(langCode: string) {
+
+    console.log("langCode", langCode)
     this.translate.use(langCode);
   }
 

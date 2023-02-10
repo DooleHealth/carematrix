@@ -38,12 +38,13 @@ export class ReminderAddPage implements OnInit {
   isInit = true;
   isNewEvent: boolean = true;
   isLoading = false
-  expanded = true
+  expanded = true;
+  titlePlaceholder = '';
   constructor(
     private fb: FormBuilder,
     public dateService: DateService,
     private dooleService: DooleService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     public datepipe: DatePipe,
     public alertController: AlertController,
     private modalCtrl: ModalController,
@@ -154,11 +155,11 @@ export class ReminderAddPage implements OnInit {
       this.form.get('origin_type').setValue('Agenda')
     }
     if(this.isNewEvent){
-      let message = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
+      this.titlePlaceholder = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
+
       if(this.type == 'Element' && this.titleReminder)
-        message = this.translate.instant('reminder.header')+' '+ this.titleReminder
-      this.form.get('title').setValue(message)
-      console.log('[ReminderAddPage] getReminder()', this.type, message);
+        this.titlePlaceholder = this.translate.instant('reminder.header')+' '+ this.titleReminder
+
     }
   }
 

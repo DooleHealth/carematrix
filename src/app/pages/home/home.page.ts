@@ -1081,10 +1081,9 @@ export class HomePage implements OnInit {
 
     // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown
     this.pusherChallenge.isModalShowing = true;
-    modal.onDidDismiss()
-      .then((result) => {
+
+    modal.onDidDismiss().then((result) => {
         console.log('showAdvices()', result);
-        console.log('modal.onDidDismiss: ', this.pusherChallenge.pendingNotification);
 
         this.pusherChallenge.isModalShowing = false;
         if (this.pusherChallenge?.pendingNotification?.show) {
