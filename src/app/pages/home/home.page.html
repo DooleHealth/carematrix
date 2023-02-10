@@ -57,8 +57,8 @@
                 <ion-col size="9" >
                   <ion-row style="display: inline-flex !important">
                     {{'health_path.goal_txt1' | translate}}&nbsp;<strong>{{ challenge?.current_level?.current_score }}  {{'game.points' | translate}}</strong>
-                    <div *ngIf="challenge?.current_level?.percentage_completed <= 100">, {{'health_path.goal_txt2' | translate}} {{ challenge?.current_level?.score_required - challenge?.current_level?.current_score }} {{'health_path.goal_txt3' | translate}}</div>
-                    <div *ngIf="challenge?.current_level?.percentage_completed <= 100">{{'health_path.goal_txt4' | translate}}</div>
+                    <div *ngIf="challenge?.current_level?.percentage_completed < 100">, {{'health_path.goal_txt2' | translate}} {{ challenge?.current_level?.score_required - challenge?.current_level?.current_score }} {{'health_path.goal_txt3' | translate}}</div>
+                    <div *ngIf="challenge?.current_level?.percentage_completed < 100">{{'health_path.goal_txt4' | translate}}</div>
                 </ion-row>
                 </ion-col>
               </ion-row>

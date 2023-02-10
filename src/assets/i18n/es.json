@@ -191,7 +191,7 @@
         "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
         "level_congratulations":"Felicitaciones!",
         "level_accomplished":"Has avanzado de nivel",
-        "goal_note":"<p>* Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
+        "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
         "done":"Hecho!"
       },
       "activity_goal":{
