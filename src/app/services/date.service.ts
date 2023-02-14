@@ -194,7 +194,6 @@ export class DateService {
 
     if(date){
       let day = this.transformDate(date, this.getLongDateFormat());
-      console.log("selected Day", day);
       return day[0].toUpperCase() + day.slice(1);
     }
 
@@ -363,6 +362,25 @@ export class DateService {
     return day[0].toUpperCase() + day.slice(1)
   }
 
+  convert12to24format(time){
+
+    console.log("TIME 12to24: ",time);
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    var AMPM = time.match(/\s(.*)$/)[1];
+    if(AMPM == "PM" && hours<12) hours = hours+12;
+    if(AMPM == "AM" && hours==12) hours = hours-12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if(hours<10) sHours = "0" + sHours;
+    if(minutes<10) sMinutes = "0" + sMinutes;
+
+    let h = sHours + ":" + sMinutes;
+
+    console.log("HOURS: ",h);
+    return h;
+  }
+
   format24h(time) {
 
     let lang =  this.translate.currentLang;
@@ -372,13 +390,17 @@ export class DateService {
 
     if (time.length > 1) { // If time format correct
       time = time.slice (1);  // Remove full string match value
-      time[5] = +time[0] < 12 ? ' am' : ' pm'; // Set AM/PM
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
       time[0] = +time[0] % 12 || 12; // Adjust hours
     }
     return time.join (''); // return adjusted time or original string
     }
     return time;
 
+  }
+
+  isAmericanFormat(){
+    return this.translate.currentLang === 'en';
   }
 
   getTimeFormat(){

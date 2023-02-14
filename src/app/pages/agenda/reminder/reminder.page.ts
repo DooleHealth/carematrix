@@ -70,7 +70,7 @@ export class ReminderPage implements OnInit {
           if(this.reminder?.times.length > 0)
           this.reminder.times.forEach(element => {
             let t = element.time.split(':')
-            this.times.push(t[0]+':'+t[1])
+            this.times.push(this.dateService.format24h(t[0]+':'+t[1]))
           });
           this.selectType(  this.reminder )
           this.selectedFrequency(res.reminder?.frequency)
@@ -85,6 +85,7 @@ export class ReminderPage implements OnInit {
         this.isLoading = false
       };
   }
+
 
   formatSelectedDate(date){
 
