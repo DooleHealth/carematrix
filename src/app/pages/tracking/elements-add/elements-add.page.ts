@@ -41,7 +41,7 @@ export class ElementsAddPage implements OnInit {
   ) {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-    this.date =  this.dateService.selectedDateFormat(localISOTime);
+    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
     let auxdate = new Date(Date.now()).setHours(23,59,59)
     let auxdate1 = new Date(auxdate)
     this.maxDate = (new Date(auxdate1.getTime() - tzoffset)).toISOString().slice(0, -1);
