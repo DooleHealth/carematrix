@@ -1,7 +1,8 @@
 import { Component, Input, NgZone, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FilesystemDirectory, Plugins } from '@capacitor/core';
-const { Filesystem } = Plugins;
+import { Filesystem, Directory as FilesystemDirectory} from '@capacitor/filesystem';
+//import { FilesystemDirectory, Plugins } from '@capacitor/core';
+//const { Filesystem } = Plugins;
 
 @Component({
   selector: 'cached-image',

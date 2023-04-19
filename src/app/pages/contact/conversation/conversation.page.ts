@@ -2,7 +2,11 @@ import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ActionSheetController, IonInfiniteScroll, Platform} from '@ionic/angular';
 import {MediaCapture} from '@ionic-native/media-capture/ngx'
 import {HttpErrorResponse} from '@angular/common/http';
-import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+//import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+
+import { Capacitor } from '@capacitor/core';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { File } from '@ionic-native/file/ngx';
 import { Events } from 'src/app/services/events.service';
@@ -17,7 +21,7 @@ import { DatePipe } from '@angular/common';
 import moment from 'moment';
 import { LanguageService } from 'src/app/services/language.service';
 import { DateService } from 'src/app/services/date.service';
-const { Camera } = Plugins;
+//const { Camera } = Plugins;
 
 interface Message {
   id: string;

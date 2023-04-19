@@ -8,9 +8,13 @@ import { ActionSheetController, ModalController, NavController, Platform } from 
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
 import { File } from '@ionic-native/file/ngx';
-import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+
+//import { Capacitor, Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Chooser } from '@ionic-native/chooser/ngx';
-const { Camera } = Plugins;
+//const { Camera } = Plugins;
+
 //declare let OT: any;
 
 @Component({

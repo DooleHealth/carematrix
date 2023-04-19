@@ -1,6 +1,15 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Filesystem, FilesystemDirectory, LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
+//import { Filesystem, FilesystemDirectory, LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
+
+import { Capacitor } from '@capacitor/core';
+import { Filesystem, Directory as FilesystemDirectory} from '@capacitor/filesystem';
+import { LocalNotifications, LocalNotificationSchema as LocalNotification, ActionPerformed as LocalNotificationActionPerformed} from '@capacitor/local-notifications';
+import { PushNotifications, PushNotificationSchema as PushNotification, ActionPerformed as PushNotificationActionPerformed, Token as PushNotificationToken} from '@capacitor/push-notifications'
+
+//import { LocalNotifications } from '@capacitor/local-notifications';
+//import { PushNotifications } from '@capacitor/push-notifications';
+
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +29,12 @@ import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
-const { PushNotifications, LocalNotifications } = Plugins;
+
+import { Storage } from '@capacitor/storage';
+
+//import {PushNotification, LocalNotifications} from 'Plugins';
+//const { PushNotifications, LocalNotifications } = Plugins;
+
 declare let VoIPPushNotification: any;
 declare let cordova: any;
 declare let IRoot: any;
@@ -66,7 +80,7 @@ export class AppComponent implements OnInit {
     private endPoind: ApiEndpointsService
   ) {
 
-
+    Storage.migrate();
   }
 
   async ngOnInit() {
@@ -201,9 +215,9 @@ export class AppComponent implements OnInit {
   private async initPushNotifications() {
     var chat_notification = this.translate.instant('notifications.chat');
 
-    PushNotifications.requestPermission().then((permission) => {
+    PushNotifications.requestPermissions().then((permission) => {
       // Register with Apple / Google to receive push via APNS/FCM
-      if (permission.granted)
+      if (permission.receive === 'granted')
         PushNotifications.register();
        else
         console.error('No permission for push granted')
@@ -294,7 +308,7 @@ export class AppComponent implements OnInit {
 
 
     // LOCAL NOTIFICATIONS
-    await LocalNotifications.requestPermission().then((data)=>{
+    await LocalNotifications.requestPermissions().then((data)=>{
       console.log("LocalNotifications Registered");
     });
 

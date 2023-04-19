@@ -3,7 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { CameraSource,CameraResultType, Plugins } from '@capacitor/core';
+//import { CameraSource,CameraResultType, Plugins } from '@capacitor/core';
+import { Camera, CameraSource, CameraResultType} from '@capacitor/camera';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
@@ -11,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
-const { Camera } = Plugins;
+//const { Camera } = Plugins;
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',

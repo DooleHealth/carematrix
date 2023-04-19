@@ -5,7 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { DatePipe, Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
+
+//import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/storage';
+
 import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
@@ -16,7 +19,7 @@ import { Constants } from 'src/app/config/constants';
 import { LocalizedDatePipe } from 'src/app/utils/localized-date.pipe';
 import moment from 'moment'
 
-const { Storage } = Plugins;
+//const { Storage } = Plugins;
 
 
 @Component({

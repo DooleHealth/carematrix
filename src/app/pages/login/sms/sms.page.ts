@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
+
+//import { Plugins } from '@capacitor/core';
+//const { Storage } = Plugins;
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-sms',

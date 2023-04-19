@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
+
+//import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/storage';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
-const { Storage } = Plugins;
+//const { Storage } = Plugins;
 const INTRO_KEY = 'intro';
 @Component({
   selector: 'app-intro',
