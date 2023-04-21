@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanLoad,Router } from '@angular/router';
 import { Observable } from 'rxjs';
-
 export const INTRO_KEY = 'intro-seen';
-
 import { Storage } from '@capacitor/storage';
 
-//import { Plugins } from '@capacitor/core';
-//const { Storage } = Plugins;
 
 @Injectable({
   providedIn: 'root'

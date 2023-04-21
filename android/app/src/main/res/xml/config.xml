@@ -14,10 +14,6 @@
     <param name="android-package" value="com.sarriaroman.PhotoViewer.PhotoViewer"/>
   </feature>
 
-  <feature name="Permissions">
-    <param name="android-package" value="com.android.plugins.Permissions"/>
-  </feature>
-
   <feature name="AppVersion">
     <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
   </feature>
@@ -90,6 +86,10 @@
 
   <feature name="Capture">
     <param name="android-package" value="org.apache.cordova.mediacapture.Capture"/>
+  </feature>
+
+  <feature name="NetworkStatus">
+    <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager"/>
   </feature>
 
   <feature name="OpenTokPlugin">

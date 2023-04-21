@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfile } from 'src/app/models/user';
 import { DooleService } from 'src/app/services/doole.service';
-
-//import { CameraSource,CameraResultType, Plugins } from '@capacitor/core';
 import { Camera, CameraSource,CameraResultType} from '@capacitor/camera';
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DateService } from 'src/app/services/date.service';
-//const { Camera } = Plugins;
+
+
 @Component({
   selector: 'app-personal',
   templateUrl: './personal.page.html',

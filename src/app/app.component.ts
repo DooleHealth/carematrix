@@ -6,10 +6,6 @@ import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory as FilesystemDirectory} from '@capacitor/filesystem';
 import { LocalNotifications, LocalNotificationSchema as LocalNotification, ActionPerformed as LocalNotificationActionPerformed} from '@capacitor/local-notifications';
 import { PushNotifications, PushNotificationSchema as PushNotification, ActionPerformed as PushNotificationActionPerformed, Token as PushNotificationToken} from '@capacitor/push-notifications'
-
-//import { LocalNotifications } from '@capacitor/local-notifications';
-//import { PushNotifications } from '@capacitor/push-notifications';
-
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,11 +25,8 @@ import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
-
 import { Storage } from '@capacitor/storage';
 
-//import {PushNotification, LocalNotifications} from 'Plugins';
-//const { PushNotifications, LocalNotifications } = Plugins;
 
 declare let VoIPPushNotification: any;
 declare let cordova: any;

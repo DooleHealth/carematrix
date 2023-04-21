@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-//import { Plugins } from "@capacitor/core";
 import { Contacts } from '@capacitor-community/contacts';
-
 import { Platform } from '@ionic/angular';
 import { EmergencyContact } from 'src/app/models/user';
-//const  { Contacts } = Plugins;
 
 @Component({
   selector: 'app-list-my-contacts',
@@ -33,30 +29,26 @@ export class ListMyContactsPage implements OnInit {
       this.getContacts()    
   }
 
-  async getContacts() {
-    const projection = {
-      name: true,
-      phones: true,
-      postalAddresses: true,
-    };
-  
-    const result = await Contacts.getContacts({projection});
-    this.contacts = result.contacts;
-    this.contactsBackup = this.contacts;
-    this.isLoading = false;
-  };
+ 
+  async getContacts(){
+    this.isLoading = true
+    Contacts.getContacts().then(result => {
+      console.log(result);
+      this.contacts = result.contacts;
+      this.contactsBackup = this.contacts;
+      this.isLoading = false
+    });
+  }
 
 
-  async getPermission() {
-    try {
-      const permissionStatus = await Contacts.checkPermissions();
-      const isPermitted = permissionStatus.contacts === 'granted';
-      if (isPermitted) {
-        await this.getContacts();
-      }
-    } catch (error) {
+  async getPermission(){
+    return Contacts.getPermissions().then(result =>{
+      console.log(result);
+      let isPermissed = result.granted
+      if(isPermissed) this.getContacts() 
+    }).catch(error =>{
       console.log(`[ListMyContactsPage] getDataContact(): ${error}`);
-    }
+    })
   }
 
   getDataContact(contact){

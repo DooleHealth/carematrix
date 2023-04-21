@@ -1,5 +1,4 @@
 import { Inject, Injectable, PLATFORM_ID, ViewChild } from '@angular/core';
-//import { Plugins } from '@capacitor/core';
 import {Storage} from '@capacitor/storage';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,7 +9,6 @@ import { Platform } from '@ionic/angular';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
-//const { Storage } = Plugins;
 const TOKEN_KEY = 'token';
 const TOKENS = 'tokens';
 const INTRO_KEY = 'intro';

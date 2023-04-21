@@ -87,6 +87,10 @@
     <param name="ios-package" value="CDVCapture"/>
   </feature>
 
+  <feature name="NetworkStatus">
+    <param name="ios-package" value="CDVConnection"/>
+  </feature>
+
   <feature name="OpenTokPlugin">
     <param name="ios-package" value="OpenTokPlugin"/>
     <param name="onload" value="true"/>

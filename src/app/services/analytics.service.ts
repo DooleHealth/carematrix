@@ -5,13 +5,8 @@ import { filter } from 'rxjs/operators';
 
 // Init for the web
 import "@capacitor-community/firebase-analytics";
- 
 import {FirebaseAnalytics} from '@capacitor-community/firebase-analytics';
-
 import {Device} from '@capacitor/device'; 
-
-//import { Plugins } from "@capacitor/core";
-//const { FirebaseAnalytics, Device } = Plugins;
 
 @Injectable({
   providedIn: 'root'

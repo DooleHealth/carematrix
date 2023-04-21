@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-//import { Plugins } from '@capacitor/core';
 import { Storage } from '@capacitor/storage';
-
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Directive, HostListener } from '@angular/core';
-//const { Storage } = Plugins;
+
 
 @Component({
   selector: 'app-verification',
