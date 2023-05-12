@@ -26,5 +26,10 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
+  },
+  "cordova": {
+    "staticPlugins": [
+      "cordova-plugin-opentok"
+    ]
   }
 }

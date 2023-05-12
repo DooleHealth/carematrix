@@ -13,9 +13,9 @@
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
-		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		AF26623E269DF90600D7008D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF26623D269DF90600D7008D /* GoogleService-Info.plist */; };
 		AF6E6BEE26C3B7BE00FD3A44 /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6E6BED26C3B7BE00FD3A44 /* PushKit.framework */; };
+		AFE7DF3D2A0E4F1100C21F7E /* public in Resources */ = {isa = PBXBuildFile; fileRef = AFE7DF3C2A0E4F1100C21F7E /* public */; };
 		AFF8CF6926CE72E6008AC6C5 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF8CF6826CE72E5008AC6C5 /* HealthKit.framework */; };
 		C11C2E8D270614050079CA8C /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C11C2E8C270614050079CA8C /* sound.mp3 */; };
 /* End PBXBuildFile section */
@@ -29,10 +29,10 @@
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = SOURCE_ROOT; };
 		AF0AF43026A2E29C00DACE2E /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		AF26623D269DF90600D7008D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF6E6BED26C3B7BE00FD3A44 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
+		AFE7DF3C2A0E4F1100C21F7E /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
 		AFF8CF6826CE72E5008AC6C5 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		C11C2E8C270614050079CA8C /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +79,7 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				AFE7DF3C2A0E4F1100C21F7E /* public */,
 				C11C2E892706135C0079CA8C /* sounds */,
 				AF0AF43026A2E29C00DACE2E /* App.entitlements */,
 				AF26623D269DF90600D7008D /* GoogleService-Info.plist */,
@@ -89,7 +90,6 @@
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
-				50B271D01FEDC1A000F3C39B /* public */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -163,10 +163,10 @@
 			files = (
 				C11C2E8D270614050079CA8C /* sound.mp3 in Resources */,
 				504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */,
-				50B271D11FEDC1A000F3C39B /* public in Resources */,
 				504EC30F1FED79650016851F /* Assets.xcassets in Resources */,
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
+				AFE7DF3D2A0E4F1100C21F7E /* public in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				AF26623E269DF90600D7008D /* GoogleService-Info.plist in Resources */,
 			);
