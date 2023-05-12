@@ -15,6 +15,8 @@ import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.mod
 import { AdvicesDetailPageModule } from './advices-detail/advices-detail.module';
 import { NewDetailPageModule } from './new-detail/new-detail.module';
 import { DietsDetailPageModule } from '../diary/diets-detail/diets-detail.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfPageModule } from '../pdf/pdf.module';
 
 
 @NgModule({
@@ -28,7 +30,10 @@ import { DietsDetailPageModule } from '../diary/diets-detail/diets-detail.module
     ElementsAddPageModule,
     AdvicesDetailPageModule,
     NewDetailPageModule,
-    DietsDetailPageModule
+    PdfViewerModule,
+    DietsDetailPageModule,
+    PdfPageModule
+
   ],
   providers: [DatePipe, InAppBrowser] ,
   declarations: [HomePage,

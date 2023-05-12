@@ -31,6 +31,8 @@ export class CachedImageComponent {
 
 
       }).catch(async e => {
+
+        console.log('imageName: ', imageName,':',imageUrl);
         await this.storeImage(imageUrl, imageName);
         Filesystem.readFile({
           directory:FilesystemDirectory.Cache,

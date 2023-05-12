@@ -281,16 +281,16 @@
 
 .level-icon {
   text-align: center;
-  width: 100%;
-  font-size: xxx-large;
+  max-width: 50%;
+  margin: auto;
 }
 
 .completed {
   opacity: 0.7;
-  max-width: 15vw;
-  max-height: 15vw;
+  max-width: 50%;
   margin: auto;
 }
+
 
 .text-completed {
   opacity: 0.7;

@@ -272,19 +272,20 @@
 .level-icon {
   text-align: center;
   width: 100%;
-  font-size: xxx-large;
+  height: 60%;
+  margin: auto;
+  font-size: xx-large;
 }
 
 .completed {
-  opacity: .7;
-  max-width: 15vw;
-  max-height: 15vw;
-  margin:auto;
+  opacity: 0.7;
+  max-width: 50%;
+  margin: auto;
 }
 
 .text-completed {
-  opacity: .7;
-  margin:auto;
+  opacity: 0.7;
+  margin: auto;
 }
 
 .icon-box {

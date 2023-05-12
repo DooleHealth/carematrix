@@ -22,6 +22,7 @@ import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pus
 import { AdvicesDetailPage } from './advices-detail/advices-detail.page';
 import { NewDetailPage } from './new-detail/new-detail.page';
 import { DateService } from 'src/app/services/date.service';
+import { PdfPage } from '../pdf/pdf.page';
 
 export interface UserInformation {
   title?: string;
@@ -922,7 +923,7 @@ export class HomePage implements OnInit {
         this.auth.user = value
       })
 
-      if (item.url.startsWith("http")) {
+      if (item.url?.startsWith("http")) {
         this.header = true
         item.url = item.url + "?user=" + this.auth.user.idUser + "&game=" + item.id;
         browser = this.iab.create(item.url, '_blank', iosoption);
@@ -1095,6 +1096,16 @@ export class HomePage implements OnInit {
 
     await modal.present();
   }
+
+  async openPDF() {
+    const modal = await this.modalCtrl.create({
+      component: PdfPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
+
+
 
 
 }

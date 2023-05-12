@@ -162,6 +162,10 @@ const routes: Routes = [
   {
     path: 'scan',
     loadChildren: () => import('./pages/bluetooth/scan/scan.module').then( m => m.ScanPageModule)
+  },
+  {
+    path: 'pdf',
+    loadChildren: () => import('./pages/pdf/pdf.module').then( m => m.PdfPageModule)
   }
 
 

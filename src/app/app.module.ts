@@ -51,6 +51,7 @@ import { Badge } from "@ionic-native/badge/ngx";
 import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.module";
 import { BackgroundMode } from "@ionic-native/background-mode/ngx";
 import { BLE } from "@awesome-cordova-plugins/ble/ngx";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeEs);

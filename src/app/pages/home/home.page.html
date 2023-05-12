@@ -84,6 +84,11 @@
       </ion-slide>
     </ion-slides>
   </ion-row>
+
+  <ion-row>
+    <ion-button (click)="openPDF()">PDF TEST</ion-button>
+  </ion-row>
+
     <!-- Reminders -->
     <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment?.length > 0 && role?.component?.agenda">
       <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>

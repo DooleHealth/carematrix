@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 // Init for the web
 import "@capacitor-community/firebase-analytics";
 import {FirebaseAnalytics} from '@capacitor-community/firebase-analytics';
-import {Device} from '@capacitor/device'; 
+import {Device} from '@capacitor/device';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,17 @@ import {Device} from '@capacitor/device';
 export class AnalyticsService {
   analyticsEnabled = true;
   constructor( private router: Router) {
-    // this.initFb();
-    // this.router.events.pipe(
-    //   filter((e: RouterEvent) => e instanceof NavigationEnd),
-    // ).subscribe((e: RouterEvent) => {
-    //   console.log('route changed: ', e.url);
-    //   this.setScreenName(e.url)
-    // });
+    this.initFb();
   }
 
   async initFb() {
-    if ((await Device.getInfo()).platform == 'web') {
-      FirebaseAnalytics.initializeFirebase(environment.firebase);
+
+    if ((await (Device.getInfo())).platform == 'web') {
+      console.log("initializeFirebase: ", environment.firebase)
+      await FirebaseAnalytics.initializeFirebase(environment.firebase);
     }
+
+    this.toggleAnalytics();
   }
 
   async setUser(userId) {
@@ -35,21 +33,21 @@ export class AnalyticsService {
       userId: userId,
     });
   }
- 
+
   setProperty(property, value) {
     FirebaseAnalytics.setUserProperty({
       name: property,
       value: value,
     });
   }
- 
+
   logEvent(name: string, params: Object) {
     FirebaseAnalytics.logEvent({
       name: name,
       params: params
     });
   }
- 
+
   setScreenName(screenName, nameOverride?) {
     FirebaseAnalytics.setScreenName({
       screenName: screenName,
@@ -61,7 +59,7 @@ export class AnalyticsService {
     this.analyticsEnabled = !this.analyticsEnabled;
     FirebaseAnalytics.setCollectionEnabled({
       enabled: this.analyticsEnabled,
-    });    
+    });
   }
 
 }

@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
     this.endPoind.loadEndPoints()
     this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
     this.settingsBio = 'settings-bio' + this.environment
-    FirebaseAnalytics.initializeFirebase(environment.firebase);
+
 
     this.platform.ready().then(() => {
       // Secutity - Rooted
