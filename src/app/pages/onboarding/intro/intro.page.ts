@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 const INTRO_KEY = 'intro';
@@ -10,7 +10,7 @@ const INTRO_KEY = 'intro';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-  
+
   constructor(
     public router: Router,
     private authService: AuthenticationService,) { }
@@ -23,6 +23,6 @@ export class IntroPage implements OnInit {
    await this.authService.setShowIntroLocalstorage()
    this.router.navigate(['home']);
  }
- 
+
 
 }

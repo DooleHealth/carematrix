@@ -514,10 +514,8 @@ ion-spinner {
   --height: 3.5em;
   --width: 3.5em;
   --start: left;
-  -webkit-animation: draw 3s 1;
-          animation: draw 3s 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
+  animation: draw 3s 1;
+  animation-direction: normal;
   top: 35%;
 }
 
@@ -530,21 +528,6 @@ ion-spinner {
   font-size: large;
   font-weight: bolder;
   top: 35%;
-}
-
-@-webkit-keyframes draw {
-  0% {
-    left: -1000px;
-    opacity: 0.2;
-  }
-  25% {
-    left: 0px;
-    opacity: 0.75;
-  }
-  50% {
-    left: 0px;
-    opacity: 1;
-  }
 }
 
 @keyframes draw {

@@ -16,7 +16,8 @@
         "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
         "message_error_serve":"Error del servidor",
         "message_failure_response":"Ha ocurrido un error inesperado intenta otra vez",
-        "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo."
+        "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo.",
+        "login_again":"Por favor inicie sesión nuevamente"
       },
       "legal": {
         "header": "Condiciones de uso",

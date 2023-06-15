@@ -1,14 +1,15 @@
-import { Inject, Injectable, PLATFORM_ID, ViewChild } from '@angular/core';
-import {Storage} from '@capacitor/storage';
+import { Inject, Injectable, Injector, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiEndpointsService } from '../services/api-endpoints.service';
 import { Constants } from '../config/constants';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
+import { TranslateService } from '@ngx-translate/core';
 const TOKEN_KEY = 'token';
 const TOKENS = 'tokens';
 const INTRO_KEY = 'intro';
@@ -56,14 +57,18 @@ export class AuthenticationService {
   public isFamily:boolean;
   private indexEndPoint: number;
   private tokens = []
+  showingSignInAlert: boolean = false;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
-  constructor(private http: HttpClient,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private http: HttpClient,
     private api: ApiEndpointsService,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     private constants: Constants,
-    @Inject(PLATFORM_ID) private platformId: object) {
+    public alertController: AlertController,
+    private injector: Injector) {
       this.setUser();
   }
 
@@ -82,7 +87,7 @@ export class AuthenticationService {
   }
 
   async loadToken() {
-    const token = await Storage.get({ key: TOKEN_KEY });
+    const token = await Preferences.get({ key: TOKEN_KEY });
     if (token && token.value) {
       this.isAuthenticated.next(true);
     } else {
@@ -121,14 +126,14 @@ export class AuthenticationService {
               let access = true;
               if(this.deviceToken && this.devicePlatform)
                 this.registerDevice(this.deviceToken, this.devicePlatform);
-              
+
               if (this.platform.is('ios')){
-                if(this.voipDeviceToken) 
-                  this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip');        
-                
+                if(this.voipDeviceToken)
+                  this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip');
+
               }
-               
-              
+
+
             }
 
         //   }, (error) => {
@@ -166,7 +171,7 @@ export class AuthenticationService {
 
   setUserLocalstorage(user) {
     console.log(`[AuthenticationService] setUserLocalstorage()`, user);
-    Storage.set({
+    Preferences.set({
       key: 'user',
       value: JSON.stringify(user)
     });
@@ -175,13 +180,13 @@ export class AuthenticationService {
 
   setFamilyUnitLocalstorage(familyUnit: []) {
 
-  
+
     familyUnit.forEach(member => {
       let s: string = member['name'];
       let fullname = s.split(',');
       let u = new User(member['id'], '', fullname[1], fullname[0], member['thumbnail']);
-      console.log("familyUnit Local Storage:", u);
-      Storage.set({
+      console.log("familyUnit Local:", u);
+      Preferences.set({
         key: u.idUser,
         value: JSON.stringify(u)
       });
@@ -189,7 +194,7 @@ export class AuthenticationService {
   }
 
   getFamilyUnitLocalstorage(id): Promise<User> {
-    return Storage.get({ key: id }).then((val) => {
+    return Preferences.get({ key: id }).then((val) => {
       console.log(`[AuthenticationService] getFamilyUnitLocalstorage(${id})`, val);
       return JSON.parse(val.value);
     });
@@ -201,7 +206,7 @@ export class AuthenticationService {
     let fullname = s.split(',');
     this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
     this.user.familyUnit = user.id;
-    Storage.set({
+    Preferences.set({
       key: user.id,
       value: JSON.stringify(this.user)
     });
@@ -210,7 +215,7 @@ export class AuthenticationService {
   }
 
   getUserLocalstorage(): Promise<User> {
-    return Storage.get({ key: 'user' }).then((val) => {
+    return Preferences.get({ key: 'user' }).then((val) => {
       return JSON.parse(val.value);
     });
   }
@@ -228,13 +233,13 @@ export class AuthenticationService {
   }
 
   getShowIntroLocalstorage(): Promise<any> {
-    return Storage.get({ key: 'showIntro' }).then((val) => {
+    return Preferences.get({ key: 'showIntro' }).then((val) => {
       return Boolean(val.value)
     });
   }
 
   async setShowIntroLocalstorage() {
-    await Storage.set({
+    await Preferences.set({
       key: 'showIntro',
       value: 'true'
     });
@@ -247,11 +252,11 @@ export class AuthenticationService {
   async logout1(): Promise<void>{
     console.log('logout');
     this.isAuthenticated.next(false);
-    await Storage.remove({ key: 'user' }).then((val) => { });
-    return Storage.remove({ key: TOKEN_KEY });
+    await Preferences.remove({ key: 'user' }).then((val) => { });
+    return Preferences.remove({ key: TOKEN_KEY });
   }
 
-  logout(allDevices?): Observable<any>  {  
+  logout(allDevices?): Observable<any>  {
     let path = 'patient/logout'
       this.getAllTokenDevices()
       let params = {
@@ -264,8 +269,8 @@ export class AuthenticationService {
         map( (res: any) => {
           console.log(`[AuthenticationService] logout(${path}) res: `, JSON.stringify(res) );
           this.isAuthenticated.next(false);
-           Storage.remove({ key: 'user' }).then((val) => { });
-           Storage.remove({ key: TOKEN_KEY });
+           Preferences.remove({ key: 'user' }).then((val) => { });
+           Preferences.remove({ key: TOKEN_KEY });
           return res;
         })
       );
@@ -400,7 +405,7 @@ export class AuthenticationService {
   }
 
   async showIntro() {
-    return Storage.get({ key: INTRO_KEY }).then(async (data) => {
+    return Preferences.get({ key: INTRO_KEY }).then(async (data) => {
       let showIntro = Boolean(data.value)
       console.log(`[AuthService] showIntro()`, showIntro);
       return showIntro;
@@ -444,4 +449,34 @@ export class AuthenticationService {
       })
     );
   }
+
+  redirectLogin(){
+    this.router.navigateByUrl('/landing');
+  }
+
+
+  async redirectUnauthenticated() {
+
+      const translateService = this.injector.get(TranslateService)
+
+      const alert = await this.alertController.create({
+        cssClass: "alertClass",
+        header:  translateService.instant('info.title'),
+        backdropDismiss:false,
+        // subHeader: 'Subtitle',
+        message: translateService.instant('landing.login_again'),
+        buttons: [
+          {text: translateService.instant('button.accept'),
+          handler: () => {
+            this.router.navigateByUrl(`/landing`);
+          }
+        }
+        ]
+      });
+
+      await alert.present();
+    }
+
+
+
 }

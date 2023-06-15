@@ -16,7 +16,8 @@
       "blocked_login": "The APP has crashed due to the number of attempts being exceeded, try after 2 minutes.",
       "message_error_serve": "Server error",
       "message_failure_response": "An unexpected error has occurred Try again",
-      "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again."
+      "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again.",
+      "login_again":"Please sign in again"
     },
     "legal": {
       "header": "Terms of Use",

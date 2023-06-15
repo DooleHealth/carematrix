@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DatePipe, Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
@@ -195,7 +195,7 @@ export class LandingPage implements OnInit {
      * On iOS this plugin  Storage will use UserDefaults and on Android SharedPreferences.
      * Stored data is cleared if the app is uninstalled.
      */
-    await Storage.set({
+    await Preferences.set({
       key: 'user',
       value: JSON.stringify(data)
     });

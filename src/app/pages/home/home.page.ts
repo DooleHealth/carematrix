@@ -229,7 +229,7 @@ export class HomePage implements OnInit {
         tempChallenges = tempChallenges?.filter(function (obj) {
           return !obj.completed;
         });
-        console.log('obj.completed', this.challenges.length)
+
         if (tempChallenges?.length == 1)
           this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
 

@@ -25,7 +25,7 @@ import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { environment } from 'src/environments/environment';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 
 
 declare let VoIPPushNotification: any;
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
     private endPoind: ApiEndpointsService
   ) {
 
-    Storage.migrate();
+    Preferences.migrate();
   }
 
   async ngOnInit() {
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit {
 
     this.platform.ready().then(() => {
       // Secutity - Rooted
-      //this.isDeviceRooted()
+      this.isDeviceRooted()
 
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         // Push
