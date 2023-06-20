@@ -35,8 +35,20 @@
 @import "theme/shell-defaults.scss";
 
 .my-alert-class {
-    //--backdrop-opacity: 0.2;
     --background: white;
+}
+
+.my-alert-rooted-class {
+  --background: white;
+  --height: 90%;
+  --width: 90%;
+
+  .alert-message {
+    max-height: 90% !important;
+    font-size: 12px;
+    color: #4f5f6f !important;
+    padding-bottom: 10px;
+  }
 }
 
 .challenge-alert {

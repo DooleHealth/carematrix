@@ -117,6 +117,7 @@ export class AppComponent implements OnInit {
 
     });
   }
+  
 
   async createCacheFolder(){
     await Filesystem.mkdir({
@@ -132,8 +133,9 @@ export class AppComponent implements OnInit {
       IRoot.isRooted((data) => {
           if (data && data == 1) {
               console.log("This is routed device");
-              alert(this.translate.instant('security.rooted'));
-              this.appBlockedByRootedUser()
+              //alert(this.translate.instant('security.rooted'));
+              setTimeout(()=>this.appBlockedByRootedUser(), 900);
+              //this.appBlockedByRootedUser()
           } else {
               console.log("This is not routed device");
               //alert("This is not routed device");
@@ -147,9 +149,9 @@ export class AppComponent implements OnInit {
 
   async appBlockedByRootedUser() {
     const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
-      subHeader: this.translate.instant('security.alert_security'),
-      message: this.translate.instant('security.rooted'),
+      cssClass: 'my-alert-rooted-class',
+      //subHeader: this.translate.instant('security.alert_security'),
+      message: this.translate.instant('security.ens_message'),
       backdropDismiss: false,
         buttons: [
          {
