@@ -10,8 +10,8 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
 import { TranslateService } from '@ngx-translate/core';
-const TOKEN_KEY = 'token';
-const TOKENS = 'tokens';
+import { TokenService } from './token.service';
+
 const INTRO_KEY = 'intro';
 
 export class User {
@@ -53,15 +53,15 @@ export class AuthenticationService {
   public voipDeviceToken: string;
   public voipDevicePlatform: string;
   public dietsAndAdvices: [];
-  public deviceVoipToken: any;
   public isFamily:boolean;
   private indexEndPoint: number;
-  private tokens = []
+  //private tokens = []
   showingSignInAlert: boolean = false;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private http: HttpClient,
+    private tokenService: TokenService,
     private api: ApiEndpointsService,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
@@ -78,29 +78,12 @@ export class AuthenticationService {
   }
 
   getAuthToken() {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token =  this.tokenService.getAuthToken()
+    console.log("[AuthService] getAuthToken: ", token);
     return token;
   }
 
-  hasToken(): boolean {
-    return !!localStorage.getItem(TOKEN_KEY);
-  }
-
-  async loadToken() {
-    const token = await Preferences.get({ key: TOKEN_KEY });
-    if (token && token.value) {
-      this.isAuthenticated.next(true);
-    } else {
-      this.isAuthenticated.next(false);
-    }
-  }
-
-  setAuthToken(token) {
-    localStorage.setItem(TOKEN_KEY, token);
-  }
-
   login(credentials: { username, password, hash }): Observable<any> {
-    this.tokens = []
     const endpoint = this.api.getEndpoint('patient/login');
 
     console.log('credentials: ', credentials);
@@ -114,7 +97,7 @@ export class AuthenticationService {
         }
         // save user's token
         if (res.token){
-          this.setAuthToken(res.token);
+          this.tokenService.setAuthToken(res.token);
         }
 
         // Set indexEndPoint ios_dev if it is QA
@@ -253,14 +236,14 @@ export class AuthenticationService {
     console.log('logout');
     this.isAuthenticated.next(false);
     await Preferences.remove({ key: 'user' }).then((val) => { });
-    return Preferences.remove({ key: TOKEN_KEY });
+       this.tokenService.removeAuthToken()
+    return
   }
 
   logout(allDevices?): Observable<any>  {
     let path = 'patient/logout'
-      this.getAllTokenDevices()
       let params = {
-        tokens: this.tokens,
+        tokens: this.tokenService.getAllTokenDevices(),
         allDevices: allDevices? allDevices: false
       }
       console.log('logout', params );
@@ -270,7 +253,7 @@ export class AuthenticationService {
           console.log(`[AuthenticationService] logout(${path}) res: `, JSON.stringify(res) );
           this.isAuthenticated.next(false);
            Preferences.remove({ key: 'user' }).then((val) => { });
-           Preferences.remove({ key: TOKEN_KEY });
+           this.tokenService.removeAuthToken()
           return res;
         })
       );
@@ -342,11 +325,6 @@ export class AuthenticationService {
 
   post(endpt, items): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
-
-    // endpoint
-    //console.log("body", endpt);
-    // body
-    //console.log("body",items);
     return this.http.post(endpoint, items).pipe(
       map((res: any) => {
         return res;
@@ -384,7 +362,7 @@ export class AuthenticationService {
         let response=data;
         console.log("response user/device/register");
         console.log(response);
-        this.saveAllTokenDevices(postData)
+        this.tokenService.saveAllTokenDevices(postData)
         return response;
       },
       (error) => {
@@ -394,15 +372,6 @@ export class AuthenticationService {
       });
   }
 
-  saveAllTokenDevices(token){
-    this.tokens.push(token)
-    localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
-  }
-
-  getAllTokenDevices(){
-    let list = JSON.parse(localStorage.getItem(TOKENS))
-    this.tokens = list? list:[]
-  }
 
   async showIntro() {
     return Preferences.get({ key: INTRO_KEY }).then(async (data) => {

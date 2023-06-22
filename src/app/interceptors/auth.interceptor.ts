@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { catchError } from 'rxjs/operators';
+import { TokenService } from '../services/token.service';
 
 /**
  * This interceptor automatically adds the token header needed by our backend API if such token is present
@@ -13,7 +14,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  constructor(private loginService: AuthenticationService) {}
+  constructor(private loginService: AuthenticationService, private token: TokenService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
