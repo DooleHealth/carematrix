@@ -29,7 +29,7 @@ export class TokenService {
   getAuthToken() {
     const token = localStorage.getItem(TOKEN_KEY);
     if(!token) return
-    console.log("[TokenService] getAuthToken()", token);
+    //console.log("[TokenService] getAuthToken()", token);
     const encryptedData = this.encryptionService.decryptData(token);
     return encryptedData;
   }

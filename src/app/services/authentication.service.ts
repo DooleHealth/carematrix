@@ -13,6 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { TokenService } from './token.service';
 
 const INTRO_KEY = 'intro';
+const TOKENS = 'tokens';
+const TOKEN_KEY = 'token';
 
 export class User {
   condicion_legal: boolean;
@@ -55,7 +57,7 @@ export class AuthenticationService {
   public dietsAndAdvices: [];
   public isFamily:boolean;
   private indexEndPoint: number;
-  //private tokens = []
+  private tokens = []
   showingSignInAlert: boolean = false;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   constructor(
@@ -79,9 +81,22 @@ export class AuthenticationService {
 
   getAuthToken() {
     const token =  this.tokenService.getAuthToken()
-    console.log("[AuthService] getAuthToken: ", token);
+    //console.log("[AuthService] getAuthToken: ", token);
     return token;
   }
+
+  setAuthToken(token) {
+    this.tokenService.setAuthToken(token)
+  }
+
+  // getAuthToken() {
+  //   const token = localStorage.getItem(TOKEN_KEY);
+  //   return token;
+  // }
+
+  // setAuthToken(token) {
+  //   localStorage.setItem(TOKEN_KEY, token);
+  // }
 
   login(credentials: { username, password, hash }): Observable<any> {
     const endpoint = this.api.getEndpoint('patient/login');
@@ -98,12 +113,11 @@ export class AuthenticationService {
         // save user's token
         if (res.token){
           this.tokenService.setAuthToken(res.token);
+          this.setAuthToken(res.token);
         }
 
         // Set indexEndPoint ios_dev if it is QA
           this.getIndexEndPoint()
-        // if (res.firebaseToken) {
-        //   this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
               //console.log(data);
               let access = true;
@@ -116,14 +130,8 @@ export class AuthenticationService {
 
               }
 
-
             }
 
-        //   }, (error) => {
-        //     console.log("[signInWithCustomToken] error", error);
-        //     throw error;
-        //   });
-        // }
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
@@ -242,8 +250,10 @@ export class AuthenticationService {
 
   logout(allDevices?): Observable<any>  {
     let path = 'patient/logout'
+    this.getAllTokenDevices()
+    const tokens = this.tokenService.getAllTokenDevices();
       let params = {
-        tokens: this.tokenService.getAllTokenDevices(),
+        tokens:  tokens, //
         allDevices: allDevices? allDevices: false
       }
       console.log('logout', params );
@@ -363,6 +373,7 @@ export class AuthenticationService {
         console.log("response user/device/register");
         console.log(response);
         this.tokenService.saveAllTokenDevices(postData)
+        //this.saveAllTokenDevices(postData)
         return response;
       },
       (error) => {
@@ -370,6 +381,18 @@ export class AuthenticationService {
         console.log('error user/device/register: ', error);
         throw error;
       });
+  }
+
+  saveAllTokenDevices(token){
+    this.tokens.push(token)
+    console.log(`[AuthService] saveAllTokenDevices()`, this.tokens);
+    localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
+  }
+
+  getAllTokenDevices(){
+    let list = JSON.parse(localStorage.getItem(TOKENS))
+    console.log(`[AuthService] getAllTokenDevices()`, list);
+    this.tokens = list? list:[]
   }
 
 
