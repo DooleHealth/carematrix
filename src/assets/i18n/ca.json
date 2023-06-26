@@ -810,6 +810,60 @@
         "day_abbr": "D",
         "month_abbr":"M",
         "year_abbr": "A"
+      },
+      "form":{
+        "info": {
+          "button":"D’acord",
+          "title":"Informació"
+        },
+        "button":{
+          "accept": "Acceptar",
+          "cancel": "Cancel·lar",
+          "send": "Enviar"
+        },
+        "file":{
+          "select": "Seleccionar",
+          "camera": "Càmera",
+          "file": "Arxius",
+          "pictures":"Imatges",
+          "delete_media_file": "Estàs segur d'eliminar l'arxiu?",
+          "input_file_name": "Ingressa un nom per a l'arxiu",
+          "button_add_file": "Afegir arxius",
+          "name": "Nom"
+        },
+        "error_required": "Valor requerit",
+        "error_no_valid": "Valor no vàlid, ingressi un valor",
+        "error_min_character": "Valor no vàlid, introduïu mínim",
+        "character": "caràcters",
+
+        "send_success": "Formulari enviat correctament",
+        "send_error": "Ha ocorregut un error en enviar el formulari",
+        "text1": "Si us plau, per a conèixer com se sent avui necessitem que respongui el",
+        "text2": "QÜESTIONARI DE SÍMPTOMES.",
+        "text3": "No hi ha informació associada a aquest formulari",
+        "text4": "ATENCIÓ",
+        "selected_value": "Valor seleccionat",
+        "go_to_app": "Tornar a la pàgina d'inici",
+        "score": "Punts aconseguits per completar el formulari: ",
+        "score1": "Punts aconseguits: ",
+
+        "goal":{
+          "title": "Atenció",
+          "message": "Aquest formulari <strong>sol puntua</strong> en el cas de ser respost <strong>correctament</strong>"
+        }
+      },
+      "answer_form":{
+        "title": "Formularis completats",
+        "detail_answer": "Detall de respostes",
+        "response_history": "Històric de respostes",
+        "date": "Data",
+        "answer": "Resposta"
+      },
+      "exercise":{
+        "title": "Detalli Exercici"
+      },
+      "departments":{
+        "text_description": "Coneix a l'equip"
       }
 
 

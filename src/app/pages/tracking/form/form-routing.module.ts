@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: FormPage
+  },
+  {
+    path: 'alarm-form',
+    loadChildren: () => import('./alarm-form/alarm-form.module').then( m => m.AlarmFormPageModule)
   }
 ];
 

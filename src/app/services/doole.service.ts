@@ -1553,6 +1553,42 @@ export class DooleService {
     );
   }
 
+  getAPIFormJSON(form, params?): Observable<any> {
+    let path = `form/${form}/formFields`;
+    let httpParams = new HttpParams();
+    httpParams = (params?.formAnswer) ? httpParams.append('formAnswer', params?.formAnswer)  : httpParams
+    httpParams = (params?.game_play_id) ? httpParams.append('game_play_id', params?.game_play_id)  : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIFormJSON(form, params): Observable<any> {
+    let path = `formfield/conditional/${form}/field/${params.formField}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIFormFill(params): Observable<any> {
+    let path = `form/fill/`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

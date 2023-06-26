@@ -25,6 +25,22 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InfoComponent } from './info/info.component';
 import { ChangeUserComponent } from './change-user/change-user.component';
 import { CachedImageComponent } from './cached-image/cached-image.component';
+import { AutocompleteComponent } from './form/autocomplete/autocomplete.component';
+import { BioquimicComponent } from './form/bioquimic/bioquimic.component';
+import { CheckboxComponent } from './form/checkbox/checkbox.component';
+import { FileComponent } from './form/file/file.component';
+import { FormControlComponent } from './form/form-control/form-control.component';
+import { HeaderComponent } from './form/header/header.component';
+import { HiddenComponent } from './form/hidden/hidden.component';
+import { InputComponent } from './form/input/input.component';
+import { ParagraphComponent } from './form/paragraph/paragraph.component';
+import { RadioComponent } from './form/radio/radio.component';
+import { SelectComponent } from './form/select/select.component';
+import { FormDirective } from './form/shared/form.directive';
+import { SliderComponent } from './form/slider/slider.component';
+import { TextareaComponent } from './form/textarea/textarea.component';
+import { TooltipComponent } from './form/tooltip/tooltip.component';
+import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
 
 @NgModule({
     imports: [
@@ -53,7 +69,24 @@ import { CachedImageComponent } from './cached-image/cached-image.component';
     VideoComponent,
     InfoComponent,
     ChangeUserComponent,
-    CachedImageComponent
+    CachedImageComponent,
+    // All Components Form
+    FormControlComponent,
+    HeaderComponent,
+    SliderComponent,
+    BioquimicComponent,
+    CheckboxComponent,
+    RadioComponent,
+    AutocompleteComponent,
+    SelectComponent,
+    TextareaComponent,
+    InputComponent,
+    ParagraphComponent,
+    HiddenComponent,
+    FileComponent,
+    TooltipComponent,
+    FormDirective,
+    SafeHtmlPipe,
   ],
   exports: [
     ShellModule,
@@ -73,7 +106,22 @@ import { CachedImageComponent } from './cached-image/cached-image.component';
     TabsComponent,
     InfoComponent,
     ChangeUserComponent,
-    CachedImageComponent
+    CachedImageComponent,
+    // All Components Form
+    FormControlComponent,
+    FileComponent,
+    HeaderComponent,
+    SliderComponent,
+    BioquimicComponent,
+    CheckboxComponent,
+    RadioComponent,
+    AutocompleteComponent,
+    SelectComponent,
+    TextareaComponent,
+    InputComponent,
+    ParagraphComponent,
+    HiddenComponent,
+    TooltipComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

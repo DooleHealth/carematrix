@@ -817,7 +817,62 @@
         "day_abbr": "D",
         "month_abbr":"M",
         "year_abbr": "A"
+      },
+      "form":{
+        "info": {
+          "button": "De acuerdo",
+          "title":"Información"
+        },
+        "button":{
+          "accept": "Aceptar",
+          "cancel":"Cancelar",
+          "send": "Enviar"
+        },
+        "file":{
+          "select": "Seleccionar",
+          "camera": "Cámara",
+          "file": "Archivos",
+          "pictures":"Imágenes",
+          "delete_media_file": "¿Estás seguro de eliminar el archivo?",
+          "input_file_name": "Ingresa un nombre para el archivo",
+          "button_add_file": "Añadir archivos",
+          "name": "Nombre"
+        },
+        "error_required": "Valor requerido",
+        "error_no_valid": "Valor no válido, ingrese un valor",
+        "error_min_character": "Valor no válido, ingrese mínimo",
+        "character": "caracteres",
+  
+        "send_success": "Formulario enviado correctamente",
+        "send_error": "Ha ocurrido un error al enviar el formulario",
+        "text1": "Por favor, para conocer cómo se siente hoy necesitamos que responda el",
+        "text2": "CUESTIONARIO DE SÍNTOMAS.",
+        "text3": "No hay información asociada a este formulario",
+        "text4": "ATENCIÓN",
+        "selected_value": "Valor seleccionado",
+        "go_to_app": "Volver a la página de inicio",
+        "score": "Puntos conseguidos por completar el formulario: ",
+        "score1": "Puntos conseguidos: ",
+  
+        "goal":{
+          "title": "Atención",
+          "message": "Este formulario <strong>solo puntúa</strong> en el caso de ser respondido <strong>correctamente</strong>"
+        }
+      },
+      "answer_form":{
+        "title": "Formularios completados",
+        "detail_answer": "Detalle de respuestas",
+        "response_history": "Histórico de respuestas",
+        "date": "Fecha",
+        "answer": "Respuesta"
+      },
+      "exercise":{
+        "title": "Detalle Ejercicio"
+      },
+      "departments":{
+        "text_description": "Conoce al equipo"
       }
+  
 
 
 }

@@ -822,5 +822,59 @@
       "day_abbr": "D",
       "month_abbr":"M",
       "year_abbr": "Y"
+    },
+    "form":{
+      "info": {
+        "button": "Agreed",
+        "title":"Information"
+      },
+      "button":{
+        "accept": "Accept",
+        "cancel":"Cancel",
+        "send": "Send"
+      },
+      "file":{
+        "select": "Select",
+        "camera": "Camera",
+        "file": "Files",
+        "pictures":"Pictures",
+        "delete_media_file": "Are you sure to delete the file?",
+        "input_file_name": "Enter a name for the file",
+        "button_add_file": "Add files",
+        "name": "Name"
+      },
+      "error_required": "Required value",
+      "error_no_valid": "Invalid value, please enter a value",
+      "error_min_character": "Invalid value, enter minimum",
+      "character": "Characters",
+
+      "send_success": "Form submitted successfully",
+      "send_error": "An error occurred while submitting the form",
+      "text1": "Please, to know how you feel today we need you to answer the",
+      "text2": "SYMPTOM QUESTIONNAIRE.",
+      "text3": "There is no information associated with this form",
+      "text4": "ATTENTION",
+      "selected_value": "selected value",
+      "go_to_app": "Return to homepage",
+      "score": "Points earned for completing the form:",
+      "score1": "Points earned:",
+
+      "goal":{
+        "title": "Attention",
+        "message": "This form <strong>only scores</strong> if it is answered <strong>correctly</strong>"
+      }
+    },
+    "answer_form":{
+      "title": "Completed forms",
+      "detail_answer": "Answer detail",
+      "response_history": "Answer history",
+      "date": "Date",
+      "answer": "Answer"
+    },
+    "exercise":{
+      "title": "Exercise Detail"
+    },
+    "departments":{
+      "text_description": "Meet the team"
     }
   }

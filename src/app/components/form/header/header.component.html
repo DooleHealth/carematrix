@@ -1,0 +1,13 @@
+<div [ngClass]="desactive ? 'd-none' : 'd-block'">
+  <div [name]="data.name" [id]="this.data?.id" [ngClass]="data?.hidden ? 'd-none' : 'd-block'">
+    <ion-row style="margin: 5% 5px 5% 5px">
+      <div  class="text-index">{{data.index}}</div>
+      <div style="display: flex;">
+        <ion-text *ngIf=" this.data.required" color="danger" style="font-size:20px; margin-right: 4px;">*</ion-text>
+        <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-top: 2px;margin-right: 4px;" [info]="this.data.tooltip" ></app-tooltip>
+        <!-- <div [innerHtml]="this.label | safeHtml"></div> -->
+      </div>
+      <div *ngIf="this.label" [innerHtml]="this.label | safeHtml"></div>
+    </ion-row>   
+  </div>
+</div>
