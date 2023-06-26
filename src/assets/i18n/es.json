@@ -200,7 +200,13 @@
         "normal_value": "Valores normales:",
         "out_range_value": "Valores fuera de rango:",
         "danger_value": "Valores anómalos:",
-        "no_data":"No hay datos a mostrar"
+        "no_data_date":"Aún no se han registrado datos",
+        "no_data_help":"Para cargar un dato, usá el botón +.",
+        "no_data":"No hay datos a mostrar",
+        "daily": "diario",
+        "weekly": "semanal",
+        "monthly": "mensual",
+        "yearly": "anual"
       },
       "activity":{
         "cal":"Cal",

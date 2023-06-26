@@ -196,7 +196,13 @@
         "normal_value": "Valors normals:",
         "out_range_value": "Valors fora de rang:",
         "danger_value": "Valors anòmals:",
-        "no_data":"No hi ha dades a mostrar"
+        "no_data_date":"Encara no s'han registrat dades",
+        "no_data_help":"Per a carregar una dada, usá el botó +.",
+        "no_data":"No hi ha dades a mostrar",
+        "daily": "diari",
+        "weekly": "setmanal",
+        "monthly": "mensual",
+        "yearly": "anual"
       },
       "activity":{
         "cal":"Cal",

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, TitleCasePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -25,6 +25,6 @@ import { ShareModule } from 'src/app/shared/share/share.module';
     ElementsAddPageModule,
   ],
   declarations: [ActivityGoalPage],
-  providers:[DatePipe]
+  providers:[DatePipe, TitleCasePipe]
 })
 export class ActivityGoalPageModule {}
