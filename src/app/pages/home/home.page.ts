@@ -638,20 +638,23 @@ export class HomePage implements OnInit {
     let endDate = new Date(); // now
     console.log('dataType: steps');
     this.health.queryAggregated({
-      startDate,
-      endDate,
+      startDate: startDate,
+      endDate: endDate,
       dataType: 'steps',
-      bucket: 'day'
+      bucket: 'hour'
     }).then(data => {
       this.postHealth('steps', data);
+    }).catch(error => {
+      console.error(error);
+      throw error;
     });
 
     console.log('dataType: distance');
     this.health.queryAggregated({
-      startDate,
-      endDate,
+      startDate: startDate,
+      endDate: endDate,
       dataType: 'distance',
-      bucket: 'day'
+      bucket: 'hour'
     }).then(data => {
       this.postHealth('distance', data);
 
