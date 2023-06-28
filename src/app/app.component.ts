@@ -436,6 +436,11 @@ export class AppComponent implements OnInit {
           this.router.navigate([`/home`],{state:{push:data, id:data.id}});
         });
         break;
+      case "NEWS":
+        this._zone.run(()=>{
+          this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
+        });
+        break;
       case "DIET":
         this._zone.run(()=>{
           this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
@@ -972,13 +977,17 @@ export class AppComponent implements OnInit {
       });
   }
 
-}
-function callback(Username: any, arg1: number, callback: any) {
-  console.log('on receive callback');
-  return;
+  showFamilyUnitButton(): boolean{
+    if(this.router.url.includes('family-unit') || this.router.url.includes('login') || this.router.url.includes('intro')
+    || this.router.url.includes('landing') || this.router.url.includes('legal')  || this.router.url.includes('sms') || this.router.url.includes('verification')
+    ){
+      return false
+    }
+    else{
+      return true
+    }
+  }
+
 }
 
-function errorCallback(Username: any, arg1: number, callback: (Username: any, arg1: number, callback: any) => void, errorCallback: any) {
-  console.error('on error receive callback');
-}
 

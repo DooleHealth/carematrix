@@ -394,7 +394,8 @@
         "appointment_by_user": "Cita afegida per l'usuari",
         "event_by_user": "Esdeveniment afegit per l'usuari",
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada",
-        "error_alert_message_get_agenda":"Error a l'obtenir l'agenda"
+        "error_alert_message_get_agenda":"Error a l'obtenir l'agenda",
+        "to": "a les"
       },
       "reminder":{
         "header": "Recordatori",
@@ -589,7 +590,8 @@
         "field_date": "Data",
         "alert_message_add_element": "Les dades ha estat afegit correctament",
         "error_alert_message_add_element": "Hi ha hagut un error a l'afegir el valor",
-        "value_invalid":"El valor no és vàlid. Ingressa un valor de"
+        "value_invalid":"El valor no és vàlid. Ingressa un valor de",
+        "confirmation": "Està informació quedarà registrada de manera permanent per a ser consultada i no es podrà modificar o eliminar."
       },
       "no_data": "En aquest moment no hi ha dades per a mostrar",
       "diary":{
@@ -810,6 +812,31 @@
         "mode_0":"Producció",
         "mode_1": "Qualitat",
         "mode_2": "Desenvolupament"
+      },
+      "list_notifications": {
+        "header": "Notificacions",
+        "form": "Hora de completar un formulari",
+        "level": "Assoliments del nivell completat",
+        "drugintake": "Hora de prendre la medicació",
+        "visitonline": "Hora de la teva cita en línia",
+        "message": "Has rebut un nou missatge",
+        "advice": "Hora de llegir un consell",
+        "agenda": "Tens una cita",
+        "reminder": "Veure recordatori",
+        "exercise": "Ver exercici",
+        "new_exercise": "S'ha creat un nou exercici",
+        "procedure": "Avui tens un procediment",
+        "diet": "Hora de menjar",
+        "games": "Hora de jugar",
+        "apren": "Hora d'aprendre",
+        "news": "Avui tens novetats",
+        "diagnostic": "Avui tens un nou estudi mèdic",
+        "default": "Nova notificació",
+        "alert_delete_message": "Aquestes per eliminar notificacions sense llegir-les prèviament.",
+        "alert_delete_error_message": "Has de seleccionar almenys una notificació per a eliminar.",
+        "subtitle0": "Tens",
+        "subtitle1": "notificacions noves",
+        "subtitle2": "notificació nova"
       },
       "date":{
         "week_abbr": "S",

@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar mode="ios" >
+    <ion-buttons slot="start">
+      <ion-back-button  text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title slot="start">{{ 'list_notifications.header' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-checkbox [checked]="this.allNotification" class="tool" style="height: 23px; width: 22px;" mode="md" color="primary"
+      (ionChange)="addAllNotificationList($event)"
+      ></ion-checkbox>&nbsp;&nbsp;
+      <ion-icon
+        name="trash"
+        class="primaryIcon"
+        slot="icon-only"
+        (click)="confirmDeleteNotifications()"
+      ></ion-icon>&nbsp;
+    </ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+
+  <ion-fab color="secondary" [ngClass]="(this.footerHidden)? 'scrollHiden':'slideNone'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="scrollToBottom()" mode="ios" size="small" >
+      <ion-icon name="chevron-up-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
+  <div *ngIf="!this.isLoading && this.notifications?.length > 0;else noDataD">
+    <ion-item lines="none">
+      <ion-text style="margin-top: 17px; margin-bottom: 0px; margin-left: 0%;" class="txtTitleBlue16px">
+        {{'list_notifications.subtitle0' | translate}} {{this.totalNotification}} {{ ( this.totalNotification > 1)?('list_notifications.subtitle1' | translate):('list_notifications.subtitle2' | translate)}}</ion-text>
+    </ion-item>
+
+    <ion-list mode="ios">
+      <ion-card class="cardProfile2" *ngFor="let noti of notifications; let i = index">
+        <ion-grid>
+          <ion-row style="padding-top: 10px;">
+            <ion-col size="1.2">
+              <ion-checkbox [checked]="noti.checked" (ionChange)="addToList($event, noti)" style="height: 20px; width: 20px;" mode="md"></ion-checkbox>
+            </ion-col>
+            <ion-col size="9.5" (click)="goPage(noti)">
+               <ion-row style="padding: 0px;">
+                <ion-text
+                [ngStyle]="{'color': (noti?.color)? (noti?.color): '#3498DB' }"
+                 class="txtTitle16px" style="font-weight: bolder">{{ noti.message }}</ion-text>
+               </ion-row>
+               <ion-row *ngIf="noti?.title" style="padding: 5px 0 5px 0;">
+                <ion-text color="grey" *ngIf="noti?.title">{{ noti?.title }}</ion-text>
+               </ion-row>
+               <ion-row *ngIf="noti?.centro" style="padding: 0px 0 0px 0;">
+                <ion-text color="grey" *ngIf="noti?.centro">{{ noti?.centro }}</ion-text>
+               </ion-row>
+               <ion-row *ngIf="noti?.time" style="padding: 5px 0 5px 0;">
+                <ion-text color="grey" *ngIf="noti?.time">{{ noti?.time }}</ion-text>
+               </ion-row>
+               <ion-row *ngIf="noti?.dose" style="padding: 5px 0 5px 0;">
+                <ion-text color="grey" *ngIf="noti?.dose">{{ noti?.dose }}</ion-text>
+               </ion-row>
+            </ion-col>
+            <ion-col size="1.3">
+              <ion-icon color="primary"  size="small" name="chevron-forward-outline"
+              (click)="goPage(noti)" ></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-item lines="none" style="--min-height: 22px !important; padding-bottom: 5px">
+            <ion-text color="black" class="txtEndBold16px" slot="end">{{ noti.date }}</ion-text>
+          </ion-item>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+
+    <ion-infinite-scroll threshold="5px" position="bottom" (ionInfinite)="getNotifications(false, true, $event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="{{'chat.loading'| translate}}">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </div>
+
+  <ng-template #noDataD>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="notifications"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h4 style="text-align: center;"> {{ "no_data_notifications"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ng-template>
+
+</ion-content>
+

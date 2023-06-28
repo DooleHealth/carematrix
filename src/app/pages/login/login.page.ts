@@ -210,6 +210,9 @@ export class LoginPage implements OnInit {
       case "ADVICE":
         this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
         break;
+      case "NEWS":
+        this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
+        break;
       case "DIET":
         this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
         break;

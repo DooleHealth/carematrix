@@ -24,11 +24,11 @@ export class PusherAlarmService {
 
   public subscribeChannel(pusherService, idUser:string){
     this.idUser = idUser;
-    console.log('[PusherNotificationService] idUser()',  this.idUser);
+    console.log('[PusherAlarmService] idUser()',  this.idUser);
     this.nameChanel = 'private-ScreenMessage.User.' + this.idUser
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
-    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+    console.log('[PusherAlarmService] subscribeChannel()',  this.channel);
   }
 
    public init(){
@@ -40,7 +40,7 @@ export class PusherAlarmService {
    }
 
    public unsubscribeChannel(pusherService){
-    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+    console.log('[PusherAlarmService] subscribeChannel()',  this.channel);
   }
 
   public unsubscribePusher(){
