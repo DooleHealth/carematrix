@@ -114,7 +114,7 @@
                   <ion-col size="12">
                     <!-- <ion-card-title class="txtTitleTrackingLittle">{{doc.idDoctor}}</ion-card-title> -->
                     <ion-card-title class="txtTitleTrackingLittle">
-                      <div [innerHtml]="doc.description | safeHtml">
+                      <div [innerHtml]="doc?.description? (doc.description | safeHtml):'' ">
 
                       </div>
 
