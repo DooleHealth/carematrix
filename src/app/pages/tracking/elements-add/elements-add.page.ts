@@ -37,6 +37,7 @@ export class ElementsAddPage implements OnInit {
     private dooleService: DooleService,
     private translate : TranslateService,
     private modalCtrl: ModalController,
+    private alertController: AlertController,
     public dateService: DateService
   ) {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
@@ -79,7 +80,8 @@ export class ElementsAddPage implements OnInit {
     if(this.form.invalid)
     return
     if(this.isValueCorrect( Number(this.form.get('measure').value)))
-      this.addElement()
+      this.showAlertConfirm()
+      //this.addElement()
     else
       this.messageInvalidValue()
   }
@@ -218,20 +220,57 @@ export class ElementsAddPage implements OnInit {
     }
   }
 
-  isValueCorrect(value){
-    if(value >= Number(this.min) && value <= Number(this.max)){
+  isValueCorrect(data){
+    var value = parseFloat((data+'')?.replace(",","."));
+    var valueMin = parseFloat(this.min?.replace(",","."));
+    var valueMax = parseFloat(this.max?.replace(",","."));
+    //console.log('[ElementsAddPage] isValueCorrect() min: ', valueMin, ' ,max: ', valueMax, 'value: ', value);
+    if(value >= valueMin && value <= valueMax){
+      //console.log('[ElementsAddPage] isValueCorrect()', true);
       return true
     }
     else if(this.min == null && this.max == null){
+      //console.log('[ElementsAddPage] isValueCorrect()', true);
       return true
     }
     else{
+      //console.log('[ElementsAddPage] isValueCorrect()', false);
       return false
     }
   }
 
   close() {
     this.modalCtrl.dismiss({error:null});
+  }
+
+  async showAlertConfirm(){
+    let dismiss =  false
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      // header: this.translate.instant('alert.header_confirmation'),
+      message: this.translate.instant('element.confirmation'),
+      backdropDismiss: dismiss,
+      buttons: [
+        {
+          role: 'cancel',
+          cssClass: 'secondary',
+          text: this.translate.instant('button.cancel'),
+          handler: (blah) => {
+            console.log('Cancel All');
+            return
+          }
+        },
+        {
+          text: this.translate.instant('button.accept'),
+          handler: (blah) => {
+            console.log('Confirm OK: blah');
+            this.addElement()
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

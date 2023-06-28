@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +22,7 @@ export class FamilyUnitPage implements OnInit {
     private authService: AuthenticationService,
     private alertController: AlertController,
     public router: Router,
+    private _zone: NgZone,
     private translate: TranslateService,) { this.user = this.authService?.user?.familyUnit}
 
   ngOnInit() {
@@ -95,18 +96,29 @@ export class FamilyUnitPage implements OnInit {
 
   changeUser(user?){
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
-    this.authService.setFamilyUnit(user);
-    
-    this.router.navigate(['home'], {state:{userChanged:true}});
-   
+    //this.pusherConnection.unsubscribePusher()
+    this.authService.setFamilyUnit(user).then((val) => {
+      this._zone.run(()=>{
+        setTimeout(()=>{
+          this.router.navigate(['home'], {state:{userChanged:true}});
+        }, 500)
+      });
+    });
+      
    
   }
 
   returnUser(){
     this.authService.isFamily = false;
-    console.log('[FamilyUnitPage] returnUser()');
-    this.authService.setUserFamilyId(null);
-    this.router.navigate(['home'], {state:{userChanged:true}});
+    //this.pusherConnection.unsubscribePusher()
+    console.log('[FamilyUnitPage] returnUser()', this.user);
+    this.authService.setUserFamilyId(null).then((val) => {
+      this._zone.run(()=>{
+        setTimeout(()=>{
+          this.router.navigate(['home'], {state:{userChanged:true}});
+        }, 500)
+      });
+    });
    
   }
 

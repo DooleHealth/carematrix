@@ -200,6 +200,18 @@ ion-progress-bar {
   -webkit-box-orient: vertical;
 }
 
+.bell{
+  margin-top: 10%;//7px; 
+  width: fit-content;
+  margin-left: -9px;
+  position: absolute;
+  z-index: 99999;
+}
+.ion-text-end{
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+}
+
 .sliderImage {
   height: 220px;
   width: 300px;

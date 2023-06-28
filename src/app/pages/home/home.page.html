@@ -9,7 +9,7 @@
     <ion-spinner name="bubbles"></ion-spinner>
   </div> -->
 
-  <ion-grid class="iosHeader">
+  <!-- <ion-grid class="iosHeader">
     <ion-row>
       <ion-col size="9" class="alingLeftTop">
         <ion-text class="txtTitleBig"> {{ this.greeting }}</ion-text>
@@ -23,7 +23,37 @@
         </ion-thumbnail>
       </ion-col>
     </ion-row>
+  </ion-grid> -->
+
+  <ion-grid class="iosHeader">
+    <ion-row style="height: 80px; justify-content: center;">
+      <ion-col size="7.5" class="alingLeftTop">
+        <ion-text class="txtTitleBig">{{ this.greeting }} </ion-text>
+      </ion-col>
+      <ion-col size="2.0" style="padding-top: 0%; padding-right: 0%;" class="ion-text-end">
+        <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="list-notifications" mode="ios">
+          <ion-badge class="bell" [ngStyle]="{'font-size': (this.numNotification >99)? '10.5px':'12px'}"
+            *ngIf="pusherNotification" mode="ios" color="danger">{{this.numNotification >99? '99+': this.numNotification
+            }}</ion-badge>
+          <ion-icon size="medium" class="colorImage" name="notifications" style="margin-left: -5px;"></ion-icon>
+        </ion-tab-button>
+      </ion-col>
+      <ion-col size="2.5" style="padding-right: 0; padding-left: 1px;">
+        <!-- <ion-avatar item-end  style="margin-right: 10%;" class="img-wrapper3" routerLink="/profile">
+          <app-image-shell animation="spinner" [src]="this.userImage"
+          [alt]="'Profile Image'"></app-image-shell>
+        </ion-avatar> -->
+        <ion-thumbnail class="img-wrapper3" style="margin-right: 10%;" routerLink="/profile" [state]="{user:this.userDoole}">
+          <app-aspect-ratio [ratio]="{w:1, h:1}">
+            <app-image-shell animation="spinner" [src]="this.userDoole?.temporaryUrl" >
+            </app-image-shell>
+          </app-aspect-ratio>
+        </ion-thumbnail>
+
+      </ion-col>
+    </ion-row>
   </ion-grid>
+
   <ion-grid>
 
     <!-- Health PATH-->
@@ -351,7 +381,6 @@
         </ion-card-content>
       </ion-card>
     </ion-row>
-    <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   </ion-grid>
 </ion-content>
 <ion-footer>

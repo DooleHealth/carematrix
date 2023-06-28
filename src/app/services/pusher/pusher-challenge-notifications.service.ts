@@ -49,10 +49,10 @@ export class PusherChallengeNotificationsService {
   public subscribeChannel(pusherService, idUser: string) {
     this.idUser = idUser
     this.nameChanel = 'private-LevelAccomplishmentCompleted.' + this.idUser;
-    console.log('[PusherNotificationService] this.nameChanel()', this.nameChanel);
+    console.log('[PusherChallengeNotificationsService] this.nameChanel()', this.nameChanel);
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
-    console.log('[PusherNotificationService] subscribeChannel()', this.channel);
+    console.log('[PusherChallengeNotificationsService] subscribeChannel()', this.channel);
   }
 
   public unsubscribePusher() {

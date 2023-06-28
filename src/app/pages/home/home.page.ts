@@ -23,6 +23,7 @@ import { AdvicesDetailPage } from './advices-detail/advices-detail.page';
 import { NewDetailPage } from './new-detail/new-detail.page';
 import { DateService } from 'src/app/services/date.service';
 import { PdfPage } from '../pdf/pdf.page';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 export interface UserInformation {
   title?: string;
@@ -50,6 +51,8 @@ export class HomePage implements OnInit {
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
+  pusherNotification = false;
+  numNotification = 0;
   WAIT_TIME = 10 //10 minutes
   userDoole: any = {}
   goals: any = []
@@ -131,6 +134,7 @@ export class HomePage implements OnInit {
     private pusherNotifications: PusherNotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
+    private pusherConnection: PusherConnectionService,
     public dateService : DateService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
@@ -138,14 +142,10 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
 
-    this.pusherNotifications.init()
-    this.pusherAlarms.init()
-    this.pusherChallenge.init()
+    this.initPushers()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     //this.date = this.dateService.yyyyMMddFormat(Date.now());
-    //this.getUserInformation()
     this.checkHealthAccess();
-    //setTimeout(()=>this.confirmAllNotification(), 2000);
     this.activateAllNotifications(1)
 
 
@@ -157,13 +157,30 @@ export class HomePage implements OnInit {
       this.openModal(this.pushNotification, true);
 
     this.getUserInformation()
-
+    this.getNumNotification();
+    if(!this.pusherConnection?.isConnectedPusher()){
+      //console.log('[HomePage] ionViewWillEnter() this.userDoole: ', this.authService?.user?.idUser);
+      const token = this.authService.getAuthToken()
+      this.pusherConnection.subscribePusher(token, this.authService?.user?.idUser)
+      this.initPushers()
+    }
 
   }
 
   ionViewDidEnter() {
     setTimeout(() => this.setTimerSlider(), 3000);
 
+  }
+
+  initPushers(){
+    this.pusherAlarms.init()
+    this.pusherChallenge.init()
+    const channel = this.pusherNotifications.init();
+    if(channel)
+    channel.bind(this.pusherNotifications.NAME_BIND, ({ data }) => {
+      console.log('[HomePage] initPushers()',  data);
+      this.getNumNotification();
+    });
   }
 
   checkHealthAccess() {
@@ -198,6 +215,24 @@ export class HomePage implements OnInit {
     // if(this.userDoole?.language?.name)
     // this.analyticsService.setProperty('Idioma', this.userDoole.language.name)
     // this.analyticsService.setProperty('gender', this.userDoole.gender)
+  }
+
+  // activatePusherNotification(){
+  //   const channel = this.pusherNotifications?.init();
+  //   console.log('[HomePage] activatePusherNotification() channel ',  channel);
+  //   if(channel)
+  //   channel?.bind(NAME_BIND, ({ data }) => {
+  //     console.log('[HomePage] activatePusherNotification()',  data);
+  //     this.getNumNotification();
+  //   });
+  // }
+
+  getNumNotification() {
+    this.dooleService.getAPINotificationsCount().subscribe((res) => {
+      if (res?.success) this.numNotification = res?.notifications;
+      if (this.numNotification == 0) this.pusherNotification = false;
+      else this.pusherNotification = true;
+    });
   }
 
   getValue(object, key) {

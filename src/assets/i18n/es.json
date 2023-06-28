@@ -397,7 +397,8 @@
         "appointment_by_user": "Cita añadida por el usuario",
         "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",
-        "error_alert_message_get_agenda":"Error al obtener la agenda"
+        "error_alert_message_get_agenda":"Error al obtener la agenda",
+        "to": "a las"
       },
       "reminder":{
         "header": "Recordatorio",
@@ -552,7 +553,8 @@
           "field_date": "Fecha",
           "alert_message_add_element": "Los datos ha sido añadido correctamente",
           "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
-          "value_invalid":"El valor no es válido. Ingresa un valor de"
+          "value_invalid":"El valor no es válido. Ingresa un valor de",
+          "confirmation": "Está información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
 
       },
       "no_data": "En este momento no hay datos para mostrar",
@@ -811,6 +813,31 @@
         "mode_0":"Producción",
         "mode_1": "Calidad",
         "mode_2": "Desarrollo"
+      },
+      "list_notifications":{
+        "header": "Notificaciones",
+        "form": "Hora de completar un formulario",
+        "level": "Logros del nivel completado",
+        "drugintake": "Hora de tomar la medicación",
+        "visitonline": "Hora de tu cita online",
+        "message": "Has recibido un nuevo mensaje",
+        "advice": "Hora de leer un consejo",
+        "agenda": "Tienes una cita",
+        "reminder": "Ver recordatorio",
+        "exercise": "Ver ejercicio",
+        "new_exercise": "Se ha creado un nuevo ejercicio",
+        "procedure": "Hoy tenés un procedimiento",
+        "diet": "Hora de comenzar la comida",
+        "games": "Hora de jugar",
+        "apren": "Hora de aprender",
+        "news": "Hoy tenés novedades",
+        "diagnostic": "Hoy tenés un nuevo estudio médico",
+        "default": "Nueva notificación",
+        "alert_delete_message": "Estás por eliminar notificaciones sin leerlas previamente.",
+        "alert_delete_error_message": "Debés seleccionar al menos una notificación para eliminar.",
+        "subtitle0": "Tienes",
+        "subtitle1": "notificaciones nuevas",
+        "subtitle2": "notificación nueva"
       },
       "date":{
         "week_abbr": "S",

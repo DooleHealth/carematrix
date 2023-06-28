@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'health-path',
     loadChildren: () => import('./health-path/health-path.module').then( m => m.HealthPathPageModule)
   },
+  {
+    path: 'list-notifications',
+    loadChildren: () => import('./list-notifications/list-notifications.module').then( m => m.ListNotificationsPageModule)
+  },
 
 
 ];

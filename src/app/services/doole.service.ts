@@ -1589,6 +1589,42 @@ export class DooleService {
     );
   }
 
+  getAPINotificationsCount(): Observable<any> {
+    let path = 'user/notifications/count';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPINotifications(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  
+  getAPINotifications(params?): Observable<any> {
+    let path = 'user/notifications';
+    let httpParams = new HttpParams();
+    httpParams = (params?.read) ? httpParams.append('read', params?.read) : httpParams
+    httpParams = (params?.withPaginate == 1) ? httpParams.append('withPaginate', params?.withPaginate) : httpParams
+    httpParams = (params?.page > 0) ? httpParams.append('page', params?.page) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPINotifications(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  
+  postAPINotificationRead(id): Observable<any> {
+    let path = `user/notification/read`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, id).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
   get(endpt): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
     return this.http.get(endpoint).pipe(

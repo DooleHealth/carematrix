@@ -405,7 +405,8 @@
       "appointment_by_user": "Appointment added by user",
       "event_by_user": "User-added event",
       "error_alert_message_get_token": "Error getting video call token",
-      "error_alert_message_get_agenda": "Error getting calendar"
+      "error_alert_message_get_agenda": "Error getting calendar",
+      "to": "at"
     },
     "reminder": {
       "header": "Reminder",
@@ -561,7 +562,8 @@
       "field_date": "Date",
       "alert_message_add_element": "Data has been added successfully",
       "error_alert_message_add_element": "An error occurred while adding the value",
-      "value_invalid": "The value is invalid. Enter a value of"
+      "value_invalid": "The value is invalid. Enter a value of",
+      "confirmation": "This information will be permanently registered to be consulted and cannot be modified or deleted."
     },
     "no_data": "No data to display",
     "diary": {
@@ -816,6 +818,31 @@
       "mode_0": "Production",
       "mode_1": "Quality",
       "mode_2": "Development"
+    },
+    "list_notifications": {
+      "header": "Notifications",
+      "form": "Time to fill out a form",
+      "level": "Completed level achievements",
+      "drugintake": "Time to take medication",
+      "visitonline": "Time of your online appointment",
+      "message": "You have received a new message",
+      "advice": "Time to read a tip",
+      "agenda": "You have a date",
+      "reminder": "See reminder",
+      "exercise": "See exercise",
+      "new_exercise": "A new exercise has been created",
+      "procedure": "You have a procedure today",
+      "diet": "Time to start the meal",
+      "games": "Time to play",
+      "apren": "Time to learn",
+      "news": "You have news today",
+      "diagnostic": "You have a new medical study today",
+      "default": "New notification",
+      "alert_delete_message": "You are about to delete notifications without reading them first.",
+      "alert_delete_error_message": "You must select at least one notification to remove.",
+      "subtitle0": "You have",
+      "subtitle1": "new notifications",
+      "subtitle2": "new notification"
     },
     "date":{
       "week_abbr": "W",

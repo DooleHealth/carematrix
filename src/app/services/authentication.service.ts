@@ -13,8 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { TokenService } from './token.service';
 
 const INTRO_KEY = 'intro';
-const TOKENS = 'tokens';
-const TOKEN_KEY = 'token';
+//const TOKENS = 'tokens';
+//const TOKEN_KEY = 'token';
 
 export class User {
   condicion_legal: boolean;
@@ -178,7 +178,7 @@ export class AuthenticationService {
       let u = new User(member['id'], '', fullname[1], fullname[0], member['thumbnail']);
       console.log("familyUnit Local:", u);
       Preferences.set({
-        key: u.idUser,
+        key: String(u.idUser),
         value: JSON.stringify(u)
       });
     })
@@ -198,7 +198,7 @@ export class AuthenticationService {
     this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
     this.user.familyUnit = user.id;
     Preferences.set({
-      key: user.id,
+      key: String(user.id),
       value: JSON.stringify(this.user)
     });
 
@@ -250,7 +250,7 @@ export class AuthenticationService {
 
   logout(allDevices?): Observable<any>  {
     let path = 'patient/logout'
-    this.getAllTokenDevices()
+    //this.getAllTokenDevices()
     const tokens = this.tokenService.getAllTokenDevices();
       let params = {
         tokens:  tokens, //
@@ -383,17 +383,17 @@ export class AuthenticationService {
       });
   }
 
-  saveAllTokenDevices(token){
-    this.tokens.push(token)
-    console.log(`[AuthService] saveAllTokenDevices()`, this.tokens);
-    localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
-  }
+  // saveAllTokenDevices(token){
+  //   this.tokens.push(token)
+  //   console.log(`[AuthService] saveAllTokenDevices()`, this.tokens);
+  //   localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
+  // }
 
-  getAllTokenDevices(){
-    let list = JSON.parse(localStorage.getItem(TOKENS))
-    console.log(`[AuthService] getAllTokenDevices()`, list);
-    this.tokens = list? list:[]
-  }
+  // getAllTokenDevices(){
+  //   let list = JSON.parse(localStorage.getItem(TOKENS))
+  //   console.log(`[AuthService] getAllTokenDevices()`, list);
+  //   this.tokens = list? list:[]
+  // }
 
 
   async showIntro() {
@@ -468,7 +468,5 @@ export class AuthenticationService {
 
       await alert.present();
     }
-
-
 
 }
