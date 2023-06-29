@@ -1,42 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
-  constructor(private storage: Storage) { }
+  constructor() {
+    Preferences.migrate();
+  }
 
   saveFirstTimeLoad(val): void {
-    this.storage.set('firstTime', val);
+    Preferences.set({ key: 'firstTime', value: val});
   }
   saveFirstTimeLoad2(val): void {
-    this.storage.set('firstTime2', val);
+    Preferences.set({key:'firstTime2', value:val});
   }
 
-
-  isFirstTimeLoad(): Promise<boolean>  {
-    return this.storage.get("firstTime").then((result) => {
-      if (result == null) {       //si no hay valor previo
-        return true;              //retornamos true
-      }
-
-      return result;              //si hay valor guardado, devolvemos el valor
-    }).catch((err) => {
-      return false;               //en caso de error, retornamos false
-    });
-  }
-
-isFirstTimeLoad2(): Promise<boolean>  {
-  return this.storage.get("firstTime2").then((result) => {
+  async isFirstTimeLoad() {
+    const result = await Preferences.get({ key: 'firstTime' });
     if (result == null) {       //si no hay valor previo
       return true;              //retornamos true
     }
 
-    return result;              //si hay valor guardado, devolvemos el valor
-  }).catch((err) => {
-    return false;               //en caso de error, retornamos false
-  });
-}
+    return JSON.parse(result.value);
+
+  }
+
+  async isFirstTimeLoad2() {
+    const result = await Preferences.get({ key: 'firstTime2' });
+    if (result == null) {       //si no hay valor previo
+      return true;              //retornamos true
+    }
+
+    return JSON.parse(result.value);
+
+  }
+
 }

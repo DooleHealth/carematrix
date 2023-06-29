@@ -24,15 +24,21 @@ export class ListMyContactsPage implements OnInit {
       return;
     }
     if(this.platform.is('android'))
-      this.getPermission() 
+      this.getPermission()
     else
-      this.getContacts()    
+      this.getContacts()
   }
 
- 
+
   async getContacts(){
     this.isLoading = true
-    Contacts.getContacts().then(result => {
+    const projection = {
+      // Specify which fields should be retrieved.
+      name: true,
+      phones: true,
+      postalAddresses: true,
+    };
+    Contacts.getContacts({projection}).then(result => {
       console.log(result);
       this.contacts = result.contacts;
       this.contactsBackup = this.contacts;
@@ -42,10 +48,10 @@ export class ListMyContactsPage implements OnInit {
 
 
   async getPermission(){
-    return Contacts.getPermissions().then(result =>{
+    return Contacts.requestPermissions().then(result =>{
       console.log(result);
-      let isPermissed = result.granted
-      if(isPermissed) this.getContacts() 
+      let isPermissed = result
+      if(isPermissed) this.getContacts()
     }).catch(error =>{
       console.log(`[ListMyContactsPage] getDataContact(): ${error}`);
     })
@@ -59,11 +65,11 @@ export class ListMyContactsPage implements OnInit {
     console.log('[ListMyContactsPage] filterList()');
     this.contacts = this.contactsBackup;
     const searchTerm = evt.srcElement.value;
-  
+
     if (!searchTerm) {
       return;
     }
-  
+
     this.contacts = this.contacts.filter(currentContacts => {
       if (currentContacts.displayName && searchTerm) {
         return (currentContacts.displayName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);

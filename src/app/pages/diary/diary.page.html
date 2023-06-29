@@ -10,11 +10,11 @@
       </ion-col>
 
       <ion-col size="8" class="textBlueCentered1">
-        <ion-slides #slides>
-          <ion-slide>
+        <swiper-container #slides>
+          <swiper-slide>
             <p>{{ formatSelectedDate(date) | titlecase}}</p>
-          </ion-slide>
-        </ion-slides>
+          </swiper-slide>
+        </swiper-container>
       </ion-col>
       <ion-col size="2">
         <ion-buttons>
@@ -63,11 +63,11 @@
       </ion-col>
 
       <ion-col size="8" class="textBlueCentered">
-        <ion-slides #slides >
-          <ion-slide>
+        <swiper-container #slides >
+          <swiper-slide>
             <p>{{ formatSelectedDate(date) | titlecase}}</p>
-          </ion-slide>
-        </ion-slides>
+          </swiper-slide>
+        </swiper-container>
       </ion-col >
       <ion-col size="2">
         <ion-buttons >

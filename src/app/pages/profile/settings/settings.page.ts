@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -12,7 +12,6 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { Constants } from 'src/app/config/constants';
 import { Router } from '@angular/router';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
-import { ThrowStmt } from '@angular/compiler';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({

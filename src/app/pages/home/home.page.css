@@ -69,7 +69,7 @@ ion-img {
   width: 18px;
 }
 .vertical-card ion-card-content {
-  height: 90px;
+  height: 100px;
 }
 .vertical-card ion-card-content ion-progress-bar {
   height: 10px;

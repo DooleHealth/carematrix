@@ -18,7 +18,8 @@
         "message_error_serve":"Error del servidor",
         "message_failure_response":"Ha passat un error inesperat intenta una altra vegada",
         "message_error_internet_disconnected":"No hi ha connexió a Internet. Connecta't a Internet i torna a intentar-ho",
-        "login_again":"Si us plau inicieu sessió novament"
+        "login_again":"Si us plau inicieu sessió novament",
+        "about_app":"Consells d'ús de l'aplicació"
       },
       "legal": {
         "header": "Condicions d'ús",

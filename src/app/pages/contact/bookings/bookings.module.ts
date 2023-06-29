@@ -10,9 +10,9 @@ import { BookingsPage } from './bookings.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { MedicalCalendarPageModule } from '../medical-calendar/medical-calendar.module';
-import { Chooser } from '@ionic-native/chooser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 
 @NgModule({
@@ -29,6 +29,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   ],
   declarations: [BookingsPage],
   providers:[Chooser,DatePipe,InAppBrowser]
- 
+
 })
 export class BookingsPageModule {}
