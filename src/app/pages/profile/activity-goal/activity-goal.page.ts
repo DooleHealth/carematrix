@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as HighCharts from 'highcharts';
-import { element } from 'protractor';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageModel } from './language.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LanguageService {
   languages: Array<LanguageModel> = new Array<LanguageModel>();
 

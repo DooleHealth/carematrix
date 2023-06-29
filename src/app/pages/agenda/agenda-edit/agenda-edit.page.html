@@ -64,7 +64,7 @@
         </ion-item>
         <ion-item>
           <ion-label>{{'reminder.field_start' | translate}}</ion-label>
-          <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" [displayFormat]="this.dateService.getDatetimeControlFormat()" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime>
+          <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime>
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
           <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
         </ion-item>

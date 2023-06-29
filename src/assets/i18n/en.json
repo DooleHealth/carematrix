@@ -17,7 +17,8 @@
       "message_error_serve": "Server error",
       "message_failure_response": "An unexpected error has occurred Try again",
       "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again.",
-      "login_again":"Please sign in again"
+      "login_again":"Please sign in again",
+      "about_app":"App usage tips"
     },
     "legal": {
       "header": "Terms of Use",

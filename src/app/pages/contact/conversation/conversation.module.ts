@@ -9,9 +9,9 @@ import { ConversationPageRoutingModule } from './conversation-routing.module';
 import { ConversationPage } from './conversation.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { Chooser } from '@ionic-native/chooser/ngx';
-import { MediaCapture } from '@ionic-native/media-capture/ngx';
-import { Media } from '@ionic-native/media/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { MediaCapture } from '@awesome-cordova-plugins/media-capture/ngx';
+import { Media } from '@awesome-cordova-plugins/media/ngx';
 
 @NgModule({
   imports: [

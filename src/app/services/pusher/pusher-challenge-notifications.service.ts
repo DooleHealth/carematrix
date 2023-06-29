@@ -2,7 +2,6 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { database } from 'firebase';
 import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';

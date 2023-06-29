@@ -1,12 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
-import { IEvent } from 'ionic2-calendar/calendar';
+
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
+import { IEvent } from 'ionic2-calendar/calendar.interface';
 
 export interface DayEvent {
   date?: string;

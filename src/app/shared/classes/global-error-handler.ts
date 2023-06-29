@@ -14,15 +14,15 @@ export class GlobalErrorHandler implements ErrorHandler {
     constructor(private injector: Injector, public router: Router) { }
 
     handleError(error: Error | HttpErrorResponse) {
-        
+
         const errorService = this.injector.get(ErrorService);
         const logger = this.injector.get(LoggingService);
         const notifier = this.injector.get(NotificationService);
-        
-        //const loading = this.injector.get(LoadingController);
+
+       console.log(error);
         let message: string;
         let stackTrace: string;
-       
+
         if (error instanceof HttpErrorResponse) {
             // Server Error
             message = errorService.getServerMessage(error);
@@ -31,20 +31,20 @@ export class GlobalErrorHandler implements ErrorHandler {
                 notifier.showError(message);
             else
                 console.error(message);
-            
+
         } else {
             // Client Error
             message = errorService.getClientMessage(error);
-           
+
             // Always log errors
             if(!environment.production)
                 notifier.showError(message)
             else
-                console.error(message); 
+                console.error(message);
         }
 
-       
+
         //logger.logError(error);
-      
+
     }
 }

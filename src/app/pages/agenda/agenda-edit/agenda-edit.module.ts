@@ -9,8 +9,8 @@ import { AgendaEditPageRoutingModule } from './agenda-edit-routing.module';
 import { AgendaEditPage } from './agenda-edit.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { Chooser } from '@ionic-native/chooser/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @NgModule({
   imports: [

@@ -18,12 +18,14 @@
   <ion-card  class="cardProfilePaddingBottom" >
       <ion-item *ngIf="!isInstant">
         <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_from_date' | translate}}</ion-label>
-        <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime>
+        <!-- FIXME:<ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime> -->
+        <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedFromDate && this.form.get('from_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
       <ion-item *ngIf="!isInstant">
         <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_to_date' | translate}}</ion-label>
-        <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime>
+        <!-- FIXME:<ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime> -->
+        <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" ></ion-datetime>
         <ion-note *ngIf="this.isSubmittedToDate && this.form.get('to_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item >
       <ion-item>

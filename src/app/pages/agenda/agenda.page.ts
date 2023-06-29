@@ -16,17 +16,29 @@ import { DateService } from 'src/app/services/date.service';
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
+  @ViewChild(CalendarComponent) myCal: CalendarComponent;
+  constructor(
+    @Inject(LOCALE_ID) private locale: string,
+    private translate: TranslateService,
+    public languageService: LanguageService,
+    private dooleService: DooleService,
+    private modalCtrl: ModalController,
+    public authService: AuthenticationService,
+    public dateService: DateService
+  ) {
+    // this.analyticsService.setScreenName('agenda','AgendaPage')
+  }
   eventSource = [];
   appointment = [];
   reminders = [];
   event: any
   viewTitle: string;
-  months = this.translate.instant('agenda.month')
-  days = this.translate.instant('agenda.days')
+  // months = this.getTranslation('agenda.month')
+  // days = this.getTranslation('agenda.days')
   isLoading:boolean;
+  selectedDate: Date;
   calendar = {
     mode: 'month',
-    weekStart:0,
     currentDate: new Date(),
       dateFormatter: {
           formatMonthViewDay: function(date:Date) {
@@ -52,21 +64,9 @@ export class AgendaPage implements OnInit {
 
   };
 
-  selectedDate: Date;
 
-  @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
-  constructor(
 
-    private translate: TranslateService,
-    public languageService: LanguageService,
-    private dooleService: DooleService,
-    private modalCtrl: ModalController,
-    public authService: AuthenticationService,
-    public dateService: DateService
-  ) {
-    // this.analyticsService.setScreenName('agenda','AgendaPage')
-  }
 
   ngOnInit() {
     console.log('[AgendaPage] this.languageService.getCurrent()', this.languageService.getCurrent());
@@ -87,6 +87,10 @@ export class AgendaPage implements OnInit {
     //return date.getDay() == 0 || date.getDay() == 6;
     return 0
 };
+
+async getTranslation(literal): Promise<string> {
+  return await this.translate.instant(literal)
+ }
 
 /* getallAgenda(){
     this.isLoading = true;
@@ -336,5 +340,7 @@ export class AgendaPage implements OnInit {
     await modal.present();
 
   }
+
+
 
 }

@@ -2,7 +2,7 @@ import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { DooleService } from 'src/app/services/doole.service';
-import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { DocumentViewer } from '@awesome-cordova-plugins/document-viewer/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/services/language.service';
 import { DateService } from 'src/app/services/date.service';

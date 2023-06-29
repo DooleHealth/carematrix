@@ -33,7 +33,8 @@
       </ion-item>
       <ion-item>
         <ion-label>{{ 'documents_add.field_date' | translate }}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" [displayFormat]="this.dateService.getShortDateFormat()" (ionInput)="isSubmittedDate = false" [placeholder]="this.dateService.ddMMyyyyFormat(this.currentDate)" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
+        <!-- FIXME: <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" [displayFormat]="this.dateService.getShortDateFormat()" (ionInput)="isSubmittedDate = false" [placeholder]="this.dateService.ddMMyyyyFormat(this.currentDate)" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" (ionInput)="isSubmittedDate = false" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>

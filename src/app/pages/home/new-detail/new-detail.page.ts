@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
@@ -31,9 +31,9 @@ export class NewDetailPage implements OnInit {
   hide = false;
   constructor(
     private modalCtrl: ModalController,
-    public loadingController: LoadingController, 
-    public alertCtrl: AlertController,     
-    public navCtrl: NavController, 
+    public loadingController: LoadingController,
+    public alertCtrl: AlertController,
+    public navCtrl: NavController,
     private dooleService: DooleService,
     public sanitizer: DomSanitizer, private router: Router) {
   }
@@ -44,7 +44,7 @@ export class NewDetailPage implements OnInit {
   ionViewWillEnter(){
     if(history.state?.id)
       this.id = history.state.id;
-    
+
     if(this.id)
       this.getDetailNew();
   }
@@ -68,11 +68,11 @@ export class NewDetailPage implements OnInit {
           this.new.content=this.new.content.replace('"//www.','"https://www.');
           this.new.content=this.sanitizer.bypassSecurityTrustHtml(this.new.content);
         }
-        
+
         if((this.new.url!='') && (this.new.url!=null)){
           this.link=this.sanitizer.bypassSecurityTrustResourceUrl(this.new.url);
         }
-  
+
         this.new.files.forEach(element => {
           if(element.mime_type=="application/pdf"){
             element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
@@ -95,12 +95,12 @@ export class NewDetailPage implements OnInit {
         this.like = this.getStatusable(this.new?.statusable, 'like')
         this.favourite = this.getStatusable(this.new?.statusable, 'favourite')
         this.hide = this.getStatusable(this.new?.statusable, 'hide')
-    
+
         this.isLoading = false
-       },(err) => { 
-          console.log('[DiaryPage] getDetailnews() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[DiaryPage] getDetailnews() ERROR(' + err.code + '): ' + err.message);
           this.isLoading = false
-          throw err; 
+          throw err;
       });
   }
 
@@ -111,7 +111,7 @@ export class NewDetailPage implements OnInit {
     console.log("miniatura", this.thumbnail);
     console.log("news", this.linkpdf2.changingThisBreaksApplicationSecurity);
     window.open(this.linkpdf2.changingThisBreaksApplicationSecurity, "");
-  
+
   }
 
   openVideo(){
@@ -169,7 +169,7 @@ export class NewDetailPage implements OnInit {
       this.router.navigate([`/advices`]);
   }
 
-  
+
 }
 
 
