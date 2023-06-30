@@ -1,6 +1,6 @@
 import { Component, Inject, LOCALE_ID, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, IonicSafeString, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe, Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -9,13 +9,17 @@ import { Preferences } from '@capacitor/preferences';
 import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
-import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
-import { Device } from '@ionic-native/device/ngx';
+import { Device } from '@awesome-cordova-plugins/device/ngx';
 import { Constants } from 'src/app/config/constants';
-import { LocalizedDatePipe } from 'src/app/utils/localized-date.pipe';
+import { Market } from '@awesome-cordova-plugins/market/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import moment from 'moment'
 
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, SwiperOptions } from 'swiper';
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
   selector: 'app-landing',
@@ -38,6 +42,401 @@ export class LandingPage implements OnInit {
   public isProd: boolean = true
   biometric_list = []
   environment = 0
+
+  diets = [
+    {
+        "date": "2023-06-27 07:00:00",
+        "items": [
+            {
+                "id": 1063436,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24129,
+                "date_intake": "2023-06-27 07:00:00",
+                "real_date_intake": null,
+                "quantity": "2",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 26,
+                "created_at": "2023-06-27T11:13:05.000000Z",
+                "updated_at": "2023-06-27T11:13:05.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 26,
+                    "center_id": 10,
+                    "ingredient_group_id": 2,
+                    "name": "Manzana",
+                    "description": false,
+                    "created_at": "2021-09-24T10:23:03.000000Z",
+                    "updated_at": "2021-09-29T15:58:35.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063438,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24129,
+                "date_intake": "2023-06-27 07:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 25,
+                "created_at": "2023-06-27T11:13:05.000000Z",
+                "updated_at": "2023-06-27T11:13:05.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 25,
+                    "center_id": 10,
+                    "ingredient_group_id": 1,
+                    "name": "Café",
+                    "description": false,
+                    "created_at": "2021-09-24T10:22:44.000000Z",
+                    "updated_at": "2021-09-29T15:57:56.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063376,
+                "user_id": 15115,
+                "diet_id": 31,
+                "diagnosticable_id": 24127,
+                "date_intake": "2023-06-27 07:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 25,
+                "created_at": "2023-06-27T11:07:36.000000Z",
+                "updated_at": "2023-06-27T11:07:36.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 25,
+                    "center_id": 10,
+                    "ingredient_group_id": 1,
+                    "name": "Café",
+                    "description": false,
+                    "created_at": "2021-09-24T10:22:44.000000Z",
+                    "updated_at": "2021-09-29T15:57:56.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063402,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24128,
+                "date_intake": "2023-06-27 07:00:00",
+                "real_date_intake": null,
+                "quantity": "2",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 26,
+                "created_at": "2023-06-27T11:13:01.000000Z",
+                "updated_at": "2023-06-27T11:13:01.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 26,
+                    "center_id": 10,
+                    "ingredient_group_id": 2,
+                    "name": "Manzana",
+                    "description": false,
+                    "created_at": "2021-09-24T10:23:03.000000Z",
+                    "updated_at": "2021-09-29T15:58:35.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063404,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24128,
+                "date_intake": "2023-06-27 07:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 25,
+                "created_at": "2023-06-27T11:13:01.000000Z",
+                "updated_at": "2023-06-27T11:13:01.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 25,
+                    "center_id": 10,
+                    "ingredient_group_id": 1,
+                    "name": "Café",
+                    "description": false,
+                    "created_at": "2021-09-24T10:22:44.000000Z",
+                    "updated_at": "2021-09-29T15:57:56.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            }
+        ]
+    },
+    {
+        "date": "2023-06-27 11:00:00",
+        "items": [
+            {
+                "id": 1063439,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24129,
+                "date_intake": "2023-06-27 11:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 23,
+                "created_at": "2023-06-27T11:13:05.000000Z",
+                "updated_at": "2023-06-27T11:13:05.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 23,
+                    "center_id": 10,
+                    "ingredient_group_id": 1,
+                    "name": "Queso fresco",
+                    "description": false,
+                    "created_at": "2021-09-24T08:29:26.000000Z",
+                    "updated_at": "2021-09-29T16:03:39.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063405,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24128,
+                "date_intake": "2023-06-27 11:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 23,
+                "created_at": "2023-06-27T11:13:01.000000Z",
+                "updated_at": "2023-06-27T11:13:01.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 23,
+                    "center_id": 10,
+                    "ingredient_group_id": 1,
+                    "name": "Queso fresco",
+                    "description": false,
+                    "created_at": "2021-09-24T08:29:26.000000Z",
+                    "updated_at": "2021-09-29T16:03:39.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            }
+        ]
+    },
+    {
+        "date": "2023-06-27 14:00:00",
+        "items": [
+            {
+                "id": 1063435,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24129,
+                "date_intake": "2023-06-27 14:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Receipt",
+                "item_id": 9,
+                "created_at": "2023-06-27T11:13:04.000000Z",
+                "updated_at": "2023-06-27T11:13:04.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 9,
+                    "center_id": 10,
+                    "name": "Escalivada",
+                    "description": "<p><span class=\"fr-video fr-deletable fr-fvc fr-dvb fr-draggable\" contenteditable=\"false\" draggable=\"true\"><iframe src=\"https://www.youtube.com/embed/KQspH-bntdE?&wmode=opaque&rel=0\" frameborder=\"0\" allowfullscreen=\"\" class=\"fr-draggable\" style=\"width: 100%; height: 100%;\"></iframe></span><br></p>",
+                    "created_at": "2021-09-24T10:24:44.000000Z",
+                    "updated_at": "2022-06-22T10:08:24.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063377,
+                "user_id": 15115,
+                "diet_id": 31,
+                "diagnosticable_id": 24127,
+                "date_intake": "2023-06-27 14:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Receipt",
+                "item_id": 9,
+                "created_at": "2023-06-27T11:07:36.000000Z",
+                "updated_at": "2023-06-27T11:07:36.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 9,
+                    "center_id": 10,
+                    "name": "Escalivada",
+                    "description": "<p><span class=\"fr-video fr-deletable fr-fvc fr-dvb fr-draggable\" contenteditable=\"false\" draggable=\"true\"><iframe src=\"https://www.youtube.com/embed/KQspH-bntdE?&wmode=opaque&rel=0\" frameborder=\"0\" allowfullscreen=\"\" class=\"fr-draggable\" style=\"width: 100%; height: 100%;\"></iframe></span><br></p>",
+                    "created_at": "2021-09-24T10:24:44.000000Z",
+                    "updated_at": "2022-06-22T10:08:24.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063401,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24128,
+                "date_intake": "2023-06-27 14:00:00",
+                "real_date_intake": null,
+                "quantity": "1",
+                "state": 0,
+                "item_type": "App\\Receipt",
+                "item_id": 9,
+                "created_at": "2023-06-27T11:13:01.000000Z",
+                "updated_at": "2023-06-27T11:13:01.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 9,
+                    "center_id": 10,
+                    "name": "Escalivada",
+                    "description": "<p><span class=\"fr-video fr-deletable fr-fvc fr-dvb fr-draggable\" contenteditable=\"false\" draggable=\"true\"><iframe src=\"https://www.youtube.com/embed/KQspH-bntdE?&wmode=opaque&rel=0\" frameborder=\"0\" allowfullscreen=\"\" class=\"fr-draggable\" style=\"width: 100%; height: 100%;\"></iframe></span><br></p>",
+                    "created_at": "2021-09-24T10:24:44.000000Z",
+                    "updated_at": "2022-06-22T10:08:24.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            }
+        ]
+    },
+    {
+        "date": "2023-06-27 19:00:00",
+        "items": [
+            {
+                "id": 1063437,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24129,
+                "date_intake": "2023-06-27 19:00:00",
+                "real_date_intake": null,
+                "quantity": "2",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 26,
+                "created_at": "2023-06-27T11:13:05.000000Z",
+                "updated_at": "2023-06-27T11:13:05.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 26,
+                    "center_id": 10,
+                    "ingredient_group_id": 2,
+                    "name": "Manzana",
+                    "description": false,
+                    "created_at": "2021-09-24T10:23:03.000000Z",
+                    "updated_at": "2021-09-29T15:58:35.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063378,
+                "user_id": 15115,
+                "diet_id": 31,
+                "diagnosticable_id": 24127,
+                "date_intake": "2023-06-27 19:00:00",
+                "real_date_intake": null,
+                "quantity": "200gr",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 21,
+                "created_at": "2023-06-27T11:07:36.000000Z",
+                "updated_at": "2023-06-27T11:07:36.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 21,
+                    "center_id": 10,
+                    "ingredient_group_id": 2,
+                    "name": "Lechuga",
+                    "description": false,
+                    "created_at": "2021-09-24T08:28:58.000000Z",
+                    "updated_at": "2021-09-29T15:57:25.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063379,
+                "user_id": 15115,
+                "diet_id": 31,
+                "diagnosticable_id": 24127,
+                "date_intake": "2023-06-27 19:00:00",
+                "real_date_intake": null,
+                "quantity": "200gr",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 18,
+                "created_at": "2023-06-27T11:07:36.000000Z",
+                "updated_at": "2023-06-27T11:07:36.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 18,
+                    "center_id": 10,
+                    "ingredient_group_id": 2,
+                    "name": "Tomate rojo",
+                    "description": false,
+                    "created_at": "2021-08-25T19:34:05.000000Z",
+                    "updated_at": "2021-09-29T16:05:57.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            },
+            {
+                "id": 1063403,
+                "user_id": 15115,
+                "diet_id": 22,
+                "diagnosticable_id": 24128,
+                "date_intake": "2023-06-27 19:00:00",
+                "real_date_intake": null,
+                "quantity": "2",
+                "state": 0,
+                "item_type": "App\\Ingredient",
+                "item_id": 26,
+                "created_at": "2023-06-27T11:13:01.000000Z",
+                "updated_at": "2023-06-27T11:13:01.000000Z",
+                "deleted_at": null,
+                "item": {
+                    "id": 26,
+                    "center_id": 10,
+                    "ingredient_group_id": 2,
+                    "name": "Manzana",
+                    "description": false,
+                    "created_at": "2021-09-24T10:23:03.000000Z",
+                    "updated_at": "2021-09-29T15:58:35.000000Z",
+                    "deleted_at": null,
+                    "media": []
+                }
+            }
+        ]
+    }
+];
+config: SwiperOptions = {
+  slidesPerView: 1,
+  spaceBetween: 50,
+  navigation: false,
+  pagination: { clickable: true },
+  scrollbar: { draggable: true },
+  direction: 'vertical',
+  effect: 'slide',
+
+  loop: true,
+};
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private router: Router,
@@ -54,14 +453,18 @@ export class LandingPage implements OnInit {
     private analyticsService: AnalyticsService,
     private device: Device,
     private constants: Constants,
-
+    public appVersion: AppVersion,
+    public platform: Platform,
+    private market: Market,
 
   ) {
-    // this.analyticsService.setScreenName('[LandingPage]')
+
+    if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
+      this.checkAppLastVersion();
    }
 
   ngOnInit() {
-    console.log('[MedicalCalendarPage] locale_ID', this.locale);
+  //   console.log('[MedicalCalendarPage] locale_ID', this.locale);
     this.loginForm = new FormGroup({
       username: new FormControl('',
       Validators.compose([
@@ -73,13 +476,6 @@ export class LandingPage implements OnInit {
       ),
       hash: new FormControl(''),
     });
-    var stringDate='20/11/2016';
-   let k =  moment(stringDate).format('DD/MM/YYYY');
-    //let k = this.localizedDatePipe.transform(stringDate, 'dd/MM/yyyy');
-    //var convertedDate= Date(stringDate);
-    // var datePiped = new DatePipe('es-ES');
-    //let d = this.ddd.transform('16-01-2023', 'M/d/yy, h:mm a')
-    console.log("transform: ", k)
 
   }
 
@@ -89,9 +485,7 @@ export class LandingPage implements OnInit {
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
     console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
-    // if(this.pushNotification){
-    //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
-    // }
+
     this.loginForm.get('username').setValue('')
     this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')
@@ -404,6 +798,89 @@ export class LandingPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  checkAppLastVersion() {
+
+    // checks app installed version
+    this.appVersion.getVersionNumber().then((version)=>{
+      let platform = this.platform.is('ios') ? 'ios':'android';
+       // get latest app version
+       console.log('[AppComponent] checkAppLastVersion()', platform,':', version);
+       this.dooleService.getAPIAppLatestVersion(version, platform).subscribe(
+        async (res: any) => {
+
+          console.log('[AppComponent] getAppLatestVersion() response', await res);
+          if (res?.mustUpdate)
+            this.appUpdateAvailable();
+
+        }, (err) => {
+          console.log('[LandingPage] checkAppLastVersion() ERROR(' + err.code + '): ' + err.message);
+          throw err;
+        });
+
+    });
+
+  }
+
+  async appUpdateAvailable() {
+
+    let subheader = await this.translate.instant('landing.update');
+    let message = await this.translate.instant('landing.message_app_update');
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: subheader,
+      message: message,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: this.translate.instant("landing.download"),
+          handler: (data) => {
+
+            // Open in store
+            if (!this.platform.is('mobileweb') && !this.platform.is('desktop')){
+              let id: string = this.platform.is('ios') ? this.constants.appleAppId:this.constants.androidBundleId;
+              console.log("OPENING: ", id);
+              this.market.open(id);
+              window.location.reload();
+            }
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async showAppUsageTips(){
+    let usageTips = this.translate.instant("landing.usage-tips")
+    const alert = await this.alertController.create({
+      cssClass: 'usage-tips-alert',
+      subHeader: this.translate.instant('info.title'),
+      message: new IonicSafeString(usageTips),
+      backdropDismiss: false,
+        buttons: [
+         {
+            text: this.translate.instant("button.accept"),
+            handler: (data) => {
+
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+
+  }
+
+
+  onSwiper([swiper]) {
+    console.log('onSwiper: ', swiper);
+  }
+  onSlideChange() {
+    console.log('slide change');
   }
 
 }

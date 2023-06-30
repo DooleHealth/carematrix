@@ -29,13 +29,14 @@ export class ListMyContactsPage implements OnInit {
       return;
     }
     if(this.platform.is('android'))
-      this.checkPermission() 
+      this.checkPermission()
     else
-      this.getContacts()    
+      this.getContacts()
   }
 
- 
-  getContacts(){
+
+  async getContacts(){
+    this.isLoading = true
     const projection = {
       // Specify which fields should be retrieved.
       name: true,
@@ -56,7 +57,7 @@ export class ListMyContactsPage implements OnInit {
       contacts.forEach(c => {
         if(c?.name?.display && c?.phones?.length > 0){
           console.log(`[ListMyContactsPage] getContacts(): ${c?.name?.display}, ${c?.phones[0]?.number}`);
-          const contact:Contact = {displayName: c?.name?.display, phoneNumbers: c?.phones} 
+          const contact:Contact = {displayName: c?.name?.display, phoneNumbers: c?.phones}
           list_contacts.push(contact)
         }
 
@@ -64,7 +65,6 @@ export class ListMyContactsPage implements OnInit {
     }
     return list_contacts
   }
-
 
   async checkPermission(){
     return Contacts.checkPermissions().then(result =>{
@@ -83,7 +83,7 @@ export class ListMyContactsPage implements OnInit {
       if (response.contacts == 'granted') {
         //console.log('Granted permissions for contacts');
         this.getContacts()
-        
+
       }
     });
   }
@@ -96,11 +96,11 @@ export class ListMyContactsPage implements OnInit {
     console.log('[ListMyContactsPage] filterList()');
     this.contacts = this.contactsBackup;
     const searchTerm = evt.srcElement.value;
-  
+
     if (!searchTerm) {
       return;
     }
-  
+
     this.contacts = this.contacts.filter(currentContacts => {
       if (currentContacts.displayName && searchTerm) {
         return (currentContacts.displayName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);

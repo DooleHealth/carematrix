@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { IonSlides, ModalController, NavController} from '@ionic/angular';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { ModalController, NavController} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -55,7 +55,7 @@ export class DiaryPage implements OnInit {
   isLoadingGames:boolean = true;
   isLoadingElements:boolean = true;
   isFutureDay = false
-  @ViewChild('slides') slides: IonSlides;
+
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,

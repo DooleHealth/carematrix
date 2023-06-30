@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -8,14 +8,17 @@ import { IntroPageRoutingModule } from './intro-routing.module';
 
 import { IntroPage } from './intro.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     TranslateModule,
-    IntroPageRoutingModule
+    IntroPageRoutingModule,
+    SwiperModule
   ],
   declarations: [IntroPage]
 })

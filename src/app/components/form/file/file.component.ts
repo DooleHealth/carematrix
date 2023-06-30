@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { CameraSource,CameraResultType, Camera } from '@capacitor/camera';
-import { Chooser } from '@ionic-native/chooser/ngx';
+
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -123,13 +124,13 @@ export class FileComponent implements OnInit {
         //console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
         if(this.disableNames){
          // this.files.push({ name: file.name, file: file.dataURI, type: file.mediaType })
-          this.files = { name: file.name, file: file.dataURI, type: file.mediaType }
+          this.files = { name: file.name, file: file.path, type: file.mimeType }
           this.value = { type: this.data.type, file: this.files.file}
           this.change.emit({[this.data.name]: this.value});
 
         }
         else{
-          this.presentPrompt(file.dataURI, file.name, file.mediaType)
+          this.presentPrompt(file.path, file.name, file.mimeType)
         }
       }
       this.checkValue()

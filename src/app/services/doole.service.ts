@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 import { ApiEndpointsService } from './api-endpoints.service';
 import { Events } from './events.service';
 import { HttpService } from './http.service';
 import { Observable, of, throwError, TimeoutError } from 'rxjs';
 import { AlertController, Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Capacitor } from '@capacitor/core';
 import { catchError, delay, filter, map, mergeMap } from 'rxjs/operators';
 import { HealthCard } from '../models/user';
@@ -50,8 +50,8 @@ export class DooleService {
     }
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    // Add files for new or saved diagnostics. 
-    // uses diagnostic/media when diagnostic is new 
+    // Add files for new or saved diagnostics.
+    // uses diagnostic/media when diagnostic is new
     //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
     const endpoint = this.api.getEndpoint('media/upload/temp');
     //console.log("* uploadFile endpoint", endpoint);
@@ -68,11 +68,11 @@ export class DooleService {
 
   }
 
-  
+
 
   postAPIAddMedia(params: Object){
     const endpoint = this.api.getEndpoint('media/add');
-   
+
     return this.http.postForm(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIAddMedia(${endpoint}) res: `, res);
@@ -80,7 +80,7 @@ export class DooleService {
       })
     );
   }
-  
+
   uploadFileToModel(image: string, name: string, params: any) {
     //console.log("uploading ", image);
     const token = localStorage.getItem('token');
@@ -335,7 +335,7 @@ export class DooleService {
     );
   }
 
-  getAPIStaffSlots(params: { id: number, date: string }) {
+  getAPIStaffSlots(params: { id: number, date: string }): Observable<any> {
 
     let path = `staff/${params.id}/availability`;
     let endpoint: string;
@@ -404,14 +404,14 @@ export class DooleService {
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
-      mergeMap((v) => v instanceof TimeoutError ? throwError(v) : of(v)) 
+      mergeMap((v) => v instanceof TimeoutError ? throwError(v) : of(v))
     );
   }
   getAPIinformationSummaryOld(params: Object){
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
-      map(res => res) 
+      map(res => res)
     );
   }
 
@@ -508,7 +508,7 @@ export class DooleService {
   }
 
   postAPIReportProblem(params: Object): Observable<any> {
-    let path = 'user/reportProblem'; // 'media/upload/temp' 
+    let path = 'user/reportProblem'; // 'media/upload/temp'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -544,7 +544,7 @@ export class DooleService {
 
   postAPIcodeVerification(params: Object): Observable<any> {
     let path = 'user/verifyTwoFactor';
-    //let path = 'user/codeVerification'; 
+    //let path = 'user/codeVerification';
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -1012,7 +1012,7 @@ export class DooleService {
         return res;
       })
     );
-  } 
+  }
 
   getAPISearchNews(query: any): Observable<any> {
     let path = 'news';
@@ -1025,6 +1025,18 @@ export class DooleService {
         return res;
       })
     );
+  }
+
+  getAPIAppLatestVersion(version, platform): Observable<any> {
+    let path = 'app/versions/must-update?version='+version+'&platform='+platform;
+    console.log(path);
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+
+        return res;
+      })
+    )
   }
 
   getAPISearchAdvices(query: any): Observable<any> {
@@ -1050,7 +1062,7 @@ export class DooleService {
       })
     );
   }
-  
+
   getAPIdrugsList(query: any): Observable<any> {
     let path = `drugIntake/list`;
     let httpParams = new HttpParams();
@@ -1338,7 +1350,7 @@ export class DooleService {
     let path = `user/allowedContacts`;
     const endpoint = this.api.getEndpoint(path);
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('withDepartments', '1') 
+    httpParams = httpParams.append('withDepartments', '1')
     return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
@@ -1544,7 +1556,7 @@ export class DooleService {
   }
 
 
-  
+
 
   getAPImessage(id, params?): Observable<any> {
     let path = 'user/message/'+ id
@@ -1656,5 +1668,7 @@ export class DooleService {
   getPushNotification(){
    return this.pushNotification;
   }
+
+
 
 }

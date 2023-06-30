@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { ComponentsModule } from 'src/app/components/components.module';
@@ -23,13 +23,14 @@ registerLocaleData(localeDe);
     FormsModule,
     IonicModule,
     ComponentsModule,
+    ReactiveFormsModule,
     MedicalCalendarPageRoutingModule,
     TranslateModule,
     NgCalendarModule,
     NgxPaginationModule
   ],
   declarations: [MedicalCalendarPage],
-  providers: [
+  providers: [DatePipe,
     { provide: LOCALE_ID, useValue: 'ca-ES' }
   ]
 })

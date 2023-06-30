@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { IonSlides} from '@ionic/angular'; 
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 export interface ItemAdvice {
@@ -15,7 +14,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items: ItemAdvice[] = [];
-  pushNotification:any = history.state.data; 
+  pushNotification:any = history.state.data;
   itemsBackup= []
   news = []
   advices = []
@@ -24,7 +23,7 @@ export class AdvicesPage implements OnInit {
    segment = 'news'
   // segment = 'news'
   isLoading = false
-  @ViewChild('slides') slides: IonSlides;
+
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
@@ -62,11 +61,11 @@ export class AdvicesPage implements OnInit {
         if(res.news)
         this.addItems(res.news)
         this.isLoading = false
-       },(err) => { 
-          console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
-          throw err; 
+          throw err;
       });
   }
 
@@ -82,10 +81,10 @@ export class AdvicesPage implements OnInit {
         if(res.advices)
         this.addItems(res.advices)
         this.isLoading = false
-       },(err) => { 
-          console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message);
           this.isLoading = false
-          throw err; 
+          throw err;
       });
   }
 
@@ -100,7 +99,7 @@ export class AdvicesPage implements OnInit {
       case 'advices':
         this.getAdvicesList()
         break;
-   
+
       default:
         //this.getDiagnosticTestsList()
         break;
@@ -111,13 +110,13 @@ export class AdvicesPage implements OnInit {
     var query = event //.target.value;
     this.isLoading = true
     this.dooleService.getAPISearchNews(query).subscribe(res=>{
-      console.log('[DiaryPage] filterListNews()', res); 
+      console.log('[DiaryPage] filterListNews()', res);
       this.items = []
       if(res.success)
         this.addItems(res.news)
       this.isLoading = false
     },err => {
-      console.log('[DiaryPage] filterListNews() ERROR(' + err.code + '): ' + err.message); 
+      console.log('[DiaryPage] filterListNews() ERROR(' + err.code + '): ' + err.message);
     });
   };
 
@@ -125,13 +124,13 @@ export class AdvicesPage implements OnInit {
     var query = event //.target.value;
     this.isLoading = true
     this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
-      console.log('[AdvicePage] filterListAdvices()', res); 
+      console.log('[AdvicePage] filterListAdvices()', res);
       this.items = []
       if(res.success)
         this.addItems(res.advice)
       this.isLoading = false
     },err => {
-      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message); 
+      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message);
     });
   };
 
@@ -167,7 +166,7 @@ export class AdvicesPage implements OnInit {
     }
   }
 
-  
+
 
 }
 

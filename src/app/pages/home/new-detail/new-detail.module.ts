@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NewDetailPageRoutingModule } from './new-detail-routing.module';
 
 import { NewDetailPage } from './new-detail.page';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShareModule } from 'src/app/shared/share/share.module';
 

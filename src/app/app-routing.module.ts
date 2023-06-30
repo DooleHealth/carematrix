@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'landing',
     loadChildren: () => import('./pages/login/landing/landing.module').then( m => m.LandingPageModule),
-    canLoad: [AutoLoginGuard] 
+    canLoad: [AutoLoginGuard]
   },
   {
     path: 'legal',
@@ -117,7 +117,7 @@ const routes: Routes = [
     path: 'doctors',
     loadChildren: () => import('./pages/contact/doctors/doctors.module').then( m => m.DoctorsPageModule)
   },
-  
+
   {
     path: 'medical-directory',
     loadChildren: () => import('./pages/contact/medical-directory/medical-directory.module').then( m => m.MedicalDirectoryPageModule)
@@ -177,7 +177,6 @@ const routes: Routes = [
     // anchorScrolling: 'enabled'}),
     RouterModule.forRoot(routes, {
       // This value is required for server-side rendering to work.
-      initialNavigation: 'enabled',
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled'
     }),
@@ -186,7 +185,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   providers: [FirebaseAuthService, AuthenticationService],
- 
+
 
 })
 export class AppRoutingModule {}

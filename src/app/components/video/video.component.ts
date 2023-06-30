@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { ActionSheetController, ModalController, NavController, Platform } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
-import { File } from '@ionic-native/file/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Chooser } from '@ionic-native/chooser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 
 
 //declare let OT: any;
@@ -52,7 +52,7 @@ constructor(
 ) { }
 
   async ngOnInit() {
-    
+
     this.apiKey = this.opentokService.apiKey$;
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
@@ -65,7 +65,7 @@ publish() {
     }
     else {
       this.publishing = true;
-      
+
     }
   });
 }
@@ -73,7 +73,7 @@ publish() {
 onStreamCreated(stream, session) {
 
   console.log('onStreamCreated');
-  
+
   const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SubscriberComponent);
   const viewContainerRef = this.subscriberHost;
   const componentRef = viewContainerRef.createComponent(componentFactory);
@@ -86,17 +86,17 @@ onStreamCreated(stream, session) {
 
 
 close() {
-  
+
   if(this.publisher){
     console.log('*- this.publisher.destroy();');
     this.publisher.destroy();
   }
-    
+
   if(this.session){
     console.log('*- this.session.disconnect();');
     this.session.disconnect();
   }
-    
+
   this.modalCtrl.dismiss({date:null});
 }
 
@@ -105,7 +105,7 @@ ngAfterViewInit(): void {
 
   if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
     this.session = OT.initSession(this.apiKey, this.sessionId);
-    var publisherOptions = { 
+    var publisherOptions = {
       height: "100%",
       width: "100%"}
     this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, publisherOptions, (err) => {
@@ -125,7 +125,7 @@ ngAfterViewInit(): void {
     this.session.on({
       streamCreated: (event) => {
         var subscriberOptions = {fitMode: "contain", insertMode: 'append'};
-        //this.session.subscribe(event.stream, 'subscriber', subscriberOptions);     
+        //this.session.subscribe(event.stream, 'subscriber', subscriberOptions);
         this.onStreamCreated(event.stream, this.session);
         //OT.updateViews();
       },
@@ -138,13 +138,13 @@ ngAfterViewInit(): void {
         this.session.publish(this.publisher, (err) => {
           console.log();
         });
-       
+
         //OT.updateViews();
       },
       connectionCreated: (event) => {
-        if (event.connection.connectionId != this.session.connection.connectionId) 
+        if (event.connection.connectionId != this.session.connection.connectionId)
          console.log("Se ha conectado un usuario");
-        
+
       }
     });
 
@@ -153,7 +153,7 @@ ngAfterViewInit(): void {
         alert(`There was an error connecting to the session ${error}`);
       }
     });
-    
+
   }else{
 
     console.log('***  device  ***');
@@ -177,7 +177,7 @@ ngAfterViewInit(): void {
         console.error(err);
       }
     });
-   
+
     this.session.connect(this.token, (err) => {
       if (err) {
         console.error(err);
@@ -212,15 +212,15 @@ ngAfterViewInit(): void {
         this.session.on("streamCreated", function (event) {
           self.onStreamCreated(event.stream, this.session);
         });
-       
+
       }
     })
-   
+
   }
 }
 
 async uploadFileFromBrowser(event: EventTarget) {
-  const eventObj: MSInputMethodContext = event as MSInputMethodContext;
+  const eventObj: any = event as any;
   const target: HTMLInputElement = eventObj.target as HTMLInputElement;
   const file: any = target.files[0];
   const toBase64 = file => new Promise((resolve, reject) => {
@@ -271,12 +271,12 @@ async selectImageSource() {
   await actionSheet.present();
 }
 async addFile(){
-    
+
   this.chooser.getFile().then(async file => {
-   
+
     if(file){
-      var filename=new Date().getTime(); 
-      this.saveBase64(file.dataURI, filename.toString(), file.mediaType).then(res => {
+      var filename=new Date().getTime();
+      this.saveBase64(file.path, filename.toString(), file.mimeType).then(res => {
         this.uploadFile(res);
       });
     }
@@ -347,16 +347,16 @@ return blob;
 }
 
 uploadFile(fileUri: string){
- 
+
   this.dooleService.uploadFile(fileUri).then(data =>{
     console.log("[VideoComponent] uploadMessageImage", data);
-   
+
   }, (err) =>{
-   
+
     throw err;
   });
-  
+
 }
-  
+
 }
 

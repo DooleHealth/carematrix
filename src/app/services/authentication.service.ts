@@ -6,7 +6,7 @@ import { ApiEndpointsService } from '../services/api-endpoints.service';
 import { Constants } from '../config/constants';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AlertController, Platform } from '@ionic/angular';
-import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
 import { TranslateService } from '@ngx-translate/core';

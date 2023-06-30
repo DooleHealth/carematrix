@@ -7,14 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { DiaryPageRoutingModule } from './diary-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { DiaryPage } from './diary.page';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { TranslateModule } from '@ngx-translate/core';
 import { DrugsDetailPageModule } from './drugs-detail/drugs-detail.module';
 import { DrugAddPageModule } from './drug-add/drug-add.module';
 import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
 import { ShareModule } from 'src/app/shared/share/share.module';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,

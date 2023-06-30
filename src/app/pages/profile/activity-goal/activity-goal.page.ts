@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as HighCharts from 'highcharts';
-import { element } from 'protractor';
 import { DooleService } from 'src/app/services/doole.service';
 //import { ElementsService } from 'src/app/services/elements.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -117,11 +116,11 @@ export class ActivityGoalPage implements OnInit {
         case "1d":
           return this.translate.instant('agenda.day')
         case "1w":
-          return this.translate.instant('agenda.week') 
+          return this.translate.instant('agenda.week')
         case "1m":
           return this.translate.instant('agenda.months')
         case "1y":
-          return this.translate.instant('agenda.year') 
+          return this.translate.instant('agenda.year')
       }
     }
     else{
@@ -129,11 +128,11 @@ export class ActivityGoalPage implements OnInit {
         case "1d":
           return this.translate.instant('activity_goal.daily')
         case "1w":
-          return this.translate.instant('activity_goal.weekly') 
+          return this.translate.instant('activity_goal.weekly')
         case "1m":
           return this.translate.instant('activity_goal.monthly')
         case "1y":
-          return this.translate.instant('activity_goal.yearly') 
+          return this.translate.instant('activity_goal.yearly')
       }
     }
 
@@ -250,10 +249,10 @@ export class ActivityGoalPage implements OnInit {
     switch (opt) {
       case 'range':
         typeChart = 'arearange'
-        break; 
+        break;
       case 'sum':
       case 'avg':
-      case 'lasValue': 
+      case 'lasValue':
       default:
         typeChart = 'category'
         break;

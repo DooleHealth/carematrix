@@ -1,15 +1,15 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ActionSheetController, IonInfiniteScroll, Platform} from '@ionic/angular';
-import {MediaCapture} from '@ionic-native/media-capture/ngx'
+import {MediaCapture} from '@awesome-cordova-plugins/media-capture/ngx'
 import {HttpErrorResponse} from '@angular/common/http';
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { File } from '@ionic-native/file/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Events } from 'src/app/services/events.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Chooser } from '@ionic-native/chooser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { IonContent } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -385,7 +385,7 @@ export class ConversationPage implements OnInit {
 
       if(file){
         var filename=new Date().getTime();
-        this.saveBase64(file.dataURI, filename.toString(), file.mediaType).then(res => {
+        this.saveBase64(file.path, filename.toString(), file.mimeType).then(res => {
           this.uploadFile(res);
         });
       }

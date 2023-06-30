@@ -4,8 +4,8 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Camera, CameraSource, CameraResultType} from '@capacitor/camera';
-import { Chooser } from '@ionic-native/chooser/ngx';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -126,11 +126,11 @@ export class FileUploadComponent implements OnInit {
       if (file) {
         //console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
         if(this.disableNames){
-          this.files.push({ name: file.name, file: file.dataURI, type: file.mediaType })
+          this.files.push({ name: file.name, file: file.path, type: file.mimeType })
           this.numFilesChange.emit(this.files.length)
         }
         else{
-          this.presentPrompt(file.dataURI, file.name, file.mediaType)
+          this.presentPrompt(file.path, file.name, file.mimeType)
         }
       }
     }).catch((error: any) => {
@@ -209,7 +209,7 @@ export class FileUploadComponent implements OnInit {
     if(type.includes('image') || type.includes('jpeg') || type.includes('jpg') || type.includes('png')){
       var image = new Image();
       image.src = "data:"+ file.type + ";base64," + file.file;
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {  
+      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         var pageContent = '<html><head></head><body>'+ image.outerHTML +'</body></html>';
         var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
         this.openWithInAppBrowser(pageContentUrl);
@@ -217,44 +217,44 @@ export class FileUploadComponent implements OnInit {
         var w = window.open("");
         w.document.write(image.outerHTML);
       }
-      
+
     }else if(type.includes('pdf')){
       if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
         var pageContent = "<html><head></head><body><iframe width='100%' height='100%' src='data:application/pdf;base64, " + file.file + "'></iframe></body></html>";
         var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
         this.openWithInAppBrowser(pageContentUrl);
-        
+
       }else{
         let pdfWindow = window.open("")
         pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(file.file) + "'></iframe>")
       }
     }else
       this.presentAlert();
-   
+
   }
 
   public openWithInAppBrowser(url : string){
     let options : InAppBrowserOptions = {
-      location : 'yes',//Or 'no' 
+      location : 'yes',//Or 'no'
       hideurlbar:'yes',
       hidden : 'no', //Or  'yes'
       clearcache : 'yes',
       clearsessioncache : 'yes',
       enableViewPortScale: 'yes',
-      zoom : 'yes',//Android only ,shows browser zoom controls 
+      zoom : 'yes',//Android only ,shows browser zoom controls
       hardwareback : 'yes',
       mediaPlaybackRequiresUserAction : 'no',
-      shouldPauseOnSuspend : 'no', //Android only 
+      shouldPauseOnSuspend : 'no', //Android only
       closebuttoncaption : 'Close', //iOS only
-      disallowoverscroll : 'no', //iOS only 
-      toolbar : 'yes', //iOS only 
-      enableViewportScale : 'no', //iOS only 
-      allowInlineMediaPlayback : 'no',//iOS only 
-      presentationstyle : 'pagesheet',//iOS only 
-      fullscreen : 'yes',//Windows only    
+      disallowoverscroll : 'no', //iOS only
+      toolbar : 'yes', //iOS only
+      enableViewportScale : 'no', //iOS only
+      allowInlineMediaPlayback : 'no',//iOS only
+      presentationstyle : 'pagesheet',//iOS only
+      fullscreen : 'yes',//Windows only
     };
       let target = "_blank";
-  
+
       this.iab.create(url,target, options);
   }
 
@@ -314,7 +314,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   isEmptyFiles():boolean{
-    if(this.files.length == 0){ 
+    if(this.files.length == 0){
       return true
     }
     else false
@@ -355,7 +355,7 @@ export class FileUploadComponent implements OnInit {
       'file': f,
       'name': n
     }
- 
+
   }
 
 

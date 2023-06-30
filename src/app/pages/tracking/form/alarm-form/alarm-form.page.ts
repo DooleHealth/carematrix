@@ -17,13 +17,15 @@ export class AlarmFormPage implements OnInit {
   formRedirect: string;
   formRedirectId = [];
   formTitle: string;
-  messageAnswer = this.translate.instant('form.send_success');
+  messageAnswer :string;
   imgAnswer = "assets/icons/icon_exito.svg"
   score
   constructor(
     private modalCtrl: ModalController,
     private translate: TranslateService,
-  ) { }
+  ) {
+    this.messageAnswer = this.translate.instant('form.send_success');
+   }
 
   ngOnInit() {
     //console.log('[InfoFormPage] ngOnInit()');
@@ -42,8 +44,8 @@ export class AlarmFormPage implements OnInit {
 
   getScreenMessage(){
     if(Array.isArray(this.data?.alarms) && this.data?.alarms.length > 0 )
-    this.data?.alarms.forEach(alarm => { 
-      alarm.screenMessage = alarm.screenMessage //.replace(/<\/?[^>]+(>|$)/g, "")  
+    this.data?.alarms.forEach(alarm => {
+      alarm.screenMessage = alarm.screenMessage //.replace(/<\/?[^>]+(>|$)/g, "")
       switch (alarm.color) {
         case 'danger':
           alarm['src'] = this.goalsAssetsAlarms[1];
@@ -58,19 +60,19 @@ export class AlarmFormPage implements OnInit {
           alarm['colorHex'] = this.color[0]
           break;
       }
-      
-      this.alarms.push(alarm) ; 
+
+      this.alarms.push(alarm) ;
     });
   }
 
   goFormRedirect(){
     console.log('[InfoFormPage] close()');
-    this.modalCtrl.dismiss({formRedirect: this.formRedirect});  
+    this.modalCtrl.dismiss({formRedirect: this.formRedirect});
   }
 
   close() {
     console.log('[InfoFormPage] close()');
-    this.modalCtrl.dismiss({error:null});   
+    this.modalCtrl.dismiss({error:null});
   }
 
 }
