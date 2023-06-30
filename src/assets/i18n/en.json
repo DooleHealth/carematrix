@@ -412,7 +412,11 @@
       "event_by_user": "User-added event",
       "error_alert_message_get_token": "Error getting video call token",
       "error_alert_message_get_agenda": "Error getting calendar",
-      "to": "at"
+      "to": "at",
+      "day": "DAY",
+      "week": "WEEK",
+      "months": "MONTH",
+      "year": "YEAR"
     },
     "reminder": {
       "header": "Reminder",

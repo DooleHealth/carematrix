@@ -395,7 +395,11 @@
         "event_by_user": "Esdeveniment afegit per l'usuari",
         "error_alert_message_get_token":"Error a l'obtenir el token de videotrucada",
         "error_alert_message_get_agenda":"Error a l'obtenir l'agenda",
-        "to": "a les"
+        "to": "a les",
+        "day": "DIA",
+        "week": "SETMANA",
+        "months": "MES",
+        "year": "ANY"
       },
       "reminder":{
         "header": "Recordatori",

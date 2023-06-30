@@ -404,7 +404,11 @@
         "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",
         "error_alert_message_get_agenda":"Error al obtener la agenda",
-        "to": "a las"
+        "to": "a las",
+        "day": "DíA",
+        "week": "SEMANA",
+        "months": "MES",
+        "year": "AÑO"
       },
       "reminder":{
         "header": "Recordatorio",

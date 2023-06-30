@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="whiteBackground">
 
     <ion-segment
     value="day"
@@ -165,7 +165,7 @@
 <div [ngClass]="(this.values &&  this.values.length > 0)? 'contaner-block':'contaner-none' "  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
 
 <div [ngClass]="(this.values &&  this.values.length > 0)? 'contaner-none':'contaner-block' ">
-<div *ngIf="!this.isLoading" style="margin-bottom: 20%;">
+<div *ngIf="!this.isLoading" style="margin-bottom: 20%; margin-top: 5%;">
 <ion-img src='assets/icons/icon_information_secondary.svg' style="height: 40px;"></ion-img>
 <ion-row class="textCentered" style="margin-top: 10px;">
   <ion-text class=" textCentered">{{ 'activity_goal.no_data_date' | translate }}</ion-text>
@@ -203,19 +203,19 @@
 <div *ngIf="description" [innerHtml]="this.description"></div>
 <!-- <ion-item-divider></ion-item-divider> -->
 <div *ngIf="this.normalValue.length > 0" class="txtMarginElement">
-  <ion-text class="txtPoppinsBold16px titleGoalBlack">{{ 'activity_goal.normal_value' | translate}}</ion-text>
+  <ion-text class="titleGoalBlack">{{ 'activity_goal.normal_value' | translate}}</ion-text>
   <div *ngFor="let range of this.normalValue">
     <ion-text style="margin: 10px 0 5px 0;">{{range}} {{this.units}}</ion-text>
   </div>
 </div>
 <div *ngIf="this.outRangeValue.length > 0" class="txtMarginElement">
-  <ion-text class="txtPoppinsBold16px titleGoalBlack">{{ 'activity_goal.out_range_value' | translate}}</ion-text>
+  <ion-text class="titleGoalBlack">{{ 'activity_goal.out_range_value' | translate}}</ion-text>
   <div *ngFor="let range of this.outRangeValue">
     <ion-text style="margin: 10px 0 5px 0;">{{range}} {{this.units}}</ion-text>
   </div>
 </div>
 <div *ngIf="this.dangerValue.length > 0" class="txtMarginElement">
-  <ion-text class="txtPoppinsBold16px titleGoalBlack">{{ 'activity_goal.danger_value' | translate}}</ion-text>
+  <ion-text class="titleGoalBlack">{{ 'activity_goal.danger_value' | translate}}</ion-text>
   <div *ngFor="let range of this.dangerValue">
     <ion-text style="margin: 10px 0 5px 0;">{{range}} {{this.units}}</ion-text>
   </div>

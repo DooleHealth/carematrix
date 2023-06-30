@@ -45,7 +45,8 @@ export class DiaryPage implements OnInit {
   listDrugIntakes=[];
   listGamePlays = [];
   diets:any = {}
-  groupedElements: any = [];
+  groupedElements: Array<any>;
+  newGroupedElements: Array<any>;
   date = Date.now()
   segment = history.state?.segment ? history.state.segment : 'diets';
   isLoading:boolean;
@@ -325,54 +326,44 @@ export class DiaryPage implements OnInit {
   }
 
 
-  async getElementsList(){
-    this.items = []
-    let formattedDate = this.transformDate(this.date)
-    let date = {date: formattedDate}
-
-    this.dooleService.getAPIelementsListByDate(date).subscribe(
-      async (data: any) =>{
-
-        if(data?.eg){
-          let elements = data.eg.toString();
-          let previousElements = this.listElements.toString();
-          console.log('[DiaryPage] getElementsList()', elements);
-          console.log('[DiaryPage] getElementsList()', previousElements);
-          if(elements !== previousElements){
-            this.groupedElements = [];
-            this.listElements = data.eg;
-            // Iterate elements in the tree searching for element groups
-            this.treeIterate(data.eg, '');
-            // Order grouped elements by Name
-            this.groupedElements.sort(function(a,b){
-              return a.group.localeCompare(b.group);
-            })
-            this.listElements = this.addItems(this.groupedElements);
-          }
-        }
-       },(err) => {
-          console.log('[DiaryPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
-          throw err;
-      }, ()=>{
+  async getElementsList() {
+    this.isLoadingElements = true
+    this.groupedElements = [];
+    this.newGroupedElements = [];
+    let params = { only_with_values: '0', grouped: '1', filter: 1 }
+    //Activar filtro getAPIelementsList(true)
+    this.dooleService.getAPIelementsList(params).subscribe(
+      async (data: any) => {
+        console.log('[TrackingPage] getElementsList()', await data);
+          this.treeIterate(data?.elements)
+          console.log('[TrackingPage] getElementsList() ', this.groupedElements);
         this.isLoadingElements = false
+      }, (err) => {
+        alert(`Error: ${err.code}, Message: ${err.message}`)
+        console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
+        this.isLoadingElements = false
+        throw err;
       });
+
   }
 
-  treeIterate(obj, stack) {
+  groupElements(elements) {
+    elements.forEach((element) => {
+      element['units'] = element?.element_unit?.abbreviation ? element?.element_unit?.abbreviation : '';
+      element['value'] = element?.last_value?.value;
+    })
+
+    console.log('[DiaryPage] groupElements()', this.groupedElements);
+  }
+
+  treeIterate(obj) {
+    console.log('[DiaryPage] groupElements()', obj);
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {
-        if (typeof obj[property] == "object") {
-
-          this.treeIterate(obj[property], stack + '.' + property);
-        } else {
-          if(property=="group"){
-            obj['is_child'] = stack.includes('childs');
-            if(obj?.elements.length>0)
-            this.groupedElements.push(obj);
-
-          }
-
-        }
+        console.log('[DiaryPage] groupElements()', property);
+              let elements = obj[property]
+              this.groupElements(elements)
+              this.groupedElements.push({ group: property, elements: elements });
       }
     }
   }

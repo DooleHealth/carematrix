@@ -433,7 +433,7 @@ export class AppComponent implements OnInit {
         break;
       case "ADVICE":
         this._zone.run(()=>{
-          this.router.navigate([`/home`],{state:{push:data, id:data.id}});
+          this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
         });
         break;
       case "NEWS":
