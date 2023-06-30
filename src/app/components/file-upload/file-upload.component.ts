@@ -30,6 +30,30 @@ export class FileUploadComponent implements OnInit {
   enableButtonAddFile = false
   ngOnInit() {}
 
+  async checkPermission(){
+    return Camera.checkPermissions().then(result =>{
+      console.log('[FileUploadComponent] checkPermission(): ', result.camera);
+      let isPermissed = result.camera
+      if(isPermissed == 'granted')
+        this.getSource()
+      else
+        this.getPermission();
+    }).catch(error =>{
+      console.log(`[FileUploadComponent] checkPermission(): ${error}`);
+    })
+  }
+
+  getPermission(){
+    Camera.requestPermissions().then((response) => {
+      console.log('Camera permission response: ', response.camera);
+      if (response.camera == 'granted') {
+        console.log('Granted permissions for camera');
+        this.getSource()
+        
+      }
+    });
+  }
+
   // Used for browser direct file upload
   uploadFile(event: EventTarget) {
     const eventObj: any = event as any;
@@ -40,6 +64,10 @@ export class FileUploadComponent implements OnInit {
     //});
   }
   async selectSource() {
+    this.checkPermission()
+  }
+  
+  async getSource() {
     const buttons = [
       {
         text: this.translate.instant('documents_add.camera'),
@@ -135,7 +163,7 @@ export class FileUploadComponent implements OnInit {
 
   transformDate(date, format) {
     return this.datepipe.transform(date, format);
-  }
+  } 
 
   async uploadFileFromBrowser(event: EventTarget) {
     const eventObj: any = event as any;
