@@ -202,22 +202,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private async initPushNotifications() {
-    var chat_notification = this.translate.instant('notifications.chat');
+  initPushNotifications(){
 
-    PushNotifications.requestPermissions().then((permission) => {
-      // Register with Apple / Google to receive push via APNS/FCM
-      if (permission.receive === 'granted')
-        PushNotifications.register();
-      else
-        console.error('No permission for push granted')
-    });
-
-    PushNotifications.addListener(
-      'registration',
-      async (token: PushNotificationToken) => {
-
-        console.log('My token: ' + JSON.stringify(token));
+    const addListeners = async () => {
+      await PushNotifications.addListener('registration', token => {
+        console.info('Registration token: ', token.value);
 
         let platform = 'ios';
         if (this.platform.is('android')) {
@@ -226,20 +215,16 @@ export class AppComponent implements OnInit {
 
         this.authService.devicePlatform = platform;
         this.authService.deviceToken = token.value;
-      }
-    );
+      });
 
-    PushNotifications.addListener('registrationError', (error: any) => {
-      console.error('Error: ' + JSON.stringify(error));
-      alert(this.translate.instant('notifications.register_error'));
-    });
+      await PushNotifications.addListener('registrationError', err => {
+        console.error('Registration error: ', err.error);
+      });
 
-    PushNotifications.addListener(
-      'pushNotificationReceived',
-      async (notification: PushNotification) => {
+      await PushNotifications.addListener('pushNotificationReceived', notification => {
+        console.log('Push notification received: ', notification);
+
         this.badge.increase(1);
-        console.log('[pushNotificationReceived] Push received:', notification);
-
         const voip = notification.data?.voip;
 
         if (voip == "true") {
@@ -258,14 +243,11 @@ export class AppComponent implements OnInit {
           this.showNotification(notification);
 
         }
-      }
-    );
+      });
 
-    PushNotifications.addListener(
-      'pushNotificationActionPerformed',
-      async (notification: PushNotificationActionPerformed) => {
+      await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
+        console.log('Push notification action performed', notification.actionId, notification.inputValue);
         const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data;
-        console.log('Action performed: ');
         console.log(notification);
 
         const action = data?.action;
@@ -293,103 +275,27 @@ export class AppComponent implements OnInit {
           } else
             this.redirectPushNotification(data, notification);
         }
-      }
-    );
-
-
-    // LOCAL NOTIFICATIONS
-    await LocalNotifications.requestPermissions().then((data) => {
-      console.log("LocalNotifications Registered");
-    });
-
-    this.translate.get(['notifications.chat', 'notifications.form', 'notifications.drug', 'notifications.videocall', 'notifications.open', 'notifications.close']).subscribe(async translations => {
-
-      await LocalNotifications.registerActionTypes({
-        types: [{
-          id: 'MESSAGE',
-          actions: [{
-            id: 'view',
-            title: translations['notifications.chat']
-          }, {
-            id: 'remove',
-            title: 'Dismiss',
-            destructive: true
-          }, {
-            id: 'respond',
-            title: 'Respond',
-            input: true
-          }],
-        }, {
-          id: 'FORM',
-          actions: [{
-            id: 'view',
-            title: translations['notifications.form']
-          }, {
-            id: 'remove',
-            title: translations['notifications.close'],
-            destructive: true
-          }],
-        }, {
-          id: 'DRUGINTAKE',
-          actions: [{
-            id: 'view',
-            title: translations['notifications.drug']
-          }, {
-            id: 'remove',
-            title: 'Dismiss',
-            destructive: true
-          }],
-        }, {
-          id: 'VIDEOCALL',
-          actions: [{
-            id: 'view',
-            title: translations['notifications.videocall'],
-            foreground: true,
-          }, {
-            id: 'remove',
-            title: translations['notifications.close'],
-            destructive: true
-          }],
-        }
-        ]
       });
-    });
+    }
 
+    const registerNotifications = async () => {
+      let permStatus = await PushNotifications.checkPermissions();
 
-    LocalNotifications.addListener('localNotificationReceived', (notification: LocalNotification) => {
-      console.log('localNotificationReceived received:', notification);
-
-
-    })
-
-    LocalNotifications.addListener('localNotificationActionPerformed', (notification: LocalNotificationActionPerformed) => {
-
-      console.log('localNotificationActionPerformed: ');
-      let f = notification.notification.extra;
-      console.log(f);
-      const action = f.data?.action;
-      const id = f.data?.id;
-      const msg = f.data?.message;
-      console.log('ACTION: ', action);
-
-      if (action == "VIDEOCALL") {
-        this.redirecToVideocall(notification)
-        return
-      }
-      else if (this.router.url.includes('landing')) {
-        this.dooleService.setPushNotification(f.data)
-        this.router.navigate([`/landing`], { state: { pushNotification: f.data } });
-      }
-      else if (this.authService?.user?.idUser) {
-        console.log('localNotificationActionPerformed idUser: ', this.authService?.user?.idUser)
-        this.redirectPushNotification(f.data, notification)
-      }
-      else {
-        this.redirecToVideocall(notification)
-        return
+      if (permStatus.receive === 'prompt') {
+        permStatus = await PushNotifications.requestPermissions();
       }
 
-    })
+      if (permStatus.receive !== 'granted') {
+        throw new Error('User denied permissions!');
+      }
+
+      await PushNotifications.register();
+    }
+
+    const getDeliveredNotifications = async () => {
+      const notificationList = await PushNotifications.getDeliveredNotifications();
+      console.log('delivered notifications', notificationList);
+    }
   }
 
   redirectPushNotification(data, notification?) {

@@ -104,7 +104,7 @@ ion-img {
 
 .customCardHealthPath {
   background-color: white;
-  width: 100%;
+  margin-right:0;
 }
 .strechCardContent {
   min-width: 300px !important;
@@ -200,7 +200,7 @@ ion-progress-bar {
 }
 
 .bell{
-  margin-top: 10%;//7px; 
+  margin-top: 10%;//7px;
   width: fit-content;
   margin-left: -9px;
   position: absolute;

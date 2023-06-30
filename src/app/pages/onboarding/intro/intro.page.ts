@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Preferences } from '@capacitor/preferences';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import Swiper, { SwiperOptions } from 'swiper';
+
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { BehaviorSubject } from 'rxjs';
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const INTRO_KEY = 'intro';
 @Component({

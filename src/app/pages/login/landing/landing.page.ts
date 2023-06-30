@@ -476,13 +476,6 @@ config: SwiperOptions = {
       ),
       hash: new FormControl(''),
     });
-  //   var stringDate='20/11/2016';
-  //  let k =  moment(stringDate).format('DD/MM/YYYY');
-    //let k = this.localizedDatePipe.transform(stringDate, 'dd/MM/yyyy');
-    //var convertedDate= Date(stringDate);
-    // var datePiped = new DatePipe('es-ES');
-    //let d = this.ddd.transform('16-01-2023', 'M/d/yy, h:mm a')
-   // console.log("transform: ", k)
 
   }
 
@@ -492,9 +485,7 @@ config: SwiperOptions = {
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
     console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
-    // if(this.pushNotification){
-    //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
-    // }
+
     this.loginForm.get('username').setValue('')
     this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')

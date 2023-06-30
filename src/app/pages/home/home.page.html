@@ -62,7 +62,7 @@
 
       <swiper [slidesPerView]="1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
         [pagination]="false" [scrollbar]="{ draggable: true }">
-        <ng-template #slider *ngFor="let challenge of this.challenges" class="ion-no-padding">
+        <ng-template swiperSlide *ngFor="let challenge of this.challenges" class="ion-no-padding">
 
             <ion-card class="customCardHealthPath">
               <ion-item lines="none" class="cardHeader" routerLink="health-path" routerLinkActive="active-item"
