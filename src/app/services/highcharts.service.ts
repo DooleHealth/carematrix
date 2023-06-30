@@ -128,7 +128,7 @@ export class HighchartsService {
   setYAxis(minY,maxY, ranges, text){
     console.log('[ActivityGoalPage] generateChart() maxY: ', maxY);
     //Solo para HPC requieren que el valor mínimo de gráfica sea 0, aquí valido que si no hay valores negativos se el minY = 0;
-    const y_min = (minY > 0) ? 0 : minY;
+    const y_min =  minY;// (minY > 0) ? 0 : minY;
     const y_max = (maxY)? maxY: this.maxY
     const y_title = {text: text, align: 'high'}
     this.yAxis = {min: y_min, max: y_max, alignTicks: false, tickInterval: null, startOnTick: false, title:y_title, opposite: true, plotBands: ranges}

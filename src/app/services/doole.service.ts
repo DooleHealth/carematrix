@@ -837,7 +837,7 @@ export class DooleService {
       })
     );
   }
-  
+
   /** get elements with query by parameter date  */
   getAPIelementsListByDate(params: Object): Observable<any> {
     let path = 'user/elementsList/v2'  /* 'user/elementsList'  */
@@ -880,6 +880,7 @@ export class DooleService {
     httpParams = (params?.interval) ? httpParams.append('interval', params?.interval) : httpParams
     httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
     httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
+    httpParams = (params?.version) ? httpParams.append('version', params?.version) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
