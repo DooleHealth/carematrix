@@ -14,6 +14,10 @@
     <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
   </feature>
 
+  <feature name="Badge">
+    <param name="android-package" value="de.appplant.cordova.plugin.badge.Badge"/>
+  </feature>
+
   <feature name="Calendar">
     <param name="android-package" value="nl.xservices.plugins.Calendar"/>
   </feature>
@@ -29,6 +33,10 @@
 
   <feature name="Fingerprint">
     <param name="android-package" value="de.niklasmerz.cordova.biometric.Fingerprint"/>
+  </feature>
+
+  <feature name="health">
+    <param name="android-package" value="org.apache.cordova.health.HealthPlugin"/>
   </feature>
 
   <feature name="IRoot">

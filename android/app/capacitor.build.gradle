@@ -27,11 +27,14 @@ dependencies {
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
     implementation project(':capawesome-capacitor-badge')
+    implementation "com.google.android.gms:play-services-fitness:21.1.0"
+    implementation "com.google.android.gms:play-services-auth:20.2.0"
     implementation "com.android.support:appcompat-v7:23.1.0"
     implementation "com.android.support:design:23.0.0"
     implementation "com.android.volley:volley:1.1.0"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
+apply from: "../../node_modules/cordova-plugin-badge/src/android/badge.gradle"
 apply from: "../../node_modules/cordova-plugin-fingerprint-aio/src/android/build.gradle"
 apply from: "../../node_modules/cordova-plugin-iroot/src/android/build-extras.gradle"
 apply from: "../../node_modules/cordova-plugin-opentok/build-extras.gradle"
