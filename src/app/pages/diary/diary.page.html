@@ -80,7 +80,7 @@
     <!-- Diets-->
     <div *ngSwitchCase="'diets'">
       <ng-container *ngIf="this.isLoadingDiets; else second">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </ng-container>
       <ng-template #second>
         <ng-container *ngIf="this.listDiets.length > 0 || this.diets?.length > 0  ;else third">
@@ -155,12 +155,14 @@
     <div *ngSwitchCase="'medication'">
        <!--medication shipping cart buttton-->
       <ng-container *ngIf="this.isLoadingDrugs;else second">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <div class="spin" >
+          <ion-spinner ></ion-spinner>
+        </div>
+
       </ng-container>
       <ng-template #second>
         <ng-container *ngIf="this.listDrug.length > 0;else third">
           <br>
-          <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
           <ion-list *ngFor="let list of this.listDrug">
             <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
               titlecase}}</ion-label>
@@ -243,6 +245,10 @@
           </ion-list>
 
         </ng-container>
+        <div class="send-drugs">
+          <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
+        </div>
+
       </ng-template>
       <ng-template #third>
         <ion-grid>
@@ -256,21 +262,14 @@
               <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col>
-              <br>
-              <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
-            </ion-col>
-
-          </ion-row>
         </ion-grid>
       </ng-template>
     </div>
     <!-- Games -->
     <div *ngSwitchCase="'games'">
-      <ng-container *ngIf="this.isLoadingGames; else second">
-        <ion-spinner name="bubbles"></ion-spinner>
-      </ng-container>
+      <div class="spin" *ngIf="this.isLoadingGames; else second">
+        <ion-spinner></ion-spinner>
+      </div>
       <ng-template #second>
         <ng-container *ngIf="this.listGames.length > 0;else third">
           <ion-list>
@@ -320,7 +319,7 @@
     <!-- Health -->
     <div *ngSwitchCase="'health'">
       <ng-container *ngIf="this.isLoadingElements; else second">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </ng-container>
       <ng-template #second>
         <ng-container *ngIf="this.groupedElements.length > 0;else third">

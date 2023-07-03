@@ -13,6 +13,7 @@ import highchartsMore from 'highcharts/highcharts-more';
 highchartsMore(HighCharts);
 import moment from 'moment';
 import { HighchartsService } from 'src/app/services/highcharts.service';
+import { RolesService } from 'src/app/services/roles.service';
 
 
 export interface graphElement {
@@ -83,7 +84,7 @@ export class ActivityGoalPage implements OnInit {
     private notification: NotificationService,
     private titlecasePipe: TitleCasePipe,
     private highchartsService: HighchartsService,
-    //private elementsService: ElementsService,
+    public role: RolesService,
   ) { }
 
   ngOnInit() {

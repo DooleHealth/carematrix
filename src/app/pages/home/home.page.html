@@ -6,7 +6,7 @@
 
 <ion-content>
   <!--   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div> -->
 
   <!-- <ion-grid class="iosHeader">
@@ -189,9 +189,9 @@
         [pagination]="false" [scrollbar]="{ draggable: true }" class="swiper">
 
         <ng-template swiperSlide *ngFor="let slide of this.advices" class="swiper-slide">
-          <div class="swiper-slide-container">
+          <div class="cover">
             <ion-card *ngIf="!slide.new"
-              [class]="this.advices?.length == 1 ? 'cardProfilePaddingBottomMinHeight':'cardProfilePaddingBottomMinHeight card'">
+              class="cardProfilePaddingBottomMinHeight">
               <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
               <cached-image class="sliderImage" (click)="openModal(slide,true)" [filename]="slide?.image?.file_name"
                 [src]="slide.image?.temporaryUrl" [spinner]="false"></cached-image>
@@ -207,7 +207,7 @@
               </ion-item>
             </ion-card>
             <ion-card *ngIf="slide.new"
-              [class]="this.advices?.length == 1 ? 'cardProfilePaddingBottomMinHeight':'cardProfilePaddingBottomMinHeight card'">
+            class="cardProfilePaddingBottomMinHeight">
               <ion-icon name="close" class="close-card" (click)="actionCloseAdvice(slide)"></ion-icon>
               <cached-image class="sliderImage" (click)="openModal(slide,false)" [filename]="slide?.files[0]?.file_name"
                 [src]="slide?.cover" [spinner]="false"></cached-image>

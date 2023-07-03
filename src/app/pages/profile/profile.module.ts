@@ -10,7 +10,7 @@ import { ProfilePage } from './profile.page';
 import { ReportProblemPageModule } from './report-problem/report-problem.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-// import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { PatientsPageModule } from './patients/patients.module';
 
 @NgModule({
@@ -24,7 +24,7 @@ import { PatientsPageModule } from './patients/patients.module';
     PatientsPageModule,
     ComponentsModule
   ],
-  providers: [ InAppBrowser,DatePipe, InAppBrowser],
+  providers: [ InAppBrowser,DatePipe, InAppBrowser, AppVersion],
   declarations: [ProfilePage]
 })
 export class ProfilePageModule {}

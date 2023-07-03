@@ -12,7 +12,7 @@
 
 <ion-content>
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div>
 
   <ion-list *ngIf="listCard.length > 0; else noData">
@@ -24,10 +24,10 @@
             <h3>{{ card.name}}</h3>
             <div>
               <p>{{ card.card_number}}</p>
-              <p *ngIf="card.expiration_date !== null && card.expiration_date !== undefined"> 
+              <p *ngIf="card.expiration_date !== null && card.expiration_date !== undefined">
                 {{ this.formatDate(card.expiration_date) | date: 'MM/yyyy'}}</p>
             </div>
-            
+
           </ion-label>
         </ion-item>
     </ion-card-content>

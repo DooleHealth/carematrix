@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div>
   <span *ngIf="othersCanAccess.length > 0 || canAccess.length > 0; else noData">
   <section *ngIf="this.user?.familyUnit === null">
@@ -64,13 +64,13 @@
     </ion-avatar>
     <ion-label >
       <h3>{{family.name}}</h3>
-     
+
     </ion-label>
   </ion-item>
 </ion-card-content>
 </ion-card>
   <ion-button expand="block"  (click)="returnUser()" >{{'profile.button_go_back' | translate | uppercase  }}</ion-button>
-</section>  
+</section>
 </span>
 <ng-template #noData>
   <div *ngIf="!this.isLoading">

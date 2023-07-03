@@ -4,7 +4,7 @@ import { AlertController, ModalController, Platform, ToastController } from '@io
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ReportProblemPage } from './report-problem/report-problem.page';
-// import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { DooleService } from 'src/app/services/doole.service';
@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
   modeNumDev: number = 0
   constructor(
     public authService: AuthenticationService,
-    // public appVersion: AppVersion,
+    public appVersion: AppVersion,
     private notification: NotificationService,
     private modalCtrl: ModalController,
     private router: Router,
@@ -53,9 +53,9 @@ export class ProfilePage implements OnInit {
     this.getPersonalInformation()
 
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
-    // this.appVersion.getVersionNumber().then((version)=>{
-    //   this.version = version;
-    // });
+    this.appVersion.getVersionNumber().then((version)=>{
+      this.version = version;
+    });
     }
 
   }

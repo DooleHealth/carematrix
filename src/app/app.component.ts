@@ -1,11 +1,9 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-//import { Filesystem, FilesystemDirectory, LocalNotification, LocalNotificationActionPerformed, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
-
-import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesystem';
-import { LocalNotifications, LocalNotificationSchema as LocalNotification, ActionPerformed as LocalNotificationActionPerformed } from '@capacitor/local-notifications';
-import { PushNotifications, PushNotificationSchema as PushNotification, ActionPerformed as PushNotificationActionPerformed, Token as PushNotificationToken } from '@capacitor/push-notifications'
+import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
+import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
+
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@awesome-cordova-plugins/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,7 +20,6 @@ import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
-
 
 declare let VoIPPushNotification: any;
 declare let cordova: any;
@@ -202,11 +199,31 @@ export class AppComponent implements OnInit {
     });
   }
 
-  initPushNotifications(){
+  public async initPushNotifications() {
 
-    const addListeners = async () => {
-      await PushNotifications.addListener('registration', token => {
-        console.info('Registration token: ', token.value);
+    console.log('Initializing HomePage');
+
+    // Request permission to use push notifications
+    // iOS will prompt user and return if they granted permission or not
+    // Android will just grant without prompting
+    PushNotifications.requestPermissions().then(async () => {
+      let permStatus = await PushNotifications.checkPermissions();
+
+      if (permStatus.receive === 'prompt') {
+        permStatus = await PushNotifications.requestPermissions();
+      }
+
+      if (permStatus.receive !== 'granted') {
+        throw new Error('User denied permissions!');
+      }
+
+      await PushNotifications.register();
+    });
+
+    // On success, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token: Token) => {
+        console.log('Push registration success, token: ' + token.value);
 
         let platform = 'ios';
         if (this.platform.is('android')) {
@@ -215,16 +232,25 @@ export class AppComponent implements OnInit {
 
         this.authService.devicePlatform = platform;
         this.authService.deviceToken = token.value;
-      });
+      }
+    );
 
-      await PushNotifications.addListener('registrationError', err => {
-        console.error('Registration error: ', err.error);
-      });
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        console.log('Error on registration: ' + JSON.stringify(error));
 
-      await PushNotifications.addListener('pushNotificationReceived', notification => {
-        console.log('Push notification received: ', notification);
+      }
+    );
 
-        this.badge.increase(1);
+    // Show us the notification payload if the app is open on our device
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification) => {
+        console.log('push token - Push notification received: ', 'Push received: ' + JSON.stringify(notification));
+
+        this.getNumNotification()
+        console.log('push token - [pushNotificationReceived] Push received:', notification);
+
         const voip = notification.data?.voip;
 
         if (voip == "true") {
@@ -240,15 +266,17 @@ export class AppComponent implements OnInit {
 
         } else {
           console.log("is notification: ", notification);
-          this.showNotification(notification);
+          //this.showNotification(notification);
 
         }
-      });
+      }
+    );
 
-      await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-        console.log('Push notification action performed', notification.actionId, notification.inputValue);
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        console.log('Push action performed: ' + JSON.stringify(notification));
         const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data;
-        console.log(notification);
 
         const action = data?.action;
         const id = data?.id;
@@ -259,46 +287,120 @@ export class AppComponent implements OnInit {
         if (action == "VIDEOCALL") {
           this.redirecToVideocall(notification)
           return
-        } else {
-          let secondsLastPause = (this.lastPause) ? this.lastPause.getTime() : 0
-          let secondsNow = (new Date).getTime()
-          // App will lock after 2 minutes
-          let secondsPassed = (secondsNow - secondsLastPause) / 1000;
-          console.log(`PushNotificationActionPerformed secondsNow: ${secondsNow / 1000}, secondsLastPause: ${secondsLastPause}`,);
-          if (this.router.url.includes('landing')) {
-            this.dooleService.setPushNotification(data)
-            this.router.navigate([`/landing`], { state: { pushNotification: data } });
-          } else if (secondsPassed >= 120) {
-            // Must implement lock-screen
-            this.showFingerprintAuthDlg(data)
-            //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
-          } else
-            this.redirectPushNotification(data, notification);
         }
+
+        let secondsLastPause = (this.lastPause) ? this.lastPause.getTime() : 0
+        let secondsNow = (new Date).getTime()
+        // App will lock after 2 minutes
+        let secondsPassed = (secondsNow - secondsLastPause) / 1000;
+        console.log(`push token - PushNotificationActionPerformed secondsNow: ${secondsNow / 1000}, secondsLastPause: ${secondsLastPause}`,);
+        if (this.router.url.includes('landing')) {
+          this.dooleService.setPushNotification(data)
+          this.router.navigate([`/landing`], { state: { pushNotification: data } });
+        } else if (secondsPassed >= 120) {
+          // Must implement lock-screen
+          this.showFingerprintAuthDlg(data)
+          //setTimeout(()=>this.showFingerprintAuthDlg(data), 500);
+        } else
+          this.redirecPushNotification(data, notification);
+      }
+    );
+
+    // LOCAL NOTIFICATIONS
+    await LocalNotifications.requestPermissions().then((data) => {
+      console.log("LocalNotifications Registered");
+    });
+
+    this.translate.get(['notifications.chat', 'notifications.form', 'notifications.drug', 'notifications.videocall', 'notifications.open', 'notifications.close']).subscribe(async translations => {
+      console.log('translations', translations['notifications.videocall']);
+      await LocalNotifications.registerActionTypes({
+        types: [{
+          id: 'MESSAGE',
+          actions: [{
+            id: 'view',
+            title: translations['notifications.chat']
+          }, {
+            id: 'remove',
+            title: 'Dismiss',
+            destructive: true
+          }, {
+            id: 'respond',
+            title: 'Respond',
+            input: true
+          }],
+        }, {
+          id: 'FORM',
+          actions: [{
+            id: 'view',
+            title: translations['notifications.form']
+          }, {
+            id: 'remove',
+            title: translations['notifications.close'],
+            destructive: true
+          }],
+        }, {
+          id: 'DRUGINTAKE',
+          actions: [{
+            id: 'view',
+            title: translations['notifications.drug']
+          }, {
+            id: 'remove',
+            title: 'Dismiss',
+            destructive: true
+          }],
+        }, {
+          id: 'VIDEOCALL',
+          actions: [{
+            id: 'view',
+            title: translations['notifications.videocall'],
+            foreground: true,
+          }, {
+            id: 'remove',
+            title: translations['notifications.close'],
+            destructive: true
+          }],
+        }
+        ]
       });
-    }
+    });
 
-    const registerNotifications = async () => {
-      let permStatus = await PushNotifications.checkPermissions();
 
-      if (permStatus.receive === 'prompt') {
-        permStatus = await PushNotifications.requestPermissions();
+    LocalNotifications.addListener('localNotificationReceived', (notification: LocalNotificationSchema) => {
+      console.log('localNotificationReceived received:', notification);
+    })
+
+    LocalNotifications.addListener('localNotificationActionPerformed', (notification: LocalNotificationActionPerformed) => {
+
+      console.log('localNotificationActionPerformed: ');
+      let f = notification.notification.extra;
+      console.log(f);
+      const action = f.data?.action;
+      const id = f.data?.id;
+      const msg = f.data?.message;
+      console.log('ACTION: ', action);
+
+      if (action == "VIDEOCALL") {
+        this.redirecToVideocall(notification)
+        return
+      }
+      else if (this.router.url.includes('landing')) {
+        this.dooleService.setPushNotification(f.data)
+        this.router.navigate([`/landing`], { state: { pushNotification: f.data } });
+      }
+      else if (this.authService?.user?.idUser) {
+        console.log('localNotificationActionPerformed idUser: ', this.authService?.user?.idUser)
+        this.redirecPushNotification(f.data, notification)
+      }
+      else {
+        this.redirecToVideocall(notification)
+        return
       }
 
-      if (permStatus.receive !== 'granted') {
-        throw new Error('User denied permissions!');
-      }
-
-      await PushNotifications.register();
-    }
-
-    const getDeliveredNotifications = async () => {
-      const notificationList = await PushNotifications.getDeliveredNotifications();
-      console.log('delivered notifications', notificationList);
-    }
+    })
   }
 
-  redirectPushNotification(data, notification?) {
+  redirecPushNotification(data, notification?) {
+
 
     switch (data.action) {
       case "MESSAGE":
@@ -334,13 +436,8 @@ export class AppComponent implements OnInit {
         });
         break;
       case "ADVICE":
-        this._zone.run(()=>{
-          this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
-        });
-        break;
-      case "NEWS":
-        this._zone.run(()=>{
-          this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
+        this._zone.run(() => {
+          this.router.navigate([`/advices-detail`], { state: { data: data, id: data.id } });
         });
         break;
       case "DIET":
@@ -359,15 +456,32 @@ export class AppComponent implements OnInit {
         });
         break;
       case "GAME":
-      case "REMINDER":
         this._zone.run(() => {
-          this.router.navigate([`/journal/games-detail`], { state: { data: data, id: data.id } });
+          if (data.type == 'form') {
+            this.router.navigate([`/tracking/form`, { id: data.form_id }], { state: { data: data, game_play_id: data?.game_play_id } });
+          } else
+            this.router.navigate([`/journal/games-detail`], { state: { data: data, id: data.id, server_url: data?.server_url } });
+        });
+        break;
+      case "EXERCISE":
+        this._zone.run(() => {
+          this.router.navigate([`/tracking/exercise`], { state: { data: data, id: data.id, programable_id: data.programable_play_id } });
         });
         break;
       default:
+        console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
         this.redirecToVideocall(notification)
         break;
     }
+  }
+
+  getNumNotification() {
+    this.dooleService.getAPINotificationsCount().subscribe((res) => {
+      if (res?.success) {
+        let numNotification = res?.notifications
+        this.badge.set(numNotification);
+      }
+    })
   }
 
   redirecToVideocall(notification) {
@@ -807,7 +921,7 @@ export class AppComponent implements OnInit {
             this.lastResume = new Date;
             this.authService.removeNumloginFailed()
             if (data) {
-              setTimeout(() => this.redirectPushNotification(data), 500);
+              setTimeout(() => this.redirecPushNotification(data), 500);
             }
           } else {
             //setTimeout(()=>this.showFingerprintAuthDlg(), 500);
@@ -879,13 +993,13 @@ export class AppComponent implements OnInit {
       });
   }
 
-  showFamilyUnitButton(): boolean{
-    if(this.router.url.includes('family-unit') || this.router.url.includes('login') || this.router.url.includes('intro')
-    || this.router.url.includes('landing') || this.router.url.includes('legal')  || this.router.url.includes('sms') || this.router.url.includes('verification')
-    ){
+  showFamilyUnitButton(): boolean {
+    if (this.router.url.includes('family-unit') || this.router.url.includes('login') || this.router.url.includes('intro')
+      || this.router.url.includes('landing') || this.router.url.includes('legal') || this.router.url.includes('sms') || this.router.url.includes('verification')
+    ) {
       return false
     }
-    else{
+    else {
       return true
     }
   }

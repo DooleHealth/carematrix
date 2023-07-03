@@ -494,7 +494,7 @@ export class SettingsPage implements OnInit {
     changeEndPoint(event){
       console.log('[SettingsPage] changeEndPoint()', event.detail.value.id)
       let index = event.detail.value.id
-      if(this.isSelectEndPoint)
+      //if(this.isSelectEndPoint)
       //this.signOut(true, index)
       this.confirmCloseAllDevices(index)
       this.isSelectEndPoint = true
@@ -538,6 +538,8 @@ export class SettingsPage implements OnInit {
 
 
     async confirmCloseAllDevices(index) {
+
+      console.log('[SettingsPage] confirmCloseAllDevices()', index)
       const alert = await this.alertController.create({
         cssClass: 'my-alert-class',
         subHeader: this.translate.instant('setting.sign_off'),
@@ -548,8 +550,8 @@ export class SettingsPage implements OnInit {
               role: 'cancel',
               cssClass: 'secondary',
               handler: (blah) => {
-                console.log('[LandingPage] AlertConfirm Cancel');
-                this.signOut(false, index)
+                console.log('[SettingsPage] AlertConfirm Cancel');
+
               }
             }, {
               text: this.translate.instant("button.yes"),

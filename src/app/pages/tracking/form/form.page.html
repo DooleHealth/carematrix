@@ -7,19 +7,19 @@
     </ion-toolbar>
 </ion-header>
 <ion-content class="form" fullscreen>
-    <app-form-control  *ngIf="this.formComponent.length > 0 &&  !this.isLoading; else second" 
-        (sendForm)="send($event)" 
-        [title]="this.title" 
-        [id]="this.id" 
-        [item]="this.formComponent" 
-        [wizard]="mode_wizard" 
+    <app-form-control  *ngIf="this.formComponent.length > 0 &&  !this.isLoading; else second"
+        (sendForm)="send($event)"
+        [title]="this.title"
+        [id]="this.id"
+        [item]="this.formComponent"
+        [wizard]="mode_wizard"
         [buttonPreview]="backDisnable"
         [goalsByAlarms]="goalsByAlarms"
         ></app-form-control>
 
     <ng-template #second>
         <ng-container  *ngIf="this.isLoading">
-            <ion-spinner class="loading" name="bubbles"></ion-spinner>
+            <ion-spinner class="loading" ></ion-spinner>
         </ng-container>
       </ng-template>
  </ion-content>

@@ -13,12 +13,11 @@ export class EncryptionService {
       JSON.stringify(data),
       this.secretKey
     ).toString();
-    console.log("ENCRYPT: ", encryptedData)
     return encryptedData;
   }
 
   decryptData(encryptedData: string): any {
-    console.log("encryptedData: ", encryptedData)
+
     const decryptedData = CryptoJS.AES.decrypt(
       encryptedData,
       this.secretKey

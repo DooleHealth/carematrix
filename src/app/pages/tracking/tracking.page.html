@@ -52,7 +52,7 @@
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'documents'">
       <div class="spin" *ngIf="this.loadingTests">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </div>
       <div
         *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0; else noData"
@@ -144,7 +144,7 @@
     <!-- Forms -->
     <div *ngSwitchCase="'forms'">
       <div class="spin" *ngIf="this.loadingForms">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </div>
       <div
         *ngIf="!this.loadingForms && this.forms && this.forms.length > 0; else noData"
@@ -212,7 +212,7 @@
     <!-- Graphics -->
     <div *ngSwitchCase="'graphics'">
       <div class="spin" *ngIf="this.loadingGraphics">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </div>
       <div
         *ngIf="!this.loadingGraphics && this.groupedElements && this.groupedElements.length > 0; else noData"
