@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   })
 export class Constants {
     public  LIST_ENPOINT: Array<any> = []
-    public  INDEX:number = 1
+    public  INDEX:number = 0
 
     public  API_ENDPOINT: string = 'https://deneb.doole.io/api';
     public  API_DOOLE_ENDPOINT: string = 'https://deneb.doole.io/api';

@@ -60,7 +60,7 @@
     <ion-row *ngIf="this.challenges?.length > 0" class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'health_path.card_title' | translate}}</ion-text>
 
-      <swiper [slidesPerView]="1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
+      <swiper [slidesPerView]="this.challenges?.length == 1 ? 1:1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
         [pagination]="false" [scrollbar]="{ draggable: true }">
         <ng-template swiperSlide *ngFor="let challenge of this.challenges" class="ion-no-padding">
 
@@ -133,7 +133,7 @@
     </ion-row>
     <!-- Agendas -->
     <ion-row *ngIf="role?.component?.agenda">
-      <swiper [slidesPerView]="1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
+      <swiper [slidesPerView]="this.appointment?.length == 1 ? 1:1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
         [pagination]="false" [scrollbar]="{ draggable: true }">
 
         <ng-template swiperSlide *ngFor="let slide of this.appointment">
@@ -185,7 +185,7 @@
 
     <ion-row *ngIf="this.advices?.length != 0 && (role?.component?.advices || role?.component?.news) ">
 
-      <swiper [slidesPerView]="1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
+      <swiper [slidesPerView]="this.advices?.length == 1 ? 1:1.2" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
         [pagination]="false" [scrollbar]="{ draggable: true }" class="swiper">
 
         <ng-template swiperSlide *ngFor="let slide of this.advices" class="swiper-slide">

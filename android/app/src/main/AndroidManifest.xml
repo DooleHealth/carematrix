@@ -18,10 +18,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="FCM_PLUGIN_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <provider
@@ -55,7 +51,7 @@
             </intent-filter>
         </service>
 
-        <service android:name="c"
+        <service android:name="com.doole.doole.DooleConnectionService"
             android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"  android:exported="true" >
             <intent-filter>
                 <action android:name="android.telecom.ConnectionService" />
@@ -99,10 +95,11 @@
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
-
+    <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
-    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+
 
 
 

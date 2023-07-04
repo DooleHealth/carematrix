@@ -73,6 +73,7 @@ export class ListNotificationsPage implements OnInit {
           this.numNotification = res.countNotifications
 
           if(this.numNotification > 0){
+
             let listNotiAux = res.notifications
             listNotiAux?.forEach(n => {
               this.getTypeNotificatios(n)
@@ -84,12 +85,15 @@ export class ListNotificationsPage implements OnInit {
               this.notifications = listNotiAux
             }
 
+
             setTimeout(() => {
               this.infiniteScroll?.complete()
+              this.allNotification = false;
             }, 1000);
 
+
           }
-          else if(this.numNotification == 0 && res.total == 0 && isFirstLoad == true){
+          else if(this.numNotification == 0 && res.nextPage == null && isFirstLoad == true){
             console.log('[ListNotificationsPage] getNotifications() autollamado');
             this.notifications = []
             this.notifications = res.notifications
@@ -351,9 +355,10 @@ export class ListNotificationsPage implements OnInit {
             //Refresco el número de notificaciones
             this.getNumNotification()
             this.getNotifications(true, true)
+            this.allNotification = false;
           }
           else
-          this.deleteNotificationsList()
+            this.deleteNotificationsList()
 
           this.checkedNotifications = []
         }
@@ -385,20 +390,20 @@ export class ListNotificationsPage implements OnInit {
   }
 
   addAllNotificationList(event){
-    console.log('[ListNotificationsPage] addAllNotificationList():', event?.detail?.checked)
+
     this.allNotification = event?.detail?.checked
     //console.log('[ListNotificationsPage] allNotification:', this.allNotification)
     if(this.notifications.length > 0){
       this.notifications.forEach(item => {
         item['checked'] = event?.detail?.checked
+        this.checkedNotifications.push(item['id'])
       } )
     }
-    console.log('[ListNotificationsPage] addToList():', this.checkedNotifications)
   }
-
 
   async confirmDeleteNotifications(){
     let error = false
+    console.log("this.checkedNotifications:",this.checkedNotifications)
     if(this.checkedNotifications.length === 0){
       error = true
     }

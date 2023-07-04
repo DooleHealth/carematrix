@@ -87,7 +87,7 @@ $color: #ffffff;
     #{percentage(math.div(math.div(50, $count) * (($i - 0) + 2), 100))} {
       transform: rotateZ((0 - (math.div(360, $count) * ($i - 1))) + deg);
     }
-    #{percentage(((50 + (math.div(50, $count) * ($i - 0))) + 2) / 100)} {
+    #{percentage(calc(((50 + (math.div(50, $count) * ($i - 0))) + 2) / 100))} {
       transform: rotateZ((0 - (math.div(360, $count) * ($i - 1))) + deg);
     }
     100% {

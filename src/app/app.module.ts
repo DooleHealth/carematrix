@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { IonicModule, IonicRouteStrategy, Platform } from "@ionic/angular";
 import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar } from "@awesome-cordova-plugins/status-bar/ngx";
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AppComponent } from "./app.component";
@@ -89,7 +89,6 @@ export function createTranslateLoader(http: HttpClient) {
 
   ],
   providers: [
-    StatusBar,
     Ng2SearchPipeModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(TranslateModule.forRoot({
