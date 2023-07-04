@@ -10,7 +10,7 @@
 <ion-content>
 
   <div class="spin" *ngIf="this.fetching;else showChallenge">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
 </div>
 <ng-template #showChallenge>
 
@@ -52,7 +52,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="this.isRequired" style="margin: 7% 2.5% 0% 2.5%; font-size: small; display: inline-flex !important;">  
+        <ion-row *ngIf="this.isRequired" style="margin: 7% 2.5% 0% 2.5%; font-size: small; display: inline-flex !important;">
           <ion-text [innerHtml]="this.note | safeHtml">
           </ion-text>
         </ion-row>

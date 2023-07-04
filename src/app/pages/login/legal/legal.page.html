@@ -10,7 +10,7 @@
 <ion-content fullscreen>
   <div class="main-container">
     <div class="spin" *ngIf="this.isLoading; else showLegal">
-      <ion-spinner name="bubbles"></ion-spinner>
+      <ion-spinner ></ion-spinner>
     </div>
     <ng-template #showLegal>
       <div [innerHtml]="this.legal?.legal_text? (this.legal?.legal_text | safeHtml):'' "></div>

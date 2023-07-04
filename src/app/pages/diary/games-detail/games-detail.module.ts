@@ -8,7 +8,7 @@ import { GamesDetailPageRoutingModule } from './games-detail-routing.module';
 
 import { GamesDetailPage } from './games-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { ShareModule } from 'src/app/shared/share/share.module';
 
 @NgModule({

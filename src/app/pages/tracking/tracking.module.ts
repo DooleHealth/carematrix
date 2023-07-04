@@ -9,7 +9,7 @@ import { TrackingPageRoutingModule } from './tracking-routing.module';
 import { TrackingPage } from './tracking.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { ElementsAddPageModule } from './elements-add/elements-add.module';
 import { DocumentsAddPageModule } from './documents-add/documents-add.module';
 import { DocumentsFilterPageModule } from './documents-filter/documents-filter.module';

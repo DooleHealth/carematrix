@@ -33,7 +33,10 @@ const config: CapacitorConfig = {
       presentationOptions: ["badge", "sound", "alert"],
     },
   },
-  cordova: {}
+  cordova: {
+    staticPlugins: [
+    "cordova-plugin-opentok"
+  ]}
 }
 
 export default config;

@@ -1,6 +1,6 @@
 .logo-header {
     width: 170px;
-  
+
     height: auto;
     display: block;
     margin-left: auto;
@@ -22,15 +22,15 @@
     align-items: center;
   }
   ion-icon {
-      
+
       font-size: 90px;
-      color:  #006172; 
+      color:  #006172;
       text-align: center;
       position:relative;
       top: calc(50% - 10px); /* 50% - 3/4 of icon height */
   }
-  
-  
+
+
   #container * {
       margin: 0;
       padding: 0;
@@ -43,7 +43,7 @@
     #middle,
     #right {
       display: inline-block;
-      *display: inline;
+
       zoom: 1;
       vertical-align: top;
     }

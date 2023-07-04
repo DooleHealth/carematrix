@@ -4,62 +4,60 @@
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{header}}</ion-title>
-    <ion-buttons slot="end" >
-      <ion-button *ngIf="role?.component?.reminder" color="primary" (click)="this.addReminder()" ><ion-icon slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="role?.component?.reminder" color="primary" (click)="this.addReminder()"><ion-icon
+          slot="icon-only" name="alarm-outline"></ion-icon></ion-button>
       <ion-icon *ngIf="role?.component?.element" slot="icon-only" name="add" color="primary"
-      (click)="this.addElement()"></ion-icon>
+        (click)="this.addElement()"></ion-icon>
     </ion-buttons>
 
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="whiteBackground">
 
-    <ion-segment
-    value="day"
-    [(ngModel)]="segmentFilter"
-    (ionChange)="segmentChanged($event)"
-    scrollable style="background-color: white;">
-      <ion-segment-button value="1d" >
-        <ion-label>{{ 'date.day_abbr' | translate}}</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="1w">
-        <ion-label>{{ 'date.week_abbr' | translate}}</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="1m">
-        <ion-label>{{ 'date.month_abbr' | translate}}</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="1y">
-        <ion-label>{{ 'date.year_abbr' | translate}}</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+  <ion-segment value="day" [(ngModel)]="segmentFilter" (ionChange)="segmentChanged($event)" scrollable
+    style="background-color: white;">
+    <ion-segment-button value="1d">
+      <ion-label>{{ 'date.day_abbr' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1w">
+      <ion-label>{{ 'date.week_abbr' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1m">
+      <ion-label>{{ 'date.month_abbr' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1y">
+      <ion-label>{{ 'date.year_abbr' | translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-    <div class="spin" *ngIf="this.isLoading">
-      <ion-spinner name="bubbles"></ion-spinner>
-    </div>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner ></ion-spinner>
+  </div>
 
-    <ion-row class="textBlueCentered1, header-change-month" style="background-color: white !important;">
-      <!-- Move back one screen of the slides -->
-     <ion-col size="2">
-       <ion-button fill="clear" (click)="back()"  class="textBlueCentered1">
-         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary" ></ion-icon>
-       </ion-button>
-     </ion-col>
-     <ion-col size="8" class="textBlue; textBlueCentered">
-       <h3 style="text-align: center; font-size: 20px;">{{ viewTitle | titlecase }}</h3>
-     </ion-col>
-     <ion-col size="2" class="textBlueCentered1">
-       <ion-button fill="clear" (click)="next()" [disabled]="disabledButton()">
-         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
-       </ion-button>
-     </ion-col>
-   </ion-row>
-   <div class="main-container2">
+  <ion-row class="textBlueCentered1, header-change-month" style="background-color: white !important;">
+    <!-- Move back one screen of the slides -->
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="back()" class="textBlueCentered1">
+        <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="8" class="textBlue; textBlueCentered">
+      <h3 style="text-align: center; font-size: 20px;">{{ viewTitle | titlecase }}</h3>
+    </ion-col>
+    <ion-col size="2" class="textBlueCentered1">
+      <ion-button fill="clear" (click)="next()" [disabled]="disabledButton()">
+        <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <!-- <div class="main-container2">
     <ion-row *ngIf="this.last_value?.value"><ion-col size="6" class="txtTitleGoalsGreenBig">{{this.last_value?.value}}&nbsp;<span style="color:black" class="txtTitleGoalsLittle2">{{units}}</span></ion-col></ion-row>
     <ion-row *ngIf="this.last_value?.date"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatDate(this.last_value?.date) | date: this.dateService.ddMMy()}}</ion-col></ion-row>
-   </div>
+   </div> -->
 
-  <div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
+  <!-- <div  id="container" style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
 
   <div *ngIf="goals !== undefined &&  goals.length >0">
     <div *ngIf="!this.isDiastoleAndSystole; else multigoals">
@@ -92,10 +90,10 @@
           </ion-card>
         </div>
     </ng-template>
-  </div>
+  </div> -->
 
-<!-- Ranges -->
-<span *ngIf="this.ranges.length > 0">
+  <!-- Ranges -->
+  <!-- <span *ngIf="this.ranges.length > 0">
   <div *ngIf="!this.isDiastoleAndSystole; else multiranges">
     <div class="main-container">
       <ion-text class="txtTitleNoMargin">{{ 'goals.subtitle_information' | translate}}</ion-text>
@@ -103,7 +101,6 @@
     <ion-card class="cardProfilePadding">
       <ion-card-title  *ngIf="description" class="txtTitleGoals">{{ 'activity_goal.definition' | translate}}</ion-card-title><br>
       <div *ngIf="description" [innerHtml]="this.description"></div>
-      <!-- <ion-item-divider></ion-item-divider> -->
       <div *ngIf="this.normalValue.length > 0">
         <div *ngFor="let range of this.normalValue">
           <ion-col class="txtTitleSuccess">{{ 'activity_goal.normal_value' | translate}}</ion-col><ion-col>{{range}} {{this.units}}</ion-col>
@@ -154,8 +151,92 @@
       </div>
     </div>
   </ng-template>
-</span>
-<!-- End Ranges -->
+</span> -->
+  <!-- End Ranges -->
+
+  <div class="main-container2" [ngClass]="(this.values &&  this.values.length > 0)? 'contaner-block':'contaner-none' ">
+    <ion-row *ngIf="this.last_value?.base_on"><ion-col size="12"
+        class="txtTitleGoalsLittle">{{this.last_value?.base_on}} {{getIntervalType(segmentFilter,
+        2)}}</ion-col></ion-row>
+    <ion-row *ngIf="this.last_value?.value"><ion-col size="12" class="txtTitleGoalsGreenBig">{{
+        (this.last_value?.value)? replaceValue(this.last_value?.value):'' }}&nbsp;<span style="color:black"
+          class="txtTitleGoalsLittle2">{{units}} / {{getIntervalType(segmentFilter, 1) |
+          lowercase}}</span></ion-col></ion-row>
+    <!-- <ion-row *ngIf="this.last_value?.date"><ion-col size="4" class="txtTitleGoalsLittle">{{ formatDate(this.last_value?.date) | date: 'dd/MM/y'}}</ion-col></ion-row> -->
+  </div>
+
+  <div [ngClass]="(this.values &&  this.values.length > 0)? 'contaner-block':'contaner-none' " id="container"
+    style="min-width: 310px; max-width: 1100px; height: 400px; margin: 0 auto"></div>
+
+  <div [ngClass]="(this.values &&  this.values.length > 0)? 'contaner-none':'contaner-block' ">
+    <div *ngIf="!this.isLoading" style="margin-bottom: 20%; margin-top: 5%;">
+      <ion-row class="ion-align-items-center" style="margin-top: 10px;">
+        <ion-col size="2" offset="1">
+          <ion-img src='assets/icons/icon_information_secondary.svg' style="height: 40px;"></ion-img>
+        </ion-col>
+        <ion-col size="8">
+          <div>
+            <p class="text-center">{{ 'activity_goal.no_data_date' | translate }}</p>
+            <p style="font-size: 12px !important;" class="text-center">{{ 'activity_goal.no_data_help' | translate }}
+            </p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <div *ngIf="goals !== undefined &&  goals.length >0;">
+    <ion-card *ngFor="let goal of goals" class="cardProfilePadding card1">
+      <ion-row class="goalGrid">
+        <ion-col size="2" style="padding: 0%;">
+          <ion-img src='assets/icons/Icon-goal.svg' style="margin-right: 5px; height: 40px;"></ion-img>
+        </ion-col>
+        <!-- <ion-col size="10" class="txtTitleGoals2">{{'goals.description_reward' | translate}} {{goal.score}} Healthies<br></ion-col> -->
+        <ion-col size="10">
+          <ion-row style="margin-bottom: 5px;">
+            <ion-text class=" txtTitleGreen">{{ 'goals.subtitle_reward' | translate | uppercase}}</ion-text>
+          </ion-row>
+          <ion-row class="txtTitleGoals2 txtTitleGreen">
+            {{'goals.description1' | translate}} {{header?.toLowerCase()}} {{goal?.typeString?.toLowerCase()}}
+            {{this.units}} {{'goals.description2' | translate}} {{goal?.coin?.name?.toLowerCase()}}:
+            {{goal.score}} {{goal?.coin?.name?.toUpperCase()}}
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
+  <span *ngIf="this.ranges.length > 0">
+    <ion-card class="cardProfilePadding card">
+      <ion-item>
+        <ion-text class="txtPoppinsBlueLightBold16px">{{ 'goals.subtitle_information' | translate |
+          uppercase}}</ion-text>
+      </ion-item>
+      <ion-card-title *ngIf="description" class="txtTitleGoals txtMarginElement">{{ 'activity_goal.definition' |
+        translate}}</ion-card-title><br>
+      <div *ngIf="description" [innerHtml]="this.description"></div>
+      <!-- <ion-item-divider></ion-item-divider> -->
+      <div *ngIf="this.normalValue.length > 0" class="txtMarginElement">
+        <ion-text class="titleGoalBlack">{{ 'activity_goal.normal_value' | translate}}</ion-text>
+        <div *ngFor="let range of this.normalValue">
+          <ion-text style="margin: 10px 0 5px 0;">{{range}} {{this.units}}</ion-text>
+        </div>
+      </div>
+      <div *ngIf="this.outRangeValue.length > 0" class="txtMarginElement">
+        <ion-text class="titleGoalBlack">{{ 'activity_goal.out_range_value' | translate}}</ion-text>
+        <div *ngFor="let range of this.outRangeValue">
+          <ion-text style="margin: 10px 0 5px 0;">{{range}} {{this.units}}</ion-text>
+        </div>
+      </div>
+      <div *ngIf="this.dangerValue.length > 0" class="txtMarginElement">
+        <ion-text class="titleGoalBlack">{{ 'activity_goal.danger_value' | translate}}</ion-text>
+        <div *ngFor="let range of this.dangerValue">
+          <ion-text style="margin: 10px 0 5px 0;">{{range}} {{this.units}}</ion-text>
+        </div>
+      </div>
+      <br>
+    </ion-card>
+  </span>
 
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
@@ -166,12 +247,12 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col >
+          <ion-col>
             <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
           </ion-col>
         </ion-row>
       </ion-grid>
-  </div>
+    </div>
   </ng-template>
 
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -20,7 +20,7 @@ export class VerificationPage implements OnInit {
   pattern = "^\\d{1,4}$"
   code = new FormControl('', [Validators.required, Validators.minLength(6)/* , Validators.pattern(this.pattern) */]);
   constructor(
-    public router: Router,    
+    public router: Router,
     private translate: TranslateService,
     private dooleService: DooleService,
     private authService: AuthenticationService,
@@ -46,7 +46,7 @@ export class VerificationPage implements OnInit {
     this.dooleService.postAPIcodeVerification(verification_code).subscribe(
       async (res: any) =>{
         console.log('[VerificationPage] checkCode()', await res);
-        let  isSuccess = res.success 
+        let  isSuccess = res.success
         if(isSuccess){
           //this.checkConditionLegal()
           this.redirectPage(true)
@@ -54,9 +54,9 @@ export class VerificationPage implements OnInit {
         }else{
           this.dooleService.presentAlert(this.translate.instant("verification.alert_message"))
         }
-       },(err) => { 
-          console.log('VerificationPage checkCode()  ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('VerificationPage checkCode()  ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -66,11 +66,11 @@ export class VerificationPage implements OnInit {
       async (res: any) =>{
         console.log('[VerificationPage] sendEmailWithCode()', await res);
         this.showAlertSendEmail(res.success)
-       },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('getAll ERROR(' + err.code + '): ' + err.message);
           let messagge = this.translate.instant("verification.send_email_alert_message")
           this.dooleService.presentAlert(messagge +' '+ err.message)
-          throw err; 
+          throw err;
       });
   }
 
@@ -91,11 +91,11 @@ export class VerificationPage implements OnInit {
           this.redirectPage(res.accepted_last)
          else
           alert(res.message)
-       },(err) => { 
-          console.log('[VerificationPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[VerificationPage] checkConditionLegal() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
-     
+
   }
 
   redirectPage(condicion){
@@ -103,7 +103,7 @@ export class VerificationPage implements OnInit {
       this.router.navigate(['/legal']);
     else{
       this.showIntro()
-    }      
+    }
   }
 
   showIntro(){

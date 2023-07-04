@@ -16,7 +16,7 @@
 <ion-content fullscreen class="whiteBackground">
   <div class="whiteBackground">
     <!-- floating action buttom -->
-   
+
     <ion-fab  *ngIf="this.event?.online === 1 && this.tokboxSession && event?.origin !== 1" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="this.startVideoCall()">
         <ion-icon name="videocam-outline"></ion-icon>
@@ -35,8 +35,8 @@
         <ion-text class="textMedium">{{ formatSelectedDate(event?.start_date_iso8601)}}</ion-text>
       </ion-item>
       <ion-item routerLink="doctor"  routerLinkActive='active-item'
-              [state]="{doctor: staff}" 
-              *ngFor="let staff of event?.staff; let i = index" 
+              [state]="{doctor: staff}"
+              *ngFor="let staff of event?.staff; let i = index"
               [lines]="(i == event?.staff?.length-1)? 'full': 'none'">
         <ion-label>{{ 'appointment.field_specially' | translate}}</ion-label>
         <ion-text class="textMedium"  >{{staff?.name}}</ion-text>
@@ -106,17 +106,17 @@
           <p class="titule">{{ getName(file) }}</p>
         </div>
       </ion-item>
-    </div>       
+    </div>
   </div>
 
   <div *ngIf="this.isSaving else buttons" class="spinnerCenter">
-    <ion-spinner  name="bubbles" ></ion-spinner>
-    </div>  
+    <ion-spinner   ></ion-spinner>
+    </div>
   <ng-template #buttons>
     <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
       <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_appointment' | translate}}</ion-button>
-    
+
       <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
         {{ 'appointment.button_delete' | translate}}</ion-button>
     </div>
@@ -124,12 +124,12 @@
     <div class="buttonContainer"  *ngIf="event?.origin === 1 && !this.event?.staff">
       <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_event' | translate}}</ion-button>
-    
+
       <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
         {{ 'appointment.delete_event' | translate}}</ion-button>
     </div>
   </ng-template>
-  
- 
+
+
 
 </ion-content>

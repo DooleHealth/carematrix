@@ -9,6 +9,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 
 import { FormPage } from './form.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlarmFormPageModule } from './alarm-form/alarm-form.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     FormPageRoutingModule,
+    AlarmFormPageModule,
     TranslateModule  ],
   declarations: [FormPage]
 })

@@ -3,9 +3,23 @@
         <ion-buttons slot="start">
             <ion-back-button text="" (click)="backButton()"></ion-back-button>
         </ion-buttons>
+        <!-- <ion-title>{{'list_notifications.form' | translate}}</ion-title> -->
     </ion-toolbar>
 </ion-header>
-<ion-content fullscreen>
-    <iframe [src]="url" allowfullscreen width="100%" height="100%" frameborder="0" style="height:100% !important;">
-    </iframe>
-</ion-content>
+<ion-content class="form" fullscreen>
+    <app-form-control  *ngIf="this.formComponent.length > 0 &&  !this.isLoading; else second"
+        (sendForm)="send($event)"
+        [title]="this.title"
+        [id]="this.id"
+        [item]="this.formComponent"
+        [wizard]="mode_wizard"
+        [buttonPreview]="backDisnable"
+        [goalsByAlarms]="goalsByAlarms"
+        ></app-form-control>
+
+    <ng-template #second>
+        <ng-container  *ngIf="this.isLoading">
+            <ion-spinner class="loading" ></ion-spinner>
+        </ng-container>
+      </ng-template>
+ </ion-content>

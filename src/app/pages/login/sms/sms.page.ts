@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-sms',
@@ -15,7 +15,7 @@ export class SmsPage implements OnInit {
   isSubmitted= false
   email = new FormControl('', [Validators.required, Validators.minLength(9), Validators.email,]);
   constructor(
-    public router: Router,    
+    public router: Router,
     private translate: TranslateService,
     private alertController: AlertController,
     private dooleService: DooleService,
@@ -65,15 +65,15 @@ export class SmsPage implements OnInit {
     this.dooleService.postAPIemailVerification(user_email).subscribe(
       async (res: any) =>{
         console.log('[LegalPage] sendEmail()', await res);
-        let  isSuccess = res.success 
+        let  isSuccess = res.success
         if(isSuccess){
           this.nav.navigateForward("verification", { state: {email: this.email.value} });
         }else{
           console.log('[LegalPage] sendEmail() Unsuccessful response', await res);
         }
-       },(err) => { 
-          console.log('[LegalPage] sendEmail() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[LegalPage] sendEmail() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 

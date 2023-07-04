@@ -39,6 +39,7 @@ export class TrackingPage implements OnInit {
   public id;
   public url;
   groupedElements: Array<any>;
+  newGroupedElements: Array<any>;
   elementValues: Array<any>;
   isLoading = true
   loadingForms = false;
@@ -168,44 +169,44 @@ export class TrackingPage implements OnInit {
         });
   }
 
-  async getElementsList(){
-      this.loadingGraphics = true
-      this.groupedElements = [];
-      this.elementValues = [];
-      this.dooleService.getAPIelementsList().subscribe(
-        async (data: any) =>{
-          console.log('[TrackingPage] getElementsList()', await data);
-          if(data.eg){
-            // Iterate elements in the tree searching for element groups
-            this.treeIterate(data.eg, '');
-            // Order grouped elements by Name
-            this.groupedElements?.sort(function(a,b){
-              return a.group.localeCompare(b.group);
-            })
-            this.elementValues = data.elementValues;
-          }
-          this.loadingGraphics = false
-         },(err) => {
-            alert(`Error: ${err.code }, Message: ${err.message}`)
-            console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
-            this.loadingGraphics = false
-            throw err;
-        });
+  async getElementsList() {
+    this.loadingGraphics = true
+    this.groupedElements = [];
+    this.newGroupedElements = [];
+    let params = { only_with_values: '0', grouped: '1', filter: 1 }
+    //Activar filtro getAPIelementsList(true)
+    this.dooleService.getAPIelementsList(params).subscribe(
+      async (data: any) => {
+        console.log('[TrackingPage] getElementsList()', await data);
+          this.treeIterate(data?.elements)
+          console.log('[TrackingPage] getElementsList() ', this.groupedElements);
+        this.loadingGraphics = false
+      }, (err) => {
+        alert(`Error: ${err.code}, Message: ${err.message}`)
+        console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
+        this.loadingGraphics = false
+        throw err;
+      });
 
   }
 
-  treeIterate(obj, stack) {
+  groupElements(elements) {
+    elements.forEach((element) => {
+      element['units'] = element?.element_unit?.abbreviation ? element?.element_unit?.abbreviation : '';
+      element['value'] = element?.last_value?.value;
+    })
+
+    console.log('[DiaryPage] groupElements()', this.groupedElements);
+  }
+
+  treeIterate(obj) {
+    console.log('[DiaryPage] groupElements()', obj);
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {
-        if (typeof obj[property] == "object") {
-          this.treeIterate(obj[property], stack + '.' + property);
-        } else {
-          if(property=="group"){
-            obj['is_child'] = stack.includes('childs');
-            if(obj?.elements.length>0)
-            this.groupedElements.push(obj);
-          }
-        }
+        console.log('[DiaryPage] groupElements()', property);
+              let elements = obj[property]
+              this.groupElements(elements)
+              this.groupedElements.push({ group: property, elements: elements });
       }
     }
   }

@@ -72,7 +72,14 @@ export class PusherConnectionService {
   public unsubscribePusher(){
     this.pusherChallenge.unsubscribePusher()
     this.pusherNotification.unsubscribePusher()
-    this.pusherChallenge.unsubscribePusher()
+    this.pusherAlarm.unsubscribePusher()
+  }
+
+  public isConnectedPusher(): boolean{
+    console.log('[PusherConnectionService] isConnectedPusher()', this.pusher);
+    if(this.pusher?.connection?.state === "connected")
+      return true;
+    return false;
   }
 
 }

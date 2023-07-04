@@ -65,7 +65,7 @@ ion-img {
   }
 
   ion-card-content {
-    height: 90px;
+    height: 80px;
     ion-progress-bar {
       height: 10px;
       width: 85%;
@@ -98,14 +98,13 @@ ion-img {
   }
 }
 .customCardAppointment {
-  background-color: white;
-  width: 100%;
-  height: 123px;
+  background-color: #fff;
+
 }
 
 .customCardHealthPath {
   background-color: white;
-  width: 100%;
+
 }
 .strechCardContent {
   min-width: 300px !important;
@@ -200,6 +199,18 @@ ion-progress-bar {
   -webkit-box-orient: vertical;
 }
 
+.bell{
+  margin-top: 10%;//7px;
+  width: fit-content;
+  margin-left: -9px;
+  position: absolute;
+  z-index: 99999;
+}
+.ion-text-end{
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+}
+
 .sliderImage {
   height: 220px;
   width: 300px;
@@ -213,6 +224,64 @@ ion-progress-bar {
     width: 100%;
     object-fit: cover;
     object-position: center center;
+  }
+}
+
+.disabled_swiper_button {
+  opacity: 0;
+  cursor: auto;
+  pointer-events: none;
+}
+
+.slides{
+  background-color: lightblue;
+}
+
+.card-content-css{
+  background-color: yellow;
+}
+
+.slider-vertical{
+  height: 70px !important;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide-container {
+  text-align: center;
+        font-size: 18px;
+        background: #fff;
+  height:100%;
+        max-width: 600px;
+  margin:auto;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+}
+
+.swiper .swiper-slide {
+  height: auto;
+}
+
+.swiper-slide {
+  display: block;
+
+  object-fit: cover;
+  border-radius: 15px;
+  .cover img{
+    height: 200px;
   }
 }
 

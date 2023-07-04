@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar mode="ios" class="iosHeaderGray">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark" text="" (click)="close()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content view-cached=”false”>
+  <ion-row [ngClass]="(alarms?.length>0)? 'first-row':'first-row1'">
+    <ion-img [ngClass]="result ? 'd-block' : 'd-none'" class="img-info-wrapper" src="assets/icons/icon_exito.svg"></ion-img>
+    <ion-img [ngClass]="result ? 'd-none' : 'd-block'" class="img-info-wrapper" src="assets/icons/icon_cerrar_rojo.svg"></ion-img>
+
+    <h3 [ngStyle]="{'color': result? color[3]:color[1] }" class="textcenter">{{messageAnswer}}</h3>
+
+    <h2  *ngIf="score && score > 0" class="textcenter" style="color: var(--ion-color-primary)">{{'form.score' | translate}} {{score}}</h2>
+    <div style="width: 100%;">
+      <ion-button (click)="close()" md="ios" class="button-go" [ngClass]="result? 'colorButtonSuccess':'colorButtonError'">{{'form.go_to_app' | translate}}</ion-button>
+    </div>
+
+    <div class="textcenter1">
+      <ion-text (click)="goFormRedirect()" *ngIf="formRedirect">{{'form.text1' | translate}} <a> {{formTitle | uppercase}}</a></ion-text>
+    </div>
+  </ion-row>
+  <div *ngFor="let message of alarms;">
+    <ion-row [ngStyle]="{'color': message?.colorHex}" style="margin: 15px;">
+        <div class="slidersHeader">
+          <ion-img slot="start" [src]='message?.src'></ion-img>
+          <ion-text style="margin-left: 6px; font-weight: bolder; font-size: 18px;" slot="start">{{ 'form.text4' | translate | uppercase}}</ion-text>
+        </div>
+      <div [innerHtml]="message.screenMessage? (message.screenMessage | safeHtml):'' "></div>
+    </ion-row>
+  </div>
+
+  <ion-card class="cardProfile" *ngIf="this.source">
+    <ion-row *ngIf="this.source" style="margin:5% 5% 0 5%">
+      <ion-text class="textBlackCentered4"><b>{{'advices.source' | translate }}:</b></ion-text>
+    </ion-row> 
+    <ion-row *ngIf="this.source" style="margin:0 5%;">
+      <div [innerHtml]="this.source | safeHtml"></div>
+    </ion-row>
+  </ion-card>
+
+</ion-content>

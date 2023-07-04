@@ -282,13 +282,14 @@
 .level-icon {
   text-align: center;
   width: 100%;
-  font-size: xxx-large;
+  height: 60%;
+  margin: auto;
+  font-size: xx-large;
 }
 
 .completed {
   opacity: 0.7;
-  max-width: 15vw;
-  max-height: 15vw;
+  max-width: 50%;
   margin: auto;
 }
 

@@ -17,6 +17,7 @@ const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCrea
   providedIn: 'root'
 })
 export class PusherNotificationService {
+  readonly NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
   idUser:string;
   nameChanel:string;
   channel;
@@ -26,7 +27,8 @@ export class PusherNotificationService {
   constructor(
     private alertController: AlertController,
     private authService: AuthenticationService,
-    public translate: TranslateService,private router: Router,
+    public translate: TranslateService,
+    private router: Router,
     private modalCtrl: ModalController,
     private pusherChallenge: PusherChallengeNotificationsService,
     private _zone: NgZone) {
@@ -48,11 +50,15 @@ export class PusherNotificationService {
   }
 
   public init(){
-     this.channel?.bind(NAME_BIND, (data) => {
-          console.log('[PusherNotificationService] getPusher()',  data);
-          this.presentPromoteNotification(data);
-        });
-  }
+    return this.channel;
+   }
+
+  // public init2(){
+  //    this.channel?.bind(NAME_BIND, (data) => {
+  //         console.log('[PusherNotificationService] getPusher()',  data);
+  //         this.presentPromoteNotification(data);
+  //       });
+  // }
 
 async presentPromoteNotification(data) {
 

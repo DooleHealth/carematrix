@@ -8,13 +8,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" >
-  <ion-searchbar 
-  [animated]="true" 
+  <ion-searchbar
+  [animated]="true"
   (ionInput)="filterList($event)" >
 </ion-searchbar>
 
 <div class="spin" *ngIf="this.isLoading">
-  <ion-spinner name="bubbles"></ion-spinner>
+  <ion-spinner ></ion-spinner>
 </div>
 
 <ion-list *ngFor="let test of listTestType">

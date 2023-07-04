@@ -2,7 +2,6 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { database } from 'firebase';
 import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
@@ -49,10 +48,10 @@ export class PusherChallengeNotificationsService {
   public subscribeChannel(pusherService, idUser: string) {
     this.idUser = idUser
     this.nameChanel = 'private-LevelAccomplishmentCompleted.' + this.idUser;
-    console.log('[PusherNotificationService] this.nameChanel()', this.nameChanel);
+    console.log('[PusherChallengeNotificationsService] this.nameChanel()', this.nameChanel);
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
-    console.log('[PusherNotificationService] subscribeChannel()', this.channel);
+    console.log('[PusherChallengeNotificationsService] subscribeChannel()', this.channel);
   }
 
   public unsubscribePusher() {

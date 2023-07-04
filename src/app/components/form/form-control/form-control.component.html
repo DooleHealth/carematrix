@@ -1,0 +1,35 @@
+<ion-content #content [scrollEvents]="true">
+
+  <ion-card class="message-card" *ngIf="this.goalsByAlarms">
+    <ion-row  style="padding: 5px; color:coral; font-weight: bold;">
+        <ion-col size="11">
+            <ion-label>{{'form.goal.title' | translate}}</ion-label>
+        </ion-col>
+        <ion-col size="1">
+            <ion-icon name="close" class="close-card" (click)="this.goalsByAlarms = false"></ion-icon>
+        </ion-col>
+    </ion-row>
+    <ion-row style="padding: 0px 5px 10px 5px;">
+        <ion-col size="12">
+            <ion-text [innerHtml]="this.note_message | safeHtml"></ion-text>
+        </ion-col>
+    </ion-row>
+  </ion-card>
+
+    <ion-row *ngIf="title" style="margin-top:5%; margin-bottom: 5%;">
+      <ion-text  class="txtTitleBlueDark" style="margin: 5px !important;">{{this.title}}}</ion-text>
+    </ion-row>  
+
+    <ion-row *ngIf="this.wizard">
+      <ion-progress-bar class="progressBarWizard" [value]="this.num_progressBar==0? 0:progressBar()"></ion-progress-bar> 
+    </ion-row>
+
+    <ng-template appFormD></ng-template>
+
+    <ion-item *ngIf="this.wizard" class="nextButton" lines="none">
+      <ion-button *ngIf="this.buttonPreview" slot="start" [disabled]="this.indexArray<=0" (click)="this.back()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+      <ion-button slot="end" [disabled]="this.disabled_next" (click)="this.next()"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+    </ion-item>
+
+    <ion-button *ngIf="!this.wizard || this.wizard && this.disabled_next" mode="ios" (click)="send()" expand="block" size="large" style="width: 80%; margin: 10%;">{{'form.button.send'| translate}}</ion-button>
+  </ion-content>

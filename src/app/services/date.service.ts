@@ -31,6 +31,24 @@ export class DateService {
     return format
   }
 
+  public getDateFormat3(){
+    let lang = this.translate.currentLang;
+    let format = 'DD/MM/YYYY';
+    if(lang === 'en' )
+      format = 'MM/DD/YYYY'
+    return format
+  }
+
+  public getLongFormat(){
+    let lang =  this.translate.currentLang;
+    let format = 'dddd, MMM yyyy';
+
+    if(lang === 'en' )
+      format = 'MMM, ddd yyyy';
+      
+    return format
+  }
+
 
   public getMonthViewDayHeader(date:Date){
     let lang = this.translate.currentLang;
@@ -439,6 +457,46 @@ export class DateService {
       sameElse: 'DD/MM/YY ' + timeString,
       nextDay : 'DD/MM/YY ' + timeString,
     });
+  }
+
+  getCalendarDay2(epoch: number): string {
+    if (!epoch) {
+      return null;
+    }
+    let timeString = this.getTimeFormat();
+    let dateString = this.getShortDateFormat();
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
+    return moment(epoch).calendar(null, {
+      sameDay: `[${today}]  `  + timeString,
+      lastDay: `[${yesterday}]  ` + timeString,
+      sameElse: dateString + ' ' + timeString,
+      lastWeek : dateString + ' ' + timeString,
+      nextDay : dateString + ' ' + timeString
+    });
+  }
+  
+
+  getCalendarDayTime(epoch: number): string {
+    if (!epoch) {
+      return null;
+    }
+    let timeString = this.getTimeFormat();
+    let dateString = this.getLongFormat();
+    let lang =  this.translate.currentLang;
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
+    const to = this.translate.instant('agenda.to');
+
+    const  m = moment
+    m.locale(lang)
+    return m(epoch).calendar(null, {
+      sameDay: `[${today}]  `  + `[${to}]  ` + timeString,
+      lastDay: `[${yesterday}]  ` + `[${to}]  ` + timeString,
+      sameElse: dateString + ' ' + `[${to}]  ` + timeString,
+      lastWeek: dateString + ' ' + `[${to}]  ` + timeString,
+      nextDay : dateString + ' ' + `[${to}]  ` + timeString
+    })
   }
 
   // return epoch string as specified format

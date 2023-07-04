@@ -82,21 +82,11 @@
 :host([animation=gradient])::before {
   background: linear-gradient(to right, var(--image-shell-loading-background) 8%, var(--image-shell-animation-color) 18%, var(--image-shell-loading-background) 33%);
   background-size: 800px 104px;
-  -webkit-animation: animateBackground 2s ease-in-out infinite;
-          animation: animateBackground 2s ease-in-out infinite;
+  animation: animateBackground 2s ease-in-out infinite;
 }
 :host([animation=gradient]).img-ssr::before, :host([animation=gradient]).img-loaded::before, :host([animation=gradient]).img-error::before {
   background: none;
-  -webkit-animation: 0;
-          animation: 0;
-}
-@-webkit-keyframes animateBackground {
-  0% {
-    background-position: -468px 0;
-  }
-  100% {
-    background-position: 468px 0;
-  }
+  animation: 0;
 }
 @keyframes animateBackground {
   0% {

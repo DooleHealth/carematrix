@@ -1,16 +1,19 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject, from, of } from 'rxjs';
 import { DataStore } from '../../../utils/shell/data-store';
 import { FirebaseProfileModel } from './firebase-profile.model';
 import { Platform } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
 
-import { User, auth } from 'firebase/app';
+import firebase from "firebase/compat/app";
 //import { cfaSignIn, cfaSignOut } from 'capacitor-firebase-auth';
 import { isPlatformBrowser } from '@angular/common';
+import { User, Auth } from 'firebase/auth';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FirebaseAuthService {
 
   currentUser: User;
@@ -79,11 +82,11 @@ export class FirebaseAuthService {
     }
   }
 
-  signInWithEmail(email: string, password: string): Promise<auth.UserCredential> {
+  signInWithEmail(email: string, password: string): Promise<firebase.auth.UserCredential> {
     return this.angularFire.signInWithEmailAndPassword(email, password);
   }
 
-  signUpWithEmail(email: string, password: string): Promise<auth.UserCredential> {
+  signUpWithEmail(email: string, password: string): Promise<firebase.auth.UserCredential> {
     return this.angularFire.createUserWithEmailAndPassword(email, password);
   }
 
@@ -91,8 +94,8 @@ export class FirebaseAuthService {
     if (this.platform.is('capacitor')) {
       //return cfaSignIn(providerName);
     } else {
-     
-      const provider = new auth.OAuthProvider(providerName);
+
+      const provider = new firebase.auth.OAuthProvider(providerName);
       //console.log("provider. ", provider);
       if (scopes) {
         scopes.forEach(scope => {
@@ -100,7 +103,7 @@ export class FirebaseAuthService {
         });
       }
 
-     
+
       if (this.platform.is('desktop')) {
         return from(this.angularFire.signInWithPopup(provider));
       } else {
@@ -111,14 +114,14 @@ export class FirebaseAuthService {
   }
 
   signInWithGoogle() {
-    const provider = new auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     //console.log("provider: ", provider);
     const scopes = ['profile', 'email'];
     return this.socialSignIn(provider.providerId, scopes);
   }
 
   signInWithTwitter() {
-    const provider = new auth.TwitterAuthProvider();
+    const provider = new firebase.auth.TwitterAuthProvider();
     return this.socialSignIn(provider.providerId);
   }
 

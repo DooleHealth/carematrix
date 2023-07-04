@@ -1,8 +1,10 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-button slot="start" fill="clear" (click)="close()">
-      <ion-icon name="close"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-button slot="start" fill="clear" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{'advices.tag_advices'| translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +12,7 @@
 <ion-content>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div>
   <ion-row style="margin-top:5%; margin-bottom: 5%;">
     <ion-text  class="txtTitleBlueDark">{{advice?.name}}</ion-text>

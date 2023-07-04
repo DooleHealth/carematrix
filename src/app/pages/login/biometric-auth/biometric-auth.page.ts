@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/config/constants';
@@ -19,12 +19,12 @@ export class BiometricAuthPage implements OnInit {
   environment = 0
   settingsBio = '';
   constructor(
-    private authService: AuthenticationService, 
-    private router: Router, 
-    private modalCtrl: ModalController, 
-    public translate: TranslateService, 
-    public platform: Platform, 
-    public alertCtrl: AlertController, 
+    private authService: AuthenticationService,
+    private router: Router,
+    private modalCtrl: ModalController,
+    public translate: TranslateService,
+    public platform: Platform,
+    public alertCtrl: AlertController,
     private faio: FingerprintAIO,
     private notification: NotificationService
   ) {
@@ -94,7 +94,7 @@ export class BiometricAuthPage implements OnInit {
             this.addBiometricToList(e)
             this.notification.displayToastSuccessful()
             this.dismissLockScreen()
-          }  
+          }
         },
         (error) => {
           // Called when error

@@ -48,7 +48,8 @@
 
       <ion-item lines="none" *ngIf="this.element">
         <ion-label>{{ 'element.field_date' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" [displayFormat]="this.dateService.getDatetimeControlFormat()" min="1990-01-01" [max]="maxDate" formControlName="date" class="textMedium" required></ion-datetime>
+        <!-- FIXME:<ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" [displayFormat]="this.dateService.getDatetimeControlFormat()" min="1990-01-01" [max]="maxDate" formControlName="date" class="textMedium" required></ion-datetime> -->
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="maxDate" formControlName="date" class="textMedium" required></ion-datetime>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
 

@@ -18,17 +18,8 @@
     <param name="ios-package" value="AppVersion"/>
   </feature>
 
-  <feature name="BackgroundMode">
-    <param name="ios-package" value="APPBackgroundMode" onload="true"/>
-    <param name="onload" value="true"/>
-  </feature>
-
   <feature name="Badge">
     <param name="ios-package" value="APPBadge"/>
-  </feature>
-
-  <feature name="BLE">
-    <param name="ios-package" value="BLECentralPlugin" onload="$IOS_INIT_ON_LOAD"/>
   </feature>
 
   <feature name="Calendar">
@@ -40,29 +31,13 @@
     <param name="onload" value="true"/>
   </feature>
 
-  <feature name="Camera">
-    <param name="ios-package" value="CDVCamera"/>
-  </feature>
-
-  <feature name="Chooser">
-    <param name="ios-package" value="Chooser"/>
-  </feature>
-
   <feature name="Device">
     <param name="ios-package" value="CDVDevice"/>
-  </feature>
-
-  <feature name="SitewaertsDocumentViewer">
-    <param name="ios-package" value="SitewaertsDocumentViewer"/>
   </feature>
 
   <feature name="File">
     <param name="ios-package" value="CDVFile"/>
     <param name="onload" value="true"/>
-  </feature>
-
-  <feature name="FileTransfer">
-    <param name="ios-package" value="CDVFileTransfer"/>
   </feature>
 
   <feature name="Fingerprint">
@@ -83,6 +58,10 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="Media">
+    <param name="ios-package" value="CDVSound"/>
+  </feature>
+
   <feature name="Capture">
     <param name="ios-package" value="CDVCapture"/>
   </feature>
@@ -96,13 +75,13 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="CDVOrientation">
+    <param name="ios-package" value="CDVOrientation"/>
+  </feature>
+
   <feature name="SocialSharing">
     <param name="ios-package" value="SocialSharing"/>
     <param name="onload" value="true"/>
-  </feature>
-
-  <feature name="SQLitePlugin">
-    <param name="ios-package" value="SQLitePlugin"/>
   </feature>
 
   

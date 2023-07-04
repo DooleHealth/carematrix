@@ -4,8 +4,8 @@ import { AlertController, ModalController, Platform, ToastController } from '@io
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ReportProblemPage } from './report-problem/report-problem.page';
-import { AppVersion } from '@ionic-native/app-version/ngx';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { VideoComponent } from 'src/app/components/video/video.component';
 import { DooleService } from 'src/app/services/doole.service';
 import { OpentokService } from 'src/app/services/opentok.service';

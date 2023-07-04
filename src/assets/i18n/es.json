@@ -16,7 +16,10 @@
         "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
         "message_error_serve":"Error del servidor",
         "message_failure_response":"Ha ocurrido un error inesperado intenta otra vez",
-        "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo."
+        "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo.",
+        "login_again":"Por favor inicie sesión nuevamente",
+        "about_app":"Consejos de uso de la aplicación",
+        "usage-tips":"<div><p>¡Bienvenido a nuestra aplicación segura y de confianza!</p><p>Para garantizar tu protección y seguridad, hemos preparado esta breve guía de inicio para resaltar las mejores prácticas que puedes seguir al utilizar nuestra aplicación. Sigue estos consejos para disfrutar de una experiencia segura y sin preocupaciones:</p><ul><li>Elige una contraseña sólida: Para proteger tus datos, es importante seleccionar una contraseña segura y única. Utiliza una combinación de letras mayúsculas y minúsculas, números y caracteres especiales. Evita utilizar contraseñas obvias o información personal fácilmente identificable.</li><li>Activa la autenticación de dos factores: Asegura aún más tu cuenta habilitando la autenticación de dos factores. Esto requerirá un segundo nivel de verificación, como un código de acceso temporal enviado a tu teléfono móvil. De esta manera, incluso si alguien obtiene tu contraseña, no podrán acceder sin el código de verificación adicional.</li><li>Mantén la aplicación actualizada: Las actualizaciones de la aplicación no solo agregan nuevas funciones, sino que también solucionan posibles vulnerabilidades de seguridad. Asegúrate de tener siempre instalada la última versión de nuestra aplicación para aprovechar todas las mejoras y protecciones adicionales.</li><li>Configuración de privacidad: Explora nuestras opciones de configuración de privacidad para personalizar tu experiencia. Puedes controlar qué información compartes y con quién la compartes. Recuerda revisar y ajustar regularmente estas configuraciones para mantener un nivel óptimo de privacidad.</li></ul><p>Estos son solo algunos consejos esenciales para maximizar la seguridad al utilizar nuestra aplicación. Estamos comprometidos con tu protección y trabajamos constantemente para garantizar la integridad de tus datos. Siempre estaremos aquí para ayudarte en caso de que tengas alguna pregunta o inquietud sobre la seguridad de la aplicación, puedes comunicarte con nosotros a través del email support@doolehealth.com.</p><p>¡Gracias por elegir nuestra aplicación y confiar en nosotros!</p><p>Equipo Doole Health.</p></div>"
       },
       "legal": {
         "header": "Condiciones de uso",
@@ -199,7 +202,13 @@
         "normal_value": "Valores normales:",
         "out_range_value": "Valores fuera de rango:",
         "danger_value": "Valores anómalos:",
-        "no_data":"No hay datos a mostrar"
+        "no_data_date":"Aún no se han registrado datos",
+        "no_data_help":"Para cargar un dato, usá el botón +.",
+        "no_data":"No hay datos a mostrar",
+        "daily": "diario",
+        "weekly": "semanal",
+        "monthly": "mensual",
+        "yearly": "anual"
       },
       "activity":{
         "cal":"Cal",
@@ -396,7 +405,12 @@
         "appointment_by_user": "Cita añadida por el usuario",
         "event_by_user": "Evento añadido por el usuario",
         "error_alert_message_get_token":"Error al obtener el token de videollamada",
-        "error_alert_message_get_agenda":"Error al obtener la agenda"
+        "error_alert_message_get_agenda":"Error al obtener la agenda",
+        "to": "a las",
+        "day": "DíA",
+        "week": "SEMANA",
+        "months": "MES",
+        "year": "AÑO"
       },
       "reminder":{
         "header": "Recordatorio",
@@ -551,7 +565,8 @@
           "field_date": "Fecha",
           "alert_message_add_element": "Los datos ha sido añadido correctamente",
           "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
-          "value_invalid":"El valor no es válido. Ingresa un valor de"
+          "value_invalid":"El valor no es válido. Ingresa un valor de",
+          "confirmation": "Está información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
 
       },
       "no_data": "En este momento no hay datos para mostrar",
@@ -794,7 +809,8 @@
       },
       "security":{
         "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",
-        "alert_security": "Alerta de Seguridad"
+        "alert_security": "Alerta de Seguridad",
+        "ens_message": "<p>Estimado usuario,<br><br>Hemos detectado que su dispositivo se encuentra rooted (Android) o jailbroken (Apple). Nos gustaría informarle sobre los riesgos asociados con el uso de un dispositivo desbloqueado para fines de seguridad de datos. <br><br>Al desbloquear su dispositivo, se eliminan todas las restricciones de fábrica impuestas por el sistema operativo, lo que puede comprometer la integridad de los datos almacenados en su dispositivo. Esto puede abrir la puerta a posibles amenazas de seguridad, como la instalación de aplicaciones maliciosas sin su conocimiento, el acceso no autorizado a sus datos personales o la pérdida de información confidencial.<br><br>Como aplicación de telemedicina, nos tomamos muy en serio la privacidad y seguridad de sus datos personales y médicos. Recomendamos encarecidamente que utilice un dispositivo no desbloqueado para garantizar la protección adecuada de su información y evitar posibles brechas de seguridad.<br><br>Si continúa utilizando nuestra aplicación en este dispositivo, lo hace bajo su exclusiva responsabilidad. No nos hacemos responsables de cualquier pérdida, daño o acceso no autorizado a sus datos que pueda ocurrir como resultado del uso de un dispositivo desbloqueado.<br><br>Le recomendamos encarecidamente que restaure su dispositivo a su configuración original de fábrica o utilice un dispositivo alternativo no desbloqueado para garantizar la seguridad de sus datos mientras utiliza nuestra aplicación.<br><br>Si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nuestro equipo de soporte en el email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a><br><br>Atentamente,<br>El equipo de Doole Health S.L.</p> "
       },
       "commons":{
         "error-network": "Se ha perdido la conexión con Internet",
@@ -810,12 +826,92 @@
         "mode_1": "Calidad",
         "mode_2": "Desarrollo"
       },
+      "list_notifications":{
+        "header": "Notificaciones",
+        "form": "Hora de completar un formulario",
+        "level": "Logros del nivel completado",
+        "drugintake": "Hora de tomar la medicación",
+        "visitonline": "Hora de tu cita online",
+        "message": "Has recibido un nuevo mensaje",
+        "advice": "Hora de leer un consejo",
+        "agenda": "Tienes una cita",
+        "reminder": "Ver recordatorio",
+        "exercise": "Ver ejercicio",
+        "new_exercise": "Se ha creado un nuevo ejercicio",
+        "procedure": "Hoy tenés un procedimiento",
+        "diet": "Hora de comenzar la comida",
+        "games": "Hora de jugar",
+        "apren": "Hora de aprender",
+        "news": "Hoy tenés novedades",
+        "diagnostic": "Hoy tenés un nuevo estudio médico",
+        "default": "Nueva notificación",
+        "alert_delete_message": "Estás por eliminar notificaciones sin leerlas previamente.",
+        "alert_delete_error_message": "Debés seleccionar al menos una notificación para eliminar.",
+        "subtitle0": "Tienes",
+        "subtitle1": "notificaciones nuevas",
+        "subtitle2": "notificación nueva"
+      },
       "date":{
         "week_abbr": "S",
         "day_abbr": "D",
         "month_abbr":"M",
         "year_abbr": "A"
+      },
+      "form":{
+        "info": {
+          "button": "De acuerdo",
+          "title":"Información"
+        },
+        "button":{
+          "accept": "Aceptar",
+          "cancel":"Cancelar",
+          "send": "Enviar"
+        },
+        "file":{
+          "select": "Seleccionar",
+          "camera": "Cámara",
+          "file": "Archivos",
+          "pictures":"Imágenes",
+          "delete_media_file": "¿Estás seguro de eliminar el archivo?",
+          "input_file_name": "Ingresa un nombre para el archivo",
+          "button_add_file": "Añadir archivos",
+          "name": "Nombre"
+        },
+        "error_required": "Valor requerido",
+        "error_no_valid": "Valor no válido, ingrese un valor",
+        "error_min_character": "Valor no válido, ingrese mínimo",
+        "character": "caracteres",
+  
+        "send_success": "Formulario enviado correctamente",
+        "send_error": "Ha ocurrido un error al enviar el formulario",
+        "text1": "Por favor, para conocer cómo se siente hoy necesitamos que responda el",
+        "text2": "CUESTIONARIO DE SÍNTOMAS.",
+        "text3": "No hay información asociada a este formulario",
+        "text4": "ATENCIÓN",
+        "selected_value": "Valor seleccionado",
+        "go_to_app": "Volver a la página de inicio",
+        "score": "Puntos conseguidos por completar el formulario: ",
+        "score1": "Puntos conseguidos: ",
+  
+        "goal":{
+          "title": "Atención",
+          "message": "Este formulario <strong>solo puntúa</strong> en el caso de ser respondido <strong>correctamente</strong>"
+        }
+      },
+      "answer_form":{
+        "title": "Formularios completados",
+        "detail_answer": "Detalle de respuestas",
+        "response_history": "Histórico de respuestas",
+        "date": "Fecha",
+        "answer": "Respuesta"
+      },
+      "exercise":{
+        "title": "Detalle Ejercicio"
+      },
+      "departments":{
+        "text_description": "Conoce al equipo"
       }
+  
 
 
 }

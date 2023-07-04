@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="spin" *ngIf="this.isLoading;else showChallenges">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
 </div>
 <ng-template #showChallenges>
   <div *ngFor="let challenge of this.listChallenges">
@@ -19,7 +19,7 @@
         <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
         <ion-text  style="margin-left:10px; color:purple" slot="start">{{ this.challenge?.name }}</ion-text>
       </ion-item>
-  
+
       <ion-card-content class="ion-no-padding">
         <ion-grid>
           <ion-row>
@@ -44,7 +44,7 @@
               <ion-progress-bar class="progress-bar" [value]="challenge?.current_level?.percentage_completed>0 ? challenge?.current_level?.percentage_completed/100:0">
               </ion-progress-bar>
             </ion-col>
-            
+
           </ion-row>
         </ion-grid>
       </ion-card-content>

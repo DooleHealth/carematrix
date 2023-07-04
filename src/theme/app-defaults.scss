@@ -544,6 +544,30 @@ margin-bottom: -3%;
   }
  }
 
-/* .md ion-header ion-title{
-  text-align: center !important;
- } */
+ .goalGrid{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+}
+.txtTitleGreen {
+  color: #4b850c !important;
+  font-weight: bolder;
+  font-family: 'Open Sans', sans-serif;
+}
+.txtPoppinsBlueLightBold16px {
+  font-size: 16px;
+  font-weight: bolder;
+  font-family: 'Open Sans', sans-serif;
+  color: var(--ion-color-primary) !important;
+}
+
+.titleGoalBlack {
+  font-size: 16px;
+  color: black;
+  font-weight: bolder;
+  font-family: 'Open Sans', sans-serif;
+}
+.txtMarginElement {
+  margin: 10px 0 10px 5%;
+}

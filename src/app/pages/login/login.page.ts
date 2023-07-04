@@ -2,12 +2,12 @@ import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Device } from '@ionic-native/device/ngx';
+import { Device } from '@awesome-cordova-plugins/device/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
-import { Network } from '@ionic-native/network/ngx';
+import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
     this.credentials['os_version'] = this.device?.version
     this.credentials['device_brand'] = this.device?.manufacturer
     this.credentials['connection_type'] = this.network?.type
-    //console.log('[LoginPage] ionViewDidEnter() Device: ',  this.device.platform, this.device.model, this.device.version, this.device.manufacturer, this.network.type);
+    console.log('[LoginPage] ionViewDidEnter() Device: ',  this.device.platform, this.device.model, this.device.version, this.device.manufacturer, this.network.type);
     this.authService.login(this.credentials).subscribe(async (res) => {
       //console.log('[LoginPage] doDooleAppLogin()', res);
       await res;
@@ -209,6 +209,9 @@ export class LoginPage implements OnInit {
         break;
       case "ADVICE":
         this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
+        break;
+      case "NEWS":
+        this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
         break;
       case "DIET":
         this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});

@@ -8,7 +8,7 @@ import { DocumentsAddPageRoutingModule } from './documents-add-routing.module';
 
 import { DocumentsAddPage } from './documents-add.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { Chooser } from '@ionic-native/chooser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({

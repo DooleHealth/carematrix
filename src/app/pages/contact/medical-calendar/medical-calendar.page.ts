@@ -38,13 +38,25 @@ export class ShowcaseShellModel extends ShellModel {
   providers:[DatePipe]
 })
 export class MedicalCalendarPage implements OnInit, AfterViewInit {
+  @ViewChild(CalendarComponent) myCal: CalendarComponent;
   @Input()id: number;
+  constructor(
+    @Inject(LOCALE_ID) public locale: string,
+    private translate: TranslateService,
+    public languageService: LanguageService,
+    private dooleService: DooleService,
+    private alertController: AlertController,
+    public datepipe: DatePipe,
+    private modalCtrl: ModalController,
+    public dateService: DateService,
+
+  ) {}
   eventSource = [];
   tagDefaultColor: Array<string> = [];
   event: any
   viewTitle: string;
-  months = this.translate.instant('agenda.month')
-  days = this.translate.instant('agenda.days')
+  // months = this.getTranslation('agenda.month')
+  days; //= this.getTranslation('agenda.days')
   currentSelection: number;
   timeSlots : Array<any> = [];
   page: number = 1;
@@ -54,7 +66,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   agendaType: string = "7";
   place: string = "";
   indications : string = "";
-  routeResolveData: ShowcaseShellModel;
+  routeResolveData: boolean = false;
   modalReady = false;
   selectedDate : Date;
   duration:string = "40"
@@ -84,25 +96,14 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   };
 
-  @ViewChild(CalendarComponent) myCal: CalendarComponent;
-
-  constructor(
-    @Inject(LOCALE_ID) private locale: string,
-    private translate: TranslateService,
-    public languageService: LanguageService,
-    private dooleService: DooleService,
-    private alertController: AlertController,
-    public datepipe: DatePipe,
-    private modalCtrl: ModalController,
-    public dateService: DateService,
-
-  ) {}
 
   ngOnInit() {
     //this.getSlots()
     console.log('[MedicalCalendarPage] locale_ID', this.locale);
   }
+
   ngAfterViewInit() {
+
     setTimeout(() => {
       this.modalReady = true;
     }, 100);
@@ -115,32 +116,37 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
      });
   }
 
+  async getTranslation(literal): Promise<string> {
+    return await this.translate.instant(literal)
+   }
+
   getSlots(date:string=""){
     this.routeResolveData = null;
     this.eventSource = [];
-    const promiseObservable = this.dooleService.getAPIStaffSlots({id:this.id, date: date });
-    if(promiseObservable){
-      promiseObservable.subscribe(
-        res =>{
-          const dataObservable = res;
 
-          if(dataObservable){
-            console.log('[MedicalCalendarPage] getSlots()', res);
-              if(dataObservable.slots.length > 0)
-                this.addScheduleToCalendar(dataObservable.slots)
+    this.dooleService.getAPIStaffSlots({id:this.id, date: date }).subscribe({
+      next: (v) => this.setSlots(v),
+      error: (e) => {console.error(e)},
+      complete: () => {
+        this.routeResolveData = true
+      }
+  });
 
-              this.routeResolveData = dataObservable;
+  }
 
-          }else{
-            console.log('[MedicalCalendarPage] getSlots() !', res);
-          }
+  setSlots(res){
+    const dataObservable = res;
 
-         },(err) => {
-            console.log('[MedicalCalendarPage] getSlots() ERROR(' + err.code + '): ' + err.message);
-            throw err;
-        });
-    }
+      if(dataObservable){
+        console.log('[MedicalCalendarPage] getSlots()', res);
+          if(dataObservable.slots.length > 0)
+            this.addScheduleToCalendar(dataObservable.slots)
 
+          this.routeResolveData = dataObservable;
+
+      }else{
+        console.log('[MedicalCalendarPage] getSlots() !', res);
+      }
   }
 
   getAppointment(){
@@ -207,14 +213,17 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
-    console.log("title", title);
-    this.viewTitle = this.formatMonths();
+
+    if(this.myCal?.currentDate)
+      this.viewTitle = this.formatMonths();
+
 
   }
 
   formatMonths(){
     let language = this.setLocale()
     const datePipe: DatePipe = new DatePipe(language);
+
     let month = datePipe.transform(this.myCal.currentDate, 'MMMM');
     if(language === 'ca'){
       month = datePipe.transform(this.myCal.currentDate, 'MMMM').split(' ')[1]

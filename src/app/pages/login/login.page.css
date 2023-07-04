@@ -24,16 +24,7 @@ body {
   stroke: #009cb3;
   stroke-dasharray: 12, 36;
   stroke-dashoffset: 48;
-  -webkit-animation: dash 1s linear infinite;
-          animation: dash 1s linear infinite;
-}
-@-webkit-keyframes dash {
-  62.5% {
-    opacity: 0;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+  animation: dash 1s linear infinite;
 }
 @keyframes dash {
   62.5% {

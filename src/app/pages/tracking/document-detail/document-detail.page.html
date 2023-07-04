@@ -15,7 +15,7 @@
 <ion-content  fullscreen>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div>
 
   <ion-row>
@@ -64,7 +64,7 @@
         <ion-item *ngIf="expandDescription">
           <!-- <ion-textarea
           class="textMedium1"
-          disabled="false" autoGrow="true" 
+          disabled="false" autoGrow="true"
           readonly
           [value]="diagnosticTest?.description">
           </ion-textarea> -->
@@ -89,7 +89,7 @@
         <ion-item *ngIf="expandDiagnostic">
 <!--           <ion-textarea
           class="textMedium1"
-          disabled="false" autoGrow="true" 
+          disabled="false" autoGrow="true"
           readonly
           [value]="diagnosticTest?.diagnostic">
           </ion-textarea> -->
@@ -165,7 +165,7 @@
               <p class="titule">{{ getName(file) }}</p>
             </div>
           </ion-item>
-        </div>       
+        </div>
       </div>
 
   </ion-card>

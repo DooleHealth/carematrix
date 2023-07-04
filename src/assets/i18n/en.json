@@ -16,7 +16,10 @@
       "blocked_login": "The APP has crashed due to the number of attempts being exceeded, try after 2 minutes.",
       "message_error_serve": "Server error",
       "message_failure_response": "An unexpected error has occurred Try again",
-      "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again."
+      "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again.",
+      "login_again":"Please sign in again",
+      "about_app":"About this app",
+      "usage-tips":"<div><p>Welcome to our safe and trusted application!</p><p>To ensure your safety and security, we have put together this short getting started guide to highlight the best practices that you can follow when using our app. Follow these tips for a secure and worry-free experience:</p><ul><li>Choose a strong password: To protect your data, it's important to select a strong and unique password. a combination of uppercase and lowercase letters, numbers, and special characters. Avoid using obvious passwords or easily identifiable personal information.</li><li>Turn on two-factor authentication: Further secure your account by enabling two-factor authentication. This it will require a second level of verification, such as a temporary access code sent to your mobile phone, so even if someone gets your password, they won't be able to get in without the additional verification code.</li><li>Keep the app updated: App updates not only add new features, but also fix potential security vulnerabilities. Make sure you always have the latest version of our app installed to take advantage of all the improvements and additional protections.</li><li>Privacy Settings: Explore our privacy settings options to personalize your experience. You can control what information you share and with whom you share it. Remember to regularly review and adjust these settings to maintain an optimal level of privacy.</li></ul><p>These are just a few essential tips to maximize security when using our app. We are committed to your protection and are constantly working to ensure the integrity of your data. We will always be here to help you in case you have any questions or concerns about the security of the app, you can contact us via email support@doolehealth.com.</p><p>Thank you for choosing our app and trusting us! on us!</p><p>Team Doole Health.</p></div>"
     },
     "legal": {
       "header": "Terms of Use",
@@ -193,7 +196,13 @@
       "normal_value": "Normal values:",
       "out_range_value": "Out-of-range values:",
       "danger_value": "Anomalous values:",
-      "no_data": "No data to display"
+      "no_data_date":"No data has been recorded yet",
+      "no_data_help":"To load a data, use the + button.",
+      "no_data":"There is no data to show",
+      "daily": "daily",
+      "weekly": "weekly",
+      "monthly": "monthly",
+      "yearly": "yearly"
     },
     "activity": {
       "cal": "Cal",
@@ -404,7 +413,12 @@
       "appointment_by_user": "Appointment added by user",
       "event_by_user": "User-added event",
       "error_alert_message_get_token": "Error getting video call token",
-      "error_alert_message_get_agenda": "Error getting calendar"
+      "error_alert_message_get_agenda": "Error getting calendar",
+      "to": "at",
+      "day": "DAY",
+      "week": "WEEK",
+      "months": "MONTH",
+      "year": "YEAR"
     },
     "reminder": {
       "header": "Reminder",
@@ -560,7 +574,8 @@
       "field_date": "Date",
       "alert_message_add_element": "Data has been added successfully",
       "error_alert_message_add_element": "An error occurred while adding the value",
-      "value_invalid": "The value is invalid. Enter a value of"
+      "value_invalid": "The value is invalid. Enter a value of",
+      "confirmation": "This information will be permanently registered to be consulted and cannot be modified or deleted."
     },
     "no_data": "No data to display",
     "diary": {
@@ -799,7 +814,8 @@
     },
     "security": {
       "rooted": "This device has been detected to have been initialized with unusual user rights (root). For reasons of security and data integrity, access has been blocked.",
-      "alert_security": "Security Alert"
+      "alert_security": "Security Alert",
+      "ens_message": "<p>Dear user,<br><br> We have detected that your device is rooted (Android) or jailbroken (Apple). We would like to inform you about the risks associated with using an unlocked device for security purposes data.<br><br>Unlocking your device removes any factory restrictions imposed by the operating system, which may compromise the integrity of data stored on your device.This may open the door to potential security threats, such as installation of malicious applications without your knowledge, unauthorized access to your personal data or loss of sensitive information.<br><br>As a telemedicine application, we take the privacy and security of your personal and medical data very seriously. We strongly recommend that you use an unlocked device to ensure adequate protection of your information and to prevent potential security breaches.<br><br>If you continue to use our app on this device, you do so at your own risk. We are not responsible for any loss, damage, or unauthorized access to your data that may occur as a result of using an unlocked device.<br><br>We strongly recommend that you restore your device to its original factory settings or use an alternative device not unlocked to ensure the safety of your data while using our app.<br><br>If you have any questions or concerns, please feel free to contact our support team at email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a> <br><br>Sincerely,<br>The Doole Health S.L. Team</p> "
     },
     "commons": {
       "error-network": "Internet connection lost",
@@ -815,10 +831,89 @@
       "mode_1": "Quality",
       "mode_2": "Development"
     },
+    "list_notifications": {
+      "header": "Notifications",
+      "form": "Time to fill out a form",
+      "level": "Completed level achievements",
+      "drugintake": "Time to take medication",
+      "visitonline": "Time of your online appointment",
+      "message": "You have received a new message",
+      "advice": "Time to read a tip",
+      "agenda": "You have a date",
+      "reminder": "See reminder",
+      "exercise": "See exercise",
+      "new_exercise": "A new exercise has been created",
+      "procedure": "You have a procedure today",
+      "diet": "Time to start the meal",
+      "games": "Time to play",
+      "apren": "Time to learn",
+      "news": "You have news today",
+      "diagnostic": "You have a new medical study today",
+      "default": "New notification",
+      "alert_delete_message": "You are about to delete notifications without reading them first.",
+      "alert_delete_error_message": "You must select at least one notification to remove.",
+      "subtitle0": "You have",
+      "subtitle1": "new notifications",
+      "subtitle2": "new notification"
+    },
     "date":{
       "week_abbr": "W",
       "day_abbr": "D",
       "month_abbr":"M",
       "year_abbr": "Y"
+    },
+    "form":{
+      "info": {
+        "button": "Agreed",
+        "title":"Information"
+      },
+      "button":{
+        "accept": "Accept",
+        "cancel":"Cancel",
+        "send": "Send"
+      },
+      "file":{
+        "select": "Select",
+        "camera": "Camera",
+        "file": "Files",
+        "pictures":"Pictures",
+        "delete_media_file": "Are you sure to delete the file?",
+        "input_file_name": "Enter a name for the file",
+        "button_add_file": "Add files",
+        "name": "Name"
+      },
+      "error_required": "Required value",
+      "error_no_valid": "Invalid value, please enter a value",
+      "error_min_character": "Invalid value, enter minimum",
+      "character": "Characters",
+
+      "send_success": "Form submitted successfully",
+      "send_error": "An error occurred while submitting the form",
+      "text1": "Please, to know how you feel today we need you to answer the",
+      "text2": "SYMPTOM QUESTIONNAIRE.",
+      "text3": "There is no information associated with this form",
+      "text4": "ATTENTION",
+      "selected_value": "selected value",
+      "go_to_app": "Return to homepage",
+      "score": "Points earned for completing the form:",
+      "score1": "Points earned:",
+
+      "goal":{
+        "title": "Attention",
+        "message": "This form <strong>only scores</strong> if it is answered <strong>correctly</strong>"
+      }
+    },
+    "answer_form":{
+      "title": "Completed forms",
+      "detail_answer": "Answer detail",
+      "response_history": "Answer history",
+      "date": "Date",
+      "answer": "Answer"
+    },
+    "exercise":{
+      "title": "Exercise Detail"
+    },
+    "departments":{
+      "text_description": "Meet the team"
     }
   }

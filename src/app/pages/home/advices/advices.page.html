@@ -1,6 +1,6 @@
 <ion-header>
   <!-- <ion-toolbar> -->
-    
+
     <ion-toolbar mode="ios" [ngSwitch]="segment">
       <ion-title>{{ 'advices.header' | translate}}</ion-title>
       <ion-buttons slot="start">
@@ -12,9 +12,9 @@
 
 <!-- SegmentBar -->
 
-  <ion-segment 
+  <ion-segment
   (ionChange)="segmentChanged($event)"
-  [(ngModel)]="segment" 
+  [(ngModel)]="segment"
   scrollable>
     <ion-segment-button *ngIf="role?.component?.news" value="news">
       <ion-label>{{ 'advices.tag_news' | translate}}</ion-label>
@@ -25,20 +25,20 @@
   </ion-segment>
 
   <!--News -->
-  
-  <ion-searchbar 
-    [animated]="true" 
-    (ionInput)="filterList($event)" 
+
+  <ion-searchbar
+    [animated]="true"
+    (ionInput)="filterList($event)"
     placeholder="{{ 'advices.searchbar' | translate}}">
   </ion-searchbar>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div>
-  
+
   <div class="verticalLine2" [ngSwitch]="segment">
-    <div *ngSwitchCase="'news'"> 
-      <ion-list *ngIf="items.length > 0; else noData">   
+    <div *ngSwitchCase="'news'">
+      <ion-list *ngIf="items.length > 0; else noData">
         <ion-card  routerLink="/new-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
           <div class="sliderImage">
             <img *ngIf="item.item?.cover !== null"[src]='item.item?.cover'/>
@@ -52,10 +52,10 @@
           </ion-item>
         </ion-card>
       </ion-list>
-    </div> 
+    </div>
     <!-- Advices -->
-<div *ngSwitchCase="'advices'"> 
-  <ion-list *ngIf="items.length > 0; else noData">   
+<div *ngSwitchCase="'advices'">
+  <ion-list *ngIf="items.length > 0; else noData">
     <ion-card routerLink="advices-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile"  routerLinkActive='active-item'  routerLinkActive='active-item'>
       <div class="sliderImage">
         <img [src]='item.item.image?.thumbnailTemporaryUrl? item.item.image?.thumbnailTemporaryUrl: item.item?.cover'/>

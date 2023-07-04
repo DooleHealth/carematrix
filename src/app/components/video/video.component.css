@@ -37,17 +37,7 @@
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  -webkit-animation: rotatePreloader 2s infinite ease-in;
-          animation: rotatePreloader 2s infinite ease-in;
-}
-
-@-webkit-keyframes rotatePreloader {
-  0% {
-    transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
-  }
-  100% {
-    transform: translateX(-50%) translateY(-50%) rotateZ(-360deg);
-  }
+  animation: rotatePreloader 2s infinite ease-in;
 }
 
 @keyframes rotatePreloader {
@@ -79,29 +69,8 @@
 
 .preloader div:nth-child(1) {
   transform: rotateZ(0deg);
-  -webkit-animation: rotateCircle1 2s infinite linear;
-          animation: rotateCircle1 2s infinite linear;
+  animation: rotateCircle1 2s infinite linear;
   z-index: 9;
-}
-
-@-webkit-keyframes rotateCircle1 {
-  0% {
-    opacity: 0;
-  }
-  0% {
-    opacity: 1;
-    transform: rotateZ(36deg);
-  }
-  7% {
-    transform: rotateZ(0deg);
-  }
-  57% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle1 {
@@ -125,29 +94,8 @@
 }
 .preloader div:nth-child(2) {
   transform: rotateZ(36deg);
-  -webkit-animation: rotateCircle2 2s infinite linear;
-          animation: rotateCircle2 2s infinite linear;
+  animation: rotateCircle2 2s infinite linear;
   z-index: 8;
-}
-
-@-webkit-keyframes rotateCircle2 {
-  5% {
-    opacity: 0;
-  }
-  5.0001% {
-    opacity: 1;
-    transform: rotateZ(0deg);
-  }
-  12% {
-    transform: rotateZ(-36deg);
-  }
-  62% {
-    transform: rotateZ(-36deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle2 {
@@ -171,29 +119,8 @@
 }
 .preloader div:nth-child(3) {
   transform: rotateZ(72deg);
-  -webkit-animation: rotateCircle3 2s infinite linear;
-          animation: rotateCircle3 2s infinite linear;
+  animation: rotateCircle3 2s infinite linear;
   z-index: 7;
-}
-
-@-webkit-keyframes rotateCircle3 {
-  10% {
-    opacity: 0;
-  }
-  10.0002% {
-    opacity: 1;
-    transform: rotateZ(-36deg);
-  }
-  17% {
-    transform: rotateZ(-72deg);
-  }
-  67% {
-    transform: rotateZ(-72deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle3 {
@@ -217,29 +144,8 @@
 }
 .preloader div:nth-child(4) {
   transform: rotateZ(108deg);
-  -webkit-animation: rotateCircle4 2s infinite linear;
-          animation: rotateCircle4 2s infinite linear;
+  animation: rotateCircle4 2s infinite linear;
   z-index: 6;
-}
-
-@-webkit-keyframes rotateCircle4 {
-  15% {
-    opacity: 0;
-  }
-  15.0003% {
-    opacity: 1;
-    transform: rotateZ(-72deg);
-  }
-  22% {
-    transform: rotateZ(-108deg);
-  }
-  72% {
-    transform: rotateZ(-108deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle4 {
@@ -263,29 +169,8 @@
 }
 .preloader div:nth-child(5) {
   transform: rotateZ(144deg);
-  -webkit-animation: rotateCircle5 2s infinite linear;
-          animation: rotateCircle5 2s infinite linear;
+  animation: rotateCircle5 2s infinite linear;
   z-index: 5;
-}
-
-@-webkit-keyframes rotateCircle5 {
-  20% {
-    opacity: 0;
-  }
-  20.0004% {
-    opacity: 1;
-    transform: rotateZ(-108deg);
-  }
-  27% {
-    transform: rotateZ(-144deg);
-  }
-  77% {
-    transform: rotateZ(-144deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle5 {
@@ -309,29 +194,8 @@
 }
 .preloader div:nth-child(6) {
   transform: rotateZ(180deg);
-  -webkit-animation: rotateCircle6 2s infinite linear;
-          animation: rotateCircle6 2s infinite linear;
+  animation: rotateCircle6 2s infinite linear;
   z-index: 4;
-}
-
-@-webkit-keyframes rotateCircle6 {
-  25% {
-    opacity: 0;
-  }
-  25.0005% {
-    opacity: 1;
-    transform: rotateZ(-144deg);
-  }
-  32% {
-    transform: rotateZ(-180deg);
-  }
-  82% {
-    transform: rotateZ(-180deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle6 {
@@ -355,29 +219,8 @@
 }
 .preloader div:nth-child(7) {
   transform: rotateZ(216deg);
-  -webkit-animation: rotateCircle7 2s infinite linear;
-          animation: rotateCircle7 2s infinite linear;
+  animation: rotateCircle7 2s infinite linear;
   z-index: 3;
-}
-
-@-webkit-keyframes rotateCircle7 {
-  30% {
-    opacity: 0;
-  }
-  30.0006% {
-    opacity: 1;
-    transform: rotateZ(-180deg);
-  }
-  37% {
-    transform: rotateZ(-216deg);
-  }
-  87% {
-    transform: rotateZ(-216deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle7 {
@@ -401,29 +244,8 @@
 }
 .preloader div:nth-child(8) {
   transform: rotateZ(252deg);
-  -webkit-animation: rotateCircle8 2s infinite linear;
-          animation: rotateCircle8 2s infinite linear;
+  animation: rotateCircle8 2s infinite linear;
   z-index: 2;
-}
-
-@-webkit-keyframes rotateCircle8 {
-  35% {
-    opacity: 0;
-  }
-  35.0007% {
-    opacity: 1;
-    transform: rotateZ(-216deg);
-  }
-  42% {
-    transform: rotateZ(-252deg);
-  }
-  92% {
-    transform: rotateZ(-252deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle8 {
@@ -447,29 +269,8 @@
 }
 .preloader div:nth-child(9) {
   transform: rotateZ(288deg);
-  -webkit-animation: rotateCircle9 2s infinite linear;
-          animation: rotateCircle9 2s infinite linear;
+  animation: rotateCircle9 2s infinite linear;
   z-index: 1;
-}
-
-@-webkit-keyframes rotateCircle9 {
-  40% {
-    opacity: 0;
-  }
-  40.0008% {
-    opacity: 1;
-    transform: rotateZ(-252deg);
-  }
-  47% {
-    transform: rotateZ(-288deg);
-  }
-  97% {
-    transform: rotateZ(-288deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle9 {
@@ -493,29 +294,8 @@
 }
 .preloader div:nth-child(10) {
   transform: rotateZ(324deg);
-  -webkit-animation: rotateCircle10 2s infinite linear;
-          animation: rotateCircle10 2s infinite linear;
+  animation: rotateCircle10 2s infinite linear;
   z-index: 0;
-}
-
-@-webkit-keyframes rotateCircle10 {
-  45% {
-    opacity: 0;
-  }
-  45.0009% {
-    opacity: 1;
-    transform: rotateZ(-288deg);
-  }
-  52% {
-    transform: rotateZ(-324deg);
-  }
-  102% {
-    transform: rotateZ(-324deg);
-  }
-  100% {
-    transform: rotateZ(-324deg);
-    opacity: 1;
-  }
 }
 
 @keyframes rotateCircle10 {
@@ -546,17 +326,6 @@
   -webkit-animation-duration: 1s;
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
-}
-@-webkit-keyframes parpadeo {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 @keyframes parpadeo {
   0% {
