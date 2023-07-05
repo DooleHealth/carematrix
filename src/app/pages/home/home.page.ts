@@ -1,13 +1,13 @@
-import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, Input, NgZone, HostBinding } from '@angular/core';
+import { DatePipe, formatDate } from '@angular/common';
+import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { Health } from '@ionic-native/health/ngx';
-import { IonSlides, ModalController, NavController, Platform } from '@ionic/angular';
+import { Health } from '@awesome-cordova-plugins/health/ngx';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { User, Agenda, FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
@@ -21,6 +21,16 @@ import { PusherAlarmService } from 'src/app/services/pusher/pusher-alarm.service
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 import { AdvicesDetailPage } from './advices-detail/advices-detail.page';
 import { NewDetailPage } from './new-detail/new-detail.page';
+import { DateService } from 'src/app/services/date.service';
+import { PdfPage } from '../pdf/pdf.page';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
+import Swiper, { SwiperOptions } from 'swiper';
+
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { BehaviorSubject } from 'rxjs';
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export interface UserInformation {
   title?: string;
@@ -41,6 +51,7 @@ export class ShowcaseShellUserModel extends ShellModel {
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomePage implements OnInit {
   dataStore: DataStore<Array<ShowcaseShellUserModel>>;
@@ -48,6 +59,27 @@ export class HomePage implements OnInit {
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
+  pusherNotification = false;
+  numNotification = 0;
+
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+    disabledClass: 'disabled_swiper_button'
+  }
+
+  config: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    navigation: false,
+    pagination: { clickable: true,
+    dynamicMainBullets: 3,     dynamicBullets: true, },
+    scrollbar: { draggable: true },
+    direction: 'vertical',
+    effect: 'slide',
+
+    loop: true,
+  };
   WAIT_TIME = 10 //10 minutes
   userDoole: any = {}
   goals: any = []
@@ -68,6 +100,7 @@ export class HomePage implements OnInit {
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
+  viewAllDiets: boolean = false;
   sliderConfig = {
     slidesPerView: 1,
     direction: 'vertical',
@@ -90,12 +123,12 @@ export class HomePage implements OnInit {
 
   sliderHealthPathConfig = this.sliderConfigHorizontal;
   sliderAdvicesConfig = this.sliderConfigHorizontal;
-
-  @ViewChild('sliderGoals') sliderGoals: IonSlides;
-  @ViewChild('sliderDiet') sliderDiet: IonSlides;
-  @ViewChild('sliderDrug') sliderDrug: IonSlides;
-  @ViewChild('sliderGames') sliderGames: IonSlides;
-  @ViewChild('sliderPhysical') sliderPhysical: IonSlides;
+  slides$ = new BehaviorSubject<string[]>(['']);
+  @ViewChild('sliderGoals') sliderGoals: Swiper;
+  @ViewChild('sliderDiet') sliderDiet: Swiper;
+  @ViewChild('sliderDrug') sliderDrug: Swiper;
+  @ViewChild('sliderGames') sliderGames: Swiper;
+  @ViewChild('sliderPhysical') sliderPhysical: Swiper;
   @ViewChild('tabs') tabs: TabsComponent;
 
   infoDiet: UserInformation
@@ -108,7 +141,7 @@ export class HomePage implements OnInit {
   challengeProgressBarValue;
   public greeting = '';
   userInfo: any;
-  pushNotification:any = history.state?.push
+  pushNotification: any = history.state?.push
   constructor(
     public router: Router,
     public platform: Platform,
@@ -129,35 +162,55 @@ export class HomePage implements OnInit {
     private pusherNotifications: PusherNotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
+    private pusherConnection: PusherConnectionService,
+    public dateService : DateService
   ) {
     // this.analyticsService.setScreenName('home','[HomePage]')
   }
 
   async ngOnInit() {
-    this.pusherNotifications.init()
-    this.pusherAlarms.init()
-    this.pusherChallenge.init()
+
+    this.initPushers()
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    //this.getUserInformation()
+    //this.date = this.dateService.yyyyMMddFormat(Date.now());
     this.checkHealthAccess();
-    //setTimeout(()=>this.confirmAllNotification(), 2000);
     this.activateAllNotifications(1)
+    this.slides$.next(
+      Array.from({ length: 600 }).map((el, index) => `Slide ${index + 1}`)
+    );
 
   }
 
 
   ionViewWillEnter() {
-    if(this.pushNotification)
+    if (this.pushNotification)
       this.openModal(this.pushNotification, true);
-    
-    this.getUserInformation()
 
+    this.getUserInformation()
+    this.getNumNotification();
+    if(!this.pusherConnection?.isConnectedPusher()){
+      //console.log('[HomePage] ionViewWillEnter() this.userDoole: ', this.authService?.user?.idUser);
+      const token = this.authService.getAuthToken()
+      this.pusherConnection.subscribePusher(token, this.authService?.user?.idUser)
+      this.initPushers()
+    }
 
   }
 
   ionViewDidEnter() {
     setTimeout(() => this.setTimerSlider(), 3000);
 
+  }
+
+  initPushers(){
+    this.pusherAlarms.init()
+    this.pusherChallenge.init()
+    const channel = this.pusherNotifications.init();
+    if(channel)
+    channel.bind(this.pusherNotifications.NAME_BIND, ({ data }) => {
+      console.log('[HomePage] initPushers()',  data);
+      this.getNumNotification();
+    });
   }
 
   checkHealthAccess() {
@@ -167,7 +220,7 @@ export class HomePage implements OnInit {
           //console.log(available);
           this.showGoogleFit = !available;
           this.health.requestAuthorization([
-            'distance', 'steps', 'heart_rate', 'activity', 'weight' //,'blood_glucose','blood_pressure','oxygen_saturation'//, read and write permissions
+            'distance', 'steps', 'heart_rate', 'activity', 'weight', ,'oxygen_saturation' //,'blood_glucose','blood_pressure'//, read and write permissions
           ])
             .then(res => {
               //console.log(res);
@@ -194,6 +247,24 @@ export class HomePage implements OnInit {
     // this.analyticsService.setProperty('gender', this.userDoole.gender)
   }
 
+  // activatePusherNotification(){
+  //   const channel = this.pusherNotifications?.init();
+  //   console.log('[HomePage] activatePusherNotification() channel ',  channel);
+  //   if(channel)
+  //   channel?.bind(NAME_BIND, ({ data }) => {
+  //     console.log('[HomePage] activatePusherNotification()',  data);
+  //     this.getNumNotification();
+  //   });
+  // }
+
+  getNumNotification() {
+    this.dooleService.getAPINotificationsCount().subscribe((res) => {
+      if (res?.success) this.numNotification = res?.notifications;
+      if (this.numNotification == 0) this.pusherNotification = false;
+      else this.pusherNotification = true;
+    });
+  }
+
   getValue(object, key) {
     var k, temp;
     if (key in object) return object[key];                // if found return value
@@ -207,8 +278,10 @@ export class HomePage implements OnInit {
   }
   async getUserInformation() {
     this.isLoading = true
+    //let date2 = this.dateService.ddMMyyyy(Date.now());
     let date2 = this.transformDate(this.date, 'dd-MM-yyyy')
     let date = { date: date2, from_date: this.date, to_date: this.date }
+    console.log("DATE: ", date);
     let tempAdvices;
     let tempChallenges;
     this.dooleService.getAPIinformationSummary(date).subscribe(
@@ -216,41 +289,41 @@ export class HomePage implements OnInit {
         await res;
 
         console.log('[HomePage] getUserInformation()', res);
-       
+
         tempChallenges = res.data?.challenges;
-        tempChallenges = tempChallenges.filter(function( obj ) {
+        tempChallenges = tempChallenges?.filter(function (obj) {
           return !obj.completed;
-      });
-      console.log('obj.completed', this.challenges.length)
-      if ( tempChallenges.length == 1)
-        this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
+        });
 
-      this.challenges = tempChallenges;
-      
+        if (tempChallenges?.length == 1)
+          this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
+
+        this.challenges = tempChallenges;
+
         this.userDoole = res.data?.profile;
-        
 
-        this.greeting = 'Hola, ' + this.userDoole?.first_name;
+
+        this.greeting = this.translate.instant('home.hello') +', ' + this.userDoole?.first_name;
         this.appointment = res.data?.agenda;
 
         if (this.role.component.advices)
           tempAdvices = res.data?.advices;
-        
+
         if (this.role.component.news)
-          res.data.news.forEach(element => {
+          res.data?.news.forEach(element => {
             element['new'] = true
             tempAdvices.push(element)
           });
 
         tempAdvices = tempAdvices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
         console.log(' this.tempAdvices ', tempAdvices.length);
-        if(tempAdvices.length == 1){
+        if (tempAdvices.length == 1) {
           this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
-          console.log(' this.sliderAdvicesConfig ',  this.sliderAdvicesConfig);
+          console.log(' this.sliderAdvicesConfig ', this.sliderAdvicesConfig);
         }
-        
+
         this.advices = tempAdvices;
-        
+
         if (res.data?.goals) {
           this.goals = res.data?.goals
           this.infoGoals = {
@@ -271,14 +344,14 @@ export class HomePage implements OnInit {
         this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
         this.searchIndexDiet()
         this.slideDietChange()
-        this.sliderDiet?.slideTo(this.currentIndexDiet)
+        // this.sliderDiet?.slideTo(this.currentIndexDiet)
 
         //Elements
         this.activity = []
         let elements = res?.data.elements
         if (elements?.eg) {
           this.treeIterate(elements?.eg, '');
-          this.sliderPhysical?.slideTo(0)
+          // this.sliderPhysical?.slideTo(0)
           this.slideActivityChange()
         }
 
@@ -290,7 +363,7 @@ export class HomePage implements OnInit {
           })
           this.searchIndexDGame()
           this.slideGamesChange()
-          this.sliderGames?.slideTo(this.currentIndexDrug)
+          // this.sliderGames?.slideTo(this.currentIndexDrug)
         }
         //this.drugs = res.data.drugIntakes.drugIntakes
         this.getDrugIntake()
@@ -317,10 +390,10 @@ export class HomePage implements OnInit {
     this.slideDietChange()
     this.searchIndexDiet()
     this.slideActivityChange()
-    this.sliderDiet?.slideTo(this.currentIndexDiet)
-    this.sliderGames?.slideTo(this.currentIndexDrug)
-    this.sliderPhysical?.slideTo(this.currentIndexDiet)
-    this.sliderDrug?.slideTo(this.currentIndexDrug)
+    // this.sliderDiet?.slideTo(this.currentIndexDiet)
+    // this.sliderGames?.slideTo(this.currentIndexDrug)
+    // this.sliderPhysical?.slideTo(this.currentIndexDiet)
+    // this.sliderDrug?.slideTo(this.currentIndexDrug)
   }
 
   treeIterateDiets(obj) {
@@ -335,6 +408,8 @@ export class HomePage implements OnInit {
         }
       }
     }
+
+    console.log('[DiaryPage]  this.diets()', this.diets);
   }
 
   treeIterate(obj, stack) {
@@ -491,7 +566,7 @@ export class HomePage implements OnInit {
   }
 
   greaterOrEqualThan(goal) {
-    
+
     goal.reversed = false;
     if (goal.last_value >= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -503,7 +578,7 @@ export class HomePage implements OnInit {
   }
 
   lessOrEqualThan(goal) {
- 
+
     goal.reversed = true;
     if (goal.last_value <= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -514,7 +589,7 @@ export class HomePage implements OnInit {
   }
 
   greaterThan(goal) {
-  
+
     goal.reversed = false;
     if (goal.last_value > goal.value1) {
       goal = this.goalAchieved(goal);
@@ -582,7 +657,7 @@ export class HomePage implements OnInit {
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus()
       this.searchIndexDrug()
-      this.sliderDrug?.slideTo(this.currentIndexDrug)
+      // this.sliderDrug?.slideTo(this.currentIndexDrug)
       this.slideDrugChange()
     })
   }
@@ -595,20 +670,23 @@ export class HomePage implements OnInit {
     let endDate = new Date(); // now
     console.log('dataType: steps');
     this.health.queryAggregated({
-      startDate,
-      endDate,
+      startDate: startDate,
+      endDate: endDate,
       dataType: 'steps',
-      bucket: 'day'
+      bucket: 'hour'
     }).then(data => {
       this.postHealth('steps', data);
+    }).catch(error => {
+      console.error(error);
+      throw error;
     });
 
     console.log('dataType: distance');
     this.health.queryAggregated({
-      startDate,
-      endDate,
+      startDate: startDate,
+      endDate: endDate,
       dataType: 'distance',
-      bucket: 'day'
+      bucket: 'hour'
     }).then(data => {
       this.postHealth('distance', data);
 
@@ -653,18 +731,18 @@ export class HomePage implements OnInit {
     //   throw error;
     // });
 
-    // console.log('dataType: oxygen_saturation');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'oxygen_saturation',
-    // }).then(data => {
-    //   this.postHealth('oxygen_saturation', data);
+    console.log('dataType: oxygen_saturation');
+    this.health.query({
+      startDate,
+      endDate,
+      dataType: 'oxygen_saturation',
+    }).then(data => {
+      this.postHealth('oxygen_saturation', data);
 
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error;
-    // });
+    }).catch(error => {
+      console.error(error);
+      throw error;
+    });
 
     // console.log('dataType: blood_glucose');
     // this.health.query({
@@ -755,41 +833,41 @@ export class HomePage implements OnInit {
   }
 
   slideGoalChange() {
-    if (this.goals !== undefined && this.goals?.length > 0)
-      this.sliderGoals?.getActiveIndex().then(index => {
-        //console.log('[HomePage] slideGoalChange()', index);
-        let slider = this.goals[index]
-        console.log('[HomePage] slideGoalChange()', slider);
-        this.infoGoals = {
-          title: slider?.typeString + ' ' + slider?.element?.element_unit?.abbreviation
-        }
-      });
+    // if (this.goals !== undefined && this.goals?.length > 0)
+      // this.sliderGoals?.getActiveIndex().then(index => {
+      //   //console.log('[HomePage] slideGoalChange()', index);
+      //   let slider = this.goals[index]
+      //   console.log('[HomePage] slideGoalChange()', slider);
+      //   this.infoGoals = {
+      //     title: slider?.typeString + ' ' + slider?.element?.element_unit?.abbreviation
+      //   }
+      // });
   }
 
   slideDietChange() {
-    if (this.diets !== undefined && this.diets?.length > 0)
-      this.sliderDiet?.getActiveIndex().then(index => {
-        //console.log('[HomePage] slideDietChange()', index);
-        let slider = this.diets[index]
-        let hour = slider?.date.split(' ')[1]
-        this.infoDiet = {
-          title: slider?.items,
-          hour: hour?.split(':')[0] + ':' + hour.split(':')[1]
-        }
-      });
+    // if (this.diets !== undefined && this.diets?.length > 0)
+      // this.sliderDiet?.getActiveIndex().then(index => {
+      //   //console.log('[HomePage] slideDietChange()', index);
+      //   let slider = this.diets[index]
+      //   let hour = slider?.date.split(' ')[1]
+      //   this.infoDiet = {
+      //     title: slider?.items,
+      //     hour: hour?.split(':')[0] + ':' + hour.split(':')[1]
+      //   }
+      // });
   }
 
   slideDrugChange(event?) {
     console.log('[HomePage] slideDrugChange()', event);
     if (this.drugs !== undefined && this.drugs?.length > 0) {
-      this.sliderDrug?.getActiveIndex().then(index => {
-        //console.log('[HomePage] slideDrugChange()', index);
-        let slider = this.drugs[index]
-        this.infoDrugs = {
-          title: slider?.name,
-          hour: slider?.hour_intake
-        }
-      });
+      // this.sliderDrug?.getActiveIndex().then(index => {
+      //   //console.log('[HomePage] slideDrugChange()', index);
+      //   let slider = this.drugs[index]
+      //   this.infoDrugs = {
+      //     title: slider?.name,
+      //     hour: slider?.hour_intake
+      //   }
+      // });
     } else {
       this.infoDrugs = null;
     }
@@ -801,26 +879,26 @@ export class HomePage implements OnInit {
   }
 
   slideGamesChange() {
-    if (this.games !== undefined && this.games?.length > 0)
-      this.sliderGames?.getActiveIndex().then(index => {
-        //console.log('[HomePage] slideGamesChange()', index);
-        let slider = this.games[index]
-        let hour = slider?.scheduled_date.split(' ')[1]
-        this.infoGames = {
-          title: slider?.name,
-          hour: hour.split(':')[0] + ':' + hour.split(':')[1]
-        }
-      });
+    // if (this.games !== undefined && this.games?.length > 0)
+      // this.sliderGames?.getActiveIndex().then(index => {
+      //   //console.log('[HomePage] slideGamesChange()', index);
+      //   let slider = this.games[index]
+      //   let hour = slider?.scheduled_date.split(' ')[1]
+      //   this.infoGames = {
+      //     title: slider?.name,
+      //     hour: hour.split(':')[0] + ':' + hour.split(':')[1]
+      //   }
+      // });
   }
 
   slideActivityChange() {
-    this.sliderPhysical?.getActiveIndex().then(index => {
-      let slider = this.activity[index]
-      this.infoActivity = {
-        title: slider?.group
-      }
+    // this.sliderPhysical?.getActiveIndex().then(index => {
+    //   let slider = this.activity[index]
+    //   this.infoActivity = {
+    //     title: slider?.group
+    //   }
 
-    });
+    // });
   }
 
   changeTake(id, taked) {
@@ -915,7 +993,7 @@ export class HomePage implements OnInit {
         this.auth.user = value
       })
 
-      if (item.url.startsWith("http")) {
+      if (item.url?.startsWith("http")) {
         this.header = true
         item.url = item.url + "?user=" + this.auth.user.idUser + "&game=" + item.id;
         browser = this.iab.create(item.url, '_blank', iosoption);
@@ -967,9 +1045,9 @@ export class HomePage implements OnInit {
   }
 
   formatSelectedDate(date) {
-    let language = this.languageService.getCurrent();
-    const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+
+    return this.dateService.formatDateLongFormat(date);
+    //return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
   }
 
   formatDate(d) {
@@ -982,7 +1060,8 @@ export class HomePage implements OnInit {
       let time = auxdate[1];
       date.setHours(time?.substring(0, 2));
       date.setMinutes(time?.substring(3, 5));
-      return this.transformDate(date, 'dd/MM/yyyy HH:mm')
+
+      return this.dateService.ddMMyyyyHHmm(date);
     }
   }
 
@@ -1073,19 +1152,35 @@ export class HomePage implements OnInit {
 
     // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown
     this.pusherChallenge.isModalShowing = true;
-    modal.onDidDismiss()
-      .then((result) => {
+
+    modal.onDidDismiss().then((result) => {
         console.log('showAdvices()', result);
-        console.log('modal.onDidDismiss: ', this.pusherChallenge.pendingNotification);
-        if (this.pusherChallenge.pendingNotification) {
+
+        this.pusherChallenge.isModalShowing = false;
+        if (this.pusherChallenge?.pendingNotification?.show) {
           this.pusherChallenge.presentChallengeNotification();
           this.getUserInformation();
-        } 
-        this.pusherChallenge.isModalShowing = false;
+        }
+
       });
 
     await modal.present();
   }
 
-  
+  async openPDF() {
+    const modal = await this.modalCtrl.create({
+      component: PdfPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
+
+  onSwiper(event){
+
+  }
+
+  onSlideChange(){
+
+  }
+
 }

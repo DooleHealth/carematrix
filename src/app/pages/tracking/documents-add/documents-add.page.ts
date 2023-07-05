@@ -9,6 +9,7 @@ import { TestTypePage } from './test-type/test-type.page';
 import { DatePipe } from '@angular/common';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-documents-add',
@@ -24,7 +25,7 @@ export class DocumentsAddPage implements OnInit {
   media: any = [];
   form: FormGroup;
   typeTest
-  public processing:boolean=false; 
+  public processing:boolean=false;
   currentDate
   isSubmittedType = false;
   isSubmittedTitle = false;
@@ -40,7 +41,7 @@ export class DocumentsAddPage implements OnInit {
     public platform: Platform,
     public datepipe: DatePipe,
     public navController: NavController,
-    private notification: NotificationService,
+    public dateService: DateService,
     private modalCtrl: ModalController,
     public alertController: AlertController,
 
@@ -74,7 +75,7 @@ export class DocumentsAddPage implements OnInit {
       this.media = this.test.diagnosticTest.media
     }
   }
-  
+
 
   isSubmittedFields(isSubmitted){
     this.isSubmittedType = isSubmitted
@@ -89,11 +90,11 @@ export class DocumentsAddPage implements OnInit {
   async submit() {
     this.isSubmittedFields(true);
     if(this.form.invalid)
-    return 
+    return
     console.log("submit");
     let date = this.form.get('date').value;
     var current = new Date(date)
-    let data_prestacio = this.transformDate(current, 'dd/MM/yyyy')
+    let data_prestacio = this.dateService.ddMMyyyyFormat(current);
     this.form.get('date').setValue(data_prestacio);
 
     let private_test = this.form.get('private').value ? 1 : 0;

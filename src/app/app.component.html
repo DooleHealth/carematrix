@@ -1,3 +1,4 @@
 <ion-app dir="{{textDir}}">
   <ion-router-outlet></ion-router-outlet>
+  <changeUser [isFamily]="this.showFamilyUnitButton() && this.authService?.user?.familyUnit != null"></changeUser>
 </ion-app>

@@ -1,18 +1,20 @@
-import { Inject, Injectable, PLATFORM_ID, ViewChild } from '@angular/core';
-import { Plugins } from '@capacitor/core';
+import { Inject, Injectable, Injector, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiEndpointsService } from '../services/api-endpoints.service';
 import { Constants } from '../config/constants';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Platform } from '@ionic/angular';
-import { AngularFireAuth } from "@angular/fire/auth";
+import { AlertController, Platform } from '@ionic/angular';
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
-const { Storage } = Plugins;
-const TOKEN_KEY = 'token';
-const TOKENS = 'tokens';
+import { TranslateService } from '@ngx-translate/core';
+import { TokenService } from './token.service';
+
 const INTRO_KEY = 'intro';
+//const TOKENS = 'tokens';
+//const TOKEN_KEY = 'token';
 
 export class User {
   condicion_legal: boolean;
@@ -53,18 +55,22 @@ export class AuthenticationService {
   public voipDeviceToken: string;
   public voipDevicePlatform: string;
   public dietsAndAdvices: [];
-  public deviceVoipToken: any;
   public isFamily:boolean;
   private indexEndPoint: number;
   private tokens = []
+  showingSignInAlert: boolean = false;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
-  constructor(private http: HttpClient,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private http: HttpClient,
+    private tokenService: TokenService,
     private api: ApiEndpointsService,
     public platform: Platform,
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     private constants: Constants,
-    @Inject(PLATFORM_ID) private platformId: object) {
+    public alertController: AlertController,
+    private injector: Injector) {
       this.setUser();
   }
 
@@ -74,29 +80,25 @@ export class AuthenticationService {
   }
 
   getAuthToken() {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token =  this.tokenService.getAuthToken()
+    //console.log("[AuthService] getAuthToken: ", token);
     return token;
   }
 
-  hasToken(): boolean {
-    return !!localStorage.getItem(TOKEN_KEY);
-  }
-
-  async loadToken() {
-    const token = await Storage.get({ key: TOKEN_KEY });
-    if (token && token.value) {
-      this.isAuthenticated.next(true);
-    } else {
-      this.isAuthenticated.next(false);
-    }
-  }
-
   setAuthToken(token) {
-    localStorage.setItem(TOKEN_KEY, token);
+    this.tokenService.setAuthToken(token)
   }
+
+  // getAuthToken() {
+  //   const token = localStorage.getItem(TOKEN_KEY);
+  //   return token;
+  // }
+
+  // setAuthToken(token) {
+  //   localStorage.setItem(TOKEN_KEY, token);
+  // }
 
   login(credentials: { username, password, hash }): Observable<any> {
-    this.tokens = []
     const endpoint = this.api.getEndpoint('patient/login');
 
     console.log('credentials: ', credentials);
@@ -110,33 +112,26 @@ export class AuthenticationService {
         }
         // save user's token
         if (res.token){
+          this.tokenService.setAuthToken(res.token);
           this.setAuthToken(res.token);
         }
 
         // Set indexEndPoint ios_dev if it is QA
           this.getIndexEndPoint()
-        // if (res.firebaseToken) {
-        //   this.firebaseAuth.signInWithCustomToken(res.firebaseToken).then((data) => {
             if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
               //console.log(data);
               let access = true;
               if(this.deviceToken && this.devicePlatform)
                 this.registerDevice(this.deviceToken, this.devicePlatform);
-              
+
               if (this.platform.is('ios')){
-                if(this.voipDeviceToken) 
-                  this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip');        
-                
+                if(this.voipDeviceToken)
+                  this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip');
+
               }
-               
-              
+
             }
 
-        //   }, (error) => {
-        //     console.log("[signInWithCustomToken] error", error);
-        //     throw error;
-        //   });
-        // }
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
         this.setUserLocalstorage(this.user)
@@ -167,7 +162,7 @@ export class AuthenticationService {
 
   setUserLocalstorage(user) {
     console.log(`[AuthenticationService] setUserLocalstorage()`, user);
-    Storage.set({
+    Preferences.set({
       key: 'user',
       value: JSON.stringify(user)
     });
@@ -176,21 +171,21 @@ export class AuthenticationService {
 
   setFamilyUnitLocalstorage(familyUnit: []) {
 
-  
+
     familyUnit.forEach(member => {
       let s: string = member['name'];
       let fullname = s.split(',');
       let u = new User(member['id'], '', fullname[1], fullname[0], member['thumbnail']);
-      console.log("familyUnit Local Storage:", u);
-      Storage.set({
-        key: u.idUser,
+      console.log("familyUnit Local:", u);
+      Preferences.set({
+        key: String(u.idUser),
         value: JSON.stringify(u)
       });
     })
   }
 
   getFamilyUnitLocalstorage(id): Promise<User> {
-    return Storage.get({ key: id }).then((val) => {
+    return Preferences.get({ key: id }).then((val) => {
       console.log(`[AuthenticationService] getFamilyUnitLocalstorage(${id})`, val);
       return JSON.parse(val.value);
     });
@@ -202,8 +197,8 @@ export class AuthenticationService {
     let fullname = s.split(',');
     this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
     this.user.familyUnit = user.id;
-    Storage.set({
-      key: user.id,
+    Preferences.set({
+      key: String(user.id),
       value: JSON.stringify(this.user)
     });
 
@@ -211,7 +206,7 @@ export class AuthenticationService {
   }
 
   getUserLocalstorage(): Promise<User> {
-    return Storage.get({ key: 'user' }).then((val) => {
+    return Preferences.get({ key: 'user' }).then((val) => {
       return JSON.parse(val.value);
     });
   }
@@ -229,13 +224,13 @@ export class AuthenticationService {
   }
 
   getShowIntroLocalstorage(): Promise<any> {
-    return Storage.get({ key: 'showIntro' }).then((val) => {
+    return Preferences.get({ key: 'showIntro' }).then((val) => {
       return Boolean(val.value)
     });
   }
 
   async setShowIntroLocalstorage() {
-    await Storage.set({
+    await Preferences.set({
       key: 'showIntro',
       value: 'true'
     });
@@ -248,15 +243,17 @@ export class AuthenticationService {
   async logout1(): Promise<void>{
     console.log('logout');
     this.isAuthenticated.next(false);
-    await Storage.remove({ key: 'user' }).then((val) => { });
-    return Storage.remove({ key: TOKEN_KEY });
+    await Preferences.remove({ key: 'user' }).then((val) => { });
+       this.tokenService.removeAuthToken()
+    return
   }
 
-  logout(allDevices?): Observable<any>  {  
+  logout(allDevices?): Observable<any>  {
     let path = 'patient/logout'
-      this.getAllTokenDevices()
+    //this.getAllTokenDevices()
+    const tokens = this.tokenService.getAllTokenDevices();
       let params = {
-        tokens: this.tokens,
+        tokens:  tokens, //
         allDevices: allDevices? allDevices: false
       }
       console.log('logout', params );
@@ -265,8 +262,8 @@ export class AuthenticationService {
         map( (res: any) => {
           console.log(`[AuthenticationService] logout(${path}) res: `, JSON.stringify(res) );
           this.isAuthenticated.next(false);
-           Storage.remove({ key: 'user' }).then((val) => { });
-           Storage.remove({ key: TOKEN_KEY });
+           Preferences.remove({ key: 'user' }).then((val) => { });
+           this.tokenService.removeAuthToken()
           return res;
         })
       );
@@ -338,11 +335,6 @@ export class AuthenticationService {
 
   post(endpt, items): Observable<any> {
     const endpoint = this.api.getDooleEndpoint(endpt);
-
-    // endpoint
-    //console.log("body", endpt);
-    // body
-    //console.log("body",items);
     return this.http.post(endpoint, items).pipe(
       map((res: any) => {
         return res;
@@ -380,7 +372,8 @@ export class AuthenticationService {
         let response=data;
         console.log("response user/device/register");
         console.log(response);
-        this.saveAllTokenDevices(postData)
+        this.tokenService.saveAllTokenDevices(postData)
+        //this.saveAllTokenDevices(postData)
         return response;
       },
       (error) => {
@@ -390,18 +383,21 @@ export class AuthenticationService {
       });
   }
 
-  saveAllTokenDevices(token){
-    this.tokens.push(token)
-    localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
-  }
+  // saveAllTokenDevices(token){
+  //   this.tokens.push(token)
+  //   console.log(`[AuthService] saveAllTokenDevices()`, this.tokens);
+  //   localStorage.setItem(TOKENS,JSON.stringify(this.tokens))
+  // }
 
-  getAllTokenDevices(){
-    let list = JSON.parse(localStorage.getItem(TOKENS))
-    this.tokens = list? list:[]
-  }
+  // getAllTokenDevices(){
+  //   let list = JSON.parse(localStorage.getItem(TOKENS))
+  //   console.log(`[AuthService] getAllTokenDevices()`, list);
+  //   this.tokens = list? list:[]
+  // }
+
 
   async showIntro() {
-    return Storage.get({ key: INTRO_KEY }).then(async (data) => {
+    return Preferences.get({ key: INTRO_KEY }).then(async (data) => {
       let showIntro = Boolean(data.value)
       console.log(`[AuthService] showIntro()`, showIntro);
       return showIntro;
@@ -445,4 +441,32 @@ export class AuthenticationService {
       })
     );
   }
+
+  redirectLogin(){
+    this.router.navigateByUrl('/landing');
+  }
+
+
+  async redirectUnauthenticated() {
+
+      const translateService = this.injector.get(TranslateService)
+
+      const alert = await this.alertController.create({
+        cssClass: "alertClass",
+        header:  translateService.instant('info.title'),
+        backdropDismiss:false,
+        // subHeader: 'Subtitle',
+        message: translateService.instant('landing.login_again'),
+        buttons: [
+          {text: translateService.instant('button.accept'),
+          handler: () => {
+            this.router.navigateByUrl(`/landing`);
+          }
+        }
+        ]
+      });
+
+      await alert.present();
+    }
+
 }

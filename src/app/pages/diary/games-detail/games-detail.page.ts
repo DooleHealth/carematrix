@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -14,6 +14,7 @@ export class GamesDetailPage implements OnInit {
   private data: any = history.state?.data;
   private form_id = history.state?.form_id;
   game:any ={}
+  gameTitle : string;
   id:any
   score = 0
   isLoading = false
@@ -40,10 +41,10 @@ export class GamesDetailPage implements OnInit {
           this.score = res.game.score
         }
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[GamesDetailPage] getGameData() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[GamesDetailPage] getGameData() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
@@ -67,7 +68,7 @@ export class GamesDetailPage implements OnInit {
       await this.auth.getUserLocalstorage().then(value =>{
         this.auth.user = value
       })
-      
+
       if(item.url?.startsWith("http")){
         item.url=item.url+"?user="+this.auth.user.idUser+"&game="+item.id;
         browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");

@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-const { Storage } = Plugins;
+import Swiper, { SwiperOptions } from 'swiper';
+
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { BehaviorSubject } from 'rxjs';
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
 const INTRO_KEY = 'intro';
 @Component({
   selector: 'app-intro',
@@ -10,7 +16,7 @@ const INTRO_KEY = 'intro';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-  
+
   constructor(
     public router: Router,
     private authService: AuthenticationService,) { }
@@ -23,6 +29,6 @@ export class IntroPage implements OnInit {
    await this.authService.setShowIntroLocalstorage()
    this.router.navigate(['home']);
  }
- 
+
 
 }

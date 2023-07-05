@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
 import { Platform } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -54,13 +54,13 @@ export class ImageDownloadComponent {
         this.downloaded = datad.downloaded;
       });
     });
-    
+
   }
 
   openImage(){
     if(this.clickable)
       this.photoViewer.show(this.localfile);
   }
-  
+
 
 }

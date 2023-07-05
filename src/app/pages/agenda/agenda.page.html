@@ -21,12 +21,11 @@
 </ion-header>
 
 <ion-content>
-  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
-    (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30" startingDayWeek="1"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30"
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
-    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter" startingDayMonth="1">
+    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter" [startingDayMonth]="this.dateService.getStartingDayMonth()">
   </calendar>
   <ng-template #template let-view="view" let-row="row" let-col="col">
     <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">
@@ -68,18 +67,18 @@
               </ion-row>
               <ion-row>
                 <ion-col *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn">
-                  {{event.startTime|date: 'HH:mm'}} - {{event?.endTime|date:
-                  'HH:mm'}}h
+                  {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
+                  this.dateService.getTimeFormat()}}
                 </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date:
-                  'EEEE, d MMMM'}}</ion-col>
+                  this.dateService.getformatSelectedDate()}}</ion-col>
               </ion-row>
             </ion-grid>
           </ion-item>
         </ion-list>
-        <ion-spinner *ngIf="this.isLoading && selectedDate?.events.length==0" name="bubbles" class="spinnerCenter"></ion-spinner>
+        <ion-spinner *ngIf="this.isLoading && selectedDate?.events.length==0"  class="spinnerCenter"></ion-spinner>
         <div *ngIf="!this.isLoading && selectedDate?.events.length==0">
           <ion-grid>
             <ion-row>
@@ -95,7 +94,7 @@
       </ion-item>
     </ion-list>
   </ng-template>
- 
+
 </ion-content>
 
 <ion-footer>

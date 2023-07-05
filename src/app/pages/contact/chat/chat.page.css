@@ -1,0 +1,43 @@
+.txtTitleTrackingLittle {
+  font-size: 12px;
+  font-weight: 400;
+  color: #7f8c8d;
+}
+
+.textMediumLeft > app-text-shell {
+  text-align: left;
+  color: #7f8c8d !important;
+}
+
+.users-list ion-item {
+  --padding-start: 0px;
+}
+
+ion-item {
+  border-bottom: 1pt solid #ced6d6;
+}
+ion-item ion-thumbnail {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.user-name > app-text-shell {
+  --text-shell-line-height: 17px;
+  max-width: 120px;
+  font-weight: 500;
+}
+.user-name > app-text-shell.text-loaded {
+  max-width: inherit;
+}
+
+.user-lastname > app-text-shell {
+  --text-shell-line-height: 14px;
+  max-width: 120px;
+}
+.user-lastname > app-text-shell.text-loaded {
+  max-width: inherit;
+}
+
+.strech {
+  max-height: 5px;
+}/*# sourceMappingURL=chat.page.css.map */

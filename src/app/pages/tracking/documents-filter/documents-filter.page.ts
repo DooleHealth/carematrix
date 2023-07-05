@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 export interface Filter {
@@ -32,6 +33,7 @@ export class DocumentsFilterPage implements OnInit {
     public router: Router,
     public navCtrl: NavController,
     private modalCtrl: ModalController,
+    public dateService: DateService
   ) { }
 
   ngOnInit() {
@@ -86,10 +88,10 @@ export class DocumentsFilterPage implements OnInit {
         this.listTestType = res.diagnosticTestTypes
         this.setCheckedDiagnosticTest()
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[DocumentsFilterPage] getDiagnosticTestType() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[DocumentsFilterPage] getDiagnosticTestType() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       },
       () => {
         // Called when operation is complete (both success and error)

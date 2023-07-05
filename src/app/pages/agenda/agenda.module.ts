@@ -14,6 +14,7 @@ import localeDe from '@angular/common/locales/de';
 import { TranslateModule } from '@ngx-translate/core';
 import { AgendaEditPage } from './agenda-edit/agenda-edit.page';
 import { AgendaEditPageModule } from './agenda-edit/agenda-edit.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 registerLocaleData(localeDe);
 
 @NgModule({
@@ -26,12 +27,14 @@ registerLocaleData(localeDe);
     AgendaPageRoutingModule,
     AgendaEditPageModule,
     TranslateModule,
-    NgCalendarModule
+    NgCalendarModule,
+    NgxPaginationModule
   ],
   declarations: [AgendaPage, AgendaEditPage],
-  exports:[AgendaEditPage],
-  providers: [ DatePipe,
+  providers: [DatePipe,
     { provide: LOCALE_ID, useValue: 'ca-ES' }
-  ]
+  ],
+  exports:[AgendaEditPage],
+
 })
 export class AgendaPageModule {}

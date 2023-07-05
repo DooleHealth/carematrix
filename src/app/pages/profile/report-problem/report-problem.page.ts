@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chooser } from '@ionic-native/chooser/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -65,9 +65,9 @@ export class ReportProblemPage implements OnInit {
   async sendProblemReport(){
       console.log('[ReportProblemPage] sendProblemReport()');
       this.isLoading = true
-/*       let category = this.form.get('category').value; 
+/*       let category = this.form.get('category').value;
       this.form.get('category').setValue(category); */
-  
+
       let description = this.form.get('description').value
       this.form.get('description').setValue(description);
 
@@ -104,7 +104,7 @@ export class ReportProblemPage implements OnInit {
     }
 
     goBacktoProfile(){
-      if(this.form.valid 
+      if(this.form.valid
         || this.numFile > 0){
         console.log("[ReportProblemPage] goBacktoProfile()", this.form.value);
         this.presentAlertConfirm();
@@ -137,7 +137,7 @@ export class ReportProblemPage implements OnInit {
           }
         ]
       });
-  
+
       await alert.present();
     }
 
@@ -156,7 +156,7 @@ export class ReportProblemPage implements OnInit {
         }],
         backdropDismiss: false
       });
-  
+
       await alert.present();
     }
 

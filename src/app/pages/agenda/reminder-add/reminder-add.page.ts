@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -20,7 +21,7 @@ export class ReminderAddPage implements OnInit {
   @Input()titleReminder: string;
   //@Input()origin_type: string;
   @Input()origin_id: string;
-  days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
+  days =[{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
   form: FormGroup;
   dateMax:any;
   time:Date;
@@ -37,24 +38,25 @@ export class ReminderAddPage implements OnInit {
   isInit = true;
   isNewEvent: boolean = true;
   isLoading = false
-  expanded = true
+  expanded = true;
+  titlePlaceholder = '';
   constructor(
     private fb: FormBuilder,
-    private loadingController: LoadingController,
+    public dateService: DateService,
     private dooleService: DooleService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     public datepipe: DatePipe,
     public alertController: AlertController,
     private modalCtrl: ModalController,
     private notification: NotificationService,
     public router: Router,
-  ) { 
+  ) {
     //this.translate.use('es');
   }
 
   ngOnInit() {
-   
-   
+
+
     let year = (new Date(Date.now()).getFullYear()) + 1
     this.dateMax = (new Date(Date.now()).getFullYear()) + this.NUM_YEAR
     this.form = this.fb.group({
@@ -90,9 +92,12 @@ export class ReminderAddPage implements OnInit {
     if(this.form !== null && this.form !== undefined) {
       const start_date = this.form.get('start_date').value;
       const end_date = group.value;
-      console.log(`[ReminderAddPage] checkDate(${start_date}, ${end_date})`);
+
       if(start_date && end_date){
-        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+        let a = new Date(start_date).getTime();
+        let b = new Date(end_date).getTime();
+        console.log(`[ReminderAddPage] checkDate(${a}, ${b})`);
+        return a <= b ? null : {
           NotLess: true
       };
       }
@@ -123,7 +128,6 @@ export class ReminderAddPage implements OnInit {
         this.form.get('frequency').setValue( this.event.frequency )
         this.frequencySeleted = this.event.frequency
       }
-
       this.form.get('day1').setValue( this.event.day1 )
       this.form.get('day2').setValue( this.event.day2 )
       this.form.get('day3').setValue( this.event.day3 )
@@ -131,30 +135,32 @@ export class ReminderAddPage implements OnInit {
       this.form.get('day5').setValue( this.event.day5 )
       this.form.get('day6').setValue( this.event.day6 )
       this.form.get('day7').setValue( this.event.day7 )
-      this.gettingDay()
+      this.gettingDay();
 
       if(this.event?.reminderable_type) this.form.get('type').setValue( this.event?.reminderable_type.split('\\')[1] )
       if(this.event?.reminderable_id) this.form.get('type_id').setValue( this.event.reminderable_id )
 
       if(this.event?.times.length > 0)
+
       this.event?.times.forEach(element => {
+
         let t = element.time.split(':')
-        this.times.push(t[0]+':'+t[1])
+        this.times.push(this.dateService.format24h(t[0]+':'+t[1]))
       });
 
       this.isInit = false
     }
-    
+
     if(this.origin_id){
       this.form.get('origin_id').setValue(this.origin_id)
       this.form.get('origin_type').setValue('Agenda')
-    } 
+    }
     if(this.isNewEvent){
-      let message = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')    
+      this.titlePlaceholder = (this.origin_id)? this.translate.instant('reminder.personal_reminder'): this.translate.instant('reminder.activity_reminder')
+
       if(this.type == 'Element' && this.titleReminder)
-        message = this.translate.instant('reminder.header')+' '+ this.titleReminder
-      this.form.get('title').setValue(message)
-      console.log('[ReminderAddPage] getReminder()', this.type, message);
+        this.titlePlaceholder = this.translate.instant('reminder.header')+' '+ this.titleReminder
+
     }
   }
 
@@ -175,12 +181,12 @@ export class ReminderAddPage implements OnInit {
   }
 
   transformDate(date) {
-    //date = new Date(date)
+    date = new Date(date)
     return this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
   }
 
   transformHour(date) {
-    return this.datepipe.transform(date, 'HH:mm');
+    return this.datepipe.transform(date, this.dateService.getTimeFormat());
   }
 
   formatDate(d){
@@ -199,25 +205,31 @@ export class ReminderAddPage implements OnInit {
 
 /*   trasnforHourToMinutes(time): any{
     let hour = time.split(':');
-    return (Number(hour[0]))*60 + (Number(hour[1]))  
+    return (Number(hour[0]))*60 + (Number(hour[1]))
   } */
 
   async addReminder(){
-    this.isLoading = true
-    let date = this.form.get('start_date').value 
-    this.form.get('start_date').setValue(this.transformDate(date));
 
-    let end_date = this.form.get('end_date').value 
-    this.form.get('end_date').setValue(this.transformDate(end_date));
+    this.isLoading = true
+    let date = this.datepipe.transform(this.form.get('start_date').value, 'yyyy-MM-dd HH:mm');
+    console.log("date after tranform", date)
+    this.form.get('start_date').setValue(date);
+
+    let end_date = this.datepipe.transform(this.form.get('end_date').value, 'yyyy-MM-dd HH:mm')
+    console.log("date after tranform", end_date)
+    this.form.get('end_date').setValue(end_date);
 
     let f = this.form.get('frequency').value
+    console.log("FREQUENCY", f);
     if(f !== 'daily')
     this.form.get('frequency').setValue('daily');
 
-    this.form.get('time').setValue(this.times)
+    this.form.get('time').setValue(this.times);
 
     this.form.get('type').setValue(this.type);
     this.form.get('type_id').setValue(this.typeId);
+
+    this.setWeekdayOrder();
 
     console.log(`[AgendaAddPage] addReminder()`,this.form.value );
 
@@ -226,7 +238,7 @@ export class ReminderAddPage implements OnInit {
         console.log('[ReminderAddPage] addReminder()', await res);
         if(res.success){
           // let message = this.translate.instant('reminder.message_added_reminder')
-          // this.notification.showSuccess(message);
+          // this.notification.showSuccess(message);z
           this.modalCtrl.dismiss({error:null, action: 'add'});
           this.notification.displayToastSuccessful()
         }else{
@@ -234,11 +246,11 @@ export class ReminderAddPage implements OnInit {
           alert(message)
         }
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[ReminderAddPage] addAgenda() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
@@ -246,17 +258,29 @@ export class ReminderAddPage implements OnInit {
   }
 
   async editReminder(){
-    let date = this.form.get('start_date').value 
+    let date = this.form.get('start_date').value
     this.form.get('start_date').setValue(this.transformDate(date));
 
-    let end_date = this.form.get('end_date').value 
+    let end_date = this.form.get('end_date').value
     this.form.get('end_date').setValue(this.transformDate(end_date));
 
     let f = this.form.get('frequency').value
     if(f !== 'daily')
     this.form.get('frequency').setValue('daily');
 
-    this.form.get('time').setValue(this.times)
+
+  let formattedTime = [];
+
+  this.times.forEach(t => {
+    if(t.includes("AM") || t.includes("PM")){
+      console.log("convrting:", t);
+      let hour = this.dateService.convert12to24format(t);
+      formattedTime.push(hour);
+    }else
+      formattedTime.push(t);
+
+  })
+    this.form.get('time').setValue(formattedTime)
 
     this.dooleService.updateAPIReminder(this.id, this.form.value).subscribe(
       async (res: any) =>{
@@ -268,10 +292,10 @@ export class ReminderAddPage implements OnInit {
           let message = this.translate.instant('reminder.error_message_added_reminder')
           this.showAlert(message)
         }
-       },(err) => { 
-          console.log('[ReminderAddPage] editReminder() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[ReminderAddPage] editReminder() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
 
@@ -313,15 +337,36 @@ export class ReminderAddPage implements OnInit {
           alert(message)
         }
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message); 
+          console.log('[ReminderAddPage] deleteReminder() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
       };
+  }
+
+  setWeekdayOrder(){
+    if(this.dateService.isAmericanFormat()){
+      let sunday = this.form.get('day1').value;
+      let monday = this.form.get('day2').value;
+      let tuesday = this.form.get('day3').value;
+      let wednesday = this.form.get('day4').value;
+      let thursday = this.form.get('day5').value;
+      let friday = this.form.get('day6').value;
+      let saturday = this.form.get('day7').value;
+
+      this.form.get('day1').setValue(monday);
+      this.form.get('day2').setValue(tuesday);
+      this.form.get('day3').setValue(wednesday);
+      this.form.get('day4').setValue(thursday);
+      this.form.get('day5').setValue(friday);
+      this.form.get('day6').setValue(saturday);
+      this.form.get('day7').setValue(sunday);
+
+    }
   }
 
   async presentAlertConfirm() {
@@ -357,20 +402,20 @@ export class ReminderAddPage implements OnInit {
     switch (fq) {
       case 'daily':
         if(this.isSubmited)
-        return 
+        return
         let dialy = [0,1,2,3,4,5,6]
         this.settingDayForm(dialy)
         this.frequencySeleted = fq
         break;
       case '1week':
         if(this.isSubmited)
-          return       
+          return
           this.settingBackupDay()
           this.frequencySeleted = fq
         break;
       case 'custom':
         if(this.isSubmited)
-          return       
+          return
           this.settingBackupDay()
           this.frequencySeleted = fq
         break;
@@ -413,6 +458,27 @@ export class ReminderAddPage implements OnInit {
     }
   }
 
+  setWeekDay(){
+    if(this.dateService.isAmericanFormat()){
+      this.form.get('day1').setValue( this.event.day1 )
+      this.form.get('day2').setValue( this.event.day1 )
+      this.form.get('day3').setValue( this.event.day2 )
+      this.form.get('day4').setValue( this.event.day3 )
+      this.form.get('day5').setValue( this.event.day4 )
+      this.form.get('day6').setValue( this.event.day5 )
+      this.form.get('day7').setValue( this.event.day6 )
+    }else{
+      this.form.get('day1').setValue( this.event.day1 )
+      this.form.get('day2').setValue( this.event.day2 )
+      this.form.get('day3').setValue( this.event.day3 )
+      this.form.get('day4').setValue( this.event.day4 )
+      this.form.get('day5').setValue( this.event.day5 )
+      this.form.get('day6').setValue( this.event.day6 )
+      this.form.get('day7').setValue( this.event.day7 )
+    }
+
+  }
+
   gettingDay(){
     let ceros = 1
     this.days.forEach((day, i) =>{
@@ -434,15 +500,15 @@ export class ReminderAddPage implements OnInit {
   }
 
   inputDate(){
-    if(this.isSubmited) 
+    if(this.isSubmited)
     return
     let time = this.form.get('time').value
     this.form.get('time').setValue('')
     if(time !== '' ){
       let date = new Date(time)
-      let hour = this.transformHour(date)
-      if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
-      this.times.push(hour)
+      let hour = this.datepipe.transform(date, 'HH:mm');
+      if ( this.times.indexOf( date) == -1 ) // if hour is not repeated
+        this.times.push(hour)
     }
   }
 

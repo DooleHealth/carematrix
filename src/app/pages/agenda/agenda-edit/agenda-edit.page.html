@@ -64,7 +64,7 @@
         </ion-item>
         <ion-item>
           <ion-label>{{'reminder.field_start' | translate}}</ion-label>
-          <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" displayFormat="D MMM YYYY H:mm" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime>
+          <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime>
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
           <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
         </ion-item>
@@ -72,7 +72,7 @@
           <ion-label lines="none">{{'reminder.field_duration' | translate}}</ion-label>
           <ion-input formControlName="duration" inputmode="numeric" type="number" placeholder="{{'reminder.minutes' | translate}}" class="textMedium" required></ion-input>
           <ion-note *ngIf="this.isSubmittedDuration && this.form.get('duration').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+
         </ion-item>
       </ion-list>
     </ion-card>
@@ -83,14 +83,14 @@
           <ion-item lines="none">
             <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
           </ion-item>
-          
+
             <app-file-upload #uploadFile [media]="this.media"></app-file-upload>
-    
+
         </ion-list>
       </form>
     </ion-card>
   </form>
   <div class="spinnerCenter">
-  <ion-spinner *ngIf="this.isSaving" name="bubbles" ></ion-spinner>
-  </div>  
+  <ion-spinner *ngIf="this.isSaving"  ></ion-spinner>
+  </div>
 </ion-content>

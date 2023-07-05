@@ -1,0 +1,20 @@
+<div [ngClass]="desactive ? 'd-none' : 'd-block'">
+  <ion-grid [id]="this.data?.id" class="form-component" [name]="data.name" [ngClass]="data?.hidden ? 'd-none' : 'd-block'">
+    <ion-row class="form-question">
+      <div  class="text-index">{{data.index}}</div>
+      <div style="display: flex;">
+        <ion-text *ngIf=" this.data.required" color="danger" style="font-size:20px; margin-right: 4px;">*</ion-text>
+        <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-top: 2px; margin-right: 4px;" [info]="this.data.tooltip" ></app-tooltip>
+        <div name="data.name" [innerHtml]="this.label | safeHtml"></div>
+      </div>
+    </ion-row> 
+    <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>  
+    <ion-radio-group [value]="this.valueDefault" (ionChange)="setValue($event); checkValue()">
+      <ion-item  lines="none1" class="item-option" *ngFor="let entry of this.options">
+        <ion-radio slot="start" mode="md" [value]="entry.value"></ion-radio>
+        <!-- <ion-text [innerHtml]="entry.label | safeHtml"></ion-text> -->
+        <div [innerHtml]="entry.label | safeHtml"></div>
+      </ion-item>
+    </ion-radio-group>
+  </ion-grid>
+</div>

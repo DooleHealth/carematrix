@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -36,10 +37,12 @@ export class ElementsAddPage implements OnInit {
     private dooleService: DooleService,
     private translate : TranslateService,
     private modalCtrl: ModalController,
-  ) { 
+    private alertController: AlertController,
+    public dateService: DateService
+  ) {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-    this.date =  localISOTime;
+    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
     let auxdate = new Date(Date.now()).setHours(23,59,59)
     let auxdate1 = new Date(auxdate)
     this.maxDate = (new Date(auxdate1.getTime() - tzoffset)).toISOString().slice(0, -1);
@@ -77,7 +80,8 @@ export class ElementsAddPage implements OnInit {
     if(this.form.invalid)
     return
     if(this.isValueCorrect( Number(this.form.get('measure').value)))
-      this.addElement()
+      this.showAlertConfirm()
+      //this.addElement()
     else
       this.messageInvalidValue()
   }
@@ -120,7 +124,7 @@ export class ElementsAddPage implements OnInit {
         },
         (error) => {
           // Called when error
-          let message = this.translate.instant('element.error_alert_message_add_element') 
+          let message = this.translate.instant('element.error_alert_message_add_element')
             + ` .Error: ${error.code}, message: ${error.message}`
           alert(message)
           console.log("error: ", error);
@@ -137,16 +141,16 @@ export class ElementsAddPage implements OnInit {
     let params = {}
     this.dooleService.searchAPIelementGroup(params).subscribe(
       async (data: any) =>{
-        console.log('[DiaryPage] getElementsGroup()', await data); 
+        console.log('[DiaryPage] getElementsGroup()', await data);
         if(data.results){
           this.groupElements = data.results
         }
         this.isLoading = false
-       },(err) => { 
-          console.log('[DiaryPage] getElementsGroup() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[DiaryPage] getElementsGroup() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
-          throw err; 
+          throw err;
       });
   }
 
@@ -154,16 +158,16 @@ export class ElementsAddPage implements OnInit {
     this.isLoading = true
     this.dooleService.getAPIelementGroupID(id).subscribe(
       async (data: any) =>{
-        console.log('[DiaryPage] getElements()', await data); 
+        console.log('[DiaryPage] getElements()', await data);
         if(data.success){
           this.group = data
         }
         this.isLoading = false
-       },(err) => { 
-          console.log('[DiaryPage] getElements() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[DiaryPage] getElements() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
-          throw err; 
+          throw err;
       });
   }
 
@@ -188,10 +192,10 @@ export class ElementsAddPage implements OnInit {
             this.form.get('category').setValue(this.nameElement)
           }
         }
-       },async (err) => { 
+       },async (err) => {
           alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[ElementsAddPage] getElementAvailable() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[ElementsAddPage] getElementAvailable() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -216,20 +220,57 @@ export class ElementsAddPage implements OnInit {
     }
   }
 
-  isValueCorrect(value){
-    if(value >= Number(this.min) && value <= Number(this.max)){
+  isValueCorrect(data){
+    var value = parseFloat((data+'')?.replace(",","."));
+    var valueMin = parseFloat(this.min?.replace(",","."));
+    var valueMax = parseFloat(this.max?.replace(",","."));
+    //console.log('[ElementsAddPage] isValueCorrect() min: ', valueMin, ' ,max: ', valueMax, 'value: ', value);
+    if(value >= valueMin && value <= valueMax){
+      //console.log('[ElementsAddPage] isValueCorrect()', true);
       return true
     }
     else if(this.min == null && this.max == null){
+      //console.log('[ElementsAddPage] isValueCorrect()', true);
       return true
     }
     else{
+      //console.log('[ElementsAddPage] isValueCorrect()', false);
       return false
     }
   }
 
   close() {
     this.modalCtrl.dismiss({error:null});
+  }
+
+  async showAlertConfirm(){
+    let dismiss =  false
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      // header: this.translate.instant('alert.header_confirmation'),
+      message: this.translate.instant('element.confirmation'),
+      backdropDismiss: dismiss,
+      buttons: [
+        {
+          role: 'cancel',
+          cssClass: 'secondary',
+          text: this.translate.instant('button.cancel'),
+          handler: (blah) => {
+            console.log('Cancel All');
+            return
+          }
+        },
+        {
+          text: this.translate.instant('button.accept'),
+          handler: (blah) => {
+            console.log('Confirm OK: blah');
+            this.addElement()
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

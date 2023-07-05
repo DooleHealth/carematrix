@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CameraSource } from '@capacitor/core';
+import { CameraSource } from '@capacitor/camera';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
@@ -31,7 +31,7 @@ export class SpecialistFinderPage implements OnInit {
       .then((result) => {
 
         if(result.data['date']){
-          this.selectedDate = this.transformDate(result.data['date']) ; 
+          this.selectedDate = this.transformDate(result.data['date']) ;
           //this.form.get('date').setValue(this.transformDate(this.selectedDate))
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }
@@ -72,7 +72,7 @@ export class SpecialistFinderPage implements OnInit {
     ];
 
     // Only allow file selection inside a browser
-    
+
     // if (Capacitor.getPlatform() == 'web') {
       buttons.push({
         text: 'Choose a File',
@@ -107,7 +107,7 @@ export class SpecialistFinderPage implements OnInit {
 
 
   async uploadFileFromBrowser(event: EventTarget) {
-    const eventObj: MSInputMethodContext = event as MSInputMethodContext;
+    const eventObj: any = event as any;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file: File = target.files[0];
     const toBase64 = file => new Promise((resolve, reject) => {

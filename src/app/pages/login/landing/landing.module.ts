@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { LandingPageRoutingModule } from './landing-routing.module';
-
 import { LandingPage } from './landing.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { Device } from '@ionic-native/device/ngx';
+import { Device } from '@awesome-cordova-plugins/device/ngx';
+import { LocalizedDatePipe } from 'src/app/utils/localized-date.pipe';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { BrowserModule } from '@angular/platform-browser';
+import { SwiperModule } from 'swiper/angular';
 
 const routes: Routes = [
   {
@@ -28,8 +29,9 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes),
     LandingPageRoutingModule,
+    SwiperModule
   ],
-  providers:[Device],
+  providers:[Device,LocalizedDatePipe,AppVersion],
   declarations: [LandingPage]
 })
 export class LandingPageModule {}

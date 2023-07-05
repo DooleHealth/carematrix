@@ -24,29 +24,30 @@
       </ion-item>
       <ion-item lines="none">
         <ion-text style="width: fit-content; margin-right: 20px;" >{{ 'documents_add.field_title' | translate }}</ion-text>
-      <!--         <ion-input formControlName="title" (ionInput)="isSubmittedTitle = false"></ion-input>
+      <!-- <ion-input formControlName="title" (ionInput)="isSubmittedTitle = false"></ion-input>
         <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
       </ion-item>
       <ion-item>
         <ion-textarea formControlName="title" (ionInput)="isSubmittedTitle = false" maxlength="100"></ion-textarea>
-        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>        
+        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'documents_add.field_date' | translate }}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" displayFormat="DD/MM/YY" (ionInput)="isSubmittedDate = false" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.dateMax"></ion-datetime>
+        <!-- FIXME: <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" [displayFormat]="this.dateService.getShortDateFormat()" (ionInput)="isSubmittedDate = false" [placeholder]="this.dateService.ddMMyyyyFormat(this.currentDate)" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" (ionInput)="isSubmittedDate = false" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
         <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>{{ 'documents_add.field_description' | translate }}</ion-label>       
+        <ion-label>{{ 'documents_add.field_description' | translate }}</ion-label>
       </ion-item>
       <ion-item>
-        <ion-textarea rows="8" formControlName="description"></ion-textarea>       
+        <ion-textarea rows="8" formControlName="description"></ion-textarea>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.field_private' | translate }}</ion-label>
         <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
-       
+
       </ion-item>
     </ion-list>
   </ion-card>
@@ -58,7 +59,7 @@
       <ion-item lines="none">
         <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
       </ion-item>
-      
+
         <app-file-upload #uploadFile [media]="this.media"></app-file-upload>
 
     </ion-list>
@@ -69,5 +70,5 @@
   <section>
     <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
     <ion-button *ngIf="this.isEdit" expand="block"  (click)="presentAlertConfirm()" >{{'button.delete' | translate }}</ion-button>
-  </section>  
+  </section>
 </ion-content>

@@ -1,0 +1,65 @@
+.logo-header {
+  width: 170px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-one {
+  --background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+ion-content {
+  --background: none;
+  background-position: center top;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.lock-img {
+  height: auto !important;
+  width: auto !important;
+  align-items: center;
+}
+
+ion-icon {
+  font-size: 90px;
+  color: #006172;
+  text-align: center;
+  position: relative;
+  top: calc(50% - 10px); /* 50% - 3/4 of icon height */
+}
+
+#container * {
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  width: 100%;
+  font-size: 0;
+}
+
+#left,
+#middle,
+#right {
+  display: inline-block;
+  zoom: 1;
+  vertical-align: top;
+}
+
+#left {
+  width: 25%;
+}
+
+#middle {
+  vertical-align: bottom;
+  width: 60%;
+}
+
+#right {
+  vertical-align: bottom;
+  width: 15%;
+}/*# sourceMappingURL=biometric-auth.page.css.map */

@@ -8,6 +8,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { Location } from '@angular/common';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
+import { DateService } from 'src/app/services/date.service';
 @Component({
   selector: 'app-agenda-edit',
   templateUrl: './agenda-edit.page.html',
@@ -30,7 +31,7 @@ export class AgendaEditPage implements OnInit {
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   constructor(
     private fb: FormBuilder,
-    private loadingController: LoadingController,
+    public dateService: DateService,
     private dooleService: DooleService,
     private translate : TranslateService,
     public datepipe: DatePipe,
@@ -72,7 +73,7 @@ export class AgendaEditPage implements OnInit {
 
   trasnforHourToMinutes(time): any {
     let hour = time.split(':');
-    return (Number(hour[0]))*60 + (Number(hour[1]))  
+    return (Number(hour[0]))*60 + (Number(hour[1]))
   }
 
   isSubmittedFields(isSubmitted){
@@ -94,7 +95,7 @@ export class AgendaEditPage implements OnInit {
     console.log('[AgendaEditPage] submit()', this.form.value );
     this.isSubmittedFields(true);
     if(this.form.invalid)
-    return 
+    return
     if(this.isNewEvent)
     this.addAgenda()
     else
@@ -103,9 +104,9 @@ export class AgendaEditPage implements OnInit {
 
   async editAgenda(){
     this.isSaving = !this.isSaving;
-    let date = this.form.get('date').value 
+    let date = this.form.get('date').value
     this.form.get('date').setValue(this.transformDate(date));
-    var online = this.form.get('online').value 
+    var online = this.form.get('online').value
     this.form.get('online').setValue(online? 1:0);
     console.log(`[AgendaAddPage] editAgenda()`,this.form.value );
     this.dooleService.putAPIagenda(this.id,this.form.value).subscribe(
@@ -134,25 +135,25 @@ export class AgendaEditPage implements OnInit {
           alert(message)
         }
         this.isSaving = !this.isSaving
-       },(err) => { 
-          console.log('[AgendaEditPage] editAgenda() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[AgendaEditPage] editAgenda() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
-       
+
       };
   }
 
   async addAgenda(){
-   
+
     this.isSaving = !this.isSaving;
-    let date = this.form.get('date').value 
+    let date = this.form.get('date').value
     this.form.get('date').setValue(this.transformDate(date));
-    var online = this.form.get('online').value 
+    var online = this.form.get('online').value
     this.form.get('online').setValue(online? 1:0);
     console.log(`[AgendaAddPage] addAgenda()`,this.form.value );
-    
+
     this.dooleService.postAPIaddAgenda(this.form.value).subscribe(
       async (res: any) =>{
         console.log('[AgendaEditPage] addAgenda()', await res);
@@ -179,19 +180,19 @@ export class AgendaEditPage implements OnInit {
           alert(message)
         }
         this.isSaving = !this.isSaving
-       },(err) => { 
-          console.log('[AgendaEditPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+       },(err) => {
+          console.log('[AgendaEditPage] addAgenda() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err; 
+          throw err;
       }) ,() => {
-       
+
         // Called when operation is complete (both success and error)
-        
+
       };
   }
 
   close() {
     this.modalCtrl.dismiss({error:null});
   }
-  
+
 }

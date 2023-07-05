@@ -5,8 +5,8 @@ import { ActionSheetController, LoadingController, ModalController, NavControlle
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { MedicalCalendarPage } from '../medical-calendar/medical-calendar.page';
-import { Chooser } from '@ionic-native/chooser/ngx';
-import { File } from '@ionic-native/file/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AnalyticsService } from 'src/app/services/analytics.service';
@@ -31,13 +31,13 @@ export class BookingsPage implements OnInit {
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
   isLoading = false
-  constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
+  constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
-    public file: File, private router: Router, private notification: NotificationService,  private analyticsService: AnalyticsService) { 
+    public file: File, private router: Router, private notification: NotificationService,  private analyticsService: AnalyticsService) {
       // this.analyticsService.setScreenName('booking','[BookingsPage]')
     }
   ngOnInit() {
-   
+
     this.form = this.fb.group({
       place: [''],
       title: [''],
@@ -84,10 +84,10 @@ export class BookingsPage implements OnInit {
     this.isLoading = true
     this.dooleService.postAPIaddAgenda(params).subscribe(
       async (res: any) =>{
-        console.log('[BookingsPage] addAgenda()', await res);  
+        console.log('[BookingsPage] addAgenda()', await res);
         if(res.success){
           this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
-          // this.analyticsService.logEvent('create_agenda', res)   
+          // this.analyticsService.logEvent('create_agenda', res)
           if(!this.uploadFile.isEmptyFiles()){
             this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
               if(res.success){
@@ -105,14 +105,14 @@ export class BookingsPage implements OnInit {
           }
         }
         this.isLoading = false
-       },(err) => { 
+       },(err) => {
         this.isLoading = false
-          console.log('[BookingsPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+          console.log('[BookingsPage] addAgenda() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
-      };     
+      };
   }
   isSubmittedFields(isSubmitted){
     this.isSubmittedTitle = isSubmitted;
@@ -125,10 +125,10 @@ export class BookingsPage implements OnInit {
     console.log('[BookingsAddPage] submit()', this.form.value );
     this.isSubmittedFields(true);
     if(this.form.invalid)
-      return 
-   
+      return
+
     this.addAgenda()
-    
+
   }
 
   async openCalendarModal() {
@@ -146,7 +146,7 @@ export class BookingsPage implements OnInit {
         }
         if(result.data['date']){
           this.duration = result.data['duration']
-          this.selectedDate = result.data['date']; 
+          this.selectedDate = result.data['date'];
           this.form.patchValue({date: this.transformDate(this.selectedDate, 'dd/MM/yyyy HH:mm')})
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }
@@ -154,23 +154,23 @@ export class BookingsPage implements OnInit {
 
     await modal.present();
   }
-  
+
 
   async payment(){
     console.log(`[AgendaAddPage] payment()` );
     this.isSubmittedFields(true);
     if(this.form.invalid)
-      return 
-  
+      return
+
     this.form.get('online').setValue(this.online)
     this.form.get('date').setValue(this.transformDate(this.selectedDate,  'dd/MM/yyyy HH:mm'))
     this.files = this.uploadFile.files
 
     this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files, selectedDate: this.selectedDate}});
-    
+
   }
 //  navigateDoctors() {
 //     return this.router.navigate(['/doctors'],{state:{staff:this.staff}});;
-   
+
 //   }
 }

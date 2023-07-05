@@ -15,21 +15,21 @@
     <ion-card-content [innerHtml]="recipe?.description">
     </ion-card-content> -->
     <ion-item lines="none">
-      <ion-label style="color:#E67E22;">{{recipe?.name}}</ion-label>  
+      <ion-label style="color:#E67E22;">{{recipe?.name}}</ion-label>
     </ion-item>
     <ion-item lines="none" *ngIf="this.ingredients">
-      <ion-label style="color:black;">{{'recipe.ingredients' | translate | uppercase}}</ion-label>  
+      <ion-label style="color:black;">{{'recipe.ingredients' | translate | uppercase}}</ion-label>
     </ion-item>
     <div *ngFor="let item of this.ingredients">
       <ion-item lines="none">
-        <ion-label>- {{item.name | titlecase}} ({{item.quantity}}) </ion-label>  
+        <ion-label>- {{item.name | titlecase}} ({{item.quantity}}) </ion-label>
         <app-info  *ngIf="item?.family" title="{{item.name | titlecase}}" info="{{'recipe.family' | translate}}: {{item?.family[0]?.name}}"></app-info>
        <!--  <ion-icon *ngIf="item?.family" slot="end" size="small" name="chevron-forward-outline"></ion-icon>  -->
       </ion-item>
     </div>
 
     <div style="padding: 15px;">
-      <span *ngIf="recipe?.description" [innerHTML]="recipe?.description | safeHtml"></span>
+      <span *ngIf="recipe?.description" [innerHTML]="recipe?.description"></span>
     </div>
 
   </ion-card>

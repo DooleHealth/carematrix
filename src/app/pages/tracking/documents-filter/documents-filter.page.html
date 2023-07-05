@@ -14,17 +14,17 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-searchbar 
-  [animated]="true" 
-  (ionInput)="filterList($event)" 
+  <!-- <ion-searchbar
+  [animated]="true"
+  (ionInput)="filterList($event)"
   placeholder="{{ 'Busca tu prueba' | translate}}">
 </ion-searchbar> -->
 
 <div class="spin" *ngIf="this.isLoading">
-  <ion-spinner name="bubbles"></ion-spinner>
+  <ion-spinner ></ion-spinner>
 </div>
 
-  <form (ngSubmit)="submit()" [formGroup]="form"> 
+  <form (ngSubmit)="submit()" [formGroup]="form">
   <ion-item lines="none">
     <ion-text class="txtTitleNoMargin">{{ 'documents_add.field_date' | translate}}</ion-text>
     <ion-toggle slot="end" color="success" [checked]="toggle" (ionChange)='(toggle = ! toggle) ? toggle : !toggle; changeToggleDate($event)'></ion-toggle>
@@ -33,11 +33,14 @@
     <ion-list>
       <ion-item>
         <ion-label>{{ 'documents_filter.from' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="start_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <!-- FIXME:: ionic 7 [displayFormat],placeholder removed-->
+        <!-- <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="start_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime> -->
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="start_date"  min="1990-01-01" [max]="this.currentDate"></ion-datetime>
       </ion-item>
       <ion-item lines="none">
         <ion-label>{{ 'documents_filter.until' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" displayFormat="DD/MM/YYYY" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime>
+        <!-- FIXME:<ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime> -->
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" min="1990-01-01" [max]="this.currentDate"></ion-datetime> -
       </ion-item>
     </ion-list>
   </ion-card>

@@ -1,17 +1,17 @@
-import { ErrorHandler, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER, Optional, PLATFORM_ID, LOCALE_ID } from "@angular/core";
-import { BrowserModule, BrowserTransferStateModule } from "@angular/platform-browser";
+import { ErrorHandler, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER, Optional, PLATFORM_ID, LOCALE_ID, importProvidersFrom } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
-import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { IonicModule, IonicRouteStrategy, Platform } from "@ionic/angular";
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { TokenInterceptorService } from "../app/interceptors/auth.interceptor";
-import { File } from '@ionic-native/file/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import { fakeBackendProvider } from "../app/interceptors/fake-backend.interceptor";
-import { FingerprintAIO } from "@ionic-native/fingerprint-aio/ngx"
+import { FingerprintAIO } from "@awesome-cordova-plugins/fingerprint-aio/ngx"
 import {
   HttpClientModule,
   HttpClient,
@@ -24,34 +24,39 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { ComponentsModule } from "./components/components.module";
-import { isPlatformServer } from "@angular/common";
+import { DatePipe, isPlatformServer } from "@angular/common";
 import { RESPONSE } from "@nguniversal/express-engine/tokens";
 import { registerLocaleData } from '@angular/common';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from "@angular/fire/compat";
+
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import {environment} from "../environments/environment";
 import { LanguageService } from "./services/language.service";
-import { FileTransfer } from "@ionic-native/file-transfer/ngx";
-import { DocumentViewer } from "@ionic-native/document-viewer/ngx";
-import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
-import { Health } from '@ionic-native/health/ngx';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { Calendar } from '@ionic-native/calendar/ngx';
-import {IonicStorageModule} from '@ionic/storage';
+import { FileTransfer } from "@awesome-cordova-plugins/file-transfer/ngx";
+import { DocumentViewer } from "@awesome-cordova-plugins/document-viewer/ngx";
+import { PhotoViewer } from "@awesome-cordova-plugins/photo-viewer/ngx";
+import { Health } from '@awesome-cordova-plugins/health/ngx';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import localeCa from '@angular/common/locales/ca';
-import localeEs from '@angular/common/locales/es';AngularFireModule
+import localeEs from '@angular/common/locales/es';
+import localeEn from '@angular/common/locales/en';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
-import { Network } from "@ionic-native/network/ngx";
+import { Network } from "@awesome-cordova-plugins/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
 import { HttpRequestInterceptor } from "./interceptors/loading.interceptor";
-import { Badge } from "@ionic-native/badge/ngx";
+import { Badge } from "@awesome-cordova-plugins/badge/ngx";
 import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.module";
-import { BackgroundMode } from "@ionic-native/background-mode/ngx";
+import { BackgroundMode } from "@awesome-cordova-plugins/background-mode/ngx";
 import { BLE } from "@awesome-cordova-plugins/ble/ngx";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { Market } from "@awesome-cordova-plugins/market/ngx";
+import { SwiperModule } from 'swiper/angular';
+import { Device } from "@awesome-cordova-plugins/device/ngx";
 
-
+registerLocaleData(localeEn);
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
 
@@ -64,24 +69,15 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserTransferStateModule,
-    IonicModule.forRoot(),
+    BrowserModule,
+    IonicModule.forRoot({
+      innerHTMLTemplatesEnabled: true
+    }),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    IonicStorageModule.forRoot(),
     ReactiveFormsModule,
     ComponentsModule,
-    Ng2SearchPipeModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-      defaultLanguage: "ca",
-    }),
     BrowserAnimationsModule,
     MatSnackBarModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -89,13 +85,19 @@ export function createTranslateLoader(http: HttpClient) {
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     TestTypePageModule,
-    ReminderAddPageModule
+    ReminderAddPageModule,
+
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
     Ng2SearchPipeModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    importProvidersFrom(TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient]
+        }
+      })),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,
@@ -121,13 +123,17 @@ export function createTranslateLoader(http: HttpClient) {
     SocialSharing,
     Calendar,
     FingerprintAIO,
+    Device,
+    Platform,
     Network,
     BackgroundMode,
     fakeBackendProvider,
+    DatePipe,
+    Market,
     {
       provide: APP_INITIALIZER,
       useFactory: (platformId: object, response: any) => {
-        return () => { 
+        return () => {
           // In the server.ts we added a custom response header with information about the device requesting the app
           if (isPlatformServer(platformId)) {
             if (response && response !== null) {
@@ -141,11 +147,12 @@ export function createTranslateLoader(http: HttpClient) {
       deps: [PLATFORM_ID, [new Optional(), RESPONSE]],
       multi: true
     },
-    
-   
+
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA],
+  exports:[HttpClientModule],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

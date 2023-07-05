@@ -30,7 +30,7 @@
     <div *ngSwitchCase="'List'">
       <ng-container *ngIf="this.loadingList; else second">
         <div class="spin">
-          <ion-spinner name="bubbles"></ion-spinner>
+          <ion-spinner ></ion-spinner>
         </div>
       </ng-container>
 
@@ -88,8 +88,8 @@
         <ion-col size="2">
           <ion-icon name="add-outline"></ion-icon>
         </ion-col>
-      </ion-row>   
-      <br> 
+      </ion-row>
+      <br>
       <div *ngIf="this.paso == 'cero' ">
         <ion-row class="paddingTopNoMarginBottom">
           <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
@@ -130,7 +130,7 @@
       </div>
       <div *ngIf="this.paso == 'uno' ">
 
-        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" (click)="this.paso = 'cero'">          
+        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" (click)="this.paso = 'cero'">
           <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
           <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
         </ion-row>

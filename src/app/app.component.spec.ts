@@ -2,8 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IonicModule, Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
@@ -24,12 +24,11 @@ describe('AppComponent', () => {
         NO_ERRORS_SCHEMA],
       providers: [
         { provide: StatusBar, useValue: statusBarSpy },
-        { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
       ],
       imports: [IonicModule, RouterTestingModule.withRoutes([])],
     }).compileComponents();
-  
+
 
     it('should create the app', async () => {
       const fixture = TestBed.createComponent(AppComponent);

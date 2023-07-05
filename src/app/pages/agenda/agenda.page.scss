@@ -2,7 +2,7 @@
   padding-left: 0.5rem;
   padding-bottom: 0.4rem;
 }
- 
+
 .event-indicator {
   background:  #F1C40F;
   width: 5px;
@@ -11,23 +11,25 @@
   display: table-cell;
 }
 
- 
+
 :host ::ng-deep {
 
   table,
   th{
     background-color: white;
     border: 0px !important;
-    border-bottom:  0.5px solid #BDC3C7 !important;//  rgb(143, 143, 143) 
+    border-bottom:  0.5px solid #BDC3C7 !important;//  rgb(143, 143, 143)
     color: #7F8C8D;
-  
- 
+
+
   };
   td {
     padding: 10px;
     border: 0px !important;
-    border-bottom:  0.7px solid #BDC3C7 !important;//  rgb(143, 143, 143) 
+    border-bottom:  0.7px solid #BDC3C7 !important;//  rgb(143, 143, 143)
     color: black;
+    vertical-align: middle;
+    text-align: center;
   }
 
 
@@ -36,7 +38,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
- 
+
   }
 
   .monthview-disabled{
@@ -82,7 +84,7 @@
 
 }
 
- 
+
 /*   .with-event {
   //background-color: var(--ion-color-primary);
   //border-radius: 15px;
@@ -99,13 +101,13 @@
 .event-detail2{
   font-size: medium;
   font-weight: 600;
- 
+
 }
 .event-detail{
   font-size: medium;
   font-weight: 400;
   text-overflow : ellipsis;
-  
+
   /* white-space: no-wrap!important;*/
 
 }
@@ -117,7 +119,7 @@
 .rowPadding2{
   background-color: rgb(255, 255, 255)!important;
   padding-bottom: 50%;
- 
+
 }
 
 .verticalLine {
@@ -157,7 +159,7 @@ ion-list {
   --padding-start: 0px;
   --inner-padding-end: 0px;
   }
- 
+
 }
 
 .list{

@@ -26,8 +26,6 @@ export class ImageShellComponent {
   @HostBinding('class.img-loaded') imageLoaded = false;
   @HostBinding('class.img-error') imageError = false;
 
-  @HostBinding('attr.data-error') errorMessage = 'Could not load image';
-
   @HostBinding('style.backgroundImage') backgroundImage: string;
 
   @HostBinding('attr.display')
@@ -65,7 +63,7 @@ export class ImageShellComponent {
 
   @Input()
   set alt(val: string) {
-    this._alt = (val !== undefined && val !== null) ? val : '';
+    this._alt = (val !== undefined && val !== null) ? val : 'assets/images/avatar-1577909.svg';
   }
 
   constructor(
@@ -98,7 +96,7 @@ export class ImageShellComponent {
     if (this._src && this._src !== '') {
       this.imageLoaded = false;
       this.imageSSR = false;
-
+      this._src = 'assets/images/avatar-1577909.svg';
       setTimeout(() => {
         this.imageError = true;
       }, 500);

@@ -1,0 +1,42 @@
+<div [ngClass]="desactive ? 'd-none' : 'd-block'">
+  <ion-grid class="form-component" [id]="this.data?.id" [name]="data.name" [ngClass]="data?.hidden ? 'd-none' : 'd-block'">
+    <ion-row class="form-question">
+      <div  class="text-index">{{data.index}}</div>
+      <div style="display: flex;">
+        <ion-text *ngIf=" this.data.required" color="danger" style="font-size:20px; margin-right: 4px;">*</ion-text>
+        <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-top: 2px; margin-right: 4px;" [info]="this.data.tooltip" ></app-tooltip>
+        <div name="data.name" [innerHtml]="this.label | safeHtml"></div>
+      </div>
+    </ion-row> 
+    <ion-note class="ion-note-padding" color="danger">{{this.error_msg}}</ion-note>  
+    <ion-item lines="none" [ngClass]="error ? 'form-input-error-textarea' : 'form-input-textarea'" >
+      <input
+        type="file"
+        #fileInput
+        (change)="uploadFileFromBrowser($event)"
+        hidden="true"
+        accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword">
+  
+        <ion-button slot="start" 
+        [color]="error? 'danger':'primary' "
+        fill="clear" 
+        (click)="selectSource(); this.checkValue()">{{this.placeholder }}
+        <ion-icon slot="start" [color]="error? 'danger':'primary' " name="add-circle" class="primaryIcon"></ion-icon>
+      </ion-button>
+    </ion-item>   
+    <ion-item lines="none">
+      <div *ngIf="this.files" id="container" style="margin-top: 10px; margin-bottom: 10px;">
+            <div id="left">
+              <!-- <ion-icon name="open" color="primary"></ion-icon> -->
+            </div>
+            <div id="middle">
+              <p class="titule">{{ this.files?.name }}</p>
+            </div>
+            <div id="right">
+              <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(files)"></ion-icon>
+            </div>
+      </div>
+    </ion-item>
+  
+  </ion-grid>
+</div>

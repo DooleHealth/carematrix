@@ -9,17 +9,17 @@
 
 <ion-content>
   <div class="spin" *ngIf="this.isLoading;else showDiet">
-    <ion-spinner name="bubbles"></ion-spinner>
+    <ion-spinner ></ion-spinner>
   </div>
   <ng-template #showDiet>
   <ion-card class="cardProfile">
-     
+
         <img *ngIf="diet.image" [src]="diet.image.thumbnailTemporaryUrl">
           <!-- <img *ngIf="diet.image" [src]="diet.image.temporaryUrl"> -->
           <ion-item lines="none">
             <ion-label style="color:#141414"> {{diet.name}}</ion-label>
           </ion-item>
-    
+
           <ion-item lines="none" *ngIf="diet.description" padding>
             <span [innerHTML]="diet.description"></span>
           </ion-item>
@@ -32,8 +32,8 @@
     <!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
       <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
     </div> -->
- 
-  
+
+
     <div class="main-container" *ngIf="linkpdf2 || video">
       <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
     </div>

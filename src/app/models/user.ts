@@ -86,6 +86,7 @@ export interface UserProfile{
     image: string,
     first_name: string,
     last_name: string,
+    birthdate:string,
     birthdate_european: string,
     gender: string,
     weight: string,

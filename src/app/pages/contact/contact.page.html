@@ -5,10 +5,9 @@
 </ion-header>
 
 <ion-content>
- <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
 <!-- SegmentBar -->
 
-<ion-segment [(ngModel)]="segment" scrollable>
+<ion-segment  (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
   <ion-segment-button *ngIf="role?.component?.agenda" value="video">
     <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
   </ion-segment-button>
@@ -173,7 +172,7 @@
   <!-- Chat -->
 
   <div *ngSwitchCase="'chat'">
-   
+
       <ion-list>
         <ion-grid>
           <ion-row>
@@ -192,7 +191,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-    
+
         <ion-list>
           <ion-card class="cardProfile">
             <ion-item lines="none" routerLink="chat"  routerLinkActive='active-item'>
@@ -244,7 +243,7 @@
           </ion-card> -->
         </ion-list>
       </ion-list>
-  </div> 
+  </div>
 
 </div>
 </ion-content>

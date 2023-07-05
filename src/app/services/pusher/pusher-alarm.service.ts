@@ -9,28 +9,40 @@ const NAME_BIND = 'App\\Events\\ScreenMessage'
   providedIn: 'root'
 })
 export class PusherAlarmService {
-
-  nameChanel = 'private-ScreenMessage.User.' + this.authService?.user?.idUser //'private-LevelAccomplishmentCompleted.15189' //
+  idUser:string;
+  nameChanel:string; //'private-LevelAccomplishmentCompleted.15189' //
   channel;
   pusher
  constructor(
+    private constants: Constants,
     private notification: NotificationService,
     private authService: AuthenticationService,
-  ) {}
+  ) {
 
-  public subscribeChannel(pusherService){
+  }
+
+  public subscribeChannel(pusherService, idUser:string){
+    this.idUser = idUser;
+    console.log('[PusherAlarmService] idUser()',  this.idUser);
+    this.nameChanel = 'private-ScreenMessage.User.' + this.idUser
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
-    console.log('[PusherNotificationService] subscribeChannel()',  this.channel);
+    console.log('[PusherAlarmService] subscribeChannel()',  this.channel);
   }
 
    public init(){
-    this.channel.bind(NAME_BIND, (data) => {
+    this.channel?.bind(NAME_BIND, (data) => {
          console.log('[PusherAlarmService] getPusherAlarm()' ,  data);
          if(data?.message)
          this.notification.confirmAllNotification(data?.message)
        });
    }
+
+
+  public unsubscribeChannel(pusherService){
+    console.log('[PusherAlarmService] subscribeChannel()',  this.channel);
+  }
+
 
   public unsubscribePusher(){
     this.channel = this.pusher.unsubscribe(this.nameChanel)

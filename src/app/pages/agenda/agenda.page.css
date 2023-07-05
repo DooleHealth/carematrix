@@ -1,0 +1,149 @@
+.indicator-container {
+  padding-left: 0.5rem;
+  padding-bottom: 0.4rem;
+}
+
+.event-indicator {
+  background: #F1C40F;
+  width: 5px;
+  height: 5px;
+  border-radius: 4px;
+  display: table-cell;
+}
+
+:host ::ng-deep table,
+:host ::ng-deep th {
+  background-color: white;
+  border: 0px !important;
+  border-bottom: 0.5px solid #BDC3C7 !important;
+  color: #7F8C8D;
+}
+:host ::ng-deep td {
+  padding: 10px;
+  border: 0px !important;
+  border-bottom: 0.7px solid #BDC3C7 !important;
+  color: black;
+  vertical-align: middle;
+  text-align: center;
+}
+:host ::ng-deep .dayWeek {
+  font-size: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+:host ::ng-deep .monthview-disabled {
+  color: #BDC3C7 !important;
+}
+:host ::ng-deep .monthview-container {
+  background-color: #F0F0F0 !important;
+}
+:host ::ng-deep .monthview-primary-with-event {
+  background-color: #F0F0F0 !important;
+  color: black !important;
+}
+:host ::ng-deep .monthview-secondary-with-event {
+  background-color: #F0F0F0 !important;
+  color: #7F8C8D !important;
+}
+:host ::ng-deep .monthview-eventdetail-timecolumn {
+  color: #7f8c8d !important;
+}
+:host ::ng-deep .monthview-selected {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+:host ::ng-deep .monthview-selected .dayWeek {
+  background-color: var(--ion-color-primary) !important;
+  border-radius: 50%;
+  max-width: 100px !important;
+  color: white !important;
+}
+:host ::ng-deep .blanco {
+  background-color: white !important;
+  min-width: 400px;
+  padding-left: 0px !important;
+}
+:host ::ng-deep .dayHeaders {
+  background-color: red !important;
+  color: white !important;
+}
+
+/*   .with-event {
+  //background-color: var(--ion-color-primary);
+  //border-radius: 15px;
+  color: black
+} */
+.event-detail-title {
+  color: var(--ion-color-primary) !important;
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.event-detail-container {
+  color: var(--ion-color-secondary) !important;
+  --ion-background-color: transparent !important;
+}
+.event-detail-container .event-detail2 {
+  font-size: medium;
+  font-weight: 600;
+}
+.event-detail-container .event-detail {
+  font-size: medium;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  /* white-space: no-wrap!important;*/
+}
+
+.rowPadding {
+  background-color: rgb(255, 255, 255) !important;
+  padding: 3%;
+}
+
+.rowPadding2 {
+  background-color: rgb(255, 255, 255) !important;
+  padding-bottom: 50%;
+}
+
+.verticalLine {
+  width: 1%;
+  height: 85%;
+  background: #2ECC71;
+  margin-left: 2%;
+}
+
+.verticalLinePurple {
+  width: 1%;
+  height: 85%;
+  background: #9B59B6;
+  margin-left: 2%;
+}
+
+.verticalLineRed {
+  width: 1%;
+  height: 85%;
+  background: #E74C3C;
+  margin-left: 2%;
+}
+
+/*  .verticalLine2 {
+ border-left: 2px solid  #3498DB,;
+ margin-left: 5%;
+}*/
+ion-img {
+  height: 30px;
+  color: #2ECC71;
+}
+
+ion-segment {
+  margin: 10px 0;
+  background: #ffffff;
+}
+
+/*remove item native padding*/
+ion-list ion-item {
+  --padding-start: 0px;
+  --inner-padding-end: 0px;
+}
+
+.list {
+  width: 100%;
+}/*# sourceMappingURL=agenda.page.css.map */

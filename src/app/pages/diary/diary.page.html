@@ -10,11 +10,11 @@
       </ion-col>
 
       <ion-col size="8" class="textBlueCentered1">
-        <ion-slides #slides>
-          <ion-slide>
+        <swiper-container #slides>
+          <swiper-slide>
             <p>{{ formatSelectedDate(date) | titlecase}}</p>
-          </ion-slide>
-        </ion-slides>
+          </swiper-slide>
+        </swiper-container>
       </ion-col>
       <ion-col size="2">
         <ion-buttons>
@@ -38,7 +38,6 @@
 
 <ion-content>
   <!-- SegmentBar -->
-  <changeUser [isFamily]="this.authService?.user?.familyUnit != null"></changeUser>
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
     <ion-segment-button *ngIf="role?.component?.diet" value="diets">
       <ion-label>{{'diary.field_diet' | translate}}</ion-label>
@@ -63,11 +62,11 @@
       </ion-col>
 
       <ion-col size="8" class="textBlueCentered">
-        <ion-slides #slides >
-          <ion-slide>
-            <p>{{ formatSelectedDate(date) | titlecase}}</p>     
-          </ion-slide>
-        </ion-slides>
+        <swiper-container #slides >
+          <swiper-slide>
+            <p>{{ formatSelectedDate(date) | titlecase}}</p>
+          </swiper-slide>
+        </swiper-container>
       </ion-col >
       <ion-col size="2">
         <ion-buttons >
@@ -81,10 +80,10 @@
     <!-- Diets-->
     <div *ngSwitchCase="'diets'">
       <ng-container *ngIf="this.isLoadingDiets; else second">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </ng-container>
       <ng-template #second>
-        <ng-container *ngIf="this.listDiets.length > 0 || this.diets ;else third">
+        <ng-container *ngIf="this.listDiets.length > 0 || this.diets?.length > 0  ;else third">
           <ion-list>
             <ion-card class="cardProfile" *ngIf="this.diets?.id">
               <ion-item lines="none" routerLink="diets-detail" [state]="{id: diets?.id}" routerLinkActive="active-item">
@@ -156,12 +155,14 @@
     <div *ngSwitchCase="'medication'">
        <!--medication shipping cart buttton-->
       <ng-container *ngIf="this.isLoadingDrugs;else second">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <div class="spin" >
+          <ion-spinner ></ion-spinner>
+        </div>
+
       </ng-container>
       <ng-template #second>
         <ng-container *ngIf="this.listDrug.length > 0;else third">
           <br>
-          <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
           <ion-list *ngFor="let list of this.listDrug">
             <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
               titlecase}}</ion-label>
@@ -244,6 +245,10 @@
           </ion-list>
 
         </ng-container>
+        <div class="send-drugs">
+          <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
+        </div>
+
       </ng-template>
       <ng-template #third>
         <ion-grid>
@@ -257,21 +262,14 @@
               <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col>
-              <br>
-              <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
-            </ion-col>
-           
-          </ion-row>
         </ion-grid>
       </ng-template>
     </div>
     <!-- Games -->
     <div *ngSwitchCase="'games'">
-      <ng-container *ngIf="this.isLoadingGames; else second">
-        <ion-spinner name="bubbles"></ion-spinner>
-      </ng-container>
+      <div class="spin" *ngIf="this.isLoadingGames; else second">
+        <ion-spinner></ion-spinner>
+      </div>
       <ng-template #second>
         <ng-container *ngIf="this.listGames.length > 0;else third">
           <ion-list>
@@ -321,7 +319,7 @@
     <!-- Health -->
     <div *ngSwitchCase="'health'">
       <ng-container *ngIf="this.isLoadingElements; else second">
-        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner ></ion-spinner>
       </ng-container>
       <ng-template #second>
         <ng-container *ngIf="this.groupedElements.length > 0;else third">
@@ -349,8 +347,12 @@
                     </ion-col>
                   </ion-row>
                   <ion-col size="12">
-                    <ion-card-title class="txtTitleGoals">{{element.value}} {{element.units}}
-                    </ion-card-title>
+                    <ion-card-title *ngIf="element?.value" style="padding-left: 2px;" class="txtTitleGoals"
+                    >{{element.value}} {{element.units}}
+                  </ion-card-title>
+                  <ion-card-title *ngIf="!element?.value" style="padding-left: 2px;" class="txtTitleGoals"
+                    >{{ 'home.get_firts_data' | translate | uppercase}}
+                  </ion-card-title>
                   </ion-col>
                 </ion-grid>
               </ion-item>

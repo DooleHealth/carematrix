@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
-import { IEvent } from 'ionic2-calendar/calendar';
+
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AgendaEditPage } from '../agenda-edit/agenda-edit.page';
+import { IEvent } from 'ionic2-calendar/calendar.interface';
 
 export interface DayEvent {
   date?: string;
@@ -29,11 +31,12 @@ export class ListAppointmentPage implements OnInit {
     private modalCtrl: ModalController,
     private nav: NavController,
     private notification: NotificationService,
+    public dateService: DateService
   ) { }
 
   ngOnInit() {
     this.listAppointment = history.state.calendar;
-    console.log('[ListAppointmentPage] ngOnInit()' ,  this.listAppointment); 
+    console.log('[ListAppointmentPage] ngOnInit()' ,  this.listAppointment);
     if(this.listAppointment !== undefined && this.listAppointment.length > 0)
     this.filterMonth()
     else {
@@ -78,7 +81,7 @@ export class ListAppointmentPage implements OnInit {
         isAllDay = true
       }
         events.push({
-          id: e.id, 
+          id: e.id,
           title: e.title,
           startTime: startTime,
           endTime: endTime,
@@ -98,9 +101,9 @@ export class ListAppointmentPage implements OnInit {
         console.log('[ListAppointmentPage] getListAppointment()', await res);
         this.listAppointment = res
         this.filterMonth()
-       },(err) => { 
-          console.log('[ListAppointmentPage] getListAppointment() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[ListAppointmentPage] getListAppointment() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   } */
 
@@ -109,12 +112,12 @@ export class ListAppointmentPage implements OnInit {
       async (res: any) =>{
         console.log('[AgendaPage] getAgenda()', await res);
         if(res.agenda){
-          this.addScheduleToCalendar(res.agenda) 
+          this.addScheduleToCalendar(res.agenda)
           this.filterMonth()
         }
-       },(err) => { 
-          console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message); 
-          throw err; 
+       },(err) => {
+          console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message);
+          throw err;
       });
   }
 
@@ -127,8 +130,8 @@ export class ListAppointmentPage implements OnInit {
     let year = date.getFullYear()
     let month = date.getMonth()
     console.log('[ListAppointmentPage] filteMonth()', date.toDateString() );
-    this.eventMonth = this.listAppointment?.filter( event => 
-      (new Date(event.startTime).getMonth() === month 
+    this.eventMonth = this.listAppointment?.filter( event =>
+      (new Date(event.startTime).getMonth() === month
       && new Date(event.startTime).getFullYear() === year)
       )
     //console.log('[ListAppointmentPage] filteMonth()', this.eventMonth );
@@ -138,7 +141,7 @@ export class ListAppointmentPage implements OnInit {
 
   sortAppointment(){
     this.eventMonth.sort( function (a, b) {
-      if (a.startTime > b.startTime) 
+      if (a.startTime > b.startTime)
         return 1;
       if (a.startTime < b.startTime)
         return -1;
@@ -150,11 +153,11 @@ export class ListAppointmentPage implements OnInit {
     this.eventMonth.forEach( (e, index) =>{
       let day = new Date(e.startTime).getDate()
       if(index == 0 || day !== new Date(this.eventMonth[index-1].startTime).getDate()){
-        let events = this.eventMonth.filter( event => 
+        let events = this.eventMonth.filter( event =>
           (new Date(event.startTime).getDate() == day)
         )
-        this.dayEvents.push({date: e.startTime, events: events}) 
-      } 
+        this.dayEvents.push({date: e.startTime, events: events})
+      }
     })
     console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
   }
@@ -162,7 +165,7 @@ export class ListAppointmentPage implements OnInit {
   formatSelectedDate(date){
     let language = this.languageService.getCurrent()
     const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM');
+    return datePipe.transform(date, this.dateService.getformatSelectedDate());
   }
 
   back(){

@@ -1,0 +1,13 @@
+ion-back-button {
+  display: block;
+  color: #3498DB;
+}
+
+.img-wrapper {
+  height: 81px;
+  width: 81px;
+  display: block;
+  margin: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=profile.page.css.map */

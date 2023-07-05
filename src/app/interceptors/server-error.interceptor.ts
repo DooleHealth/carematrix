@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
+import { HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { retry, catchError, timeout, map, finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor() { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     return next.handle(request).pipe(
@@ -22,13 +21,12 @@ export class ServerErrorInterceptor implements HttpInterceptor {
         return throwError(error);
       } else if(error.message == 'ERR_INTERNET_DISCONNECTED' || error.status == 0 || error.message=='Timeout has occurred'){
         return throwError(error);
-        //return throwError(error)
-      } else if (error.status === 401) {
-        //this.router.navigate(['login']);
-        return [];
       } else if (error.status === 400) {
         console.error('error 400');
         return [];
+      } else if (error.status === 401) {
+        console.log('error 401');
+        return throwError(error)
       } else if (error.status === 402) {
         console.log('error 402');
           return [];
@@ -58,5 +56,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
   private handleRequestCompleted(): void {
     console.log(`Request finished`);
   }
+
+
 
 }

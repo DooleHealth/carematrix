@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageModel } from './language.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LanguageService {
   languages: Array<LanguageModel> = new Array<LanguageModel>();
 
-  constructor(public translate: TranslateService) {
+  constructor(public translate: TranslateService, ) {
     this.languages.push(
       { name: 'Català', code: 'ca' },
       { name: 'Español', code: 'es' },
@@ -19,12 +21,14 @@ export class LanguageService {
   }
 
   public changeLanguage(langCode: string) {
+
+    console.log("langCode", langCode)
     this.translate.use(langCode);
   }
 
   public getCurrent() : string {
     let lang = this.translate.currentLang ? this.translate.currentLang : this.translate.getDefaultLang();
-    return lang;
+    return  lang;
   }
 
   public getLanguageAPI() : string {
@@ -36,5 +40,4 @@ export class LanguageService {
     this.changeLanguage(language);
     localStorage.setItem('language', language);
   }
-
 }

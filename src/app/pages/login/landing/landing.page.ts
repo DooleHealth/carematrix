@@ -1,20 +1,25 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, IonicSafeString, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 import { LanguageService } from 'src/app/services/language.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LoginPage } from '../login.page';
-import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { AnalyticsService } from 'src/app/services/analytics.service';
-import { Device } from '@ionic-native/device/ngx';
+import { Device } from '@awesome-cordova-plugins/device/ngx';
 import { Constants } from 'src/app/config/constants';
-const { Storage } = Plugins;
+import { Market } from '@awesome-cordova-plugins/market/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import moment from 'moment'
 
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, SwiperOptions } from 'swiper';
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
   selector: 'app-landing',
@@ -37,26 +42,46 @@ export class LandingPage implements OnInit {
   public isProd: boolean = true
   biometric_list = []
   environment = 0
+
+config: SwiperOptions = {
+  slidesPerView: 1,
+  spaceBetween: 50,
+  navigation: false,
+  pagination: { clickable: true },
+  scrollbar: { draggable: true },
+  direction: 'vertical',
+  effect: 'slide',
+
+  loop: true,
+};
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private router: Router,
     public route: ActivatedRoute,
     private translate: TranslateService,
     public loadingController: LoadingController,
     public location: Location,
     public alertController: AlertController,
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     public languageService: LanguageService,
     private dooleService: DooleService,
     private modalCtrl: ModalController,
     private faio: FingerprintAIO,
     private analyticsService: AnalyticsService,
     private device: Device,
-    private constants: Constants
+    private constants: Constants,
+    public appVersion: AppVersion,
+    public platform: Platform,
+    private market: Market,
+
   ) {
-    // this.analyticsService.setScreenName('[LandingPage]')
+
+    // if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
+    //   this.checkAppLastVersion();
    }
 
   ngOnInit() {
+  //   console.log('[MedicalCalendarPage] locale_ID', this.locale);
     this.loginForm = new FormGroup({
       username: new FormControl('',
       Validators.compose([
@@ -77,11 +102,9 @@ export class LandingPage implements OnInit {
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
     console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
-    // if(this.pushNotification){
-    //   alert('pushNotification: '+ JSON.stringify(this.pushNotification) )
-    // }
-    this.loginForm.get('username').setValue('akio.dhairya')
-    this.loginForm.get('password').setValue('ayriahd.oika')
+
+    this.loginForm.get('username').setValue('')
+    this.loginForm.get('password').setValue('')
     this.loginForm.get('hash').setValue('')
     this.loginForm.clearValidators()
     this.getStoredValues()
@@ -92,7 +115,7 @@ export class LandingPage implements OnInit {
     this.isProd = Number(localStorage.getItem('endpoint')) === 0? true:false
     console.log("[AuthService] indexEndPoint: ", this.isProd);
   }
-  
+
   async dismissLoading() {
     if (this.redirectLoader) {
       console.log("dismissLoading");
@@ -183,7 +206,7 @@ export class LandingPage implements OnInit {
      * On iOS this plugin  Storage will use UserDefaults and on Android SharedPreferences.
      * Stored data is cleared if the app is uninstalled.
      */
-    await Storage.set({
+    await Preferences.set({
       key: 'user',
       value: JSON.stringify(data)
     });
@@ -254,12 +277,12 @@ export class LandingPage implements OnInit {
   public doBiometricLogin() {
 
     this.faio.isAvailable().then((result: any) => {
-    
+
       this.faio.show({
         cancelButtonTitle: this.translate.instant('button.cancel'),
         title: this.translate.instant('face-id.title'),
       })
-        .then(async (result: any) => { 
+        .then(async (result: any) => {
           console.log("[LandingPage] doBiometricLogin()", result);
           this.loginForm.get('hash').setValue(this.biometricAuth.hash)
           this.doDooleAppLogin()
@@ -285,7 +308,7 @@ export class LandingPage implements OnInit {
 
   async getStoredValues() {
     if(!this.isAvailableFaID())
-    return 
+    return
 
     const biometricsEnabled = localStorage.getItem(this.settingsBio);
     const biometricToken =  this.getBiometric(); //localStorage.getItem('bio-auth');
@@ -305,7 +328,7 @@ export class LandingPage implements OnInit {
       console.log('showDialog: ', showDialog !== 'false');
       this.showBiometricDialog = false;
     }
-      
+
   }
 
   getBiometric(){
@@ -392,6 +415,89 @@ export class LandingPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  checkAppLastVersion() {
+
+    // checks app installed version
+    this.appVersion.getVersionNumber().then((version)=>{
+      let platform = this.platform.is('ios') ? 'ios':'android';
+       // get latest app version
+       console.log('[AppComponent] checkAppLastVersion()', platform,':', version);
+       this.dooleService.getAPIAppLatestVersion(version, platform).subscribe(
+        async (res: any) => {
+
+          console.log('[AppComponent] getAppLatestVersion() response', await res);
+          if (res?.mustUpdate)
+            this.appUpdateAvailable();
+
+        }, (err) => {
+          console.log('[LandingPage] checkAppLastVersion() ERROR(' + err.code + '): ' + err.message);
+          throw err;
+        });
+
+    });
+
+  }
+
+  async appUpdateAvailable() {
+
+    let subheader = await this.translate.instant('landing.update');
+    let message = await this.translate.instant('landing.message_app_update');
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      subHeader: subheader,
+      message: message,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: this.translate.instant("landing.download"),
+          handler: (data) => {
+
+            // Open in store
+            if (!this.platform.is('mobileweb') && !this.platform.is('desktop')){
+              let id: string = this.platform.is('ios') ? this.constants.appleAppId:this.constants.androidBundleId;
+              console.log("OPENING: ", id);
+              this.market.open(id);
+              window.location.reload();
+            }
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async showAppUsageTips(){
+    let usageTips = this.translate.instant("landing.usage-tips")
+    const alert = await this.alertController.create({
+      cssClass: 'usage-tips-alert',
+      subHeader: this.translate.instant('info.title'),
+      message: new IonicSafeString(usageTips),
+      backdropDismiss: false,
+        buttons: [
+         {
+            text: this.translate.instant("button.accept"),
+            handler: (data) => {
+
+            }
+          }
+        ]
+    });
+
+    await alert.present();
+
+  }
+
+
+  onSwiper([swiper]) {
+    console.log('onSwiper: ', swiper);
+  }
+  onSlideChange() {
+    console.log('slide change');
   }
 
 }

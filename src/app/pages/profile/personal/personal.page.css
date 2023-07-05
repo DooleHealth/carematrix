@@ -1,0 +1,39 @@
+ion-back-button {
+  display: block;
+  color: #3498db;
+}
+
+.img-wrapper {
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.img-wrapper2 {
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.paddingGrid {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.txtTitle {
+  font-size: 18px;
+}
+
+.whiteBackground {
+  --ion-background-color: white !important;
+}
+
+.textMedium {
+  text-align: right;
+  color: #7f8c8d;
+}/*# sourceMappingURL=personal.page.css.map */
