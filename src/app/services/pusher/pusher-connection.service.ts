@@ -70,7 +70,7 @@ export class PusherConnectionService {
   }
 
   public unsubscribePusher(){
-    this.pusherChallenge.unsubscribePusher()
+    this.pusherAlarm.unsubscribePusher()
     this.pusherNotification.unsubscribePusher()
     this.pusherAlarm.unsubscribePusher()
   }
