@@ -1,11 +1,11 @@
 ion-tab-button{
-    --background-focused: #3498DB;
-    --color-selected: #3498DB;
+    --background-focused: #8d99ae;
+    --color-selected: #232838;
     background-color: #FAFAFA;
     --padding-bottom: 12%;
- 
-    
-    
+
+
+
     &::before {
         background-color: transparent;
         display: block;
@@ -14,14 +14,14 @@ ion-tab-button{
         width: 17px;
         height: 2px;
       }
-    
+
       &.tab-selected::before {
         background-color: var(--ion-color-primary);
       }
     }
     ion-tab-button ion-label{
       margin-bottom: 0%;
-     
+
     }
     .md ion-tab-bar {
       position: relative;

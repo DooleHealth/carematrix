@@ -1,11 +1,11 @@
 PODS:
-  - Capacitor (5.0.5):
+  - Capacitor (5.1.1):
     - CapacitorCordova
-  - CapacitorApp (5.0.3):
+  - CapacitorApp (5.0.5):
     - Capacitor
-  - CapacitorBrowser (5.0.3):
+  - CapacitorBrowser (5.0.5):
     - Capacitor
-  - CapacitorCamera (5.0.4):
+  - CapacitorCamera (5.0.5):
     - Capacitor
   - CapacitorCommunityContacts (5.0.3):
     - Capacitor
@@ -16,36 +16,36 @@ PODS:
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (5.0.5)
+  - CapacitorCordova (5.1.1)
   - CapacitorDevice (5.0.5):
     - Capacitor
-  - CapacitorFilesystem (5.0.4):
+  - CapacitorFilesystem (5.0.5):
     - Capacitor
-  - CapacitorFirebaseAppCheck (5.0.0):
+  - CapacitorFirebaseAppCheck (5.0.1):
     - Capacitor
     - FirebaseAppCheck (= 10.8.0)
-  - CapacitorHaptics (5.0.4):
+  - CapacitorHaptics (5.0.5):
     - Capacitor
-  - CapacitorKeyboard (5.0.4):
+  - CapacitorKeyboard (5.0.5):
     - Capacitor
   - CapacitorLocalNotifications (5.0.5):
     - Capacitor
-  - CapacitorNetwork (5.0.4):
+  - CapacitorNetwork (5.0.5):
     - Capacitor
   - CapacitorPreferences (5.0.5):
     - Capacitor
-  - CapacitorPushNotifications (5.0.4):
+  - CapacitorPushNotifications (5.0.5):
     - Capacitor
-  - CapacitorSplashScreen (5.0.4):
+  - CapacitorSplashScreen (5.0.5):
     - Capacitor
   - CapacitorStatusBar (5.0.5):
     - Capacitor
   - CapawesomeCapacitorBadge (5.0.0):
     - Capacitor
-  - CordovaPlugins (5.0.5):
+  - CordovaPlugins (5.1.1):
     - CapacitorCordova
   - CordovaPluginsResources (0.0.105)
-  - CordovaPluginsStatic (5.0.5):
+  - CordovaPluginsStatic (5.1.1):
     - CapacitorCordova
     - OpenTok (~> 2.17.0)
   - Firebase/CoreOnly (10.10.0):
@@ -246,29 +246,29 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
-  CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
-  CapacitorBrowser: 2688852d02f1e89560a31b70521c71a5e7348860
-  CapacitorCamera: 9b5c8e809c1042f263994f97ba846aa37e974f12
+  Capacitor: 55956e1199b63efcd7f2dedffa5c6b9129c45aae
+  CapacitorApp: 9d91a5a400e4ad8cafe66a02cc9d8073c864d7bb
+  CapacitorBrowser: c08582e15086d4195f8e7808a6738b0499b6d52a
+  CapacitorCamera: 834aade2952a06bd1e46c078d1068a980f37f8c9
   CapacitorCommunityContacts: fda3a2e951a1300869ccb6ca0763adf9b2b5b4ff
   CapacitorCommunityFirebaseAnalytics: a29279a99fad771ba307d9a07571372ea2f36b1f
   CapacitorCommunitySqlite: b90d3ca2785560e666cfacd3438dc42bed74f9dc
-  CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
+  CapacitorCordova: b31a46ad379c93a5c04e0598a6164e8cb90c2bb2
   CapacitorDevice: 4c78eeaa553c7a46bc07372c6eb03a5665459885
-  CapacitorFilesystem: e1bdfab09b95b181c844c16abcfda45ec8e8ed6b
-  CapacitorFirebaseAppCheck: 189d196b163b7468afee3a4670c537290dbefe79
-  CapacitorHaptics: e36653b37326d71bb35ae42b944124037dbc3d97
-  CapacitorKeyboard: d1b25fde6f19744ad09c890862aefc6e2a7ded3d
+  CapacitorFilesystem: 335bccfc8ebe381c4e9a7328ef1c4dae9035a6fe
+  CapacitorFirebaseAppCheck: 333f58419094a607c92a2f38f0cf06b295cabaff
+  CapacitorHaptics: 4b1a7e1bac1794d1515842d304f9fce46ef5084c
+  CapacitorKeyboard: ba4d618d80bf8caef4b9d8a971d714b9ca795e28
   CapacitorLocalNotifications: cb6a69d128c5ed2a7f22c897c393c0e380f680e7
-  CapacitorNetwork: e2bd0bf1614aca34bb976f125a756a8a3df1c81a
+  CapacitorNetwork: f13736619d9859418fe9580dcfd4114e7adc9562
   CapacitorPreferences: c4764b0b3beae28c625c87b1a80504d9b24947ec
-  CapacitorPushNotifications: 3704ac3dac68a9bfc669fb384cbc7beec9b1f100
-  CapacitorSplashScreen: 93a389d4f7673c08214ae25bb6f21d867d5305c5
+  CapacitorPushNotifications: 6ec1a5d0dff2e8b2456bce633996d15fc9de92ac
+  CapacitorSplashScreen: e563abf6d590bfe0269515ccc9d8bc03c41f32e9
   CapacitorStatusBar: 540867ac3c63875b65bebd888f695de50a13a9a2
   CapawesomeCapacitorBadge: 2b9919ea79b85bdc5455143cf6607c9e25bec9ae
-  CordovaPlugins: ed068c09e9959fa440c47152cd421be34e42697d
+  CordovaPlugins: c5900154e80c56cebdd4b7f1d229120fa1739606
   CordovaPluginsResources: 1b3992e05cb6336d2850cd77dd5e3054f2f76f96
-  CordovaPluginsStatic: 2b5f4be98b8d240ce9422cdf8688f14f057dfdba
+  CordovaPluginsStatic: 627b8b5a8ec4714ff5439107cec1fec8023d8174
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
   FirebaseAnalytics: 7bc7de519111dae802f5bc0c9c083918f8b8870d
   FirebaseAppCheck: 8bde2c5f393518ab98290151188bf196b4bab91e
