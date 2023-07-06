@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { NotificationService } from '../notification.service';
+import { Constants } from 'src/app/config/constants';
 
 declare const Pusher: any;
 const NAME_BIND = 'App\\Events\\ScreenMessage'
