@@ -1,4 +1,4 @@
-package com.oxeencompany.oxeenhome;
+package com.doole.doole;
 
 import com.getcapacitor.BridgeActivity;
 

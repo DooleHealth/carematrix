@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 
 const config: CapacitorConfig = {
-  appId: 'com.oxeencompany.oxeenhome',
-  appName: 'Oxeen Home',
+  appId: 'com.doole.doole',
+  appName: 'Doole',
   bundledWebRuntime: false,
   webDir: "www",
   plugins: {

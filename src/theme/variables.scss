@@ -4,9 +4,9 @@
 /** Ionic CSS Variables **/
 
 $colors: (
-  primary:   #232838,
-  secondary:   #8d99ae,
-  tertiary:    #8d99ae,
+  primary:   #0097b3,
+  secondary:   #009cb3,
+  tertiary:    #F39C12,
   grey:  #BDC3C7,
   danger:     #f53d3d,
   light:      #fff,
@@ -32,17 +32,17 @@ $chat-bubble: (
 
   /** font-family **/
   --ion-font-family: 'Roboto-Regular'!important;
-  --ion-text-color: #232838;
+  --ion-text-color: #2C3E50;
   /** background **/
   --ion-background-color:#f5f5f5;
   --line-height: 21px !important;
   /** primary **/
-  --ion-color-primary: #8d99ae;
+  --ion-color-primary: #009cb3;
   --ion-color-primary-rgb: 0, 156, 179;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #232838;
-  --ion-color-primary-tint: #f5f5f5;
+  --ion-color-primary-shade: #0b78c0;
+  --ion-color-primary-tint: #F39C12;
 
   /** secondary **/
   --ion-color-secondary: #009cb3;
