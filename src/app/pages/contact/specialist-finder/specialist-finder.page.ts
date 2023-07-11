@@ -31,7 +31,7 @@ export class SpecialistFinderPage implements OnInit {
       .then((result) => {
 
         if(result.data['date']){
-          this.selectedDate = this.transformDate(result.data['date']) ;
+          // this.selectedDate = this.transformDate(result.data['date']) ;
           //this.form.get('date').setValue(this.transformDate(this.selectedDate))
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }

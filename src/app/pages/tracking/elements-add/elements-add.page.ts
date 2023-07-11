@@ -32,6 +32,7 @@ export class ElementsAddPage implements OnInit {
   min: any
   max: any
   maxDate
+  locale:string;
   constructor(
     private fb: FormBuilder,
     private dooleService: DooleService,
@@ -47,6 +48,7 @@ export class ElementsAddPage implements OnInit {
     let auxdate1 = new Date(auxdate)
     this.maxDate = (new Date(auxdate1.getTime() - tzoffset)).toISOString().slice(0, -1);
     console.log('[ElementsAddPage] formatDate() constructor()', this.date, this.maxDate);
+    this.locale = this.dateService.getLocale();
   }
 
   ngOnInit() {

@@ -1,7 +1,6 @@
 .titleBold {
   font-weight: 1000;
-  margin-top: 10%;
-  font-size: 40px;
+  font-size: 35px;
   text-align: left;
 }
 
@@ -11,9 +10,8 @@
 
 .titleBoldCentered {
   font-weight: 1000;
-  margin-top: 10%;
-  font-size: 40px;
-  text-align: center;
+  font-size: 35px;
+  text-align: left;
 }
 
 .iconPadddingCenter {
@@ -32,6 +30,18 @@
 
 .buttonPaddingIphone {
   opacity: 0%;
+}
+
+.justify-content-center {
+  align-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 50%;
+}
+
+.swiper-container-wrapper {
+  display: flex;
+  height: 80vh; /* Set the height as needed */
 }
 
 /* ----------- iPhone 10 ----------- */

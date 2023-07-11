@@ -1,1 +1,1 @@
-{"version":3,"sources":["drugs-detail.page.scss","drugs-detail.page.css"],"names":[],"mappings":"AAAA;EACI,eAAA;EACA,gBAAA;EACA,gBAAA;ACCJ;;ADCE;EACE,eAAA;EACA,gBAAA;EACA,iBAAA;ACEJ;;ADCE;EACE,eAAA;EACA,gBAAA;EACA,iBAAA;ACEJ","file":"drugs-detail.page.css"}
+{"version":3,"sources":["drugs-detail.page.scss","drugs-detail.page.css"],"names":[],"mappings":"AAAA;EACE,eAAA;EACA,gBAAA;EACA,gBAAA;ACCF;;ADCA;EACE,eAAA;EACA,gBAAA;ACEF;;ADEA;EACE,eAAA;EACA,gBAAA;EACA,iBAAA;ACCF","file":"drugs-detail.page.css"}

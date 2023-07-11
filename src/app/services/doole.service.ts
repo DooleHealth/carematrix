@@ -403,8 +403,9 @@ export class DooleService {
   getAPIinformationSummary(params: Object){
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
+    console.log('home params', params)
     return this.http.post(endpoint, params).pipe(
-      mergeMap((v) => v instanceof TimeoutError ? throwError(v) : of(v))
+      map(res => res)
     );
   }
   getAPIinformationSummaryOld(params: Object){
@@ -1617,7 +1618,7 @@ export class DooleService {
       })
     );
   }
-  
+
   getAPINotifications(params?): Observable<any> {
     let path = 'user/notifications';
     let httpParams = new HttpParams();
@@ -1632,7 +1633,7 @@ export class DooleService {
       })
     );
   }
-  
+
   postAPINotificationRead(id): Observable<any> {
     let path = `user/notification/read`;
     const endpoint = this.api.getEndpoint(path);

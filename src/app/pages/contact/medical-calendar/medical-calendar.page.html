@@ -34,7 +34,7 @@
   </ion-row>
 
   <calendar *ngIf="modalReady" [eventSource]="eventSource" [calendarMode]="calendar.mode"
-    [currentDate]="calendar.currentDate" (onTitleChanged)="onViewTitleChanged($event)"
+   (onTitleChanged)="onViewTitleChanged($event)"
     (onEventSelected)="onEventSelected($event)" (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6"
     endHour="20" step="30" [startingDayWeek]="this.dateService.getStartingDayWeek()"
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
@@ -62,9 +62,6 @@
         </div>
       </ng-container>
       <div *ngIf="routeResolveData">
-        <!--           <ion-item lines="none" *ngIf="this.eventSource.length==0 else slots">
-            <div class="no-events-label">{{'medical_calendar.no_slot_available' | translate}}</div>
-          </ion-item> -->
         <div *ngIf="this.eventSource.length==0 else slots">
           <ion-grid>
             <ion-row>

@@ -18,6 +18,13 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "dayjs/locale/*",
+              "dayjs",
+              "ng2-pdf-viewer",
+							"pdfjs-dist/build/pdf",
+							"pdfjs-dist/web/pdf_viewer"
+           ],
             "assets": [
               {
                 "glob": "**/*",
@@ -77,12 +84,14 @@
               "sourceMap": true,
               "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "defaultConfiguration": "",
           "options": {
-            "browserTarget": "app:build"
+            "browserTarget": "app:build:development"
           },
           "configurations": {
             "production": {
@@ -92,7 +101,7 @@
               "progress": false
             },
             "development": {
-              "browserTarget": "app:build:development"
+              "browserTarget": "app:build"
             }
           }
         },

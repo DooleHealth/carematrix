@@ -245,9 +245,23 @@
           </ion-list>
 
         </ng-container>
+
         <div class="send-drugs">
-          <ion-button color="primary" expand="block" routerLink="/medication"  routerLinkActive='active-item'>{{'medication.send_medication' | translate}}</ion-button>
+          <ion-toolbar>
+            <ion-buttons slot="secondary">
+              <ion-button routerLink="/medication" routerLinkActive='active-item'>{{'medication.send_medication' | translate}}
+                <ion-icon slot="start" name="send-outline"></ion-icon>
+              </ion-button>
+
+            </ion-buttons>
+            <ion-buttons slot="primary">
+
+            </ion-buttons>
+            <ion-title></ion-title>
+          </ion-toolbar>
+
         </div>
+
 
       </ng-template>
       <ng-template #third>

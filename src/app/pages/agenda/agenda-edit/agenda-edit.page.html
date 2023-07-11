@@ -62,12 +62,15 @@
           <ion-label>{{'reminder.field_place' | translate}}</ion-label>
           <ion-input formControlName="place" class="textMedium"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label>{{'reminder.field_start' | translate}}</ion-label>
-          <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime>
+
+          <!-- <ion-datetime locale="es-ES" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime> -->
+          <ion-datetime presentation="date-time" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" required  formControlName="date">
+            <span slot="time-label">{{ 'reminder.field_time' | translate}}</span>
+            <!-- <span slot="title">{{'reminder.field_start' | translate}}</span> -->
+          </ion-datetime>
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-        </ion-item>
+
+
         <ion-item lines="none">
           <ion-label lines="none">{{'reminder.field_duration' | translate}}</ion-label>
           <ion-input formControlName="duration" inputmode="numeric" type="number" placeholder="{{'reminder.minutes' | translate}}" class="textMedium" required></ion-input>

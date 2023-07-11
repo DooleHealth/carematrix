@@ -79,4 +79,8 @@ ion-spinner {
   bottom: 40;
   left: 40;
   position: absolute;
+}
+
+.send-drugs {
+  margin-inline: 16px;
 }/*# sourceMappingURL=diary.page.css.map */
