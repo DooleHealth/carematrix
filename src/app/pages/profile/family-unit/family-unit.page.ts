@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FamilyUnit, Mentoring, Tutor } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 @Component({
   selector: 'app-family-unit',
@@ -23,7 +24,9 @@ export class FamilyUnitPage implements OnInit {
     private alertController: AlertController,
     public router: Router,
     private _zone: NgZone,
-    private translate: TranslateService,) { this.user = this.authService?.user?.familyUnit}
+    private translate: TranslateService,
+    private pusherConnection: PusherConnectionService,
+    ) { this.user = this.authService?.user?.familyUnit}
 
   ngOnInit() {
     
@@ -96,7 +99,7 @@ export class FamilyUnitPage implements OnInit {
 
   changeUser(user?){
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
-    //this.pusherConnection.unsubscribePusher()
+    this.pusherConnection.unsubscribePusher()
     this.authService.setFamilyUnit(user).then((val) => {
       this._zone.run(()=>{
         setTimeout(()=>{
@@ -110,7 +113,7 @@ export class FamilyUnitPage implements OnInit {
 
   returnUser(){
     this.authService.isFamily = false;
-    //this.pusherConnection.unsubscribePusher()
+    this.pusherConnection.unsubscribePusher()
     console.log('[FamilyUnitPage] returnUser()', this.user);
     this.authService.setUserFamilyId(null).then((val) => {
       this._zone.run(()=>{

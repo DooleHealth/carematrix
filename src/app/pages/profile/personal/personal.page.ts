@@ -8,6 +8,7 @@ import { ActionSheetController, AlertController, Platform } from '@ionic/angular
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DateService } from 'src/app/services/date.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class PersonalPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private datepipe: DatePipe,
     private alertController: AlertController,
+    public authService: AuthenticationService,
     ) { }
 
   ngOnInit() {
@@ -142,7 +144,7 @@ export class PersonalPage implements OnInit {
 
       this.files = { name: filename, file: img, type: image.format }
       console.log('[PersonalPage] addImage()', this.files);
-      let params = {file: this.files.file}
+      let params = {file: this.files.file, user: this.authService?.user?.idUser}
       const temporary = this.userProfile?.temporaryUrl
       this.isLoading = true
       this.dooleService.updateAPIImageuser(params).subscribe(
