@@ -73,6 +73,10 @@ export class PusherConnectionService {
     this.pusherAlarm.unsubscribePusher()
     this.pusherNotification.unsubscribePusher()
     this.pusherAlarm.unsubscribePusher()
+
+    // this.pusher?.unsubscribe(this.pusherAlarm.nameChanel)
+    // this.pusher?.unsubscribe(this.pusherNotification.nameChanel)
+    this.pusher?.disconnect();
   }
 
   public isConnectedPusher(): boolean{

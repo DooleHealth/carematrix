@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,6 +32,7 @@ export class ListNotificationsPage implements OnInit {
     public router:Router,
     public dateService: DateService,
     private analyticsService: AnalyticsService,
+    private _zone: NgZone,
   ) { }
 
   ngOnInit() {
@@ -248,10 +249,9 @@ export class ListNotificationsPage implements OnInit {
   }
 
   goPage(notification){
-    console.log('[ListNotificationsPage] goPage():', notification)
+    console.log('[ListNotificationsPage] goPage(): ', notification)
     let data = notification.notification_origin;
     if(data == null) data = {id: notification.notification_origin_id}
-
     switch (notification.notification_origin_type) {
       case "App\\FormAnswer":
         this.setRead(notification.id)
@@ -264,7 +264,9 @@ export class ListNotificationsPage implements OnInit {
         break;
       case "App\\DrugIntake":
         this.setRead(notification.id)
-        this.router.navigate([`/more/medication-plan`],{state:{data: null}}); // definir donde tiene q abrirse
+        this._zone.run(() => {
+          this.router.navigate([`/journal`], { state: { data: data, segment: 'medication' } });
+        });
         break;
       case "App\\Agenda":
         this.setRead(notification.id)
@@ -277,6 +279,10 @@ export class ListNotificationsPage implements OnInit {
       case "App\\Advice":
         this.setRead(notification.id)
         this.router.navigate([`/advices/advices-detail`],{state:{data:null, id: data.id}}); //Bien
+        break;
+      case "App\\News":
+        this.setRead(notification.id)
+        this.router.navigate([`/new-detail`],{state:{data:null, id: data.id}}); //Bien
         break;
       case "App\\Agenda":
         this.setRead(notification.id)
