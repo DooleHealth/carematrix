@@ -18,6 +18,7 @@ import { DietsDetailPageModule } from '../diary/diets-detail/diets-detail.module
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfPageModule } from '../pdf/pdf.module';
 import { SwiperModule } from 'swiper/angular';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 
 @NgModule({
@@ -35,10 +36,9 @@ import { SwiperModule } from 'swiper/angular';
     PdfViewerModule,
     DietsDetailPageModule,
     PdfPageModule,
-    SwiperModule
-
+    SwiperModule,
   ],
-  providers: [DatePipe, InAppBrowser] ,
+  providers: [DatePipe, InAppBrowser, AndroidPermissions] ,
   declarations: [HomePage,
     ]
 })

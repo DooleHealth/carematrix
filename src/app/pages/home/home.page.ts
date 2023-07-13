@@ -25,6 +25,7 @@ import { DateService } from 'src/app/services/date.service';
 import { PdfPage } from '../pdf/pdf.page';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import Swiper, { SwiperOptions } from 'swiper';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -173,9 +174,12 @@ export class HomePage implements OnInit {
     private pusherAlarms: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
     private pusherConnection: PusherConnectionService,
-    public dateService : DateService
+    public dateService : DateService,
+    private androidPermissions: AndroidPermissions
   ) {
-    // this.analyticsService.setScreenName('home','[HomePage]')
+    if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
+        this.checkPhoneStatePermission();
+
   }
 
   async ngOnInit() {
@@ -223,6 +227,24 @@ export class HomePage implements OnInit {
     });
   }
 
+  checkPhoneStatePermission(){
+      // this.analyticsService.setScreenName('home','[HomePage]')
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS).then(
+        result => {
+          console.log('Has permission?',result.hasPermission)
+            if(!result.hasPermission){
+              "requesting"
+              this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS]);
+            }
+        },
+        err => {
+          console.error('error permission', err)
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS)
+        }
+      );
+
+
+  }
   checkHealthAccess() {
     if (this.platform.is('cordova')) {
       this.health.isAvailable()
