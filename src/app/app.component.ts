@@ -417,7 +417,7 @@ export class AppComponent implements OnInit {
         }
         console.log('staff: ', staff);
         this._zone.run(() => {
-          this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff } });
+          this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff, customData: data?.user_id } });
         });
         break;
       case "FORM":
@@ -438,6 +438,11 @@ export class AppComponent implements OnInit {
       case "ADVICE":
         this._zone.run(() => {
           this.router.navigate([`/advices-detail`], { state: { data: data, id: data.id } });
+        });
+        break;
+      case "NEWS":
+        this._zone.run(() => {
+          this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
         });
         break;
       case "DIET":

@@ -202,7 +202,7 @@ export class LoginPage implements OnInit {
           }
         }
         console.log('staff: ', staff);
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff}});
+        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff,  customData: data?.user_id}});
         break;
       case "FORM":
         this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
