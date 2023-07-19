@@ -94,7 +94,7 @@
     "cordova-plugin-app-version": "^0.1.14",
     "cordova-plugin-badge": "^0.8.9",
     "cordova-plugin-calendar": "^5.1.6",
-    "cordova-plugin-callkit": "git+https://github.com/DooleHealth/callkit-plugin.git",
+    "cordova-plugin-callkit": "github:DooleHealth/callkit-plugin",
     "cordova-plugin-device": "^2.1.0",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-fingerprint-aio": "^5.0.1",

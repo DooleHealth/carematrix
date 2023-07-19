@@ -14,6 +14,7 @@ public class DooleConnectionService extends ConnectionService {
     public String app_name = "Doole";
     private static String TAG = "DooleConnectionService";
     private static Connection conn;
+
     Connection mConnection;
     public static Connection getConnection() {
         return conn;
