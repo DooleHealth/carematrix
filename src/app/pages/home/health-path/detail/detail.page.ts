@@ -131,7 +131,7 @@ export class DetailPage {
     let link = '';
     switch (goal?.goalable_type) {
       case "App\\Form":
-        this.openModal(FormPage,{ id: goal.id });
+        this.openModal(FormPage,{ id: goal.id, isModal: true });
         //this.router.navigate(['/tracking/form', { id: goal.id }]);
         break;
       case "App\\Drug":
