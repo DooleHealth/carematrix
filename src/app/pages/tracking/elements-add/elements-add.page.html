@@ -39,9 +39,13 @@
 
 
       <ion-item>
-        <ion-label>{{ 'element.field_measure' | translate}}</ion-label>
-        <ion-input  type="number" [placeholder]="placeholderRange" formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
-        <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-label>
+          <h6>{{ 'element.field_measure' | translate}}</h6>
+          <ion-note style="width: min-content; padding: 0%;" *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        </ion-label>
+        <!-- <ion-label>{{ 'element.field_measure' | translate}}</ion-label> -->
+        <ion-input style="text-align: end;" type="number" [placeholder]="placeholderRange" formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
+        <!-- <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
       </ion-item>
 
       <ion-item *ngIf="this.element">

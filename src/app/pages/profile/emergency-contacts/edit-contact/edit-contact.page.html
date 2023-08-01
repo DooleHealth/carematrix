@@ -6,9 +6,11 @@
     <ion-title>
       {{ isNewContact? ('edit_contact.header_add' | translate) : ('edit_contact.header' | translate) }}
     </ion-title>
-  <ion-button slot="end" fill="clear" (click)="sumittedContact()">
-    <ion-icon name="checkmark-outline"></ion-icon>  
-  </ion-button>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="sumittedContact()">
+        <ion-icon name="checkmark-outline"></ion-icon>  
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
