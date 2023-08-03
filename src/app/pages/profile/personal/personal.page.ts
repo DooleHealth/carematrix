@@ -32,9 +32,13 @@ export class PersonalPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.getPersonalInformation()
+    //this.getPersonalInformation()
   }
 
+  ionViewWillEnter(){
+    console.log('[PersonalPage] ionViewWillEnter()');
+    this.getPersonalInformation()
+  }
   getPersonalInformation(){
     this.isLoading = true
     this.dooleService.getAPIuserProfile().subscribe(
@@ -118,10 +122,14 @@ export class PersonalPage implements OnInit {
   deleteImage() {
     this.dooleService.deleteAPIImageuser().subscribe(
       async (res: any) =>{
-        console.log('[PersonalPage] getPersonalInformation()', res);
+        console.log('[PersonalPage] deleteImage()', res);
+        if(res.success){
+          if( res?.user?.temporaryUrl)
+          this.userProfile.temporaryUrl = res?.user?.temporaryUrl
+        }
         this.isLoading = false
        },(err) => {
-          console.log('[PersonalPage] getPersonalInformation() ERROR(' + err.code + '): ' + err.message);
+          console.log('[PersonalPage] deleteImage() ERROR(' + err.code + '): ' + err.message);
           this.isLoading = false
           throw err;
       });

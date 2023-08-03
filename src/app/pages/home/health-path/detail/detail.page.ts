@@ -11,6 +11,7 @@ import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pus
 import { AdvicesDetailPage } from '../../advices-detail/advices-detail.page';
 import { AdvicesPage } from '../../advices/advices.page';
 import { NewDetailPage } from '../../new-detail/new-detail.page';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-detail',
@@ -28,7 +29,7 @@ export class DetailPage {
   goalsList = [];
   goals = [];
   isRequired = false
-  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef,  private ngZone: NgZone) { }
+  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone) { }
 
   ionViewWillEnter() {
     this.note = this.translate.instant('health_path.goal_note')
@@ -64,48 +65,63 @@ export class DetailPage {
     this.goals?.forEach(goal => {
       if(goal?.required)
       this.isRequired = true
-
       switch (goal?.goalable_type) {
         case "App\\Form":
 
           if (goal.hasOwnProperty("form")) {
             id = goal?.form?.id;
-            message = this.translate.instant("health_path.form") + '"' + goal?.form?.title + '"';
+            message = this.translate.instant("health_path.form") //+ '"' + goal?.form?.title + '"';
+            name =   goal?.form?.title
           } else {
             id = goal?.goalable?.id;
-            message = this.translate.instant("health_path.form") + '"' + goal?.goalable?.title + '"';
+            message = this.translate.instant("health_path.form")// + '"' + goal?.goalable?.title + '"';
+            name =   goal?.goalable?.title
           }
           link = '/journal/add';
           break;
 
         case "App\\Drug":
-          name = goal?.drug?.name;
-          message = this.translate.instant("health_path.drug") + '"' + goal?.drug?.name + '"';
+          id = goal?.drug?.id;
+          name =  goal?.drug?.name;
+          message = this.translate.instant("health_path.drug");
           link = '/form';
           break;
         case "App\\News":
           id = goal?.news?.id;
-          name = goal?.news?.subject;
-          message = this.translate.instant("health_path.news") + '"' + goal?.news?.subject + '"';
+          name =   goal?.news?.subject;
+          message = this.translate.instant("health_path.news") //+ '"' + goal?.news?.subject + '"';
           link = '/form';
           break;
         case "App\\Advice":
           id = goal?.advice?.id;
-          name = '';
-          message = this.translate.instant("health_path.advice") + '"' + goal?.advice?.name + '"';
+          name =  goal?.advice?.name;
+          message = this.translate.instant("health_path.advice") //+ '"' + goal?.advice?.name + '"';
           link = '/form';
           break;
         case "App\\Diet":
           id = goal?.diet?.id;
-          name = '';
-          message = this.translate.instant("health_path.diet") + '"' + goal?.diet?.name + '"';
+          name =  goal?.diet?.name;
+          message = this.translate.instant("health_path.diet") //+ '"' + goal?.diet?.name + '"';
           link = '/form';
           break;
         case "App\\Element":
           id = goal?.element?.id;
-          name = goal?.element?.name;
-          message = this.translate.instant("health_path.measure") + '"' + goal?.element?.name + '"';
+          name =  goal?.element?.name;
+          message = this.translate.instant("health_path.measure") //+ '"' + goal?.element?.name + '"';
           link = '/form';
+          break;
+        case "App\\Game":
+          if (goal?.game?.form) {
+            id = goal?.game?.form_id;
+            name =  goal?.game?.form?.title;
+            type = 'form';
+          }else{
+            id = goal?.game?.id;
+            name =  goal?.game?.title;
+            type = 'game';
+            link = goal?.game?.url_access;
+          }
+          message = this.translate.instant("health_path.game") //+ '"' + goal?.element?.name + '"';
           break;
         default:
           name = '';
@@ -117,6 +133,7 @@ export class DetailPage {
       tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed, required: goal?.required, type: type })
     });
     this.goalsList = tempGoals;
+    console.log("gsetChallenge() ", this.goalsList)
     this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
     this.fetching = false;
     this.changeDetectorRef.detectChanges();
@@ -152,7 +169,15 @@ export class DetailPage {
       case "App\\Element":
         this.openModal(ElementsAddPage, { id: goal.id, nameElement: goal.name, units: '' });
         //this.presentAlert(goal);
-
+        break;
+      case "App\\Game":
+        console.log('openGoal goal: ', goal);
+        if(goal?.type == 'form')
+        this.openModal(FormPage,{ id: goal?.id, isModal: true});
+        else{
+          //this.router.navigate(['/tracking/games-detail'], { state: { id: goal.id } });
+          this.openGames(goal?.link)
+        }
         break;
       default:
         message = ''
@@ -188,6 +213,16 @@ export class DetailPage {
     await modal.present();
   }
 
+  getChallengeNotification(){
+
+    if (this.pusher?.pendingNotification?.show) {
+      this.pusher.presentChallengeNotification();
+    }
+    this.ngZone.run(() => {
+      this.getChallenge();
+    });
+  }
+
   async presentAlert(goal) {
     const alert = await this.alertController.create({
       header: goal?.name,
@@ -204,4 +239,36 @@ export class DetailPage {
 
     await alert.present();
   }
+
+  async openGames(url_access){
+
+    var browser : any;
+      const iosoption: InAppBrowserOptions = {
+        zoom: 'no',
+        location:'yes',
+        toolbar:'yes',
+        clearcache: 'yes',
+        clearsessioncache: 'yes',
+        disallowoverscroll: 'yes',
+        enableViewportScale: 'yes'
+      }
+
+      this.pusher.isModalShowing = true;
+
+      if(url_access?.startsWith("http"))
+        browser = this.iab.create(url_access, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+      else
+        browser = this.iab.create(url_access, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+
+      browser.on('exit')?.subscribe(event => {
+        this.ngZone.run(() => {
+          console.log("openGames event: ", JSON.stringify(event) );
+          //alert(JSON.stringify(event))
+          this.pusher.isModalShowing = false;
+          this.getChallengeNotification()
+        });
+      });
+
+
+    }
 }

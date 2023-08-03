@@ -29,20 +29,21 @@ export class BioquimicComponent implements  OnInit, ItemForm {
   sliderHeader = '';
   sliderFooter = '';
   valueDescription = '';
-  intervals
+  //intervals
   value1: number = 0;
-  vSlider: Options = {
+  options:Options = {
     floor: 0,
-    ceil: 0,
+    ceil: 100,
     vertical: true,
-    showSelectionBar: true
-  };
+    // showTicks: true,
+    showSelectionBar: true,
+  }
   constructor(
     private translate: TranslateService, private appRef: ApplicationRef) { }
 
   ngOnInit() {
     console.log('BioquimicComponent data: ', this.data)
-    this.isVertical = this.data?.bioquimic?.slider_vertical? true:false
+    this.isVertical = this.data?.data?.slider_vertical? true:false
     let translate = this.data?.translate[`label_${this.data.type}`]
     this.label = translate[this.data?.userLang]?.replace('<p', '<div')?.replace('</p', '</div')
     this.slider = this.data?.bioquimic?.slider
@@ -52,7 +53,7 @@ export class BioquimicComponent implements  OnInit, ItemForm {
     if(Number(step) <= 0){
       this.step =  '1'
     }else this.step = step
-    let vDefault = this.data?.bioquimic?.valueDefault
+    let vDefault = this.data?.data?.valueDefault
     if(vDefault >= Number(this.min) && vDefault <= Number(this.max))
     this.valueDefault = vDefault
 
@@ -61,15 +62,16 @@ export class BioquimicComponent implements  OnInit, ItemForm {
     this.numDecimal = this.getDecimalNumber(this.step, decimals) //decimals < 0? 0:decimals
 
     if(this.isVertical){
-      this.intervals = this.getInterval();
-      let header = this.data?.translate?.start_message_slider ? this.data?.translate?.start_message_slider[this.data?.userLang]:''
-      let footer = this.data?.translate?.end_message_slider ? this.data?.translate?.end_message_slider[this.data?.userLang]:''
+      //this.intervals = this.getInterval();
+      let header = this.data?.translate?.start_message_bioquimic ? this.data?.translate?.start_message_bioquimic[this.data?.userLang]:''
+      let footer = this.data?.translate?.end_message_bioquimic ? this.data?.translate?.end_message_bioquimic[this.data?.userLang]:''
       this.sliderHeader= header? header:''
       this.sliderFooter= footer? footer:''
 
       this.setVerticalSlider()
-    }else
-      this.setHorizontalSlider()
+    }
+    // else
+    //   this.setHorizontalSlider()
 
   }
   setHorizontalSlider(){
@@ -77,56 +79,34 @@ export class BioquimicComponent implements  OnInit, ItemForm {
     this.numDecimal = this.getDecimalNumber(this.step, decimals) //decimals < 0? 0:decimals
   }
 
-  getInterval(): number {
+  // getInterval(): number {
 
-    if(this.data.data?.step_range){
-      console.log("Interval Number: ", this.data.data?.step_range);
-      let numero = Number(this.data.data?.step_range);
-      if(numero == 5)
-        return numero
-      else
-        return 10
-    }else{
-      let numero: number =  Number(this.max) - Number(this.min)
+  //   if(this.data.data?.step_range){
+  //     console.log("Interval Number: ", this.data.data?.step_range);
+  //     let numero = Number(this.data.data?.step_range);
+  //     if(numero == 5)
+  //       return numero
+  //     else
+  //       return 10
+  //   }else{
+  //     let numero: number =  Number(this.max) - Number(this.min)
 
-      if (numero >= 0 && numero <= 10) {
-        return 5;
-      } else {
-        return 10;
-      }
-    }
+  //     if (numero >= 0 && numero <= 10) {
+  //       return 5;
+  //     } else {
+  //       return 10;
+  //     }
+  //   }
 
-  }
+  // }
 
   setVerticalSlider(){
-    const decimals = Number(this.step)%1  //String(Number(this.step) - Math.floor(Number(this.step))).length - 2
-    this.numDecimal = this.getDecimalNumber(this.step, decimals) //decimals < 0? 0:decimals
-
-    if(this.data.bioquimic?.step_range){
-      this.vSlider  = {
-        floor: Number(this.min),
-        ceil: Number(this.max),
-        vertical: true,
-        showSelectionBar: true,
-        step:Number(this.step),
-        showTicksValues: true,
-        showTicks: true,
-        tickStep:this.intervals
-      };
-    }else{
-      this.vSlider  = {
-        floor: Number(this.min),
-        ceil: Number(this.max),
-        vertical: true,
-        showSelectionBar: true,
-        step:Number(this.step)
-      };
-
-    }
-
-    console.log('SliderComponent setVasetVerticalSliderlue() ', this.vSlider)
+    const newOptions: Options = Object.assign({}, this.options);
+    newOptions.floor = Number(this.min)
+    newOptions.ceil = Number(this.max)
+    newOptions.step = Number(this.step)
+    this.options = newOptions;
     this.value1 = this.data.required? this.value1:Number(this.valueDefault)
-
   }
 
 
@@ -149,10 +129,36 @@ export class BioquimicComponent implements  OnInit, ItemForm {
       let point = aux?.substring(aux?.length - 1)
       if( point == '.' ||  point == ','  || aux < Number(this.min))
       return
-      this.value1 = (aux !== '')? aux:this.vSlider.floor
+      this.value1 = (aux !== '')? aux:this.options.floor
       //console.log('SliderComponent setValue() vert ', this.value, this.value1)
     }
   }
+
+  setValue1(event){
+    let aux = event.target?.value
+    console.log('BioquimicComponent setValue() r0 ', event.target?.value)
+   let point = (aux+'')?.substring(aux?.length - 1)
+   if( point == '.' ||  point == ',' || isNaN(aux))
+   return
+
+   let valueD = parseFloat((aux+'')?.replace(",","."))%1
+   let num = this.getDecimalNumber(aux, valueD)
+
+   if(num > this.numDecimal && valueD > 0 //&& event.type == 'ionChange'
+   ){
+     console.log('BioquimicComponent setValue() r1 ', event.target?.value , this.numDecimal)
+     const respString = (aux+'') ?.replace(",",".")
+     const resp =  parseFloat(respString)?.toFixed(this.numDecimal)
+     //this.ionInputEl.value = 
+     this.value =  resp
+     console.log('BioquimicComponent setValue() r2 ', this.value , this.numDecimal)
+   }
+   else{
+     this.value =  event.target.value
+     console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
+   }
+   this.appRef.tick();
+ }
 
   getDecimalNumber(value, decimal){
     if(decimal<=0) return 0
@@ -195,7 +201,7 @@ export class BioquimicComponent implements  OnInit, ItemForm {
 
   onValueChange(event){
     //console.log('SliderComponent onValueChange() ', event, this.value, this.value1)
-    if( this.value === '' && this.value1 === this.vSlider?.floor)
+    if( this.value === '' && this.value1 === this.options?.floor)
     return
     this.value = event
   }
