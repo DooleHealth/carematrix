@@ -41,7 +41,7 @@ import { SliderComponent } from './form/slider/slider.component';
 import { TextareaComponent } from './form/textarea/textarea.component';
 import { TooltipComponent } from './form/tooltip/tooltip.component';
 import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
-
+import { NgxSliderModule } from 'ngx-slider-v2';
 @NgModule({
     imports: [
         CommonModule,
@@ -50,6 +50,7 @@ import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
         IonicModule,
         RouterModule,
         TranslateModule,
+        NgxSliderModule
     ],
   declarations: [
     CheckboxWrapperComponent,

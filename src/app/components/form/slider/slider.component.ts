@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider/options';
+import { Options } from 'ngx-slider-v2';
 import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';

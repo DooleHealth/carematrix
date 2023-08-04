@@ -1,7 +1,7 @@
-import { Options } from '@angular-slider/ngx-slider/options';
-import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Options } from 'ngx-slider-v2';
+import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonInput } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ItemForm } from '../shared/item-form';
 
@@ -14,6 +14,7 @@ export class BioquimicComponent implements  OnInit, ItemForm {
   @Input() data: any;
   @Input() desactive: boolean;
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('ionInputEl', { static: false }) ionInputEl!: IonInput;
   label = ''
   sliderForm: FormControl;
   slider: true;
@@ -109,34 +110,45 @@ export class BioquimicComponent implements  OnInit, ItemForm {
     this.value1 = this.data.required? this.value1:Number(this.valueDefault)
   }
 
-
   setValue(event){
     let aux = event.target?.value
-    let valueD =  aux%1
-    let num = this.getDecimalNumber(aux, valueD) //String(valueD).length - 2
 
-    if(num > this.numDecimal && valueD > 0 && event.type == 'ionChange'){
-      console.log('BioquimicComponent setValue() r ', this.value , this.numDecimal)
-      this.value =  event.target?.value?.toFixed(this.numDecimal)
+    let point = (aux+'')?.substring(aux?.length - 1)
+    if( point == '.' ||  point == ',' || isNaN(aux))
+    return
+
+    let valueD = aux%1//  Number((aux)?.replace(",","."))%1
+    let num = this.getDecimalNumber(aux, valueD) //String(valueD).length - 2
+    console.log('BioquimicComponent setValue() valueD: ', valueD , 'decimal: ', this.numDecimal, 'num' , num, 'event', event.type)
+
+    if(num > this.numDecimal && valueD > 0 //&& event.type == 'ionChange'
+    ){
+      let respString = (aux+'')?.replace(",",".")
+      const resp =  Number(respString)?.toFixed(this.numDecimal)
+      this.value = String(resp)
+      console.log('BioquimicComponent setValue() rendondear', this.value , this.numDecimal, 'resp ', resp)
     }else{
-      this.value =  event.target.value
-      console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
+      this.value = aux
+      //console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
     }
     if(event.type !== 'ionChange')
     this.change.emit({[this.data.name]: Number(this.value)});
 
     if(this.isVertical){
       let point = aux?.substring(aux?.length - 1)
-      if( point == '.' ||  point == ','  || aux < Number(this.min))
+      if( point == '.' ||  point == ',' || isNaN(aux))
+      return
+      if(aux < Number(this.min))
       return
       this.value1 = (aux !== '')? aux:this.options.floor
-      //console.log('SliderComponent setValue() vert ', this.value, this.value1)
+      console.log('BioquimicComponent setValue() vert ', this.value, this.value1)
     }
+    this.appRef.tick();
   }
 
   setValue1(event){
     let aux = event.target?.value
-    console.log('BioquimicComponent setValue() r0 ', event.target?.value)
+    console.log('BioquimicComponent setValue1() r0 ', event.target?.value)
    let point = (aux+'')?.substring(aux?.length - 1)
    if( point == '.' ||  point == ',' || isNaN(aux))
    return
@@ -146,16 +158,15 @@ export class BioquimicComponent implements  OnInit, ItemForm {
 
    if(num > this.numDecimal && valueD > 0 //&& event.type == 'ionChange'
    ){
-     console.log('BioquimicComponent setValue() r1 ', event.target?.value , this.numDecimal)
+     console.log('BioquimicComponent setValue1() r1 ', event.target?.value , this.numDecimal)
      const respString = (aux+'') ?.replace(",",".")
      const resp =  parseFloat(respString)?.toFixed(this.numDecimal)
-     //this.ionInputEl.value = 
-     this.value =  resp
-     console.log('BioquimicComponent setValue() r2 ', this.value , this.numDecimal)
+     this.ionInputEl.value = this.value =  resp
+     console.log('BioquimicComponent setValue1() r2 ', this.value , this.numDecimal)
    }
    else{
      this.value =  event.target.value
-     console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
+     console.log('BioquimicComponent setValue1() ', this.value , this.numDecimal)
    }
    this.appRef.tick();
  }

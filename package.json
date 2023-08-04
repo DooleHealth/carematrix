@@ -117,6 +117,7 @@
     "moment": "^2.29.1",
     "ng2-pdf-viewer": "9.1.5",
     "ngx-pagination": "6.0.3",
+    "ngx-slider-v2": "^16.0.2",
     "pusher-js": "8.2.0",
     "rxjs": "^7.5.0",
     "sass": "^1.33.0",
