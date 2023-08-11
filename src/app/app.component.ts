@@ -522,6 +522,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();
@@ -557,6 +558,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();
@@ -679,6 +681,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();
@@ -713,6 +716,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();

@@ -142,6 +142,7 @@ export class FormPage implements OnInit {
       const modal = await this.modalCtrl.create({
         component:  AlarmFormPage,
         componentProps: {result: result, data:data, source: source},
+        cssClass: "modal-custom-class"
       });
     
       modal.onDidDismiss()

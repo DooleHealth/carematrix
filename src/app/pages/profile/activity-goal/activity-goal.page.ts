@@ -659,7 +659,7 @@ export class ActivityGoalPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ElementsAddPage,
       componentProps: { id: this.id, nameElement: this.header, units: this.units },
-      //cssClass: "modal-custom-class"
+      cssClass: "modal-custom-class"
     });
     modal.onDidDismiss()
       .then((result) => {

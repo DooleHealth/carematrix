@@ -484,11 +484,8 @@ ion-spinner {
 }
 
 .modal-custom-class{
-
-  .modal-wrapper {
-    height: 100%!important;
-    width:  100%!important;
-  }
+  --height: 100% !important;
+  --width:  100% !important;
 }
 
 /*IOS STYLES*/

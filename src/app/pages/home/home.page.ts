@@ -1160,6 +1160,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ElementsAddPage,
       componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -1183,6 +1184,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: isAdvice ? AdvicesDetailPage : NewDetailPage,
       componentProps: { id: slide?.id },
+      cssClass: "modal-custom-class"
     });
 
     // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown

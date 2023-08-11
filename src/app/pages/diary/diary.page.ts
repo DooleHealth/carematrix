@@ -502,6 +502,7 @@ export class DiaryPage implements OnInit {
       const modal = await this.modalCtrl.create({
         component:  ElementsAddPage,
         componentProps: { },
+        cssClass: "modal-custom-class"
       });
 
       modal.onDidDismiss()

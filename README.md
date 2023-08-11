@@ -132,3 +132,57 @@ public class CapacitorFirebaseMessagingService extends FirebaseMessagingService 
   }
 }
 ```
+
+## Error de notifcaciones push en primer plano no redirigen a la app:
+https://github.com/ionic-team/capacitor-plugins/pull/1478
+añadir en el siguiente archivo
+push-notifications/android/src/main/java/com/capacitorjs/plugins/pushnotifications/PushNotificationsPlugin.java
+
+las siguiente lineas de código apartir 279
+
+Intent intent = new Intent(getContext(), getActivity().getClass());
+                    intent.putExtras(remoteMessage.toIntent().getExtras());
+                    PendingIntent pendingIntent = PendingIntent.getActivity(
+                            getContext(),
+                            0,
+                            intent,
+                            PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                    );
+
+y reemplazar las siguientes lineas
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                        getContext(),
+                        NotificationChannelManager.FOREGROUND_NOTIFICATION_CHANNEL_ID
+                    )
+                        .setSmallIcon(pushIcon)
+                        .setContentTitle(title)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setContentText(body)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+Quedaría:
+
+                    if (bundle != null && bundle.getInt("com.google.firebase.messaging.default_notification_icon") != 0) {
+                        pushIcon = bundle.getInt("com.google.firebase.messaging.default_notification_icon");
+                    }
+                    Intent intent = new Intent(getContext(), getActivity().getClass());
+                    intent.putExtras(remoteMessage.toIntent().getExtras());
+                    PendingIntent pendingIntent = PendingIntent.getActivity(
+                            getContext(),
+                            0,
+                            intent,
+                            PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                    );
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                        getContext(),
+                        NotificationChannelManager.FOREGROUND_NOTIFICATION_CHANNEL_ID
+                    )
+                        .setSmallIcon(pushIcon)
+                        .setContentTitle(title)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setContentText(body)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    notificationManager.notify(0, builder.build());

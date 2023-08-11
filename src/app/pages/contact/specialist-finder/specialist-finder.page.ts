@@ -25,6 +25,7 @@ export class SpecialistFinderPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: MedicalCalendarPage,
       componentProps: { id: this.staffId },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()

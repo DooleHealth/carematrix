@@ -38,7 +38,6 @@ export class DocumentsAddPage implements OnInit {
     private fb: FormBuilder,
     public router: Router,
     private dooleService: DooleService,
-    private modalController: ModalController,
     private translate : TranslateService,
     public platform: Platform,
     public datepipe: DatePipe,
@@ -223,8 +222,9 @@ export class DocumentsAddPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
       component: TestTypePage,
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss().then((dataReturned) => {

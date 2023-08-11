@@ -144,6 +144,7 @@ config: SwiperOptions = {
     const modal = await this.modalCtrl.create({
       component: LoginPage,
       componentProps: { credentials: this.loginForm.value, pushNotification: this.pushNotification },
+      cssClass: 'my-custom-class'
     });
 
     modal.onDidDismiss()

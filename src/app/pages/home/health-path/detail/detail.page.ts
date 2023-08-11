@@ -29,7 +29,7 @@ export class DetailPage {
   goalsList = [];
   goals = [];
   isRequired = false
-  constructor(public translate: TranslateService, private dooleService: DooleService, private modalController: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone) { }
+  constructor(public translate: TranslateService, private dooleService: DooleService, private modalCtrl: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone) { }
 
   ionViewWillEnter() {
     this.note = this.translate.instant('health_path.goal_note')
@@ -189,9 +189,10 @@ export class DetailPage {
   }
 
   async openModal(component, componentProps) {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
       component: component,
       componentProps: componentProps,
+      cssClass: 'my-custom-class'
     });
 
     this.pusher.isModalShowing = true;

@@ -16,7 +16,6 @@ export class EmergencyContactsPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
-    private modalCtrl: ModalController,
     private notification: NotificationService
   ) { }
 
