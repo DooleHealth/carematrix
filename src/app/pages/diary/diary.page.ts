@@ -182,7 +182,8 @@ export class DiaryPage implements OnInit {
 
     console.log('[DiaryPage] getDietListByDate()');
     let date  = this.transformDate2(this.date)
-    this.dooleService.getAPIdietsByDate(date).subscribe(
+    const params = {date: date, grouped_by_times: true}
+    this.dooleService.getAPIdietsByDate(params).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDietListByDate()', await res);
         if(res.success){
@@ -207,12 +208,12 @@ export class DiaryPage implements OnInit {
       if (obj.hasOwnProperty(property)) {
         if (typeof obj[property] == "object") {
           console.log('[DiaryPage] treeIterateDiets()', obj[property]);
-          this.listDiets.push({date: property, items: obj[property], expanded: false,})
+          this.listDiets.push({name: property, date: obj[property][0]?.date_intake, items: obj[property], expanded: false,})
           //this.treeIterate(obj[property], stack + '.' + property);
         }
       }
     }
-    //console.log('[DiaryPage] treeIterateDiets()', this.listDiets);
+    console.log('[DiaryPage] treeIterateDiets()', this.listDiets);
   }
 
   async getDrugIntakeList(){

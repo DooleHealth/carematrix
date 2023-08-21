@@ -207,14 +207,14 @@
   </div>
 
   <span *ngIf="this.ranges.length > 0">
-    <ion-card class="cardProfilePadding card">
+    <ion-card class="cardProfilePadding card0">
       <ion-item>
         <ion-text class="txtPoppinsBlueLightBold16px">{{ 'goals.subtitle_information' | translate |
           uppercase}}</ion-text>
       </ion-item>
       <ion-card-title *ngIf="description" class="txtTitleGoals txtMarginElement">{{ 'activity_goal.definition' |
         translate}}</ion-card-title><br>
-      <div *ngIf="description" [innerHtml]="this.description"></div>
+      <div *ngIf="description" class="txtMarginElement" [innerHtml]="this.description"></div>
       <!-- <ion-item-divider></ion-item-divider> -->
       <div *ngIf="this.normalValue.length > 0" class="txtMarginElement">
         <ion-text class="titleGoalBlack">{{ 'activity_goal.normal_value' | translate}}</ion-text>

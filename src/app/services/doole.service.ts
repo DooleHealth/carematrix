@@ -946,10 +946,11 @@ export class DooleService {
     );
   }
 
-  getAPIdietsByDate(date: any): Observable<any> {
+  getAPIdietsByDate(params: any): Observable<any> {
     let path = `user/dietaryIntakes`
     let httpParams = new HttpParams();
-    httpParams = (date) ? httpParams.append('date', date) : httpParams
+    httpParams = (params?.date) ? httpParams.append('date', params.date) : httpParams
+    httpParams = (params?.grouped_by_times) ? httpParams.append('grouped_by_times', params.grouped_by_times) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {

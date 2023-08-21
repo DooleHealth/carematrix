@@ -29,6 +29,7 @@ export class DetailPage {
   goalsList = [];
   goals = [];
   isRequired = false
+  isChallengeCompleted = false
   constructor(public translate: TranslateService, private dooleService: DooleService, private modalCtrl: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone) { }
 
   ionViewWillEnter() {
@@ -44,6 +45,15 @@ export class DetailPage {
 
         await res;
         console.log('[DetailPage] getAPIChallenge()', res);
+        if(res?.current_level == null && res.challenge_completed){
+          console.error('[DetailPage] challenge_completed');
+          setTimeout(()=>{
+            this.ngZone.run(()=>{
+              this.router.navigate([`/home`]);
+            });
+          }, 1000);
+
+        }else
         this.setChallenge(res);
 
       }, (err) => {
@@ -56,6 +66,7 @@ export class DetailPage {
     this.goals = res?.current_level?.goals;
     this.current_level = res?.current_level;
     this.challenge = res?.challenge;
+    this.isChallengeCompleted = res.challenge_completed
     let name = '';
     let message = '';
     let link = '';

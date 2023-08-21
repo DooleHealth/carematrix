@@ -189,6 +189,8 @@
       "goal_txt4":" and move to the next level.",
       "level_congratulations": "Congratulations!",
       "level_accomplished": "You have reached the next level",
+      "congratulation":"Congratulations! You have managed to overcome a challenge",
+      "congratulation_level":"Congratulations! You have managed to pass the level",
       "done": "done!"
     },
     "activity_goal": {
