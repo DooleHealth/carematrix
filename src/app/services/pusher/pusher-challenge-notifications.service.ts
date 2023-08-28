@@ -64,7 +64,7 @@ export class PusherChallengeNotificationsService {
       console.log('[PusherChallengeNotificationsService] getPusher()', data);
 
       if (!this.isModalShowing) {
-        this.presentChallengeNotification();
+        this.presentChallengeNotification(data);
       } else {
         this.pendingNotification = { show: true, data: data }
       }
@@ -105,11 +105,11 @@ export class PusherChallengeNotificationsService {
 
   // }
 
-  async presentChallengeNotification() {
+  async presentChallengeNotification(notification) {
 
     let message = '';
     let header = '';
-    if(this.pendingNotification?.isChallengeCompleted){
+    if(notification?.isChallengeCompleted){
       message =  `<div class="pyro">
       <div class="before"></div>
       <ion-row><ion-col class="text-align-center"><img src="assets/images/trofeo.png" class="card-alert"></img></ion-col></ion-row>
@@ -120,13 +120,13 @@ export class PusherChallengeNotificationsService {
     else{
       message = `<div class="pyro">
       <div class="before"></div>
-      <ion-row><ion-col class="text-align-center"><img src="assets/images/trofeo.png" class="card-alert"></img></ion-col></ion-row>
+      <ion-row><ion-col class="text-align-center"><img src="assets/images/duly_champ.gif" class="card-alert"></img></ion-col></ion-row>
       <div class="after"></div>
       </div>`;
-      let name_level = this.pendingNotification?.levelDetail?.name? this.pendingNotification?.levelDetail?.name:''
-      header = this.translate.instant('health_path.congratulation_level') + ' '+name_level
+      let name_level = notification?.levelDetail?.name? notification?.levelDetail?.name:''
+      header = this.translate.instant('health_path.congratulation_level') + ' ' + name_level
     }
-  
+
     const alert = await this.alertController.create({
       header: header,
       cssClass:'challenge-alert',
@@ -137,16 +137,16 @@ export class PusherChallengeNotificationsService {
           role: 'confirm',
           handler: () => {
             this.handlerMessage = 'Alert confirmed';
-            this.pendingNotification = null;
+
           },
         },
       ],
     });
     await alert.present();
-  
+
     const { role } = await alert.onDidDismiss();
       this.roleMessage = `Dismissed with role: ${role}`;
-  
+
   }
 
 }

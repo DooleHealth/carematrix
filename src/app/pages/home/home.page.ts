@@ -1195,7 +1195,7 @@ export class HomePage implements OnInit {
 
         this.pusherChallenge.isModalShowing = false;
         if (this.pusherChallenge?.pendingNotification?.show) {
-          this.pusherChallenge.presentChallengeNotification();
+          this.pusherChallenge.presentChallengeNotification(this.pusherChallenge?.pendingNotification?.data);
           this.getUserInformation();
         }
 

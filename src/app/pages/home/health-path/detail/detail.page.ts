@@ -213,7 +213,7 @@ export class DetailPage {
 
         this.pusher.isModalShowing = false;
         if (this.pusher?.pendingNotification?.show) {
-          this.pusher.presentChallengeNotification();
+          this.pusher.presentChallengeNotification(this.pusher?.pendingNotification?.data);
         }
         this.ngZone.run(() => {
         this.getChallenge();
@@ -228,7 +228,7 @@ export class DetailPage {
   getChallengeNotification(){
 
     if (this.pusher?.pendingNotification?.show) {
-      this.pusher.presentChallengeNotification();
+      this.pusher.presentChallengeNotification(this.pusher?.pendingNotification?.data);
     }
     this.ngZone.run(() => {
       this.getChallenge();
