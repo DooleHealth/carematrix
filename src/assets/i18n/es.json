@@ -572,6 +572,7 @@
 
       },
       "no_data": "En este momento no hay datos para mostrar",
+      "no_data_notifications":"No hay notificaciones pendientes",
       "diary":{
         "header_diary": "Mi diario",
           "field_diet": "Dieta",

@@ -602,6 +602,7 @@
         "confirmation": "Està informació quedarà registrada de manera permanent per a ser consultada i no es podrà modificar o eliminar."
       },
       "no_data": "En aquest moment no hi ha dades per a mostrar",
+      "no_data_notifications": "No hi ha cap notificació pendent",
       "diary":{
         "header_diary": "El meu diari",
           "field_diet": "Dieta",
