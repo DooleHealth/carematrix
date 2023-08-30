@@ -111,65 +111,72 @@ export class BioquimicComponent implements  OnInit, ItemForm {
   }
 
   setValue(event){
+    try {
+      event.target.value = event.target?.value?.replace(",",".")
+    } catch (error) {}
     let aux = event.target?.value
-
     let point = (aux+'')?.substring(aux?.length - 1)
     if( point == '.' ||  point == ',' || isNaN(aux))
     return
-
-    let valueD = aux%1//  Number((aux)?.replace(",","."))%1
-    let num = this.getDecimalNumber(aux, valueD) //String(valueD).length - 2
-    console.log('BioquimicComponent setValue() valueD: ', valueD , 'decimal: ', this.numDecimal, 'num' , num, 'event', event.type)
-
+    let valueD = Math.abs(aux%1) 
+    let num = this.getDecimalNumber(aux, valueD)
+    //console.log('BioquimicComponent setValue() valueD: ', valueD , 'decimal: ', this.numDecimal, 'num' , num, event.type)
     if(num > this.numDecimal && valueD > 0 //&& event.type == 'ionChange'
     ){
-      let respString = (aux+'')?.replace(",",".")
-      const resp =  Number(respString)?.toFixed(this.numDecimal)
-      this.value = String(resp)
-      console.log('BioquimicComponent setValue() rendondear', this.value , this.numDecimal, 'resp ', resp)
+      const resp =  parseFloat(aux+'')?.toFixed(this.numDecimal)
+      event.target.value = this.value =  resp
+      console.log('BioquimicComponent setValue() r ', this.value , this.numDecimal)
     }else{
-      this.value = aux
-      //console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
+      this.value =  event.target.value
+      console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
     }
     if(event.type !== 'ionChange')
     this.change.emit({[this.data.name]: Number(this.value)});
 
+
     if(this.isVertical){
-      let point = aux?.substring(aux?.length - 1)
-      if( point == '.' ||  point == ',' || isNaN(aux))
-      return
       if(aux < Number(this.min))
       return
-      this.value1 = (aux !== '')? aux:this.options.floor
-      console.log('BioquimicComponent setValue() vert ', this.value, this.value1)
+      setTimeout( () => this.value1 = (aux !== '')? aux:this.options.floor, 400)
+      //this.value1 = (aux !== '')? aux:this.options.floor
+      //console.log('BioquimicComponent setValue() vert ', this.value, this.value1)
     }
     this.appRef.tick();
   }
 
   setValue1(event){
+    try {
+      event.target.value = event.target?.value?.replace(",",".")
+    } catch (error) {}
     let aux = event.target?.value
-    console.log('BioquimicComponent setValue1() r0 ', event.target?.value)
-   let point = (aux+'')?.substring(aux?.length - 1)
-   if( point == '.' ||  point == ',' || isNaN(aux))
-   return
+    let point = (aux+'')?.substring(aux?.length - 1)
+    if( point == '.' ||  point == ',' || isNaN(aux))
+    return
+    let valueD = Math.abs(aux%1) 
+    let num = this.getDecimalNumber(aux, valueD)
+    //console.log('BioquimicComponent setValue() valueD: ', valueD , 'decimal: ', this.numDecimal, 'num' , num, event.type)
+    if(num > this.numDecimal && valueD > 0 && event.type == 'ionChange'
+    ){
+      const resp =  parseFloat(aux+'')?.toFixed(this.numDecimal)
+      this.value =  resp
+      console.log('BioquimicComponent setValue() r ', this.value , this.numDecimal)
+    }else{
+      this.value =  event.target.value
+      console.log('BioquimicComponent setValue() ', this.value , this.numDecimal)
+    }
+    if(event.type !== 'ionChange')
+    this.change.emit({[this.data.name]: Number(this.value)});
 
-   let valueD = parseFloat((aux+'')?.replace(",","."))%1
-   let num = this.getDecimalNumber(aux, valueD)
 
-   if(num > this.numDecimal && valueD > 0 //&& event.type == 'ionChange'
-   ){
-     console.log('BioquimicComponent setValue1() r1 ', event.target?.value , this.numDecimal)
-     const respString = (aux+'') ?.replace(",",".")
-     const resp =  parseFloat(respString)?.toFixed(this.numDecimal)
-     this.ionInputEl.value = this.value =  resp
-     console.log('BioquimicComponent setValue1() r2 ', this.value , this.numDecimal)
-   }
-   else{
-     this.value =  event.target.value
-     console.log('BioquimicComponent setValue1() ', this.value , this.numDecimal)
-   }
-   this.appRef.tick();
- }
+    if(this.isVertical){
+      if( point == '.' ||  point == ',' || aux < Number(this.min))
+      return
+      setTimeout( () => this.value1 = (aux !== '')? aux:this.options.floor, 400)
+      //this.value1 = (aux !== '')? aux:this.options.floor
+      //console.log('BioquimicComponent setValue() vert ', this.value, this.value1)
+    }
+    this.appRef.tick();
+  }
 
   getDecimalNumber(value, decimal){
     if(decimal<=0) return 0

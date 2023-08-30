@@ -15,7 +15,7 @@
         <ion-item lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'">
           <ion-input  mode="ios" (ionBlur)="checkLastValue()" (ionInput)="setValue($event)" (ionChange)="checkValue()" 
           [value]="this.value" [min]="min" [max]="max" maxlength="20"
-          type="number"
+          type="text"
           inputmode="decimal" [placeholder]="this.data?.placeholder" required="this.data?.required"></ion-input>
         </ion-item>
         <ion-item lines="none">
@@ -30,8 +30,8 @@
         <ion-item lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'">
           <ion-input #ionInputEl
           mode="ios" [min]="min" [max]="max" [step]="step" [value]="this.value"  maxlength="10" 
-          type="number"  inputmode="decimal"
-           (ionBlur)="checkLastValue()" (ionInput)="setValue1($event)" (ionChange)="checkValue()" [placeholder]="this.data?.placeholder" required="this.data?.required"></ion-input>
+          type="text"  inputmode="decimal"
+           (ionBlur)="checkLastValue()" (ionInput)="setValue($event)" (ionChange)="checkValue()" [placeholder]="this.data?.placeholder" required="this.data?.required"></ion-input>
         </ion-item>
       </ng-template>
     </ion-grid>
@@ -70,7 +70,7 @@
                     (ionBlur)="checkLastValue()" 
                     (ionInput)="setValue($event)" 
                     (ionChange)="checkValue()"
-                      [value]="this.value" [min]="this.min" [max]="this.max" type="number" maxlength="20"
+                      [value]="this.value" [min]="this.min" [max]="this.max" type="text" maxlength="20"
                       inputmode="decimal" [placeholder]="this.data?.placeholder" [required]="this.data?.required">
                     </ion-input>
                   </ion-item>
