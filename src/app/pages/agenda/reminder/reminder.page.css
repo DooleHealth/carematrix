@@ -1,0 +1,21 @@
+.paddingGrid2 {
+  padding-top: 3%;
+  background-color: white !important;
+}
+
+.txtTitle {
+  font-size: 18px;
+}
+
+.whiteBackground {
+  --ion-background-color: white !important;
+}
+
+.textMedium {
+  text-align: right;
+  color: #7f8c8d;
+}
+
+.ios .arrow {
+  display: none;
+}/*# sourceMappingURL=reminder.page.css.map */

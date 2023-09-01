@@ -1,0 +1,46 @@
+<!-- <ion-nav-link (click)="selectSource()" expand="block" color="primary">
+  <ion-icon class="primaryIcon" size="large" name="attach"></ion-icon>{{ this.text }}</ion-nav-link> -->
+<input
+  type="file"
+  #fileInput
+  (change)="uploadFileFromBrowser($event)"
+  hidden="true"
+  accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword">
+
+  <ion-button slot="start" 
+  fill="clear" 
+  (click)="selectSource()"
+  [disabled]="enableButtonAddFile">{{'report_problem.button_add_file' | translate }}
+  <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
+</ion-button>
+
+
+  <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
+
+    <div *ngFor="let file of this.media; let i = index">
+      <ion-item lines="none">
+      <div id="left">
+        <ion-icon name="open" color="primary" (click)="openFileMedia(file)"></ion-icon>
+      </div>
+      <div id="middle">
+        <p class="titule">{{ getName(file)  }}</p>
+      </div>
+      <div id="right">
+        <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, false)"></ion-icon>
+      </div>
+    </ion-item>
+  </div>
+
+  <div *ngFor="let file of this.files;let i = index">
+    <ion-item lines="none">
+      <div id="left">
+        <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
+      </div>
+      <div id="middle">
+        <p class="titule">{{ file.name }}</p>
+      </div>
+      <div id="right">
+        <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, true)"></ion-icon>
+      </div>
+    </ion-item>
+  </div>

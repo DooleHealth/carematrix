@@ -1,0 +1,418 @@
+.imgProfile {
+  width: 30px;
+}
+.active-item {
+  --color: var(--ion-color-primary);
+}
+.txtTitleHome {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 4%;
+  text-align: left;
+}
+.txtTitleHome1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0%;
+  padding: 0% !important; //padding: 0px 0px 8px 0px;
+  text-align: left;
+}
+.txtSubTitleHome {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 4%;
+  text-align: left;
+}
+.size-50 {
+  height: 50px;
+  width: 50px;
+}
+
+.level-image {
+  height: 60%;
+  width: 60%;
+  margin: auto;
+  border: 2px brown;
+  margin-top: 10%;
+  display: block;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.button-size {
+  font-size: x-small;
+}
+
+.level-card {
+  --ion-background-color: white !important;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.progress-bar {
+  width: 100%;
+  border-radius: 100px;
+  height: 20px;
+  margin: auto;
+  --background: #f5f5f5;
+  --progress-background: purple;
+}
+
+.vertical-card {
+  background-color: white !important;
+  width: 100%;
+  max-height: 115px;
+  ion-img {
+    height: 18px;
+    width: 18px;
+  }
+
+  ion-card-content {
+    height: 100px;
+    ion-progress-bar {
+      height: 10px;
+      width: 85%;
+    }
+    p {
+      width: 85%;
+    }
+  }
+}
+
+.vertical-card {
+  background-color: white !important;
+  width: 100%;
+
+  ion-img {
+    height: 18px;
+    width: 18px;
+  }
+
+  ion-card-content {
+    height: 100px;
+    ion-progress-bar {
+      height: 10px;
+      width: 85%;
+    }
+    p {
+      width: 85%;
+    }
+  }
+}
+
+.vertical-card2 {
+  background-color: rgb(255, 255, 255) !important;
+  width: 100%;
+  min-height: 115px;
+  ion-img {
+    height: 18px;
+    width: 18px;
+  }
+
+  ion-card-content {
+    height: 110px;
+    margin-top: -10%;
+    ion-progress-bar {
+      height: 10px;
+      width: 85%;
+    }
+    p {
+      width: 85%;
+    }
+  }
+}
+.customCardAppointment {
+  background-color: #fff;
+}
+
+.customCardHealthPath {
+  background-color: white;
+}
+.strechCardContent {
+  min-width: 300px !important;
+  padding-top: 0%;
+}
+
+.zeroMarginPadding {
+  padding: 0%;
+  margin: 0%;
+}
+
+.cardHeader {
+  --background: #ffffff !important;
+  max-height: 41px;
+  text-overflow: ellipsis;
+}
+.customCardAdvices {
+  background-color: white;
+  width: 100%;
+  height: 300px;
+
+  ion-icon {
+    padding: 5%;
+  }
+}
+
+.close-card {
+  float: right;
+  font-size: 20px;
+}
+
+.full-width {
+  padding: 0px 10px 0px 10px;
+}
+
+.close-card {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  color: black;
+  font-weight: 900;
+  overflow: hidden;
+}
+ion-progress-bar {
+  border-radius: 20px;
+  min-height: 17px;
+}
+.my-buffer-progress_red {
+  --background: #82f038;
+  --buffer-background: #facdcc;
+  --progress-background: #f31212;
+  border-radius: 20px;
+  min-height: 17px;
+}
+.my-buffer-progress_orange {
+  --background: #82f038;
+  --buffer-background: #faeacc;
+  --progress-background: #f39c12;
+  border-radius: 20px;
+  min-height: 17px;
+}
+.my-buffer-progress_green {
+  --background: #82f038;
+  --buffer-background: #cdfacc;
+  --progress-background: #048b22;
+  border-radius: 20px;
+  min-height: 17px;
+}
+.slide {
+  width: 90% !important;
+}
+.slide1 {
+  width: 100% !important;
+}
+
+.card {
+  width: 300px;
+}
+
+.text2line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.text1line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.bell {
+  margin-top: 10%; //7px;
+  width: fit-content;
+  margin-left: -9px;
+  position: absolute;
+  z-index: 99999;
+}
+.ion-text-end {
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+}
+
+.sliderImage {
+  height: 220px;
+  width: 300px;
+}
+.sliderImage img {
+  height: 100%;
+  width: auto;
+}
+@supports (object-fit: cover) {
+  .sliderImage img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+.disabled_swiper_button {
+  opacity: 0;
+  cursor: auto;
+  pointer-events: none;
+}
+
+.slides {
+  background-color: lightblue;
+}
+
+.card-content-css {
+  background-color: yellow;
+}
+
+.slider-vertical {
+  height: 100px !important;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+.swiper-pagination {
+  height: auto !important;
+}
+
+.swiper-slide-container {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  height: 100%;
+  max-width: 600px;
+  margin: auto;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper .swiper-slide {
+  height: auto;
+}
+
+.swiper-slide {
+  display: block;
+
+  object-fit: cover;
+  border-radius: 15px;
+  .cover img {
+    height: 200px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .card {
+    width: 400px;
+  }
+
+  .strechCardContent {
+    min-width: 400px !important;
+    padding-top: 0%;
+  }
+
+  .sliderImage {
+    height: 220px;
+    width: 400px;
+  }
+
+  .sliderImage img {
+    height: 100%;
+    width: auto;
+  }
+
+  @supports (object-fit: cover) {
+    .sliderImage img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+
+  .vertical-card2 {
+    background-color: rgb(255, 255, 255) !important;
+    width: 100%;
+    min-height: 115px;
+    ion-img {
+      height: 18px;
+      width: 18px;
+    }
+
+    ion-card-content {
+      height: 110px;
+      margin-top: 0%;
+      ion-progress-bar {
+        height: 10px;
+        width: 85%;
+      }
+      p {
+        width: 85%;
+      }
+    }
+  }
+}
+/*MEDIA QUERIES FOR IPAD*/
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .strechCardContent {
+    min-width: 500px !important;
+    padding-top: 0%;
+  }
+  .card {
+    width: 500px;
+  }
+  .sliderImage {
+    height: 420px;
+    width: 500px;
+  }
+  .sliderImage img {
+    height: 100%;
+    width: auto;
+  }
+  @supports (object-fit: cover) {
+    .sliderImage img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+  .noMargin {
+    margin-bottom: -2%;
+    --background: #ffffff !important;
+  }
+  .ios .paddingTopNoMarginBottom {
+    padding-top: 3%;
+    margin-bottom: 0%;
+    width: 100%;
+  }
+  .vertical-card2 {
+    background-color: rgb(255, 255, 255) !important;
+    width: 100%;
+    min-height: 115px;
+    ion-img {
+      height: 18px;
+      width: 18px;
+    }
+
+    ion-card-content {
+      height: 110px;
+      margin-top: 0%;
+      ion-progress-bar {
+        height: 10px;
+        width: 85%;
+      }
+      p {
+        width: 85%;
+      }
+    }
+  }
+}

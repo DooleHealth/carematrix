@@ -1,0 +1,17 @@
+image-download .progress-outer {
+  width: 96%;
+  margin: 10px 2%;
+  padding: 3px;
+  text-align: center;
+  color: #fff;
+  border-radius: 20px;
+}
+image-download .progress-inner {
+  min-width: 15%;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  color: black;
+}/*# sourceMappingURL=image-download.css.map */

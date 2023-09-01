@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start" [class.isDisabled]="this.isSaving">
+      <ion-back-button text=""  (click)="backButton()"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="font-size: medium; padding-left: 0%;" *ngIf="this.event?.origin == 1 && !this.event?.staff">{{ 'appointment.header_event' | translate}}</ion-title>
+    <ion-title *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
+    <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
+      <ion-button *ngIf="this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
+      <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
+      <ion-button color="primary"  (click)="addCalendar(this.event)"><ion-icon name="calendar-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="whiteBackground">
+  <div class="whiteBackground">
+    <!-- floating action buttom -->
+
+    <ion-fab  *ngIf="this.event?.online === 1 && this.tokboxSession && event?.origin !== 1" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="this.startVideoCall()">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-list>
+      <ion-row>
+        <ion-text class="txtTitle2">{{this.event?.title}}</ion-text>
+      </ion-row>
+      <ion-item>
+        <ion-label>{{ 'appointment.field_modality' | translate}}</ion-label>
+        <ion-label class="textMedium">{{(this.event?.online == 1)? ('appointment.online' | translate) : ('appointment.face_to_face' | translate)}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'appointment.field_date' | translate}}</ion-label>
+        <ion-text class="textMedium">{{ formatSelectedDate(event?.start_date_iso8601)}}</ion-text>
+      </ion-item>
+      <ion-item routerLink="doctor"  routerLinkActive='active-item'
+              [state]="{doctor: staff}"
+              *ngFor="let staff of event?.staff; let i = index"
+              [lines]="(i == event?.staff?.length-1)? 'full': 'none'">
+        <ion-label>{{ 'appointment.field_specially' | translate}}</ion-label>
+        <ion-text class="textMedium"  >{{staff?.name}}</ion-text>
+        <ion-icon class="arrow" name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <div *ngIf="!this.isLoading && !this.event?.online && this.event?.origin == 0">
+        <ion-item [lines]="(event?.site !== null)? 'none': 'full' ">
+          <ion-label>{{ 'appointment.field_center' | translate}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngFor="let coord of event?.center_location; let i = index">
+        <ion-item *ngIf="coord?.name">
+          <ion-text slot="start" class="textMedium">{{coord?.name}}</ion-text>
+        </ion-item>
+        <ion-item *ngIf="coord?.latitude && coord?.longitude">
+          <img
+            [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=16&size=600x400&key=AIzaSyCSG5Itu_gLT4XZO2u3DK46Q-RCAVvPX5c'">
+        </ion-item>
+      </div>
+      <ion-item *ngIf="!this.event?.online && this.event?.origin == 1">
+        <ion-label>{{ 'reminder.field_place'| translate}}</ion-label>
+        <ion-label class="textMedium">{{event?.site}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="this.event?.origin == 0">
+        <ion-label>{{ 'appointment.field_appointment_type' | translate}}</ion-label>
+        <ion-label class="textMedium">{{event?.agendaType?.name}}</ion-label>
+      </ion-item>
+      <ion-item lines="none" *ngIf="event?.instructions !== undefined && event?.instructions.length > 0">
+        <ion-label>{{ 'appointment.field_instructions' | translate}}</ion-label>
+      </ion-item>
+      <ion-item *ngFor="let instruction of event?.instructions" (click)="actionIntrucction( instruction)">
+        <ion-label text-wrap class="textMediumLeft">{{instruction.title}}</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item *ngIf="this.event?.origin == 1 && event?.user_comments">
+        <ion-label>{{ 'appointment.field_description' | translate}}</ion-label>
+        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments? (event?.user_comments | safeHtml):'' "></ion-textarea>
+      </ion-item>
+      <ion-item *ngIf="this.event?.origin == 0 && event?.user_comments">
+        <ion-label>{{ 'appointment.field_information' | translate}}</ion-label>
+        <ion-textarea class="textMedium" [innerHtml]="event?.user_comments? (event?.user_comments | safeHtml):'' "></ion-textarea>
+      </ion-item>
+      <ion-item *ngIf="this.event?.origin == 0 && event?.description">
+        <ion-label>{{ 'appointment.field_description' | translate}}</ion-label>
+        <ion-textarea class="textMedium" [innerHtml]="event?.description? (event?.description | safeHtml):''"></ion-textarea>
+      </ion-item>
+      <ion-item >
+        <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
+        <ion-label  class="textMedium">{{ (event?.files?.length > 0)? '': 'appointment.no_files' | translate}}</ion-label>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-button size="large" expand="full"  color="primary" (click)="share()"><ion-icon name="share"></ion-icon></ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button size="large" expand="full"  (click)="addCalendar(this.event)"><ion-icon name="calendar-clear-outline"></ion-icon></ion-button>
+      </ion-item> -->
+    </ion-list>
+  </div>
+
+  <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
+    <div *ngFor="let file of event?.files; let i = index" class="section">
+      <ion-item [lines]="(i === event?.files.length -1)? 'none':'full' " (click)="openFile(file)">
+        <div id="left">
+          <ion-icon name="open" color="primary"></ion-icon>
+        </div>
+        <div id="middle">
+          <p class="titule">{{ getName(file) }}</p>
+        </div>
+      </ion-item>
+    </div>
+  </div>
+
+  <div *ngIf="this.isSaving else buttons" class="spinnerCenter">
+    <ion-spinner   ></ion-spinner>
+    </div>
+  <ng-template #buttons>
+    <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
+      <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
+        {{ 'appointment.edit_appointment' | translate}}</ion-button>
+
+      <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+        {{ 'appointment.button_delete' | translate}}</ion-button>
+    </div>
+
+    <div class="buttonContainer"  *ngIf="event?.origin === 1 && !this.event?.staff">
+      <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
+        {{ 'appointment.edit_event' | translate}}</ion-button>
+
+      <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+        {{ 'appointment.delete_event' | translate}}</ion-button>
+    </div>
+  </ng-template>
+
+
+
+</ion-content>

@@ -1,0 +1,20 @@
+/* Set the text color */
+ion-select::part(text) {
+    font-size: 13px;
+}
+
+.txtTitleSetting {
+  padding-top: 10%;
+  padding-bottom: 5%;
+}
+
+@media (orientation: landscape) {
+  .txtTitleSetting {
+    padding-top: 3%;
+    padding-bottom: 3%;
+  }
+ }
+
+ion-toggle{
+  width: 100%;
+}

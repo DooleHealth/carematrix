@@ -1,0 +1,33 @@
+<ion-grid>
+  <ion-row class="main-container">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/home']">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>{{ 'tab.home' | translate }}</ion-label>
+          <!-- <ion-badge  *ngIf="pusherNotification" mode="ios" color="danger">6</ion-badge> -->
+        </ion-tab-button>
+        <ion-tab-button *ngIf="role?.component?.agenda" [routerLinkActive]="['tab-selected']" [routerLink]="['/agenda']">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label>{{ 'tab.agenda' | translate }}</ion-label>
+          <!-- <ion-badge  *ngIf="pusherNotification" mode="ios" color="danger">20</ion-badge> -->
+        </ion-tab-button>
+        <ion-tab-button *ngIf="role?.component?.contacta" [routerLinkActive]="['tab-selected']" [routerLink]="['/contact']">
+          <ion-icon name="chatbubble"></ion-icon>
+          <ion-label>{{ 'tab.contact' | translate  }}</ion-label>
+         <!--  <ion-badge  *ngIf="pusherNotification" mode="ios" color="danger">1</ion-badge> -->
+        </ion-tab-button>
+        <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/tracking']">
+          <ion-icon name="newspaper"></ion-icon>
+          <ion-label>{{ 'tab.tracking' | translate }}</ion-label>
+         <!--  <ion-badge  *ngIf="pusherNotification" mode="ios" color="danger">6</ion-badge> -->
+        </ion-tab-button>
+        <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/journal']">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>{{ 'tab.journal' | translate }}</ion-label>
+         <!--  <ion-badge  *ngIf="pusherNotification" mode="ios" color="danger">6</ion-badge> -->
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-row>
+</ion-grid>

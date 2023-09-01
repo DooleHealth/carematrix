@@ -1,0 +1,83 @@
+//Form Component Class
+.text-index{
+  display: none;
+}
+.d-none{
+  display: none;
+}
+
+.d-block{
+  display: block;
+}
+
+ .form-component{
+  margin-bottom: 15px;
+  //border-bottom: 1px solid var(--ion-color-primary) !important;
+
+}
+
+.item-option{
+  margin-bottom: 8px;
+}
+
+ .form-question{
+   margin-bottom: 8px;
+ }
+
+ .form-input{
+  --background: white; 
+  text-align: center; 
+  //border: 1px solid var(--ion-color-primary) !important;
+  --border-color: var(--ion-color-primary) !important;
+  --border-radius: 10px !important;
+  --border-style:solid !important;
+  --border-width: 1px !important;
+  margin: 0% 15px 0% 15px;
+}
+.form-input-error{
+  --background: white;
+  text-align: center; 
+  //border: 1px solid var(--ion-color-danger) !important;
+  --border-color: var(--ion-color-primary) !important;
+  --border-radius: 10px !important;
+  --border-style:solid !important;
+  --border-width: 1px !important;
+  margin: 0% 15px 0% 15px;
+}
+.form-input-textarea{
+  --background: white;
+  //border: 1px solid var(--ion-color-primary) !important;
+  --border-color: var(--ion-color-primary) !important;
+  --border-radius: 10px !important;
+  --border-style:solid !important;
+  --border-width: 1px !important;
+  margin: 0% 15px 0% 15px;
+}
+.form-input-error-textarea{
+  --background: white;
+  //border: 1px solid var(--ion-color-danger) !important;
+  --border-color: var(--ion-color-primary) !important;
+  --border-radius: 10px !important;
+  --border-style:solid !important;
+  --border-width: 1px !important;
+  margin: 0% 15px 0% 15px;
+}
+.ion-note-padding{
+  margin-left: 18px;
+}
+.tooltip{
+  margin-right: 7px;
+  padding: 0%;
+  width: 24px !important;
+}
+
+.progressBarWizard{
+  border-radius: 5px;
+  min-height: 15px;
+  margin: 15px 0px 20px 0px;
+}
+
+.nextButton{
+  margin-bottom: 20px;
+}
+//End Form Component Class

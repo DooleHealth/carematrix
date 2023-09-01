@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="close()" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="this.isLoading" (click)="submit()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+  <ion-card class="cardProfile" *ngIf="!this.isNewValueElement">
+    <ion-list>
+      <ion-item>
+        <ion-label>{{ 'element.field_category' | translate}}</ion-label>
+        <ion-select interface="action-sheet"  (ionChange)="selectedCategory(); isSubmittedCategory = false" formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
+          <ion-select-option *ngFor="let group of groupElements" [value]="group.id">{{group.text}}</ion-select-option>
+        </ion-select>
+<!--         <ion-note *ngIf="this.isSubmittedCategory && this.form.get('category').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
+      </ion-item>
+
+      <ion-item lines="none" *ngIf="this.group?.elements || isNewValueElement">
+        <ion-label>{{ 'element.field_data' | translate}}</ion-label>
+        <ion-select interface="action-sheet" (ionChange)="selectedElement()" formControlName="data" placeholder="{{ 'placeholder_select' | translate}}">
+          <ion-select-option *ngFor="let e of group?.elements" [value]="e.name">{{e.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+    <ion-list>
+      <ion-card class="cardProfile" *ngIf="this.element || isNewValueElement">
+
+
+      <ion-item>
+        <ion-label>
+          <h6>{{ 'element.field_measure' | translate}}</h6>
+          <ion-note style="width: min-content; padding: 0%;" *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        </ion-label>
+        <!-- <ion-label>{{ 'element.field_measure' | translate}}</ion-label> -->
+        <ion-input style="text-align: end;" type="number" [placeholder]="placeholderRange" formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
+        <!-- <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
+      </ion-item>
+
+      <ion-item *ngIf="this.element">
+        <ion-label>{{ 'element.field_units' | translate}}</ion-label>
+        <ion-text slot="end">{{ (this.units)? this.units: ''}}</ion-text >
+      </ion-item>
+
+    </ion-card>
+      <div *ngIf="this.element">
+        <ion-card class="cardProfile" *ngIf="this.element || isNewValueElement">
+          <ion-item>
+            <ion-label>{{'documents_add.field_date' | translate}}</ion-label>
+
+          </ion-item>
+          <ion-datetime presentation="date-time"    [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="maxDate" formControlName="date" required>
+
+            <span slot="time-label">{{ 'reminder.field_time' | translate}}</span>
+
+          </ion-datetime>
+        </ion-card>
+
+        <!-- FIXME:<ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" [displayFormat]="this.dateService.getDatetimeControlFormat()" min="1990-01-01" [max]="maxDate" formControlName="date" class="textMedium" required></ion-datetime> -->
+
+
+      </div>
+
+    </ion-list>
+
+</form>
+</ion-content>

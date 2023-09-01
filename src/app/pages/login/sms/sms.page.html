@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button>
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="toolbarTitle">{{ 'sms.header' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <div class="main-container">
+    <ion-grid>
+      <h2 class="bold">{{ 'sms.title' | translate}}</h2>
+      <ion-text>{{ 'sms.text1' | translate}}</ion-text>
+      <ion-col>
+        <div style="padding-top: 15%;">
+          <ion-item-divider>          
+            <ion-input type="tel-country-code" (ionInput)="isSubmitted = false" [formControl]="email" maxlength="50"  required></ion-input>
+            <ion-note class="error ion-padding" color="danger" *ngIf="isSubmitted && this.email.invalid">
+              {{ 'sms.error_invalid_email' | translate}}
+            </ion-note>
+          </ion-item-divider>
+          <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" (click)="goVerification()">
+            {{ 'sms.next_button' | translate}}
+          </ion-button>
+          <div style="padding-top:5%;">
+            <ion-text>{{ 'sms.text2' | translate}}</ion-text>
+          </div>
+        </div>
+      </ion-col>
+    </ion-grid>
+  </div>
+</ion-content>

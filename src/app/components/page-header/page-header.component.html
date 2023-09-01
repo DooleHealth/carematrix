@@ -1,0 +1,15 @@
+<div id="container">
+  <div id="left">
+    <ion-img class="icon-title" src="{{this.icon}}"></ion-img>
+  </div>
+  <div id="middle">
+    <p class="titule">{{this.title}}</p>
+  </div>
+  <div id="right">
+    <div *ngIf="this.info">
+    <ion-img (click)="presentAlert()" src="assets/icons/interrogant.svg" style="width: 24px;">
+    </ion-img>
+  </div>
+</div>
+</div>
+

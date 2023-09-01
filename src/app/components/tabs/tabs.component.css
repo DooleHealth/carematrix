@@ -1,0 +1,40 @@
+ion-tab-button {
+  --background-focused: #3498DB;
+  --color-selected: #3498DB;
+  background-color: #FAFAFA;
+  --padding-bottom: 12%;
+}
+ion-tab-button::before {
+  background-color: transparent;
+  display: block;
+  content: "";
+  margin: 0 auto;
+  width: 17px;
+  height: 2px;
+}
+ion-tab-button.tab-selected::before {
+  background-color: var(--ion-color-primary);
+}
+
+ion-tab-button ion-label {
+  margin-bottom: 0%;
+}
+
+.md ion-tab-bar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.ios ion-tab-bar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0%;
+}
+
+ion-badge {
+  font-weight: bolder;
+}/*# sourceMappingURL=tabs.component.css.map */

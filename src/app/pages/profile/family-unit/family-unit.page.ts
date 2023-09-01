@@ -1,0 +1,129 @@
+import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { FamilyUnit, Mentoring, Tutor } from 'src/app/models/user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DooleService } from 'src/app/services/doole.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
+
+@Component({
+  selector: 'app-family-unit',
+  templateUrl: './family-unit.page.html',
+  styleUrls: ['./family-unit.page.scss'],
+})
+export class FamilyUnitPage implements OnInit {
+  listFamilyUnit:FamilyUnit[] = [];
+  canAccess:Mentoring[] = [];
+  othersCanAccess:Tutor[] = [];
+  isLoading = false
+  user
+  constructor(
+    private dooleService: DooleService,
+    private authService: AuthenticationService,
+    private alertController: AlertController,
+    public router: Router,
+    private _zone: NgZone,
+    private translate: TranslateService,
+    private pusherConnection: PusherConnectionService,
+    ) { this.user = this.authService?.user?.familyUnit}
+
+  ngOnInit() {
+    
+    this.getFamilyUnitData();
+    this.getFamilyUnit2Data();
+
+  }
+
+  getFamilyUnitData(){
+    this.isLoading = true
+    this.dooleService.getAPIFamilyUnit().subscribe(
+      async (res: any) =>{
+        console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        this.listFamilyUnit = res
+        this.isLoading = false
+       },(err) => { 
+          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          throw err; 
+      });  
+  }
+
+  getFamilyUnit2Data(){
+    this.isLoading = true
+    this.dooleService.getAPIFamilyUnit2().subscribe(
+      async (res: any) =>{
+        //console.log('[FamilyUnitPage] getFamilyUnitData()', await res);
+        this.canAccess = res.canAccess
+        this.othersCanAccess = res.othersCanAccess
+        // this.listFamilyUnit = this.canAccess
+        this.isLoading = false
+       },(err) => { 
+          console.log('[FamilyUnitPage] getFamilyUnitData() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          throw err; 
+      });  
+  }
+
+  changeAccount(family){
+    console.log('[FamilyUnitPage] changeAccount()', family.name);
+    this.presentAlertConfirm(family)
+  }
+
+  async presentAlertConfirm(family) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      header: family.name,
+      message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: this.translate.instant("alert.button_change"),
+          handler: () => {
+            console.log('Confirm Okay');
+            console.log('[FamilyUnitPage] presentAlertConfirm() Cuenta de:', family.name);
+            this.changeUser(family)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  changeUser(user?){
+    console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
+    this.pusherConnection.unsubscribePusher()
+    this.authService.setFamilyUnit(user).then((val) => {
+      this._zone.run(()=>{
+        setTimeout(()=>{
+          this.router.navigate(['home'], {state:{userChanged:true}});
+        }, 500)
+      });
+    });
+      
+   
+  }
+
+  returnUser(){
+    this.authService.isFamily = false;
+    this.pusherConnection.unsubscribePusher()
+    console.log('[FamilyUnitPage] returnUser()', this.user);
+    this.authService.setUserFamilyId(null).then((val) => {
+      this._zone.run(()=>{
+        setTimeout(()=>{
+          this.router.navigate(['home'], {state:{userChanged:true}});
+        }, 500)
+      });
+    });
+   
+  }
+
+
+}

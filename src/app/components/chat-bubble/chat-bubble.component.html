@@ -1,0 +1,41 @@
+<!-- Generated template for the ChatBubbleComponent component -->
+<ng-content></ng-content>
+<div>
+  <div class="chat-bubble {{message?.from == 'message_response' ? 'right' : 'left'}} {{message.mediaType == 'UPLOADING' ? 'uploading' : ''}}"   >
+    <div>
+      <div class="message">{{message.fromName}}</div>
+    </div>
+    <div *ngIf="message.mediaType=='UPLOADING'">
+      <div class="message">
+        <div class="progress-outer">
+          <div class="progress-inner" [style.width]="message.percentage + '%'">
+            {{message.percentage}} %
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="message.mediaType=='TEXT'">
+      <div class="message" [innerHtml]="message.message"></div>
+    </div>
+    <div *ngIf="message.mediaType=='GEOLOCATION'">
+      <img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=16&size=600x400&key=AIzaSyCSG5Itu_gLT4XZO2u3DK46Q-RCAVvPX5c'">
+    </div>
+
+    <div *ngIf="this.mediaTypeImg(message.mediaType)">
+      <!-- <image-download [url]="message.fileUrl" [target]="message.timestamp" [clickable]="true"></image-download> -->
+      <img [src]="message.fileUrl" loading="lazy">
+    </div>
+    <div *ngIf="this.mediaTypeApp(message.mediaType)">
+      <ion-icon style="width: 50px; height: 50px;" src="/assets/icons/document-text.svg"></ion-icon>
+      <div class="message" (click)="openMedia(message)"><a>{{'conversation.open_file' | translate}}</a></div>
+    </div>
+    <div *ngIf="this.mediaType(message.mediaType)" style="min-width: 220px">
+      <video [src]="message.fileUrl" controls style="width: 100%; height: 100%;" poster="/assets/icons/Video.svg"></video>
+      <br><br>
+      <a (click)="openMedia(message)">{{'conversation.open_file' | translate}}</a>
+    </div>
+    <div class="message-detail" style="float:right">
+      <span>{{this.formatDate(message.timestamp)}}</span>
+    </div>
+  </div>
+</div>

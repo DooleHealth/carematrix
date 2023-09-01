@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="close"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'payment.header' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <ion-text class="txtTitle2">{{'payment.payment_summary' | translate}}</ion-text>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner ></ion-spinner>
+  </div>
+  <ion-card class="cardProfilePadding">
+    <ion-list>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">{{ this.add | translate }}</ion-label>
+        <ion-label class="textMedium">50€</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-text class="textMediumLeft">{{this.staff?.name}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-text class="textMediumLeft">{{ this.agenda?.date}}</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">{{'payment.field_subtotal' | translate}}</ion-label>
+        <ion-label class="textMedium">50€</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">{{'payment.field_expenses' | translate}}</ion-label>
+        <ion-label class="textMedium">5€</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="txtTitleGoals">IVA (21%)</ion-label>
+        <ion-label class="textMedium">10'5€</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="txtTitleGoals">{{'payment.field_total' | translate}}</ion-label>
+        <ion-label class="textMedium">65'5€</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card class="cardProfile" routerLink="/profile/cards/detailCard"  routerLinkActive='active-item'>
+
+      <ion-item>
+        <ion-label class="txtTitleGoals">{{'payment.modality' | translate}}</ion-label>
+        <ion-label class="txtTitleTrackingLittle">Tarjeta de crédito</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+          <img src="assets/images/tarjeta.png">
+        <ion-label class="txtPaddingLeft" >
+          <h3>...8730</h3>
+          <div>
+            <p>
+              08/2026</p>
+          </div>
+        </ion-label>
+      </ion-item>
+
+</ion-card>
+<div class="buttonContainer">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" (click)="this.addAgenda()">
+    {{'payment.button_payment' | translate}}
+  </ion-button>
+</div>
+</ion-content>

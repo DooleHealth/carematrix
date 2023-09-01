@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="close"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'specialist_finder.header' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card class="cardProfile">
+
+   <!-- Los dos primeros items CIUDAD Y CENTRO SOLO HAN DE VISUALIZARSE si la cita es presencial -->
+      <!-- <ion-item>
+        <div>
+          <ion-label>Ciudad</ion-label>
+        </div>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <div>
+          <ion-label>Centro</ion-label>
+        </div>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item> -->
+        <ion-item>
+          <div >
+            <ion-label>{{'specialist_finder.field_specially' | translate}}</ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+        <ion-item lines="none">
+          <div>
+            <ion-label>{{'specialist_finder.field_professional' | translate}}</ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+
+        <!-- ESTA PARTE SE VISUALIZARÁ CUANDO SE HAYA SELECCIONADO AL PROFESIONAL -->
+
+
+        <!-- <ion-item lines="none" style="padding: 3%;">
+          <img src="assets/images/avatar_masculino.png" class="img-wrapper-doctors">
+          <div class="txtPaddingLeft">
+            <ion-label>Jesús Fernández</ion-label>
+            <ion-label class="textMediumLeft">
+              Medicina General
+            </ion-label>
+          </div>
+          <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        </ion-item> -->
+
+
+    </ion-card>
+
+  <ion-card class="cardProfile">
+
+      <ion-item lines="none" (click)="this.openCalendarModal()">
+        <ion-label>{{'specialist_finder.field_date' | translate}}</ion-label>
+        <ion-input class="textMedium" [value]="this.selectedDate"></ion-input>
+        <ion-icon
+        name="chevron-forward-outline"
+        slot="end"
+        size="small"
+      ></ion-icon>
+      </ion-item>
+
+  </ion-card>
+
+  <ion-card class="cardProfile">
+    <ion-list>
+      <!-- <ion-item >
+        <ion-label class="txtTitleGoals">Tipo de cita</ion-label>
+        <ion-label class="textMedium">Primera Consulta</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item> -->
+      <ion-item>
+        <ion-label>{{'specialist_finder.reason_appointment' | translate}}</ion-label>
+        <ion-textarea class="textMedium" placeholder="..." ></ion-textarea>
+      </ion-item>
+      <ion-item lines="none">
+        {{'specialist_finder.attachments' | translate}}
+      </ion-item>
+      <ion-item lines="none" class="textMediumLeft">{{'specialist_finder.text_attachments' | translate}}
+      </ion-item>
+
+      <ion-button slot="start" fill="clear"  (click)="this.selectImageSource()">{{'report_problem.button_add_file' | translate }}
+        <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
+      </ion-button>
+      <input
+      type="file"
+      #fileInput
+      (change)="uploadFileFromBrowser($event)"
+      hidden="true"
+      accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword"
+    />
+      <div id="container">
+        <div *ngFor="let file of this.files">
+          <div id="left">
+
+          </div>
+          <div id="middle">
+            <p class="titule">{{ file.name }}</p>
+          </div>
+          <div id="right">
+            <ion-icon
+              name="close-circle"
+              color="primary"
+              (click)="removeFile(file.name)"
+            ></ion-icon>
+          </div>
+        </div>
+      </div>
+    </ion-list>
+  </ion-card>
+  <div class="buttonContainer">
+  <ion-button type="button" color="primary" expand="block" style="margin-top:5%;" >
+    {{'specialist_finder.button_videocall' | translate}}
+  </ion-button>
+  </div>
+</ion-content>

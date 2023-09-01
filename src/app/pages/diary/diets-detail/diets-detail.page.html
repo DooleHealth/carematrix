@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar  mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="backButton()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'diet.detail' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="spin" *ngIf="this.isLoading;else showDiet">
+    <ion-spinner ></ion-spinner>
+  </div>
+  <ng-template #showDiet>
+  <ion-card class="cardProfile">
+
+        <img *ngIf="diet.image" [src]="diet.image.thumbnailTemporaryUrl">
+          <!-- <img *ngIf="diet.image" [src]="diet.image.temporaryUrl"> -->
+          <ion-item lines="none">
+            <ion-label style="color:#141414"> {{diet.name}}</ion-label>
+          </ion-item>
+
+          <ion-item lines="none" *ngIf="diet.description" padding>
+            <span [innerHTML]="diet.description"></span>
+          </ion-item>
+
+  </ion-card>
+    <div *ngIf="link" #frame style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+      <iframe [src]="link" class="iframe" scrolling="yes" ></iframe>
+    </div>
+
+    <!-- <div *ngIf="linkpdf" #framepdf style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+      <iframe [src]="linkpdf" class="iframe" scrolling="yes" ></iframe>
+    </div> -->
+
+
+    <div class="main-container" *ngIf="linkpdf2 || video">
+      <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
+    </div>
+    <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo()">
+      <ion-row>
+        <ion-col size="4" class="imgCardMedia">
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-title class="txtTitleGoals3">{{videoTitle}}</ion-card-title>
+          <p class="txtTitleGoals3"> {{videoDescription}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-card class="cardProfilePadding" *ngIf="linkpdf2"  (click)="openFile()">
+      <ion-row>
+        <ion-col size="4" class="imgCardPdf">
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-title class="txtTitleGoals3">{{linkPdfTitle}}</ion-card-title>
+          <p class="txtTitleGoals3"> {{linkPdfDescription}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ng-template>
+  </ion-content>

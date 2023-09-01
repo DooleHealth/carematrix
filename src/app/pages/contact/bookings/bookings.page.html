@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="close"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'bookings.header' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+    <ion-list>
+      <ion-card class="cardProfile" class="cardProfile" routerLink="doctor" [state]="{doctor: staff}" routerLinkActive='active-item'>
+        <ion-card-content style="padding-left: 1%;">
+          <ion-item lines="none">
+            <img [src]="this.staff?.image" class="img-wrapper-doctors" />
+            <div class="txtPaddingLeft">
+              <ion-label>{{ this.staff?.name}}</ion-label>
+              <ion-label class="textMediumLeft">
+                {{ this.staff?.specialty }}
+              </ion-label>
+            </div>
+            <ion-icon
+              name="chevron-forward-outline"
+              slot="end"
+              size="small"
+            ></ion-icon>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+    <ion-card class="cardProfile">
+      <ion-list>
+        <ion-item lines="none" (click)="this.openCalendarModal()">
+          <ion-label>{{'bookings.field_date' | translate}}</ion-label>
+          <ion-input class="textMedium" formControlName="date" required></ion-input>
+          <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        
+          <ion-icon
+            name="chevron-forward-outline"
+            slot="end"
+            size="small"
+          ></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  
+    <ion-card>
+      <ion-list>
+        <!-- <ion-item>
+          <ion-label class="txtTitleGoals">Tipo de cita</ion-label>
+          <ion-label class="textMedium">Primera Consulta</ion-label>
+          <ion-icon
+            name="chevron-forward-outline"
+            slot="end"
+            size="small"
+          ></ion-icon>
+        </ion-item> -->
+        <ion-item>
+          <ion-label>{{'bookings.reason_appointment' | translate}}</ion-label>
+          <ion-textarea class="textMedium" placeholder="..."  formControlName="user_comments"></ion-textarea>
+        </ion-item>
+        <ion-item lines="none"> {{'bookings.attachments' | translate}}</ion-item>
+        <ion-item lines="none" class="textMediumLeft"
+          >{{'bookings.text_attachments' | translate}}
+        </ion-item>
+  
+        <app-file-upload #uploadFile ></app-file-upload>
+      </ion-list>
+    </ion-card>
+    <div class="buttonContainer">
+      <ion-button
+        type="button"
+        color="primary"
+        expand="block"
+        style="margin-top: 5%"
+        (click)="this.submit()"
+      >
+      {{'bookings.button_videocall' | translate}}
+      </ion-button>
+      <ion-button
+      type="button"
+      color="primary"
+      expand="block"
+      style="margin-top: 5%"
+      (click)="this.payment()"
+    >
+    {{'bookings.button_videocall_charge' | translate}}
+    </ion-button>
+    </div>
+  </form>
+    
+  
+</ion-content>

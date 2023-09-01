@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'detail_health_card.header_detail_card' | translate}}</ion-title>
+    <ion-button (click)="editCard()" slot="end" fill="clear"> <ion-icon name="create-outline"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <img class="img-wrapperCard" src="assets/images/Subtract.png">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+    </ion-row>
+  </ion-grid>
+
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner ></ion-spinner>
+  </div>
+
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item lines="none" *ngIf="this.card !== undefined">
+        <ion-label>{{ 'health_card.modality' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.card?.type?.name}}</ion-label>
+
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card class="cardProfile" *ngIf="this.card !== undefined">
+    <ion-list>
+      <ion-item>
+        <ion-label class="txtTitleGoals">{{ 'health_card.name' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.card?.name}}</ion-label>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'health_card.affiliation_number'  | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.card?.card_number}}</ion-label>
+
+      </ion-item>
+      <ion-item *ngIf="this.card.issue_date">
+        <ion-label>{{ 'health_card.expedition_date' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.formatDate(card?.issue_date) | date: 'MM/yyyy'}}</ion-label>
+      </ion-item>
+      <ion-item lines="none" *ngIf="this.card.expiration_date">
+        <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
+        <ion-label class="textMedium">{{this.formatDate(card?.expiration_date) | date: 'MM/yyyy'}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+    <!-- <section>
+      <ion-button expand="block" routerLink="../addCard" [state]="{card:card}">{{ 'detail_health_card.button_edit_card' | translate}}</ion-button>
+    </section>
+    <section>
+    <ion-button expand="block" (click)="deleteHealthCard()">{{ 'detail_health_card.button_delete_card' | translate}}</ion-button>
+    </section> -->
+
+
+</ion-content>

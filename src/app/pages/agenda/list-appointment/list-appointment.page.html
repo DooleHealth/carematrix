@@ -1,0 +1,65 @@
+
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="back()">
+        <ion-icon name="chevron-back-outline" slot="icon-only"  color="primary" ></ion-icon>
+      </ion-button>
+      <h3 class="textBlueCentered1">
+        {{ viewTitle | titlecase }}
+      </h3>
+      <ion-button fill="clear" (click)="next()">
+        <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-button slot="end" fill="clear" routerLink="/agenda" [state]="{calendar:listAppointment}" routerLinkActive='active-item'>
+      <ion-icon slot="icon-only" name="list-circle" color="primary"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill="clear"  (click)="addAgenda()">
+      <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list *ngFor="let events of this.dayEvents">
+      <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDate(events.date) | uppercase}}</ion-text></ion-row>
+      <ion-list *ngFor="let e of events.events; let i = index"lines="full" class="blanco" >
+
+        <ion-item [routerLink]="(e?.is_reminder)? '../reminder':'detail'" [state]="{event: e, id: e.id}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" >
+          <div [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"  class="verticalLine"></div>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="1">
+                <ion-icon style="align-items: left" [ngStyle]="{'color': (e?.color)? e?.color: '#F1C40F'  }" name="calendar"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <ion-text class="event-detail2" text-wrap>{{e.type}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="e.origin == 1 && (e?.staff?.length ==0) || e.is_reminder">{{e.title}}</ion-row>
+            <ion-row *ngFor="let doctor of e.staff; let i = index">
+              <!-- <ion-col class="event-detail">{{ (i== 0)? ('appointment.field_specially' | translate)+': ' :'' }}{{doctor.name}}</ion-col> -->
+              <ion-col class="event-detail">{{ 'appointment.field_specially' | translate }}: {{doctor.name}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col style="color: #7f8c8d;" >{{e?.startTime | date:this.dateService.getTimeFormat() }} {{ this.dateService.getTimeFormat() == 'HH:mm' ? ' h': ''}} - {{e?.endTime |date:this.dateService.getTimeFormat() }} {{ this.dateService.getTimeFormat() == 'HH:mm' ? ' h': ''}}</ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+
+  <div *ngIf="dayEvents.length ==0 ">
+      <ion-item lines="none" >
+        <div class="no-events-label">{{'agenda.no_events' | translate}}</div>
+    </ion-item>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

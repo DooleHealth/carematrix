@@ -1,0 +1,79 @@
+<div [ngClass]="desactive ? 'd-none' : 'd-block'">
+  <div *ngIf="!this.isVertical; else verticalSlider">
+  <ion-grid class="form-component" [id]="this.data?.id" [name]="data.name" [ngClass]="data?.hidden ? 'd-none' : 'd-block'">
+    <ion-row class="form-question">
+      <div  class="text-index">{{data.index}}</div>
+      <div style="display: flex;">
+        <ion-text *ngIf=" this.data.required" color="danger" style="font-size:20px;margin-right: 4px">*</ion-text>
+        <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-right: 4px;margin-top: 2px;" [info]="this.data.tooltip" ></app-tooltip>
+        <div [innerHtml]="this.label | safeHtml"></div>
+      </div>
+    </ion-row>
+    <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>
+        <ion-item mode="ios" lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'">
+          <ion-input (ionBlur)="checkLastValue()" (ionInput)="setValue($event)" (ionChange)="checkValue()"
+          [value]="this.value" [min]="min" [max]="max" type="text" maxlength="20"
+          inputmode="decimal" [placeholder]="this.data?.placeholder" required="this.data?.required"></ion-input>
+        </ion-item>
+        <ion-item mode="ios" lines="none">
+          <ion-range (ionChange)="setValue($event)" (touchend)="sendValue($event)" [value]="this.value" [min]="min" [max]="max" [step]="step" snaps="true" [pin]="true">
+            <ion-label slot="start">{{min}}</ion-label>
+            <ion-label slot="end">{{max}}</ion-label>
+          </ion-range>
+        </ion-item>
+  </ion-grid>
+  </div>
+  <ng-template #verticalSlider>
+    <ion-grid class="form-component" [id]="this.data?.id" [name]="data.name"
+    [ngClass]="data?.hidden ? 'd-none' : 'd-block'">
+      <ion-row class="ion-justify-content-end">
+        <ion-col size="4">
+          <div class="ion-text-center" [innerHtml]="this.sliderHeader | safeHtml">
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">
+          <ion-row>
+            <ion-col size="12" class="ion-align-self-start">
+
+                <div class="form-question max-height">
+                  <div class="text-index">{{data.index}}</div>
+                  <div style="display: flex;">
+                    <ion-text *ngIf=" this.data.required" color="danger" style="font-size:20px;margin-right: 4px">*</ion-text>
+                    <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-right: 4px;margin-top: 2px;"
+                      [info]="this.data.tooltip"></app-tooltip>
+                    <div [innerHtml]="this.label | safeHtml"></div>
+                  </div>
+                </div>
+                <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>
+
+            </ion-col>
+            <ion-col size="12" class="ion-align-self-start">
+              <ion-item mode="ios" lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'">
+                <ion-input (ionBlur)="checkLastValue()" (ionInput)="setValue($event)" (ionChange)="checkValue()"
+                  [value]="this.value" [min]="this.min" [max]="this.max" type="text" maxlength="20"
+                  inputmode="decimal" [placeholder]="this.data?.placeholder" [required]="this.data?.required">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-col>
+        <ion-col size="4" style="padding-left: 0%;">
+          <div style="height: 400px;text-align: center;">
+            <ngx-slider [(value)]="value1" [options]="this.options" (valueChange)="onValueChange($event)"
+            (userChange)="this.update()" (userChangeEnd)="sendValue($event)">
+          </ngx-slider>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-end">
+        <ion-col size="4">
+          <div class="ion-text-center" [innerHtml]="this.sliderFooter | safeHtml">
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+</div>

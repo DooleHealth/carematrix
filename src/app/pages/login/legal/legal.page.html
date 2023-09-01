@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+        <ion-back-button text=""></ion-back-button>
+      </ion-buttons>
+    <ion-title class="toolbarTitle" >{{ 'legal.header' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="main-container">
+    <div class="spin" *ngIf="this.isLoading; else showLegal">
+      <ion-spinner ></ion-spinner>
+    </div>
+    <ng-template #showLegal>
+      <div [innerHtml]="this.legal?.legal_text? (this.legal?.legal_text | safeHtml):'' "></div>
+      <ion-row style="margin-top:0%; margin-left: 2%; margin-right: 2%;">
+        <ion-col size="6">
+          <ion-button expand="block" color="primary" (click)="confirmLegalTerms()">{{ 'button.reject' | translate | uppercase}}</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" color="primary" (click)="acceptLegalConditions()">{{ 'button.accept' | translate | uppercase}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </div>
+</ion-content>

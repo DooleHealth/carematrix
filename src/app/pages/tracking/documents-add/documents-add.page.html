@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+       <ion-buttons slot="start">
+      <ion-back-button (click)="close()" text="" icon="close"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'documents_add.header' | translate }} </ion-title>
+    <ion-buttons slot="end">
+    <ion-button (click)="submit()" [disabled]="this.isLoading">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+  <ion-card class="cardProfile">
+    <ion-list>
+      <ion-item (click)="openModal()">
+        <ion-text>{{ 'documents_add.field_test_type' | translate }}</ion-text>
+        <ion-input formControlName="type" slot="end" [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false"></ion-input>
+        <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-text style="width: fit-content; margin-right: 20px;" >{{ 'documents_add.field_title' | translate }}</ion-text>
+      <!-- <ion-input formControlName="title" (ionInput)="isSubmittedTitle = false"></ion-input>
+        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
+      </ion-item>
+      <ion-item>
+        <ion-textarea formControlName="title" (ionInput)="isSubmittedTitle = false" maxlength="100"></ion-textarea>
+        <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'documents_add.field_date' | translate }}</ion-label>
+        <!-- FIXME: <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" [displayFormat]="this.dateService.getShortDateFormat()" (ionInput)="isSubmittedDate = false" [placeholder]="this.dateService.ddMMyyyyFormat(this.currentDate)" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
+        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" (ionInput)="isSubmittedDate = false" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
+        <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{ 'documents_add.field_description' | translate }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-textarea rows="8" formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{ 'documents_add.field_private' | translate }}</ion-label>
+        <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
+
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+<ion-card class="cardProfile" text-wrap>
+  <form>
+    <ion-list text-wrap>
+      <ion-item lines="none">
+        <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
+      </ion-item>
+
+        <app-file-upload #uploadFile [media]="this.media"></app-file-upload>
+
+    </ion-list>
+  </form>
+</ion-card>
+</form>
+
+  <section>
+    <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
+    <ion-button *ngIf="this.isEdit" expand="block"  (click)="presentAlertConfirm()" >{{'button.delete' | translate }}</ion-button>
+  </section>
+</ion-content>

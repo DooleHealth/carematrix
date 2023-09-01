@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon class="primaryIcon" name="close" text=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{(isEdit)? ('medications.edit_address' | translate):('medications.add_address' | translate) }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <span>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <br>
+      <ion-item>
+        <ion-label floating>{{ 'medications.name' | translate}}</ion-label>
+        <ion-input formControlName="name" type="text" (ionFocus)="this.isSubmittedName = false" required></ion-input>
+        <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedName && this.form.get('name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ 'medications.telephone' | translate}}</ion-label>
+        <ion-input formControlName="phone" type="tel" required (ionFocus)="this.isSubmittedTelephone = false" maxlength="18"></ion-input>
+        <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedTelephone && this.form.get('phone').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ 'medications.address' | translate}}</ion-label>
+        <ion-input formControlName="address" type="text" (ionFocus)="this.isSubmittedAddress = false" required></ion-input>
+        <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedAddress && this.form.get('address').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ 'medications.city' | translate}}</ion-label>
+        <ion-input formControlName="city" type="text" (ionFocus)="this.isSubmittedCity = false" required></ion-input>
+        <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedCity && this.form.get('city').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ 'medications.state' | translate}}</ion-label>
+        <ion-input formControlName="state" type="text" (ionFocus)="this.isSubmittedState = false" required></ion-input>
+        <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedState && this.form.get('state').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ 'medications.postal_code' | translate}}</ion-label>
+        <ion-input formControlName="postal_code" type="tel" (ionFocus)="this.isSubmittedPostalCode = false" maxlength="10"></ion-input>
+        <ion-note style="font-size: smaller;" *ngIf="this.isSubmittedPostalCode && this.form.get('postal_code').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </ion-item>
+    </form>
+    <ion-button type="submit" color="primary" expand="block" (click)="submit()">{{(isEdit)? ('medications.edit_address' | translate):('medications.add_address' | translate) }}
+    </ion-button>
+  </span>
+</ion-content>

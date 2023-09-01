@@ -1,0 +1,28 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body { 
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.basic-container {
+  padding: 30px;
+}
+
+.mat-snack-bar-container.pizza-party {
+  color: hotpink;
+}
+
+.mat-snack-bar-container .flex {
+  display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 20; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}

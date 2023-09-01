@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="backButton()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
+      translate)}}</ion-title> <!-- event.type -->
+    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" (click)="editReminder()">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner ></ion-spinner>
+  </div>
+  <div class="whiteBackground">
+    <ion-grid class="paddingGrid2">
+      <ion-row>
+        <ion-col size="12">
+          <ion-img class="img-wrapper"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list>
+      <ion-row>
+        <ion-text class="txtTitle">{{reminder?.title}}</ion-text>
+      </ion-row>
+      <ion-item routerLink="doctor" [state]="{doctor: staff}" *ngFor="let staff of reminder.staff; let i = index"
+        [lines]="(i == reminder?.staff.length-1)? 'full': 'none'"  routerLinkActive='active-item'>
+        <ion-label>{{(i == 0)? ('reminder.field_doctor' | translate): ''}}</ion-label>
+        <ion-text class="textMedium">{{staff.name}}</ion-text>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+      </ion-item>
+      <ion-item>
+        <ion-label> {{ 'reminder.field_notes' | translate }}</ion-label>
+        <ion-textarea class="textMedium" [innerHtml]="reminder?.description? (reminder?.description | safeHtml):'' "></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'reminder.field_type' | translate }}</ion-label>
+        <ion-text class="textMedium">{{this.type}}</ion-text>
+      </ion-item>
+      <ion-item (click)="actionIntrucction()">
+        <ion-label>{{ (this.isElement)?('reminder.field_reminder' | translate) :('reminder.field_appointment' | translate) }}</ion-label>
+        <ion-text class="textMedium">{{this.getReminderTitle() }}</ion-text>
+        <ion-icon  name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'reminder.field_start' | translate }}</ion-label>
+        <ion-text class="textMedium">{{ formatSelectedDate(reminder?.from_date) }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'reminder.field_end' | translate }}</ion-label>
+        <ion-text class="textMedium">{{ formatSelectedDate(reminder?.to_date) }}</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{'reminder.field_time' | translate}}</ion-label>
+      </ion-item>
+      <ng-container *ngFor="let time of this.times;let i = index">
+        <ion-chip>
+          <ion-label class="txtTitleGoals">{{time}} </ion-label>
+        </ion-chip>
+      </ng-container>
+      <ion-item></ion-item>
+      <ion-item lines="none">
+        <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>
+        <ion-text class="textMedium">{{this.frequency}}</ion-text>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+      </ion-item>
+    </ion-list>
+  </div>
+
+    <div class="whiteBackground" *ngIf="this.frequencySeleted === 'custom' ">
+      <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="this.expanded" lines="none">
+        <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+        <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+      <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="!this.expanded"  lines="none">
+        <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+        <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+      </ion-item>
+
+      <!-- ACORDION -->
+      <app-expandable expandHeight="400px" [expanded]="this.expanded">
+        <ion-list mode="ios" *ngFor="let e of days;let i= index">
+          <ion-item [lines]="(i==6)? 'none':'full' " *ngIf="setDay(e, i)">
+           <!--  <ion-checkbox color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox> -->
+            <ion-text>
+              <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>
+            </ion-text>
+          </ion-item>
+        </ion-list>
+      </app-expandable>
+    </div>
+
+</ion-content>

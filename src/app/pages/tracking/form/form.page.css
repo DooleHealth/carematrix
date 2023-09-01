@@ -1,0 +1,13 @@
+.form {
+  margin-left: 8px;
+  margin-right: 8px;
+  --padding-start: 5px;
+  --padding-end: 5px;
+}
+
+.loading {
+  justify-items: center;
+  align-items: center;
+  top: 45%;
+  width: 100%;
+}/*# sourceMappingURL=form.page.css.map */

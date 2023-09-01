@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'doctor.header_doctor' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-img [src]="this.doctor?.temporaryUrl" class="img-wrapper"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h3 style="text-align: center;">{{this.doctor?.name}}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+<!--       <ion-col>
+        <p style="text-align: center;">Medicina General</p>
+      </ion-col> -->
+    </ion-row>
+
+
+<!--   <ion-card class="cardProfilePadding">
+    <ion-row style="font-weight: 600;">
+      <ion-label>Número de colegiado</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
+    </ion-row>
+  </ion-card> -->
+
+  <ion-card *ngIf="this.doctor?.city" class="cardProfilePadding">
+    <ion-row style="font-weight: 600;">
+      <ion-label>{{ 'doctor.field_city' | translate}}</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-label>{{this.doctor?.city}}</ion-label>
+    </ion-row>
+  </ion-card>
+
+  <ion-card class="cardProfilePadding" *ngIf="this.doctor?.departments" >
+    <ion-row style="font-weight: 600;">
+      <ion-label>{{ 'doctor.field_centers' | translate}}</ion-label>
+    </ion-row>
+    <ion-row *ngFor="let center of this.doctor?.departments">
+      <ion-label>{{ center?.name}}</ion-label>
+    </ion-row>
+  </ion-card>
+
+<!--   <div class="buttonContainer">
+  <ion-button *ngIf="this.isAllowed" expand="block" style="margin-top: 5%;" (click)="this.redirect()">
+    {{ 'doctor.button_chat' | translate}}
+  </ion-button>
+</div> -->
+
+</ion-content>

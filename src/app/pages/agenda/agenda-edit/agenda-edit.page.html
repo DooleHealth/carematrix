@@ -1,0 +1,99 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="" text="Cancelar"></ion-back-button>
+    </ion-buttons>
+    <ion-title text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title>
+    <ion-button slot="end" fill="clear" (click)="submit()">{{'button.ok' | translate}}
+    </ion-button>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon class="primaryIcon" name="close" text=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="this.event?.origin == 1 && this.event?.staff?.length > 0" text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title>
+    <ion-title *ngIf="this.event?.origin == 1 && !this.event?.staff || !this.event" text-wrap>{{ (isNewEvent)? ('appointment.add_event' | translate): ('appointment.edit_event' | translate) }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  slot="end" (click)="submit()">
+        <ion-icon class="primaryIcon" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+    <div class="whiteBackground">
+      <ion-card class="cardProfile" [disabled]="this.isSaving">
+        <ion-list>
+          <ion-item>
+            <ion-label>{{'appointment.field_title' | translate}}</ion-label>
+            <ion-input formControlName="title" class="textMedium" required></ion-input>
+            <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>{{'appointment.field_description' | translate}}</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-textarea formControlName="user_comments" class="textMedium" placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </div>
+    <ion-card class="cardProfile" [disabled]="this.isSaving">
+      <ion-list>
+<!--         <ion-item>
+          <ion-label>{{'appointment.field_modality' | translate}}</ion-label>
+          <ion-select interface="action-sheet" [value]="0" (ionChange)="selectedCategory()" formControlName="online" placeholder="{{ 'placeholder_select' | translate}}">
+            <ion-select-option value="0">{{'Presencial' | translate}}</ion-select-option>
+            <ion-select-option value="1">{{'Online' | translate}}</ion-select-option>
+          </ion-select>
+        </ion-item> -->
+        <ion-item>
+          <ion-label>{{'Online' | translate}}</ion-label>
+          <ion-toggle slot="end" color="success" formControlName="online" checked></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="!this.form.get('online').value">
+          <ion-label>{{'reminder.field_place' | translate}}</ion-label>
+          <ion-input formControlName="place" class="textMedium"></ion-input>
+        </ion-item>
+
+          <!-- <ion-datetime locale="es-ES" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime> -->
+          <ion-datetime presentation="date-time" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" required  formControlName="date">
+            <span slot="time-label">{{ 'reminder.field_time' | translate}}</span>
+            <!-- <span slot="title">{{'reminder.field_start' | translate}}</span> -->
+          </ion-datetime>
+          <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+
+
+        <ion-item lines="none">
+          <ion-label lines="none">{{'reminder.field_duration' | translate}}</ion-label>
+          <ion-input formControlName="duration" inputmode="numeric" type="number" placeholder="{{'reminder.minutes' | translate}}" class="textMedium" required></ion-input>
+          <ion-note *ngIf="this.isSubmittedDuration && this.form.get('duration').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <ion-card class="cardProfile" text-wrap>
+      <form>
+        <ion-list text-wrap>
+          <ion-item lines="none">
+            <ion-label>{{ 'documents_add.attachments' | translate }}</ion-label>
+          </ion-item>
+
+            <app-file-upload #uploadFile [media]="this.media"></app-file-upload>
+
+        </ion-list>
+      </form>
+    </ion-card>
+  </form>
+  <div class="spinnerCenter">
+  <ion-spinner *ngIf="this.isSaving"  ></ion-spinner>
+  </div>
+</ion-content>

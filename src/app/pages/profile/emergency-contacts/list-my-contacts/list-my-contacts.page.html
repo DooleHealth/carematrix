@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'emergency_contact.contact' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon *ngIf="!this.isHybrid" class="primaryIcon" slot="icon-only" name="checkmark-outline" routerLink="../list-relationship" [state]="{newContact:this.emergencyContact}"></ion-icon>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="whiteBackground">
+  <ion-searchbar
+  [animated]="true"
+  (ionInput)="filterList($event)" >
+</ion-searchbar>
+<div class="spin" *ngIf="this.isLoading">
+  <ion-spinner ></ion-spinner>
+</div>
+  <div *ngIf="contacts !== undefined">
+    <ion-list *ngFor="let contact of contacts">
+      <ion-item *ngIf="contact !== undefined" routerLink="../list-relationship" [state]="{contact:contact}"  routerLinkActive='active-item'>
+        <ion-label class="txtPaddingLeft" *ngIf="contact.displayName !== undefined">
+          {{contact.displayName}}
+        </ion-label>
+        <div *ngIf="contact.phoneNumbers !== undefined && contact.phoneNumbers[0] !== undefined">
+          <p *ngIf="contact.phoneNumbers[0].number !== undefined">
+            {{ contact.phoneNumbers[0].number}}</p>
+        </div>
+      </ion-item>
+
+    </ion-list>
+  </div>
+
+
+</ion-content>

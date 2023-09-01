@@ -1,0 +1,255 @@
+<ion-header>
+    <ion-toolbar [ngSwitch]="segment" mode="ios">
+      <ion-title>{{ 'contact.header' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- SegmentBar -->
+
+<ion-segment  (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+  <ion-segment-button *ngIf="role?.component?.agenda" value="video">
+    <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
+  </ion-segment-button>
+  <ion-segment-button *ngIf="role?.component?.agenda" value="appointment">
+    <ion-label>{{ 'contact.tap_appointment' | translate}}</ion-label>
+  </ion-segment-button>
+  <ion-segment-button *ngIf="role?.component?.chat" value="chat">
+    <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
+  </ion-segment-button>
+</ion-segment>
+<!-- videocall-->
+
+<div class="verticalLine2" [ngSwitch]="segment">
+  <div *ngSwitchCase="'video'">
+    <ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src='assets/icons/Video.svg' class="img-wrapper"></ion-img>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h3 style="text-align: center;">{{ 'contact.tap_video' | translate}}</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p class="txtContactLittle">{{ 'contact.text_video' | translate}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list>
+        <ion-card class="cardProfile">
+          <ion-item lines="none" (click)="goMedicalDirectory(true)">
+            <div class="verticalLine"></div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-img style="align-items: left;" src='assets/icons/corazon.svg' style="width: 50%;padding: 3%;">
+                  </ion-img>
+                </ion-col>
+                <ion-col size="10">
+                  <ion-card-title class="txtTitleGoals">{{ 'contact.regular_professional' | translate}}</ion-card-title>
+                  <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-col size="12">
+                <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_regular_professional' | translate}}</ion-card-title>
+              </ion-col>
+              <ion-col size="12">
+                <ion-card-title class="textBlue">
+                  {{ 'button.continue' | translate}}</ion-card-title>
+              </ion-col>
+            </ion-grid>
+          </ion-item>
+        </ion-card>
+        <ion-card class="cardProfile">
+          <ion-item lines="none"routerLink="specialist-finder" routerLinkActive='active-item'>
+            <div class="verticalLine"></div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
+                  </ion-img>
+                </ion-col>
+                <ion-col size="8">
+                  <ion-card-title class="txtTitleGoals">{{ 'contact.other_specialists' | translate}}</ion-card-title>
+                  <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-col size="12">
+                <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_other_specialists' | translate}}</ion-card-title>
+              </ion-col>
+              <ion-col size="12">
+                <ion-card-title class="textBlue">
+                  {{ 'button.continue' | translate}}</ion-card-title>
+              </ion-col>
+            </ion-grid>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </ion-list>
+  </div>
+
+  <!-- Appointment -->
+<div  *ngSwitchCase="'appointment'">
+<ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-img src='assets/icons/Cita.svg' class="img-wrapper"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h3 style="text-align: center;">{{ 'contact.tap_appointment' | translate}}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="txtContactLittle">{{ 'contact.text_appointment_in_person' | translate}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-card class="cardProfile">
+      <ion-item lines="none" (click)="goMedicalDirectory(false)">
+        <div class="verticalLine"></div>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <ion-img style="align-items: left;" src='assets/icons/corazon.svg' style="width: 50%;padding: 3%;">
+              </ion-img>
+            </ion-col>
+            <ion-col size="8">
+              <ion-card-title class="txtTitleGoals">{{ 'contact.regular_professional' | translate}}</ion-card-title>
+              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-col size="12">
+            <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_appointment_regular_professional' | translate}}</ion-card-title>
+          </ion-col>
+          <ion-col size="12">
+            <ion-card-title class="textBlue">
+              {{ 'button.continue' | translate}}</ion-card-title>
+          </ion-col>
+        </ion-grid>
+      </ion-item>
+    </ion-card>
+    <ion-card class="cardProfile">
+      <ion-item lines="none" routerLink="specialist-finder" routerLinkActive='active-item'>
+        <div class="verticalLine"></div>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
+              </ion-img>
+            </ion-col>
+            <ion-col size="8">
+              <ion-card-title class="txtTitleGoals">{{ 'contact.other_specialists' | translate}}</ion-card-title>
+              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-col size="12">
+            <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_appointment_other_specialists' | translate}}</ion-card-title>
+          </ion-col>
+          <ion-col size="12">
+            <ion-card-title class="textBlue">
+              {{ 'button.continue' | translate}}</ion-card-title>
+          </ion-col>
+        </ion-grid>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-list>
+</div>
+
+
+  <!-- Chat -->
+
+  <div *ngSwitchCase="'chat'">
+
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-img src='assets/icons/Chat2.svg' class="img-wrapper"></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h3 style="text-align: center;">{{ 'contact.tap_chat' | translate}}</h3>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p class="txtContactLittle">{{ 'contact.text_chat' | translate}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-list>
+          <ion-card class="cardProfile">
+            <ion-item lines="none" routerLink="chat"  routerLinkActive='active-item'>
+              <div class="verticalLine"></div>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="2">
+                    <ion-img style="align-items: left;" src='assets/icons/list.svg' style="width: 50%;padding: 3%;">
+                    </ion-img>
+                  </ion-col>
+                  <ion-col size="8">
+                    <ion-card-title class="txtTitleGoals">{{ 'contact.recent_conversations' | translate}}</ion-card-title>
+                    <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <ion-col size="12">
+                  <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_recent_conversations' | translate}}</ion-card-title>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-card-title class="textBlue">
+                    {{ 'button.continue' | translate}}</ion-card-title>
+                </ion-col>
+              </ion-grid>
+            </ion-item>
+          </ion-card>
+          <!-- <ion-card class="cardProfile" routerLink="medical-directory" [state]="{isChat:true}">
+            <ion-item lines="none">
+              <div class="verticalLine"></div>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="2">
+                    <ion-img style="align-items: left;" src='assets/icons/others.svg' style="width: 50%;padding: 3%;">
+                    </ion-img>
+                  </ion-col>
+                  <ion-col size="8">
+                    <ion-card-title class="txtTitleGoals">{{ 'contact.new_conversation' | translate}}</ion-card-title>
+                    <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <ion-col size="12">
+                  <ion-card-title class="txtTitleTrackingLittle">{{ 'contact.text_new_conversation' | translate}}</ion-card-title>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-card-title class="textBlue">
+                    {{ 'button.continue' | translate}}</ion-card-title>
+                </ion-col>
+              </ion-grid>
+            </ion-item>
+          </ion-card> -->
+        </ion-list>
+      </ion-list>
+  </div>
+
+</div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

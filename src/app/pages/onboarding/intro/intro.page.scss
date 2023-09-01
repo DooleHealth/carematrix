@@ -1,0 +1,94 @@
+.titleBold{
+    font-weight: 1000;
+    font-size: 35px;
+    text-align: left;
+}
+.iconPadding{
+    padding-top: 90%;
+}
+.titleBoldCentered{
+    font-weight: 1000;
+    font-size: 35px;
+    text-align: left;
+}
+.iconPadddingCenter{
+    padding-top: 20%;
+}
+
+.buttonPadding{
+    margin-bottom:3%;
+    margin-top: 7%;
+}
+.buttonPadding2{
+    margin-bottom:3%;
+    margin-top: 10%;
+
+}
+.buttonPaddingIphone{
+    opacity: 0%;
+}
+
+.justify-content-center{
+    align-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 50%;
+}
+.swiper-container-wrapper {
+    display: flex;
+    height: 80vh; /* Set the height as needed */
+  }
+
+/* ----------- iPhone 10 ----------- */
+@media only screen
+  and (min-device-height : 800px)
+  and (orientation: portrait)
+{
+    .buttonPadding{
+        margin-top:40%;
+    }
+
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+@media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 360px)
+{
+    .main-container {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top:0%;
+        margin-bottom: 5%;
+      }
+      .buttonPadding{
+        opacity: 0%;
+    }
+    .buttonPaddingIphone{
+        opacity: 100%;
+    }
+    ion-segment{
+        font-size: small;
+    }
+}
+/* ----------- Galaxy s3 ----------- */
+@media only screen
+  and (min-device-width : 360px)
+  and (max-device-width : 390px)
+  and (max-device-height: 670px)
+{
+
+    .main-container {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top:0%;
+        margin-bottom: 5%;
+      }
+      .buttonPadding{
+        opacity: 0%;
+    }
+    .buttonPaddingIphone{
+        opacity: 100%;
+    }
+
+}

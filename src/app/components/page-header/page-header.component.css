@@ -1,0 +1,50 @@
+ion-img {
+  display: inline-block;
+}
+
+.rowTitle2 {
+  padding-left: 3%;
+}
+
+.icon-title {
+  width: 80px;
+  height: auto;
+  display: block;
+}
+
+.titule {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#container * {
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  width: 100%;
+  font-size: 0;
+}
+
+#left,
+#middle,
+#right {
+  display: inline-block;
+  zoom: 1;
+  vertical-align: top;
+}
+
+#left {
+  width: 25%;
+}
+
+#middle {
+  vertical-align: bottom;
+  width: 60%;
+}
+
+#right {
+  vertical-align: bottom;
+  width: 15%;
+}/*# sourceMappingURL=page-header.component.css.map */

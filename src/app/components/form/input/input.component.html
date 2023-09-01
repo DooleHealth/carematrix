@@ -1,0 +1,40 @@
+<div [ngClass]="desactive ? 'd-none' : 'd-block'">
+  <ion-grid class="form-component"  [id]="this.data?.id" [name]="data.name" [ngClass]="this.data?.hidden ? 'd-none' : 'd-block'">
+    <ion-row class="form-question">
+      <div  class="text-index">{{data.index}}</div>
+      <div style="display: flex;">
+        <ion-text *ngIf=" this.data.required" color="danger" style="font-size:20px; margin-right: 4px;">*</ion-text>
+        <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-top: 2px; margin-right: 4px;" [info]="this.data.tooltip" ></app-tooltip>
+        <div name="data.name" [innerHtml]="this.label | safeHtml"></div>
+      </div>
+    </ion-row> 
+    <ion-note class="ion-note-padding" color="danger">{{this.error_msg}}</ion-note> 
+    <div *ngIf="this.data.type == 'text' || this.data.type == 'number' || this.data.type == 'formula'|| this.data.type == 'logic' ">
+      <ion-item lines="none" [ngClass]="error ? 'form-input-error-textarea' : 'form-input-textarea'" >
+        <ion-input [type]="(data?.type == 'number')? 'number':'text' " [placeholder]="this.placeholder"
+          [value]="this.value"
+          [maxlength]="this.max"
+          (ionInput)="setValue($event)" 
+          (ionChange)="checkValue(); valueChange()" 
+          (ionBlur)="checkValue()" 
+          [required]="this.data.required">
+        </ion-input>
+      </ion-item>
+      <ion-row style="margin: 0%;padding: 0%;">
+        <span *ngIf="this.max" style="margin-right: 20px; text-align: end; width: 100%;">{{remainingText}}</span>
+      </ion-row> 
+    </div>
+    <div *ngIf="this.data.type == 'date'">
+      <ion-item  lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'" >
+         <ion-datetime style="text-align: center;" cancelText="{{'form.button.cancel' | translate}}" doneText="{{'form.button.accept' | translate}}" 
+         (ionChange)="setValue($event);checkValue()" (ionBlur)="checkValue()" [placeholder]="this.placeholder"
+         displayFormat="DD/MM/YYYY" [max]="max" [required]="this.data.required"></ion-datetime>
+      </ion-item> 
+    </div>   
+    <div *ngIf="this.data.type == 'button'">
+      <ion-item lines="none">
+        <ion-button (click)="setValue($event)" expand="block" size="large" style="width: 100%;">{{labelButton}}</ion-button>
+      </ion-item> 
+    </div>   
+  </ion-grid>
+</div>

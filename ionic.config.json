@@ -1,0 +1,7 @@
+{
+  "name": "Doole Health",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'setting.title_setting' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="txtTitleSetting"></div>
+    <ion-text class="txtTitle2">{{ 'setting.title_security' | translate}}</ion-text>
+    <ion-card class="cardProfile">
+          <ion-list [lines]="isTwoFactor? 'full': 'none' ">
+            <ion-item (click)="changePassword()" >
+              <ion-label>{{ 'setting.password.title_change_password' | translate}}</ion-label>
+              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+            </ion-item>
+            <ion-item [lines]="isFaID? 'full': 'none' " *ngIf="isTwoFactor">
+              <ion-toggle slot="end" color="success" [(ngModel)]="authentication" (ionChange)="changeAuthentication()" checked>{{ 'setting.subtitle_authentication' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item lines="none" *ngIf="isFaID">
+              <ion-toggle slot="end" color="success" [(ngModel)]="faceId" (ionChange)="changeFaceId()" checked>{{ 'setting.subtitle_face_id' | translate}}</ion-toggle>
+            </ion-item>
+
+          </ion-list>
+    </ion-card>
+
+    <ion-text class="txtTitle2">{{ 'setting.title_languages' | translate}}</ion-text>
+    <ion-card class="cardProfile">
+          <ion-list>
+            <ion-item lines="none">
+
+              <ion-select [(ngModel)]="language" (ionChange)="changeLanguages()" interface="action-sheet"  okText="{{ 'button.ok' | translate}}" cancelText="{{ 'button.cancel' | translate}}" placeholder="{{'add_health_card.placeholder_select' | translate}}" label="{{ 'setting.subtitle_languages'| translate}}">
+                <ion-select-option *ngFor="let language of listLanguage" [value]="language">{{language.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+          </ion-list>
+    </ion-card>
+
+    <ion-text class="txtTitle">{{ 'setting.title_notification' | translate}}</ion-text>
+    <ion-card class="cardProfile">
+          <ion-list>
+            <ion-item>
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="communications" (ionChange)="changeCommunications()" checked>{{'setting.subtitle_communications' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.agenda">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="appointment" (ionChange)="changeAppointment()" checked>{{'setting.subtitle_appointment' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.agenda && role?.component?.reminder">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="reminder" (ionChange)="changeReminders()" checked>{{'setting.subtitle_reminders' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.diet">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="diets" (ionChange)="changeDiets()" checked>{{'setting.subtitle_diets' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.drug">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="medication" (ionChange)="changeMedication()" checked>{{'setting.subtitle_medication' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.goal">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="goals" (ionChange)="changeGoals()" checked>{{'setting.subtitle_goals' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.advices">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="advices" (ionChange)="changeAdvices()" checked>{{'setting.subtitle_advices' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.news">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="news" (ionChange)="changeNews()" checked>{{'setting.subtitle_news' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item>
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="offers" (ionChange)="changeOffers()" checked>{{'setting.subtitle_offers' | translate}}</ion-toggle>
+            </ion-item>
+             <ion-item *ngIf="role?.component?.form">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="form" (ionChange)="changeForm()" checked>{{'setting.subtitle_form' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="role?.component?.chat">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="messages" (ionChange)="changeMessages()" checked>{{'setting.subtitle_messages' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item>
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="games" (ionChange)="changeGames()" checked>{{'setting.subtitle_games' | translate}}</ion-toggle>
+            </ion-item>
+            <ion-item lines="none">
+
+              <ion-toggle slot="end" color="success" [(ngModel)]="release" (ionChange)="changeRelease()" checked>{{'setting.subtitle_release' | translate}}</ion-toggle>
+            </ion-item>
+          </ion-list>
+    </ion-card>
+
+    <div *ngIf="this.modeDevelop">
+      <ion-text class="txtTitle2">{{ 'Desarrollador' | translate}}</ion-text>
+      <ion-card class="cardProfile">
+            <ion-list>
+              <ion-item lines="none">
+
+                <ion-select label="BO" [(ngModel)]="this.api" (ionChange)="changeEndPoint($event)" interface="action-sheet"  okText="{{ 'button.ok' | translate}}" cancelText="{{ 'button.cancel' | translate}}" placeholder="{{'add_health_card.placeholder_select' | translate}}">
+                  <ion-select-option *ngFor="let api of listEndPoint; let index = i" [value]="api">{{api.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+            </ion-list>
+      </ion-card>
+    </div>
+
+
+</ion-content>
+

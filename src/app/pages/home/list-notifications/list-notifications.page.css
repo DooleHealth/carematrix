@@ -1,0 +1,12 @@
+.tool {
+  --border-width: 2px;
+  --border-radius: 3px;
+}
+
+.scrollHiden {
+  display: block;
+}
+
+.slideNone {
+  display: none;
+}/*# sourceMappingURL=list-notifications.page.css.map */

@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="close()" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEditDrug? ('medication.edit_medication' | translate): ('medication.add_medication' | translate) }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card  class="cardProfilePaddingBottom" >
+    <ion-item lines="none">
+      <ion-text style="margin: 10px;" class="txtTitleGoals" stacked>{{drug?.name}}</ion-text>
+    </ion-item>
+  </ion-card>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+  <ion-card  class="cardProfilePaddingBottom" >
+      <div *ngIf="!isInstant">
+        <ion-item>
+          <label>
+            <span slot="title">{{ 'medication.field_from_date' | translate}}</span>
+          </label>
+        </ion-item>
+
+
+
+        <!-- FIXME:<ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime> -->
+        <ion-datetime presentation="date" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date">
+          <!-- <span slot="title">{{ 'medication.field_from_date' | translate}}</span> -->
+          <span slot="time-label">{{'reminder.field_start' | translate}}</span>
+
+        </ion-datetime>
+
+        <!-- <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date"></ion-datetime> -->
+        <ion-note *ngIf="this.isSubmittedFromDate && this.form.get('from_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </div>
+    </ion-card>
+    <ion-card  class="cardProfilePaddingBottom" >
+      <div *ngIf="!isInstant">
+
+        <ion-item>
+          <label>
+            <span slot="title">{{ 'medication.field_to_date' | translate}}</span>
+          </label>
+        </ion-item>
+        <!-- FIXME:<ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime> -->
+        <ion-datetime presentation="date"   [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date">
+          <!-- <span slot="title">{{ 'medication.field_to_date' | translate}} </span> -->
+          <span slot="time-label">{{'reminder.field_end' | translate}}</span>
+        </ion-datetime>
+
+        <!-- <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" ></ion-datetime> -->
+        <ion-note *ngIf="this.isSubmittedToDate && this.form.get('to_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </div >
+    </ion-card>
+    <ion-card  class="cardProfilePaddingBottom" >
+      <ion-item>
+        <ion-label class="txtTitleGoals"  stacked>{{ 'medication.field_dose' | translate}}</ion-label>
+        <ion-input (ionChange)="this.isSubmittedDosis = false" formControlName="dose"  type="number" placeholder="{{ 'medication.placeholder_dose' | translate}}" ></ion-input>
+        <ion-note *ngIf="this.isSubmittedDosis && this.form.get('dose').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </ion-item >
+      <ion-item *ngIf="!isInstant">
+        <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}
+        </ion-label>
+        <ion-input formControlName="alias" type="text" placeholder="{{ 'medication.placeholder_alias' | translate}}" ></ion-input>
+      </ion-item >
+
+      <div *ngIf="!isInstant">
+        <ion-item>
+        <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_take_time' | translate}}</ion-label>
+        </ion-item>
+        <ion-datetime #datetime presentation="time" [locale]="this.locale" displayFormat="HH:mm" formControlName="time"  (ionChange)="inputDate(); this.isSubmittedTimes = false">
+
+          <ion-buttons slot="buttons">
+            <ion-button></ion-button>
+            <ion-button></ion-button>
+            <ion-button color="primary" (click)="datetime.confirm()" slot="primary">{{'button.add' | translate}}</ion-button>
+          </ion-buttons>
+
+        </ion-datetime>
+        <ion-note *ngIf="this.isSubmittedTimes && this.times.length == 0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+      </div>
+      <div *ngIf="!isInstant">
+        <ng-container *ngFor="let time of this.times;let i = index">
+          <ion-chip>
+            <ion-label class="txtTitleGoals">{{time}} </ion-label>
+            <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
+          </ion-chip>
+        </ng-container>
+      </div>
+
+      <ion-item *ngIf="!isInstant" lines="none">
+        <ion-label class="txtTitleGoals" lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
+        <ion-select class="txtTitleGoals" interface="action-sheet" (ionChange)="this.selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+          <ion-select-option value="daily">{{'reminder.frequency.daily' | translate}}</ion-select-option>
+          <ion-select-option value="custom">{{'reminder.frequency.custom' | translate}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
+      </ion-item>
+
+  </ion-card>
+  <div *ngIf="!isInstant">
+    <ion-card class="cardProfile" *ngIf="this.frequencySeleted === 'custom' ">
+      <div>
+        <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="this.expanded" lines="none">
+          <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+          <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+        <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="!this.expanded"  lines="none">
+          <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+          <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+        </ion-item>
+
+        <!-- ACORDION -->
+        <app-expandable expandHeight="400px" [expanded]="this.expanded">
+          <ion-list mode="ios" *ngFor="let e of days;let i= index">
+            <ion-item [lines]="(i==6)? 'none':'full' ">
+              <ion-checkbox color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox>
+              <ion-text>
+                <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>
+              </ion-text>
+            </ion-item>
+          </ion-list>
+        </app-expandable>
+      </div>
+    </ion-card>
+  </div>
+
+</form>
+  <div class="buttonContainer">
+  <ion-button *ngIf="!isEditDrug" expand="block" (click)="snapshot()" [color]="isInstant? 'tertiary':'primary'">{{isInstant? ('medication.medication_plan' | translate):('medication.snapshot_medication' | translate) }}</ion-button><br>
+  <ion-button [disabled]="this.isLoading" expand="block" (click)="submit()" color="primary" >{{'medication.save_medication' | translate}}</ion-button><br>
+  <ion-button *ngIf="isEditDrug" (click)="presentAlertConfirm()" class="buttonClose" color="transparent" expand="block">{{'medication.delete_medication' | translate}}</ion-button>
+</div>
+</ion-content>
+
+

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+       <ion-buttons slot="start">
+    
+    </ion-buttons>
+    <ion-title>{{ 'biometrics.activate' | translate }}</ion-title>
+    <ion-buttons slot="end">
+ 
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="back" fullscreen>
+  
+  <ng-container *ngIf="this.showDialog">
+    <div class="landing-container">
+      <div style="text-align: center; padding-top: 15%;">
+        <ion-icon slot="start" name="finger-print-outline"></ion-icon>
+      </div>
+      <br>
+      <div style="text-align: left;padding-top: 10%; margin: 5%;">
+        <ion-text>
+          {{ 'biometrics.text1' | translate }}
+          <br><br> <strong>{{ 'biometrics.text2' | translate }}</strong> {{ 'biometrics.text3' | translate }}
+        </ion-text>
+      </div>
+      <ion-row style="margin-top:0%; margin-left: 2%; margin-right: 2%;">
+        <ion-col size="6">
+          <ion-button expand="block" color="primary" (click)="this.showBioAuthDlg()">{{ 'biometrics.active' | translate | uppercase}}</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" color="primary" (click)="dismissLockScreen()">{{ 'biometrics.dismiss' | translate | uppercase}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ng-container>
+  
+</ion-content>

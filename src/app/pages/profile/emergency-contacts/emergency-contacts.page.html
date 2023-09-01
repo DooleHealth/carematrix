@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title style="font-size: 16px;">{{ 'emergency_contact.header' | translate}}</ion-title>
+    <ion-buttons slot="end" routerLink="list-my-contacts" >
+    <ion-icon slot="icon-only" name="add" color="primary" ></ion-icon>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner ></ion-spinner>
+  </div>
+
+  <div *ngIf="listContact.length > 0; else noData">
+  <ion-list *ngFor="let contact of this.listContact">
+    <ion-card class="cardProfile" routerLink="detail-contact" [state]="{contact:contact}" routerLinkActive='active-item' routerLinkActive='active-item'>
+      <ion-card-content style="padding: 2%;">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="contact.temporaryUrl">
+      </ion-avatar>
+      <ion-grid>
+     <ion-row><ion-col size="6">
+        <p>{{contact.full_name}}</p>
+      </ion-col>
+        <ion-col size="6" class="textMediumLeft">
+        <p>{{contact.phone}}</p>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col class="textMediumLeft"><p>{{contact.socialRelationName}}</p></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-card-content>
+  </ion-card>
+  </ion-list>
+</div>
+<ng-template #noData>
+  <div *ngIf="!this.isLoading">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-icon class="iconNoData" name="call"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col >
+          <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</div>
+</ng-template>
+</ion-content>

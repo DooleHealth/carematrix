@@ -1,0 +1,83 @@
+<ion-content fullscreen>
+  <ng-container >
+    <div class="holder" *ngIf="this.isWaiting">
+      <div class="preloader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </ng-container>
+  <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="danger" (click)="this.close()" >
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-fab-button>
+    </ion-fab>
+  <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="start" slot="fixed">
+  <ion-fab-button *ngIf="durationStr != 'Fin' && durationStr != 'instant' && durationStr != '-1 min'" color="primary">
+    <p>{{durationStr}}</p>
+  </ion-fab-button>
+</ion-fab>
+<ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="start" slot="fixed">
+  <ion-fab-button *ngIf="durationStr == '-1 min'" color="warning" class="parpadea">
+    <p>{{durationStr}}</p>
+  </ion-fab-button>
+</ion-fab>
+  <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button *ngIf="durationStr == 'Fin'" color="danger">
+      <p>{{durationStr}}</p>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-fab *ngIf="!this.isWaiting" vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button  color="light">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light" (click)="this.addImage()">
+        <ion-icon name="images"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="document" (click)="this.addFile()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="camera-reverse-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <input
+    type="file"
+    #fileInput
+    (change)="uploadFileFromBrowser($event)"
+    hidden="true"
+    accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword"
+  />
+  <div id="container">
+    <div *ngFor="let file of this.files">
+      <div id="left"></div>
+      <div id="middle">
+        <p class="titule">{{ file.name }}</p>
+      </div>
+      <div id="right">
+        <ion-icon name="close-circle" color="primary"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="publishingDiv img-wrapper-patient"
+    [ngClass]="{ publishing: publishing }"
+    #publisherDiv
+  ></div>
+  <div>
+    <ng-template #subscriberHost></ng-template>
+  </div>
+</ion-content>
