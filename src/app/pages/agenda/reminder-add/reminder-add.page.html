@@ -50,21 +50,25 @@
       [displayFormat]="this.dateService.getTimeFormat()" [pickerFormat]="this.dateService.getTimeFormat()" -->
       <ion-item>
         <ion-label>{{'reminder.field_start' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="start_date" class="textMedium" required></ion-datetime>
         <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
+      <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="start_date" class="textMedium" required></ion-datetime>
       <ion-item>
         <ion-label lines="none">{{'reminder.field_end' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}"  min="1990-01-01" [max]="dateMax" formControlName="end_date" class="textMedium" required></ion-datetime>
         <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error ion-padding" color="danger" slot="end">{{ getErrorEndDate() }}</ion-note>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
+      <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}"  min="1990-01-01" [max]="dateMax" formControlName="end_date" class="textMedium" required></ion-datetime>
       <ion-item>
         <ion-label>{{'reminder.field_time' | translate}}</ion-label>
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}"  (ionChange)="inputDate(); this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
+        <!-- <ion-datetime [showDefaultButtons]="true" presentation="time" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="inputDate(); this.isSubmittedTimes = false" formControlName="time"></ion-datetime> -->
+        <!-- <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}"  (ionChange)="inputDate(); this.isSubmittedTimes = false" formControlName="time"></ion-datetime> -->
         <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </ion-item>
+      <ion-datetime presentation="time" (ionChange)="inputDate(); this.isSubmittedTimes = false" #datetime formControlName="time">
+        <ion-buttons slot="buttons">
+          <ion-button color="primary" (click)="datetime.confirm()">{{'button.accept' | translate}}</ion-button>
+        </ion-buttons>
+      </ion-datetime>
       <ng-container *ngFor="let time of this.times;let i = index">
         <ion-chip>
           <ion-label class="txtTitleGoals">{{ this.dateService.format24h(time)}} </ion-label>

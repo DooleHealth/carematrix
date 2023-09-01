@@ -55,7 +55,7 @@
     </ion-card>
 
   <ion-card class="cardProfile">
-   
+
       <ion-item lines="none" (click)="this.openCalendarModal()">
         <ion-label>{{'specialist_finder.field_date' | translate}}</ion-label>
         <ion-input class="textMedium" [value]="this.selectedDate"></ion-input>
@@ -65,7 +65,7 @@
         size="small"
       ></ion-icon>
       </ion-item>
-   
+
   </ion-card>
 
   <ion-card class="cardProfile">
@@ -98,7 +98,7 @@
       <div id="container">
         <div *ngFor="let file of this.files">
           <div id="left">
-           
+
           </div>
           <div id="middle">
             <p class="titule">{{ file.name }}</p>

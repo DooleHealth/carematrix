@@ -85,7 +85,7 @@ export class HttpService {
           'Accept': 'application/json'
         })
       };
-    
+
     console.log("url: ", path);
     console.log("body: ", body);
 
@@ -145,15 +145,17 @@ export class HttpService {
 
   setHttpOptions(options, formData?) {
 
+    console.log('** options', options);
+
     if(formData){
       const httpOptions = {
         headers: new HttpHeaders({
           'Accept': 'application/json'
         })
       };
-      console.log('httpOptions', httpOptions);
+
     return httpOptions;
-    }else{
+    }else if(Object.keys(options).length > 0){
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':'application/json',
@@ -161,11 +163,18 @@ export class HttpService {
           options
         })
       };
-      console.log('httpOptions', httpOptions);
+
+      return httpOptions;
+    }else{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':'application/json',
+          'Accept': 'application/json',
+        })
+      };
+
       return httpOptions;
     }
-   
-    
 
   }
 }

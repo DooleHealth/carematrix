@@ -25,7 +25,7 @@ export class EditContactPage implements OnInit {
     private formBuilder: FormBuilder,
     private dooleService: DooleService,
     public router: Router,
-    private modalController: ModalController,
+    private modalCtrl: ModalController,
     private alertController: AlertController,
     private notification: NotificationService,
     private translate: TranslateService) { }
@@ -202,8 +202,9 @@ export class EditContactPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
       component: ListRelationshipPage,
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss().then((dataReturned) => {

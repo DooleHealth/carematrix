@@ -98,7 +98,8 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    //this.getSlots()
+    this.getSlots()
+
     console.log('[MedicalCalendarPage] locale_ID', this.locale);
   }
 
@@ -121,16 +122,18 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
    }
 
   getSlots(date:string=""){
-    this.routeResolveData = null;
-    this.eventSource = [];
-
-    this.dooleService.getAPIStaffSlots({id:this.id, date: date }).subscribe({
-      next: (v) => this.setSlots(v),
-      error: (e) => {console.error(e)},
-      complete: () => {
-        this.routeResolveData = true
-      }
-  });
+    if(this.id){
+      this.routeResolveData = null;
+      this.eventSource = [];
+      this.dooleService.getAPIStaffSlots({id:this.id, date: date }).subscribe({
+        next: (v) => this.setSlots(v),
+        error: (e) => {console.error(e)},
+        complete: () => {
+          this.routeResolveData = true
+        }
+    });
+    }else
+      this.routeResolveData = true
 
   }
 

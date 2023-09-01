@@ -238,6 +238,7 @@ export class AgendaDetailPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
       componentProps: { },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss().then((result) => {
@@ -351,6 +352,7 @@ export class AgendaDetailPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
       componentProps: {},
+      cssClass: "modal-custom-class"
     });
 
     await modal.present();
@@ -362,7 +364,8 @@ export class AgendaDetailPage implements OnInit {
 
     const modal = await this.modalCtrl.create({
       component: VideocallIframePage,
-      componentProps: {"id": this.opentokService.agendaId$}
+      componentProps: {"id": this.opentokService.agendaId$},
+      cssClass: "modal-custom-class"
     });
 
     return await modal.present();

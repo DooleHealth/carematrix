@@ -23,7 +23,7 @@
   margin: 4%;
   text-align: left;
 }
-ion-img {
+.size-50 {
   height: 50px;
   width: 50px;
 }
@@ -37,6 +37,10 @@ ion-img {
   display: block;
   border-radius: 15px;
   background-color: white;
+}
+
+.button-size {
+  font-size: x-small;
 }
 
 .level-card {
@@ -54,7 +58,6 @@ ion-img {
   --progress-background: purple;
 }
 
-
 .vertical-card {
   background-color: white !important;
   width: 100%;
@@ -65,7 +68,28 @@ ion-img {
   }
 
   ion-card-content {
-    height: 80px;
+    height: 100px;
+    ion-progress-bar {
+      height: 10px;
+      width: 85%;
+    }
+    p {
+      width: 85%;
+    }
+  }
+}
+
+.vertical-card {
+  background-color: white !important;
+  width: 100%;
+
+  ion-img {
+    height: 18px;
+    width: 18px;
+  }
+
+  ion-card-content {
+    height: 100px;
     ion-progress-bar {
       height: 10px;
       width: 85%;
@@ -99,12 +123,10 @@ ion-img {
 }
 .customCardAppointment {
   background-color: #fff;
-
 }
 
 .customCardHealthPath {
   background-color: white;
-
 }
 .strechCardContent {
   min-width: 300px !important;
@@ -199,14 +221,14 @@ ion-progress-bar {
   -webkit-box-orient: vertical;
 }
 
-.bell{
-  margin-top: 10%;//7px;
+.bell {
+  margin-top: 10%; //7px;
   width: fit-content;
   margin-left: -9px;
   position: absolute;
   z-index: 99999;
 }
-.ion-text-end{
+.ion-text-end {
   padding-left: 0% !important;
   padding-right: 0% !important;
 }
@@ -233,42 +255,45 @@ ion-progress-bar {
   pointer-events: none;
 }
 
-.slides{
+.slides {
   background-color: lightblue;
 }
 
-.card-content-css{
+.card-content-css {
   background-color: yellow;
 }
 
-.slider-vertical{
-  height: 70px !important;
+.slider-vertical {
+  height: 100px !important;
 }
 .swiper {
   width: 100%;
   height: 100%;
 }
+.swiper-pagination {
+  height: auto !important;
+}
 
 .swiper-slide-container {
   text-align: center;
-        font-size: 18px;
-        background: #fff;
-  height:100%;
-        max-width: 600px;
-  margin:auto;
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
+  font-size: 18px;
+  background: #fff;
+  height: 100%;
+  max-width: 600px;
+  margin: auto;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }
 
 .swiper .swiper-slide {
@@ -280,7 +305,7 @@ ion-progress-bar {
 
   object-fit: cover;
   border-radius: 15px;
-  .cover img{
+  .cover img {
     height: 200px;
   }
 }
@@ -367,6 +392,7 @@ ion-progress-bar {
   .ios .paddingTopNoMarginBottom {
     padding-top: 3%;
     margin-bottom: 0%;
+    width: 100%;
   }
   .vertical-card2 {
     background-color: rgb(255, 255, 255) !important;

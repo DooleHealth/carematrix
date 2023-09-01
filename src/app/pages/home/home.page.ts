@@ -25,6 +25,7 @@ import { DateService } from 'src/app/services/date.service';
 import { PdfPage } from '../pdf/pdf.page';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import Swiper, { SwiperOptions } from 'swiper';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -73,12 +74,22 @@ export class HomePage implements OnInit {
     spaceBetween: 50,
     navigation: false,
     pagination: { clickable: true,
-    dynamicMainBullets: 3,     dynamicBullets: true, },
+      dynamicMainBullets: 3, dynamicBullets: true, },
     scrollbar: { draggable: true },
-    direction: 'vertical',
     effect: 'slide',
+    loop: false,
 
-    loop: true,
+  };
+  configVertical: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    navigation: false,
+    pagination: { clickable: true,
+    dynamicMainBullets: 3, dynamicBullets: true, },
+    scrollbar: { draggable: true },
+    effect: 'slide',
+    loop: false,
+    direction:'vertical'
   };
   WAIT_TIME = 10 //10 minutes
   userDoole: any = {}
@@ -163,9 +174,12 @@ export class HomePage implements OnInit {
     private pusherAlarms: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
     private pusherConnection: PusherConnectionService,
-    public dateService : DateService
+    public dateService : DateService,
+    private androidPermissions: AndroidPermissions
   ) {
-    // this.analyticsService.setScreenName('home','[HomePage]')
+    if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
+        this.checkPhoneStatePermission();
+
   }
 
   async ngOnInit() {
@@ -213,6 +227,24 @@ export class HomePage implements OnInit {
     });
   }
 
+  checkPhoneStatePermission(){
+      // this.analyticsService.setScreenName('home','[HomePage]')
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS).then(
+        result => {
+          console.log('Has permission?',result.hasPermission)
+            if(!result.hasPermission){
+              "requesting"
+              this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS]);
+            }
+        },
+        err => {
+          console.error('error permission', err)
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS)
+        }
+      );
+
+
+  }
   checkHealthAccess() {
     if (this.platform.is('cordova')) {
       this.health.isAvailable()
@@ -276,112 +308,115 @@ export class HomePage implements OnInit {
     }
     return null;
   }
-  async getUserInformation() {
+  getUserInformation() {
     this.isLoading = true
     //let date2 = this.dateService.ddMMyyyy(Date.now());
     let date2 = this.transformDate(this.date, 'dd-MM-yyyy')
     let date = { date: date2, from_date: this.date, to_date: this.date }
     console.log("DATE: ", date);
-    let tempAdvices;
-    let tempChallenges;
+
     this.dooleService.getAPIinformationSummary(date).subscribe(
-      async (res: any) => {
-        await res;
-
-        console.log('[HomePage] getUserInformation()', res);
-
-        tempChallenges = res.data?.challenges;
-        tempChallenges = tempChallenges?.filter(function (obj) {
-          return !obj.completed;
-        });
-
-        if (tempChallenges?.length == 1)
-          this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
-
-        this.challenges = tempChallenges;
-
-        this.userDoole = res.data?.profile;
-
-
-        this.greeting = this.translate.instant('home.hello') +', ' + this.userDoole?.first_name;
-        this.appointment = res.data?.agenda;
-
-        if (this.role.component.advices)
-          tempAdvices = res.data?.advices;
-
-        if (this.role.component.news)
-          res.data?.news.forEach(element => {
-            element['new'] = true
-            tempAdvices.push(element)
-          });
-
-        tempAdvices = tempAdvices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
-        console.log(' this.tempAdvices ', tempAdvices.length);
-        if (tempAdvices.length == 1) {
-          this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
-          console.log(' this.sliderAdvicesConfig ', this.sliderAdvicesConfig);
-        }
-
-        this.advices = tempAdvices;
-
-        if (res.data?.goals) {
-          this.goals = res.data?.goals
-          this.infoGoals = {
-            title: this.goals[0]?.typeString + ' ' + this.goals[0]?.element?.element_unit?.abbreviation
-          }
-
-          // Get the latest value of the element-goal
-          this.goals.forEach(goal => {
-            let element_last_value = goal?.element?.element_last_value // Get the element group
-            if (element_last_value?.value)
-              this.getGoalLastValue(element_last_value, goal)
-            else
-              goal.last_value_text = this.translate.instant('home.goals_no_data');
-          });
-        }
-
-        //diets
-        this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
-        this.searchIndexDiet()
-        this.slideDietChange()
-        // this.sliderDiet?.slideTo(this.currentIndexDiet)
-
-        //Elements
-        this.activity = []
-        let elements = res?.data.elements
-        if (elements?.eg) {
-          this.treeIterate(elements?.eg, '');
-          // this.sliderPhysical?.slideTo(0)
-          this.slideActivityChange()
-        }
-
-        //Games
-        if (res.data.gamePlays) {
-          this.games = res.data.gamePlays
-          this.games.sort(function (a, b) {
-            return a.scheduled_date.localeCompare(b.scheduled_date);
-          })
-          this.searchIndexDGame()
-          this.slideGamesChange()
-          // this.sliderGames?.slideTo(this.currentIndexDrug)
-        }
-        //this.drugs = res.data.drugIntakes.drugIntakes
-        this.getDrugIntake()
-        this.userInfo = res?.data;
-        this.isLoading = false
-
-        //Analytics
-        //console.log('[HomePage] getUserInformation()', this.userDoole);
-        //this.setAnalyticsUserProperty()
-      }, (err) => {
-        console.log('***** ERROR ' + err);
-        this.isLoading = false
-
-        throw err;
-
-      });
+      (res) => {
+        this.setUserVallues(res);
+      }
+    );
   }
 
+  setUserVallues(res){
+
+    let tempAdvices;
+    let tempChallenges;
+      console.log('[HomePage] getUserInformation()', res);
+
+      tempChallenges = res.data?.challenges;
+      tempChallenges = tempChallenges?.filter(function (obj) {
+        return !obj.completed;
+      });
+
+      if (tempChallenges?.length == 1)
+        this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
+
+      this.challenges = tempChallenges;
+
+      this.userDoole = res.data?.profile;
+
+
+      this.greeting = this.translate.instant('home.hello') +', ' + this.userDoole?.first_name;
+      this.appointment = res.data?.agenda;
+
+      if (this.role.component.advices)
+        tempAdvices = res.data?.advices;
+
+      if (this.role.component.news)
+        res.data?.news.forEach(element => {
+          element['new'] = true
+          tempAdvices.push(element)
+        });
+
+      tempAdvices = tempAdvices?.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
+
+      if (tempAdvices?.length == 1) {
+        this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
+
+      }
+
+      this.advices = tempAdvices;
+
+      if (res.data?.goals) {
+        this.goals = res.data?.goals
+        this.infoGoals = {
+          title: this.goals[0]?.typeString + ' ' + this.goals[0]?.element?.element_unit?.abbreviation
+        }
+
+        // Get the latest value of the element-goal
+        this.goals.forEach(goal => {
+          let element_last_value = goal?.element?.element_last_value // Get the element group
+          if (element_last_value?.value)
+            this.getGoalLastValue(element_last_value, goal)
+          else
+            goal.last_value_text = this.translate.instant('home.goals_no_data');
+        });
+      }
+
+      //diets
+      this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
+      this.searchIndexDiet()
+      this.slideDietChange()
+      // this.sliderDiet?.slideTo(this.currentIndexDiet)
+
+      //Elements
+      this.activity = []
+      let elements = res?.data?.elements
+      if (elements?.eg) {
+        this.treeIterate(elements?.eg, '');
+        // this.sliderPhysical?.slideTo(0)
+        // this.slideActivityChange()
+      }
+
+      console.log("activity: ",this.activity);
+
+      //Games
+      if (res?.data?.gamePlays) {
+        this.games = res.data.gamePlays
+        this.games.sort(function (a, b) {
+          return a.scheduled_date.localeCompare(b.scheduled_date);
+        })
+        this.searchIndexDGame()
+        this.slideGamesChange()
+        // this.sliderGames?.slideTo(this.currentIndexDrug)
+      }
+      //this.drugs = res.data.drugIntakes.drugIntakes
+      this.getDrugIntake()
+      this.userInfo = res?.data;
+      this.isLoading = false
+
+      //Analytics
+      //console.log('[HomePage] getUserInformation()', this.userDoole);
+      //this.setAnalyticsUserProperty()
+
+
+
+  }
   setTimerSlider() {
     this.slideGamesChange()
     this.searchIndexDGame()
@@ -421,7 +456,7 @@ export class HomePage implements OnInit {
         } else {
           if (property == "group") {
             obj['is_child'] = stack.includes('childs');
-            if (obj?.elements.length > 0)
+            if (obj?.elements?.length > 0)
               this.activity.push(obj);
 
           }
@@ -653,8 +688,8 @@ export class HomePage implements OnInit {
 
   getDrugIntake() {
     this.dooleService.getAPIdrugIntakeByDate({ date: this.date }).subscribe((res) => {
-      console.log('[HomePage] getDrugIntake()', res);
-      this.drugs = res.drugIntakes;
+      console.log('[HomePage] getDrugIntake()', res?.drugIntakes);
+      this.drugs = res?.drugIntakes;
       this.filterDrugsByStatus()
       this.searchIndexDrug()
       // this.sliderDrug?.slideTo(this.currentIndexDrug)
@@ -892,13 +927,13 @@ export class HomePage implements OnInit {
   }
 
   slideActivityChange() {
-    // this.sliderPhysical?.getActiveIndex().then(index => {
-    //   let slider = this.activity[index]
-    //   this.infoActivity = {
-    //     title: slider?.group
-    //   }
 
-    // });
+      // let slider = this.activity[ this.sliderPhysical.activeIndex]
+      // this.infoActivity = {
+      //   title: slider?.group
+      // }
+
+
   }
 
   changeTake(id, taked) {
@@ -1125,6 +1160,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ElementsAddPage,
       componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -1148,6 +1184,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: isAdvice ? AdvicesDetailPage : NewDetailPage,
       componentProps: { id: slide?.id },
+      cssClass: "modal-custom-class"
     });
 
     // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown
@@ -1158,7 +1195,7 @@ export class HomePage implements OnInit {
 
         this.pusherChallenge.isModalShowing = false;
         if (this.pusherChallenge?.pendingNotification?.show) {
-          this.pusherChallenge.presentChallengeNotification();
+          this.pusherChallenge.presentChallengeNotification(this.pusherChallenge?.pendingNotification?.data);
           this.getUserInformation();
         }
 

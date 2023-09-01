@@ -45,7 +45,7 @@ export class DateService {
 
     if(lang === 'en' )
       format = 'MMM, ddd yyyy';
-      
+
     return format
   }
 
@@ -81,7 +81,7 @@ export class DateService {
     let lang =  this.translate.currentLang;
     let locale = 'es-ES'
     if(lang === 'ca'){
-      locale = 'es-CA'
+      locale = 'ca-ES'
     }else if(lang === 'en')
       locale = 'en-US';
 
@@ -475,7 +475,7 @@ export class DateService {
       nextDay : dateString + ' ' + timeString
     });
   }
-  
+
 
   getCalendarDayTime(epoch: number): string {
     if (!epoch) {
@@ -502,6 +502,20 @@ export class DateService {
   // return epoch string as specified format
   formatEpoch(epoch): string {
     return this.getCalendarDay(epoch);
+  }
+
+  getToday(){
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+    let date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
+    return date
+  }
+
+  getCurrentTime(){
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+    let date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
+    return new Date(Date.now() - tzoffset).getTime().toLocaleString();
   }
 
 

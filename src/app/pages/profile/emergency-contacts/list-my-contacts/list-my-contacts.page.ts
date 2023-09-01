@@ -43,7 +43,7 @@ export class ListMyContactsPage implements OnInit {
       phones: true,
     };
     Contacts.getContacts({ projection }).then((result) => {
-      //console.log(`[ListMyContactsPage] getContacts()`, JSON.stringify(result.contacts));
+      console.log(`[ListMyContactsPage] getContacts()`, JSON.stringify(result.contacts));
       this.contacts = this.setContacts(result.contacts);
       this.contactsBackup = this.contacts;
       this.isLoading = false
@@ -68,10 +68,10 @@ export class ListMyContactsPage implements OnInit {
 
   async checkPermission(){
     return Contacts.checkPermissions().then(result =>{
-      //console.log('[ListMyContactsPage] checkPermission(): ', result.contacts);
+      console.log('[ListMyContactsPage] checkPermission(): ', result.contacts);
       let isPermissed = result.contacts
       if(isPermissed && isPermissed == 'granted') this.getContacts()
-      else this.checkPermission();
+      else this.getPermission();
     }).catch(error =>{
       console.log(`[ListMyContactsPage] checkPermission(): ${error}`);
     })

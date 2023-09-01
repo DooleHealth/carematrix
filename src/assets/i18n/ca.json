@@ -190,6 +190,8 @@
         "goal":"Tens <strong>{{ total }} {{ coin }}</strong>, aconsegueix {{ required }} més i passa al següent nivell.",
         "level_congratulations":"Felicitats!",
         "level_accomplished":"Has avançat de nivell",
+        "congratulation":"Felicitats! Has aconseguit superar un repte",
+        "congratulation_level":"Felicitats! Has aconseguit superar el nivell",
         "goal_note":"<p>* Complir els <strong>objectius marcats amb un asterisc</strong> és <strong>indispensables</strong> per a passar al següent nivell.</p>",
         "done":"Fet!"
       },
@@ -600,6 +602,7 @@
         "confirmation": "Està informació quedarà registrada de manera permanent per a ser consultada i no es podrà modificar o eliminar."
       },
       "no_data": "En aquest moment no hi ha dades per a mostrar",
+      "no_data_notifications": "No hi ha cap notificació pendent",
       "diary":{
         "header_diary": "El meu diari",
           "field_diet": "Dieta",

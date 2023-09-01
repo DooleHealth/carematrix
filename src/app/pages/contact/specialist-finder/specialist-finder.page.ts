@@ -25,13 +25,14 @@ export class SpecialistFinderPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: MedicalCalendarPage,
       componentProps: { id: this.staffId },
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
       .then((result) => {
 
         if(result.data['date']){
-          this.selectedDate = this.transformDate(result.data['date']) ;
+          // this.selectedDate = this.transformDate(result.data['date']) ;
           //this.form.get('date').setValue(this.transformDate(this.selectedDate))
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
         }

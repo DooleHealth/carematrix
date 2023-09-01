@@ -403,8 +403,9 @@ export class DooleService {
   getAPIinformationSummary(params: Object){
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
+    console.log('home params', params)
     return this.http.post(endpoint, params).pipe(
-      mergeMap((v) => v instanceof TimeoutError ? throwError(v) : of(v))
+      map(res => res)
     );
   }
   getAPIinformationSummaryOld(params: Object){
@@ -945,10 +946,11 @@ export class DooleService {
     );
   }
 
-  getAPIdietsByDate(date: any): Observable<any> {
+  getAPIdietsByDate(params: any): Observable<any> {
     let path = `user/dietaryIntakes`
     let httpParams = new HttpParams();
-    httpParams = (date) ? httpParams.append('date', date) : httpParams
+    httpParams = (params?.date) ? httpParams.append('date', params.date) : httpParams
+    httpParams = (params?.grouped_by_times) ? httpParams.append('grouped_by_times', params.grouped_by_times) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
@@ -1558,10 +1560,11 @@ export class DooleService {
 
 
 
-  getAPImessage(id, params?): Observable<any> {
-    let path = 'user/message/'+ id
+  getAPImessage(id, params): Observable<any> {
+    let path = 'user/message/' + id
     let httpParams = new HttpParams();
-    httpParams = httpParams? httpParams.append('page', params) : httpParams
+    httpParams = params?.page? httpParams.append('page', params?.page) : httpParams
+    httpParams = params?.user? httpParams.append('user', params?.user) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
@@ -1617,7 +1620,7 @@ export class DooleService {
       })
     );
   }
-  
+
   getAPINotifications(params?): Observable<any> {
     let path = 'user/notifications';
     let httpParams = new HttpParams();
@@ -1632,7 +1635,7 @@ export class DooleService {
       })
     );
   }
-  
+
   postAPINotificationRead(id): Observable<any> {
     let path = `user/notification/read`;
     const endpoint = this.api.getEndpoint(path);

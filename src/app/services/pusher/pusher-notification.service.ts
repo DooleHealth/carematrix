@@ -132,6 +132,7 @@ async openModal(data, pageComponent) {
   const modal = await this.modalCtrl.create({
     component: pageComponent,
     componentProps: { id: data?.model_id },
+    cssClass: "modal-custom-class"
   });
 
   await modal.present();

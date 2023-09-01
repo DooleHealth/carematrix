@@ -32,11 +32,12 @@ export class DocumentsAddPage implements OnInit {
   isSubmittedDate = false;
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   isLoading: boolean;
+  date: any;
+  locale:string;
   constructor(
     private fb: FormBuilder,
     public router: Router,
     private dooleService: DooleService,
-    private modalController: ModalController,
     private translate : TranslateService,
     public platform: Platform,
     public datepipe: DatePipe,
@@ -45,17 +46,23 @@ export class DocumentsAddPage implements OnInit {
     private modalCtrl: ModalController,
     public alertController: AlertController,
 
-  ) { }
+  ) {
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
+    this.locale = this.dateService.getLocale();
+   }
 
   ngOnInit() {
     console.log("[DocumentsAddPage] ngOnInit()");
     this.dateMax = (new Date(Date.now()).getFullYear()) + this.NUM_YEAR
-    this.currentDate = new Date().toISOString()
+    console.log("[DocumentsAddPage] ngOnInit()", this.dateMax);
+    //this.currentDate = new Date().toISOString()
     this.form = this.fb.group({
-      private: [+false, [Validators.required]],
+      private: [false, [Validators.required]],
       type: ['', [Validators.required]],
       title: ['', [Validators.required]],
-      date: ['', [Validators.required]],
+      date: [this.date, [Validators.required]],
       description: [''],
     });
 
@@ -215,8 +222,9 @@ export class DocumentsAddPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
       component: TestTypePage,
+      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss().then((dataReturned) => {

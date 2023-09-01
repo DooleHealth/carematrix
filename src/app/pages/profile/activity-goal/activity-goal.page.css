@@ -1,1 +1,25 @@
-/*# sourceMappingURL=activity-goal.page.css.map */
+.card {
+  box-shadow: none !important;
+  border-radius: 0%;
+  border: solid 2px lightgray;
+}
+
+.card1 {
+  --background: #f5f5f5;
+  border: solid 2px lightgray;
+}
+
+.contaner-none {
+  display: none;
+}
+
+.contaner-block {
+  display: block;
+}
+
+.textCentered {
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}/*# sourceMappingURL=activity-goal.page.css.map */

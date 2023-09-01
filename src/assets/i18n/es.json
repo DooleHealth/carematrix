@@ -13,7 +13,7 @@
         "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
         "message_email_sent":"El correo ha sido enviado",
         "message_wrong_credentials": "El usuario o la contraseñas no son correctas",
-        "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
+        "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta después de 3 minutos.",
         "message_error_serve":"Error del servidor",
         "message_failure_response":"Ha ocurrido un error inesperado intenta otra vez",
         "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo.",
@@ -194,6 +194,8 @@
         "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
         "level_congratulations":"Felicitaciones!",
         "level_accomplished":"Has avanzado de nivel",
+        "congratulation":"Felicitaciones! Has logrado superar un reto",
+        "congratulation_level":"Felicitaciones! Has logrado superar el nivel",
         "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
         "done":"Hecho!"
       },
@@ -570,6 +572,7 @@
 
       },
       "no_data": "En este momento no hay datos para mostrar",
+      "no_data_notifications":"No hay notificaciones pendientes",
       "diary":{
         "header_diary": "Mi diario",
           "field_diet": "Dieta",

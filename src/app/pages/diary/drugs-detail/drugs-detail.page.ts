@@ -29,8 +29,11 @@ export class DrugsDetailPage implements OnInit {
   frequencySeleted = 'daily';
   isInit = true;
   expanded = true;
-  isInstant = false
-  maxYear = (new Date()?.getFullYear() + 5);
+  isInstant = false;
+  maxYear : string;
+  date:any;
+  time:any;
+  locale:string;
   constructor(
     private dooleService: DooleService,
     private fb: FormBuilder,
@@ -39,16 +42,23 @@ export class DrugsDetailPage implements OnInit {
     public alertController: AlertController,
     private modalCtrl: ModalController,
     public dateService: DateService
-  ) { }
+  ) {
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
+    this.locale = this.dateService.getLocale();
+    this.time = localISOTime;
+  }
 
   ngOnInit() {
+
     this.form = this.fb.group({
-      from_date: ['', [Validators.required]],
-      to_date: ['', [Validators.required]],
+      from_date: [this.date, [Validators.required]],
+      to_date: [this.date, [Validators.required]],
       alias: [''],
       dose: ['', [Validators.required]],
       drug: [],
-      time: [''],
+      time: [this.time],
       addedByUser: ["1"],
       frequency: ['instant'],
       day1: [1],
@@ -229,9 +239,12 @@ export class DrugsDetailPage implements OnInit {
   }
 
   inputDate(){
+
+    console.log('[DrugsDetailPage] this.time()', this.time);
     if(this.isSubmited)
     return
     let time = this.form.get('time').value
+    console.log('[DrugsDetailPage] time()', time);
     this.form.get('time').setValue('')
     if(time !== '' ){
       let date = new Date(time)

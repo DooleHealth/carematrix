@@ -189,6 +189,8 @@
       "goal_txt4":" and move to the next level.",
       "level_congratulations": "Congratulations!",
       "level_accomplished": "You have reached the next level",
+      "congratulation":"Congratulations! You have managed to overcome a challenge",
+      "congratulation_level":"Congratulations! You have managed to pass the level",
       "done": "done!"
     },
     "activity_goal": {
@@ -578,6 +580,7 @@
       "confirmation": "This information will be permanently registered to be consulted and cannot be modified or deleted."
     },
     "no_data": "No data to display",
+    "no_data_notifications":"There are no pending notifications",
     "diary": {
       "header_diary": "My Journal",
       "field_diet": "Diet",

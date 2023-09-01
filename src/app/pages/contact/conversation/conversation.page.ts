@@ -43,6 +43,7 @@ export class ConversationPage implements OnInit {
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   private data: any = history.state?.data;
+  private user: any = history.state?.customData;
 
   lastMessageId = -1;
   lastPage = 0
@@ -161,6 +162,9 @@ export class ConversationPage implements OnInit {
   }
 
   getRecipients(recipients){
+    if(this.user)
+    this.to.push(this.staff?.id);
+    else
       recipients.forEach(r => {
        if(r.messageable_id != this.authService?.user.idUser){
 
@@ -186,9 +190,10 @@ export class ConversationPage implements OnInit {
   getMessagesList(isFirstLoad, event?) {
     this.loading = true
     console.log('[ChatPusherPage] getMessagesList() bander:' ,   ++this.bander);
+    const params = {user: this.user, page: this.nextPage}
     const page = this.nextPage;
     if(this.nextPage <= this.lastPage)
-        this.dooleService.getAPImessage(this.id, page).subscribe(
+        this.dooleService.getAPImessage(this.id, params).subscribe(
           async (res: any) =>{
             console.log('[ChatPusherPage] getAPImessage()', await res);
             if (res.success) {

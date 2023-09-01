@@ -72,13 +72,15 @@ export class ListNotificationsPage implements OnInit {
           this.nextPage =  res.nextPage? (this.currentPage) + 1 : (res.lastPage +1)
           this.lastPage =  res.lastPage
           this.numNotification = res.countNotifications
+          //Se filtran las notificaciones de objetivos
+           res.notifications = res.notifications.filter( n => n?.notification_origin_type !== "App\\Goalable")
 
           if(this.numNotification > 0){
 
             let listNotiAux = res.notifications
             listNotiAux?.forEach(n => {
-              this.getTypeNotificatios(n)
-              this.notifications.push(n)
+                this.getTypeNotificatios(n)
+                this.notifications.push(n)
             })
 
             if(this.currentPage <= 1){
@@ -239,6 +241,14 @@ export class ListNotificationsPage implements OnInit {
         //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
         notification['color'] = '#1A8E92'
         break;
+      // case "App\\Goalable":
+      //   notification['message'] = this.translate.instant('list_notifications.diagnostic')
+      //   notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
+      //   notification['title'] = notification?.notification_origin?.title
+      //   //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
+      //   //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
+      //   notification['color'] = '#1A8E92'
+      //   break;
       default:
         notification['message'] = this.translate.instant('list_notifications.default')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
@@ -259,8 +269,9 @@ export class ListNotificationsPage implements OnInit {
         break;
       case "App\\LevelAccomplishment":
         this.setRead(notification.id)
-        //this.router.navigate([`/tracking`],{state:{data: data, segment: 'goals'}});
-        this.router.navigate([`/home`]);
+        const dataA = {id: data.id, name: ''}
+        this.router.navigate([`home/health-path/detail`] , { state: { challenge: dataA } });
+        //this.router.navigate([`/home`]);
         break;
       case "App\\DrugIntake":
         this.setRead(notification.id)

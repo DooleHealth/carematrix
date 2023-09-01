@@ -199,7 +199,8 @@ export class ProfilePage implements OnInit {
   async openVideocallIframeModal(agenda){
     const modal = await this.modalCtrl.create({
       component: VideocallIframePage,
-      componentProps: {"id":agenda}
+      componentProps: {"id":agenda},
+      cssClass: 'my-custom-class'
     });
 
     await modal.present();
@@ -210,6 +211,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
       componentProps: {},
+      cssClass: 'my-custom-class'
     });
     await modal.present();
 
@@ -220,6 +222,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: PatientsPage,
       componentProps: {},
+      cssClass: 'my-custom-class'
     });
     await modal.present();
 

@@ -28,6 +28,8 @@ export class AgendaEditPage implements OnInit {
   isNewEvent = true
   enableReminder = false;
   media = []
+  locale:string;
+  date: any;
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   constructor(
     private fb: FormBuilder,
@@ -38,15 +40,24 @@ export class AgendaEditPage implements OnInit {
     public alertController: AlertController,
     private modalCtrl: ModalController,
     private notification: NotificationService
-  ) { }
+  ) {
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
+    this.locale = this.dateService.getLocale();
+
+   }
 
   ngOnInit() {
-    console.log('event', this.event);
+
     this.dateMax = (new Date(Date.now()).getFullYear()) + this.NUM_YEAR
+    console.log('locale',this.locale);
+
+
     this.form = this.fb.group({
       place: [],
       title: ['', [Validators.required]],
-      date: ['', [Validators.required]],
+      date: [this.date, [Validators.required]],
       duration: ['', [Validators.required]],
       user_comments: [],
       origin: [1],

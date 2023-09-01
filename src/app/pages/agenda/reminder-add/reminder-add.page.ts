@@ -500,9 +500,11 @@ export class ReminderAddPage implements OnInit {
   }
 
   inputDate(){
-    if(this.isSubmited)
+    let time = String(this.form.get('time').value) 
+    console.log('[DrugsDetailPage] inputDate() time', time);
+    if(this.isSubmited && !time)
     return
-    let time = this.form.get('time').value
+
     this.form.get('time').setValue('')
     if(time !== '' ){
       let date = new Date(time)

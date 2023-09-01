@@ -557,12 +557,14 @@ ion-spinner {
 .ios .paddingTopNoMarginBottom {
   padding-top: 3%;
   margin-bottom: -3%;
+  width: 100%;
 }
 
 .ios .paddingTopNoMarginBottomBlue {
   padding-top: 3%;
   margin-bottom: -3%;
   color: #3498db;
+  width: 100%;
 }
 
 .ios .iosHeader {
@@ -576,11 +578,13 @@ ion-spinner {
 /*ANDROID STYLES*/
 .md .paddingTopNoMarginBottom {
   padding-top: 6%;
+  width: 100%;
 }
 
 .md .paddingTopNoMarginBottomBlue {
   padding-top: 6%;
   color: #3498db;
+  width: 100%;
 }
 
 @media (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
@@ -599,6 +603,33 @@ ion-spinner {
     --padding-bottom: 30% !important;
   }
 }
-/* .md ion-header ion-title{
-  text-align: center !important;
- } *//*# sourceMappingURL=app-defaults.css.map */
+.goalGrid {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+}
+
+.txtTitleGreen {
+  color: #4b850c !important;
+  font-weight: bolder;
+  font-family: "Open Sans", sans-serif;
+}
+
+.txtPoppinsBlueLightBold16px {
+  font-size: 16px;
+  font-weight: bolder;
+  font-family: "Open Sans", sans-serif;
+  color: var(--ion-color-primary) !important;
+}
+
+.titleGoalBlack {
+  font-size: 16px;
+  color: black;
+  font-weight: bolder;
+  font-family: "Open Sans", sans-serif;
+}
+
+.txtMarginElement {
+  margin: 10px 0 10px 5%;
+}/*# sourceMappingURL=app-defaults.css.map */

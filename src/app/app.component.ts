@@ -126,15 +126,17 @@ export class AppComponent implements OnInit {
       IRoot.isRooted((data) => {
         if (data && data == 1) {
           console.log("This is routed device");
-          alert(this.translate.instant('security.rooted'));
-          this.appBlockedByRootedUser()
+          //alert(this.translate.instant('security.rooted'));
+          this._zone.run(() => {
+            setTimeout(()=> this.appBlockedByRootedUser(), 500);          
+          });
         } else {
           console.log("This is not routed device");
           //alert("This is not routed device");
         }
       }, (data) => {
         console.log("routed device detection failed case", data);
-        alert(`routed device detection failed case, ${{ data }}`);
+        //alert(`routed device detection failed case, ${{ data }}`);
       });
     }
   }
@@ -417,7 +419,7 @@ export class AppComponent implements OnInit {
         }
         console.log('staff: ', staff);
         this._zone.run(() => {
-          this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff } });
+          this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff, customData: data?.user_id } });
         });
         break;
       case "FORM":
@@ -438,6 +440,11 @@ export class AppComponent implements OnInit {
       case "ADVICE":
         this._zone.run(() => {
           this.router.navigate([`/advices-detail`], { state: { data: data, id: data.id } });
+        });
+        break;
+      case "NEWS":
+        this._zone.run(() => {
+          this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
         });
         break;
       case "DIET":
@@ -517,6 +524,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();
@@ -552,6 +560,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();
@@ -674,6 +683,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();
@@ -708,6 +718,7 @@ export class AppComponent implements OnInit {
           const modal = await this.modalCtrl.create({
             component: VideoComponent,
             componentProps: {},
+            cssClass: "modal-custom-class"
           });
 
           await modal.present();

@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider/options';
+import { Options } from 'ngx-slider-v2';
 import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +34,7 @@ export class SliderComponent implements OnInit, ItemForm {
   valueDescription = '';
   intervals
   value1: number = 0;
-  vSlider: any = {
+  options: any = {
     floor: 0,
     ceil: 0,
     vertical: true,
@@ -105,7 +105,7 @@ export class SliderComponent implements OnInit, ItemForm {
     this.numDecimal = this.getDecimalNumber(this.step, decimals) //decimals < 0? 0:decimals
 
     if(this.data.data?.step_range){
-      this.vSlider  = {
+      this.options  = {
         floor: Number(this.min),
         ceil: Number(this.max),
         vertical: true,
@@ -116,7 +116,7 @@ export class SliderComponent implements OnInit, ItemForm {
         tickStep:this.intervals
       };
     }else{
-      this.vSlider  = {
+      this.options  = {
         floor: Number(this.min),
         ceil: Number(this.max),
         vertical: true,
@@ -126,19 +126,27 @@ export class SliderComponent implements OnInit, ItemForm {
 
     }
 
-    console.log('SliderComponent setVasetVerticalSliderlue() ', this.vSlider)
+    console.log('SliderComponent setVasetVerticalSliderlue() ', this.options)
     this.value1 = this.data.required? this.value1:Number(this.valueDefault)
 
   }
 
   setValue(event){
+    try {
+      event.target.value = event.target?.value?.replace(",",".")
+    } catch (error) {}
     let aux = event.target?.value
-    let valueD = aux%1
-    let num = this.getDecimalNumber(aux, valueD)// String(valueD).length - 2
-
-    if(num > this.numDecimal && valueD > 0 && event.type == 'ionChange'){
+    let point = (aux+'')?.substring(aux?.length - 1)
+    if( point == '.' ||  point == ',' || isNaN(aux))
+    return
+    let valueD = Math.abs(aux%1) 
+    let num = this.getDecimalNumber(aux, valueD)
+    //console.log('SliderComponent setValue() valueD: ', valueD , 'decimal: ', this.numDecimal, 'num' , num)
+    if(num > this.numDecimal &&valueD > 0 //&& event.type == 'ionChange'
+    ){
+      const resp =  parseFloat(aux+'')?.toFixed(this.numDecimal)
+      event.target.value = this.value =  resp
       console.log('SliderComponent setValue() r ', this.value , this.numDecimal)
-      this.value =  event.target?.value?.toFixed(this.numDecimal)
     }else{
       this.value =  event.target.value
       console.log('SliderComponent setValue() ', this.value , this.numDecimal)
@@ -148,12 +156,13 @@ export class SliderComponent implements OnInit, ItemForm {
 
 
     if(this.isVertical){
-      let point = aux?.substring(aux?.length - 1)
-      if( point == '.' ||  point == ','  || aux < Number(this.min))
+      if( aux < Number(this.min))
       return
-      this.value1 = (aux !== '')? aux:this.vSlider.floor
-      console.log('SliderComponent setValue() vert ', this.value, this.value1)
+      //this.value1 = (aux !== '')? aux:this.options.floor
+      setTimeout( () => this.value1 = (aux !== '')? aux:this.options.floor, 400)
+      //console.log('SliderComponent setValue() vert ', this.value, this.value1)
     }
+    this.appRef.tick();
   }
 
   getDecimalNumber(value, decimal){
@@ -199,7 +208,7 @@ export class SliderComponent implements OnInit, ItemForm {
 
   onValueChange(event){
     //console.log('SliderComponent onValueChange() ', event, this.value, this.value1)
-    if( this.value === '' && this.value1 === this.vSlider?.floor)
+    if( this.value === '' && this.value1 === this.options?.floor)
     return
     this.value = event
   }

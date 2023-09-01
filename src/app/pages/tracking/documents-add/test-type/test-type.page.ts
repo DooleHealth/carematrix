@@ -12,7 +12,7 @@ export class TestTypePage implements OnInit {
   listTestTypeBackup = []
   isLoading = false
   constructor(
-    private modalController: ModalController,
+    private modalCtrl: ModalController,
     private dooleService: DooleService
   ) { }
 
@@ -58,17 +58,18 @@ export class TestTypePage implements OnInit {
   }
 
   async presentModal() {
-    const modal = await this.modalController.create({
-      component: TestTypePage
+    const modal = await this.modalCtrl.create({
+      component: TestTypePage,
+      cssClass: "modal-custom-class"
     });
     return await modal.present();
   }
 
   async closeModal(test?: any) {
     if(test)
-    await this.modalController.dismiss(test);
+    await this.modalCtrl.dismiss(test);
     else
-    await this.modalController.dismiss();
+    await this.modalCtrl.dismiss();
   }
 
 }
