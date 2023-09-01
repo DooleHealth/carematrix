@@ -126,15 +126,17 @@ export class AppComponent implements OnInit {
       IRoot.isRooted((data) => {
         if (data && data == 1) {
           console.log("This is routed device");
-          alert(this.translate.instant('security.rooted'));
-          this.appBlockedByRootedUser()
+          //alert(this.translate.instant('security.rooted'));
+          this._zone.run(() => {
+            setTimeout(()=> this.appBlockedByRootedUser(), 500);          
+          });
         } else {
           console.log("This is not routed device");
           //alert("This is not routed device");
         }
       }, (data) => {
         console.log("routed device detection failed case", data);
-        alert(`routed device detection failed case, ${{ data }}`);
+        //alert(`routed device detection failed case, ${{ data }}`);
       });
     }
   }
