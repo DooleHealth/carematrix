@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 
 const config: CapacitorConfig = {
-  appId: 'com.doole.doole',
-  appName: 'Doole',
+  appId: 'com.doole.rosia',
+  appName: 'Rosia',
   bundledWebRuntime: false,
   webDir: "www",
   plugins: {

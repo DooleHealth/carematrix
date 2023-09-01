@@ -20,7 +20,7 @@
         "message_error_internet_disconnected":"No hi ha connexió a Internet. Connecta't a Internet i torna a intentar-ho",
         "login_again":"Si us plau inicieu sessió novament",
         "about_app":"Consells d'ús de l'aplicació",
-        "usage-tips":"<div><p>Benvingut a la nostra aplicació segura i de confiança!</p><p>Per garantir la teva protecció i seguretat, hem preparat aquesta breu guia d'inici per ressaltar les millors pràctiques que pots seguir en utilitzar la nostra aplicació Seguiu aquests consells per gaudir d'una experiència segura i sense preocupacions:</p><ul><li>Escolliu una contrasenya sòlida: Per protegir les vostres dades, és important seleccionar una contrasenya segura i única. una combinació de lletres majúscules i minúscules, números i caràcters especials Evita utilitzar contrasenyes òbvies o informació personal fàcilment identificable.</li><li>Activa l'autenticació de dos factors: Assegura encara més el teu compte habilitant l'autenticació de dos factors. requerirà un segon nivell de verificació, com ara un codi d'accés temporal enviat al telèfon mòbil d'aquesta manera, fins i tot si algú obté la contrasenya, no podran accedir sense el codi de verificació addicional.</li><li>Mantén l'aplicació actualitzada: Les actualitzacions de l'aplicació no només afegeixen noves funcions, sinó que també solucionen possibles vulnerabilitats de seguretat. Assegureu-vos de tenir sempre instal·lada la darrera versió de la nostra aplicació per aprofitar totes les millores i proteccions addicionals.</li><li>Configuració de privadesa: Explora les nostres opcions de configuració de privadesa per personalitzar la teva experiència. Pots controlar quina informació comparteixes i amb qui la comparteixes. Recordeu revisar i ajustar regularment aquestes configuracions per mantenir un nivell òptim de privadesa.</li></ul><p>Aquests són només alguns consells essencials per maximitzar la seguretat en utilitzar la nostra aplicació. Estem compromesos amb la teva protecció i treballem constantment per garantir la integritat de les dades. Sempre estarem aquí per ajudar-te en cas que tinguis alguna pregunta o inquietud sobre la seguretat de l'aplicació, pots comunicar-te amb nosaltres a través de l'email support@doolehealth.com.</p><p>Gràcies per triar la nostra aplicació i confiar en nosaltres!</p><p>Equip Doole Health.</p></div>"
+        "usage-tips":"<div><p>Benvingut a la nostra aplicació segura i de confiança!</p><p>Per garantir la teva protecció i seguretat, hem preparat aquesta breu guia d'inici per ressaltar les millors pràctiques que pots seguir en utilitzar la nostra aplicació Seguiu aquests consells per gaudir d'una experiència segura i sense preocupacions:</p><ul><li>Escolliu una contrasenya sòlida: Per protegir les vostres dades, és important seleccionar una contrasenya segura i única. una combinació de lletres majúscules i minúscules, números i caràcters especials Evita utilitzar contrasenyes òbvies o informació personal fàcilment identificable.</li><li>Activa l'autenticació de dos factors: Assegura encara més el teu compte habilitant l'autenticació de dos factors. requerirà un segon nivell de verificació, com ara un codi d'accés temporal enviat al telèfon mòbil d'aquesta manera, fins i tot si algú obté la contrasenya, no podran accedir sense el codi de verificació addicional.</li><li>Mantén l'aplicació actualitzada: Les actualitzacions de l'aplicació no només afegeixen noves funcions, sinó que també solucionen possibles vulnerabilitats de seguretat. Assegureu-vos de tenir sempre instal·lada la darrera versió de la nostra aplicació per aprofitar totes les millores i proteccions addicionals.</li><li>Configuració de privadesa: Explora les nostres opcions de configuració de privadesa per personalitzar la teva experiència. Pots controlar quina informació comparteixes i amb qui la comparteixes. Recordeu revisar i ajustar regularment aquestes configuracions per mantenir un nivell òptim de privadesa.</li></ul><p>Aquests són només alguns consells essencials per maximitzar la seguretat en utilitzar la nostra aplicació. Estem compromesos amb la teva protecció i treballem constantment per garantir la integritat de les dades. Sempre estarem aquí per ajudar-te en cas que tinguis alguna pregunta o inquietud sobre la seguretat de l'aplicació, pots comunicar-te amb nosaltres a través de l'email support@doolehealth.com.</p><p>Gràcies per triar la nostra aplicació i confiar en nosaltres!</p><p>Equip Rosia.</p></div>"
       },
       "legal": {
         "header": "Condicions d'ús",
@@ -76,7 +76,7 @@
         "slider1_text6": "Connecta les teves aplicacions de salut per veure la teva evolució",
 
         "title2": "Agenda",
-        "slider2_text1": "L'agenda de Doole Health et permet incloure tots els teus cites i recordatoris mèdics. No podràs viure sense ella!",
+        "slider2_text1": "L'agenda de Rosia et permet incloure tots els teus cites i recordatoris mèdics. No podràs viure sense ella!",
 
         "title3": "Contacta",
         "slider3_text1": "Parla amb el teu metge i especialista a través de videotrucada o xat i sol·licita una cita presencial Mai va ser tan ràpid i còmode!",
@@ -91,7 +91,7 @@
         "slider6_text1": "Disposa de les últimes novetats sanitàries i consells per part d'equip mèdic Estigues actualitzat en tot moment!",
 
         "title7": "El meu perfil",
-        "slider7_text1": "Configura les teves dades i les teves preferències de notificació per poder estar sempre informat. Gaudeix la teva experiència en Doole Health!"
+        "slider7_text1": "Configura les teves dades i les teves preferències de notificació per poder estar sempre informat. Gaudeix la teva experiència en Rosia!"
       },
       "home": {
         "hello": "Hola",
@@ -190,8 +190,6 @@
         "goal":"Tens <strong>{{ total }} {{ coin }}</strong>, aconsegueix {{ required }} més i passa al següent nivell.",
         "level_congratulations":"Felicitats!",
         "level_accomplished":"Has avançat de nivell",
-        "congratulation":"Felicitats! Has aconseguit superar un repte",
-        "congratulation_level":"Felicitats! Has aconseguit superar el nivell",
         "goal_note":"<p>* Complir els <strong>objectius marcats amb un asterisc</strong> és <strong>indispensables</strong> per a passar al següent nivell.</p>",
         "done":"Fet!"
       },
@@ -602,7 +600,7 @@
         "confirmation": "Està informació quedarà registrada de manera permanent per a ser consultada i no es podrà modificar o eliminar."
       },
       "no_data": "En aquest moment no hi ha dades per a mostrar",
-      "no_data_notifications": "No hi ha cap notificació pendent",
+      "no_data_notifications":"No hi ha cap notificació pendent",
       "diary":{
         "header_diary": "El meu diari",
           "field_diet": "Dieta",
@@ -806,7 +804,7 @@
       "security":{
         "rooted": "S'ha detectat que aquest dispositiu ha estat inicialitzat amb drets d'usuari inusuals (root). Per motius de seguretat i integritat de les dades s'ha bloquejat l'accés.",
         "alert_security": "Alerta de Seguretat",
-        "ens_message": "<p>Estimat usuari,<br><br>Hem detectat que el seu dispositiu es troba rooted (Android) o jailbroken (Apple). Ens agradaria informar-lo sobre els riscos associats amb l’ ús d’ un dispositiu desbloquejat per a fins de seguretat de dades.<br><br>En desbloquejar el seu dispositiu, s’ eliminen totes les restriccions de fàbrica imposades pe el sistema operatiu, el que pot comprometre la integritat de les dades emmagatzemades al dispositiu. Això pot obrir la porta a possibles amenaces de seguretat, com la instal·lació d’ aplicacions malicioses sense el vostre coneixement, l’ accés no autoritzat a les vostres dades personals o la pèrdua d’ informació confidencial.<br><br>Com a aplicació de telemedicina, ens prenem molt seriosament la privacitat i seguretat de les seves dades personals i mèdiques. Recomanem encaridament que utilitzeu un dispositiu no desbloquejat per garantir la protecció adequada de la vostra informació i evitar possibles bretxes de seguretat.<br><br>Si continua utilitzant la nostra aplicació en aquest dispositiu, ho fa sota la seva responsabilitat exclusiva. No ens fem responsables de qualsevol pèrdua, dany o accés no autoritzat a les vostres dades que pugui passar com a resultat de l'ús d'un dispositiu desbloquejat.<br><br>Us recomanem encaridament que restaureu el dispositiu a la vostra configuració original de fàbrica o utilitzeu un dispositiu alternatiu no desbloquejat per garantir la seguretat de les vostres dades mentre utilitza la nostra aplicació.<br><br>Si teniu alguna pregunta o inquietud, no dubteu a posar-vos en contacte amb el nostre equip de suport a l'email: <a href='mailto : support@doolehealth.com'>support@doolehealth.com</a><br><br>Atentament,<br>L'equip de Doole Health S.L.</p> "
+        "ens_message": "<p>Estimat usuari,<br><br>Hem detectat que el seu dispositiu es troba rooted (Android) o jailbroken (Apple). Ens agradaria informar-lo sobre els riscos associats amb l’ ús d’ un dispositiu desbloquejat per a fins de seguretat de dades.<br><br>En desbloquejar el seu dispositiu, s’ eliminen totes les restriccions de fàbrica imposades pe el sistema operatiu, el que pot comprometre la integritat de les dades emmagatzemades al dispositiu. Això pot obrir la porta a possibles amenaces de seguretat, com la instal·lació d’ aplicacions malicioses sense el vostre coneixement, l’ accés no autoritzat a les vostres dades personals o la pèrdua d’ informació confidencial.<br><br>Com a aplicació de telemedicina, ens prenem molt seriosament la privacitat i seguretat de les seves dades personals i mèdiques. Recomanem encaridament que utilitzeu un dispositiu no desbloquejat per garantir la protecció adequada de la vostra informació i evitar possibles bretxes de seguretat.<br><br>Si continua utilitzant la nostra aplicació en aquest dispositiu, ho fa sota la seva responsabilitat exclusiva. No ens fem responsables de qualsevol pèrdua, dany o accés no autoritzat a les vostres dades que pugui passar com a resultat de l'ús d'un dispositiu desbloquejat.<br><br>Us recomanem encaridament que restaureu el dispositiu a la vostra configuració original de fàbrica o utilitzeu un dispositiu alternatiu no desbloquejat per garantir la seguretat de les vostres dades mentre utilitza la nostra aplicació.<br><br>Si teniu alguna pregunta o inquietud, no dubteu a posar-vos en contacte amb el nostre equip de suport a l'email: <a href='mailto : support@doolehealth.com'>support@doolehealth.com</a><br><br>Atentament,<br>L'equip de Rosia S.L.</p> "
       },
       "commons":{
         "error-network": "S'ha perdut la connexió amb Internet",

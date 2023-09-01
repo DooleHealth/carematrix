@@ -1,4 +1,4 @@
-package com.doole.doole;
+package com.doole.rosia;
 
 import android.os.Bundle;
 import android.telecom.Connection;
@@ -11,7 +11,7 @@ import android.util.Log;
 
 
 public class DooleConnectionService extends ConnectionService {
-    public String app_name = "Doole";
+    public String app_name = "Rosia";
     private static String TAG = "DooleConnectionService";
     private static Connection conn;
 

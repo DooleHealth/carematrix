@@ -983,7 +983,7 @@ export class AppComponent implements OnInit {
 
   showExitConfirm() {
     this.alertController.create({
-      header: 'Doole App',
+      header: 'Rosia App',
       message: this.translate.instant('home.close_app'),
       backdropDismiss: false,
       buttons: [{

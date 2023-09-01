@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-            android:name="com.doole.doole.MainActivity"
+            android:name="com.doole.rosia.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBarLaunch"
             android:launchMode="singleTask"
@@ -61,7 +61,7 @@
         </service>
 
         <service
-            android:name="com.doole.doole.DooleConnectionService"
+            android:name="com.doole.rosia.DooleConnectionService"
             android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
             android:exported="true">
             <intent-filter>

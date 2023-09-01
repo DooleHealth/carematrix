@@ -46,7 +46,7 @@ export class TrackingPage implements OnInit {
   loadingTests = false;
   loadingGraphics = false;
   segment = history.state?.segment ? history.state.segment : 'documents';
-  active_color= '#3498DB'
+  active_color= '#5250da'
   inactive_color= '#7F8C8D'
   filter: Filter;
   constructor(
@@ -275,7 +275,6 @@ async addDocument(){
     const modal = await this.modalCtrl.create({
       component:  ElementsAddPage,
       componentProps: { },
-      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()

@@ -10,19 +10,12 @@ declare const Pusher: any;
 export class PusherConnectionService {
   public  LIST_APP_KEY: Array<any> = [
     {
-      name: 'Producción',
-      app_id: "1287334",
-      key: "f89e2ed013b43522069e",
-      secret: "e23e0b09095890bdac73",
+      name: 'Rosia Producción',
+      app_id: "1632528",
+      key: "3591d99947685b0e45e4",
+      secret: "2972f138fed48a358a61",
       cluster: "eu"
     },
-    {
-      name: 'Calidad',
-      app_id: "1287332",
-      key: "d560960f0cc446a18c95",
-      secret: "63522acb9ee1832855a4",
-      cluster: "eu"
-    }
   ]
   pusher
   constructor(
@@ -73,9 +66,6 @@ export class PusherConnectionService {
     this.pusherAlarm.unsubscribePusher()
     this.pusherNotification.unsubscribePusher()
     this.pusherAlarm.unsubscribePusher()
-
-    // this.pusher?.unsubscribe(this.pusherAlarm.nameChanel)
-    // this.pusher?.unsubscribe(this.pusherNotification.nameChanel)
     this.pusher?.disconnect();
   }
 

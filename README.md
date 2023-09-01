@@ -1,12 +1,12 @@
-# DooleHealth APP 
+# Rosia
 
 ## Contiene:
-- Ionic 5 y Capacitor
+- Ionic 7 y Capacitor 5
 - Interceptores de errores, respuestas de API (fakebackend), errores de servidor y timeouts
 - Servicios de notificacion a usuarios, redes, multi idioma, manejo de errores, logging de errores
 - Integracion con Firebase, Google Fit y Apple Health
 - Contenedor Docker de desarrollo
-- Guards de autenticacion 
+- Guards de autenticacion
 - Componentes Web
 - Plugins para fotos/imagenes, opentok, autenticacion biometrica, redes sociales, calendarios y coneccion a la red.
 
@@ -18,7 +18,7 @@ ionic serve
 npm run build;npx cap sync; npx cap copy ios;npx cap open ios
 ## Ejecutar en Android Studio
 npm run build;npx cap sync; npx cap copy android;npx cap open android
-## Firebase Config 
+## Firebase Config
 environment.ts
 
 ## Error Android “error: package android.support.v4.content does not exist”
@@ -31,15 +31,15 @@ https://ionicframework.com/docs/angular/pwa
 
 1. Ejecutar npm install para instalar @angular/pwa y firebase-tools
 2. Compilar con **ionic build --prod**
-3. Autenticarse (cuenta de google configurada en firebase) ejecutando: **firebase login** 
-4. Iniciar con **firebase init** y configurar:  
+3. Autenticarse (cuenta de google configurada en firebase) ejecutando: **firebase login**
+4. Iniciar con **firebase init** y configurar:
 
 >"Which Firebase CLI features do you want to set up for this folder?" Choose "Hosting: Configure and deploy Firebase Hosting sites."
 >"Select a default Firebase project for this directory:" Choose the project you created on the Firebase website. (deneb-65a05)
 >"What do you want to use as your public directory?" Enter "www".
 
 5. Deploy: **firebase deploy**
-## Desactivar el deploy: 
+## Desactivar el deploy:
 **firebase hosting:disable deneb-65a05**
 
 ## En caso de reinstalar los plugins de Capacitor
@@ -90,7 +90,7 @@ public class CapacitorFirebaseMessagingService extends FirebaseMessagingService 
       try {
         final String phoneAccountLabel = "Doole";
         PhoneAccountHandle phoneAccountHandle = new PhoneAccountHandle(
-                new ComponentName(this.getApplicationContext(), Class.forName("com.doole.doole.DooleConnectionService")),
+                new ComponentName(this.getApplicationContext(), Class.forName("com.doole.rosia.DooleConnectionService")),
                 phoneAccountLabel);
 
         PhoneAccount phoneAccount = PhoneAccount.builder(phoneAccountHandle, phoneAccountLabel).setCapabilities(PhoneAccount.CAPABILITY_CALL_PROVIDER).setCapabilities(PhoneAccount.CAPABILITY_CONNECTION_MANAGER).setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED).build();
@@ -117,7 +117,7 @@ public class CapacitorFirebaseMessagingService extends FirebaseMessagingService 
 
   public void startMain(RemoteMessage remoteMessage){
     try{
-      Intent startIntent = new Intent(this, Class.forName("com.doole.doole.MainActivity"));
+      Intent startIntent = new Intent(this, Class.forName("com.doole.rosia.MainActivity"));
       startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       startIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -180,7 +180,6 @@ Quedaría:
                         NotificationChannelManager.FOREGROUND_NOTIFICATION_CHANNEL_ID
                     )
                         .setSmallIcon(pushIcon)
-                        .setColor(ResourcesCompat.getColor(getContext().getResources(), R.color.primary, null))
                         .setContentTitle(title)
                         .setAutoCancel(true)
                         .setContentIntent(pendingIntent)
