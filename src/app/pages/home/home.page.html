@@ -57,6 +57,25 @@
 
   <ion-grid>
 
+
+    <!-- TEMPORARY Prescribed apps TRAK-->
+    <ion-row
+      class="paddingTopNoMarginBottom">
+      
+      <ion-text class="txtTitle" style="white-space: nowrap">
+        {{ 'home.prescribed_apps_title' | translate}}</ion-text>
+
+        <swiper [slidesPerView]="3" (swiper)="onSwiper($event)"
+        (slideChange)="onSlideChange()" [navigation]="false" [pagination]="false" [scrollbar]="{ draggable: true }">
+
+        <ng-template swiperSlide class="ion-no-padding">
+          <ion-card style="background: white;">
+            <img alt="Silhouette of mountains" src="assets/icons/trak_logo.png" />
+          </ion-card>
+        </ng-template>
+      </swiper>
+    </ion-row>
+
     <!-- Health PATH-->
     <ion-row *ngIf="this.challenges?.length > 0" class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'health_path.card_title' | translate}}</ion-text>
