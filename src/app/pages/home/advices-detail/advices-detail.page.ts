@@ -139,8 +139,8 @@ export class AdvicesDetailPage implements OnInit {
       await modal.dismiss({error:null});
     else if(this.data)
       this.router.navigate([`/home`]);
-    else
-      this.router.navigate([`/advices`]);
+   /*  else
+      this.router.navigate([`/advices`]); */
   }
 
   getStatusable(list, type){

@@ -188,8 +188,14 @@ export class DiaryPage implements OnInit {
         console.log('[DiaryPage] getDietListByDate()', await res);
         if(res.success){
           this.listDiets = []
-          this.diets = res.diet
+
+          this.diets = res?.diet?.id ? res.diet : undefined;
+
           this.treeIterateDiets(res.dietIntakes, '')
+
+          console.log("VERIFY DIETS")
+          console.log(this.diets)
+          console.log(this.diets?.length)
         }
 
        },(err) => {

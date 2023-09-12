@@ -83,7 +83,7 @@
         <ion-spinner ></ion-spinner>
       </ng-container>
       <ng-template #second>
-        <ng-container *ngIf="this.listDiets.length > 0 || this.diets?.length > 0  ;else third">
+        <ng-container *ngIf="this.listDiets.length > 0 || (this.diets !== undefined) ;else third">
           <ion-list>
             <ion-card class="cardProfile" *ngIf="this.diets?.id">
               <ion-item lines="none" routerLink="diets-detail" [state]="{id: diets?.id}" routerLinkActive="active-item">
