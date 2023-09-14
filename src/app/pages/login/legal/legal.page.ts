@@ -99,22 +99,7 @@ export class LegalPage implements OnInit {
   }
 
   rejectLegalConditions(){
-    let confirmation = {lt_id: this.legal.id}
-    this.dooleService.postAPIRejectLegalConfirmation(confirmation).subscribe(
-    async (res: any) =>{
-      console.log('[LegalPage] sendLegalConformation()', await res);
-      if(res.success){
-        this.signOut()
-      }
-      else {
-        let message = this.translate.instant("legal.error_post_conditions_label");
-        this.dooleService.presentAlert(message)
-      }
-     },(err) => { 
-        console.log('getAll ERROR(' + err.code + '): ' + err.message); 
-        this.dooleService.presentAlert(err.message)
-        throw err; 
-    });
+    this.signOut()
   }
 
   async confirmLegalTerms() {
