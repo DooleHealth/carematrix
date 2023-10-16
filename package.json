@@ -1,7 +1,7 @@
 {
   "name": "com.doole.rosia",
   "version": "0.0.1",
-  "author": "Doole Health",
+  "author": "Rehabilify",
   "homepage": "https://www.doolehealth.com/",
   "scripts": {
     "ng": "nx exec -- ng",
