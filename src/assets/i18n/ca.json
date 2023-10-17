@@ -905,6 +905,9 @@
       },
       "departments":{
         "text_description": "Coneix a l'equip"
+      },
+      "trak":{
+        "header": "Trak"
       }
 
 

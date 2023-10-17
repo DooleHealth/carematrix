@@ -912,8 +912,8 @@
     },
     "departments":{
       "text_description": "Conoce al equipo"
+    },
+    "trak":{
+      "header": "Trak"
     }
-
-
-
 }

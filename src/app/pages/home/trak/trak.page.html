@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-toolbar mode="ios">
+      <ion-title>{{ 'trak.header' | translate}}</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button text=""></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content view-cached=”false”>
+
+<ion-content [fullscreen]="true">
+  <iframe [src]="this.safeUrl" class="iframe" allow="camera; microphone" scrolling="yes" width="100%" height="100%" frameborder="0"></iframe>
+</ion-content>
