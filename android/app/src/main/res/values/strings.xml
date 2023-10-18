@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Rosia</string>
-    <string name="title_activity_main">Rosia</string>
+    <string name="app_name">Rehabilify</string>
+    <string name="title_activity_main">Rehabilify</string>
     <string name="package_name">com.doole.rosia</string>
     <string name="custom_url_scheme">com.doole.rosia</string>
 </resources>

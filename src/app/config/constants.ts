@@ -14,7 +14,7 @@ export class Constants {
     public readonly appleAppId = '1672263053'
     public readonly androidBundleId = 'com.doole.rosia'
 
-    public readonly TRAK_URL = "https://salud.rehabilify.com/trak/patient";
+    public readonly TRAK_URL = "https://salud.rehabilify.com/app/trak/patient";
 
     public setEndPoint(index){
       let opt = this.LIST_ENPOINT[index]

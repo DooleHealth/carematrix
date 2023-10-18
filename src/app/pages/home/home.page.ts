@@ -1,5 +1,5 @@
 import { DatePipe, formatDate } from '@angular/common';
-import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ViewEncapsulation, Sanitizer } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@awesome-cordova-plugins/health/ngx';
 import { ModalController, NavController, Platform } from '@ionic/angular';
@@ -26,10 +26,15 @@ import { PdfPage } from '../pdf/pdf.page';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import Swiper, { SwiperOptions } from 'swiper';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import {HttpParams} from "@angular/common/http";
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { BehaviorSubject } from 'rxjs';
+
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Constants } from 'src/app/config/constants';
+
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -153,6 +158,8 @@ export class HomePage implements OnInit {
   public greeting = '';
   userInfo: any;
   pushNotification: any = history.state?.push
+  safeUrl;
+
   constructor(
     public router: Router,
     public platform: Platform,
@@ -175,7 +182,10 @@ export class HomePage implements OnInit {
     private pusherChallenge: PusherChallengeNotificationsService,
     private pusherConnection: PusherConnectionService,
     public dateService : DateService,
-    private androidPermissions: AndroidPermissions
+    private androidPermissions: AndroidPermissions,
+    private sanitizer: DomSanitizer,
+    private constants: Constants
+    
   ) {
     if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
         this.checkPhoneStatePermission();
@@ -192,6 +202,9 @@ export class HomePage implements OnInit {
     this.slides$.next(
       Array.from({ length: 600 }).map((el, index) => `Slide ${index + 1}`)
     );
+
+
+    
 
   }
 
@@ -213,6 +226,12 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     setTimeout(() => this.setTimerSlider(), 3000);
+
+    const params = new HttpParams().set('user_id', this.authService.user.idUser);
+    const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
+    this.safeUrl = urlWithParams
+    console.log(urlWithParams);
+    //this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlWithParams);
 
   }
 

@@ -69,7 +69,8 @@
         (slideChange)="onSlideChange()" [navigation]="false" [pagination]="false" [scrollbar]="{ draggable: true }">
 
         <ng-template swiperSlide class="ion-no-padding">
-          <ion-card style="background: white;" routerLink="/home/trak">
+<!--           routerLink="/home/trak [href]="this.safeUrl"
+ -->          <ion-card style="background: white;"[href]="this.safeUrl">
             <img alt="Silhouette of mountains" src="assets/icons/trak_logo.png" />
           </ion-card>
         </ng-template>
