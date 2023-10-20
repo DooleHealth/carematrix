@@ -271,7 +271,7 @@ export class HomePage implements OnInit {
           //console.log(available);
           this.showGoogleFit = !available;
           this.health.requestAuthorization([
-            'distance', 'steps', 'heart_rate', 'activity', 'weight', ,'oxygen_saturation' //,'blood_glucose','blood_pressure'//, read and write permissions
+            'distance', 'steps', 'heart_rate', 'activity', 'weight', 'oxygen_saturation' //,'blood_glucose','blood_pressure'//, read and write permissions
           ])
             .then(res => {
               //console.log(res);
