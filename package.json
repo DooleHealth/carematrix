@@ -71,6 +71,7 @@
     "@capacitor/push-notifications": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.0",
     "@capacitor/status-bar": "^5.0.5",
+    "@capacitor-community/native-market": "^5.0.0",
     "@capawesome/capacitor-badge": "5.0.0",
     "@ionic/angular": "^7.0.14",
     "@ionic/angular-server": "^7.0.14",

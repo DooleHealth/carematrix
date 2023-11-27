@@ -122,10 +122,20 @@
       <swiper [slidesPerView]="3" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()" [navigation]="false"
         [pagination]="false" [scrollbar]="{ draggable: true }">
 
-        <ng-template swiperSlide class="ion-no-padding">
-          <ion-card style="background: white; box-shadow: none;" [href]="this.safeUrl">
-            <img alt="Silhouette of mountains" src="assets/icons/trak_logo.png" />
-          </ion-card>
+        <ng-template swiperSlide  *ngFor="let slide of this.prescribedApps" class="ion-no-padding">
+
+          <ng-container *ngIf="slide.iframe_url !== null else openMarketApp">
+            <ion-card style="background: white; box-shadow: none;" [href]="this.safeUrl">
+              <img [src]="slide.icon" />
+            </ion-card>
+          </ng-container>
+
+          <ng-template #openMarketApp (click)="openMarketApp(slide.open_market_app_pkg)">
+            <ion-card style="background: white; box-shadow: none;"  >
+              <img [src]="slide.icon" />
+            </ion-card>
+          </ng-template>
+
         </ng-template>
       </swiper>
     </ion-row>

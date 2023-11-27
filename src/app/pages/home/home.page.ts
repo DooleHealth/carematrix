@@ -34,6 +34,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Constants } from 'src/app/config/constants';
+import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
+import { NativeMarket } from "@capacitor-community/native-market";
 
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -160,6 +162,8 @@ export class HomePage implements OnInit {
   pushNotification: any = history.state?.push
   safeUrl;
 
+  prescribedApps: SharedCarePlanPrescribedApps[];
+  
   constructor(
     public router: Router,
     public platform: Platform,
@@ -337,9 +341,37 @@ export class HomePage implements OnInit {
     this.dooleService.getAPIinformationSummary(date).subscribe(
       (res) => {
         this.setUserVallues(res);
+        //prescribed apps pending api call adapter PENDING
+
+
+        const params = new HttpParams().set('user_id', this.authService.user.idUser);
+        const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
+        this.safeUrl = urlWithParams
+
+        this.prescribedApps = [
+          {
+            id: 1,
+            icon: 'assets/icons/trak_logo.png',
+            title: 'TRAK',
+            description: 'TRAK App',
+            iframe_url: this.safeUrl,
+            open_market_app_pkg: null,
+          },
+        ];
       }
+
     );
   }
+
+  openMarketApp(pkg:string) {
+    NativeMarket.openStoreListing({
+      appId: pkg,
+    });
+
+    window.location.reload();
+  }
+
+ 
 
   setUserVallues(res){
 

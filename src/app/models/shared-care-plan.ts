@@ -15,3 +15,12 @@ export interface SharedCarePlanGoal {
     icon: string,
     percentage: string
 }
+
+export interface SharedCarePlanPrescribedApps {
+    id?: number,
+    icon:string,
+    title: string,
+    description: string,
+    iframe_url:string;
+    open_market_app_pkg:string;
+}
