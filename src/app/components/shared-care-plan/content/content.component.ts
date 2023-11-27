@@ -14,7 +14,6 @@ export class ContentComponent  implements OnInit {
   ngOnInit() {}
 
   goTo(type){
-   
       this.redirect.emit({type: type})
   }
     

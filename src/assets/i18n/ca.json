@@ -908,6 +908,18 @@
       },
       "trak":{
         "header": "Trak"
+      },
+      "lifestyle":{
+        "header":"Hàbits d'estil de vida",
+        "head_card_title":"Hàbits d'estil de vida" , 
+        "head_card_text": "Els hàbits de vida poden influir considerablement en la salut física, mental i emocional d'una persona."
+      },
+      "shared_care_plan":{
+        "title": "Pla de cures compartit",
+        "description": "<p>Aquest és el seu <b>Pla de cures compartit</b></p>",
+        "monitoring": "Medical Procedure",
+        "medical_procedure": "Medical Procedure",
+        "informed_consent": "Informed Consent"
       }
 
 
