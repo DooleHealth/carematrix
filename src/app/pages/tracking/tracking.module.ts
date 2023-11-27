@@ -14,6 +14,7 @@ import { ElementsAddPageModule } from './elements-add/elements-add.module';
 import { DocumentsAddPageModule } from './documents-add/documents-add.module';
 import { DocumentsFilterPageModule } from './documents-filter/documents-filter.module';
 import { ShareModule } from 'src/app/shared/share/share.module';
+import { LifestyleHabitsModule } from './lifestyle-habits/lifestyle-habits.module';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ShareModule } from 'src/app/shared/share/share.module';
     TrackingPageRoutingModule,
     ElementsAddPageModule,
     DocumentsAddPageModule,
-    DocumentsFilterPageModule
+    DocumentsFilterPageModule,
+    LifestyleHabitsModule
   ],
   providers: [ InAppBrowser],
   declarations: [TrackingPage]

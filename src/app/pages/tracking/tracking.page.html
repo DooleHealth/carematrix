@@ -56,7 +56,7 @@
     <!-- Shared Care Plan -->
     <div *ngSwitchCase="'sharedcare'">
       <ion-list *ngFor="let content of this.listContent">
-          <scp-content [content]="content"></scp-content>
+          <scp-content [content]="content" (redirect)="handleRedirect($event)"></scp-content>
       </ion-list>
     </div>
 

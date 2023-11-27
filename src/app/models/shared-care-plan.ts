@@ -15,3 +15,11 @@ export interface SharedCarePlanGoal {
     icon: string,
     percentage: string
 }
+
+export interface SharedCarePlanLifeStyle {
+    img?: string,
+    title: string,
+    description: string,
+    type: string
+    
+}

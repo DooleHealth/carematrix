@@ -43,6 +43,7 @@ import { TooltipComponent } from './form/tooltip/tooltip.component';
 import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
 import { NgxSliderModule } from 'ngx-slider-v2';
 import { ContentComponent } from './shared-care-plan/content/content.component';
+import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/lifestyle-index.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -89,7 +90,8 @@ import { ContentComponent } from './shared-care-plan/content/content.component';
     TooltipComponent,
     FormDirective,
     SafeHtmlPipe,
-    ContentComponent
+    ContentComponent,
+    LifestyleIndexComponent
   ],
   exports: [
     ShellModule,
@@ -125,7 +127,8 @@ import { ContentComponent } from './shared-care-plan/content/content.component';
     ParagraphComponent,
     HiddenComponent,
     TooltipComponent,
-    ContentComponent
+    ContentComponent,
+    LifestyleIndexComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
