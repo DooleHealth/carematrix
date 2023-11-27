@@ -11,3 +11,11 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
     date: string;
     percentage: string
 }
+
+export interface SharedCarePlanLifeStyle {
+    img?: string,
+    title: string,
+    description: string,
+    type: string
+    
+}

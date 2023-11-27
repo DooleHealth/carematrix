@@ -920,5 +920,11 @@
   },
   "trak":{
     "header": "Trak"
-  }
+  },  
+    "lifestyle":{
+      "header":"Lifestyle Habits",
+      "head_card_title":"Lifestyle Habits" , 
+      "head_card_text": "Lifestyle habits can have a significant impact on an individual's physical, mental, and emotional health"
+    }
+      
 }

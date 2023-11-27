@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title class="ion-text-wrap">{{ 'lifestyle.header' | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card >
+    <ion-item lines="none">
+      <ion-grid> 
+        <ion-row>
+          <ion-icon style="height: 20px; width: 20px;"  src="assets/icons/walk.svg"></ion-icon>
+          <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{ 'lifestyle.head_card_title' | translate}}</ion-text>
+        </ion-row>
+        <ion-row class="imgPadding">
+          <p>{{ 'lifestyle.head_card_text' | translate}}</p>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  
+  </ion-card>
+
+  <div>
+    <ion-list *ngFor="let content of this.listContent">
+        <app-lifestyle-index [content]="content" (redirect)="handleRedirect($event)"></app-lifestyle-index>
+    </ion-list>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

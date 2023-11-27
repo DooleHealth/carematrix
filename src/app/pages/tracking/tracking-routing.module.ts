@@ -32,6 +32,11 @@ const routes: Routes = [
     path: 'form',
     loadChildren: () => import('./form/form.module').then( m => m.FormPageModule)
   },
+  {
+    path: 'lifestyle-habits',
+    loadChildren: () => import('./lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsModule)
+  },
+
 ];
 
 @NgModule({

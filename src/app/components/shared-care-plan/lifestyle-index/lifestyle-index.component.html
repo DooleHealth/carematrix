@@ -1,0 +1,19 @@
+<ion-card class="cardProfile" (click)="goTo(content.type)">
+  <ion-item lines="none">
+    <ion-thumbnail slot="start">
+      <img alt="Silhouette of mountains" [src]="content?.img" />
+    </ion-thumbnail>
+    <ion-grid> 
+      <ion-row>
+        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title}}</ion-text>
+        <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+      </ion-row>
+     
+      <ion-row class="imgPadding">
+        <p>{{ content?.description }}</p>
+      </ion-row>
+     
+    </ion-grid>
+  </ion-item>
+
+</ion-card>
