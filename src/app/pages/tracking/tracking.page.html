@@ -36,8 +36,8 @@
     [(ngModel)]="segment"
     scrollable
   >
-    <ion-segment-button value="sharedcare">
-      <ion-label>{{ 'tab.tracking' | translate}}</ion-label>
+    <ion-segment-button value="sharedcareplan">
+      <ion-label>{{ 'shared_care_plan.title' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button *ngIf="role?.component?.doc_diagnostic" value="documents">
       <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
@@ -54,9 +54,9 @@
 
   <div [ngSwitch]="segment">
     <!-- Shared Care Plan -->
-    <div *ngSwitchCase="'sharedcare'">
-      <ion-list *ngFor="let content of this.listContent">
-          <scp-content [content]="content" (redirect)="handleRedirect($event)"></scp-content>
+    <div *ngSwitchCase="'sharedcareplan'">
+      <ion-list>
+          <scp-content *ngFor="let content of this.listContent" [content]="content"></scp-content>
       </ion-list>
     </div>
 

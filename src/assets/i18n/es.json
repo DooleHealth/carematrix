@@ -920,5 +920,12 @@
       "header":"Hábitos de estilo de vida",
       "head_card_title":"Hábitos de estilo de vida" , 
       "head_card_text": "Los hábitos de vida pueden influir considerablemente en la salud física, mental y emocional de una persona."
+    },
+    "shared_care_plan":{
+      "title": "Plan de cuidados compartido",
+      "description": "<p>Este es su <b>Plan de cuidados compartido</b></p>",
+      "monitoring": "Monitorización",
+      "medical_procedure": "Procediments mèdics",
+      "informed_consent": "Consentiment Informat"
     }
 }
