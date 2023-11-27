@@ -43,6 +43,7 @@ import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import localeCa from '@angular/common/locales/ca';
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
+import localePt from '@angular/common/locales/pt';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@awesome-cordova-plugins/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
@@ -59,6 +60,7 @@ import { Device } from "@awesome-cordova-plugins/device/ngx";
 registerLocaleData(localeEn);
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
+registerLocaleData(localePt);
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
