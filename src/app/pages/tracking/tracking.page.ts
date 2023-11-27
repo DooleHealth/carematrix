@@ -32,7 +32,7 @@ export interface Filter {
 })
 export class TrackingPage implements OnInit {
   listContent: Array<SharedCarePlan> = [];
-  exampleContent: SharedCarePlan = {icon: 'assets/icons/scp-goals.svg', title: 'Goals', description: 'This is your Shared Care Plan ', type: 'goal', state: 'new'}
+  exampleContent: SharedCarePlan = {icon: 'assets/icons/share-care-plan/scp-goals.svg', title: 'Goals', description: 'This is your Shared Care Plan ', type: 'goal', state: 'new'}
 
   listDiagnostic:  ListDiagnosticTests[];
   diagnosticTests : Array<any>;
