@@ -4,6 +4,7 @@ export interface SharedCarePlan {
     description: string;
     type: string;
     state?: string;
+    booleanState?: boolean;
     route?: string;
 }
 
@@ -13,17 +14,17 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
     percentage: string
 }
 
-enum ContentTypePath {
-    Goals,
-    LifestyleHabits,
-    Medication,
-    Forms,
-    Monitoring,
-    MedicalProcedure,
-    InformedConsent,
+export enum ContentTypePath {
+    Goals = '/profile/goals',
+    LifestyleHabits = '/profile/goals', //cambiar
+    Medication= '/profile/goals', //cambiar
+    Forms= '/profile/goals', //cambiar
+    Monitoring= '/profile/goals', //cambiar
+    MedicalProcedure= '/profile/goals', //cambiar
+    InformedConsent = '/tracking/informed-consent'
 }
 
-enum ContentTypeIcons {
+export enum ContentTypeIcons {
     Goals = 'assets/icons/share-care-plan/scp-goals.svg',
     LifestyleHabits = 'assets/icons/share-care-plan/scp-lifestyle.svg',
     Medication = 'assets/icons/share-care-plan/scp-medication.svg',
@@ -38,5 +39,6 @@ interface SCPContentType {
 }
 
 const ListContentType: SCPContentType = [
-
+    {icon: ContentTypeIcons.Goals, title: '', description: '', type: 'goals', state: '', booleanState: false, route: ContentTypePath.Goals},
+    {icon: ContentTypeIcons.LifestyleHabits, title: '', description: '', type: 'lifestyle', state: '', booleanState: false, route: ContentTypePath.LifestyleHabits}
 ]

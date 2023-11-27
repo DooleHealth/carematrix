@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'form',
     loadChildren: () => import('./form/form.module').then( m => m.FormPageModule)
   },
+  {
+    path: 'informed-consent',
+    loadChildren: () => import('./informed-consent/informed-consent.module').then( m => m.InformedConsentPageModule)
+  },
 ];
 
 @NgModule({
