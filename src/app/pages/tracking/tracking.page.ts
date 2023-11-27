@@ -11,6 +11,7 @@ import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { DateService } from 'src/app/services/date.service';
+import { SharedCarePlan } from 'src/app/models/shared-care-plan';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -30,6 +31,9 @@ export interface Filter {
   styleUrls: ['./tracking.page.scss'],
 })
 export class TrackingPage implements OnInit {
+  listContent: Array<SharedCarePlan> = [];
+  exampleContent: SharedCarePlan = {icon: 'assets/icons/scp-goals.svg', title: 'Goals', description: 'This is your Shared Care Plan ', type: 'goal', state: 'new'}
+
   listDiagnostic:  ListDiagnosticTests[];
   diagnosticTests : Array<any>;
   forms: Array<any>;
@@ -60,6 +64,7 @@ export class TrackingPage implements OnInit {
 
 
   ngOnInit() {
+    this.listContent.push(this.exampleContent)
   }
 
   ionViewWillEnter(){

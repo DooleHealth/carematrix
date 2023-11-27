@@ -37,6 +37,10 @@
 // Add base shell styles
 @import "theme/shell-defaults.scss";
 
+// Add Shared Care Plan
+@import "theme/shared-care-plan/ion-colors.scss";
+@import "theme/shared-care-plan/components.scss";
+
 // Swiper
 @import 'swiper/scss';
 @import 'swiper/scss/navigation';

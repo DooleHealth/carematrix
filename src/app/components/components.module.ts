@@ -42,6 +42,7 @@ import { TextareaComponent } from './form/textarea/textarea.component';
 import { TooltipComponent } from './form/tooltip/tooltip.component';
 import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
 import { NgxSliderModule } from 'ngx-slider-v2';
+import { ContentComponent } from './shared-care-plan/content/content.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -88,6 +89,7 @@ import { NgxSliderModule } from 'ngx-slider-v2';
     TooltipComponent,
     FormDirective,
     SafeHtmlPipe,
+    ContentComponent
   ],
   exports: [
     ShellModule,
@@ -122,7 +124,8 @@ import { NgxSliderModule } from 'ngx-slider-v2';
     InputComponent,
     ParagraphComponent,
     HiddenComponent,
-    TooltipComponent
+    TooltipComponent,
+    ContentComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

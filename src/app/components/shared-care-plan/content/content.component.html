@@ -1,0 +1,15 @@
+<ion-card class="cardProfile" (click)="goTo(content.type)">
+  <ion-item lines="none">
+    <div class="verticalLineMalva"></div>
+    <ion-grid> 
+      <ion-row>
+        <ion-icon [src]="content.icon"></ion-icon>
+        <ion-text class="txtTitleGoals textAdvicesSlider">{{content?.title}}</ion-text>
+      </ion-row>
+      <ion-row class="imgPadding">
+        <p>{{ content?.description }}</p>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+</ion-card>

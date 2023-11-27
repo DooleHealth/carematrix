@@ -166,6 +166,10 @@ const routes: Routes = [
   {
     path: 'pdf',
     loadChildren: () => import('./pages/pdf/pdf.module').then( m => m.PdfPageModule)
+  },
+  {
+    path: 'shared-care-plan',
+    loadChildren: () => import('./pages/shared-care-plan/shared-care-plan.module').then( m => m.SharedCarePlanPageModule)
   }
 
 
