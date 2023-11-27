@@ -1,3 +1,20 @@
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0 0 0 ;
+}
+
+.icon-notifications {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.icon-menu {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+
 .imgProfile {
   width: 30px;
 }
@@ -122,11 +139,21 @@
   }
 }
 .customCardAppointment {
+  border-radius: 8px;
   background-color: #fff;
+  box-shadow: none !important;
+}
+
+.challenge-txt {
+  margin-left:10px; 
+  color:var(--purple);
+  font-weight: 600;
+  line-height: 21px;  
 }
 
 .customCardHealthPath {
   background-color: white;
+  box-shadow: none !important;
 }
 .strechCardContent {
   min-width: 300px !important;
@@ -219,15 +246,26 @@ ion-progress-bar {
   -webkit-line-clamp: 1;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  color: black;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+strong {
+  color: black;
 }
 
 .bell {
   margin-top: 10%; //7px;
-  width: fit-content;
+  width: -webkit-fill-available;
   margin-left: -9px;
   position: absolute;
   z-index: 99999;
 }
+
+
 .ion-text-end {
   padding-left: 0% !important;
   padding-right: 0% !important;
