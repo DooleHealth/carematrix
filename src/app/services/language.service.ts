@@ -12,7 +12,8 @@ export class LanguageService {
     this.languages.push(
       { name: 'Català', code: 'ca' },
       { name: 'Español', code: 'es' },
-      { name: 'English', code: 'en' }
+      { name: 'English', code: 'en' },
+      { name: 'Português', code: 'pt' },
     );
   }
 

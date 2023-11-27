@@ -120,7 +120,7 @@ ion-back-button {
 .txtTitle {
   font-size: 18px;
   font-weight: 700;
-  margin-left: 5%;
+  padding-left: 3%;
 }
 .txtTitleGray {
   font-size: 18px;
@@ -312,6 +312,8 @@ ion-back-button {
 text-align: left !important;
 }
 .alingLeftTop {
+  display: flex;
+  align-items: center;
   text-align: left !important;
   padding-left: 3%;
   margin-top: 3%;

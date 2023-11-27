@@ -1,9 +1,10 @@
-<ion-grid>
+<ion-grid mode="ios">
   <ion-row class="main-container">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/home']">
-          <ion-icon name="home"></ion-icon>
+          <ion-icon src="../../assets/icons/home.svg"></ion-icon>
+          
           <ion-label>{{ 'tab.home' | translate }}</ion-label>
         </ion-tab-button>
         <ion-tab-button *ngIf="role?.component?.agenda" [routerLinkActive]="['tab-selected']" [routerLink]="['/agenda']">
@@ -15,7 +16,7 @@
           <ion-label>{{ 'tab.contact' | translate  }}</ion-label>
         </ion-tab-button>
         <ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/tracking']">
-          <ion-icon name="newspaper"></ion-icon>
+          <ion-icon src="../../assets/icons/follow_up.svg"></ion-icon>
           <ion-label>{{ 'tab.tracking' | translate }}</ion-label>
         </ion-tab-button>
         <!--<ion-tab-button [routerLinkActive]="['tab-selected']" [routerLink]="['/journal']">

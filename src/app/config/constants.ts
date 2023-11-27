@@ -23,17 +23,6 @@ export class Constants {
       this.DOOLE_ENDPOINT = opt.endpoint
     }
 
-
-
-
-    /* name: 'Producción',
-    api: 'https://salud.rehabilify.com/api',
-    endpoint: 'https://salud.rehabilify.com' */
-
-
-    
-
-
     public addEndPoint(){
       this.LIST_ENPOINT = []
       this.LIST_ENPOINT.push({ //Por defecto index 0
