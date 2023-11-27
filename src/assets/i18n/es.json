@@ -915,5 +915,10 @@
     },
     "trak":{
       "header": "Trak"
+    },
+    "lifestyle":{
+      "header":"Hábitos de estilo de vida",
+      "head_card_title":"Hábitos de estilo de vida" , 
+      "head_card_text": "Los hábitos de vida pueden influir considerablemente en la salud física, mental y emocional de una persona."
     }
 }

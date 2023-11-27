@@ -56,9 +56,9 @@ export class TabsComponent implements OnInit {
     return this.router.navigateByUrl('/tracking');
   }
 
-  public navigateDiary(){
+  /* public navigateDiary(){
     return this.router.navigateByUrl('/journal');
-  }
+  } */
 
 // borrar después de esta linea para abajo
 

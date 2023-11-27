@@ -12,6 +12,7 @@ import { ElementsAddPage } from './elements-add/elements-add.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlan } from 'src/app/models/shared-care-plan';
+import { Router } from '@angular/router';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -32,7 +33,11 @@ export interface Filter {
 })
 export class TrackingPage implements OnInit {
   listContent: Array<SharedCarePlan> = [];
-  exampleContent: SharedCarePlan = {icon: 'assets/icons/share-care-plan/scp-goals.svg', title: 'Goals', description: 'This is your Shared Care Plan ', type: 'goal', state: 'new'}
+
+  exampleContent: SharedCarePlan [] = [
+  {icon: 'assets/icons/scp-goals.svg', title: 'Goals', description: 'This is your Shared Care Plan ', type: 'goal', state: 'new'},
+  {icon: 'assets/icons/walk.svg', title: 'Lifestyle Habits', description: 'This is your Shared Care Plan ', type: 'lifestyle_habits', state: ''} ] 
+
 
   listDiagnostic:  ListDiagnosticTests[];
   diagnosticTests : Array<any>;
@@ -59,12 +64,13 @@ export class TrackingPage implements OnInit {
     private modalCtrl: ModalController,
     private notification: NotificationService,
     private dateService: DateService,
-    public role: RolesService
+    public role: RolesService,
+    private router: Router
   ) { }
 
 
   ngOnInit() {
-    this.listContent.push(this.exampleContent)
+    this.listContent.push(...this.exampleContent)
   }
 
   ionViewWillEnter(){
@@ -322,5 +328,19 @@ async addDocument(){
         await modal.present();
 
       }
+
+      handleRedirect(event: { type: string }) {        
+        switch (event.type) {
+          case 'goal':
+           break;
+          case 'lifestyle_habits':           
+            this.router.navigate(['/lifestyle-habits']);
+            break;
+          default:
+            break;
+        }
+      }
+
+    
 
 }

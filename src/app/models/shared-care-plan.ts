@@ -42,3 +42,10 @@ const ListContentType: SCPContentType = [
     {icon: ContentTypeIcons.Goals, title: '', description: '', type: 'goals', state: '', booleanState: false, route: ContentTypePath.Goals},
     {icon: ContentTypeIcons.LifestyleHabits, title: '', description: '', type: 'lifestyle', state: '', booleanState: false, route: ContentTypePath.LifestyleHabits}
 ]
+export interface SharedCarePlanLifeStyle {
+    img?: string,
+    title: string,
+    description: string,
+    type: string
+    
+}
