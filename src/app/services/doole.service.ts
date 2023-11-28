@@ -1997,6 +1997,17 @@ export class DooleService {
     );
   }
 
+  getAPIExercises(): Observable<any> {
+    let path = 'user/exercises';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIChallenge(challengeId, params?): Observable<any> {
     let path = 'user/challenge/'+challengeId
 
@@ -2033,11 +2044,6 @@ export class DooleService {
     )
   }
 
-
-
-
-
-  
   getAPIpatients(): Observable<any> {
     let path = 'user/patients';
     const endpoint = this.api.getEndpoint(path);
