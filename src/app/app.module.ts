@@ -53,7 +53,6 @@ import { BackgroundMode } from "@awesome-cordova-plugins/background-mode/ngx";
 import { BLE } from "@awesome-cordova-plugins/ble/ngx";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Market } from "@awesome-cordova-plugins/market/ngx";
-import { SwiperModule } from 'swiper/angular';
 import { Device } from "@awesome-cordova-plugins/device/ngx";
 
 registerLocaleData(localeEn);

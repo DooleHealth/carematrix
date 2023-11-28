@@ -1,10 +1,10 @@
 import { DatePipe, formatDate } from '@angular/common';
-import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ViewEncapsulation, Sanitizer } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ViewEncapsulation, Sanitizer, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@awesome-cordova-plugins/health/ngx';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
-import { User, Agenda, FamilyUnit } from 'src/app/models/user';
+import { User, Agenda, FamilyUnit, Game } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
@@ -24,25 +24,22 @@ import { NewDetailPage } from './new-detail/new-detail.page';
 import { DateService } from 'src/app/services/date.service';
 import { PdfPage } from '../pdf/pdf.page';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
-import Swiper, { SwiperOptions } from 'swiper';
+
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import {HttpParams} from "@angular/common/http";
-
-// import Swiper core and required modules
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { BehaviorSubject } from 'rxjs';
 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Constants } from 'src/app/config/constants';
 import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
 import { NativeMarket } from "@capacitor-community/native-market";
+import { SwiperOptions } from 'swiper/types/swiper-options';
 
-// install Swiper modules
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export interface UserInformation {
   title?: string;
   hour?: string;
+  image?: string;
+  frequency?: string;
 }
 
 export class ShowcaseShellUserModel extends ShellModel {
@@ -76,28 +73,7 @@ export class HomePage implements OnInit {
     disabledClass: 'disabled_swiper_button'
   }
 
-  config: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 50,
-    navigation: false,
-    pagination: { clickable: true,
-      dynamicMainBullets: 3, dynamicBullets: true, },
-    scrollbar: { draggable: true },
-    effect: 'slide',
-    loop: false,
 
-  };
-  configVertical: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 50,
-    navigation: false,
-    pagination: { clickable: true,
-    dynamicMainBullets: 3, dynamicBullets: true, },
-    scrollbar: { draggable: true },
-    effect: 'slide',
-    loop: false,
-    direction:'vertical'
-  };
   WAIT_TIME = 10 //10 minutes
   userDoole: any = {}
   goals: any = []
@@ -119,34 +95,90 @@ export class HomePage implements OnInit {
   currentIndexGame = 0
   currentIndexDiet = 0
   viewAllDiets: boolean = false;
-  sliderConfig = {
+
+  sliderGoalConfig: SwiperOptions = {
+    initialSlide: 0,
     slidesPerView: 1,
     direction: 'vertical',
-    centeredSlides: false,
-  };
-  sliderConfigHorizontal = {
+    centeredSlides: true,
+    pagination: {
+      el: '.swiper-pagination',
+      dynamicBullets: true,
+    },
+   };
+
+   sliderConfigVertical : SwiperOptions = {
+    slidesPerView: 1,
+    direction: 'vertical',
+    centeredSlides: true,
+    pagination: {
+      el: '.swiper-pagination',
+      dynamicBullets: true,
+    },
+   };
+
+   sliderConfigVerticalOneSlide : SwiperOptions = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    direction: 'vertical',
+    centeredSlides: true,
+    pagination: true,
+   };
+
+   sliderConfigHorizontal : SwiperOptions = {
     initialSlide: 0,
     slidesPerView: 1.1,
     spaceBetween: 0,
     centeredSlides: false,
-  };
+   };
 
-
-  sliderConfigHorizontalOneSlide = {
+   sliderConfigHorizontalOneSlide : SwiperOptions = {
     initialSlide: 0,
     slidesPerView: 1,
     spaceBetween: 0,
     centeredSlides: true,
   };
 
+  config: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    navigation: false,
+    pagination: { clickable: true},
+    scrollbar: { draggable: true },
+    effect: 'slide',
+    loop: false,
+
+  };
+
+  configVertical: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    navigation: false,
+    pagination: { clickable: true, dynamicMainBullets: 3, dynamicBullets: true, },
+    scrollbar: { draggable: true },
+    effect: 'slide',
+    loop: false,
+    direction:'vertical'
+  };
+
   sliderHealthPathConfig = this.sliderConfigHorizontal;
   sliderAdvicesConfig = this.sliderConfigHorizontal;
-  slides$ = new BehaviorSubject<string[]>(['']);
-  @ViewChild('sliderGoals') sliderGoals: Swiper;
-  @ViewChild('sliderDiet') sliderDiet: Swiper;
-  @ViewChild('sliderDrug') sliderDrug: Swiper;
-  @ViewChild('sliderGames') sliderGames: Swiper;
-  @ViewChild('sliderPhysical') sliderPhysical: Swiper;
+
+
+  //vertical
+  sliderGoalsConfigVertical:any = this.sliderGoalConfig;
+  sliderDietsConfigVertical:any = this.sliderConfigVertical;
+  sliderDrugsConfigVertical:any = this.sliderConfigVertical;
+  sliderPhysicalConfigVertical:any = this.sliderConfigVertical;
+
+  //slides$ = new BehaviorSubject<string[]>(['']);
+
+
+  @ViewChild('sliderGoals') sliderGoals: ElementRef | undefined;
+  @ViewChild('sliderDiet') sliderDiet: ElementRef | undefined;
+  @ViewChild('sliderDrug') sliderDrug: ElementRef | undefined;
+  @ViewChild('sliderGames') sliderGames: ElementRef | undefined;
+  @ViewChild('sliderPhysical') sliderPhysical: ElementRef | undefined;
   @ViewChild('tabs') tabs: TabsComponent;
 
   infoDiet: UserInformation
@@ -196,6 +228,76 @@ export class HomePage implements OnInit {
 
   }
 
+
+  slideGoalChange() {
+    console.log('[HomePage] slideGoalChange()');
+    if(this.goals !== undefined && this.goals?.length > 0){
+      const index = this.sliderGoals.nativeElement.swiper.activeIndex
+      let slider = this.goals[index]
+      this.infoGoals = {
+        title: slider?.element?.name, 
+        //image: this.selectImgGoalsProgressBar(slider?.progress_bar_color),
+        frequency: slider?.frequencyString
+      }
+    }
+  }
+
+  slideDietChange(){
+    if(this.diets !== undefined && this.diets?.length > 0) {
+     const index = this.sliderDiet?.nativeElement?.swiper.activeIndex
+      let slider = this.diets[index]
+      this.infoDiet = {
+        title: slider?.items,
+      }
+  }
+  }
+
+  slideDrugChange(){
+    if(this.drugs !== undefined && this.drugs?.length > 0){
+      const index = this.sliderDrug?.nativeElement?.swiper?.activeIndex
+        let slider = this.drugs[index]
+        this.infoDrugs = {
+          title: slider?.name,
+          hour: slider?.hour_intake
+        }
+        console.log('[HomePage] slideDrugChange()', this.infoDrugs, index );
+    }else{
+      this.infoDrugs = null;
+    }
+
+  }
+
+  slideGamesChange(){
+
+    if(this.games !== undefined && this.games?.length > 0) {
+      console.log("ENTROO")
+      const index = this.sliderGames?.nativeElement?.swiper?.activeIndex
+      console.log(this.games)
+      let slider = /*this.games[index]*/ this.games;
+      console.log(slider)
+
+      this.games
+      let hour = this.games[0].scheduled_date?.split(' ')[1]
+      this.infoGames = {
+        title:this.games[0].name,
+        hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
+      }
+
+      console.log(this.infoGames)
+    }
+  }
+
+  slideActivityChange(){
+    if(this.activity !== undefined && this.activity?.length > 0){
+      const index = this.sliderPhysical?.nativeElement?.swiper?.activeIndex
+      let slider = this.activity[index]
+      this.infoActivity = {
+        title: slider?.group
+      }
+    }
+  }
+
+
   async ngOnInit() {
 
     this.initPushers()
@@ -203,13 +305,6 @@ export class HomePage implements OnInit {
     //this.date = this.dateService.yyyyMMddFormat(Date.now());
     this.checkHealthAccess();
     this.activateAllNotifications(1)
-    this.slides$.next(
-      Array.from({ length: 600 }).map((el, index) => `Slide ${index + 1}`)
-    );
-
-
-    
-
   }
 
 
@@ -373,6 +468,24 @@ export class HomePage implements OnInit {
 
  
 
+  setSliderOption(option, list?){
+    switch (option) {
+      //Horizontal
+      case 'goals':
+        this.sliderGoalsConfigVertical = (this.goals?.length == 1)? this.sliderConfigVerticalOneSlide: this.sliderGoalConfig
+        break;
+      case 'drugs':
+        this.sliderDrugsConfigVertical = (this.drugs?.length == 1)?this.sliderConfigVerticalOneSlide: this.sliderConfigVertical
+        break;
+      case 'physical':
+        this.sliderPhysicalConfigVertical = (this.activity?.length == 1)?this.sliderConfigVerticalOneSlide: this.sliderConfigVertical
+        break;
+      case 'diets':
+        this.sliderDietsConfigVertical = (this.diets?.length == 1)?this.sliderConfigVerticalOneSlide: this.sliderConfigVertical
+        break;
+    }
+  }
+
   setUserVallues(res){
 
     let tempAdvices;
@@ -454,6 +567,8 @@ export class HomePage implements OnInit {
         })
         this.searchIndexDGame()
         this.slideGamesChange()
+
+        console.log(this.games)
         // this.sliderGames?.slideTo(this.currentIndexDrug)
       }
       //this.drugs = res.data.drugIntakes.drugIntakes
@@ -737,15 +852,28 @@ export class HomePage implements OnInit {
 
 
 
-  getDrugIntake() {
-    this.dooleService.getAPIdrugIntakeByDate({ date: this.date }).subscribe((res) => {
-      console.log('[HomePage] getDrugIntake()', res?.drugIntakes);
-      this.drugs = res?.drugIntakes;
-      this.filterDrugsByStatus()
-      this.searchIndexDrug()
-      // this.sliderDrug?.slideTo(this.currentIndexDrug)
-      this.slideDrugChange()
-    })
+  async getDrugIntake() {
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIdrugIntakeByDate({ date: this.date }).subscribe(
+          (data: any) => {
+            console.log('[HomePage] getDrugIntake()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getDrugIntake() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+  
+      this.drugs = res.drugIntakes;
+      this.filterDrugsByStatus();
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching drug intake:', error);
+      throw error;
+    }
   }
 
 
@@ -918,74 +1046,7 @@ export class HomePage implements OnInit {
     //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
-  slideGoalChange() {
-    // if (this.goals !== undefined && this.goals?.length > 0)
-      // this.sliderGoals?.getActiveIndex().then(index => {
-      //   //console.log('[HomePage] slideGoalChange()', index);
-      //   let slider = this.goals[index]
-      //   console.log('[HomePage] slideGoalChange()', slider);
-      //   this.infoGoals = {
-      //     title: slider?.typeString + ' ' + slider?.element?.element_unit?.abbreviation
-      //   }
-      // });
-  }
-
-  slideDietChange() {
-    // if (this.diets !== undefined && this.diets?.length > 0)
-      // this.sliderDiet?.getActiveIndex().then(index => {
-      //   //console.log('[HomePage] slideDietChange()', index);
-      //   let slider = this.diets[index]
-      //   let hour = slider?.date.split(' ')[1]
-      //   this.infoDiet = {
-      //     title: slider?.items,
-      //     hour: hour?.split(':')[0] + ':' + hour.split(':')[1]
-      //   }
-      // });
-  }
-
-  slideDrugChange(event?) {
-    console.log('[HomePage] slideDrugChange()', event);
-    if (this.drugs !== undefined && this.drugs?.length > 0) {
-      // this.sliderDrug?.getActiveIndex().then(index => {
-      //   //console.log('[HomePage] slideDrugChange()', index);
-      //   let slider = this.drugs[index]
-      //   this.infoDrugs = {
-      //     title: slider?.name,
-      //     hour: slider?.hour_intake
-      //   }
-      // });
-    } else {
-      this.infoDrugs = null;
-    }
-
-    /*     event.target.isEnd().then(isEnd => {
-          this.showDrugPager = !isEnd;
-        }); */
-
-  }
-
-  slideGamesChange() {
-    // if (this.games !== undefined && this.games?.length > 0)
-      // this.sliderGames?.getActiveIndex().then(index => {
-      //   //console.log('[HomePage] slideGamesChange()', index);
-      //   let slider = this.games[index]
-      //   let hour = slider?.scheduled_date.split(' ')[1]
-      //   this.infoGames = {
-      //     title: slider?.name,
-      //     hour: hour.split(':')[0] + ':' + hour.split(':')[1]
-      //   }
-      // });
-  }
-
-  slideActivityChange() {
-
-      // let slider = this.activity[ this.sliderPhysical.activeIndex]
-      // this.infoActivity = {
-      //   title: slider?.group
-      // }
-
-
-  }
+  
 
   changeTake(id, taked) {
     taked = (taked == "0") ? "1" : "0";
@@ -1004,9 +1065,23 @@ export class HomePage implements OnInit {
     });
   }
 
-  filterDrugsByStatus() {
-    if (this.drugs !== undefined && this.drugs?.length > 0) {
-      this.drugs = this.drugs.filter(drug => drug.forgotten != 0)
+  filterDrugsByStatus(){
+    console.log('[HomePage] filterDrugsByStatus()');
+    if(this.drugs !== undefined && this.drugs?.length > 0){
+        console.log('[HomePage] filterDrugsByStatus()', event);
+        this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+
+        this.searchIndexDrug()
+        this.infoDrugs = {
+          title: this.drugs[this.currentIndexDrug]?.name,
+          hour: this.drugs[this.currentIndexDrug]?.hour_intake
+        }
+        // this.sliderDrug?.nativeElement?.swiper?.slideTo(this.currentIndexDrug).then( slide => {
+        //   this.slideDrugChange()
+        // })
+      this.setSliderOption('drugs')
+    } else{
+      this.infoDrugs = null;
     }
   }
 

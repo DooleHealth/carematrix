@@ -401,6 +401,7 @@ export class DateService {
 
   format24h(time) {
 
+    console.log("ENTRO  " +  time)
     let lang =  this.translate.currentLang;
     if(lang === 'en'){
       // Check correct time format and split into components
@@ -413,6 +414,9 @@ export class DateService {
     }
     return time.join (''); // return adjusted time or original string
     }
+
+    console.log(time);
+    
     return time;
 
   }
