@@ -32,11 +32,11 @@ export class Constants {
         endpoint: 'https://salud.rehabilify.com'
       })
 
-      // this.LIST_ENPOINT.push({
-      //   id:1,
-      //   name: 'Desarrollo',
-      //   api: 'https://aran-dev.doole.io/api',
-      //   endpoint: 'https://aran-dev.doole.io'
-      // })
+      this.LIST_ENPOINT.push({
+        id:1,
+        name: 'Desarrollo',
+        api: 'https://deneb.doole.io/api',
+        endpoint: 'https://deneb.doole.io'
+      })
     }
 }

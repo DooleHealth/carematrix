@@ -81,10 +81,54 @@ export interface SharedCarePlanLifeStyle {
     img?: string,
     title: string,
     type: string,
-    id?: string,
-    routerlink?: string
-
+    id?: string | number;
+    routerlink?: string | Object
 }
+
+export class LifeStyle implements SharedCarePlanLifeStyle{
+    img?: string;
+    title: string;
+    type: string;
+    id?: string | number;
+    routerlink?: string | Object;
+
+    constructor(type: string, routerlink: string){
+        this.type = type;
+        this.routerlink = routerlink;
+    }
+
+    adapterForView(list: Array<any>, field1: string, field2: string, field3: string){
+        let newList: Array<SharedCarePlanLifeStyle> = []
+            list.forEach((element) => {
+                let data: SharedCarePlanLifeStyle = {
+                    img: element[field1],
+                    title: element[field2],
+                    type:  this.type,
+                    id: element.id,
+                    routerlink: this.routerlink,                  
+                }                 
+                newList.push(data)
+            });
+            return newList
+         
+    }
+    
+}
+
+// export function adapterForView(list: Array<any>, field1: string, field2: string, field3: string){
+//     let newList: Array<SharedCarePlanLifeStyle> = []
+//         list.forEach((element) => {
+//             let data: SharedCarePlanLifeStyle = {
+//                 img: element.cover,
+//                 title: element.name,
+//                 type:  field2,// this.type,
+//                 id: element.id,
+//                 routerlink: field2,// this.routerlink,                  
+//             }                 
+//             newList.push(data)
+//         });
+//         return newList  
+// }
 export interface SharedCarePlanPrescribedApps {
     id?: number,
     icon:string,
@@ -93,15 +137,3 @@ export interface SharedCarePlanPrescribedApps {
     iframe_url:string;
     open_market_app_pkg:string;
 }
-
-export interface AdapterView {
-    img: string,
-    title: string,
-    description?: string,
-    type: string,
-    id: string | number,
-    routerlink: string | object
-}
-
-
-
