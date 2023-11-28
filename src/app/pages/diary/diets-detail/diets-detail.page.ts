@@ -113,7 +113,7 @@ export class DietsDetailPage implements OnInit {
     else if(this.data)
       this.router.navigate([`/home`]);
     else
-    this.router.navigate([`/journal`]);
+    this.router.navigate([`/diets`]);
   }
 
 }
