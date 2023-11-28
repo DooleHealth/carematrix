@@ -27,8 +27,8 @@
   </ion-card>
 
   <div>
-    <ion-list *ngFor="let content of this.listContent">
-        <app-lifestyle-index [content]="content" (redirect)="handleRedirect($event)"></app-lifestyle-index>
+    <ion-list>
+        <app-lifestyle-index *ngFor="let content of this.listContent" [content]="content" (redirect)="handleRedirect($event)"></app-lifestyle-index>
     </ion-list>
   </div>
 
