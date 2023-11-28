@@ -1672,6 +1672,43 @@ export class DooleService {
    return this.pushNotification;
   }
 
+  getAPIExerciseDetail(id, params?): Observable<any> {
+    let path = `user/exercise/${id}`;
+    let httpParams = new HttpParams();
+    httpParams = (params?.programable_play) ? httpParams.append('programable_play', params?.programable_play) : httpParams
+    httpParams = (params?.challenge_id) ? httpParams.append('challenge_id', params?.challenge_id) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
+  getAPIExercisesByDate(from_date?,to_date?): Observable<any> {
+    let path = 'user/exercises/scheduled';
+    let httpParams = new HttpParams();
+    httpParams = httpParams? httpParams.append('from_date', from_date) : httpParams
+    httpParams = httpParams? httpParams.append('to_date', to_date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIExercises(): Observable<any> {
+    let path = 'user/exercises';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
 }

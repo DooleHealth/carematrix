@@ -13,11 +13,11 @@ export class LifestyleHabitsComponent  implements OnInit {
 
   listContent: Array<SharedCarePlanLifeStyle> = [];
   exampleContent: SharedCarePlanLifeStyle [] = [
-  {img: 'assets/images/shared-care-plan/news.png', title: 'News', description: 'Stay up to date and informed', type: NotificationsType.NEWS, id:""},
-  {img: 'assets/images/shared-care-plan/advices.png', title: 'Advices', description: 'Health recommendations', type: NotificationsType.ADVICES, id:""},
-  {img: 'assets/images/shared-care-plan/exercices.png', title: 'Exercices', description: 'Experiences similar to yours', type:NotificationsType.EXERCISES, id:""},
-  {img: 'assets/images/shared-care-plan/games.png', title: 'Games', description: 'Experiences similar to yours', type:NotificationsType.GAMES, id:""},
-  {img: 'assets/images/shared-care-plan/diets.png', title: 'Diets', description: 'Improve your diet', type:NotificationsType.DIETS, id:""},
+  {img: 'assets/images/shared-care-plan/news.png', title: 'News',  type: NotificationsType.NEWS, id:""},
+  {img: 'assets/images/shared-care-plan/advices.png', title: 'Advices',  type: NotificationsType.ADVICES, id:""},
+  {img: 'assets/images/shared-care-plan/exercices.png', title: 'Exercises',  type:NotificationsType.EXERCISES, id:""},
+  {img: 'assets/images/shared-care-plan/games.png', title: 'Games',  type:NotificationsType.GAMES, id:""},
+  {img: 'assets/images/shared-care-plan/diets.png', title: 'Diets',  type:NotificationsType.DIETS, id:""},
 
 ] 
 
