@@ -17,9 +17,8 @@ import { Market } from '@awesome-cordova-plugins/market/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import moment from 'moment'
 
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, SwiperOptions } from 'swiper';
-// install Swiper modules
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
+
 
 @Component({
   selector: 'app-landing',
@@ -43,17 +42,6 @@ export class LandingPage implements OnInit {
   biometric_list = []
   environment = 0
 
-config: SwiperOptions = {
-  slidesPerView: 1,
-  spaceBetween: 50,
-  navigation: false,
-  pagination: { clickable: true },
-  scrollbar: { draggable: true },
-  direction: 'vertical',
-  effect: 'slide',
-
-  loop: true,
-};
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private router: Router,

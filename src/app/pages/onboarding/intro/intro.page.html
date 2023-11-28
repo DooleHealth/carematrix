@@ -2,11 +2,11 @@
 
   <div class="main-container swiper-container-wrapper">
 
-    <swiper [slidesPerView]="1" [navigation]="false" [pagination]="false" [scrollbar]="{ draggable: true }">
+    <swiper-container [slidesPerView]="1" [navigation]="false" [pagination]="false" [scrollbar]="{ draggable: true }">
 
       <!-- first slide -->
-      <ng-template swiperSlide>
-        <div class="slide">
+      <swiper-slide>
+        <div>
           <ion-text class="titleBold"> {{'intro.title1' | translate}}<br>
             <span style="color:#5250da;">Rosia </span>
           </ion-text>
@@ -44,11 +44,10 @@
             </ion-row>
           </ion-grid>
         </div>
-      </ng-template>
+      </swiper-slide>
       <!-- second slide -->
-
-      <ng-template swiperSlide>
-        <div class="">
+      <swiper-slide>
+        <div>
           <ion-row class="justify-content-center">
             <ion-col size="4">
               <img class="iconPadddingCenter" src="assets/icons/calendar.svg" />
@@ -62,11 +61,11 @@
             </ion-col>
           </ion-row>
         </div>
-      </ng-template>
+      </swiper-slide>
 
       <!-- third slide -->
-      <ng-template swiperSlide>
-        <div class="slide">
+      <swiper-slide>
+        <div>
           <ion-row class="justify-content-center">
             <ion-col size="4">
               <img src="assets/icons/chat.svg" />
@@ -80,10 +79,11 @@
             </ion-col>
           </ion-row>
         </div>
-      </ng-template>
+      </swiper-slide>
+
       <!-- fourth slide -->
-      <ng-template swiperSlide>
-        <div class="slide">
+      <swiper-slide>
+        <div>
           <ion-row class="justify-content-center">
             <ion-col size="4">
               <img src="assets/icons/Seguimiento.svg" />
@@ -97,10 +97,10 @@
             </ion-col>
           </ion-row>
         </div>
-      </ng-template>
+      </swiper-slide>
       <!-- fifth slide -->
-      <ng-template swiperSlide>
-        <div class="slide">
+      <swiper-slide>
+        <div>
           <ion-row class="justify-content-center">
             <ion-col size="4">
               <img src="assets/icons/Mi Diario.svg" />
@@ -114,10 +114,10 @@
             </ion-col>
           </ion-row>
         </div>
-      </ng-template>
+      </swiper-slide>
       <!-- sixth  slide -->
-      <ng-template swiperSlide>
-        <div class="slide">
+      <swiper-slide>
+        <div>
           <ion-row class="justify-content-center">
             <ion-col size="4">
               <img src="assets/icons/Novedades.svg" />
@@ -131,10 +131,10 @@
             </ion-col>
           </ion-row>
         </div>
-      </ng-template>
+      </swiper-slide>
       <!-- seventh  slide -->
-      <ng-template swiperSlide>
-        <div class="slide">
+      <swiper-slide>
+        <div>
           <ion-row class="justify-content-center">
             <ion-col size="4">
               <img src="assets/icons/Mi Perfil.svg" />
@@ -155,14 +155,7 @@
             </ion-col>
           </ion-row>
         </div>
-      </ng-template>
-
-
-
-    </swiper>
-
-    <!-- <ion-button type="button" color="primary" expand="block" class="buttonPadding" (click)="introAction()">
-        {{'button.continue' | translate}}
-      </ion-button> -->
+      </swiper-slide>
+    </swiper-container>
   </div>
 </ion-content>

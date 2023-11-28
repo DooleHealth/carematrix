@@ -8,7 +8,7 @@ import { IntroPageRoutingModule } from './intro-routing.module';
 
 import { IntroPage } from './intro.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { SwiperModule } from 'swiper/angular';
+
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -18,7 +18,7 @@ import { SwiperModule } from 'swiper/angular';
     IonicModule,
     TranslateModule,
     IntroPageRoutingModule,
-    SwiperModule
+
   ],
   declarations: [IntroPage]
 })

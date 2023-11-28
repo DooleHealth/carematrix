@@ -82,4 +82,13 @@ export interface SharedCarePlanLifeStyle {
     title: string,
     description: string,
     type: string
+
+}
+export interface SharedCarePlanPrescribedApps {
+    id?: number,
+    icon:string,
+    title: string,
+    description: string,
+    iframe_url:string;
+    open_market_app_pkg:string;
 }
