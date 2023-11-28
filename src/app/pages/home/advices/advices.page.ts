@@ -13,7 +13,7 @@ export interface ItemAdvice {
   styleUrls: ['./advices.page.scss'],
 })
 export class AdvicesPage implements OnInit {
-  public items: ItemAdvice[] = [];
+  public items= [];
   pushNotification:any = history.state.data;
   itemsBackup= []
   news = []
@@ -31,7 +31,8 @@ export class AdvicesPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.segmentChanged();
+   // this.segmentChanged();
+    this.getAdvicesList()
   }
 
 
@@ -47,6 +48,20 @@ export class AdvicesPage implements OnInit {
     });
     this.itemsBackup = this.items
     console.log('[AdvicePage] addItems()', this.items);
+  }
+  adapterForView(list){
+    list.forEach(element => {
+    //Se adapta la respuesta de la API a lo que espera el componente  
+      let data={
+        img: element.image.temporaryUrl,
+        title: element.name,
+        description: "",
+        type: "advices",
+        id:element.id,
+        routerlink: "advices-detail"
+      }
+      this.items.push(data)
+    })
   }
 
   async getNewsList(){
@@ -79,7 +94,8 @@ export class AdvicesPage implements OnInit {
       async (res: any) =>{
         console.log('[AdvicePage] getAdvicesList()', await res);
         if(res.advices)
-        this.addItems(res.advices)
+        //this.addItems(res.advices)
+        this.adapterForView(res.advices)
         this.isLoading = false
        },(err) => {
           console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message);
