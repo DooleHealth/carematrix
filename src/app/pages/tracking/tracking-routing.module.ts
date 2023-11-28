@@ -36,9 +36,10 @@ const routes: Routes = [
     path: 'informed-consent',
     loadChildren: () => import('./informed-consent/informed-consent.module').then( m => m.InformedConsentPageModule)
   },
+  
   {
     path: 'lifestyle-habits',
-    loadChildren: () => import('./lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsModule)
+    loadChildren: () => import('./lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsPageModule)
   },
 
 ];

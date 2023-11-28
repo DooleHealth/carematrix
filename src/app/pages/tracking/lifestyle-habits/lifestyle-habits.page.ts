@@ -5,11 +5,10 @@ import { NotificationsType } from 'src/app/shared/classes/notification-options';
 
 @Component({
   selector: 'app-lifestyle-habits',
-  templateUrl: './lifestyle-habits.component.html',
-  styleUrls: ['./lifestyle-habits.component.scss'],
+  templateUrl: './lifestyle-habits.page.html',
+  styleUrls: ['./lifestyle-habits.page.scss'],
 })
-export class LifestyleHabitsComponent  implements OnInit {
-
+export class LifestyleHabitsPage implements OnInit {
 
   listContent: Array<SharedCarePlanLifeStyle> = [];
   exampleContent: SharedCarePlanLifeStyle [] = [
@@ -43,11 +42,12 @@ export class LifestyleHabitsComponent  implements OnInit {
       this.router.navigate(['/exercices']);
       break;
       case NotificationsType.GAMES:              
-      this.router.navigate(['/journal']);
+      this.router.navigate(['/games']);
       break;
       case NotificationsType.DIETS:             
         this.router.navigate(['/diets']);
         break;     
     }
   }
+
 }

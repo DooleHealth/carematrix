@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { AdapterView } from 'src/app/models/shared-care-plan';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
-  selector: 'app-exercices',
-  templateUrl: './exercices.component.html',
-  styleUrls: ['./exercices.component.scss'],
+  selector: 'app-exercises',
+  templateUrl: './exercises.page.html',
+  styleUrls: ['./exercises.page.scss'],
 })
-export class ExercicesComponent  implements OnInit {
+export class ExercisesPage implements OnInit {
 
   public items= [];
   pushNotification:any = history.state.data;
@@ -52,7 +53,7 @@ export class ExercicesComponent  implements OnInit {
   adapterForView(list){
     list.forEach(element => {
     //Se adapta la respuesta de la API a lo que espera el componente  
-      let data={
+      let data: AdapterView={
         img: element.cover,
         title: element.name,
         description: "",

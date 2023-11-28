@@ -14,7 +14,6 @@ import { DrugAddPageModule } from './drug-add/drug-add.module';
 import { ElementsAddPageModule } from '../tracking/elements-add/elements-add.module';
 import { ShareModule } from 'src/app/shared/share/share.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ExercicesModule } from './exercices/exercices.module';
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -27,8 +26,7 @@ import { ExercicesModule } from './exercices/exercices.module';
     DiaryPageRoutingModule,
     DrugsDetailPageModule,
     DrugAddPageModule,
-    ElementsAddPageModule,
-    ExercicesModule
+    ElementsAddPageModule
 
   ],
   providers: [DatePipe, InAppBrowser] ,

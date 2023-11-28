@@ -177,12 +177,18 @@ const routes: Routes = [
   },
   {
     path: 'lifestyle-habits',
-    loadChildren: () => import('./pages/tracking/lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsModule)
+    loadChildren: () => import('./pages/tracking/lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsPageModule)
   },
   {
     path: 'exercices',
-    loadChildren: () => import('./pages/diary/exercices/exercices.module').then( m => m.ExercicesModule)
+    loadChildren: () => import('./pages/diary/exercises/exercises.module').then( m => m.ExercicesModule)
    },
+   {
+    path: 'games',
+    loadChildren: () => import('./pages/diary/games/games.module').then( m => m.GamesPageModule)
+   },
+ 
+
 
 
 ];

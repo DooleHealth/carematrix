@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LifestyleHabitsComponent } from './lifestyle-habits.component';
-import { LifestyleRoutingModule } from './lifestyle-habits-routing.module';
+import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShareModule } from 'src/app/shared/share/share.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { LifestyleHabitsPageRoutingModule } from './lifestyle-habits-routing.module';
+import { LifestyleHabitsPage } from './lifestyle-habits.page';
 
 
 
 @NgModule({
-  declarations: [LifestyleHabitsComponent],
+  declarations: [LifestyleHabitsPage],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,9 +20,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     TranslateModule,
     ShareModule,
     ComponentsModule,
-    LifestyleRoutingModule
+    LifestyleHabitsPageRoutingModule
 
     
   ]
 })
-export class LifestyleHabitsModule { }
+export class LifestyleHabitsPageModule {}
