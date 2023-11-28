@@ -932,6 +932,9 @@
     "monitoring": "Monitoring",
     "medical_procedure": "Medical Procedure",
     "informed_consent": "Informed Consent"
+  },
+  "exercices":{
+    "header": "Exercises"
   }
       
 }

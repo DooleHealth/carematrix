@@ -179,6 +179,10 @@ const routes: Routes = [
     path: 'lifestyle-habits',
     loadChildren: () => import('./pages/tracking/lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsModule)
   },
+  {
+    path: 'exercices',
+    loadChildren: () => import('./pages/diary/exercices/exercices.module').then( m => m.ExercicesModule)
+   },
 
 
 ];

@@ -1,19 +1,17 @@
 <ion-card class="cardProfile" (click)="goTo(content.type)"  [routerLink]="content.routerlink" [state]="{id: content?.id}" routerLinkActive='active-item' >
-  <ion-item lines="none">
+  <ion-item lines="none" mode="ios">
     <ion-thumbnail slot="start">
       <img [src]="content?.img" />
     </ion-thumbnail>
     <ion-grid> 
       <ion-row>
-        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title}}</ion-text>
-        <!--<div>
+        <ion-text  class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title}}</ion-text>
+      
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-        </div>-->       
+             
       </ion-row>
      
-      <ion-row class="imgPadding">
-        <p>{{ content?.description }}</p>
-      </ion-row>
+     
      
     </ion-grid>
   </ion-item>
