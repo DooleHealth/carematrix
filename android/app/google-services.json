@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "442183935102",
+    "project_id": "rosia-pro",
+    "storage_bucket": "rosia-pro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442183935102:android:0ecee86f6354ae1a51242f",
+        "android_client_info": {
+          "package_name": "com.doole.rosia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442183935102-3kfv09chh92ktdq4bbfme6gbp4gqtq8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doole.rosia",
+            "certificate_hash": "c359dc81caa3c86b1e6529ee1bd70e0eb9192212"
+          }
+        },
+        {
+          "client_id": "442183935102-cmlbv1i48c0rke181mnsutsi3naa28si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP1Zrfl21cGEaMaJEcrGNzNex4KDZz9N4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442183935102-cmlbv1i48c0rke181mnsutsi3naa28si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
