@@ -49,6 +49,7 @@ export interface Game {
     type?: string,
     url?: string,
     image?: string
+    scheduled_date?:string
 }
 
 export interface Drug {
