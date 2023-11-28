@@ -39,7 +39,8 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 *.xml
 android/.idea/misc.xml
-*.json
+#*.json
+package-lock.json
 android/.idea/misc.xml
 android/.DS_Store
 android/.idea/compiler.xml
