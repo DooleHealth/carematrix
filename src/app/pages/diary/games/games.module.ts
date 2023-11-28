@@ -9,22 +9,22 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { ExercicesComponent } from './exercices.component';
-import { ExercicesRoutingModule } from './exercices-routing.module';
+import { GamesRoutingModule } from './games-routing.module';
+import { GamesPage } from './games.page';
 
 
 
 @NgModule({
-  
+ 
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ComponentsModule,
     TranslateModule,
-    ExercicesRoutingModule
+    GamesRoutingModule
   ],
   providers: [DatePipe, InAppBrowser] ,
-  declarations: [ExercicesComponent]
+  declarations: [GamesPage]
 })
-export class ExercicesModule { }
+export class GamesPageModule {}

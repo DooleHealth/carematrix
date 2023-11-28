@@ -93,3 +93,15 @@ export interface SharedCarePlanPrescribedApps {
     iframe_url:string;
     open_market_app_pkg:string;
 }
+
+export interface AdapterView {
+    img: string,
+    title: string,
+    description?: string,
+    type: string,
+    id: string | number,
+    routerlink: string | object
+}
+
+
+

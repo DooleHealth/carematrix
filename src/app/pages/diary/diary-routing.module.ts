@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'games-detail',
     loadChildren: () => import('./games-detail/games-detail.module').then( m => m.GamesDetailPageModule)
-  },
+  },  
 ];
 
 @NgModule({

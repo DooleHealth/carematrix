@@ -1,0 +1,34 @@
+<ion-header>
+  <!-- <ion-toolbar> -->
+
+    <ion-toolbar mode="ios">
+      <ion-title>{{'diary.field_game' | translate}}</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button text=""></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content view-cached=”false”>
+
+  <div>
+    <ion-list *ngIf="items.length > 0; else noData">
+        <app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>
+    </ion-list>
+  </div>
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+  </ng-template>
+  </ion-content>
