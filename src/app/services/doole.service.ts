@@ -1561,6 +1561,7 @@ export class DooleService {
     let path = 'user/agenda/v2';
     let httpParams = new HttpParams();
     httpParams = params?.from_date? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = params?.to_date? httpParams.append('to_date', params?.to_date) : httpParams
     httpParams = params?.filter_by_date? httpParams.append('filter_by_date', params?.filter_by_date) : httpParams
     httpParams = (params?.with_medical_procedures != undefined)? httpParams.append('with_medical_procedures', params?.with_medical_procedures) : httpParams
     const endpoint = this.api.getEndpoint(path);
