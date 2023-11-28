@@ -1,10 +1,10 @@
-import { DatePipe, formatDate } from '@angular/common';
-import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ViewEncapsulation, Sanitizer, ElementRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ApplicationRef, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@awesome-cordova-plugins/health/ngx';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
-import { User, Agenda, FamilyUnit, Game } from 'src/app/models/user';
+import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice, FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
@@ -13,28 +13,20 @@ import { TranslateService } from '@ngx-translate/core';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { LanguageService } from 'src/app/services/language.service';
-import { RolesService } from 'src/app/services/roles.service';
 import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { NotificationService } from 'src/app/services/notification.service';
-import { PusherNotificationService } from 'src/app/services/pusher/pusher-notification.service';
 import { PusherAlarmService } from 'src/app/services/pusher/pusher-alarm.service';
-import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
-import { AdvicesDetailPage } from './advices-detail/advices-detail.page';
-import { NewDetailPage } from './new-detail/new-detail.page';
-import { DateService } from 'src/app/services/date.service';
-import { PdfPage } from '../pdf/pdf.page';
+import { PusherNotificationService } from 'src/app/services/pusher/pusher-notification.service';
+import { ExceptionCode } from '@capacitor/core';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
-
-import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
-import {HttpParams} from "@angular/common/http";
-
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Constants } from 'src/app/config/constants';
+import { SwiperOptions } from 'swiper/types/swiper-options';
 import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
 import { NativeMarket } from "@capacitor-community/native-market";
-import { SwiperOptions } from 'swiper/types/swiper-options';
+import {HttpParams} from "@angular/common/http";
+import { Constants } from 'src/app/config/constants';
 
-
+const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
+const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
   title?: string;
   hour?: string;
@@ -56,45 +48,45 @@ export class ShowcaseShellUserModel extends ShellModel {
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class HomePage implements OnInit {
+  first_name = ''
+  public greeting = '';
+  pusherNotification = false;
+  numNotification = 0;
+  goalsColor = ['assets/icons/hpc/icon_check_verde.svg', 'assets/icons/hpc/icon_check_naranja.svg', 'assets/icons/hpc/icon_check_rojo.svg', 'assets/icons/hpc/icon_check_primary.svg']
   dataStore: DataStore<Array<ShowcaseShellUserModel>>;
   data: Array<ShowcaseShellUserModel> & ShellModel;
+  numMedicationPlans: number = 0;
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
-  pusherNotification = false;
-  numNotification = 0;
-
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-    disabledClass: 'disabled_swiper_button'
-  }
-
-
   WAIT_TIME = 10 //10 minutes
+  MAX_GOAL_SLIDER = 3
   userDoole: any = {}
+  userImage: string
   goals: any = []
   diets: any = []
+  dietsNoMenu: any = []
   drugs: any = []
-  challenges = [];
   games = []
   header = false;
   listFamilyUnit: FamilyUnit[] = [];
   isLoading = false
+  isLoadingNumNotifications = false;
   activity: any = []
   appointment: Agenda[] = []
   showGoogleFit = false;
   advices: any = []
+  procedures: any = []
   date
+  healtDate
   loading: boolean = true;
   isFirstTime = true;
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
-  viewAllDiets: boolean = false;
+  currentIndexGoal = 0
 
   sliderGoalConfig: SwiperOptions = {
     initialSlide: 0,
@@ -105,9 +97,9 @@ export class HomePage implements OnInit {
       el: '.swiper-pagination',
       dynamicBullets: true,
     },
-   };
+  };
 
-   sliderConfigVertical : SwiperOptions = {
+  sliderConfigVertical: SwiperOptions = {
     slidesPerView: 1,
     direction: 'vertical',
     centeredSlides: true,
@@ -115,24 +107,24 @@ export class HomePage implements OnInit {
       el: '.swiper-pagination',
       dynamicBullets: true,
     },
-   };
+  };
 
-   sliderConfigVerticalOneSlide : SwiperOptions = {
+  sliderConfigVerticalOneSlide: SwiperOptions = {
     initialSlide: 0,
     slidesPerView: 1,
     direction: 'vertical',
     centeredSlides: true,
     pagination: true,
-   };
+  };
 
-   sliderConfigHorizontal : SwiperOptions = {
+  sliderConfigHorizontal: SwiperOptions = {
     initialSlide: 0,
     slidesPerView: 1.1,
     spaceBetween: 0,
     centeredSlides: false,
-   };
+  };
 
-   sliderConfigHorizontalOneSlide : SwiperOptions = {
+  sliderConfigHorizontalOneSlide: SwiperOptions = {
     initialSlide: 0,
     slidesPerView: 1,
     spaceBetween: 0,
@@ -143,7 +135,7 @@ export class HomePage implements OnInit {
     slidesPerView: 1,
     spaceBetween: 50,
     navigation: false,
-    pagination: { clickable: true},
+    pagination: { clickable: true },
     scrollbar: { draggable: true },
     effect: 'slide',
     loop: false,
@@ -158,28 +150,25 @@ export class HomePage implements OnInit {
     scrollbar: { draggable: true },
     effect: 'slide',
     loop: false,
-    direction:'vertical'
+    direction: 'vertical'
   };
 
-  sliderHealthPathConfig = this.sliderConfigHorizontal;
-  sliderAdvicesConfig = this.sliderConfigHorizontal;
-
-
+  //Horizontal
+  sliderAdvicesConfigHorizontal = this.sliderConfigHorizontal;
+  sliderProceduresConfigHorizontal = this.sliderConfigHorizontal;
+  sliderAgendasConfigHorizontal = this.sliderConfigHorizontal;
   //vertical
-  sliderGoalsConfigVertical:any = this.sliderGoalConfig;
-  sliderDietsConfigVertical:any = this.sliderConfigVertical;
-  sliderDrugsConfigVertical:any = this.sliderConfigVertical;
-  sliderPhysicalConfigVertical:any = this.sliderConfigVertical;
-
-  //slides$ = new BehaviorSubject<string[]>(['']);
-
+  sliderGoalsConfigVertical: any = this.sliderGoalConfig;
+  sliderDietsConfigVertical: any = this.sliderConfigVertical;
+  sliderDrugsConfigVertical: any = this.sliderConfigVertical;
+  sliderPhysicalConfigVertical: any = this.sliderConfigVertical;
 
   @ViewChild('sliderGoals') sliderGoals: ElementRef | undefined;
-  @ViewChild('sliderDiet') sliderDiet: ElementRef | undefined;
-  @ViewChild('sliderDrug') sliderDrug: ElementRef | undefined;
-  @ViewChild('sliderGames') sliderGames: ElementRef | undefined;
   @ViewChild('sliderPhysical') sliderPhysical: ElementRef | undefined;
-  @ViewChild('tabs') tabs: TabsComponent;
+  @ViewChild('sliderDrug') sliderDrug: ElementRef | undefined;
+  @ViewChild('sliderDiet') sliderDiet: ElementRef | undefined;
+  @ViewChild('sliderGames') sliderGames: ElementRef | undefined;
+  //@ViewChild('tabs') tabs: TabsComponent;
 
   infoDiet: UserInformation
   infoDrugs: UserInformation
@@ -187,15 +176,10 @@ export class HomePage implements OnInit {
   infoActivity: UserInformation
   infoGoals: UserInformation
 
-  showDrugPager = true
-  challengeProgressBarValue;
-  public greeting = '';
-  userInfo: any;
-  pushNotification: any = history.state?.push
+  textGoals = ''
+  prescribedApps: SharedCarePlanPrescribedApps[];
   safeUrl;
 
-  prescribedApps: SharedCarePlanPrescribedApps[];
-  
   constructor(
     public router: Router,
     public platform: Platform,
@@ -204,165 +188,87 @@ export class HomePage implements OnInit {
     private datePipe: DatePipe,
     private health: Health,
     private iab: InAppBrowser,
-    private auth: AuthenticationService,
     private ngZone: NgZone,
     public translate: TranslateService,
     public alertController: AlertController,
+    private analyticsService: AnalyticsService,
     private languageService: LanguageService,
     private nav: NavController,
     private modalCtrl: ModalController,
     private notification: NotificationService,
-    public role: RolesService,
-    private pusherNotifications: PusherNotificationService,
     private pusherAlarms: PusherAlarmService,
-    private pusherChallenge: PusherChallengeNotificationsService,
+    private pusherNotifications: PusherNotificationService,
+    private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
-    public dateService : DateService,
-    private androidPermissions: AndroidPermissions,
-    private sanitizer: DomSanitizer,
     private constants: Constants
-    
-  ) {
-    if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
-        this.checkPhoneStatePermission();
 
-  }
-
-
-  slideGoalChange() {
-    console.log('[HomePage] slideGoalChange()');
-    if(this.goals !== undefined && this.goals?.length > 0){
-      const index = this.sliderGoals.nativeElement.swiper.activeIndex
-      let slider = this.goals[index]
-      this.infoGoals = {
-        title: slider?.element?.name, 
-        //image: this.selectImgGoalsProgressBar(slider?.progress_bar_color),
-        frequency: slider?.frequencyString
-      }
-    }
-  }
-
-  slideDietChange(){
-    if(this.diets !== undefined && this.diets?.length > 0) {
-     const index = this.sliderDiet?.nativeElement?.swiper.activeIndex
-      let slider = this.diets[index]
-      this.infoDiet = {
-        title: slider?.items,
-      }
-  }
-  }
-
-  slideDrugChange(){
-    if(this.drugs !== undefined && this.drugs?.length > 0){
-      const index = this.sliderDrug?.nativeElement?.swiper?.activeIndex
-        let slider = this.drugs[index]
-        this.infoDrugs = {
-          title: slider?.name,
-          hour: slider?.hour_intake
-        }
-        console.log('[HomePage] slideDrugChange()', this.infoDrugs, index );
-    }else{
-      this.infoDrugs = null;
-    }
-
-  }
-
-  slideGamesChange(){
-
-    if(this.games !== undefined && this.games?.length > 0) {
-      console.log("ENTROO")
-      const index = this.sliderGames?.nativeElement?.swiper?.activeIndex
-      console.log(this.games)
-      let slider = /*this.games[index]*/ this.games;
-      console.log(slider)
-
-      this.games
-      let hour = this.games[0].scheduled_date?.split(' ')[1]
-      this.infoGames = {
-        title:this.games[0].name,
-        hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
-      }
-
-      console.log(this.infoGames)
-    }
-  }
-
-  slideActivityChange(){
-    if(this.activity !== undefined && this.activity?.length > 0){
-      const index = this.sliderPhysical?.nativeElement?.swiper?.activeIndex
-      let slider = this.activity[index]
-      this.infoActivity = {
-        title: slider?.group
-      }
-    }
-  }
-
+  ) { }
 
   async ngOnInit() {
-
-    this.initPushers()
+    console.log("ENTER")
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    //this.date = this.dateService.yyyyMMddFormat(Date.now());
     this.checkHealthAccess();
-    this.activateAllNotifications(1)
+    this.checkStorageNotification();
+    this.initPushers()
   }
 
-
   ionViewWillEnter() {
-    if (this.pushNotification)
-      this.openModal(this.pushNotification, true);
+    console.log('[HomePage] ionViewWillEnter()');
+    //console.log('[HomePage] ionViewWillEnter() this.deviceToken: ', this.authService?.deviceToken);
+
+
 
     this.getUserInformation()
     this.getNumNotification();
-    if(!this.pusherConnection?.isConnectedPusher()){
+
+    this.update()
+    if (!this.pusherConnection?.isConnectedPusher()) {
       //console.log('[HomePage] ionViewWillEnter() this.userDoole: ', this.authService?.user?.idUser);
       const token = this.authService.getAuthToken()
       this.pusherConnection.subscribePusher(token, this.authService?.user?.idUser)
       this.initPushers()
     }
-
   }
 
-  ionViewDidEnter() {
-    setTimeout(() => this.setTimerSlider(), 3000);
-
-    const params = new HttpParams().set('user_id', this.authService.user.idUser);
-    const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
-    this.safeUrl = urlWithParams
-    console.log(urlWithParams);
-    //this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlWithParams);
-
-  }
-
-  initPushers(){
-    this.pusherAlarms.init()
-    this.pusherChallenge.init()
+  initPushers() {
+    this.pusherAlarms?.init()
     const channel = this.pusherNotifications.init();
-    if(channel)
-    channel.bind(this.pusherNotifications.NAME_BIND, ({ data }) => {
-      console.log('[HomePage] initPushers()',  data);
-      this.getNumNotification();
+    if (channel)
+      channel.bind(NAME_BIND, ({ data }) => {
+        console.log('[HomePage] initPushers()', data);
+        this.getNumNotification();
+      });
+  }
+
+  activatePusherNotification() {
+    const channel = this.pusherNotifications?.init();
+    console.log('[HomePage] activatePusherNotification() channel ', channel);
+    if (channel)
+      channel?.bind(NAME_BIND, ({ data }) => {
+        console.log('[HomePage] activatePusherNotification()', data);
+        this.getNumNotification();
+      });
+  }
+
+  getNumNotification() {
+    this.isLoadingNumNotifications = true;
+    this.dooleService.getAPINotificationsCount().subscribe((res) => {
+      console.log('[HomePage] getNumNotification()', res);
+      if (res?.success) this.numNotification = res?.notifications;
+      if (this.numNotification == 0) this.pusherNotification = false;
+      else this.pusherNotification = true;
+
+      this.isLoadingNumNotifications = false;
     });
   }
 
-  checkPhoneStatePermission(){
-      // this.analyticsService.setScreenName('home','[HomePage]')
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS).then(
-        result => {
-          console.log('Has permission?',result.hasPermission)
-            if(!result.hasPermission){
-              "requesting"
-              this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS]);
-            }
-        },
-        err => {
-          console.error('error permission', err)
-          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_NUMBERS)
-        }
-      );
 
 
+  update() {
+    this.appRef.tick();
+    console.log('[HomePage] update() cambio ');
   }
+
   checkHealthAccess() {
     if (this.platform.is('cordova')) {
       this.health.isAvailable()
@@ -370,21 +276,18 @@ export class HomePage implements OnInit {
           //console.log(available);
           this.showGoogleFit = !available;
           this.health.requestAuthorization([
-            'distance', 'steps', 'heart_rate', 'activity', 'weight', 'oxygen_saturation' //,'blood_glucose','blood_pressure'//, read and write permissions
+            'distance', 'steps', 'heart_rate', 'activity', 'weight', 'oxygen_saturation'  //read and write permissions
           ])
             .then(res => {
               //console.log(res);
               this.syncData(30);
-              //setTimeout(()=>this.confirmAllNotification(), 500);
             })
             .catch(e => {
               console.log(e)
-              //setTimeout(()=>this.confirmAllNotification(), 100);
             });
         })
         .catch(e => {
           console.log(e)
-          //setTimeout(()=>this.confirmAllNotification(), 500);
         });
     }
   }
@@ -395,24 +298,6 @@ export class HomePage implements OnInit {
     // if(this.userDoole?.language?.name)
     // this.analyticsService.setProperty('Idioma', this.userDoole.language.name)
     // this.analyticsService.setProperty('gender', this.userDoole.gender)
-  }
-
-  // activatePusherNotification(){
-  //   const channel = this.pusherNotifications?.init();
-  //   console.log('[HomePage] activatePusherNotification() channel ',  channel);
-  //   if(channel)
-  //   channel?.bind(NAME_BIND, ({ data }) => {
-  //     console.log('[HomePage] activatePusherNotification()',  data);
-  //     this.getNumNotification();
-  //   });
-  // }
-
-  getNumNotification() {
-    this.dooleService.getAPINotificationsCount().subscribe((res) => {
-      if (res?.success) this.numNotification = res?.notifications;
-      if (this.numNotification == 0) this.pusherNotification = false;
-      else this.pusherNotification = true;
-    });
   }
 
   getValue(object, key) {
@@ -426,175 +311,370 @@ export class HomePage implements OnInit {
     }
     return null;
   }
-  getUserInformation() {
-    this.isLoading = true
-    //let date2 = this.dateService.ddMMyyyy(Date.now());
-    let date2 = this.transformDate(this.date, 'dd-MM-yyyy')
-    let date = { date: date2, from_date: this.date, to_date: this.date }
-    console.log("DATE: ", date);
 
-    this.dooleService.getAPIinformationSummary(date).subscribe(
-      (res) => {
-        this.setUserVallues(res);
-        //prescribed apps pending api call adapter PENDING
+  async getUserInformation() {
+    this.isLoading = true;
+
+    try {
+      await Promise.all([
+        this.getUserImage(),
+        this.getPersonalInformation(),
+        this.getGoalImformation(),
+        this.getallAgenda(),
+        this.getAdvicesList(),
+        (this.drugs = [], this.getDrugIntake()),
+        this.getDietList(),
+        this.getProcedures(),
+        this.getPendingMedicationPlans(),
+        this.getElementsList(),
+        this.getGamesList(),
+        // Add other asynchronous calls as needed
+      ]);
+
+      // Analytics
+      // this.setAnalyticsUserProperty();
+    } catch (error) {
+      console.error('Error fetching user information:', error);
+      // Handle errors if needed
+    } finally {
+
+      console.log('Entro sense esperar');
+
+      this.isLoading = false;
+    }
+  }
 
 
-        const params = new HttpParams().set('user_id', this.authService.user.idUser);
-        const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
-        this.safeUrl = urlWithParams
 
-        this.prescribedApps = [
-          {
-            id: 1,
-            icon: 'assets/icons/trak_logo.png',
-            title: 'TRAK',
-            description: 'TRAK App',
-            iframe_url: this.safeUrl,
-            open_market_app_pkg: null,
+  async getUserImage() {
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIUserImage().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getUserImage()', data);
+            resolve(data);
           },
-        ];
+          (error) => {
+            console.log('[HomePage] getUserImage() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.userImage = res.temporary_url;
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching user image:', error);
+      throw error;
+    }
+  }
+
+
+  async getPersonalInformation() {
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIuserProfile().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getPersonalInformation()', data);
+
+            const params = new HttpParams().set('user_id', this.authService.user.idUser);
+            const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
+            this.safeUrl = urlWithParams
+
+            this.prescribedApps = [
+              {
+                id: 1,
+                icon: 'assets/icons/trak_logo.png',
+                title: 'TRAK',
+                description: 'TRAK App',
+                iframe_url: this.safeUrl,
+                open_market_app_pkg: null,
+              },
+              {
+                id: 2,
+                icon: 'assets/icons/trak_logo.png',
+                title: 'TRAK',
+                description: 'TRAK App',
+                iframe_url: this.safeUrl,
+                open_market_app_pkg: null,
+              },
+            ];
+
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getPersonalInformation() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.userDoole = res.user;
+      this.first_name = this.userDoole?.first_name?.split(' ')[0];
+      this.greeting = this.translate.instant('home.hello') + ', ' + this.first_name;
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching personal information:', error);
+      throw error;
+    }
+  }
+
+
+  async getAdvicesList() {
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIlistAdvices().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getAdvicesList()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getAdvicesList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.getNewsList(res.advices);
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching advices list:', error);
+      throw error;
+    }
+  }
+
+
+  async getNewsList(advices) {
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIlistNews().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getNewsList()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getNewsList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.setAdvicesSlider(advices, res.news);
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching news list:', error);
+      alert('ERROR(' + error.code + '): ' + error.message);
+      throw error;
+    }
+  }
+
+
+  async getGoalImformation() {
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIgoals().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getGoalImformation()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('getGoalImformation() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      if (res?.goals?.length > 0) {
+        this.setGoalsSlider(res.goals);
       }
-
-    );
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching goal information:', error);
+      throw error;
+    }
   }
 
-  openMarketApp(pkg:string) {
-    NativeMarket.openStoreListing({
-      appId: pkg,
-    });
 
-    window.location.reload();
+  async getElementsList() {
+    try {
+      const params = { filter: '1' };
+      const data: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIelementsListByDate(params).subscribe(
+          (response: any) => {
+            console.log('[TrackingPage] getElementsList()', response);
+            resolve(response);
+          },
+          (error) => {
+            alert(`Error: ${error.code}, Message: ${error.message}`);
+            console.log('[TrackingPage] getElementsList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.setPhysicalSlider(data);
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching elements list:', error);
+      throw error;
+    }
   }
 
- 
+  async getGamesList() {
+    try {
+     
+      const data: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIgames().subscribe(
+          async (res: any) => {
 
-  setSliderOption(option, list?){
+            console.log('[TrackingPage] getGamesList()', await res);
+            this.setGamesSlider(res.games)
+            
+          },
+          (error) => {
+            alert(`Error: ${error.code}, Message: ${error.message}`);
+            console.log('[TrackingPage] getGamesList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.setPhysicalSlider(data);
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching elements list:', error);
+      throw error;
+    }
+  }
+
+
+  setSliderOption(option, list?) {
     switch (option) {
       //Horizontal
+      case 'agenda':
+        this.sliderAgendasConfigHorizontal = (this.appointment?.length == 1) ? this.sliderConfigHorizontalOneSlide : this.sliderConfigHorizontal
+        break;
+      case 'advices':
+        this.sliderAdvicesConfigHorizontal = (this.advices?.length == 1) ? this.sliderConfigHorizontalOneSlide : this.sliderConfigHorizontal
+        break;
+      case 'procedures':
+        this.sliderProceduresConfigHorizontal = (this.procedures?.length == 1) ? this.sliderConfigHorizontalOneSlide : this.sliderConfigHorizontal
+        break;
+      //Vertical
       case 'goals':
-        this.sliderGoalsConfigVertical = (this.goals?.length == 1)? this.sliderConfigVerticalOneSlide: this.sliderGoalConfig
+        this.sliderGoalsConfigVertical = (this.goals?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderGoalConfig
         break;
       case 'drugs':
-        this.sliderDrugsConfigVertical = (this.drugs?.length == 1)?this.sliderConfigVerticalOneSlide: this.sliderConfigVertical
+        this.sliderDrugsConfigVertical = (this.drugs?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
         break;
       case 'physical':
-        this.sliderPhysicalConfigVertical = (this.activity?.length == 1)?this.sliderConfigVerticalOneSlide: this.sliderConfigVertical
+        this.sliderPhysicalConfigVertical = (this.activity?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
         break;
       case 'diets':
-        this.sliderDietsConfigVertical = (this.diets?.length == 1)?this.sliderConfigVerticalOneSlide: this.sliderConfigVertical
+        this.sliderDietsConfigVertical = (this.diets?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
+        break;
+      case 'games':
+        this.sliderDietsConfigVertical = (this.games?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
         break;
     }
   }
 
-  setUserVallues(res){
+  setGoalsSlider(goals) {
+    this.currentIndexGoal = 0
 
-    let tempAdvices;
-    let tempChallenges;
-      console.log('[HomePage] getUserInformation()', res);
+    console.log('setGoalsSlider()', this.goals);
 
-      tempChallenges = res.data?.challenges;
-      tempChallenges = tempChallenges?.filter(function (obj) {
-        return !obj.completed;
+
+    if (goals && goals?.length > 0) {
+      this.goals = goals
+
+      this.goals.forEach(goal => {
+        let element_last_value = goal?.element?.element_last_value
+        if (element_last_value.value != null) {
+          goal['progress_bar_value'] = String(this.convertToDecimal(goal?.goal_compute?.percentage));
+          goal['progress_bar_color'] = this.getProgressBarClass(goal);
+          goal['last_value'] = parseFloat(goal?.element?.element_last_value?.value);
+          goal['value1'] = parseFloat(goal?.value1)
+          goal['last_value_date'] = goal?.element.element_last_value?.date_value;
+          goal['last_value_text'] = goal?.last_value + ' ' + goal.element?.element_unit?.abbreviation
+        }
+        else
+          goal.last_value_text = this.translate.instant('home.goals_no_data');
       });
 
-      if (tempChallenges?.length == 1)
-        this.sliderHealthPathConfig = this.sliderConfigHorizontalOneSlide;
+      this.searchIndexGoal()
+      console.log('[HomePage] setGoalsSlider() update', this.currentIndexGoal);
 
-      this.challenges = tempChallenges;
-
-      this.userDoole = res.data?.profile;
-
-
-      this.greeting = this.translate.instant('home.hello') +', ' + this.userDoole?.first_name;
-      this.appointment = res.data?.agenda;
-
-      if (this.role.component.advices)
-        tempAdvices = res.data?.advices;
-
-      if (this.role.component.news)
-        res.data?.news.forEach(element => {
-          element['new'] = true
-          tempAdvices.push(element)
-        });
-
-      tempAdvices = tempAdvices?.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
-
-      if (tempAdvices?.length == 1) {
-        this.sliderAdvicesConfig = this.sliderConfigHorizontalOneSlide;
-
+      this.infoGoals = {
+        title: this.goals[this.currentIndexGoal]?.element?.name,
+        image: this.selectImgGoalsProgressBar(this.goals[this.currentIndexGoal]?.progress_bar_color),
+        frequency: this.goals[this.currentIndexGoal]?.frequencyString
       }
 
-      this.advices = tempAdvices;
+      //  this.sliderGoals?.nativeElement?.swiper?.slideTo(this.currentIndexGoal).then( slide => {
+      //     this.slideGoalChange()
+      //   }) 
+      console.log('[HomePage] setGoalsSlider() update', this.infoGoals);
+    }
+  }
 
-      if (res.data?.goals) {
-        this.goals = res.data?.goals
-        this.infoGoals = {
-          title: this.goals[0]?.typeString + ' ' + this.goals[0]?.element?.element_unit?.abbreviation
-        }
+  updateAdvicesSlider(advices) {
+    /* this.sliderGoals?.update().then( event => {
+      this.advices = advices?.length > 0 ? advices: [];
+      this.setSliderOption('advices')
+    }) */
+  }
 
-        // Get the latest value of the element-goal
-        this.goals.forEach(goal => {
-          let element_last_value = goal?.element?.element_last_value // Get the element group
-          if (element_last_value?.value)
-            this.getGoalLastValue(element_last_value, goal)
-          else
-            goal.last_value_text = this.translate.instant('home.goals_no_data');
-        });
-      }
+  setAdvicesSlider(advices, news) {
+    this.advices = advices?.length > 0 ? advices : [];
+    if (news?.length > 0)
+      news.forEach(element => {
+        element['new'] = true
+        this.advices.push(element)
+      });
+    this.advices = this.advices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
+    this.setSliderOption('advices')
+    this.updateAdvicesSlider(advices)
+  }
 
-      //diets
-      this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes)
-      this.searchIndexDiet()
-      this.slideDietChange()
-      // this.sliderDiet?.slideTo(this.currentIndexDiet)
+  updateDietSlider(diets) {
 
-      //Elements
-      this.activity = []
-      let elements = res?.data?.elements
-      if (elements?.eg) {
-        this.treeIterate(elements?.eg, '');
-        // this.sliderPhysical?.slideTo(0)
-        // this.slideActivityChange()
-      }
-
-      console.log("activity: ",this.activity);
-
-      //Games
-      if (res?.data?.gamePlays) {
-        this.games = res.data.gamePlays
-        this.games.sort(function (a, b) {
-          return a.scheduled_date.localeCompare(b.scheduled_date);
-        })
-        this.searchIndexDGame()
-        this.slideGamesChange()
-
-        console.log(this.games)
-        // this.sliderGames?.slideTo(this.currentIndexDrug)
-      }
-      //this.drugs = res.data.drugIntakes.drugIntakes
-      this.getDrugIntake()
-      this.userInfo = res?.data;
-      this.isLoading = false
-
-      //Analytics
-      //console.log('[HomePage] getUserInformation()', this.userDoole);
-      //this.setAnalyticsUserProperty()
+    this.diets = diets?.length > 0 ? diets : [];
+    this.setSliderOption('diets')
 
 
 
   }
-  setTimerSlider() {
-    this.slideGamesChange()
-    this.searchIndexDGame()
-    this.slideDrugChange()
-    this.searchIndexDrug()
-    this.slideDietChange()
-    this.searchIndexDiet()
-    this.slideActivityChange()
-    // this.sliderDiet?.slideTo(this.currentIndexDiet)
-    // this.sliderGames?.slideTo(this.currentIndexDrug)
-    // this.sliderPhysical?.slideTo(this.currentIndexDiet)
-    // this.sliderDrug?.slideTo(this.currentIndexDrug)
+
+  updateGamesSlider(games) {
+    this.games = games?.length > 0 ? games : [];
+    this.setSliderOption('games')
+  }
+
+  setDietSlider(diets) {
+    console.log('[DiaryPage] setDietSlider()', diets);
+    this.diets = diets?.length > 0 ? diets : [];
+    this.setSliderOption('diets')
+    this.updateDietSlider(diets)
+  }
+
+  setGamesSlider(games) {
+    console.log('[DiaryPage] setDietSlider()', games);
+    this.games = games?.length > 0 ? games : [];
+    this.setSliderOption('games')
+    this.updateGamesSlider(games)
+  }
+
+  
+
+  setPhysicalSlider(constants) {
+    this.activity = []
+    let elements = constants
+    if (elements?.eg) {
+      this.treeIterate(elements?.eg, '');
+      this.slideActivityChange()
+    }
+    this.setSliderOption('physical')
   }
 
   treeIterateDiets(obj) {
@@ -609,8 +689,7 @@ export class HomePage implements OnInit {
         }
       }
     }
-
-    console.log('[DiaryPage]  this.diets()', this.diets);
+    console.log('[DiaryPage] treeIterateDiets()', this.diets);
   }
 
   treeIterate(obj, stack) {
@@ -622,14 +701,18 @@ export class HomePage implements OnInit {
         } else {
           if (property == "group") {
             obj['is_child'] = stack.includes('childs');
-            if (obj?.elements?.length > 0)
-              this.activity.push(obj);
+            //if(obj?.elements?.length>0)
+            this.activity.push(obj);
 
           }
 
         }
       }
     }
+  }
+
+  goElements() {
+    console.log('[HomePage] goElements()');
   }
 
   getStatusable(list, type) {
@@ -644,7 +727,7 @@ export class HomePage implements OnInit {
 
 
     goal.last_value = parseFloat(element_goal?.value);
-    goal.value1 = parseFloat(goal?.value1)
+    goal.value1 = parseFloat(goal.value1)
     goal.last_value_date = element_goal?.date_value;
 
     switch (goal.goalType) {
@@ -670,6 +753,15 @@ export class HomePage implements OnInit {
       default:
         break;
     }
+
+    // console.log("** Goal: ", goal );
+    // console.log("** goalType: ", goal.goalType );
+    // console.log("**  element.last value: ", element_goal?.value);
+    // console.log("**  goal.value2 : ", goal.value2 );
+    // console.log("**  element.reversed: ", goal.reversed);
+    // console.log("**  element.goal_percentage: ", goal.goal_percentage);
+    // console.log("**  element.progress_bar_value: ",  goal.progress_bar_value);
+    // console.log("**  element.progress_bar_color: ",  goal.progress_bar_color);
     goal.last_value_text = goal.last_value + ' ' + goal.element?.element_unit?.abbreviation
 
   }
@@ -682,7 +774,10 @@ export class HomePage implements OnInit {
     } else if (goal.last_value >= goal.value1 && goal.last_value >= goal.value2) {
       goal.reversed = true;
       goal = this.getGoalProgress(goal, goal.value2)
+    } else if (goal.last_value <= goal.value1 && goal.last_value <= goal.value2) {
+      goal = this.getGoalProgress(goal, goal.value1)
     } else if (goal.last_value <= goal.value1 && goal.last_value >= goal.value2) {
+      console.log("**  ERROR: ");
       goal = this.getGoalProgress(goal, goal.value1)
     }
     return goal;
@@ -698,11 +793,11 @@ export class HomePage implements OnInit {
 
   getGoalProgress(goal, target) {
     if (goal.last_value <= target) {
-      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target);
-      goal.progress_bar_value = this.convertToDecimal(goal.goal_percentage);
+      goal.goal_percentage = goal?.goal_compute?.percentage; //this.getGoalPercentage(goal.last_value, target);
+      goal.progress_bar_value = this.convertToDecimal(goal?.goal_compute?.percentage)
     } else if (goal.last_value > target) {
-      goal.goal_percentage = this.getGoalPercentage(goal.last_value, target);
-      goal.progress_bar_value = this.getProgressBarValue(goal);
+      goal.goal_percentage = goal?.goal_compute?.percentage;//this.getGoalPercentage(goal.last_value, target);
+      goal.progress_bar_value = this.convertToDecimal(goal?.goal_compute?.percentage)
     }
 
     goal.progress_bar_color = this.getProgressBarClass(goal.progress_bar_value, goal.reversed);
@@ -747,6 +842,7 @@ export class HomePage implements OnInit {
   }
 
   equal(goal) {
+    //console.log("** equal() goalType: ", goal.goalType);
     if (goal.last_value == goal.value1) {
       goal = this.goalAchieved(goal);
     } else {
@@ -756,7 +852,7 @@ export class HomePage implements OnInit {
   }
 
   lessThan(goal) {
-
+    //console.log("** lessThan() goalType: ", goal.goalType);
     goal.reversed = true;
     if (goal.last_value < goal.value1) {
       goal = this.goalAchieved(goal);
@@ -767,7 +863,7 @@ export class HomePage implements OnInit {
   }
 
   greaterOrEqualThan(goal) {
-
+    //console.log("** greaterThan() goalType: ", goal.goalType);
     goal.reversed = false;
     if (goal.last_value >= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -779,7 +875,7 @@ export class HomePage implements OnInit {
   }
 
   lessOrEqualThan(goal) {
-
+    //console.log("** lessThan() goalType: ", goal.goalType);
     goal.reversed = true;
     if (goal.last_value <= goal.value1) {
       goal = this.goalAchieved(goal);
@@ -790,7 +886,7 @@ export class HomePage implements OnInit {
   }
 
   greaterThan(goal) {
-
+    //console.log("** greaterThan() goalType: ", goal.goalType);
     goal.reversed = false;
     if (goal.last_value > goal.value1) {
       goal = this.goalAchieved(goal);
@@ -802,55 +898,68 @@ export class HomePage implements OnInit {
   }
 
   convertToDecimal(numberVal) {
-    if (numberVal < 10)
-      return (numberVal / 10).toFixed(2);
-    else if (numberVal < 100)
-      return (numberVal / 100).toFixed(2);
+    if (numberVal == 0)
+      return 0;
     else
-      return (numberVal / 1000).toFixed(2);
+      return (numberVal / 100).toFixed(3);
 
   }
 
 
-  getProgressBarClass(percentage, isReversed) {
+  getProgressBarClass(goal, reversed = false) {
+
 
     let cssClass: string;
-    if (isReversed)
-      cssClass = this.reversedProgressBarClass(percentage);
-    else
-      cssClass = this.progressBarClass(percentage);
+    let value = this.convertToDecimal(goal?.goal_compute?.percentage);
+
+    // if(goal.goal_type == "<" || goal.goal_type == "<=")
+    //   cssClass = this.reversedProgressBarClass(percentage);
+    // else
+    cssClass = this.progressBarClass(value);
 
     return cssClass
   }
 
   progressBarClass(value) {
-
-    if (value < 0.50)
+    //console.log("** progressBarClass(): ", value);
+    if (value <= 0.25)
       return 'my-buffer-progress_red'
-    else if (value > 0.49 && value < 0.75)
+    else if (value > 0.25 && value <= 0.75)
       return 'my-buffer-progress_orange'
-    else
+    else if (value > 0.75)
       return 'my-buffer-progress_green'
 
   }
 
   reversedProgressBarClass(value) {
-
-    if (1 > value && value < 0.50)
+    //console.log("** reversedProgressBarClass(): ", value);
+    if (value >= 0.75)
       return 'my-buffer-progress_red'
-    else if (value >= 0.50 && value <= 0.75)
+    else if (value < 0.75 && value > 0.25)
       return 'my-buffer-progress_orange'
     else
       return 'my-buffer-progress_green'
+
   }
 
-  getDateElementGoal(last_value_date) {
-    if (last_value_date)
-      return this.translate.instant('element.field_date') + ': ' + this.formatDate(last_value_date)
-    else ''
+  selectImgGoalsProgressBar(progress) {
+    let res = this.goalsColor[0]
+    switch (progress) {
+      case 'my-buffer-progress_green':
+        res = this.goalsColor[0]
+        break;
+      case 'my-buffer-progress_orange':
+        res = this.goalsColor[1]
+        break;
+      case 'my-buffer-progress_red':
+        res = this.goalsColor[2]
+        break;
+      default:
+        res = this.goalsColor[3]
+        break;
+    }
+    return res
   }
-
-
 
   async getDrugIntake() {
     try {
@@ -866,7 +975,7 @@ export class HomePage implements OnInit {
           }
         );
       });
-  
+
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus();
     } catch (error) {
@@ -877,12 +986,88 @@ export class HomePage implements OnInit {
   }
 
 
+  async getProcedures() {
+    try {
+      const date = { from_date: this.date + ' 00:00', to_date: null };
+
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.postAPImedicalProcedures(date).subscribe(
+          (data: any) => {
+            console.log('[HomePage] getProcedures()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getProcedures() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      if (res.success) {
+        this.procedures = res.medicalProcedures;
+        this.setSliderOption('procedures');
+      }
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching procedures:', error);
+      throw error;
+    }
+  }
+
+
+  async getPendingMedicationPlans() {
+    try {
+      const params = { onlyCount: 1 };
+
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIPendingMedicationPlans(params).subscribe(
+          (data: any) => {
+            console.log('[HomePage] getPendingMedicationPlans()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getPendingMedicationPlans() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      if (res.success) {
+        this.numMedicationPlans = res.medication_plan_count ? res.medication_plan_count : 0;
+      }
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching pending medication plans:', error);
+      throw error;
+    }
+  }
+
+
+
+  async getDietList() {
+    this.diets = []
+    this.dooleService.getAPIlistDietsByDate().subscribe(
+      async (res: any) => {
+        console.log('[DiaryPage] getDietList()', await res);
+        if (res.diets) {
+          /*           this.dietsNoMenu = res.data?.dietaryIntake?.diet
+                    this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes) */
+          this.setDietSlider(res?.diets)
+        }
+      });
+  }
+
+  convertTZ(date, tzString) {
+    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
+  }
 
   syncData(days) {
 
     let startDate = new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000);
     let endDate = new Date(); // now
+
     console.log('dataType: steps');
+
     this.health.queryAggregated({
       startDate: startDate,
       endDate: endDate,
@@ -933,15 +1118,15 @@ export class HomePage implements OnInit {
       throw error;
     });
 
-    // console.log('dataType: body_temperature');
-    //  this.health.query({
-    //    startDate,
-    //    endDate,
-    //    dataType: 'body_temperature',
-    //  }).then(data => {
-    //    this.postHealth('temperature', data);
-    //  }).catch(error => {
-    //    console.error(error);
+    //console.log('dataType: temperature');
+    // this.health.query({
+    //   startDate,
+    //   endDate,
+    //   dataType: 'temperature',
+    // }).then(data => {
+    //   //this.postHealth('temperature', data);
+    // }).catch(error => {
+    //   console.error(error);
     //   throw error;
     // });
 
@@ -958,38 +1143,19 @@ export class HomePage implements OnInit {
       throw error;
     });
 
-    // console.log('dataType: blood_glucose');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'blood_glucose',
-    // }).then(data => {
-    //   this.postHealth('blood_glucose', data);
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error;
-    // });
-
-    // console.log('dataType: blood_pressure');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'blood_pressure',
-    // }).then(data => {
-    //   this.postHealth('blood_pressure', data);
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error;
-    // });
-
   }
 
   //envia post amb dades de salut a api
   postHealth(type, data) {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    console.log('syncData', timezone)
     const postData = {
+      timezone: timezone,
       type: type,
       vals: JSON.stringify(data),
     };
+    if (this.authService?.deviceToken)
+      postData['device_token'] = this.authService.deviceToken
     this.dooleService.post('user/element/sync', postData).subscribe(
       async (data) => {
         console.log("postHealth: ", data);
@@ -1004,6 +1170,19 @@ export class HomePage implements OnInit {
         // Called when operation is complete (both success and error)
         // loading.dismiss();
       });
+  }
+
+  agendaTitle(slide) {
+    //console.log('[HomePage] agendaTitle()', slide);
+    if (slide?.agenda_type?.type == 'turnos' || slide?.agenda_type?.type == 'turno') {
+      return this.translate.instant('agenda.type_turn')
+    } else {
+      if (slide?.origin == 0)
+        return this.translate.instant('agenda.type_turn')
+      else if (slide?.origin == 1 && slide?.staff.length > 0)
+        return this.translate.instant('agenda.type_meeting')
+      else return this.translate.instant('agenda.type_event')
+    }
   }
 
   actionCloseAdvice(slide) {
@@ -1046,7 +1225,73 @@ export class HomePage implements OnInit {
     //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
-  
+  slideGoalDrag(event) {
+    console.log('[HomePage] slideGoalDrag()', event);
+  }
+
+  slideGoalChange() {
+    console.log('[HomePage] slideGoalChange()');
+    if (this.goals !== undefined && this.goals?.length > 0) {
+      const index = this.sliderGoals.nativeElement.swiper.activeIndex
+      let slider = this.goals[index]
+      this.infoGoals = {
+        title: slider?.element?.name,
+        image: this.selectImgGoalsProgressBar(slider?.progress_bar_color),
+        frequency: slider?.frequencyString
+      }
+    }
+  }
+
+  slideDietChange() {
+    if (this.diets !== undefined && this.diets?.length > 0) {
+      const index = this.sliderDiet?.nativeElement?.swiper.activeIndex
+      let slider = this.diets[index]
+      this.infoDiet = {
+        title: slider?.items,
+      }
+    }
+  }
+
+  slideDrugChange() {
+    if (this.drugs !== undefined && this.drugs?.length > 0) {
+      const index = this.sliderDrug?.nativeElement?.swiper?.activeIndex
+      let slider = this.drugs[index]
+
+      console.log(slider)
+
+      this.infoDrugs = {
+        title: slider?.name,
+        hour: slider?.hour_intake
+      }
+      console.log('[HomePage] slideDrugChange()', this.infoDrugs, index);
+    } else {
+      this.infoDrugs = null;
+    }
+
+  }
+
+  slideGamesChange() {
+    if (this.games !== undefined && this.games?.length > 0) { }
+    /* this.sliderGames?.getActiveIndex().then(index => {
+      let slider = this.games[index]
+      let hour = slider?.scheduled_date?.split(' ')[1]
+      this.infoGames = {
+        title: slider?.name,
+        hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
+      }
+    }); */
+  }
+
+  slideActivityChange() {
+    if (this.activity !== undefined && this.activity?.length > 0) {
+      const index = this.sliderPhysical?.nativeElement?.swiper?.activeIndex
+      let slider = this.activity[index]
+      this.infoActivity = {
+        title: slider?.group
+      }
+    }
+    console.log(this.activity)
+  }
 
   changeTake(id, taked) {
     taked = (taked == "0") ? "1" : "0";
@@ -1065,30 +1310,40 @@ export class HomePage implements OnInit {
     });
   }
 
-  filterDrugsByStatus(){
+  filterDrugsByStatus() {
     console.log('[HomePage] filterDrugsByStatus()');
-    if(this.drugs !== undefined && this.drugs?.length > 0){
-        console.log('[HomePage] filterDrugsByStatus()', event);
-        this.drugs = this.drugs.filter( drug => drug.forgotten != 0)
+    if (this.drugs !== undefined && this.drugs?.length > 0) {
+      console.log('[HomePage] filterDrugsByStatus()', event);
+      this.drugs = this.drugs.filter(drug => drug.forgotten != 0)
 
-        this.searchIndexDrug()
-        this.infoDrugs = {
-          title: this.drugs[this.currentIndexDrug]?.name,
-          hour: this.drugs[this.currentIndexDrug]?.hour_intake
-        }
-        // this.sliderDrug?.nativeElement?.swiper?.slideTo(this.currentIndexDrug).then( slide => {
-        //   this.slideDrugChange()
-        // })
+      this.searchIndexDrug()
+      this.infoDrugs = {
+        title: this.drugs[this.currentIndexDrug]?.name,
+        hour: this.drugs[this.currentIndexDrug]?.hour_intake
+      }
+      // this.sliderDrug?.nativeElement?.swiper?.slideTo(this.currentIndexDrug).then( slide => {
+      //   this.slideDrugChange()
+      // })
       this.setSliderOption('drugs')
-    } else{
+    } else {
       this.infoDrugs = null;
+    }
+  }
+
+  searchIndexGoal() {
+    let length = this.goals?.length
+    if (length > 0) {
+      if (length % 2 == 0) { //Si es par
+        this.currentIndexGoal = length / 2 - 1
+      } else
+        this.currentIndexGoal = Math.trunc(length / 2)
     }
   }
 
   searchIndexDrug() {
     if (this.drugs !== undefined && this.drugs?.length > 0) {
       let drug = this.drugs?.find(element =>
-        ((this.hourToMinutes(element.hour_intake) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element?.hour_intake) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.drugs.indexOf(drug);
       //console.log('[HomePage] searchIndexDrug()', drug, index);
@@ -1099,7 +1354,7 @@ export class HomePage implements OnInit {
   searchIndexDGame() {
     if (this.games !== undefined && this.games?.length > 0) {
       let game = this.games?.find(element =>
-        ((this.hourToMinutes(element.scheduled_date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.games.indexOf(game);
       this.currentIndexDrug = (index > -1) ? index : 0
@@ -1109,15 +1364,15 @@ export class HomePage implements OnInit {
   searchIndexDiet() {
     if (this.diets !== undefined && this.diets?.length > 0) {
       let diet = this.diets?.find(element =>
-        ((this.hourToMinutes(element.date.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element.date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
-      let index = this.diets.indexOf(diet);
+      let index = this.diets?.indexOf(diet);
       this.currentIndexDiet = (index > -1) ? index : 0
     }
   }
 
   hourToMinutes(hour) {
-    let minutes = hour.split(':')
+    let minutes = hour?.split(':')
     return (Number(minutes[0])) * 60 + (Number(minutes[1]))
   }
 
@@ -1150,13 +1405,13 @@ export class HomePage implements OnInit {
         hidden: 'no',
       }
 
-      await this.auth.getUserLocalstorage().then(value => {
-        this.auth.user = value
+      await this.authService.getUserLocalstorage().then(value => {
+        this.authService.user = value
       })
 
-      if (item.url?.startsWith("http")) {
+      if (item.url.startsWith("http")) {
         this.header = true
-        item.url = item.url + "?user=" + this.auth.user.idUser + "&game=" + item.id;
+        item.url = item.url + "?user=" + this.authService.user.idUser + "&game=" + item.id;
         browser = this.iab.create(item.url, '_blank', iosoption);
         browser.on('exit').subscribe(event => {
           this.ngZone.run(() => {
@@ -1171,24 +1426,7 @@ export class HomePage implements OnInit {
     }
 
     if (item.game_type == "form") {
-      // const options: InAppBrowserOptions = {
-      //   location: 'no',
-      //   toolbar: 'yes'
-      // };
-
-      // var pageContent = '<html><head></head><body><form id="loginForm" action="https://covid.doole.io/formAnswer/fill/'+item.form_id+'" method="post" enctype="multipart/form-data">' +
-      //   '<input type="hidden" name="idForm" value="'+item.form_id+'">' +
-      //   '<input type="hidden" name="user_id" value="'+this.auth.user.idUser+'">' +
-      //   '<input type="hidden" name="secret" value="'+this.auth.user.secret+'">' +
-      //   '</form> <script type="text/javascript">document.getElementById("loginForm").submit();</script></body></html>';
-      // var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-      // var browserRef = this.iab.create(
-      //   pageContentUrl,
-      //   "_blank",
-      //   "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
-      // );
-      //this.nav.navigateForward('/tracking/form', { state: {id: item.id} });
-      this.nav.navigateForward(['/tracking/form', { id: item.form_id }]);
+      this.nav.navigateForward(['/tracking/form', { id: item?.form_id }]);
     }
 
   }
@@ -1206,23 +1444,15 @@ export class HomePage implements OnInit {
   }
 
   formatSelectedDate(date) {
-
-    return this.dateService.formatDateLongFormat(date);
-    //return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
   }
 
   formatDate(d) {
     if (d) {
-      var auxdate = d.split(' ')
-      //let date = new Date(auxdate[0]);
-      d = d.replace(' ', 'T')
-      let date0 = new Date(d).toUTCString();
-      let date = new Date(date0);
-      let time = auxdate[1];
-      date.setHours(time?.substring(0, 2));
-      date.setMinutes(time?.substring(3, 5));
-
-      return this.dateService.ddMMyyyyHHmm(date);
+      let date = new Date(d)
+      return this.transformDate(date, 'dd/MM/yyyy HH:mm')
     }
   }
 
@@ -1231,18 +1461,24 @@ export class HomePage implements OnInit {
   }
 
   goDetailRecipe(e) {
-    let id = e.item.id
-    if (e.item_type === 'App\\Receipt')
-      this.nav.navigateForward("/journal/diets-detail/recipe", { state: { id: id } });
+    let id = e.id
+    if (id)
+      this.nav.navigateForward("/journal/diets-detail", { state: { id: id } });
+  }
+
+  goUnitName(unitName) {
+    let name = JSON.parse(unitName)
+    return Object.values(name) + ''
   }
 
   async confirmAllNotification() {
-    const notification = localStorage.getItem('allNotification');
+    const notification = localStorage.getItem(ALL_NOTICATION);
     if (JSON.parse(notification))
       return
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
+      //mode: 'ios',
       subHeader: this.translate.instant('home.enable_notifications'),
       message: this.translate.instant('home.message_enable_notifications'),
       buttons: [
@@ -1252,13 +1488,13 @@ export class HomePage implements OnInit {
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('[LandingPage] AlertConfirm Cancel');
-            localStorage.setItem('allNotification', 'true');
+            localStorage.setItem(ALL_NOTICATION, 'true');
             this.activateAllNotifications(0)
           }
         }, {
           text: this.translate.instant("button.ok"),
           handler: (data) => {
-            localStorage.setItem('allNotification', 'true')
+            localStorage.setItem(ALL_NOTICATION, 'true')
             this.activateAllNotifications(1)
           }
         }
@@ -1269,16 +1505,17 @@ export class HomePage implements OnInit {
   }
 
   activateAllNotifications(factor) {
+    console.log('[HomePage] activateAllNotifications()');
+    let params = { active: 'all', value: factor }
+    this.dooleService.postAPIConfiguration(params).subscribe((res) => { })
+  }
+
+  checkStorageNotification() {
     const notification = localStorage.getItem('allNotification');
     if (JSON.parse(notification))
       return
-
-    console.log('[HomePage] activateAllNotifications()');
-    let params = { active: 'all', value: factor }
-    this.dooleService.postAPIConfiguration(params).subscribe((res) => {
-      localStorage.setItem('allNotification', 'true');
-    })
-
+    this.activateAllNotifications(1)
+    localStorage.setItem('allNotification', 'true')
   }
 
   async addElement(slide) {
@@ -1286,7 +1523,6 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ElementsAddPage,
       componentProps: { id: slide?.element_id, nameElement: slide?.element?.name, units: slide.element?.element_unit?.abbreviation },
-      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -1305,45 +1541,82 @@ export class HomePage implements OnInit {
     await modal.present();
   }
 
-  async openModal(slide, isAdvice) {
-    console.log('AdviceDEtailModal()', slide);
-    const modal = await this.modalCtrl.create({
-      component: isAdvice ? AdvicesDetailPage : NewDetailPage,
-      componentProps: { id: slide?.id },
-      cssClass: "modal-custom-class"
+
+  async activatePendingMedicationPlans() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      header: this.translate.instant('alert.header_atention'),
+      message: this.translate.instant('home.pending_medication_planes'),
+      buttons: [
+        {
+          text: this.translate.instant("button.ignore"),
+          role: 'cancel',
+          cssClass: 'warning',
+          handler: (blah) => {
+            console.log('[LandingPage] AlertConfirm Cancel');
+          }
+        }, {
+          text: this.translate.instant("button.start"),
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: (data) => {
+            this.router.navigate([`/more/medication-plan/medication-pending`]);
+          }
+        }
+      ]
     });
 
-    // isModalShowing: FLAG to control IF and WHEN the challenge notification will be shown
-    this.pusherChallenge.isModalShowing = true;
+    await alert.present();
+  }
 
-    modal.onDidDismiss().then((result) => {
-        console.log('showAdvices()', result);
+  async getallAgenda() {
+    try {
+      const params = { /* from_date: this.date, to_date: null, with_medical_procedures: 0, filter_by_date: 1 */ };
+      console.log('[HomePage] getallAgenda() init', params, this.date);
 
-        this.pusherChallenge.isModalShowing = false;
-        if (this.pusherChallenge?.pendingNotification?.show) {
-          this.pusherChallenge.presentChallengeNotification(this.pusherChallenge?.pendingNotification?.data);
-          this.getUserInformation();
-        }
-
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIallAgenda(params).subscribe(
+          (data: any) => {
+            console.log('[HomePage] getallAgenda()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getallAgenda() ERROR(' + error.code + '): ' + error.message);
+            alert('ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
       });
 
-    await modal.present();
+      if (res.agenda) {
+        this.appointment = res.agenda;
+        this.setSliderOption('agenda');
+      }
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching agenda:', error);
+      throw error;
+    }
   }
 
-  async openPDF() {
-    const modal = await this.modalCtrl.create({
-      component: PdfPage,
-      cssClass: 'my-custom-class'
-    });
-    return await modal.present();
+
+  goEventDetail(event) {
+    if (event?.agenda_type?.type === 'turno' || event?.agenda_type?.type === 'turnos') {
+      this.router.navigate([`EndMeeting`], { state: { turn_ext_id: event?.ext_id, segment: 'turn', segment_backup: 'home' } });
+    }
+    else {
+      if (event?.is_reminder)
+        this.router.navigate([`EndMeeting/reminder`], { state: { event: event, id: event.id } });
+      else
+        this.router.navigate([`EndMeeting/detail`], { state: { event: event, id: event.id } });
+    }
   }
 
-  onSwiper(event){
-
+  returnValueProgressBarr(v) {
+    let value = parseFloat(v)
+    if (0.999 === value) value = 0.99
+    //console.log('[HomePage] returnValueProgressBarr()',  value);
+    return value
   }
-
-  onSlideChange(){
-
-  }
-
 }

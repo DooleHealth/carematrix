@@ -21,6 +21,9 @@ import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
 
+import { register } from 'swiper/element/bundle';
+register();
+
 declare let VoIPPushNotification: any;
 declare let cordova: any;
 declare let IRoot: any;

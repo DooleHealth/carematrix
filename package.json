@@ -74,7 +74,6 @@
     "@capacitor-community/native-market": "^5.0.0",
     "@capawesome/capacitor-badge": "5.0.0",
     "@ionic/angular": "^7.0.14",
-    "@ionic/angular-server": "^7.0.14",
     "@ionic/core": "^7.0.14",
     "@ionic/pwa-elements": "3.1.1",
     "@ionic/storage": "4.0.0",

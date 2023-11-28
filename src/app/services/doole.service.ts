@@ -50,9 +50,9 @@ export class DooleService {
     }
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    // Add files for new or saved diagnostics.
-    // uses diagnostic/media when diagnostic is new
-    //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getDooleEndpoint('media/upload/temp') ;
+    // Add files for new or saved diagnostics. 
+    // uses diagnostic/media when diagnostic is new 
+    //const endpoint = id ? this.api.getEndpoint('diagnostic/media'):this.api.getEndpoint('media/upload/temp') ;
     const endpoint = this.api.getEndpoint('media/upload/temp');
     //console.log("* uploadFile endpoint", endpoint);
 
@@ -68,11 +68,11 @@ export class DooleService {
 
   }
 
-
+  
 
   postAPIAddMedia(params: Object){
     const endpoint = this.api.getEndpoint('media/add');
-
+   
     return this.http.postForm(endpoint, params).pipe(
       map((res: any) => {
         console.log(`[DooleService] postAPIAddMedia(${endpoint}) res: `, res);
@@ -80,7 +80,7 @@ export class DooleService {
       })
     );
   }
-
+  
   uploadFileToModel(image: string, name: string, params: any) {
     //console.log("uploading ", image);
     const token = localStorage.getItem('token');
@@ -139,7 +139,7 @@ export class DooleService {
       }
     });
 
-    const endpoint = this.api.getDooleEndpoint('message');
+    const endpoint = this.api.getEndpoint('message');
 
     return new Promise(function (resolve, reject) {
       fileTransfer.upload(fileUrl, endpoint, options)
@@ -172,6 +172,21 @@ export class DooleService {
 
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
+  }
+
+  download(url) {
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    var path = null;
+    if (this.platform.is('ios')) {
+      path = this.file.documentsDirectory;
+    } else {
+      path = this.file.dataDirectory;
+    }
+    fileTransfer.download(url, path + 'file.pdf').then((entry) => {
+      console.log('download complete: ' + entry.toURL());
+    }, (error) => {
+      // handle error
+    });
   }
 
   downloadFile(url, destination): Observable<any> {
@@ -244,10 +259,21 @@ export class DooleService {
   showAlert(message: string) {
 
     return this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
       header: 'Info',
       message: message,
       backdropDismiss: false,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Aceptar',
+          role: 'confirm',
+          cssClass: 'onlyButton',
+          handler: (blah) => {
+            console.log('[LandingPage] AlertConfirm Cancel');
+          }
+        }
+      ]
     });
 
   }
@@ -256,14 +282,16 @@ export class DooleService {
     //console.log(`[DooleService] showAlertAndReturn()`);
     let dismiss = (isDismiss !== undefined) ? isDismiss : false
     const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
       header: header,
       message: message,
       backdropDismiss: dismiss,
       buttons: [
         {
-          text: 'OK',
+          text: 'Aceptar',
           handler: (blah) => {
-           // console.log('Confirm OK: blah');
+            console.log('Confirm OK: blah');
             if (route !== undefined && route !== null)
               this.router.navigateByUrl(route);
           }
@@ -274,11 +302,21 @@ export class DooleService {
   }
 
   async presentAlert(message, button?: string) {
-    let buttonName = (button !== undefined) ? button : 'Ok'
+    let buttonName = (button !== undefined) ? button : 'Aceptar'
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
+      //mode: 'ios',
       message: message,
-      buttons: [buttonName]
+      buttons: [
+        {
+          text: buttonName,
+          role: 'confirm',
+          cssClass: 'onlyButton',
+          handler: (blah) => {
+            console.log('[LandingPage] AlertConfirm Cancel');
+          }
+        }
+      ]
     });
     await alert.present();
   }
@@ -289,17 +327,27 @@ export class DooleService {
     return httpParams = (user.familyUnit) ? httpParams.append('user', user.familyUnit) : httpParams
   }
 
-  getAPILegalInformation(): Observable<any> {
-    let path = 'user/legalTerm/lastAccepted';
+  getAPILegalAndPolicy(): Observable<any> {
+    let path = 'center/legal-term-and-privacy-policy/last';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
+        //console.log(`[DooleService] getAPILegalAndPolicy(${path}) res: `, res);
         return res;
       })
     )
   }
 
+  getAPILegalInformation(): Observable<any> {
+    let path = 'user/legalTerm/lastAccepted';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPILegalInformation(${path}) res: `, res);
+        return res;
+      })
+    )
+  }
   postAPILegalConfirmation(params: Object): Observable<any> {
     let path = 'user/legalTerm/lastAccepted';
     const endpoint = this.api.getEndpoint(path);
@@ -335,7 +383,7 @@ export class DooleService {
     );
   }
 
-  getAPIStaffSlots(params: { id: number, date: string }): Observable<any> {
+  getAPIStaffSlots(params: { id: number, date: string }) {
 
     let path = `staff/${params.id}/availability`;
     let endpoint: string;
@@ -355,6 +403,7 @@ export class DooleService {
 
   getAPIgoals(): Observable<any> {
     let path = 'user/element/goals'
+    //let path = 'user/goals/elements'
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
@@ -398,21 +447,43 @@ export class DooleService {
       })
     )
   } */
+  
+  updateAPIImageuser(params: Object): Observable<any> {
+    let path = `user/image`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
+        return res;
 
+      })
+    );
+  }
+
+  deleteAPIImageuser(): Observable<any> {
+    let path = `user/image`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
 
   getAPIinformationSummary(params: Object){
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
-    console.log('home params', params)
     return this.http.post(endpoint, params).pipe(
-      map(res => res)
+      mergeMap((v) => v instanceof TimeoutError ? throwError(v) : of(v)) 
     );
   }
   getAPIinformationSummaryOld(params: Object){
     let path = 'home'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
-      map(res => res)
+      map(res => res) 
     );
   }
 
@@ -509,7 +580,7 @@ export class DooleService {
   }
 
   postAPIReportProblem(params: Object): Observable<any> {
-    let path = 'user/reportProblem'; // 'media/upload/temp'
+    let path = 'user/reportProblem'; // 'media/upload/temp' 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -545,7 +616,7 @@ export class DooleService {
 
   postAPIcodeVerification(params: Object): Observable<any> {
     let path = 'user/verifyTwoFactor';
-    //let path = 'user/codeVerification';
+    //let path = 'user/codeVerification'; 
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
       map((res: any) => {
@@ -731,6 +802,17 @@ export class DooleService {
     );
   }
 
+  getAPIdiagnosticTestsLast(): Observable<any> {
+    let path = 'user/diagnosticTests/last-done';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdiagnosticTests(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIdiagnosticTestTypesAvailable(): Observable<any> {
     let path = 'diagnosticTestTypes/available';
     const endpoint = this.api.getEndpoint(path);
@@ -822,6 +904,43 @@ export class DooleService {
       })
     );
   }
+
+  getAPIFormJSON(form, params?): Observable<any> {
+    let path = `form/${form}/formFields`;
+    let httpParams = new HttpParams();
+    httpParams = (params?.formAnswer) ? httpParams.append('formAnswer', params?.formAnswer)  : httpParams
+    httpParams = (params?.game_play_id) ? httpParams.append('game_play_id', params?.game_play_id)  : httpParams
+    httpParams = (params?.started_app) ? httpParams.append('started_app', params?.started_app)  : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIFormJSON(form, params): Observable<any> {
+    let path = `formfield/conditional/${form}/field/${params.formField}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIFormFill(params): Observable<any> {
+    let path = `form/fill/`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
   //graphics-Tracking
 
   getAPIelementsList(filter?): Observable<any> {
@@ -838,12 +957,28 @@ export class DooleService {
       })
     );
   }
-
+  
   /** get elements with query by parameter date  */
-  getAPIelementsListByDate(params: Object): Observable<any> {
+  getAPIelementsListByDate(params: any): Observable<any> {
     let path = 'user/elementsList/v2'  /* 'user/elementsList'  */
+    let httpParams = new HttpParams();
+    if(params.filter == '1') httpParams = httpParams.append('filter', '1')
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.get(endpoint,httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIelementsListByDate(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIelementsByGroup(filter?): Observable<any> {
+    let path = 'center/elementGroup/elements'
+    let httpParams = new HttpParams();
+    if(filter == '1' || filter == '0') httpParams = httpParams.append('filter', filter)
+    else httpParams = httpParams.append('filter', '1')
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIelementsListByDate(${path}) res: `, res);
         return res;
@@ -913,10 +1048,12 @@ export class DooleService {
     );
   }
 
-  getAPIelementGroupID(id: Object): Observable<any> {
+  getAPIelementGroupID(id: Object, filter?): Observable<any> {
     let path = `center/elementGroup/${id}/elements`;
+    let httpParams = new HttpParams();
+    httpParams = (filter) ? httpParams.append('filter', filter) : httpParams
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIelementGroupID(${path}) res: `, res);
         return res;
@@ -924,7 +1061,7 @@ export class DooleService {
     );
   }
 
-  searchAPIelementGroup(params: Object): Observable<any> {
+  searchAPIelementGroup(params?: any): Observable<any> {
     let path = 'center/elementGroups'
     const endpoint = this.api.getEndpoint(path);
     return this.http.post(endpoint, params).pipe(
@@ -934,8 +1071,21 @@ export class DooleService {
       })
     );
   }
+
+  getAPIelementGroup(params?: any): Observable<any> {
+    let path = 'center/elementGroups'
+    let httpParams = new HttpParams();
+    httpParams = (params?.filter) ? httpParams.append('filter', params?.filter) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIelementGroup(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
   /** get diets with query by parameter date  */
-  getAPIlistDietsByDate(params: Object): Observable<any> {
+  getAPIlistDietsByDate(params?: Object): Observable<any> {
     let path = 'user/diets';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
@@ -946,11 +1096,10 @@ export class DooleService {
     );
   }
 
-  getAPIdietsByDate(params: any): Observable<any> {
+  getAPIdietsByDate(date: any): Observable<any> {
     let path = `user/dietaryIntakes`
     let httpParams = new HttpParams();
-    httpParams = (params?.date) ? httpParams.append('date', params.date) : httpParams
-    httpParams = (params?.grouped_by_times) ? httpParams.append('grouped_by_times', params.grouped_by_times) : httpParams
+    httpParams = (date) ? httpParams.append('date', date) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
@@ -994,23 +1143,34 @@ export class DooleService {
     );
   }
     /** get news  **/
-  getAPIlistNews(): Observable<any> {
-    let path = 'user/news';
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
+    getAPIlistNews(): Observable<any> {
+      let path = 'user/news';
+      const endpoint = this.api.getEndpoint(path);
+      return this.http.get(endpoint).pipe(
+        map((res: any) => {
+          //console.log(`[DooleService] getAPIlistNews(${path}) res: `, res);
+          return res;
+        })
+      );
+    }
 
-  getAPIdetailNew(id: any): Observable<any> {
-    let path = `user/new/${id}`;
+    getAPIdetailNew(id: any): Observable<any> {
+      let path = `user/new/${id}`;
+      const endpoint = this.api.getEndpoint(path);
+      return this.http.get(endpoint).pipe(
+        map((res: any) => {
+          //console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
+          return res;
+        })
+      );
+    } 
+
+  getAPIdetailAdvices(id: any): Observable<any> {
+    let path = `advice/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIdetailNew(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIdetailAdvices(${path}) res: `, res);
         return res;
       })
     );
@@ -1029,18 +1189,6 @@ export class DooleService {
     );
   }
 
-  getAPIAppLatestVersion(version, platform): Observable<any> {
-    let path = 'app/versions/must-update?version='+version+'&platform='+platform;
-    console.log(path);
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-
-        return res;
-      })
-    )
-  }
-
   getAPISearchAdvices(query: any): Observable<any> {
     let path = 'advices';
     let httpParams = new HttpParams();
@@ -1048,23 +1196,12 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPISearchAdvices(${path}) res: `, res);
+        console.log(`[DooleService] getAPISearchAdvices(${path}) res: `, res);
         return res;
       })
     );
   }
-
-  getAPIdetailAdvices(id: any): Observable<any> {
-    let path = `advice/${id}`;
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] getAPIdetailAdvices(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
-
+  
   getAPIdrugsList(query: any): Observable<any> {
     let path = `drugIntake/list`;
     let httpParams = new HttpParams();
@@ -1246,6 +1383,134 @@ export class DooleService {
     );
   }
 
+  getAPImedicationPlans(params?): Observable<any> {
+    let path = `user/medicationPlans`
+    let httpParams = new HttpParams();
+    httpParams = (params?.onDate === 0 || params?.onDate === 1) ? httpParams.append('onDate', params?.onDate) : httpParams
+    httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+// activatePendingMedicationPlans
+  getAPIPendingMedicationPlans(params?): Observable<any> {
+    let path = `user/pending/medicationPlans`
+    let httpParams = new HttpParams();
+    httpParams = (params?.onlyCount === 1 || params?.onlyCount === 0) ? httpParams.append('onlyCount', params?.onlyCount) : httpParams
+    httpParams = (params?.onlyCount === undefined) ? httpParams.append('onlyCount', '0') : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIPendingMedicationPlans(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIFrequenciesMedicationPlansHPC(params?): Observable<any> {
+    let path = `hpc/medicationPlan/frequencies`
+    let httpParams = new HttpParams();
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIFrequenciesMedicationPlansHPC(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIDrugUnits(id, search?): Observable<any> {
+    let path = `drug/${id}/units`
+    let httpParams = new HttpParams();
+    httpParams = search ? httpParams.append('search', search) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIDrugUnits(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIDiagnostic(params): Observable<any> {
+    let path = 'user/diagnostics'//'v2/diagnostic/user';
+    let httpParams = new HttpParams();
+    httpParams = (params?.onDate === 0 || params?.onDate === 1) ? httpParams.append('onDate', params?.onDate) : httpParams
+    httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPICenterAllergies(search?): Observable<any> {
+    let path = 'center/allergies';
+    let httpParams = new HttpParams();
+    httpParams = (search) ? httpParams.append('search', search) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIAllergies(): Observable<any> {
+    let path = 'user/allergies';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  postAPIAllergies(params: Object): Observable<any> {
+    let path = `user/allergy/create`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  putAPIAllergy(id: any, params: Object): Observable<any> {
+    let path = `user/allergy/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.put(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] putAPIAllergy(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  deleteAPIAllergy(id: Object): Observable<any> {
+    let path = `user/allergy/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.delete(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] deleteAPIAllergy(${path}) res: ${res}`, JSON.stringify(res));
+        return res;
+      })
+    );
+  }
+
   getAPIgames(): Observable<any> {
     let path = 'user/games';
     const endpoint = this.api.getEndpoint(path);
@@ -1292,12 +1557,17 @@ export class DooleService {
     );
   }
 
-  getAPIallAgenda(): Observable<any>{
+  getAPIallAgenda(params?): Observable<any>{
     let path = 'user/agenda/v2';
+    let httpParams = new HttpParams();
+    httpParams = params?.from_date? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = params?.to_date? httpParams.append('to_date', params?.to_date) : httpParams
+    httpParams = params?.filter_by_date? httpParams.append('filter_by_date', params?.filter_by_date) : httpParams
+    httpParams = (params?.with_medical_procedures != undefined)? httpParams.append('with_medical_procedures', params?.with_medical_procedures) : httpParams
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIappointmentAgendaV2(${path}) res: `, res);
+        console.log(`[DooleService] getAPIappointmentAgendaV2(${path}) res: `, res);
         return res;
       })
     );
@@ -1352,8 +1622,8 @@ export class DooleService {
     let path = `user/allowedContacts`;
     const endpoint = this.api.getEndpoint(path);
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('withDepartments', '1')
-    return this.http.get(endpoint,httpParams).pipe(
+    httpParams = httpParams.append('withDepartments', '1') 
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIallowedContacts(${path}) res: `, res);
         let allowed = res.allowed
@@ -1476,29 +1746,6 @@ export class DooleService {
     );
   }
 
-  updateAPIImageuser(params: Object): Observable<any> {
-    let path = `user/image`;
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.put(endpoint, params).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
-        return res;
-
-      })
-    );
-  }
-
-  deleteAPIImageuser(): Observable<any> {
-    let path = `user/image`;
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.delete(endpoint).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] updateAPIReminder(${path}) res: `, res);
-        return res;
-
-      })
-    );
-  }
   postAPIContentStatus(params: Object): Observable<any> {
     let path = 'content/status'
     const endpoint = this.api.getEndpoint(path);
@@ -1510,61 +1757,33 @@ export class DooleService {
     );
   }
 
-  getAPIpatients(): Observable<any> {
-    let path = 'user/patients';
+  postAPIuserRegister(params: Object): Observable<any> {
+    let path = 'hpc/user/store';
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    return this.http.post(endpoint, params).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        console.log(`[DooleService] postAPIsendRegister(${path}) res: `, res);
         return res;
+
       })
     );
   }
 
-  getAPILevelInfo(challengeId, levelId, params?): Observable<any> {
-    let path = 'user/challenge/'+challengeId+'/level/'+ levelId+'/goals'
-
+  getAPITypeDocument(): Observable<any> {
+    let path = 'center/documentTypes';
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPILevelInfo(${path}) res: `, res);
+        //console.log(`[DooleService] getAPITypeDocument(${path}) res: `, res);
         return res;
       })
     );
   }
-
-  getAPIChallenge(challengeId, params?): Observable<any> {
-    let path = 'user/challenge/'+challengeId
-
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] getAPIChallenge(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
-
-  getAPIChallenges( params?): Observable<any> {
-    let path = 'user/challenges'
-
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
-      map((res: any) => {
-        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
-
-
-
-
-  getAPImessage(id, params): Observable<any> {
-    let path = 'user/message/' + id
+  
+  getAPImessage(id, params?): Observable<any> {
+    let path = 'user/message/'+ id
     let httpParams = new HttpParams();
-    httpParams = params?.page? httpParams.append('page', params?.page) : httpParams
-    httpParams = params?.user? httpParams.append('user', params?.user) : httpParams
+    httpParams = httpParams? httpParams.append('page', params) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
@@ -1574,37 +1793,104 @@ export class DooleService {
     );
   }
 
-  getAPIFormJSON(form, params?): Observable<any> {
-    let path = `form/${form}/formFields`;
+  getAPIEvents(params): Observable<any> {
+    let path = 'hpc/user/episodes';
     let httpParams = new HttpParams();
-    httpParams = (params?.formAnswer) ? httpParams.append('formAnswer', params?.formAnswer)  : httpParams
-    httpParams = (params?.game_play_id) ? httpParams.append('game_play_id', params?.game_play_id)  : httpParams
+    httpParams = (params?.onDate === 0 || params?.onDate === 1) ? httpParams.append('onDate', params?.onDate) : httpParams
+    httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res; 
+      })
+    );
+  }
+
+  postAPImedicalProcedures(params?: Object): Observable<any> {
+    let path = `user/medicalProcedures`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  getAPImedicalProcedures2(params?: any): Observable<any> {
+    let path = `hpc/user/medicalProcedures`;
+    const endpoint = this.api.getEndpoint(path);
+    let httpParams = new HttpParams();
+    httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
+    httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = (params?.user) ? httpParams.append('user', params?.user) : httpParams
+    return this.http.get(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  postAPINextMedicalProcedure(params?: Object): Observable<any> {
+    let path = `user/medicalProcedure/next`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  getAPImedicalProcedures(params: any): Observable<any> {
+    let path = `hpc/user/medicalProcedure`;
+    let httpParams = new HttpParams();
+    httpParams = (params?.byEpisode === 0 || params?.byEpisode === 1) ? httpParams.append('byEpisode', params?.byEpisode) : httpParams
+    httpParams = (params?.medical_procedure_id && params?.byEpisode === 0) ? httpParams.append('medical_procedure_id', params?.medical_procedure_id) : httpParams
+    httpParams = (params?.episode_id && params?.byEpisode === 1) ? httpParams.append('episode_id', params?.episode_id) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] postAPIdrugIntake(${path}) res: `, res);
+        return res;
+
+      })
+    );
+  }
+
+  getAPIpreexistingConditions(params?): Observable<any> {
+    let path = 'user/preexistingConditions'
+    let httpParams = new HttpParams();
+    httpParams = (params?.onDate === 0 || params?.onDate === 1) ? httpParams.append('onDate', params?.onDate) : httpParams
+    httpParams = (params?.from_date) ? httpParams.append('from_date', params?.from_date) : httpParams
+    httpParams = (params?.to_date) ? httpParams.append('to_date', params?.to_date) : httpParams
+    //httpParams = (params?.preexistingConditionTypes) ? httpParams.append('preexistingConditionTypes[]', params?.preexistingConditionTypes) : httpParams
+    if (params?.preexistingConditionTypes && params?.preexistingConditionTypes?.length) {
+      params.preexistingConditionTypes.forEach(element => {
+        httpParams = httpParams.append('preexistingConditionTypes[]', element)
+      });
+    }
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIelementsList(${path}) res: `, res);
         return res;
       })
     );
   }
 
-  postAPIFormJSON(form, params): Observable<any> {
-    let path = `formfield/conditional/${form}/field/${params.formField}`;
+  getAPIpreexistingConditionsType(): Observable<any> {
+    let path = 'center/preexistingConditionTypes'
     const endpoint = this.api.getEndpoint(path);
-    return this.http.post(endpoint, params).pipe(
+    return this.http.get(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
-        return res;
-      })
-    );
-  }
-
-  postAPIFormFill(params): Observable<any> {
-    let path = `form/fill/`;
-    const endpoint = this.api.getEndpoint(path);
-    return this.http.post(endpoint, params).pipe(
-      map((res: any) => {
-        //console.log(`[DooleService] postAPIContentStatus(${path}) res: `, res);
+        //console.log(`[DooleService] getAPIpreexistingConditionsType(${path}) res: `, res);
         return res;
       })
     );
@@ -1636,6 +1922,17 @@ export class DooleService {
     );
   }
 
+  getAPIUserImage(): Observable<any> {
+    let path = 'user/image';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIgames(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   postAPINotificationRead(id): Observable<any> {
     let path = `user/notification/read`;
     const endpoint = this.api.getEndpoint(path);
@@ -1647,7 +1944,7 @@ export class DooleService {
   }
 
   get(endpt): Observable<any> {
-    const endpoint = this.api.getDooleEndpoint(endpt);
+    const endpoint = this.api.getEndpoint(endpt);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
         return res;
@@ -1656,7 +1953,7 @@ export class DooleService {
   }
 
   post(endpt, items): Observable<any> {
-    const endpoint = this.api.getDooleEndpoint(endpt);
+    const endpoint = this.api.getEndpoint(endpt);
     return this.http.post(endpoint, items).pipe(
       map((res: any) => {
         return res;
@@ -1700,12 +1997,53 @@ export class DooleService {
     );
   }
 
-  getAPIExercises(): Observable<any> {
-    let path = 'user/exercises';
+  getAPIChallenge(challengeId, params?): Observable<any> {
+    let path = 'user/challenge/'+challengeId
+
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        console.log(`[DooleService] getAPIChallenge(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIChallenges( params?): Observable<any> {
+    let path = 'user/challenges'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  getAPIAppLatestVersion(version, platform): Observable<any> {
+    let path = 'app/versions/must-update?version='+version+'&platform='+platform;
+    console.log(path);
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+
+        return res;
+      })
+    )
+  }
+
+
+
+
+
+  
+  getAPIpatients(): Observable<any> {
+    let path = 'user/patients';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
         return res;
       })
     );
