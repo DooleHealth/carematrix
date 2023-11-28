@@ -187,6 +187,10 @@ const routes: Routes = [
     path: 'games',
     loadChildren: () => import('./pages/diary/games/games.module').then( m => m.GamesPageModule)
    },
+   {
+    path: 'diets',
+    loadChildren: () => import('./pages/diary/diets/diets.module').then( m => m.DietsPageModule)
+   }
  
 
 
