@@ -22,7 +22,7 @@ import { PusherConnectionService } from 'src/app/services/pusher/pusher-connecti
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
 import { NativeMarket } from "@capacitor-community/native-market";
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import { Constants } from 'src/app/config/constants';
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
@@ -67,6 +67,9 @@ export class HomePage implements OnInit {
   userImage: string
   goals: any = []
   diets: any = []
+  exercises: any = []
+  forms: any = []
+  challenges: any = [];
   dietsNoMenu: any = []
   drugs: any = []
   games = []
@@ -156,12 +159,17 @@ export class HomePage implements OnInit {
   //Horizontal
   sliderAdvicesConfigHorizontal = this.sliderConfigHorizontal;
   sliderProceduresConfigHorizontal = this.sliderConfigHorizontal;
+  sliderChallengesConfigHorizontal = this.sliderConfigHorizontal;
+
   sliderAgendasConfigHorizontal = this.sliderConfigHorizontal;
   //vertical
   sliderGoalsConfigVertical: any = this.sliderGoalConfig;
   sliderDietsConfigVertical: any = this.sliderConfigVertical;
+  sliderExercisesConfigVertical: any = this.sliderConfigVertical;
+  sliderGamesConfigVertical: any = this.sliderConfigVertical;
   sliderDrugsConfigVertical: any = this.sliderConfigVertical;
   sliderPhysicalConfigVertical: any = this.sliderConfigVertical;
+  sliderFormsConfigVertical: any = this.sliderConfigVertical;
 
   @ViewChild('sliderGoals') sliderGoals: ElementRef | undefined;
   @ViewChild('sliderPhysical') sliderPhysical: ElementRef | undefined;
@@ -328,6 +336,9 @@ export class HomePage implements OnInit {
         this.getPendingMedicationPlans(),
         this.getElementsList(),
         this.getGamesList(),
+        this.getExercisesList(),
+        this.getFormsList(),
+        this.getChallenges()
         // Add other asynchronous calls as needed
       ]);
 
@@ -522,14 +533,14 @@ export class HomePage implements OnInit {
 
   async getGamesList() {
     try {
-     
+
       const data: any = await new Promise((resolve, reject) => {
         this.dooleService.getAPIgames().subscribe(
           async (res: any) => {
 
             console.log('[TrackingPage] getGamesList()', await res);
             this.setGamesSlider(res.games)
-            
+
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
@@ -540,6 +551,79 @@ export class HomePage implements OnInit {
       });
 
       this.setPhysicalSlider(data);
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching elements list:', error);
+      throw error;
+    }
+  }
+
+  async getFormsList() {
+    try {
+
+      const data: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIformLists().subscribe(
+          async (res: any) => {
+            console.log('[TrackingPage] getAPIExercises()', await res);
+            this.setFormsSlider(res.forms)
+
+          },
+          (error) => {
+            alert(`Error: ${error.code}, Message: ${error.message}`);
+            console.log('[TrackingPage] getGamesList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching elements list:', error);
+      throw error;
+    }
+  }
+
+  async getChallenges() {
+    try {
+
+      const data: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIChallenges().subscribe(
+          async (res: any) => {
+            console.log('[TrackingPage] getAPIChallenges()', await res);
+            this.setExercisesSlider(res.exercises)
+            this.setChallengesSlider(res.challenges)
+
+          },
+          (error) => {
+            alert(`Error: ${error.code}, Message: ${error.message}`);
+            console.log('[TrackingPage] getGamesList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching elements list:', error);
+      throw error;
+    }
+  }
+
+
+  async getExercisesList() {
+    try {
+
+      const data: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIExercises().subscribe(
+          async (res: any) => {
+            console.log('[TrackingPage] getAPIExercises()', await res);
+            this.setExercisesSlider(res.exercises)
+          },
+          (error) => {
+            alert(`Error: ${error.code}, Message: ${error.message}`);
+            console.log('[TrackingPage] getGamesList() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching elements list:', error);
@@ -560,6 +644,9 @@ export class HomePage implements OnInit {
       case 'procedures':
         this.sliderProceduresConfigHorizontal = (this.procedures?.length == 1) ? this.sliderConfigHorizontalOneSlide : this.sliderConfigHorizontal
         break;
+      case 'challenges':
+        this.sliderChallengesConfigHorizontal = (this.challenges?.length == 1) ? this.sliderConfigHorizontalOneSlide : this.sliderConfigHorizontal
+        break;
       //Vertical
       case 'goals':
         this.sliderGoalsConfigVertical = (this.goals?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderGoalConfig
@@ -574,7 +661,13 @@ export class HomePage implements OnInit {
         this.sliderDietsConfigVertical = (this.diets?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
         break;
       case 'games':
-        this.sliderDietsConfigVertical = (this.games?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
+        this.sliderGamesConfigVertical = (this.games?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
+        break;
+      case 'exercises':
+        this.sliderExercisesConfigVertical = (this.exercises?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
+        break;
+      case 'forms':
+        this.sliderFormsConfigVertical = (this.forms?.length == 1) ? this.sliderConfigVerticalOneSlide : this.sliderConfigVertical
         break;
     }
   }
@@ -650,6 +743,20 @@ export class HomePage implements OnInit {
     this.games = games?.length > 0 ? games : [];
     this.setSliderOption('games')
   }
+  updateExercisesSlider(exercises) {
+    this.exercises = exercises?.length > 0 ? exercises : [];
+    this.setSliderOption('exercises')
+  }
+
+  updateChallengesSlider(challenges) {
+    this.challenges = challenges?.length > 0 ? challenges : [];
+    this.setSliderOption('challenges')
+  }
+
+  updateFormsSlider(forms) {
+    this.forms = forms?.length > 0 ? forms : [];
+    this.setSliderOption('forms')
+  }
 
   setDietSlider(diets) {
     console.log('[DiaryPage] setDietSlider()', diets);
@@ -665,7 +772,26 @@ export class HomePage implements OnInit {
     this.updateGamesSlider(games)
   }
 
-  
+  setExercisesSlider(exercises) {
+    console.log('[DiaryPage] setDietSlider()', exercises);
+    this.exercises = exercises?.length > 0 ? exercises : [];
+    this.setSliderOption('exercises')
+    this.updateExercisesSlider(exercises)
+  }
+
+  setChallengesSlider(challenges) {
+    console.log('[DiaryPage] challenges()', challenges);
+    this.challenges = challenges?.length > 0 ? challenges : [];
+    this.setSliderOption('challenges')
+    this.updateChallengesSlider(challenges)
+  }
+
+  setFormsSlider(forms) {
+    console.log('[DiaryPage] setFormsSlider()', forms);
+    this.forms = forms?.length > 0 ? forms : [];
+    this.setSliderOption('forms')
+    this.updateFormsSlider(forms)
+  }
 
   setPhysicalSlider(constants) {
     this.activity = []
@@ -1280,6 +1406,14 @@ export class HomePage implements OnInit {
         hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
       }
     }); */
+
+    if (this.games !== undefined && this.games?.length > 0) {
+      const index = this.sliderGames?.nativeElement?.swiper.activeIndex
+      let slider = this.games[index]
+      this.infoGames = {
+        title: slider?.items,
+      }
+    }
   }
 
   slideActivityChange() {

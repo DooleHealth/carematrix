@@ -1969,6 +1969,17 @@ export class DooleService {
    return this.pushNotification;
   }
 
+  getAPIExercises(): Observable<any> {
+    let path = 'user/exercises';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
   getAPIChallenge(challengeId, params?): Observable<any> {
     let path = 'user/challenge/'+challengeId
 

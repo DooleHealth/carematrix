@@ -166,6 +166,13 @@ ion-card {
   --background: #ffffff !important;
   max-height: 41px;
   text-overflow: ellipsis;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px; /* 150% */
+  text-transform: uppercase; text-align:left; 
+  padding-bottom: 0px
 }
 .customCardAdvices {
   background-color: white;
@@ -248,6 +255,7 @@ ion-progress-bar {
   font-style: normal;
   font-weight: 500;
   line-height: 21px;
+  //padding-left: 5%;
 }
 
 strong {
