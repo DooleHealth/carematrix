@@ -2,7 +2,7 @@
   <!-- <ion-toolbar> -->
 
     <ion-toolbar mode="ios" [ngSwitch]="segment">
-      <ion-title>{{ 'advices.header' | translate}}</ion-title>
+      <ion-title>{{'advices.tag_advices'| translate }}</ion-title>
       <ion-buttons slot="start">
         <ion-back-button text=""></ion-back-button>
       </ion-buttons>
@@ -10,9 +10,14 @@
 </ion-header>
 <ion-content view-cached=”false”>
 
+  <div>
+    <ion-list *ngIf="items.length > 0; else noData">
+        <app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>
+    </ion-list>
+  </div>
 <!-- SegmentBar -->
 
-  <ion-segment
+  <!--<ion-segment
   (ionChange)="segmentChanged($event)"
   [(ngModel)]="segment"
   scrollable>
@@ -22,11 +27,11 @@
     <ion-segment-button *ngIf="role?.component?.advices" value="advices">
       <ion-label>{{ 'advices.tag_advices' | translate}}</ion-label>
     </ion-segment-button>
-  </ion-segment>
+  </ion-segment>-->
 
   <!--News -->
 
-  <ion-searchbar
+  <!--<ion-searchbar
     [animated]="true"
     (ionInput)="filterList($event)"
     placeholder="{{ 'advices.searchbar' | translate}}">
@@ -34,9 +39,10 @@
 
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner ></ion-spinner>
-  </div>
+  </div>-->
 
-  <div class="verticalLine2" [ngSwitch]="segment">
+ <!--
+   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'news'">
       <ion-list *ngIf="items.length > 0; else noData">
         <ion-card  routerLink="/new-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile" >
@@ -52,9 +58,9 @@
           </ion-item>
         </ion-card>
       </ion-list>
-    </div>
+    </div>-->
     <!-- Advices -->
-<div *ngSwitchCase="'advices'">
+<!--<div *ngSwitchCase="'advices'">
   <ion-list *ngIf="items.length > 0; else noData">
     <ion-card routerLink="advices-detail" [state]="{id: item.item.id}" *ngFor="let item of items" class="cardProfile"  routerLinkActive='active-item'  routerLinkActive='active-item'>
       <div class="sliderImage">
@@ -68,8 +74,8 @@
       </ion-item>
     </ion-card>
   </ion-list>
-  </div>
-</div>
+  </div>-->
+<!--</div>-->
  <!-- NO DATA MESSAGE -->
 <ng-template #noData>
   <div *ngIf="!this.isLoading">

@@ -81,7 +81,9 @@ export interface SharedCarePlanLifeStyle {
     img?: string,
     title: string,
     description: string,
-    type: string
+    type: string,
+    id?: string,
+    routerlink?: string
 
 }
 export interface SharedCarePlanPrescribedApps {

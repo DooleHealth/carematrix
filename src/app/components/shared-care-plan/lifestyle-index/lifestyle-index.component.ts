@@ -11,7 +11,8 @@ export class LifestyleIndexComponent  implements OnInit {
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   goTo(type: any){   
     this.redirect.emit({type: type})

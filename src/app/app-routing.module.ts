@@ -139,6 +139,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/advices/advices.module').then( m => m.AdvicesPageModule)
   },
   {
+    path: 'news',
+    loadChildren: () => import('./pages/home/news/news.module').then( m => m.NewsPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
