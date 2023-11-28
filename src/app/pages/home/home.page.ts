@@ -197,6 +197,7 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    console.log("ENTER")
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.checkHealthAccess();
     this.checkStorageNotification();
