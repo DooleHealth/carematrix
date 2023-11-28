@@ -44,10 +44,10 @@
 
   <ion-grid>
     <!-- Health PATH-->
-    <!-- <ion-row *ngIf="this.challenges?.length > 0" class="paddingTopNoMarginBottom">
+    <ion-row *ngIf="this.challenges?.length > 0" class="paddingTopNoMarginBottom">
       <ion-text class="txtTitle">{{ 'health_path.card_title' | translate}}</ion-text>
 
-      <swiper-container [slidesPerView]="this.challenges?.length == 1 ? 1:1.2">
+      <swiper-container [slidesPerView]="this.challenges?.length == 1 ? 1:1.2" [config]="this.sliderChallengesConfigHorizontal">
         <swiper-slide *ngFor="let challenge of this.challenges" class="ion-no-padding">
 
           <ion-card mode="md" class="customCardHealthPath">
@@ -89,14 +89,11 @@
                       <br>
                     </ion-row>
 
-
-
                     <ion-row style="margin-bottom: 5%;">
                       <ion-progress-bar class="progress-bar"
                         value="{{ challenge?.current_level?.percentage_completed > 0 ? challenge?.current_level?.percentage_completed / 100 : 0 }}">
                       </ion-progress-bar>
                     </ion-row>
-
 
                     <ion-row>
                       <a routerLink="health-path/detail" routerLinkActive="active-item"
@@ -110,19 +107,17 @@
 
         </swiper-slide>
       </swiper-container>  
-    </ion-row>-->
+    </ion-row>
 
     <!-- TEMPORARY Prescribed apps TRAK-->
     <ion-row class="paddingTopNoMarginBottom">
 
       <ion-text class="txtTitle" style="white-space: nowrap">
         {{ 'home.prescribed_apps_title' | translate}}</ion-text>
-
-        <ion-card >
           <swiper-container [config]="this.config" [slidesPerView]="this.prescribedApps?.length == 1 ? 1:2">
             <swiper-slide *ngFor="let slide of this.prescribedApps" class="ion-no-padding">
              <ng-container *ngIf="slide.iframe_url !== null else openMarketApp">
-                <ion-card style="background: white; box-shadow: none;" [href]="this.safeUrl">
+                <ion-card style="background: white; box-shadow: none;" [href]="this.safeUrl" >
                   <img [src]="slide.icon" />
                 </ion-card>
               </ng-container>
@@ -132,16 +127,9 @@
                   <img style="width: 30%;" [src]="slide.icon" />
                 </ion-card>
               </ng-template>
-    
             </swiper-slide>
           </swiper-container>
-        </ion-card>
-     
     </ion-row>
-
-
-
-
 
     <ion-row class="paddingTopNoMarginBottom">
 
@@ -153,10 +141,70 @@
     </ion-row>
 
     <!-- Forms -->
+    <ion-row>
+      <ion-card class="vertical-card">
+        <ion-item lines="none" class="noMargin" routerLink="/tracking" routerLinkActive="active-item"
+          [state]="{segment: 'diets'}">
+          <ion-img class="ion-no-margin" slot="start" src="assets/icons/checklist-pen.svg"></ion-img>
+          <ion-text class="card-title" slot="start">{{ 'home.forms_subtitle' | translate}}</ion-text>
+          <ion-text slot="end" *ngIf="infoDiet">{{infoDiet?.hour}}</ion-text>
+          <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
 
+        <ion-card-content>
+          <div class="txtTitleGoalsLittle3" *ngIf="!this.forms|| this.forms?.length == 0 ">
+            {{ 'no_data' | translate}}
+          </div>
+          <swiper-container #sliderExercises *ngIf="this.forms?.length > 0" direction="vertical" pagination="true"
+            [config]="this.sliderFormsConfigVertical">
+
+            <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.forms">
+              <ion-grid class="zeroMarginPadding" style="width: 100%;">
+                  <ion-row>
+                    <p style="text-align: left;margin-left: 0px;">- {{slide?.title}}</p>
+                  </ion-row>
+              </ion-grid>
+            </swiper-slide>
+            
+          </swiper-container>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-row>
 
 
     <!-- Exercises -->
+    <ion-row>
+      <ion-card class="vertical-card">
+        <ion-item lines="none" class="noMargin" routerLink="/tracking" routerLinkActive="active-item"
+          [state]="{segment: 'diets'}">
+          <ion-img class="ion-no-margin" slot="start" src="assets/icons/exercises.svg"></ion-img>
+          <ion-text class="card-title" slot="start">{{ 'home.exercises_subtitle' | translate}}</ion-text>
+          <ion-text slot="end" *ngIf="infoDiet">{{infoDiet?.hour}}</ion-text>
+          <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+
+        <ion-card-content>
+          <div class="txtTitleGoalsLittle3" *ngIf="!this.exercises|| this.exercises?.length == 0 ">
+            {{ 'no_data' | translate}}
+          </div>
+          <swiper-container #sliderExercises *ngIf="this.exercises?.length > 0" direction="vertical" pagination="true"
+            [config]="this.sliderExercisesConfigVertical">
+
+            <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.exercises">
+              <ion-grid class="zeroMarginPadding" style="width: 100%;">
+                  <ion-row>
+                    <!-- (click)="goDetailRecipe(slide)" -->
+                    <p style="text-align: left;margin-left: 0px;" >- {{slide?.name}}</p>
+                  </ion-row>
+              </ion-grid>
+            </swiper-slide>
+            
+          </swiper-container>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-row>
 
 
     <!-- Drugs -->
@@ -176,7 +224,7 @@
             {{ 'no_data' | translate}}
           </div>
           <swiper-container #sliderDrug (slidechange)="slideDrugChange()" direction="vertical" pagination="true"
-            [config]="this.config" class="slider-vertical">
+            [config]="this.sliderDrugsConfigVertical" class="slider-vertical">
             <swiper-slide *ngFor="let slide of this.drugs">
               <ion-grid>
                 <ion-row routerLink="/tracking" [state]="{segment: 'medication'}">
@@ -221,7 +269,7 @@
             {{ 'no_data' | translate}}
           </div>
           <swiper-container #sliderDiet *ngIf="this.diets?.length > 0" direction="vertical" pagination="true"
-            [config]="sliderPhysicalConfigVertical">
+            [config]="this.sliderDietsConfigVertical">
 
             <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.diets">
               <ion-grid class="zeroMarginPadding" style="width: 100%;">
@@ -234,7 +282,6 @@
           </swiper-container>
         </ion-card-content>
       </ion-card>
-
     </ion-row>
 
     <!-- Games -->
@@ -256,8 +303,8 @@
             {{ 'no_data' | translate}}
           </div>
 
-          <swiper-container #sliderGames *ngIf="this.games?.length > 0" (slideChange)="slideDietChange()"
-            direction="vertical" pagination="true" [config]="this.configVertical" class="slider-vertical">
+          <swiper-container #sliderGames *ngIf="this.games?.length > 0" (slideChange)="slideGamesChange()"
+            direction="vertical" pagination="true" [config]="this.sliderGamesConfigVertical" class="slider-vertical">
             <swiper-slide *ngFor="let slide of this.games">
               <div (click)="actionButtonGames(slide.game)" class="txtTitleGoalsLittle3">
                 <p style="text-align: left">{{slide.name}}</p>
@@ -332,11 +379,11 @@
             <div class="txtTitleGoalsLittle3" *ngIf="!this.appointment || this.appointment?.length == 0 ">
               {{ 'no_data' | translate}}
             </div>
-            <ion-item class="cardHeader">
-              <ion-text slot="start">{{slide.title | uppercase }}</ion-text>
 
-            </ion-item>
-
+            <ion-card-header class="cardHeader"style="">
+              <ion-card-subtitle>{{slide.title | uppercase }}</ion-card-subtitle>
+            </ion-card-header>
+           
             <ion-card-content mode="md" class="strechCardContent" routerLink="/agenda/reminder/detail"
               routerLinkActive="active-item" [state]="{ event: slide}">
               <ion-grid>
@@ -345,18 +392,17 @@
                     <ion-img src="assets/icons/agenda2.svg"></ion-img>
                   </ion-col>
                   <ion-col size="9.5" class="alingLeft zeroMarginPadding">
-                    <p class="text1line"><b>{{slide?.staff[0]?.name}}</b></p>
-                    <p>
+                    <p class="text1line" style="padding-left: 5%"><b>{{slide?.staff[0]?.name}}</b></p>
+                    <p style="padding-left: 5%" class="ion-margin-start">
                       {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
                       }}
                     </p>
                     <ion-row>
-                      <p><a>{{ 'home.detail_button' | translate }}</a></p>
+                      <p style="padding-left: 5%"><a>{{ 'home.detail_button' | translate }}</a></p>
                     </ion-row>
                   </ion-col>
                 </ion-row>
               </ion-grid>
-
             </ion-card-content>
           </ion-card>
         </swiper-slide>
