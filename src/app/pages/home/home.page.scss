@@ -87,10 +87,8 @@
 
   ion-card-content {
     height: 100px;
-    ion-progress-bar {
-      height: 10px;
-      width: 85%;
-    }
+    width: 100%;
+    display: flex;
     p {
       width: 85%;
     }
@@ -109,27 +107,6 @@ ion-card {
   font-style: normal;
   font-weight: 600;
   line-height: 21px;
-}
-
-.vertical-card {
-  background-color: white !important;
-  width: 100%;
-
-  ion-img {
-    height: 18px;
-    width: 18px;
-  }
-
-  ion-card-content {
-    height: 100px;
-    ion-progress-bar {
-      height: 10px;
-      width: 85%;
-    }
-    p {
-      width: 85%;
-    }
-  }
 }
 
 
@@ -320,49 +297,49 @@ strong {
 .slider-vertical {
   height: 100px !important;
 }
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-.swiper-pagination {
-  height: auto !important;
-}
+// .swiper {
+//   width: 100%;
+//   height: 100%;
+// }
+// .swiper-pagination {
+//   height: auto !important;
+// }
 
-.swiper-slide-container {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-  height: 100%;
-  max-width: 600px;
-  margin: auto;
-  /* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-}
+// .swiper-slide-container {
+//   text-align: center;
+//   font-size: 18px;
+//   background: #fff;
+//   height: 100%;
+//   max-width: 600px;
+//   margin: auto;
+//   /* Center slide text vertically */
+//   display: -webkit-box;
+//   display: -ms-flexbox;
+//   display: -webkit-flex;
+//   display: flex;
+//   -webkit-box-pack: center;
+//   -ms-flex-pack: center;
+//   -webkit-justify-content: center;
+//   justify-content: center;
+//   -webkit-box-align: center;
+//   -ms-flex-align: center;
+//   -webkit-align-items: center;
+//   align-items: center;
+// }
 
-.swiper .swiper-slide {
-  height: auto;
-}
+// .swiper .swiper-slide {
+//   height: auto;
+// }
 
-.swiper-slide {
-  display: block;
+// .swiper-slide {
+//   display: block;
 
-  object-fit: cover;
-  border-radius: 15px;
-  .cover img {
-    height: 200px;
-  }
-}
+//   object-fit: cover;
+//   border-radius: 15px;
+//   .cover img {
+//     height: 200px;
+//   }
+// }
 
 @media (min-width: 640px) and (max-width: 1024px) {
   .card {
