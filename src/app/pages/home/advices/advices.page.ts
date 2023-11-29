@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
+import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
+import { NotificationsType } from 'src/app/shared/classes/notification-options';
 export interface ItemAdvice {
   expanded?: boolean;
   item?: any;
@@ -16,19 +18,19 @@ export class AdvicesPage implements OnInit {
   public items= [];
   pushNotification:any = history.state.data;
   itemsBackup= []
-  news = []
+  //news = []
   advices = []
-  groupedElements: any = [];
   date = Date.now()
-   segment = 'news'
-  // segment = 'news'
+  //segment = 'news'
   isLoading = false
-
+  private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
     public role: RolesService
-  ) { }
+  ) {
+    this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "advices-detail")
+   }
 
   ngOnInit() {
    // this.segmentChanged();
@@ -40,49 +42,43 @@ export class AdvicesPage implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
-  addItems(list){
-    this.items = []
-    this.itemsBackup = []
-    list.forEach(element => {
-      this.items.push({expanded: false, item: element })
-    });
-    this.itemsBackup = this.items
-    console.log('[AdvicePage] addItems()', this.items);
-  }
+  // addItems(list){
+  //   this.items = []
+  //   this.itemsBackup = []
+  //   list.forEach(element => {
+  //     this.items.push({expanded: false, item: element })
+  //   });
+  //   this.itemsBackup = this.items
+  //   console.log('[AdvicePage] addItems()', this.items);
+  // }
+
   adapterForView(list){
-    list.forEach(element => {
-    //Se adapta la respuesta de la API a lo que espera el componente  
-      let data={
-        img: element.image.temporaryUrl,
-        title: element.name,
-        description: "",
-        type: "advices",
-        id:element.id,
-        routerlink: "advices-detail"
-      }
-      this.items.push(data)
-    })
+    this.items = this.lifeStyle.adapterForView(
+      list, // JSON
+      'image',  //img
+      'name'
+    )   //title
   }
 
-  async getNewsList(){
-    console.log('[AdvicePage] getNewsList()');
-    this.items = []
-    this.isLoading = true
-    let formattedDate = this.transformDate(this.date)
-    let date = {date: formattedDate}
-    this.dooleService.getAPIlistNews().subscribe(
-      async (res: any) =>{
-        console.log('[AdvicePage] getNewsList()', await res);
-        if(res.news)
-        this.addItems(res.news)
-        this.isLoading = false
-       },(err) => {
-          console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message);
-          alert( 'ERROR(' + err.code + '): ' + err.message)
-          this.isLoading = false
-          throw err;
-      });
-  }
+  // async getNewsList(){
+  //   console.log('[AdvicePage] getNewsList()');
+  //   this.items = []
+  //   this.isLoading = true
+  //   let formattedDate = this.transformDate(this.date)
+  //   let date = {date: formattedDate}
+  //   this.dooleService.getAPIlistNews().subscribe(
+  //     async (res: any) =>{
+  //       console.log('[AdvicePage] getNewsList()', await res);
+  //       if(res.news)
+  //       this.addItems(res.news)
+  //       this.isLoading = false
+  //      },(err) => {
+  //         console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message);
+  //         alert( 'ERROR(' + err.code + '): ' + err.message)
+  //         this.isLoading = false
+  //         throw err;
+  //     });
+  // }
 
 // ADVICES
   async getAdvicesList(){
@@ -106,35 +102,35 @@ export class AdvicesPage implements OnInit {
 
 
 
-  segmentChanged(event?){
-    console.log("segement changed: ", this.segment);
-    switch (this.segment) {
-      case 'news':
-        this.getNewsList()
-        break;
-      case 'advices':
-        this.getAdvicesList()
-        break;
+  // segmentChanged(event?){
+  //   console.log("segement changed: ", this.segment);
+  //   switch (this.segment) {
+  //     case 'news':
+  //       this.getNewsList()
+  //       break;
+  //     case 'advices':
+  //       this.getAdvicesList()
+  //       break;
 
-      default:
-        //this.getDiagnosticTestsList()
-        break;
-    }
-  }
+  //     default:
+  //       //this.getDiagnosticTestsList()
+  //       break;
+  //   }
+  // }
 
-  filterListNews(event){
-    var query = event //.target.value;
-    this.isLoading = true
-    this.dooleService.getAPISearchNews(query).subscribe(res=>{
-      console.log('[DiaryPage] filterListNews()', res);
-      this.items = []
-      if(res.success)
-        this.addItems(res.news)
-      this.isLoading = false
-    },err => {
-      console.log('[DiaryPage] filterListNews() ERROR(' + err.code + '): ' + err.message);
-    });
-  };
+  // filterListNews(event){
+  //   var query = event //.target.value;
+  //   this.isLoading = true
+  //   this.dooleService.getAPISearchNews(query).subscribe(res=>{
+  //     console.log('[DiaryPage] filterListNews()', res);
+  //     this.items = []
+  //     if(res.success)
+  //       this.addItems(res.news)
+  //     this.isLoading = false
+  //   },err => {
+  //     console.log('[DiaryPage] filterListNews() ERROR(' + err.code + '): ' + err.message);
+  //   });
+  // };
 
   filterListAdvices(event){
     var query = event //.target.value;
@@ -143,44 +139,44 @@ export class AdvicesPage implements OnInit {
       console.log('[AdvicePage] filterListAdvices()', res);
       this.items = []
       if(res.success)
-        this.addItems(res.advice)
+        this.adapterForView(res.advice)
       this.isLoading = false
     },err => {
       console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message);
     });
   };
 
-  async filterList(evt) {
-    console.log('[AdvicePage] filterList()');
+  // async filterList(evt) {
+  //   console.log('[AdvicePage] filterList()');
 
-    this.items = this.itemsBackup;
-    const searchTerm = evt.srcElement.value;
-    if (!searchTerm) {
-      //this.items = []
-      this.segmentChanged();
-      return;
-    }
+  //   this.items = this.itemsBackup;
+  //   const searchTerm = evt.srcElement.value;
+  //   if (!searchTerm) {
+  //     //this.items = []
+  //     //this.segmentChanged();
+  //     return;
+  //   }
 
-    switch (this.segment) {
-      case 'news':
-        // this.items = this.items.filter(element => {
-        //   if (element.item.subject && searchTerm) {
-        //     return (element.item.subject .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-        //   }
-        // });
-        this.filterListNews(searchTerm)
-        break;
+  //   switch (this.segment) {
+  //     case 'news':
+  //       // this.items = this.items.filter(element => {
+  //       //   if (element.item.subject && searchTerm) {
+  //       //     return (element.item.subject .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+  //       //   }
+  //       // });
+  //       this.filterListNews(searchTerm)
+  //       break;
 
-      case 'advices':
-        // this.items = this.items.filter(element => {
-        //   if (element.item.name && searchTerm) {
-        //     return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-        //   }
-        // });
-        this.filterListAdvices(searchTerm)
-        break;
-    }
-  }
+  //     case 'advices':
+  //       // this.items = this.items.filter(element => {
+  //       //   if (element.item.name && searchTerm) {
+  //       //     return (element.item.name .toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+  //       //   }
+  //       // });
+  //       this.filterListAdvices(searchTerm)
+  //       break;
+  //   }
+  // }
 
 
 

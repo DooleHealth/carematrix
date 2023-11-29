@@ -1,15 +1,25 @@
 <!-- <ion-card class="cardProfile" (click)="goTo(content.type)" > -->
-<ion-card class="cardProfile"  routerLinkActive="active-item" [routerLink]="content.route" >
+<ion-card class="cardProfile"  routerLinkActive="active-item" [routerLink]="content.routerlink" >
   <ion-item lines="none">
     <div class="verticalLineMalva"></div>
     <ion-grid> 
       <ion-row>
-        <ion-icon [src]="content.icon"></ion-icon>
-        <ion-text class="txtTitleGoals textAdvicesSlider">{{content?.title | translate}}</ion-text>
-        <ion-icon style="margin-right: 0%;" name="chevron-up-outline"></ion-icon>
+        <ion-col size="0.9">
+          <ion-icon [src]="content.icon"></ion-icon>
+        </ion-col>
+        <ion-col size="10.3">
+          <ion-text class="imgPadding">{{content?.title | translate}}</ion-text>
+        </ion-col>
+        <ion-col size="0.8">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-col>
       </ion-row>
-      <ion-row class="imgPadding">
-        <p [innerHtml]="content?.description | translate"></p>
+      <ion-row  class="txtTitleGoals textAdvicesSlider">
+        <ion-col size="0.9">
+        </ion-col>
+        <ion-col size="11.1">
+          <p [innerHtml]="content?.description | translate"></p>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </ion-item>

@@ -36,12 +36,22 @@ const routes: Routes = [
     path: 'informed-consent',
     loadChildren: () => import('./informed-consent/informed-consent.module').then( m => m.InformedConsentPageModule)
   },
-  
   {
     path: 'lifestyle-habits',
     loadChildren: () => import('./lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsPageModule)
   },
-
+  {
+    path: 'form-list',
+    loadChildren: () => import('./form-list/form-list.module').then( m => m.FormListPageModule)
+  },
+  {
+    path: 'procedures',
+    loadChildren: () => import('./procedures/procedures.module').then( m => m.ProceduresPageModule)
+  },
+  {
+    path: 'monitoring',
+    loadChildren: () => import('./monitoring/monitoring.module').then( m => m.MonitoringPageModule)
+  },
 ];
 
 @NgModule({
