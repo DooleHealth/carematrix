@@ -57,7 +57,6 @@ export class HomePage implements OnInit {
   goalsColor = ['assets/icons/hpc/icon_check_verde.svg', 'assets/icons/hpc/icon_check_naranja.svg', 'assets/icons/hpc/icon_check_rojo.svg', 'assets/icons/hpc/icon_check_primary.svg']
   dataStore: DataStore<Array<ShowcaseShellUserModel>>;
   data: Array<ShowcaseShellUserModel> & ShellModel;
-  numMedicationPlans: number = 0;
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
@@ -176,9 +175,14 @@ export class HomePage implements OnInit {
   @ViewChild('sliderDrug') sliderDrug: ElementRef | undefined;
   @ViewChild('sliderDiet') sliderDiet: ElementRef | undefined;
   @ViewChild('sliderGames') sliderGames: ElementRef | undefined;
+  @ViewChild('sliderForms') sliderForms: ElementRef | undefined;
+  @ViewChild('sliderExercises') sliderExercises: ElementRef | undefined;
+
   //@ViewChild('tabs') tabs: TabsComponent;
 
   infoDiet: UserInformation
+  infoForms: UserInformation
+  infoExercises: UserInformation
   infoDrugs: UserInformation
   infoGames: UserInformation
   infoActivity: UserInformation
@@ -325,20 +329,29 @@ export class HomePage implements OnInit {
 
     try {
       await Promise.all([
+        
+
         this.getUserImage(),
         this.getPersonalInformation(),
-        this.getGoalImformation(),
-        this.getallAgenda(),
-        this.getAdvicesList(),
-        (this.drugs = [], this.getDrugIntake()),
-        this.getDietList(),
-        this.getProcedures(),
-        this.getPendingMedicationPlans(),
-        this.getElementsList(),
-        this.getGamesList(),
-        this.getExercisesList(),
+        this.getChallenges(),
+
+        //this.getPrescribedApps() PENDING*
+
         this.getFormsList(),
-        this.getChallenges()
+        this.getExercisesList(),
+        (this.drugs = [], this.getDrugIntake()),
+
+       
+        this.getDietList(),
+
+        this.getGoalImformation(),
+
+        this.getGamesList(),
+        this.getElementsList(),
+        this.getallAgenda(),
+        this.getProcedures()
+        
+        
         // Add other asynchronous calls as needed
       ]);
 
@@ -535,7 +548,7 @@ export class HomePage implements OnInit {
     try {
 
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIgames().subscribe(
+        this.dooleService.getAPIgamesByDate(this.date, this.date).subscribe(
           async (res: any) => {
 
             console.log('[TrackingPage] getGamesList()', await res);
@@ -562,15 +575,15 @@ export class HomePage implements OnInit {
     try {
 
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIformLists().subscribe(
+        this.dooleService.getAPIformPending({ date: this.date }).subscribe(
           async (res: any) => {
-            console.log('[TrackingPage] getAPIExercises()', await res);
+            console.log('[TrackingPage] getAPIformPending()', await res);
             this.setFormsSlider(res.forms)
 
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
-            console.log('[TrackingPage] getGamesList() ERROR(' + error.code + '): ' + error.message);
+            console.log('[TrackingPage] getAPIformPending() ERROR(' + error.code + '): ' + error.message);
             reject(error);
           }
         );
@@ -589,9 +602,7 @@ export class HomePage implements OnInit {
         this.dooleService.getAPIChallenges().subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIChallenges()', await res);
-            this.setExercisesSlider(res.exercises)
             this.setChallengesSlider(res.challenges)
-
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
@@ -612,10 +623,10 @@ export class HomePage implements OnInit {
     try {
 
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIExercises().subscribe(
+        this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIExercises()', await res);
-            this.setExercisesSlider(res.exercises)
+            this.setExercisesSlider(res?.exercisePlays)
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
@@ -761,6 +772,16 @@ export class HomePage implements OnInit {
   setDietSlider(diets) {
     console.log('[DiaryPage] setDietSlider()', diets);
     this.diets = diets?.length > 0 ? diets : [];
+
+    
+    //aqui
+
+    this.searchIndexDiet
+    this.infoDiet = {
+      title: this.diets[this.currentIndexDiet]?.items,
+      hour: this.diets[this.currentIndexDiet]?.from_date !== null ? this.transformDate(new Date(this.diets[this.currentIndexDiet]?.from_date), 'HH:mm') : 'undefined'
+    }
+
     this.setSliderOption('diets')
     this.updateDietSlider(diets)
   }
@@ -1140,44 +1161,13 @@ export class HomePage implements OnInit {
     }
   }
 
-
-  async getPendingMedicationPlans() {
-    try {
-      const params = { onlyCount: 1 };
-
-      const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIPendingMedicationPlans(params).subscribe(
-          (data: any) => {
-            console.log('[HomePage] getPendingMedicationPlans()', data);
-            resolve(data);
-          },
-          (error) => {
-            console.log('[HomePage] getPendingMedicationPlans() ERROR(' + error.code + '): ' + error.message);
-            reject(error);
-          }
-        );
-      });
-
-      if (res.success) {
-        this.numMedicationPlans = res.medication_plan_count ? res.medication_plan_count : 0;
-      }
-    } catch (error) {
-      // Handle errors if needed
-      console.error('Error fetching pending medication plans:', error);
-      throw error;
-    }
-  }
-
-
-
   async getDietList() {
     this.diets = []
-    this.dooleService.getAPIlistDietsByDate().subscribe(
+    let date  = this.transformDate2(this.date)
+    this.dooleService.getAPIlistDietsByDate(date).subscribe(
       async (res: any) => {
         console.log('[DiaryPage] getDietList()', await res);
         if (res.diets) {
-          /*           this.dietsNoMenu = res.data?.dietaryIntake?.diet
-                    this.treeIterateDiets(res.data?.dietaryIntake.dietIntakes) */
           this.setDietSlider(res?.diets)
         }
       });
@@ -1355,6 +1345,23 @@ export class HomePage implements OnInit {
     console.log('[HomePage] slideGoalDrag()', event);
   }
 
+
+  slideFormChange() {
+   /*  if (this.forms !== undefined && this.diets?.length > 0) {
+      const index = this.sliderForms?.nativeElement?.swiper.activeIndex
+      let slider = this.forms[index]
+      console.log(this.forms)
+      this.infoForm = {
+        title: slider?.items,
+        hour: slider?.from_date
+        ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
+        : ''
+      }
+
+      console.log(this.infoDiet)
+    } */
+  }
+
   slideGoalChange() {
     console.log('[HomePage] slideGoalChange()');
     if (this.goals !== undefined && this.goals?.length > 0) {
@@ -1372,9 +1379,15 @@ export class HomePage implements OnInit {
     if (this.diets !== undefined && this.diets?.length > 0) {
       const index = this.sliderDiet?.nativeElement?.swiper.activeIndex
       let slider = this.diets[index]
+      console.log(this.diets)
       this.infoDiet = {
         title: slider?.items,
+        hour: slider?.from_date
+        ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
+        : ''
       }
+
+      console.log(this.infoDiet)
     }
   }
 
@@ -1397,16 +1410,6 @@ export class HomePage implements OnInit {
   }
 
   slideGamesChange() {
-    if (this.games !== undefined && this.games?.length > 0) { }
-    /* this.sliderGames?.getActiveIndex().then(index => {
-      let slider = this.games[index]
-      let hour = slider?.scheduled_date?.split(' ')[1]
-      this.infoGames = {
-        title: slider?.name,
-        hour: hour?.split(':')[0] + ':' + hour?.split(':')[1]
-      }
-    }); */
-
     if (this.games !== undefined && this.games?.length > 0) {
       const index = this.sliderGames?.nativeElement?.swiper.activeIndex
       let slider = this.games[index]
@@ -1455,9 +1458,8 @@ export class HomePage implements OnInit {
         title: this.drugs[this.currentIndexDrug]?.name,
         hour: this.drugs[this.currentIndexDrug]?.hour_intake
       }
-      // this.sliderDrug?.nativeElement?.swiper?.slideTo(this.currentIndexDrug).then( slide => {
-      //   this.slideDrugChange()
-      // })
+
+      console.log(this.drugs)
       this.setSliderOption('drugs')
     } else {
       this.infoDrugs = null;
@@ -1592,6 +1594,10 @@ export class HomePage implements OnInit {
 
   transformDate(date, format) {
     return this.datePipe.transform(date, format);
+  }
+
+  transformDate2(date) {
+    return this.datePipe.transform(date, 'dd-MM-yyyy');
   }
 
   goDetailRecipe(e) {

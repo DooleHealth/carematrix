@@ -893,6 +893,18 @@ export class DooleService {
       })
     );
   }
+
+  getAPIformPending(params): Observable<any> {
+    let path = 'forms/pending/user';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIformPending(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  
   //forms-Tracking
   getAPIformLists(): Observable<any> {
     let path = 'forms/user';
