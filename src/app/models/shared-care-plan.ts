@@ -63,7 +63,7 @@ export const ListContentType: SCPContentType = [
 export interface SharedCarePlanGoal extends SharedCarePlan  {
     id: number;
     date: string;
-    percentage: string
+    percentage: string | number
 }
 export interface SharedCarePlanLifeStyle {
     img?: string,

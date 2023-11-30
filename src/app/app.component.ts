@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesystem';
-import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
+import { ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
 import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
 
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';

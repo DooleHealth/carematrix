@@ -1,3 +1,32 @@
-<p>
-  content-circle-progress works!
-</p>
+<ion-card class="cardProfile"  routerLinkActive="active-item" [routerLink]="content?.routerlink" >
+  <ion-item lines="none">
+    <ion-grid> 
+      <ion-row>
+        <ion-col size="8.2" size-md="8.7" size-lg="8.3">
+          <!-- <ion-text class="imgPadding">{{content?.title | translate}}</ion-text> -->
+          <ion-text class="imgPadding">{{ 'Esto es un título' }}</ion-text>
+        </ion-col>
+        <ion-col size="3" size-md="2.8" size-lg="2.4">
+          <!-- https://bootsoon.github.io/ng-circle-progress/ -->
+          <circle-progress
+          [percent]="this.percent"
+          [showSubtitle]="false"
+          [radius]="30"
+          [space]="-5"
+          [responsive]="true"
+          [outerStrokeWidth]="5"
+          [innerStrokeWidth]="5"
+          [outerStrokeColor]="this.outerProgreesColor"
+          [innerStrokeColor]="this.innerProgreesColor"
+          [animation]="true"
+          [animationDuration]="1000"
+          ></circle-progress>
+        </ion-col>
+        <ion-col size="0.8" size-md="0.5" size-lg="0.3">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-card>
+

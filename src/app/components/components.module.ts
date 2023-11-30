@@ -44,6 +44,8 @@ import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
 import { NgxSliderModule } from 'ngx-slider-v2';
 import { ContentComponent } from './shared-care-plan/content/content.component';
 import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/lifestyle-index.component';
+import { ContentCircleProgressComponent } from './shared-care-plan/content-circle-progress/content-circle-progress.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 @NgModule({
     imports: [
         CommonModule,
@@ -52,7 +54,8 @@ import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/life
         IonicModule,
         RouterModule,
         TranslateModule,
-        NgxSliderModule
+        NgxSliderModule,
+        NgCircleProgressModule.forRoot({})
     ],
   declarations: [
     CheckboxWrapperComponent,
@@ -91,7 +94,8 @@ import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/life
     FormDirective,
     SafeHtmlPipe,
     ContentComponent,
-    LifestyleIndexComponent
+    LifestyleIndexComponent,
+    ContentCircleProgressComponent,
   ],
   exports: [
     ShellModule,
@@ -128,7 +132,8 @@ import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/life
     HiddenComponent,
     TooltipComponent,
     ContentComponent,
-    LifestyleIndexComponent
+    LifestyleIndexComponent,
+    ContentCircleProgressComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

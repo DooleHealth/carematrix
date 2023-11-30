@@ -7,12 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="cardProfile">
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner ></ion-spinner>
   </div>
+
+  <ion-card class="cardProfile">
+    <ion-item lines="none">
+
+    </ion-item>
+
+    <scp-content-circle-progress ></scp-content-circle-progress>
+  </ion-card>
+
+  <!-- <scp-content-circle-progress ></scp-content-circle-progress> -->
+
+  <!-- <scp-content *ngFor="let content of this.listContent" [content]="content"></scp-content> -->
+
   <div *ngIf="listGoal.length > 0; else noData">
-  <div *ngFor="let goal of this.listGoal" >
+  <!-- <div *ngFor="let goal of this.listGoal" >
     <ion-card routerLink="/activity-goal" [state]="{id: goal.element_id, header: goal.element.name}" class="cardProfile"  routerLinkActive='active-item'>
 
         <ion-grid>
@@ -22,10 +35,6 @@
             <ion-col size="4"><ion-text class="textMediumGreen">{{goal?.score}} {{goal?.coin?.name? (goal?.coin?.name):('goals.points' | translate ) }}</ion-text></ion-col>
           </ion-row>
         </ion-grid>
-        <!-- <ion-img  src='assets/icons/goals.svg' style="margin-right: 5px;"></ion-img>
-        <ion-card-title class="txtTitleGoals">Objetivo de {{goal.element.name}}</ion-card-title><br>
-        <div class="textMedium">{{goal.score}} Healthies</div>
-        <ion-icon name="chevron-forward-outline" style="margin-left: 5px;"></ion-icon> -->
 
 
       <ion-card-content>
@@ -40,7 +49,7 @@
         </div>
       </ion-card-content>
     </ion-card>
-  </div>
+  </div> -->
 </div>
 <ng-template #noData>
   <div *ngIf="!this.isLoading">
