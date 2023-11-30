@@ -131,6 +131,7 @@ export function createTranslateLoader(http: HttpClient) {
     fakeBackendProvider,
     DatePipe,
     Market,
+    
     {
       provide: APP_INITIALIZER,
       useFactory: (platformId: object, response: any) => {

@@ -811,6 +811,7 @@
   "notifications": {
     "register_error": "Failed to register device. You will not be able to receive notifications.",
     "voip_register_error": "Failed to register device. You will not be able to receive VoIP notifications.",
+    "scp": "Shared care plan",
     "chat": "Message",
     "form": "Form",
     "drug": "Medicament",
@@ -935,7 +936,13 @@
     "description": "<p>This is your <b>Shared Care Plan</b></p>",
     "monitoring": "Monitoring",
     "medical_procedure": "Medical Procedure",
-    "informed_consent": "Informed Consent"
+    "informed_consent": "Informed Consent",
+    "new_scp_notification_title": "New goals have been added to your Shared Care Plan",
+    "new_scp_notification_msg": "Please review the changes to approve or reject",
+
+    "new_scp_alert_cancel": "Close",
+    "new_scp_alert_review": "Review"
+
   },
   "exercices":{
     "header": "Exercises"
