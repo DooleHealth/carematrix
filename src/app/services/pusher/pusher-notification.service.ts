@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, IonicSafeString, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Constants } from 'src/app/config/constants';
@@ -11,6 +11,8 @@ import { AdvicesDetailPage } from 'src/app/pages/home/advices-detail/advices-det
 import { NewDetailPage } from 'src/app/pages/home/new-detail/new-detail.page';
 import { AuthenticationService } from '../authentication.service';
 import { PusherChallengeNotificationsService } from './pusher-challenge-notifications.service';
+
+
 declare const Pusher: any;
 const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
 
@@ -25,6 +27,7 @@ export class PusherNotificationService {
   handlerMessage = '';
   roleMessage = '';
   pusher
+  isScpAlertOpened = false
   constructor(
     private alertController: AlertController,
     private authService: AuthenticationService,
@@ -32,9 +35,7 @@ export class PusherNotificationService {
     private router: Router,
     private modalCtrl: ModalController,
     private pusherChallenge: PusherChallengeNotificationsService,
-    private _zone: NgZone) {
-
-
+    private _zone: NgZone,) {
   }
 
   public subscribeChannel(pusherService, idUser:string){
@@ -54,13 +55,59 @@ export class PusherNotificationService {
     return this.channel;
    }
 
-  // public init2(){
-  //    this.channel?.bind(NAME_BIND, (data) => {
-  //         console.log('[PusherNotificationService] getPusher()',  data);
-  //         this.presentPromoteNotification(data);
-  //       });
-  // }
+  public init2() {
+    this.channel?.bind(NAME_BIND, (data) => {
+      console.log('[PusherNotificationService] getPusher()',  data);
+      if (data.type === "NEW_SCP_NOTIFICATION_PUSHER") {
+        this.openScpNotificationDialog()
+      }
+    });
+  }
 
+
+  public async openScpNotificationDialog() {
+
+    if (!this.isScpAlertOpened) {
+      let message = `
+      <ion-row>
+        <ion-col class="text-align-center" style="padding: 0px" >
+          <img src="${'../../assets/images/shared-care-plan/scp-alert.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
+          <h1>`+ this.translate.instant('shared_care_plan.new_scp_notification_title') + `</h1>
+          <ion-text> <p>`+ this.translate.instant('shared_care_plan.new_scp_notification_msg') + ` </p> </ion-text>
+        </ion-col>
+      </ion-row>`;
+
+      const alert = await this.alertController.create({
+        mode: 'ios',
+        animated: true,
+        backdropDismiss: false,
+        cssClass: "scp-home-alert",
+
+        message: new IonicSafeString(message),
+        buttons: [
+          {
+            text: this.translate.instant('shared_care_plan.new_scp_alert_cancel'),
+            role: 'cancel',
+          },
+
+          {
+            text: this.translate.instant('shared_care_plan.new_scp_alert_review'),
+            role: 'accept',
+            handler: () => {
+              this.router.navigateByUrl('/tracking');
+            }
+          },
+        ],
+      });
+
+      this.isScpAlertOpened = true;
+      await alert.present();
+
+      await alert.onDidDismiss();
+      this.isScpAlertOpened = false;
+    }
+  }
+  
 async presentPromoteNotification(data) {
 
   let [message,component] = this.getNotificationMessage(data)

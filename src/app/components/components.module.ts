@@ -46,6 +46,7 @@ import { ContentComponent } from './shared-care-plan/content/content.component';
 import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/lifestyle-index.component';
 import { ContentCircleProgressComponent } from './shared-care-plan/content-circle-progress/content-circle-progress.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-med-for-mon.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -96,6 +97,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ContentComponent,
     LifestyleIndexComponent,
     ContentCircleProgressComponent,
+    ScpMedForMonComponent
   ],
   exports: [
     ShellModule,
@@ -134,6 +136,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ContentComponent,
     LifestyleIndexComponent,
     ContentCircleProgressComponent,
+    ScpMedForMonComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

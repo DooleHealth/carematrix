@@ -637,7 +637,16 @@
     "placeholder_alias": "Alternative name",
     "placeholder_search": "Search by name or code",
     "snapshot_medication": "Instant shot",
-    "medication_plan": "Medication Plan"
+    "medication_plan": "Medication Plan",
+    "button_details": "See details",
+    "from": "From",
+    "to": "To",
+    "dose":"Doses : ",
+    "accepted_rejected": "Do you want to approve or reject this medication plan?",
+    "rejected": "We would like you to give us a brief explanation of the reasons for your refusal.",
+    "button_accepted": "Approve",
+    "button_rejected": "Reject"
+    
   },
   "button": {
     "detail": "Detail",
@@ -775,7 +784,7 @@
   },
   "medications": {
     "list": "List of orders",
-    "title": "Sending medication",
+    "title": "Medication",
     "direction": "Reorder",
     "directions_title": "1.-Select a shipping address",
     "directions_title_2": "2.-Select a type of shipment",
@@ -799,7 +808,8 @@
     "shipping_method": "Type of shipment: ",
     "go_back": "Back to previous step",
     "add_address": "Add Address",
-    "edit_address": "Edit Address"
+    "edit_address": "Edit Address",
+    "head_card_text": "Here you will find information about the prescribed medication plans. You can contact your medical team if you have any questions about it"
   },
   "recipe": {
     "header": "Recipes",
@@ -809,6 +819,7 @@
   "notifications": {
     "register_error": "Failed to register device. You will not be able to receive notifications.",
     "voip_register_error": "Failed to register device. You will not be able to receive VoIP notifications.",
+    "scp": "Shared care plan",
     "chat": "Message",
     "form": "Form",
     "drug": "Medicament",
@@ -933,7 +944,13 @@
     "description": "<p>This is your <b>Shared Care Plan</b></p>",
     "monitoring": "Monitoring",
     "medical_procedure": "Medical Procedure",
-    "informed_consent": "Informed Consent"
+    "informed_consent": "Informed Consent",
+    "new_scp_notification_title": "New goals have been added to your Shared Care Plan",
+    "new_scp_notification_msg": "Please review the changes to approve or reject",
+
+    "new_scp_alert_cancel": "Close",
+    "new_scp_alert_review": "Review"
+
   },
   "exercices":{
     "header": "Exercises"

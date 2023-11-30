@@ -893,6 +893,18 @@ export class DooleService {
       })
     );
   }
+
+  getAPIformPending(params): Observable<any> {
+    let path = 'forms/pending/user';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.post(endpoint, params).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIformPending(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  
   //forms-Tracking
   getAPIformLists(): Observable<any> {
     let path = 'forms/user';
@@ -1397,6 +1409,18 @@ export class DooleService {
       })
     );
   }
+//todos los medicamentos asignados a esa persona
+  getAPImedicationAlls(): Observable<any> {
+    let path = `user/medicationPlans`  
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPImedicationPlan(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
 // activatePendingMedicationPlans
   getAPIPendingMedicationPlans(params?): Observable<any> {
     let path = `user/pending/medicationPlans`
@@ -1556,6 +1580,9 @@ export class DooleService {
       })
     );
   }
+
+  //reminders
+  //user/reminder 
 
   getAPIallAgenda(params?): Observable<any>{
     let path = 'user/agenda/v2';

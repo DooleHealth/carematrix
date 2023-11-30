@@ -258,6 +258,36 @@ ion-progress-bar {
   //padding-left: 5%;
 }
 
+.alertCancel{
+  --background: red;
+    button.alertButton{
+      color: white;
+    }
+ }
+
+.my-custom-class {
+  .alert-wrapper {
+    .alert-head {
+        // header styling here eg. background
+        --padding: 0px
+        h2 {
+            // header text styling here eg. color, font size
+        }
+    }
+
+    .alert-message {
+      padding: 0px;
+    }
+  }
+}
+
+
+div#alert-1-ms.alert-message.sc-ion-alert-ios {
+  padding: 0px;
+}
+
+
+
 strong {
   color: black;
 }

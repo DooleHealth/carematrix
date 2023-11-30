@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'trak',
     loadChildren: () => import('./trak/trak.module').then( m => m.TrakPageModule)
   },
+  {
+    path: 'news',
+    loadChildren: () => import('./news/news.module').then( m => m.NewsPageModule)
+  },
 
 
 ];

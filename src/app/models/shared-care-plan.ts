@@ -73,10 +73,26 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
 }
 export interface SharedCarePlanLifeStyle {
     img?: string,
+    textHeader?: string,
     title: string,
+    description?: string;
     type: string,
     id?: string | number;
     routerlink?: string | any
+}
+
+export interface medication extends SharedCarePlanLifeStyle{
+    from? : string,
+    to?: string
+    accepted?: boolean
+}
+
+export class LifeStyle implements SharedCarePlanLifeStyle{
+    img?: string;
+    title: string;
+    type: string;
+    id?: string | number;
+    routerlink?: string | Object;  
 }
 
 export interface SharedCarePlanPrescribedApps {
@@ -87,10 +103,3 @@ export interface SharedCarePlanPrescribedApps {
     iframe_url:string;
     open_market_app_pkg:string;
 }
-
-// contentType 
-// is_new_content
-
-// last_accepted_or_declined
-
-// aderence . total_percentage
