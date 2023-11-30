@@ -2055,4 +2055,15 @@ export class DooleService {
     );
   }
 
+  getAPI_SCP_goals(): Observable<any> {
+    let path = `sharecareplan/goals`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIagendaID(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
 }

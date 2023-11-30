@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { SharedCarePlanLifeStyle } from "../shared-care-plan";
+import { SharedCarePlanGoal, SharedCarePlanLifeStyle } from "../shared-care-plan";
 
 export class ScpAdapters extends ContentComponent {
     img?: string;
@@ -52,6 +52,25 @@ export class LifeStyle extends ScpAdapters {
     }
     
 }
+
+export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGoal {
+    date: string;
+    percentage: string | number;
+    state?: string | boolean;
+    boolean_state?: boolean;
+    icon: string;
+    title: string;
+    description: string;
+    type: string;
+    is_new_content: boolean;
+    routerlink?: string;
+
+    constructor(){
+        super();
+    }
+    
+}
+
 
 // type Class = {
 //     new (...args: any[]): unknown
