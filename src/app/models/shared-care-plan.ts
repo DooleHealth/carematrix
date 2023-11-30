@@ -87,6 +87,14 @@ export interface SharedCarePlanLifeStyle {
     routerlink?: string | Object
 }
 
+
+
+export interface medication extends SharedCarePlanLifeStyle{
+    from? : string,
+    to?: string
+    accepted?: boolean
+}
+
 export class LifeStyle implements SharedCarePlanLifeStyle{
     img?: string;
     title: string;
