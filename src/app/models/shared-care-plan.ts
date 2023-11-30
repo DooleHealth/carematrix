@@ -3,7 +3,7 @@ import { NotificationsType } from "../shared/classes/notification-options";
 export enum ContentTypePath {
     Goals = '/profile/goals',
     LifestyleHabits = '/lifestyle-habits',
-    Medication= '/profile/goals', //cambiar
+    Medication= '/medication', //cambiar
     Forms= '/profile/goals', //cambiar
     Monitoring= '/profile/goals', //cambiar
     MedicalProcedure= '/profile/goals', //cambiar
@@ -79,7 +79,9 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
 }
 export interface SharedCarePlanLifeStyle {
     img?: string,
+    textHeader?: string,
     title: string,
+    description?: string;
     type: string,
     id?: string | number;
     routerlink?: string | Object

@@ -44,6 +44,7 @@ import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
 import { NgxSliderModule } from 'ngx-slider-v2';
 import { ContentComponent } from './shared-care-plan/content/content.component';
 import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/lifestyle-index.component';
+import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-med-for-mon.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -91,7 +92,8 @@ import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/life
     FormDirective,
     SafeHtmlPipe,
     ContentComponent,
-    LifestyleIndexComponent
+    LifestyleIndexComponent,
+    ScpMedForMonComponent
   ],
   exports: [
     ShellModule,
@@ -128,7 +130,8 @@ import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/life
     HiddenComponent,
     TooltipComponent,
     ContentComponent,
-    LifestyleIndexComponent
+    LifestyleIndexComponent,
+    ScpMedForMonComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -9,8 +9,9 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { NewsComponent } from './news.component';
-import { NewsRoutingModule } from './news-routing.module';
+import { NewsPageRoutingModule } from './news-routing.module';
+import { NewsPage } from './news.page';
+
 
 @NgModule({
   imports: [
@@ -19,9 +20,9 @@ import { NewsRoutingModule } from './news-routing.module';
     IonicModule,
     ComponentsModule,
     TranslateModule,
-    NewsRoutingModule
+    NewsPageRoutingModule
   ],
   providers: [DatePipe, InAppBrowser] ,
-  declarations: [NewsComponent]
+  declarations: [NewsPage]
 })
 export class NewsPageModule {}

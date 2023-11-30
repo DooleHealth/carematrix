@@ -190,7 +190,11 @@ const routes: Routes = [
    {
     path: 'diets',
     loadChildren: () => import('./pages/diary/diets/diets.module').then( m => m.DietsPageModule)
-   }
+   },
+   {
+    path: 'medication-details',
+    loadChildren: () => import('./pages/diary/medication-detail/medication-detail.module').then( m => m.MedicationDetailPageModule)
+  },
  
 
 

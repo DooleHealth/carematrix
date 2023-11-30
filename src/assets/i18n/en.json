@@ -637,7 +637,8 @@
     "placeholder_alias": "Alternative name",
     "placeholder_search": "Search by name or code",
     "snapshot_medication": "Instant shot",
-    "medication_plan": "Medication Plan"
+    "medication_plan": "Medication Plan",
+    "button_details": "See details"   
   },
   "button": {
     "detail": "Detail",
@@ -775,7 +776,7 @@
   },
   "medications": {
     "list": "List of orders",
-    "title": "Sending medication",
+    "title": "Medication",
     "direction": "Reorder",
     "directions_title": "1.-Select a shipping address",
     "directions_title_2": "2.-Select a type of shipment",
@@ -799,7 +800,8 @@
     "shipping_method": "Type of shipment: ",
     "go_back": "Back to previous step",
     "add_address": "Add Address",
-    "edit_address": "Edit Address"
+    "edit_address": "Edit Address",
+    "head_card_text": "Here you will find information about the prescribed medication plans. You can contact your medical team if you have any questions about it"
   },
   "recipe": {
     "header": "Recipes",

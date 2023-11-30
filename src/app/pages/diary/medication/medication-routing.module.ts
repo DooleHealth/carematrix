@@ -25,6 +25,10 @@ const routes: Routes = [
     path: 'add-address',
     loadChildren: () => import('./add-address/add-address.module').then( m => m.AddAddressPageModule)
   },
+  {
+    path: 'medication-details',
+    loadChildren: () => import('../medication-detail/medication-detail.module').then( m => m.MedicationDetailPageModule)
+  },
 ];
 
 @NgModule({
