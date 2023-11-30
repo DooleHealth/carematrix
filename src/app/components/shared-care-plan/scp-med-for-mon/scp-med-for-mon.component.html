@@ -1,7 +1,9 @@
 <ion-card class="cardProfile" (click)="goTo(content.type)"  [routerLink]="content.routerlink" [state]="{id: content?.id}" routerLinkActive='active-item' >
   <ion-item lines="none" mode="ios">
     <ion-thumbnail slot="start">
-      <img [src]="content?.img" />
+      <img [src]="content?.img" 
+      onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt=""
+      />
     </ion-thumbnail>
     <ion-grid> 
       <ion-row class="imgPadding">

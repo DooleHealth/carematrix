@@ -1,23 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-
-import { ViewChild } from '@angular/core';
-import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { IonicSlides, LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
+import { LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { DrugAddPage } from '../drug-add/drug-add.page';
-import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
-import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { AddAddressPage } from './add-address/add-address.page';
-
 import { NotificationsType } from 'src/app/shared/classes/notification-options';
-import { LifeStyle } from 'src/app/models/shared-care-plan';
 import { Router } from '@angular/router';
-import { DateAdapter } from '@angular/material/core';
+import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 
 @Component({
   selector: 'app-medication',
@@ -33,7 +23,7 @@ export class MedicationPage implements OnInit {
   loading : any;
   loadingList : any;
 
-  public exerLifeStyle:LifeStyle
+  public lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
@@ -47,7 +37,7 @@ export class MedicationPage implements OnInit {
     private datePipe: DatePipe,
 
   ) {
-    this.exerLifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
+    this.lifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
   }
 
   ngOnInit() {
