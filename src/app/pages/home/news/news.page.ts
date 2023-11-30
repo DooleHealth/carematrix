@@ -5,10 +5,11 @@ import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss'],
+  templateUrl: './news.page.html',
+  styleUrls: ['./news.page.scss'],
 })
-export class NewsComponent  implements OnInit {
+export class NewsPage implements OnInit {
+
   public items= [];
   pushNotification:any = history.state.data;
   itemsBackup= []
@@ -51,6 +52,7 @@ export class NewsComponent  implements OnInit {
 
 
   adapterForView(list){
+    console.log("ver que envia", list)
     list.forEach(element => {
     //Se adapta la respuesta de la API a lo que espera el componente  
       let data={
@@ -58,7 +60,7 @@ export class NewsComponent  implements OnInit {
         title: element.subject,
         description: "",
         type: "news",
-        id:element.files.id,
+        id:element.id,
         routerlink: "new-detail"
       }
       this.items.push(data)

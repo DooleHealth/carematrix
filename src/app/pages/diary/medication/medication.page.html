@@ -7,212 +7,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
-  <!-- SegmentBar -->
+<ion-content view-cached=”false”>
 
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
-    <ion-segment-button value="Order">
-      <ion-label>{{'medications.direction' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="List">
-      <ion-label>{{'medications.list' | translate}}</ion-label>
-    </ion-segment-button>
-
-  </ion-segment>
-
-  <!-- segment -->
-
-  <div [ngSwitch]="segment">
-
-    <!--LIST-->
-
-    <div *ngSwitchCase="'List'">
-      <ng-container *ngIf="this.loadingList; else second">
-        <div class="spin">
-          <ion-spinner ></ion-spinner>
-        </div>
-      </ng-container>
-
-      <ng-template #second>
-        <ng-container *ngIf="this.deliveries.length > 0;else third">
-          <ion-list>
-            <ion-card class="cardProfile" *ngFor="let sending of this.deliveries">
-              <ion-item lines="none">
-                <div class="verticalLineBlue"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-icon name="cart" color="primary"></ion-icon>
-                    </ion-col>
-                    <ion-col size="10" class="textBlueBold">{{sending.status_name}}</ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">{{ 'medications.shipping_method' | translate}}{{sending.shipping_method}}</ion-col>
-                    <ion-col size="12">{{sending.address}}</ion-col>
-                    <ion-col size="12">{{sending.city}},&nbsp;{{sending.state}}</ion-col>
-                    <ion-col size="12">{{sending.postal_code}}</ion-col>
-                    <ion-col size="12">{{sending.country}}</ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-          </ion-list>
-        </ng-container>
-      </ng-template>
-
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ng-template>
-    </div>
-
-    <!-- ORDER -->
-
-    <div *ngSwitchCase="'Order'">
-      <ion-row class="paddingTopNoMarginBottomBlue" (click)="addAddress()"
-        *ngIf="this.paso == 'cero' ">
-        <ion-col size="10">
-          <ion-text class="txtTitle">{{ 'medications.direction_add' | translate | titlecase}}</ion-text>
-        </ion-col>
-        <ion-col size="2">
-          <ion-icon name="add-outline"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <br>
-      <div *ngIf="this.paso == 'cero' ">
-        <ion-row class="paddingTopNoMarginBottom">
-          <ion-text class="txtTitle">{{ 'medications.directions_title' | translate | titlecase}}</ion-text>
+  <ion-card class="cardProfile" (click)="goTo()" >
+    <ion-item lines="none">
+      <ion-grid> 
+        <ion-row>
+          <ion-icon style="height: 20px; width: 20px;"  src="assets/icons/shared-care-plan/scp-medication.svg"></ion-icon>
+          <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{ 'medications.title' | translate}}</ion-text>
         </ion-row>
-        <br>
-        <ion-list>
-          <span *ngFor="let address of this.directions; let i = index">
-            <ion-card class="cardProfile" >
-              <ion-item lines="none">
-                <div class="verticalLineOrange"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="1">
-                      <ion-icon name="location" color="tertiary"></ion-icon>
-                    </ion-col>
-                    <ion-col size="8.5" class="textOrangeBold">{{address.name}}</ion-col>
-                    <ion-col size="1.2">
-                      <ion-icon (click)="addAddress(address)" name="create" color="tertiary"></ion-icon>
-                    </ion-col>
-                    <ion-col size="1.2">
-                      <ion-icon (click)="deleteAddress(address)" name="trash" color="tertiary"></ion-icon>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row (click)="selectDirection(address)">
-                    <ion-col size="12">{{address.address}}</ion-col>
-                    <ion-col size="12">{{address.city}}</ion-col>
-                    <ion-col size="12">{{address.state}}</ion-col>
-                    <ion-col size="12">{{address.country}}</ion-col>
-                    <ion-col style="color:tertiary;">{{address.postal_code}}</ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-          </span>
-        </ion-list>
-        <div>
-        </div>
-      </div>
-      <div *ngIf="this.paso == 'uno' ">
-
-        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" (click)="this.paso = 'cero'">
-          <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
-          <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
+        <ion-row >
+          <p>{{ 'medications.head_card_text' | translate}}</p>
         </ion-row>
-        <br>
+      </ion-grid>
+    </ion-item>
+  
+  </ion-card>
 
-        <ion-row class="paddingTopNoMarginBottom" *ngIf="this.directions">
-          <ion-text class="txtTitle">{{ 'medications.directions_title_2' | translate}}</ion-text>
-        </ion-row>
-        <ion-card class="cardProfile">
-          <form [formGroup]="formShipment">
-            <ion-radio-group mode="md" formControlName="sendType" value="urgente10">
-              <ion-item lines="full">
-                <ion-label>{{ 'medications.urgente10' | translate}}</ion-label>
-                <ion-radio  value="urgente10" checked></ion-radio>
-              </ion-item>
-              <ion-item lines="full">
-                <ion-label>{{ 'medications.bag14' | translate}}</ion-label>
-                <ion-radio  value="bag14"></ion-radio>
-              </ion-item>
-              <ion-item lines="full">
-                <ion-label>{{ 'medications.bag19' | translate}}</ion-label>
-                <ion-radio value="bag19"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-
-          </form>
-        </ion-card>
-        <ion-button expand="block" color="primary" (click)="selectSendType()">{{'button.continue' | translate}}
-        </ion-button>
-      </div>
-      <div *ngIf="this.paso == 'dos'">
-
-        <ion-row style="align-items: center;" class="paddingTopNoMarginBottom; txtTitle" *ngIf="this.directions" (click)="this.paso = 'uno'">
-          <ion-icon color="primary" size="large" name="arrow-back"></ion-icon>
-          <ion-text color="primary" style="font-size: large;" >{{ 'medications.go_back' | translate }}</ion-text>
-        </ion-row>
-        <br>
-
-        <ion-row class="paddingTopNoMarginBottom">
-          <ion-text class="txtTitle">{{ 'medications.directions_title_3' | translate}}</ion-text>
-        </ion-row>
-        <p class="txtTitleGreyLeft">{{ 'medications.ok' | translate}}</p>
-        <ion-list>
-          <ion-card class="cardProfile">
-            <ion-item lines="none">
-              <div class="verticalLineBlue"></div>
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="2">
-                    <ion-icon name="location" color="primary"></ion-icon>
-                  </ion-col>
-                  <ion-col size="10" color="primary">{{this.direction.name}}</ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="12">{{this.direction.address}}</ion-col>
-                  <ion-col size="12">{{this.direction.city}}</ion-col>
-                  <ion-col size="12">{{this.direction.state}}</ion-col>
-                  <ion-col size="12">{{this.direction.postal_code}}</ion-col>
-                  <ion-col size="12">{{this.direction.country}}</ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-card>
-        </ion-list>
-        <ion-row class="paddingTopNoMarginBottom">
-
-          <ion-text class="txtTitle">{{ 'medications.mrw' | translate}}{{this.sendTypes}}</ion-text>
-        </ion-row><br>
-        <ion-button expand="block" (click)="confirm()">{{ 'medications.confirm' | translate}}</ion-button>
-        <form [formGroup]="formulario" style="visibility: hidden; ">
-          <ion-input formControlName="selected_address"></ion-input>
-          <ion-input formControlName="order_shipping_method"></ion-input>
-        </form>
-      </div>
-      <div *ngIf="showConfirmed">
-        <h1>{{ 'medications.correct' | translate}}<ion-button>{{ 'medications.back' | translate}}
-          </ion-button>
-        </h1>
-      </div>
-    </div>
+  <div>
+    <ion-list *ngIf="items.length > 0; else noData">
+        <app-scp-med-for-mon *ngFor="let content of items" [content]="content"></app-scp-med-for-mon>
+    </ion-list>
   </div>
-</ion-content>
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+  </ng-template>
+  </ion-content>
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

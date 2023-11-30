@@ -67,7 +67,9 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
 }
 export interface SharedCarePlanLifeStyle {
     img?: string,
+    textHeader?: string,
     title: string,
+    description?: string;
     type: string,
     id?: string | number;
     routerlink?: string | Object

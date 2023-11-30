@@ -13,6 +13,7 @@ export class InfoComponent implements OnInit {
   @Input('title') title: string;
   // @Input('icon') icon: string;
   @Input('info') info: string;
+  @Input('details') details: string;
   // info: string;
 
   constructor(public translate: TranslateService, public alertController: AlertController) { }

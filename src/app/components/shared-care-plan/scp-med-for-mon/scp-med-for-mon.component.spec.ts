@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NewsComponent } from './news.component';
+import { ScpMedForMonComponent } from './scp-med-for-mon.component';
 
-describe('NewsComponent', () => {
-  let component: NewsComponent;
-  let fixture: ComponentFixture<NewsComponent>;
+describe('ScpMedForMonComponent', () => {
+  let component: ScpMedForMonComponent;
+  let fixture: ComponentFixture<ScpMedForMonComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewsComponent ],
+      declarations: [ ScpMedForMonComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NewsComponent);
+    fixture = TestBed.createComponent(ScpMedForMonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
