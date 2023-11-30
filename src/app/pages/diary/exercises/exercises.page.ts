@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LifeStyle } from 'src/app/models/shared-care-plan';
-//import { AdapterView } from 'src/app/models/shared-care-plan';
+import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/shared/classes/notification-options';
@@ -18,59 +17,36 @@ export class ExercisesPage implements OnInit {
   news = []
   advices = []
   isLoading = false
-  public exerLifeStyle:LifeStyle
+  public lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
     public role: RolesService,
   ) { 
-    this.exerLifeStyle = new LifeStyle( NotificationsType.EXERCISES, "exercices-detail")
+    this.lifeStyle = new LifeStyle( NotificationsType.EXERCISES, "exercices-detail")
   }
 
   ngOnInit() {
-    this.getNewsList()
+    this.getExercisesList()
   }
- 
 
- 
-
- 
-
-  async getNewsList(){
-    console.log('[AdvicePage] getNewsList()');
+  async getExercisesList(){
+    console.log('[ExercisesPage] getExercisesList()');
     this.items = []
     this.isLoading = true,  
     this.dooleService.getAPIExercises().subscribe(
       async (res: any) =>{      
         if(res.success){
-          this.items = []
-          this.items = this.exerLifeStyle.adapterForView(
+          this.items = this.lifeStyle.adapterForView(
             res.exercises, // JSON
             'cover',  //img
-            'name',   //title
-            'id')     //id
+            'name')   //title
          }
        },(err) => {
-          console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message);
+          console.log('[ExercisesPage] getExercisesList() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
           throw err;
       });
   }
-
-
-  // adapterForView(list){
-  //   list.forEach(element => {
-  //   //Se adapta la respuesta de la API a lo que espera el componente  
-  //     let data: AdapterView={
-  //       img: element.cover,
-  //       title: element.name,
-  //       description: "",
-  //       type: "exercices",
-  //       id:element.id,
-  //       routerlink: "exercices-detail"
-  //     }
-  //     this.items.push(data)
-  //   })
-  // }
 
 }
