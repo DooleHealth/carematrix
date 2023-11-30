@@ -67,9 +67,10 @@ export class HomePage implements OnInit {
   userDoole: any = {}
   userImage: string
   goals: any = []
-  diets: any = []
+  gamesdiets: any = []
   exercises: any = []
   forms: any = []
+  diets: any = []
   challenges: any = [];
   dietsNoMenu: any = []
   drugs: any = []
@@ -87,6 +88,9 @@ export class HomePage implements OnInit {
   healtDate
   loading: boolean = true;
   isFirstTime = true;
+
+  currentIndexForm = 0
+  currentIndexExercise = 0
   currentIndexDrug = 0
   currentIndexGame = 0
   currentIndexDiet = 0
@@ -596,7 +600,6 @@ export class HomePage implements OnInit {
           async (res: any) => {
             console.log('[TrackingPage] getAPIformPending()', await res);
             this.setFormsSlider(res.forms)
-
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
@@ -759,12 +762,8 @@ export class HomePage implements OnInit {
   }
 
   updateDietSlider(diets) {
-
     this.diets = diets?.length > 0 ? diets : [];
     this.setSliderOption('diets')
-
-
-
   }
 
   updateGamesSlider(games) {
@@ -790,45 +789,66 @@ export class HomePage implements OnInit {
     console.log('[DiaryPage] setDietSlider()', diets);
     this.diets = diets?.length > 0 ? diets : [];
 
+    if (this.diets.length > 0) {
+      this.infoDiet = {
+        title: this.diets[this.currentIndexDiet]?.items,
+        hour: this.diets[this.currentIndexDiet]?.from_date !== null ? this.transformDate(new Date(this.diets[this.currentIndexDiet]?.from_date), 'HH:mm') : ''
+      }
 
-    //aqui
-
-    this.searchIndexDiet
-    this.infoDiet = {
-      title: this.diets[this.currentIndexDiet]?.items,
-      hour: this.diets[this.currentIndexDiet]?.from_date !== null ? this.transformDate(new Date(this.diets[this.currentIndexDiet]?.from_date), 'HH:mm') : 'undefined'
+      this.setSliderOption('diets')
+      this.updateDietSlider(diets)
     }
-
-    this.setSliderOption('diets')
-    this.updateDietSlider(diets)
   }
 
   setGamesSlider(games) {
     console.log('[DiaryPage] setDietSlider()', games);
     this.games = games?.length > 0 ? games : [];
-    this.setSliderOption('games')
-    this.updateGamesSlider(games)
+
+    if (this.games.length > 0) {
+      this.setSliderOption('games')
+      this.updateGamesSlider(games)
+    }
   }
 
   setExercisesSlider(exercises) {
     console.log('[DiaryPage] setDietSlider()', exercises);
     this.exercises = exercises?.length > 0 ? exercises : [];
-    this.setSliderOption('exercises')
-    this.updateExercisesSlider(exercises)
+
+    if (this.exercises.length > 0) {
+      this.infoExercises = {
+        title: this.exercises[this.currentIndexExercise]?.exercise?.name,
+        hour: this.exercises[this.currentIndexExercise]?.from_date !== null ? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
+      }
+
+      this.setSliderOption('exercises')
+      this.updateExercisesSlider(exercises)
+    }
+    
   }
 
   setChallengesSlider(challenges) {
     console.log('[DiaryPage] challenges()', challenges);
     this.challenges = challenges?.length > 0 ? challenges : [];
-    this.setSliderOption('challenges')
-    this.updateChallengesSlider(challenges)
+
+    if (this.challenges.length > 0) {
+      this.setSliderOption('challenges')
+      this.updateChallengesSlider(challenges)
+    }
+
   }
 
   setFormsSlider(forms) {
     console.log('[DiaryPage] setFormsSlider()', forms);
     this.forms = forms?.length > 0 ? forms : [];
-    this.setSliderOption('forms')
-    this.updateFormsSlider(forms)
+
+    if (this.forms.length > 0) {
+      this.infoForms = {
+        title: this.forms[this.currentIndexForm]?.form?.title,
+        hour: this.forms[this.currentIndexForm]?.scheduled_date !== null ? this.transformDate(new Date(this.forms[this.currentIndexForm]?.scheduled_date), 'HH:mm') : ''
+      }
+      this.setSliderOption('forms')
+      this.updateFormsSlider(forms)
+    }
   }
 
   setPhysicalSlider(constants) {
@@ -1363,20 +1383,35 @@ export class HomePage implements OnInit {
   }
 
 
+  slideExerciseChange() {
+    if (this.exercises !== undefined && this.exercises?.length > 0) {
+      const index = this.sliderExercises?.nativeElement?.swiper.activeIndex
+      let slider = this.exercises[index]
+      this.infoExercises = {
+        title: slider?.exercise?.name,
+        hour: slider?.scheduled_date
+          ? this.transformDate(new Date(slider?.scheduled_date), 'HH:mm')
+          : ''
+      }
+
+      console.log(this.infoExercises)
+    }
+  }
+
   slideFormChange() {
-    /*  if (this.forms !== undefined && this.diets?.length > 0) {
-       const index = this.sliderForms?.nativeElement?.swiper.activeIndex
-       let slider = this.forms[index]
-       console.log(this.forms)
-       this.infoForm = {
-         title: slider?.items,
-         hour: slider?.from_date
-         ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
-         : ''
-       }
- 
-       console.log(this.infoDiet)
-     } */
+    if (this.forms !== undefined && this.forms?.length > 0) {
+      const index = this.sliderForms?.nativeElement?.swiper.activeIndex
+      let slider = this.forms[index]
+      console.log(this.forms)
+      this.infoForms = {
+        title: slider?.form?.title,
+        hour: slider?.scheduled_date
+          ? this.transformDate(new Date(slider?.scheduled_date), 'HH:mm')
+          : ''
+      }
+
+      console.log(this.infoForms)
+    }
   }
 
   slideGoalChange() {
@@ -1504,6 +1539,16 @@ export class HomePage implements OnInit {
     }
   }
 
+  searchIndexForm() {
+    if (this.forms !== undefined && this.forms?.length > 0) {
+      let form = this.forms?.find(element =>
+        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+      )
+      let index = this.forms.indexOf(form);
+      this.currentIndexForm = (index > -1) ? index : 0
+    }
+  }
+
   searchIndexDGame() {
     if (this.games !== undefined && this.games?.length > 0) {
       let game = this.games?.find(element =>
@@ -1517,7 +1562,7 @@ export class HomePage implements OnInit {
   searchIndexDiet() {
     if (this.diets !== undefined && this.diets?.length > 0) {
       let diet = this.diets?.find(element =>
-        ((this.hourToMinutes(element.date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.diets?.indexOf(diet);
       this.currentIndexDiet = (index > -1) ? index : 0

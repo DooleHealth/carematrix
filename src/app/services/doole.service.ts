@@ -1569,6 +1569,9 @@ export class DooleService {
     );
   }
 
+  //reminders
+  //user/reminder 
+
   getAPIallAgenda(params?): Observable<any>{
     let path = 'user/agenda/v2';
     let httpParams = new HttpParams();
