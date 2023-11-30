@@ -3,15 +3,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.service';
-
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './guards/auth.guard';
 import { VideoComponent } from './components/video/video.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { ReminderAddPage } from './pages/agenda/reminder-add/reminder-add.page';
-import { ReminderAddPageModule } from './pages/agenda/reminder-add/reminder-add.module';
 import { AutoLoginGuard } from './guards/auto-login.guard';
 
 const routes: Routes = [
