@@ -23,6 +23,9 @@ import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    IonicModule.forRoot({
+      innerHTMLTemplatesEnabled: true
+    }),
     CommonModule,
     FormsModule,
     IonicModule,
@@ -35,6 +38,7 @@ import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions
     PdfViewerModule,
     DietsDetailPageModule,
     PdfPageModule,
+    
   ],
   providers: [DatePipe, InAppBrowser, AndroidPermissions] ,
   declarations: [HomePage,

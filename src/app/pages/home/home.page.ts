@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ApplicationRef, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@awesome-cordova-plugins/health/ngx';
-import { ModalController, NavController, Platform } from '@ionic/angular';
+import { IonicSafeString, ModalController, NavController, Platform } from '@ionic/angular';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice, FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -24,6 +24,8 @@ import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
 import { NativeMarket } from "@capacitor-community/native-market";
 import { HttpParams } from "@angular/common/http";
 import { Constants } from 'src/app/config/constants';
+//import { ScpAlertService } from 'src/app/services/scp-alert.service';
+
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
@@ -192,6 +194,10 @@ export class HomePage implements OnInit {
   prescribedApps: SharedCarePlanPrescribedApps[];
   safeUrl;
 
+  private dataShareCarePlanNotification: any = history.state?.data;
+  private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
+
+
   constructor(
     public router: Router,
     public platform: Platform,
@@ -207,12 +213,14 @@ export class HomePage implements OnInit {
     private languageService: LanguageService,
     private nav: NavController,
     private modalCtrl: ModalController,
+    //private scpAlert: ScpAlertService,
     private notification: NotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherNotifications: PusherNotificationService,
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
-    private constants: Constants
+    private constants: Constants,
+
 
   ) { }
 
@@ -224,27 +232,36 @@ export class HomePage implements OnInit {
     this.initPushers()
   }
 
+
   ionViewWillEnter() {
-    console.log('[HomePage] ionViewWillEnter()');
-    //console.log('[HomePage] ionViewWillEnter() this.deviceToken: ', this.authService?.deviceToken);
 
-
+    this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
+    console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
     this.getUserInformation()
     this.getNumNotification();
 
     this.update()
+
+
     if (!this.pusherConnection?.isConnectedPusher()) {
-      //console.log('[HomePage] ionViewWillEnter() this.userDoole: ', this.authService?.user?.idUser);
       const token = this.authService.getAuthToken()
       this.pusherConnection.subscribePusher(token, this.authService?.user?.idUser)
       this.initPushers()
     }
+
+    if (this.openNotificationAlertDialog) {
+      this.pusherNotifications.openScpNotificationDialog();
+    }
   }
+
 
   initPushers() {
     this.pusherAlarms?.init()
     const channel = this.pusherNotifications.init();
+
+    this.pusherNotifications.init2();
+
     if (channel)
       channel.bind(NAME_BIND, ({ data }) => {
         console.log('[HomePage] initPushers()', data);
@@ -329,7 +346,7 @@ export class HomePage implements OnInit {
 
     try {
       await Promise.all([
-        
+
 
         this.getUserImage(),
         this.getPersonalInformation(),
@@ -341,7 +358,7 @@ export class HomePage implements OnInit {
         this.getExercisesList(),
         (this.drugs = [], this.getDrugIntake()),
 
-       
+
         this.getDietList(),
 
         this.getGoalImformation(),
@@ -350,8 +367,8 @@ export class HomePage implements OnInit {
         this.getElementsList(),
         this.getallAgenda(),
         this.getProcedures()
-        
-        
+
+
         // Add other asynchronous calls as needed
       ]);
 
@@ -773,7 +790,7 @@ export class HomePage implements OnInit {
     console.log('[DiaryPage] setDietSlider()', diets);
     this.diets = diets?.length > 0 ? diets : [];
 
-    
+
     //aqui
 
     this.searchIndexDiet
@@ -1163,7 +1180,7 @@ export class HomePage implements OnInit {
 
   async getDietList() {
     this.diets = []
-    let date  = this.transformDate2(this.date)
+    let date = this.transformDate2(this.date)
     this.dooleService.getAPIlistDietsByDate(date).subscribe(
       async (res: any) => {
         console.log('[DiaryPage] getDietList()', await res);
@@ -1347,19 +1364,19 @@ export class HomePage implements OnInit {
 
 
   slideFormChange() {
-   /*  if (this.forms !== undefined && this.diets?.length > 0) {
-      const index = this.sliderForms?.nativeElement?.swiper.activeIndex
-      let slider = this.forms[index]
-      console.log(this.forms)
-      this.infoForm = {
-        title: slider?.items,
-        hour: slider?.from_date
-        ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
-        : ''
-      }
-
-      console.log(this.infoDiet)
-    } */
+    /*  if (this.forms !== undefined && this.diets?.length > 0) {
+       const index = this.sliderForms?.nativeElement?.swiper.activeIndex
+       let slider = this.forms[index]
+       console.log(this.forms)
+       this.infoForm = {
+         title: slider?.items,
+         hour: slider?.from_date
+         ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
+         : ''
+       }
+ 
+       console.log(this.infoDiet)
+     } */
   }
 
   slideGoalChange() {
@@ -1383,8 +1400,8 @@ export class HomePage implements OnInit {
       this.infoDiet = {
         title: slider?.items,
         hour: slider?.from_date
-        ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
-        : ''
+          ? this.transformDate(new Date(slider?.from_date), 'HH:mm')
+          : ''
       }
 
       console.log(this.infoDiet)
