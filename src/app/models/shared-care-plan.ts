@@ -75,12 +75,20 @@ export interface SharedCarePlanLifeStyle {
     routerlink?: string | Object
 }
 
-// export class LifeStyle implements SharedCarePlanLifeStyle{
-//     img?: string;
-//     title: string;
-//     type: string;
-//     id?: string | number;
-//     routerlink?: string | Object;
+
+export interface medication extends SharedCarePlanLifeStyle{
+    from? : string,
+    to?: string
+    accepted?: boolean
+}
+
+export class LifeStyle implements SharedCarePlanLifeStyle{
+    img?: string;
+    title: string;
+    type: string;
+    id?: string | number;
+    routerlink?: string | Object;
+
 
 //     constructor(type: string, routerlink: string){
 //         this.type = type;

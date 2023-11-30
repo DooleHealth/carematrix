@@ -52,7 +52,6 @@ export class NewsPage implements OnInit {
 
 
   adapterForView(list){
-    console.log("ver que envia", list)
     list.forEach(element => {
     //Se adapta la respuesta de la API a lo que espera el componente  
       let data={

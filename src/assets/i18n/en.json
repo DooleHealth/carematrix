@@ -638,7 +638,15 @@
     "placeholder_search": "Search by name or code",
     "snapshot_medication": "Instant shot",
     "medication_plan": "Medication Plan",
-    "button_details": "See details"   
+    "button_details": "See details",
+    "from": "From",
+    "to": "To",
+    "dose":"Doses : ",
+    "accepted_rejected": "Do you want to approve or reject this medication plan?",
+    "rejected": "We would like you to give us a brief explanation of the reasons for your refusal.",
+    "button_accepted": "Approve",
+    "button_rejected": "Reject"
+    
   },
   "button": {
     "detail": "Detail",
