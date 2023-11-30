@@ -4,23 +4,24 @@
     <div class="verticalLineMalva"></div>
     <ion-grid> 
       <ion-row>
-        <ion-col size="0.9">
+        <ion-col size="0.9" size-md="0.5" size-lg="0.4">
           <ion-icon [src]="content.icon"></ion-icon>
         </ion-col>
-        <ion-col size="10.3">
+        <ion-col size="10.3" size-md="10.5" size-lg="11.3">
           <ion-text class="imgPadding">{{content?.title | translate}}</ion-text>
         </ion-col>
-        <ion-col size="0.8">
-          <ion-icon name="chevron-up-outline"></ion-icon>
+        <ion-col size="0.8" size-md="0.8" size-lg="0.3">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-col>
       </ion-row>
       <ion-row  class="txtTitleGoals textAdvicesSlider">
-        <ion-col size="0.9">
+        <ion-col size="0.9" size-md="0.5" size-lg="0.4">
         </ion-col>
-        <ion-col size="11.1">
+        <ion-col size="11.1"size-md="11.5" size-lg="11.6">
           <p [innerHtml]="content?.description | translate"></p>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-item>
 </ion-card>
+<!-- https://ionicframework.com/docs/api/grid -->

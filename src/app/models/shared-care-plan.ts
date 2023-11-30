@@ -73,36 +73,6 @@ export interface SharedCarePlanLifeStyle {
     routerlink?: string | Object
 }
 
-// export class LifeStyle implements SharedCarePlanLifeStyle{
-//     img?: string;
-//     title: string;
-//     type: string;
-//     id?: string | number;
-//     routerlink?: string | Object;
-
-//     constructor(type: string, routerlink: string){
-//         this.type = type;
-//         this.routerlink = routerlink;
-//     }
-
-//     adapterForView(list: any[], field1: string, field2: string, field3: string){
-//         let newList: SharedCarePlanLifeStyle[] = []
-//             list.forEach((element) => {
-//                 let data: SharedCarePlanLifeStyle = {
-//                     img: element[field1],
-//                     title: element[field2],
-//                     type:  this.type,
-//                     id: element.id,
-//                     routerlink: this.routerlink,                  
-//                 }                 
-//                 newList.push(data)
-//             });
-//             return newList
-         
-//     }
-    
-// }
-
 export interface SharedCarePlanPrescribedApps {
     id?: number,
     icon:string,
