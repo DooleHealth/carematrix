@@ -19,6 +19,17 @@ export class LifeStyle extends ScpAdapters {
         this.routerlink = routerlink;
     }
 
+    /**
+   * @public
+   * @method adapterForView
+   * @param {any[]} list JSON via api
+   * @param {string} field1 Image of component
+   * @param {string} field2 Title of component
+   * @description    Adapta la información que llega via api al componente 
+   * @returns {SharedCarePlanLifeStyle[]}
+   * @memberof LifestyleIndexComponent
+   */
+
     adapterForView(list: any[], field1: string, field2: string){
         let newList: SharedCarePlanLifeStyle[] = []
             list.forEach((element) => {
