@@ -52,9 +52,9 @@ import { Badge } from "@awesome-cordova-plugins/badge/ngx";
 import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.module";
 import { BackgroundMode } from "@awesome-cordova-plugins/background-mode/ngx";
 import { BLE } from "@awesome-cordova-plugins/ble/ngx";
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Market } from "@awesome-cordova-plugins/market/ngx";
 import { Device } from "@awesome-cordova-plugins/device/ngx";
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeEs);
@@ -87,7 +87,7 @@ export function createTranslateLoader(http: HttpClient) {
     AngularFireStorageModule,
     TestTypePageModule,
     ReminderAddPageModule,
-
+    NgCircleProgressModule
   ],
   providers: [
     Ng2SearchPipeModule,

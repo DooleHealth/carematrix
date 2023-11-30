@@ -1,12 +1,17 @@
 import { NotificationsType } from "../shared/classes/notification-options";
 
+export enum ContentType {
+    MEDICATIONS_PLAN = "App\\MedicationPlan",
+    AGENDA = "App\\Agenda"
+}
+
 export enum ContentTypePath {
     Goals = '/profile/goals',
     LifestyleHabits = '/lifestyle-habits',
-    Medication= '/medication/', //cambiar
-    Forms= '/tracking/form-list', //cambiar
-    Monitoring= '/tracking/monitoring', //cambiar
-    MedicalProcedure= '/tracking/procedures', //cambiar
+    Medication= '/medication/', 
+    Forms= '/tracking/form-list', 
+    Monitoring= '/tracking/monitoring', 
+    MedicalProcedure= '/tracking/procedures', 
     InformedConsent = '/tracking/informed-consent'
 }
 
@@ -43,7 +48,7 @@ export interface ContentComponent {
     routerlink?: string;
 }
 export interface SharedCarePlan extends ContentComponent {
-    booleanState?: boolean;
+    boolean_state?: boolean;
 }
 
 export interface SCPContentType {
@@ -51,19 +56,20 @@ export interface SCPContentType {
 }
 
 export const ListContentType: SCPContentType = [
-    {icon: ContentTypeIcons.Goals, title: ContentTypeTranslatedName.Goals, description: ContentTypeDescription.Description, type: NotificationsType.GOALS, state: '', booleanState: false, routerlink: ContentTypePath.Goals},
-    {icon: ContentTypeIcons.LifestyleHabits, title: ContentTypeTranslatedName.LifestyleHabits, description: ContentTypeDescription.Description, type: NotificationsType.LIFE_STILE_HABITS, state: '', booleanState: false, routerlink: ContentTypePath.LifestyleHabits},
-    {icon: ContentTypeIcons.Medication, title:ContentTypeTranslatedName.Medication, description: ContentTypeDescription.Description, type: NotificationsType.MEDICATIONS, state: '', booleanState: false, routerlink: ContentTypePath.Medication},
-    {icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.Description, type: NotificationsType.FORMS, state: '', booleanState: false, routerlink: ContentTypePath.Forms},
-    {icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.Description, type: NotificationsType.MONITORING, state: '', booleanState: false, routerlink: ContentTypePath.Monitoring},
-    {icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.Description, type: NotificationsType.PROCEDURES, state: '', booleanState: false, routerlink: ContentTypePath.MedicalProcedure},
-    {icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', booleanState: false, routerlink: ContentTypePath.InformedConsent}
+    {icon: ContentTypeIcons.Goals, title: ContentTypeTranslatedName.Goals, description: ContentTypeDescription.Description, type: NotificationsType.GOALS, state: '', boolean_state: false, routerlink: ContentTypePath.Goals},
+    {icon: ContentTypeIcons.LifestyleHabits, title: ContentTypeTranslatedName.LifestyleHabits, description: ContentTypeDescription.Description, type: NotificationsType.LIFE_STILE_HABITS, state: '', boolean_state: false, routerlink: ContentTypePath.LifestyleHabits},
+    {icon: ContentTypeIcons.Medication, title:ContentTypeTranslatedName.Medication, description: ContentTypeDescription.Description, type: NotificationsType.MEDICATIONS, state: '', boolean_state: false, routerlink: ContentTypePath.Medication},
+    {icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.Description, type: NotificationsType.FORMS, state: '', boolean_state: false, routerlink: ContentTypePath.Forms},
+    {icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.Description, type: NotificationsType.MONITORING, state: '', boolean_state: false, routerlink: ContentTypePath.Monitoring},
+    {icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.Description, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
+    {icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
 ]
 
 export interface SharedCarePlanGoal extends SharedCarePlan  {
-    id: number;
+    id?: string | number;
     date: string;
-    percentage: string
+    percentage: string | number;
+    is_new_content: boolean;
 }
 export interface SharedCarePlanLifeStyle {
     img?: string,
@@ -72,9 +78,8 @@ export interface SharedCarePlanLifeStyle {
     description?: string;
     type: string,
     id?: string | number;
-    routerlink?: string | Object
+    routerlink?: string | any
 }
-
 
 export interface medication extends SharedCarePlanLifeStyle{
     from? : string,
@@ -87,31 +92,8 @@ export class LifeStyle implements SharedCarePlanLifeStyle{
     title: string;
     type: string;
     id?: string | number;
-    routerlink?: string | Object;
-
-
-//     constructor(type: string, routerlink: string){
-//         this.type = type;
-//         this.routerlink = routerlink;
-//     }
-
-//     adapterForView(list: any[], field1: string, field2: string, field3: string){
-//         let newList: SharedCarePlanLifeStyle[] = []
-//             list.forEach((element) => {
-//                 let data: SharedCarePlanLifeStyle = {
-//                     img: element[field1],
-//                     title: element[field2],
-//                     type:  this.type,
-//                     id: element.id,
-//                     routerlink: this.routerlink,                  
-//                 }                 
-//                 newList.push(data)
-//             });
-//             return newList
-         
-//     }
-    
-// }
+    routerlink?: string | Object;  
+}
 
 export interface SharedCarePlanPrescribedApps {
     id?: number,

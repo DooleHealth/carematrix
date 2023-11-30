@@ -44,6 +44,8 @@ import { SafeHtmlPipe } from './form/shared/safe-html.pipe';
 import { NgxSliderModule } from 'ngx-slider-v2';
 import { ContentComponent } from './shared-care-plan/content/content.component';
 import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/lifestyle-index.component';
+import { ContentCircleProgressComponent } from './shared-care-plan/content-circle-progress/content-circle-progress.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-med-for-mon.component';
 @NgModule({
     imports: [
@@ -53,7 +55,8 @@ import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-me
         IonicModule,
         RouterModule,
         TranslateModule,
-        NgxSliderModule
+        NgxSliderModule,
+        NgCircleProgressModule.forRoot({})
     ],
   declarations: [
     CheckboxWrapperComponent,
@@ -93,6 +96,7 @@ import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-me
     SafeHtmlPipe,
     ContentComponent,
     LifestyleIndexComponent,
+    ContentCircleProgressComponent,
     ScpMedForMonComponent
   ],
   exports: [
@@ -131,6 +135,7 @@ import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-me
     TooltipComponent,
     ContentComponent,
     LifestyleIndexComponent,
+    ContentCircleProgressComponent,
     ScpMedForMonComponent
   ],
   schemas: [

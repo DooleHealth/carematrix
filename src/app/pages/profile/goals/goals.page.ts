@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { GoalUser } from 'src/app/models/goal-user';
+import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
+import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
+import { NotificationsType } from 'src/app/shared/classes/notification-options';
 
 @Component({
   selector: 'app-goals',
@@ -10,12 +12,16 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./goals.page.scss'],
 })
 export class GoalsPage implements OnInit {
-  listGoal: GoalUser[] = []
-  nameGoal: string = 'Doolehealth'
+  listGoal: any[] = []
+  nameGoal: string = ContentTypeTranslatedName.Goals
+  iconGoals = ContentTypeIcons.Goals
+  public lifeStyle:LifeStyle
   isLoading = false
   constructor(
     public router:Router,
-    private dooleService: DooleService) { }
+    private dooleService: DooleService) { 
+      this.lifeStyle = new LifeStyle( NotificationsType.GOALS, "/activity-goal")
+    }
 
   ngOnInit() {
     this.getGoalImformation()
@@ -23,21 +29,19 @@ export class GoalsPage implements OnInit {
 
   getGoalImformation(){
     this.isLoading = true
-    this.dooleService.getAPIgoals().subscribe(
+    this.dooleService.getAPI_SCP_goals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
-        this.listGoal = res.goals as GoalUser[]
+        this.listGoal = this.lifeStyle.adapterForView(
+          res.goals, // JSON
+          'cover',  //img
+          'name')   //title
         this.isLoading = false
        },(err) => { 
           console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
           throw err; 
       });
-  }
-
-
-  openActivities(){
-    this.router.navigateByUrl('/activity-goal')
   }
 
   formatDate(d){
