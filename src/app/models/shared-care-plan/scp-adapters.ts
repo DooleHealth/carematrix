@@ -35,7 +35,7 @@ export class LifeStyle extends ScpAdapters {
             list.forEach((element) => {
                 const temporaryUrl = element[field1]
                 let image = element[field1]
-                if(temporaryUrl.hasOwnProperty("temporaryUrl")){
+                if(temporaryUrl?.hasOwnProperty("temporaryUrl")){
                       image = temporaryUrl.temporaryUrl
                 }
                 let data: SharedCarePlanLifeStyle = {
