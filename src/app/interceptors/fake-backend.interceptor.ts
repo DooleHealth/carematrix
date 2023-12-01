@@ -1194,7 +1194,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         drug_id: 1,
                         origin_type: "App\\ShareCarePlan",
                         from_date: "2023-11-24 11:32:00",
-                        is_new_content: false,
+                        is_new_content: true,
                         isPermitedModify: true,
                         state_string: "Finalitzat",
                         frequencyName: "Cada dia",

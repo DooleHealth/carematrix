@@ -23,7 +23,9 @@ export enum ContentTypePath {
     Forms= '/tracking/form-list', 
     Monitoring= '/tracking/monitoring', 
     MedicalProcedure= '/tracking/procedures', 
-    InformedConsent = '/tracking/informed-consent'
+    InformedConsent = '/tracking/informed-consent',
+    //
+    MedicationID = '/drugs-detail'
 }
 
 export enum ContentTypeIcons {
@@ -133,6 +135,7 @@ export class GoalState {
                 this.name = GoalStateName.PENDING
                 this.color = GoalStateColor.PENDING
                 this.icon = GoalStateIcons.PENDING
+                this.state = GoalStateType.PENDING
                 break;
         }
     }

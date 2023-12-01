@@ -15,6 +15,7 @@ export class DrugsDetailPage implements OnInit {
   days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
   @Input()drug : any
   @Input()id: any;
+  drugID = history.state?.id
   form: FormGroup;
   times = []
   isLoading = false
@@ -51,7 +52,8 @@ export class DrugsDetailPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.id = this.drugID? this.drugID:this.id
+    console.log('[DrugsDetailPage] ngOnInit() id: ',this.id);
     this.form = this.fb.group({
       from_date: [this.date, [Validators.required]],
       to_date: [this.date, [Validators.required]],
@@ -81,10 +83,10 @@ export class DrugsDetailPage implements OnInit {
   }
 
   showDetailsDrug(){
-    this.form.get('from_date').setValue(this.drug.from_date)
-    this.form.get('to_date').setValue(this.drug.to_date)
-    this.form.get('dose').setValue(this.drug.dose)
-    if(this.drug?.alias) this.form.get('alias').setValue(this.drug.alias)
+    this.form.get('from_date').setValue(this.drug?.from_date)
+    this.form.get('to_date').setValue(this.drug?.to_date)
+    this.form.get('dose').setValue(this.drug?.dose)
+    if(this.drug?.alias) this.form.get('alias').setValue(this.drug?.alias)
 
   }
 
@@ -325,8 +327,9 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan(){
+    const medication_plan_id = this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
     console.log('[DrugsDetailPage] getMedicationPlan()');
-    this.dooleService.getAPImedicationPlan(this.drug.medication_plan_id).subscribe(
+    this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] getMedicationPlan()', await res);
         if(res.success){

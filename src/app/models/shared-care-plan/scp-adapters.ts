@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { ContentType, SharedCarePlanGoal, SharedCarePlanLifeStyle } from "../shared-care-plan";
+import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle } from "../shared-care-plan";
 
 export class ScpAdapters extends ContentComponent {
     img?: string;
@@ -75,7 +75,7 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
                 const state = goal?.last_accepted_or_declined?.type
                 const typeGoal = goal[type]
                 const titleGoal = this.getTitle(goal, typeGoal, title); //if it is  MedicationPlan type -> For example:  drug.name
-                //routerlink: this.routerlink,
+ 
                 let data: SharedCarePlanGoal = {
                     id: goal?.id, // id -> id MedicationPlan
                     title: titleGoal,
@@ -84,6 +84,7 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
                     state: goal[state]? goal[state]:state,
                     percentage: percentage? percentage:0,
                     is_new_content: goal[is_new_content],
+                    routerlink: this.routerlink,
                 }                 
                 newList.push(data)
             });
@@ -100,6 +101,8 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
                     resTitle = titleDrug[title]
                 else
                     console.error(`${ContentType.MEDICATIONS_PLAN} -> drug: Not field ${title}`)
+
+                this.routerlink = ContentTypePath.MedicationID
                 break;
             case ContentType.ADVICE:
                 const titleAdvice = goal['advice']

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
-import { NotificationsType } from 'src/app/shared/classes/notification-options';
+import { DrugsDetailPage } from '../../diary/drugs-detail/drugs-detail.page';
+import { ModalController } from '@ionic/angular';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-goals',
@@ -19,7 +20,10 @@ export class GoalsPage implements OnInit {
   isLoading = false
   constructor(
     public router:Router,
-    private dooleService: DooleService) { 
+    private dooleService: DooleService,
+    private modalCtrl: ModalController,
+    private notification: NotificationService,
+    ) { 
       this.scpGoals = new SharedCarePlanGoals()
     }
 
@@ -30,7 +34,6 @@ export class GoalsPage implements OnInit {
   getGoalImformation(){
     this.listGoal = []
     this.isLoading = true
-    //this.dooleService.getAPIgoals().subscribe(
     this.dooleService.getAPI_SCP_goals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
@@ -42,7 +45,7 @@ export class GoalsPage implements OnInit {
           'is_new_content' //is_new_content
           )  
         this.isLoading = false
-        console.log('[GoalsPage] getGoalImformation() goals', await this.listGoal);
+        //console.log('[GoalsPage] getGoalImformation() goals', await this.listGoal);
        },(err) => { 
           console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
@@ -50,16 +53,27 @@ export class GoalsPage implements OnInit {
       });
   }
 
-  formatDate(d){
-    var auxdate = d.split(' ')
-    //let date = new Date(auxdate[0]);
-    d = d.replace(' ', 'T')
-    let date0 = new Date(d).toUTCString();
-    let date = new Date(date0);
-    let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    return date;
-  }
+  // async addDrugPlan(drug, id){
+  //   const modal = await this.modalCtrl.create({
+  //     component:  DrugsDetailPage,
+  //     componentProps: { drug: drug, id: id},
+  //     cssClass: "modal-custom-class"
+  //   });
+
+  //   modal.onDidDismiss()
+  //     .then((result) => {
+  //       console.log('addDrugPlan()', result);
+
+  //       if(result?.data?.error){
+  //        // let message = this.translate.instant('landing.message_wrong_credentials')
+  //         //this.dooleService.presentAlert(message)
+  //       }else if(result?.data?.action !== undefined){
+  //         this.notification.displayToastSuccessful()
+  //         //this.segmentChanged()
+  //       }
+  //     });
+
+  //     await modal.present();
+  //   }
 
 }
