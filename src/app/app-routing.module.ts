@@ -191,6 +191,10 @@ const routes: Routes = [
     path: 'medication-details',
     loadChildren: () => import('./pages/diary/medication-detail/medication-detail.module').then( m => m.MedicationDetailPageModule)
   },
+  {
+    path: 'drugs-detail',
+    loadChildren: () => import('./pages/diary/drugs-detail/drugs-detail.module').then( m => m.DrugsDetailPageModule)
+  },
  
 
 

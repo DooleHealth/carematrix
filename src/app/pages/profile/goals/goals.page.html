@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'goals.your_goals' | translate}}</ion-title>
+    <ion-title>{{ this.nameGoal | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,40 +19,12 @@
       <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
     </ion-item>
 
-    <scp-content-circle-progress ></scp-content-circle-progress>
+    <div *ngIf="listGoal.length > 0; else noData">
+      <scp-content-circle-progress *ngFor="let content of this.listGoal" [content]="content"></scp-content-circle-progress>
+    </div>
+
   </ion-card>
 
-  <!-- <scp-content-circle-progress ></scp-content-circle-progress> -->
-
-  <!-- <scp-content *ngFor="let content of this.listContent" [content]="content"></scp-content> -->
-
-  <div *ngIf="listGoal.length > 0; else noData">
-  <!-- <div *ngFor="let goal of this.listGoal" >
-    <ion-card routerLink="/activity-goal" [state]="{id: goal.element_id, header: goal.element.name}" class="cardProfile"  routerLinkActive='active-item'>
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="2"><ion-img  src='assets/icons/goals.svg' style="margin-right: 5px;"></ion-img></ion-col>
-            <ion-col size="6"><ion-card-title class="txtTitleGoals">{{'goals.goals' | translate}} de {{goal.element.name}}</ion-card-title></ion-col>
-            <ion-col size="4"><ion-text class="textMediumGreen">{{goal?.score}} {{goal?.coin?.name? (goal?.coin?.name):('goals.points' | translate ) }}</ion-text></ion-col>
-          </ion-row>
-        </ion-grid>
-
-
-      <ion-card-content>
-        <div class="txtTitleGoals2">{{'goals.achieve' | translate}} {{goal.typeString}} {{goal.element.element_unit.abbreviation}}</div>
-        <div class="txtTitleGoalsLittle">
-          <ion-row><ion-col size="12" *ngIf="(goal.from_date != null || goal.to_date != null); else objetive"></ion-col></ion-row>
-            <ion-row>
-              <ion-col size="6" style="margin-left: -1.5%;" *ngIf='goal.from_date != null'>{{'goals.start' | translate}}: {{ formatDate(goal.from_date) | date: 'dd/MM/yyyy'}}</ion-col>
-              <ion-col size="6" style="margin-left: -1.5%;" *ngIf='goal.to_date != null'>{{'goals.end' | translate}}: {{ formatDate(goal.to_date) | date: 'dd/MM/yyyy'}}</ion-col>
-            </ion-row>
-          <ng-template #objetive>{{'goals.goals' | translate}}: {{goal.frequencyString}}</ng-template>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
-</div>
 <ng-template #noData>
   <div *ngIf="!this.isLoading">
     <ion-grid>

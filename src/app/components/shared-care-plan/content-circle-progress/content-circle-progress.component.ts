@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GoalState, SharedCarePlanGoal } from 'src/app/models/shared-care-plan';
+import { GoalState, GoalStateType, SharedCarePlanGoal } from 'src/app/models/shared-care-plan';
+import { DateService } from 'src/app/services/date.service';
 
 enum CircleProgressColors {
-  GREEN_SHADE = '#C7E596',
-  GREEN_TINT = '#27C100',
+  GREEN_SHADE = '#27C100',
+  GREEN_TINT = '#C7E596', 
   MALVA_SHADE = '#BA0186',
   MALVA_TINT = '#FFE0F5'
 }
@@ -20,27 +21,36 @@ export class ContentCircleProgressComponent  implements OnInit {
   innerProgreesColor = CircleProgressColors.MALVA_TINT;
   percent: number;
   state: GoalState;
-  constructor() { 
+  isShowProgrress = true;
+  constructor(public dateService:DateService) { }
+
+  ngOnInit() {
     this.setState()
     this.setPercent()
+    this.setDate()
     this.getProgress()
-  }
 
-  ngOnInit() {}
+    console.log('[ContentCircleProgressComponent] ngOnInit()', this.content);
+  }
 
   goTo(type){
     this.redirect.emit({type: type})
   }
 
   setState(){
-    //this.content.type = 'pending'
-    this.state = new GoalState('pending')
+    this.state = new GoalState(this.content?.state)
+    if(this.state.state === GoalStateType.PENDING)
+      this.isShowProgrress = false
+  }
+
+  setDate(){
+    this.content.date = this.dateService.selectedDateFormat(this.content?.date)
   }
 
   getProgress(){
     if(this.percent == 100){
-      this.outerProgreesColor = CircleProgressColors.GREEN_SHADE;
-      this.innerProgreesColor = CircleProgressColors.GREEN_TINT;
+      this.outerProgreesColor =  CircleProgressColors.GREEN_SHADE;
+      this.innerProgreesColor =  CircleProgressColors.GREEN_SHADE;
     }
   }
 

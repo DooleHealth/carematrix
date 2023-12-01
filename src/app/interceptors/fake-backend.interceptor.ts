@@ -81,6 +81,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIreminderID(); */
                 case url.includes('user/patients') && method === 'GET':
                     return getAPIpatients();
+                case url.includes('sharecareplan/goals') && method === 'GET':
+                    return getAPI_SCP_goals();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -1123,6 +1125,99 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     {name: 'David Valarezo león'},
                     {name: 'Fernando Roque'},
                     {name: 'María Mendoza Salcedo'},
+                ]
+            })
+        }
+
+        function getAPI_SCP_goals(){
+            return ok({
+                success: true,
+                status: 200,
+                goals: [
+                    {
+                        id: 551, //x
+                        user_id: 789,
+                        drug_id: 470,
+                        origin_type: "App\\ShareCarePlan",
+                        from_date: "2022-02-16 00:00:00", //x
+                        is_new_content: false,
+                        content_type: "App\\MedicationPlan",
+                        aderence: {
+                            total_percentage: 33,
+                            drug_takes_percentage: 0,
+                        },
+                        last_accepted_or_declined: {
+                            id: 10832,
+                            user_id: 470,
+                            target_type: "App\\MedicationPlan",
+                            target_id: 551,
+                            type: "declined", //x
+                        },
+                        drug: {
+                            id: 470,
+                            name: "AMOXICILINA/ACIDO CLAVULANICO NORMON 875 mg/125 mg POLVO PARA SUSPENSION ORAL EN SOBRES EFG , 500 sobres"
+                        }
+                    },
+                    {
+                        id: 784,
+                        user_id: 470,
+                        drug_id: 1,
+                        origin_type: "App\\ShareCarePlan",
+                        from_date: "2023-11-24 11:32:00",
+                        is_new_content: false,
+                        isPermitedModify: true,
+                        state_string: "Finalitzat",
+                        frequencyName: "Cada dia",
+                        patient_has_created_times: false,
+                        aderence: {
+                            total_percentage: 100,
+                            drug_takes_percentage: 0,
+                        },
+                        content_type: "App\\MedicationPlan",
+                        last_accepted_or_declined: {
+                            id: 10791,
+                            user_id: 470,
+                            target_type: "App\\MedicationPlan",
+                            target_id: 784,
+                            type: "accepted",
+                            value: "Lo he aceptado desde API",
+                        },
+                        drug: {
+                            id: 1,
+                            name: "ABACAVIR/LAMIVUDINA  DR. REDDYS 600 MG/300 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG 30 comprimidos"
+                        },
+                        medication_plan_times: []
+                    },
+                    {
+                        id: 784,
+                        user_id: 470,
+                        drug_id: 1,
+                        origin_type: "App\\ShareCarePlan",
+                        from_date: "2023-11-24 11:32:00",
+                        is_new_content: true,
+                        isPermitedModify: true,
+                        state_string: "Finalitzat",
+                        frequencyName: "Cada dia",
+                        patient_has_created_times: false,
+                        aderence: {
+                            total_percentage: 0,
+                            drug_takes_percentage: 0,
+                        },
+                        content_type: "App\\MedicationPlan",
+                        last_accepted_or_declined: {
+                            id: 10791,
+                            user_id: 470,
+                            target_type: "App\\MedicationPlan",
+                            target_id: 784,
+                            type: null,
+                            value: "Lo he aceptado desde API",
+                        },
+                        drug: {
+                            id: 1,
+                            name: "ABACAVIR/LAMIVUDINA  DR. REDDYS 600 MG/300 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG 30 comprimidos"
+                        },
+                        medication_plan_times: []
+                    }
                 ]
             })
         }

@@ -9,6 +9,7 @@ import { GoalsPageRoutingModule } from './goals-routing.module';
 import { GoalsPage } from './goals.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { DrugsDetailPageModule } from '../../diary/drugs-detail/drugs-detail.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     TranslateModule,
-    GoalsPageRoutingModule
+    GoalsPageRoutingModule,
+    DrugsDetailPageModule
   ],
   declarations: [GoalsPage]
 })
