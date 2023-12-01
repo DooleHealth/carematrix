@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesystem';
-import { ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
+import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
 import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
 
 import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
@@ -20,6 +20,7 @@ import { DooleService } from './services/doole.service';
 import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
+import { VideocallPage } from './pages/agenda/videocall/videocall.page';
 
 import { register } from 'swiper/element/bundle';
 register();
@@ -69,6 +70,8 @@ export class AppComponent implements OnInit {
     private endPoind: ApiEndpointsService
   ) {
     this.setLanguage();
+    
+    
   }
 
   async ngOnInit() {
@@ -214,7 +217,12 @@ export class AppComponent implements OnInit {
     PushNotifications.requestPermissions().then(async () => {
       let permStatus = await PushNotifications.checkPermissions();
 
-      if (permStatus.receive === 'prompt') {
+      if (permStatus.receive === 'granted') {
+        // Register with Apple / Google to receive push via APNS/FCM
+        await PushNotifications.register();
+      }
+
+      else if (permStatus.receive === 'prompt') {
         permStatus = await PushNotifications.requestPermissions();
       }
 
@@ -222,7 +230,7 @@ export class AppComponent implements OnInit {
         throw new Error('User denied permissions!');
       }
 
-      await PushNotifications.register();
+      //await PushNotifications.register();
     });
 
     // On success, we should be able to receive notifications
@@ -250,22 +258,34 @@ export class AppComponent implements OnInit {
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
-      (notification) => {
+      (notification: PushNotificationSchema) => {
         console.log('push token - Push notification received: ', 'Push received: ' + JSON.stringify(notification));
 
-        this.getNumNotification()
+        
+        this.getNumNotification();
+
+       this.badge.get().then(res => (
+        notification.badge = res
+
+        ));
+
         console.log('push token - [pushNotificationReceived] Push received:', notification);
 
-        const voip = notification.data?.voip;
+        const voip = notification?.data?.voip;
 
         if (voip == "true") {
           // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
-          let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data.isCancelPush;
+          let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data?.isCancelPush;
 
-          if (cancel == "false") {
+          if (!cancel || cancel == "false") {
             const caller = JSON.parse(notification.data.Caller);
             this.opentokService.agendaId$ = caller.callId;
-            cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
+
+            if (this.platform.is('ios')) {
+              cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
+            } else {
+
+            }
           } else
             console.log("End call push");
 
@@ -281,7 +301,7 @@ export class AppComponent implements OnInit {
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
         console.log('Push action performed: ' + JSON.stringify(notification));
-        const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data;
+        const data = notification?.notification?.data?.aps ? notification.notification.data.aps : notification.notification.data;
 
         const action = data?.action;
         const id = data?.id;
@@ -290,12 +310,15 @@ export class AppComponent implements OnInit {
         this.isNotification = true;
         // Only VIDEOCALL does not verify lock-screen
         if (action == "VIDEOCALL") {
-          this.redirecToVideocall(notification)
-          return
+            this._zone.run(() => {
+             // this.redirecToVideocall(notification)
+              this.startVideocallIframe(data?.id)
+            });
+            return
         }
 
         let secondsLastPause = (this.lastPause) ? this.lastPause.getTime() : 0
-        let secondsNow = (new Date).getTime()
+        let secondsNow = (new Date)?.getTime()
         // App will lock after 2 minutes
         let secondsPassed = (secondsNow - secondsLastPause) / 1000;
         console.log(`push token - PushNotificationActionPerformed secondsNow: ${secondsNow / 1000}, secondsLastPause: ${secondsLastPause}`,);
@@ -489,12 +512,28 @@ export class AppComponent implements OnInit {
     this.dooleService.getAPINotificationsCount().subscribe((res) => {
       if (res?.success) {
         let numNotification = res?.notifications
-        this.badge.set(numNotification);
+        // if(!numNotification || numNotification === 0 )this.badge.clear()
+        // else
+        this.badge
+          .requestPermission()
+          .then((result: any) => {
+            console.log('Permission granted:', result);
+            this.badge.set(numNotification);
+            // Handle success
+          })
+          .catch((error: any) => {
+            console.error('Permission denied:', error);
+            // Handle error
+          });
       }
     })
   }
 
   redirecToVideocall(notification) {
+
+    // const data = notification.notification.data?.aps ? notification.notification.data.aps : notification.notification.data;
+
+    // this.startVideocallIframe(data?.id)
 
     let caller;
 
@@ -509,7 +548,9 @@ export class AppComponent implements OnInit {
 
     console.log('caller', caller);
 
-    this.startVideocallAndroid(caller.callId)
+     this.startVideocallAndroid(caller.callId)
+
+
   }
 
   async getTokboxSessionAndroid(agenda, caller?) {
@@ -741,6 +782,28 @@ export class AppComponent implements OnInit {
       });
   }
 
+  async startVideocallIframe(id) {
+    const modal = await this.modalCtrl.create({
+      component:  VideocallPage,
+      componentProps: {id: id },
+      cssClass: "modal-custom-class"
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('addElement()', result);
+
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'add'){
+
+        }
+      });
+
+      await modal.present();
+    }
+
 
   phonecallHandlers() {
 
@@ -789,25 +852,45 @@ export class AppComponent implements OnInit {
   lockDevice() {
     // Lock phone after 2 minutes in pause
     this.lastResume = new Date;
+    this.setLastResume(this.lastResume)
     this.platform.pause.subscribe((e) => {
       // Saves the time of pause to be used in resume
       this.lastResume = new Date;
       this.lastPause = new Date;
+      this.setLastResume(this.lastResume)
+      this.getNumNotification()
+
+      
     });
 
     this.platform.resume.subscribe(async (e) => {
 
       if (!this.router.url.includes('landing') && !this.router.url.includes('login')) {
-        // App will lock after 2 minutes
+        let longResume: Date = this.getLastResume()
+        let secondsPassed2 = ((new Date).getTime() - longResume.getTime()) / 1000;
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-        if (secondsPassed >= 120 && !this.isNotification) {
+        //900 sec are 10 minutes
+        if(secondsPassed2 >= 900 && !this.isNotification){
+          this.router.navigateByUrl('/landing');
+        }
+        // App will lock after 2 minutes
+        else if (secondsPassed >= 120 && !this.isNotification) {
           // Must implement lock-screen
-          this.showFingerprintAuthDlg()
+         this.showFingerprintAuthDlg()
         }
       }
       this.isNotification = false
     });
 
+  }
+
+  getLastResume(): Date{
+    const date = localStorage.getItem('lastResume');
+    return new Date(JSON.parse(date))
+  }
+
+  setLastResume(lastResume: Date){
+    localStorage.setItem('lastResume',JSON.stringify(lastResume.getTime()))
   }
   async showMessage(text) {
     let toast = await this.toastCtrl.create({
@@ -831,10 +914,9 @@ export class AppComponent implements OnInit {
     //this.translate.setDefaultLang('ca');
     let lang = this.translate.getBrowserLang();
     console.log("BROWSER LANG: ", lang);
-    if (lang !== 'ca' && lang !== 'es' && lang !== 'en' && lang !== 'pt')
+    if (lang !== 'ca' && lang !== 'es' && lang !== 'en')
       lang = 'es'
 
-    lang= 'en'
     this.translate.setDefaultLang(lang);
     console.log("APP LANG: ", lang);
     //this.translate.getBrowserLang()
@@ -987,7 +1069,7 @@ export class AppComponent implements OnInit {
 
   showExitConfirm() {
     this.alertController.create({
-      header: 'Rosia App',
+      header: 'Doole App',
       message: this.translate.instant('home.close_app'),
       backdropDismiss: false,
       buttons: [{

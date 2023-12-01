@@ -15,6 +15,8 @@ export class Constants {
     public readonly androidBundleId = 'com.doole.rosia'
 
     public readonly TRAK_URL = "https://salud.rehabilify.com/app/trak/patient";
+    public readonly VIDEOCALL_URL = 'https://videocalls.doole.io/';
+
 
     public setEndPoint(index){
       let opt = this.LIST_ENPOINT[index]

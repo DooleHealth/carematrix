@@ -23,30 +23,30 @@
     <ion-text class="txtTitle">{{ 'profile.information.title_information' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list >
-            <ion-item lines="inset" routerLink="personal" detail="false" routerLinkActive='active-item'>
+            <ion-item routerLink="personal" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <!-- <ion-item routerLink="cards" detail="false" routerLinkActive='active-item'>
+            <ion-item routerLink="cards" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.your_health_cards' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item> -->
-            <ion-item lines="inset" routerLink="emergency-contacts" detail="false" routerLinkActive='active-item'>
+            </ion-item>
+            <ion-item routerLink="emergency-contacts" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.emergency' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item lines="inset" routerLink="family" detail="false" routerLinkActive='active-item'>
+            <ion-item routerLink="family" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.family_unit' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>          
-            <ion-item lines="none" routerLink="challenges" detail="false" routerLinkActive='active-item'>
+            <ion-item routerLink="challenges" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.your_challenges' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <!-- <ion-item lines="none" detail="false" routerLinkActive='active-item'>
+            <ion-item lines="none" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.payment_method' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item> -->
+            </ion-item>
             
           </ion-list>
     </ion-card>
@@ -74,22 +74,22 @@
               <ion-label>{{ 'profile.configuration.linked_accounts' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item >
-            <ion-item lines="none" routerLink="settings" detail="false" routerLinkActive='active-item'>
-              <ion-label>{{ 'profile.configuration.settings' | translate}}</ion-label>
+            <ion-item routerLink="settings" detail="false" routerLinkActive='active-item'>
+              <ion-label lines="none">{{ 'profile.configuration.settings' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
             </ion-item>
-            <!-- <ion-item routerLink="devices" detail="false" routerLinkActive='active-item'>
+            <ion-item routerLink="devices" detail="false" routerLinkActive='active-item'>
               <ion-label lines="none">{{ 'profile.configuration.bluetooth' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item> -->
-            <!-- <ion-item (click)="this.startVideoCall()" detail="false">
+            </ion-item>
+            <ion-item (click)="this.startVideoCall()" detail="false">
               <ion-label>{{'contact.tap_video' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item> -->
-            <!-- <ion-item (click)="this.openWithInAppBrowser()" detail="false" lines="none" >
+            </ion-item>
+            <ion-item (click)="this.openWithInAppBrowser()" detail="false" lines="none" >
               <ion-label>{{'profile.configuration.videocall_test' | translate}}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item> -->
+            </ion-item>
           </ion-list>
     </ion-card>
     <ion-text class="txtTitle">{{ 'profile.help.title_help' | translate}}</ion-text>
