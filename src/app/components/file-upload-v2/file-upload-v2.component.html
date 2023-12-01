@@ -1,0 +1,11 @@
+<ion-button (click)="selectSource()">
+  <ion-icon icon-start [color]="color" [name]="this.icon"></ion-icon>
+  <input
+    type="file"
+    #fileInput
+    (change)="uploadFileFromBrowser($event)"
+    hidden="true"
+    [disabled]="enableButtonAddFile"
+    accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword"
+  />
+</ion-button>

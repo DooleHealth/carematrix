@@ -1,46 +1,53 @@
 <!-- <ion-nav-link (click)="selectSource()" expand="block" color="primary">
   <ion-icon class="primaryIcon" size="large" name="attach"></ion-icon>{{ this.text }}</ion-nav-link> -->
-<input
+  <input
   type="file"
   #fileInput
   (change)="uploadFileFromBrowser($event)"
   hidden="true"
   accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword">
 
-  <ion-button slot="start" 
-  fill="clear" 
-  (click)="selectSource()"
-  [disabled]="enableButtonAddFile">{{'report_problem.button_add_file' | translate }}
-  <ion-icon slot="start" name="add-circle" class="primaryIcon"></ion-icon>
-</ion-button>
-
-
-  <div id="container" style="margin-top: 10px; margin-bottom: 10px;">
+  <div id="container" style="margin-top: 20px; margin-bottom: 10px;">
 
     <div *ngFor="let file of this.media; let i = index">
       <ion-item lines="none">
-      <div id="left">
-        <ion-icon name="open" color="primary" (click)="openFileMedia(file)"></ion-icon>
-      </div>
-      <div id="middle">
-        <p class="titule">{{ getName(file)  }}</p>
-      </div>
-      <div id="right">
-        <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, false)"></ion-icon>
-      </div>
-    </ion-item>
-  </div>
+        <div id="middle">
+          <p class="titule">{{ getName(file)  }}</p>
+        </div>
+        <div id="left">
+          <ion-icon name="open-outline" color="primary" (click)="openFileMedia(file)"></ion-icon>
+        </div>
+        <div id="right">
+          <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, false)"></ion-icon>
+        </div>
+      </ion-item>
+    </div>
 
-  <div *ngFor="let file of this.files;let i = index">
-    <ion-item lines="none">
-      <div id="left">
-        <ion-icon name="open" color="primary" (click)="openFile(file)"></ion-icon>
-      </div>
-      <div id="middle">
-        <p class="titule">{{ file.name }}</p>
-      </div>
-      <div id="right">
-        <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, true)"></ion-icon>
-      </div>
+    <div *ngFor="let file of this.files;let i = index">
+      <ion-item lines="none">
+        <div id="middle">
+          <p class="titule">{{ file.name }}</p>
+        </div>
+        <div id="left">
+          <ion-icon name="open-outline" color="primary" (click)="openFile(file)"></ion-icon>
+        </div>
+        <div id="right">
+          <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, true)"></ion-icon>
+        </div>
+      </ion-item>
+    </div>
+    <ion-item></ion-item>
+    <ion-item style="margin-top: 20px; margin-bottom: 20px;" lines="none">
+      <ion-button
+        style="font-weight: bold;"
+        slot="end"
+        class="buttonEnd"
+        size="medium"
+        mode="ios"
+        (click)="selectSource()"
+        [disabled]="enableButtonAddFile">{{'report_problem.button_add_file' | translate | uppercase }}
+        <!-- <ion-icon slot="start" name="add-circle"></ion-icon> -->
+        <!-- <ion-icon slot="start" name="add-circle-outline"></ion-icon> -->
+      </ion-button>
     </ion-item>
-  </div>
+

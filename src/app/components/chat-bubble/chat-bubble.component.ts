@@ -1,11 +1,9 @@
 import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-
+import moment from 'moment';
 import { DooleService } from 'src/app/services/doole.service';
 import { DocumentViewer } from '@awesome-cordova-plugins/document-viewer/ngx';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService } from 'src/app/services/language.service';
-import { DateService } from 'src/app/services/date.service';
 
 
 @Component({
@@ -20,7 +18,7 @@ import { DateService } from 'src/app/services/date.service';
 export class ChatBubbleComponent implements OnInit {
 
   @Input('chatMessage') message;
-
+  static translate: any;
   localfile : string ='';
   localfileNormalized : string ='';
   temporaryUrl : string ='';
@@ -30,9 +28,8 @@ export class ChatBubbleComponent implements OnInit {
   target:number;
   public lat: string;
   public lon: string;
-  static translate: any;
-
-  constructor(private dooleService : DooleService, private dateService: DateService, private  translate : TranslateService,) {
+  patient: string = 'message_response';
+  constructor(private dooleService : DooleService, private document: DocumentViewer, private  translate : TranslateService) { 
     ChatBubbleComponent.translate = this.translate
   }
 
@@ -44,7 +41,7 @@ export class ChatBubbleComponent implements OnInit {
   nl2br(text: string) { return text.replace(/(\\n)/, "<br/>");}
 
   format(message){
-    //console.log(message);
+    console.log('[ChatBubbleComponent] message: ',message);
     if(message.mediaType=="TEXT"){
       if(message.message){
         message.message=this.nl2br(message.message);
@@ -55,63 +52,80 @@ export class ChatBubbleComponent implements OnInit {
       }
 
     }else if(message.mediaType=="FILE"){
-      this.dooleService.downloadFile(this.message.fileUrl,message.timestamp+".pdf").subscribe(data => {
-        //downloadFile subscribefile:///var/mobile/Containers/Data/Application/4D8A5FB4-B486-498D-97E8-76F404A6315F/Documents/1535373755996
-        //downloadFile subscribehttp://localhost:8080/var/mobile/Containers/Data/Application/946A8956-0513-469B-803D-4C6F34087DDC/Library/Caches/1535374599756
-        console.log('res in chat bubble: ', data)
-        this.localfile = data.file;
-        this.localfileNormalized = data.fileNormalized;
+      // this.dooleService.downloadFile(this.message.fileUrl,message.timestamp+".pdf").subscribe(data => {
+      //   //downloadFile subscribefile:///var/mobile/Containers/Data/Application/4D8A5FB4-B486-498D-97E8-76F404A6315F/Documents/1535373755996
+      //   //downloadFile subscribehttp://localhost:8080/var/mobile/Containers/Data/Application/946A8956-0513-469B-803D-4C6F34087DDC/Library/Caches/1535374599756
+      //   console.log('res in chat bubble: ', data)
+      //   this.localfile = data.file;
+      //   this.localfileNormalized = data.fileNormalized;
 
-      });
+      // });
 
     }else if(message.mediaType=="GEOLOCATION"){
 
-
+      
       var t = message.message;
-      var array_message = t.split (",");
+      var array_message = t.split (","); 
       this.lat = array_message[0].substring(5);
       this.lon = array_message[1].substring(4,array_message[1].length - 1);
-
-
+     
+     
       console.log(this.lat, this.lon);
     }
-
+  
 
   }
 
-  formatDate(date){
-    let dateFormated = this.dateService.formatDate(date);
-
-    return dateFormated;
+  static getEpoch(): number {
+    return moment().unix();
   }
 
-
-  openFile(message){
-    this.target = message.timestamp;
-    var dict = [];
-    console.log("clicked message: ", message.fileUrl);
-    dict.push({file:message.fileUrl});
-    this.dooleService.post("message/temporaryUrl", {file:message.fileUrl}).subscribe(data=>{
-      console.log('post("message/temporaryUrl"', data);
-      this.temporaryUrl=data.temporaryUrl;
-      this.dooleService.downloadFile(data.temporaryUrl,this.target).subscribe(datad => {
-        console.log("***", datad);
-        //console.log("downloadFile subscribe"+datad.fileNormalized);
-        //console.log(data.percent);
-        this.percent=datad.percent;
-        this.status=datad.status;
-        //downloadFile subscribefile:///var/mobile/Containers/Data/Application/4D8A5FB4-B486-498D-97E8-76F404A6315F/Documents/1535373755996
-        //downloadFile subscribehttp://localhost:8080/var/mobile/Containers/Data/Application/946A8956-0513-469B-803D-4C6F34087DDC/Library/Caches/1535374599756
-        this.localfile = datad.file;
-        this.localfileNormalized = datad.fileNormalized;
-        this.downloaded = datad.downloaded;
-        window.open(this.temporaryUrl, "");
-        //window.open("data:application/pdf," + encodeURI(this.localfile));
-        //this.document.viewDocument(this.localfile, 'application/pdf',null);
-      });
+  static getCalendarDay(epoch: number): string {
+    if (!epoch) {
+      return null;
+    }
+    let timeString = 'h:mm A';
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
+    return moment(epoch).calendar(null, {
+      sameDay: `[${today}] ` + timeString,
+      lastDay: `[${yesterday}] ` + timeString,
+      lastWeek : 'DD/MM/YY ' + timeString,
+      sameElse: 'DD/MM/YY ' + timeString,
+      nextDay : 'DD/MM/YY ' + timeString,
     });
-
   }
+
+  formatEpoch(epoch): string {
+    return ChatBubbleComponent.getCalendarDay(epoch);
+  }
+
+  // openFile(message){
+  //   this.target = message.timestamp;
+  //   var dict = [];
+  //   console.log("clicked message: ", message.fileUrl);
+  //   dict.push({file:message.fileUrl});
+  //   this.dooleService.post("message/temporaryUrl", {file:message.fileUrl}).subscribe(data=>{
+  //     console.log('post("message/temporaryUrl"', data);
+  //     this.temporaryUrl=data.temporaryUrl;
+  //     this.dooleService.downloadFile(data.temporaryUrl,this.target).subscribe(datad => {
+  //       console.log("***", datad);
+  //       //console.log("downloadFile subscribe"+datad.fileNormalized);
+  //       //console.log(data.percent);
+  //       this.percent=datad.percent;
+  //       this.status=datad.status;
+  //       //downloadFile subscribefile:///var/mobile/Containers/Data/Application/4D8A5FB4-B486-498D-97E8-76F404A6315F/Documents/1535373755996
+  //       //downloadFile subscribehttp://localhost:8080/var/mobile/Containers/Data/Application/946A8956-0513-469B-803D-4C6F34087DDC/Library/Caches/1535374599756
+  //       this.localfile = datad.file;
+  //       this.localfileNormalized = datad.fileNormalized;
+  //       this.downloaded = datad.downloaded;
+  //       window.open(this.temporaryUrl, "");
+  //       //window.open("data:application/pdf," + encodeURI(this.localfile)); 
+  //       //this.document.viewDocument(this.localfile, 'application/pdf',null);
+  //     });
+  //   });
+    
+  // }
 
   openMedia(message){
     window.open(message.fileUrl, "");

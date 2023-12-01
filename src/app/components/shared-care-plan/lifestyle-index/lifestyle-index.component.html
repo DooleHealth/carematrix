@@ -1,22 +1,28 @@
-<ion-card class="cardProfile" (click)="goTo(content.type)"  [routerLink]="content.routerlink" [state]="{id: content?.id}" routerLinkActive='active-item' >
-  <ion-item lines="none" mode="ios">
-    <ion-thumbnail slot="start">
-      <img 
-      [src]="content?.img" 
-      onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt=""
+<ion-card
+  class="cardProfile"
+  (click)="goTo(content.type)"
+  [routerLink]="content.routerlink"
+  [state]="{ id: content?.id }"
+  routerLinkActive="active-item"
+>
+  <ion-item class="ion-no-padding item" lines="none" mode="ios">
+    <ion-thumbnail class="thumbnail" slot="start">
+      <img
+        class="img"
+        [src]="content?.img"
+        onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+        alt=""
       />
     </ion-thumbnail>
-    <ion-grid> 
+    <ion-grid style="height: 100% !important">
       <ion-row>
-        <ion-text  class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title}}</ion-text>
-      
-          <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-             
+        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{
+          content?.title
+        }}</ion-text>
       </ion-row>
-     
-     
-     
     </ion-grid>
+    <ion-buttons slot="end">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-buttons>
   </ion-item>
-
 </ion-card>

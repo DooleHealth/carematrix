@@ -8,6 +8,9 @@ project(':capacitor-community-contacts').projectDir = new File('../node_modules/
 include ':capacitor-community-firebase-analytics'
 project(':capacitor-community-firebase-analytics').projectDir = new File('../node_modules/@capacitor-community/firebase-analytics/android')
 
+include ':capacitor-community-native-market'
+project(':capacitor-community-native-market').projectDir = new File('../node_modules/@capacitor-community/native-market/android')
+
 include ':capacitor-community-sqlite'
 project(':capacitor-community-sqlite').projectDir = new File('../node_modules/@capacitor-community/sqlite/android')
 

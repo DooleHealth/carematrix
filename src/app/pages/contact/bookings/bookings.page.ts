@@ -17,27 +17,26 @@ import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.
   styleUrls: ['./bookings.page.scss'],
 })
 export class BookingsPage implements OnInit {
-
   staff = history.state.staff;
   staffId = this.staff?.id
   selectedDate: string;
-  online// = history.state.isOnline;
   files: Array<{ name: string, file: any, type: string }> = [];
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
   form: FormGroup;
   dateMax:any;
-  duration:string = "30";
+  slot_id: any;
+  duration:string = "5";
   isSubmittedTitle = false;
   isSubmittedDuration = false;
   isSubmittedStartDate = false;
   isLoading = false
-  constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,
+  constructor(public dooleService:DooleService, private nav: NavController, private actionSheetCtrl: ActionSheetController,  private translate: TranslateService,  
     public datepipe: DatePipe,  private loadingController: LoadingController,  private fb: FormBuilder, private modalCtrl: ModalController, private chooser: Chooser,
-    public file: File, private router: Router, private notification: NotificationService,  private analyticsService: AnalyticsService) {
+    public file: File, private router: Router, private notification: NotificationService,  private analyticsService: AnalyticsService) { 
       // this.analyticsService.setScreenName('booking','[BookingsPage]')
     }
   ngOnInit() {
-
+   
     this.form = this.fb.group({
       place: [''],
       title: [''],
@@ -45,17 +44,12 @@ export class BookingsPage implements OnInit {
       date: ['', [Validators.required]],
       duration: [this.duration],
       indications: [],
-      // file:[this.images],
       staff_id:[this.staffId],
-      online:[this.online]
+      online:[history.state.isOnline],
+      user_availability_slot_id: []
     });
     this.setTitle()
     console.log(`[BookingsPage] ngOnInit() staffId: `, this.staffId );
-  }
-
-  ionViewDidEnter(){
-    this.online = JSON.parse(localStorage.getItem('isOnline-contact')) ;
-    console.log(`[BookingsPage] ionViewDidEnter() online: `, this.online);
   }
 
   setTitle(){
@@ -73,21 +67,16 @@ export class BookingsPage implements OnInit {
 
   async addAgenda(){
     console.log(`[BookingsPage] addAgenda()`, this.form.value );
-
-    this.form.get('online').setValue(this.online)
+    this.isLoading = true
 
     let params = this.form.value
     params.date = this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss')
 
-    console.log(`[BookingsPage] addAgenda()1`, params);
-    //return
-    this.isLoading = true
     this.dooleService.postAPIaddAgenda(params).subscribe(
       async (res: any) =>{
-        console.log('[BookingsPage] addAgenda()', await res);
+        console.log('[BookingsPage] addAgenda()', await res);  
         if(res.success){
-          this.form.get('date').setValue(this.transformDate(this.selectedDate,  'yyyy-MM-dd HH:mm:ss'))
-          // this.analyticsService.logEvent('create_agenda', res)
+          // this.analyticsService.logEvent('create_agenda', res)   
           if(!this.uploadFile.isEmptyFiles()){
             this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
               if(res.success){
@@ -105,14 +94,14 @@ export class BookingsPage implements OnInit {
           }
         }
         this.isLoading = false
-       },(err) => {
+       },(err) => { 
         this.isLoading = false
-          console.log('[BookingsPage] addAgenda() ERROR(' + err.code + '): ' + err.message);
-          throw err;
+          console.log('[BookingsPage] addAgenda() ERROR(' + err.code + '): ' + err.message); 
+          throw err; 
       }) ,() => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
-      };
+      };     
   }
   isSubmittedFields(isSubmitted){
     this.isSubmittedTitle = isSubmitted;
@@ -125,17 +114,16 @@ export class BookingsPage implements OnInit {
     console.log('[BookingsAddPage] submit()', this.form.value );
     this.isSubmittedFields(true);
     if(this.form.invalid)
-      return
-
+      return 
+   
     this.addAgenda()
-
+    
   }
 
   async openCalendarModal() {
     const modal = await this.modalCtrl.create({
       component: MedicalCalendarPage,
       componentProps: { id: this.staffId },
-      cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
@@ -146,32 +134,34 @@ export class BookingsPage implements OnInit {
           console.log("openCalendarModal() selectedDate: ", result.data);
         }
         if(result.data['date']){
-          this.duration = result.data['duration']
-          this.selectedDate = result.data['date'];
+          this.selectedDate = result.data['date']; 
           this.form.patchValue({date: this.transformDate(this.selectedDate, 'dd/MM/yyyy HH:mm')})
           console.log("openCalendarModal() selectedDate: ", this.selectedDate);
+        }
+        if(result.data['slot_id']){
+          this.slot_id = result.data['slot_id']
+          this.form.get('user_availability_slot_id').setValue(this.slot_id)
+          console.log("openCalendarModal() selectedDate: ", result.data);
         }
     });
 
     await modal.present();
   }
-
+  
 
   async payment(){
     console.log(`[AgendaAddPage] payment()` );
     this.isSubmittedFields(true);
     if(this.form.invalid)
-      return
-
-    this.form.get('online').setValue(this.online)
-    this.form.get('date').setValue(this.transformDate(this.selectedDate,  'dd/MM/yyyy HH:mm'))
+      return 
+  
     this.files = this.uploadFile.files
 
-    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files, selectedDate: this.selectedDate}});
-
+    this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files}});
+    
   }
 //  navigateDoctors() {
 //     return this.router.navigate(['/doctors'],{state:{staff:this.staff}});;
-
+   
 //   }
 }

@@ -3,7 +3,7 @@
 <div>
   <div class="chat-bubble {{message?.from == 'message_response' ? 'right' : 'left'}} {{message.mediaType == 'UPLOADING' ? 'uploading' : ''}}"   >
     <div>
-      <div class="message">{{message.fromName}}</div>
+      <div *ngIf="message.from != this.patient" class="message">{{message.fromName}}</div>
     </div>
     <div *ngIf="message.mediaType=='UPLOADING'">
       <div class="message">
@@ -35,7 +35,7 @@
       <a (click)="openMedia(message)">{{'conversation.open_file' | translate}}</a>
     </div>
     <div class="message-detail" style="float:right">
-      <span>{{this.formatDate(message.timestamp)}}</span>
+      <span>{{formatEpoch(message.timestamp)}}</span>
     </div>
   </div>
 </div>

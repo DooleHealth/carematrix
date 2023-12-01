@@ -64,7 +64,7 @@
         </ion-item>
 
           <!-- <ion-datetime locale="es-ES" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="date" class="textMedium" required></ion-datetime> -->
-          <ion-datetime presentation="date-time" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" required  formControlName="date">
+          <ion-datetime presentation="date-time" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [min]="this.date" required  formControlName="date">
             <span slot="time-label">{{ 'reminder.field_time' | translate}}</span>
             <!-- <span slot="title">{{'reminder.field_start' | translate}}</span> -->
           </ion-datetime>
