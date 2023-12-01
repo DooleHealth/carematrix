@@ -45,14 +45,19 @@
         <div  *ngFor="let message of this.messagesList; let i = index">
           <ion-badge mode="ios" *ngIf="this.currentPage == this.lastPage && i==0" color="primary">{{'chat.end'| translate}}</ion-badge>
           <ion-badge mode="ios" *ngIf="message.showDay" color="primary">{{formatDate(message?.created_at)}}</ion-badge>
-          <ion-item >
+          <ion-item class="itemChat">
+            <ion-label>
+              <chat-bubble [chatMessage]="message"></chat-bubble>
+            </ion-label>
+          </ion-item>
+          <!--<ion-item >
             <ion-label>
               <chat-bubble [chatMessage]="message"></chat-bubble>
             </ion-label>
           </ion-item>
           <ion-item *ngFor="let message of this.messageUploadList">
             <chat-bubble [chatMessage]="message"></chat-bubble>
-          </ion-item>
+          </ion-item>-->
         </div>
       </ion-list>
     </div>
@@ -64,7 +69,7 @@
   <ion-toolbar>
     <ion-item no-lines>
       <ion-buttons >
-        <ion-button (click)="selectImageSource()">
+        <!--<ion-button (click)="selectImageSource()">
           <ion-icon icon-start name="add-outline"></ion-icon>
           <input
             type="file"
@@ -73,7 +78,8 @@
             hidden="true"
             accept="image/*, application/pdf, video/*, audio/*, .doc,.docx,application/msword"
           />
-        </ion-button>
+        </ion-button>-->
+        <app-file-upload-v2 #uploadFile1 (numFilesChange)="sendFile()"></app-file-upload-v2>
       </ion-buttons>
       <div item-content style="width:120%!important" >
         <elastic-textarea #txtChat placeholder="{{ 'conversation.placeholder' | translate}}">
@@ -81,10 +87,11 @@
         </elastic-textarea>
       </div>
       <ion-buttons >
-         <ion-button (click)="this.addImage()">
+        <app-file-upload-v2 color="dark" icon="camera-outline" #uploadFile2 [enableFiles]="false" [enablePhotos]="false" (numFilesChange)="sendFile2()"></app-file-upload-v2>
+         <!--<ion-button (click)="this.addImage()">
           <ion-icon name="camera-outline"></ion-icon>
         </ion-button>
-        <!-- <ion-button  (click)="this.addAudio()">
+         <ion-button  (click)="this.addAudio()">
           <ion-icon name="mic-outline"></ion-icon>
         </ion-button> -->
         <ion-button [disabled]="txtChat.content.trim().length<1 || !btnEnabled" slot="end" (click)="this.send()">

@@ -70,6 +70,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   modalReady = false;
   selectedDate : Date;
   duration:string = "40"
+  slot_id
   calendar = {
     mode: 'month',
     currentDate: new Date(),
@@ -142,9 +143,12 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
       if(dataObservable){
         console.log('[MedicalCalendarPage] getSlots()', res);
-          if(dataObservable.slots.length > 0)
-            this.addScheduleToCalendar(dataObservable.slots)
+          if(dataObservable.slots.length > 0) {
+            console.log("Entro per cada slot")
 
+            this.addScheduleToCalendar(dataObservable.slots)
+          }
+            
           this.routeResolveData = dataObservable;
 
       }else{
@@ -167,17 +171,20 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   addScheduleToCalendar(appointments: any[]){
     var events = [];
     this.eventSource = [];
+    const currentDate = new Date();
     appointments.forEach((e) =>{
 
     var from_date = this.formatDate(e.from_date);
     var to_date = this.formatDate(e.to_date);
     let isAllDay = false
     events.push({
+      id: e.id,
       title: 'Day - ' + from_date.toDateString(),
       startTime:  from_date,
       endTime: to_date,
       allDay: isAllDay,
-      duration: e.duration
+      duration: e.duration,
+      isDisabled: (new Date(from_date).getTime() < currentDate.getTime()) || e.available === 0
     });
   })
       console.log('[HomePage] addScheduleToCalendar()',events )
@@ -202,7 +209,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   markDisabled = (date: Date) => {
     var current = new Date();
-    return (date.getDate() < current.getDate() && date.getMonth() == current.getMonth() || date.getMonth() < current.getMonth());
+    return (date.getDate() < current.getDate() && date.getMonth() == current.getMonth() || date.getMonth() < current.getMonth() && date.getFullYear() < current.getFullYear());
 };
 
   // Change current month/week/day
@@ -290,14 +297,16 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
     await alert.present();
   }
-  changeTagColor(i:number, date :Date, duration?: any) {
+  changeTagColor(id: any, i:number, date :Date, duration?: any) {
 
+    console.log("ID: " + id);
     console.log('Selected date: ' + date + ' duration: ' +duration);
     this.selectedDate = date;
     this.tagDefaultColor[this.currentSelection] = "secondary";
     this.tagDefaultColor[i] = "warning";
     this.currentSelection = i;
     this.duration = duration
+    this.slot_id = id
   }
 
   onCurrentDateChanged(event:Date) {
@@ -325,7 +334,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   }
 
   save(){
-    console.log('Confirm Okay');
-    this.modalCtrl.dismiss({date:this.selectedDate, duration: this.duration});
+    console.log('Confirm Okay', this.slot_id);
+    this.modalCtrl.dismiss({date:this.selectedDate, duration: this.duration, slot_id: this.slot_id});
   }
 }

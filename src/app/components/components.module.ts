@@ -47,6 +47,9 @@ import { LifestyleIndexComponent } from './shared-care-plan/lifestyle-index/life
 import { ContentCircleProgressComponent } from './shared-care-plan/content-circle-progress/content-circle-progress.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-med-for-mon.component';
+import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
+import { FileUploadV2Component } from './file-upload-v2/file-upload-v2.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -97,7 +100,9 @@ import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-me
     ContentComponent,
     LifestyleIndexComponent,
     ContentCircleProgressComponent,
-    ScpMedForMonComponent
+    ScpMedForMonComponent,
+    PdfViewerComponent,
+    FileUploadV2Component
   ],
   exports: [
     ShellModule,
@@ -136,7 +141,9 @@ import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-me
     ContentComponent,
     LifestyleIndexComponent,
     ContentCircleProgressComponent,
-    ScpMedForMonComponent
+    ScpMedForMonComponent,
+    PdfViewerComponent,
+    FileUploadV2Component
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

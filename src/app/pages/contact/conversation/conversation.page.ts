@@ -18,6 +18,7 @@ import { DatePipe } from '@angular/common';
 import moment from 'moment';
 import { LanguageService } from 'src/app/services/language.service';
 import { DateService } from 'src/app/services/date.service';
+import { FileUploadV2Component } from 'src/app/components/file-upload-v2/file-upload-v2.component';
 
 
 interface Message {
@@ -40,11 +41,12 @@ interface Message {
 export class ConversationPage implements OnInit {
   @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild('uploadFile1') uploadFileV1: FileUploadV2Component;
+  @ViewChild('uploadFile2') uploadFileV2: FileUploadV2Component;
   public staff: any = history.state?.staff;
   private id: string = history.state?.chat;
   private data: any = history.state?.data;
   private user: any = history.state?.customData;
-
   lastMessageId = -1;
   lastPage = 0
   nextPage = 0
@@ -557,4 +559,86 @@ export class ConversationPage implements OnInit {
     if(this.data)
     this.router.navigate([`/home`]);
   }
+
+  sendFile(){
+    const numFile = this.uploadFileV1.files.length
+    if(numFile  < 1){
+      return
+    }
+    const file = this.uploadFileV1.files;
+    this.btnEnabled = false;
+    this.btnImageEnabled = false;
+    let type = this.type? this.type:this.staff.type
+    const postData = {
+      file: file[0].file,
+      to: this.to,
+      isBase64: true,
+      type: type.toLowerCase()
+    };
+    if(this.id)
+    postData['id'] = this.id
+
+    console.log('sendFile()', JSON.stringify(postData) );
+    console.log('sendFile()', JSON.stringify(postData.file) );
+
+    this.dooleService.post('message', postData).subscribe(
+        async (data) => {
+          this.txtChat.clearInput();
+          this.btnEnabled = true;
+          this.btnImageEnabled = true;
+
+          this.uploadFileV1.enableButtonAddFile = false
+          this.uploadFileV1.files = [];
+        },
+        (error) => {
+          // Called when error
+          console.log('error: ', error);
+          throw new HttpErrorResponse(error);
+        },
+        () => {
+          // Called when operation is complete (both success and error)
+          // loading.dismiss();
+        });
+  }
+
+  sendFile2(){
+    const numFile = this.uploadFileV2.files.length
+    if(numFile  < 1){
+      return
+    }
+    const file = this.uploadFileV2.files;
+    this.btnEnabled = false;
+    this.btnImageEnabled = false;
+    let type = this.type? this.type:this.staff.type
+    const postData = {
+      file: file[0].file,
+      to: this.to,
+      isBase64: true,
+      type: type.toLowerCase()
+    };
+    if(this.id)
+    postData['id'] = this.id
+
+    console.log('sendFile()', postData);
+
+    this.dooleService.post('message', postData).subscribe(
+        async (data) => {
+          this.txtChat.clearInput();
+          this.btnEnabled = true;
+          this.btnImageEnabled = true;
+
+          this.uploadFileV2.enableButtonAddFile = false
+          this.uploadFileV2.files = [];
+        },
+        (error) => {
+          // Called when error
+          console.log('error: ', error);
+          throw new HttpErrorResponse(error);
+        },
+        () => {
+          // Called when operation is complete (both success and error)
+          // loading.dismiss();
+        });
+  }
+
 }

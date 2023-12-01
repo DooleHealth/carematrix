@@ -1,0 +1,31 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios" color="transparent">
+    <!-- <ion-title>{{ title}}</ion-title> -->
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon class="icon-arrow" text="" icon="assets/icons/hpc/icon_cerrar.svg"></ion-icon>
+      </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="pdf-container">
+    <pdf-viewer
+      [src]="this.pdfSrc"
+      [rotation]="0"
+      [original-size]="false"
+      [show-all]="true"
+      [fit-to-page]="false"
+      [zoom]="1"
+      [zoom-scale]="'page-width'"
+      [stick-to-page]="false"
+      [render-text]="true"
+      [external-link-target]="'blank'"
+      [autoresize]="true"
+      [show-borders]="false"
+      style="width: 100%; height: 600px;"
+    ></pdf-viewer>
+  </div>
+
+</ion-content>

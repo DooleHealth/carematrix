@@ -3,14 +3,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Camera, CameraSource, CameraResultType} from '@capacitor/camera';
+import { CameraSource,CameraResultType, Camera } from '@capacitor/camera';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-file-upload',
@@ -20,21 +22,23 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class FileUploadComponent implements OnInit {
   @Input('media') media: any = [];
   @Input('disableNames') disableNames: boolean;
-  constructor(private dooleService: DooleService, private platform: Platform, private iab: InAppBrowser, private alertCtrl : AlertController, private translate: TranslateService,private actionSheetCtrl: ActionSheetController,private notification: NotificationService, private chooser: Chooser, private sanitizer: DomSanitizer, private datepipe: DatePipe,) { }
+  constructor(private dooleService: DooleService, private platform: Platform, private iab: InAppBrowser, private modalCtrl: ModalController, private alertController : AlertController, private translate: TranslateService,private actionSheetCtrl: ActionSheetController,private notification: NotificationService, private chooser: Chooser, private sanitizer: DomSanitizer, private datepipe: DatePipe,) { }
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   @Input('text') text: string;
   @Input('form') form: FormGroup;
-  @Input('files') files:  Array<{ name: string, file: string, type: string }> = [];
+  @Input('files') files:  Array<{ name: string, file: string, type: string, url:string }> = [];
+  @Input('length') file_length: number = 6;
   @Output() numFilesChange: EventEmitter<number> = new EventEmitter<number>();
   file64: SafeResourceUrl;
   enableButtonAddFile = false
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("[FileUploadComponent] ngOnInit() media ", this.media.length);
+  }
 
-  async checkPermission(){
+  checkPermission(){
     return Camera.checkPermissions().then(result =>{
-      console.log('[FileUploadComponent] checkPermission(): ', result.camera);
-      let isPermissed = result.camera
-      if(isPermissed == 'granted')
+      console.log('[FileUploadComponent] checkPermission(): ', result?.camera);
+      if( result?.camera == 'granted')
         this.getSource()
       else
         this.getPermission();
@@ -45,8 +49,8 @@ export class FileUploadComponent implements OnInit {
 
   getPermission(){
     Camera.requestPermissions().then((response) => {
-      console.log('Camera permission response: ', response.camera);
-      if (response.camera == 'granted') {
+      console.log('Camera permission response: ', response?.camera);
+      if (response?.camera == 'granted') {
         console.log('Granted permissions for camera');
         this.getSource()
         
@@ -63,11 +67,17 @@ export class FileUploadComponent implements OnInit {
     //  this.images.push(newImage);
     //});
   }
+
   async selectSource() {
     this.checkPermission()
   }
   
   async getSource() {
+
+    if(this.media.length >= this.file_length){
+      this.presentAlert();
+      return
+    }
     const buttons = [
       {
         text: this.translate.instant('documents_add.camera'),
@@ -105,6 +115,7 @@ export class FileUploadComponent implements OnInit {
     }
 
     const actionSheet = await this.actionSheetCtrl.create({
+      mode: 'ios',
       buttons
     });
     await actionSheet.present();
@@ -124,13 +135,16 @@ export class FileUploadComponent implements OnInit {
   async addFile() {
     this.chooser.getFile().then(async file => {
       if (file) {
-        //console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
+        console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
         if(this.disableNames){
-          this.files.push({ name: file.name, file: file.path, type: file.mimeType })
+          if(this.files.length >= this.file_length){
+            this.files.pop()
+          }
+          this.files.push({ name: file.name, file: file.dataURI, type: file.mimeType, url: null })
           this.numFilesChange.emit(this.files.length)
         }
         else{
-          this.presentPrompt(file.path, file.name, file.mimeType)
+          this.presentPrompt(file.dataURI, file.name, file.mimeType)
         }
       }
     }).catch((error: any) => {
@@ -139,7 +153,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   async addImage(source: CameraSource) {
-    const image = await Camera.getPhoto({
+    const imageA = await Camera.getPhoto({
       quality: 60,
       allowEditing: false,
       resultType: CameraResultType.Base64,
@@ -147,13 +161,16 @@ export class FileUploadComponent implements OnInit {
     }).catch((e) => {
       console.log('cancelled');
     });
-
+    var image = imageA
     if (image) {
       var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
-      //console.log("[FileUploadComponent] addImage()", JSON.stringify(image));
+      console.log("[FileUploadComponent] addImage()", JSON.stringify(image));
       let img = `data:image/${image.format};base64,`+image.base64String
       if(this.disableNames){
-        this.files.push({ name: filename, file: img, type: image.format })
+        if(this.files.length >= this.file_length){
+          this.files.pop()
+        }
+        this.files.push({ name: filename, file: img, type: image.format, url: null })
         this.numFilesChange.emit(this.files.length)
       }
       else
@@ -163,7 +180,7 @@ export class FileUploadComponent implements OnInit {
 
   transformDate(date, format) {
     return this.datepipe.transform(date, format);
-  } 
+  }
 
   async uploadFileFromBrowser(event: EventTarget) {
     const eventObj: any = event as any;
@@ -178,8 +195,10 @@ export class FileUploadComponent implements OnInit {
     if(file){
       const result = await toBase64(file).catch(e => Error(e));
       var base64result = result as string;
-      console.log("[FileUploadComponent] uploadFileFromBrowser()", JSON.stringify(base64result));
-      this.files.push({ name: file.name, file: base64result, type: file.type })
+      if(this.files.length >= this.file_length){
+        this.files.pop()
+      }
+      this.files.push({ name: file.name, file: base64result, type: file.type, url: null })
       this.numFilesChange.emit(this.files.length)
     }
   }
@@ -189,7 +208,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   removeFile(name: string) {
-    console.log("removeFile: ", name);
+    //console.log("removeFile: ", name);
     this.files.forEach((element, index) => {
       if (element.name == name){
         this.files.splice(index, 1);
@@ -204,12 +223,20 @@ export class FileUploadComponent implements OnInit {
   }
 
   openFile(file){
-    //console.log("openFile", file);
+    console.log("openFile", file);
+    console.log("openFile", file.file);
     let type : string = file.type;
-    if(type.includes('image') || type.includes('jpeg') || type.includes('jpg') || type.includes('png')){
+
+    const formatStartIndex = file.file.indexOf('/') + 1;
+    const formatEndIndex = file.file.indexOf(';');
+    const imageFormat = file.file.substring(formatStartIndex, formatEndIndex);
+
+    console.log(imageFormat)
+    if(imageFormat.includes('image') || imageFormat.includes('jpeg') || imageFormat.includes('jpg') || imageFormat.includes('png')){
       var image = new Image();
-      image.src = "data:"+ file.type + ";base64," + file.file;
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+      //image.src = "data:"+ file.type + ";base64," + file.file;
+      image.src = file.file;      
+        if (Capacitor.isNativePlatform()) {
         var pageContent = '<html><head></head><body>'+ image.outerHTML +'</body></html>';
         var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
         this.openWithInAppBrowser(pageContentUrl);
@@ -218,15 +245,17 @@ export class FileUploadComponent implements OnInit {
         w.document.write(image.outerHTML);
       }
 
-    }else if(type.includes('pdf')){
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    }else if(imageFormat.includes('pdf')){
+      
+        if (Capacitor.isNativePlatform()) {
         var pageContent = "<html><head></head><body><iframe width='100%' height='100%' src='data:application/pdf;base64, " + file.file + "'></iframe></body></html>";
         var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-        this.openWithInAppBrowser(pageContentUrl);
+        //this.openWithInAppBrowser(pageContentUrl);
+        this.actionOpenFiles(file.file)
 
       }else{
         let pdfWindow = window.open("")
-        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(file.file) + "'></iframe>")
+        pdfWindow.document.write("<iframe width='100%' height='100%' src='" + encodeURI(file.file) + "'></iframe>")
       }
     }else
       this.presentAlert();
@@ -259,10 +288,12 @@ export class FileUploadComponent implements OnInit {
   }
 
   async presentAlert() {
-    const alert = await this.alertCtrl.create({
-      cssClass: 'my-custom-class',
-      message: this.translate.instant("videocall.file_type_not supported"),
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      message: this.translate.instant("documents_add.alert_media", {num: this.file_length}),
       buttons: [{
+        cssClass: 'primary',
         text: 'Ok',
       }]
     });
@@ -271,17 +302,15 @@ export class FileUploadComponent implements OnInit {
   }
 
   async presentPrompt(file, filename, type) {
-    const alert = await this.alertCtrl.create({
+    const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
+      //mode: 'ios',
       subHeader: this.translate.instant('documents_add.input_file_name'),
       inputs: [
         {
           name: 'filename',
           type: 'text',
           placeholder: this.translate.instant('documents_add.name'),
-          attributes: {
-            maxlength: 30
-          }
         }
       ],
         buttons: [
@@ -290,17 +319,24 @@ export class FileUploadComponent implements OnInit {
             role: 'cancel',
             cssClass: 'secondary',
             handler: (blah) => {
-              console.log('[FileUploadComponent] AlertConfirm Cancel');
-              this.files.push({ name: filename, file: file, type: type })
+              if(this.files.length >= this.file_length){
+                this.files.pop()
+              }
+              this.files.push({ name: filename, file: file, type: type, url: null })
               this.numFilesChange.emit(this.files.length)
             }
           }, {
             text: this.translate.instant("button.accept"),
+            role: 'confirm',
+            cssClass: 'primary',
             handler: (data) => {
-              console.log('[FileUploadComponent] AlertConfirm Okay', data.filename );
+              //console.log('[FileUploadComponent] AlertConfirm Okay', data.filename );
               if (data.filename && data.filename !== '') {
                  let name = data.filename +'.'+filename.split('.').pop()
-                 this.files.push({ name: name, file: file, type: type })
+                 if(this.files.length >= this.file_length){
+                  this.files.pop()
+                }
+                 this.files.push({ name: name, file: file, type: type, url: null })
                  this.numFilesChange.emit(this.files.length)
               } else {
                 return false;
@@ -336,7 +372,7 @@ export class FileUploadComponent implements OnInit {
       'name': n
     }
 
-    console.log("[FileUploadComponent] postAPIAddMedia:", params);
+    //console.log("[FileUploadComponent] postAPIAddMedia:", params);
     return this.dooleService.postAPIAddMedia(params)
 
   }
@@ -358,11 +394,27 @@ export class FileUploadComponent implements OnInit {
 
   }
 
+  async actionOpenFiles(pdf){
+      console.log('[StudiesPage] actionOpenFiles()',pdf);
+      const modal = await this.modalCtrl.create({
+        component:  PdfViewerComponent,
+        componentProps: { pdfSrc: pdf},
+        cssClass: "modal-custom-class"
+      });
+    
+      modal.onDidDismiss()
+        .then((result) => {      
+        });
+    
+        await modal.present(); 
+
+  }
+
 
   deleteMediaFile(m){
     this.dooleService.deleteFile(m.id).subscribe(
       async (data) => {
-        console.log("data:", data);
+        //console.log("data:", data);
         if(data)
           this.notification.displayToastSuccessful()
         else{
@@ -382,8 +434,9 @@ export class FileUploadComponent implements OnInit {
 
   async presentAlertConfirm(mediaFile, index?, isNewFile?) {
     let message = this.translate.instant("documents_add.delete_media_file")
-    const alert = await this.alertCtrl.create({
+    const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
+      //mode: 'ios',
       //header: this.translate.instant("alert.header_confirmation"),
       message: message,
       buttons: [
@@ -392,12 +445,14 @@ export class FileUploadComponent implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('[FileUploadComponent] AlertConfirm Cancel');
+            //console.log('[FileUploadComponent] AlertConfirm Cancel');
           }
         }, {
-          text: this.translate.instant("alert.button_ok"),
+          text: this.translate.instant("button.continue"),
+          role: 'confirm',
+          cssClass: 'primary',
           handler: () => {
-            console.log('[FileUploadComponent] AlertConfirm Okay');
+            //console.log('[FileUploadComponent] AlertConfirm Okay');
               if(isNewFile){
                 this.files.splice(index,1)
                 this.numFilesChange.emit(this.files.length)
