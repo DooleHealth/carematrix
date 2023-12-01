@@ -29,7 +29,8 @@ export class GoalsPage implements OnInit {
 
   getGoalImformation(){
     this.isLoading = true
-    this.dooleService.getAPI_SCP_goals().subscribe(
+    this.dooleService.getAPIgoals().subscribe(
+    //this.dooleService.getAPI_SCP_goals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
         this.listGoal = this.lifeStyle.adapterForView(

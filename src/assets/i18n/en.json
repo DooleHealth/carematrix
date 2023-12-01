@@ -947,9 +947,13 @@
     "informed_consent": "Informed Consent",
     "new_scp_notification_title": "New goals have been added to your Shared Care Plan",
     "new_scp_notification_msg": "Please review the changes to approve or reject",
-
     "new_scp_alert_cancel": "Close",
-    "new_scp_alert_review": "Review"
+    "new_scp_alert_review": "Review",
+    "goal_state":{
+      "approved": "Aprovado",
+      "rejected": "Rechazado",
+      "pending": "Pendiente"
+    }
 
   },
   "exercices":{

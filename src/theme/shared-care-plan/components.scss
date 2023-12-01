@@ -3,7 +3,11 @@
     height:85%;
     background:var(--malva);
     margin-left:2%;
-  }
+}
+
+.verticalAlignItem{
+  align-items: center;
+}
 
   a {
     color:var(--blue);

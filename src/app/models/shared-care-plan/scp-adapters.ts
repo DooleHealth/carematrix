@@ -58,9 +58,8 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
     percentage: string | number;
     state?: string | boolean;
     boolean_state?: boolean;
-    icon: string;
+    icon?: string;
     title: string;
-    description: string;
     type: string;
     is_new_content: boolean;
     routerlink?: string;
@@ -68,9 +67,27 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
     constructor(){
         super();
     }
+
+    adapterForView(list: any[], title: string, date: string, type: string, aderence:string, state:string, is_new_content: string){
+        let newList: SharedCarePlanGoal[] = []
+            list.forEach((goal) => {
+                let data: SharedCarePlanGoal = {
+                    id: goal?.id,
+                    title: goal[title],
+                    date: goal[date],
+                    type: goal[type],
+                    state: goal[state],
+                    percentage: goal[aderence],
+                    routerlink: this.routerlink,
+                    is_new_content: goal[is_new_content],
+                }                 
+                newList.push(data)
+            });
+            return newList
+         
+    }
     
 }
-
 
 // type Class = {
 //     new (...args: any[]): unknown

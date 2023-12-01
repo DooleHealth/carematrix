@@ -1,3 +1,4 @@
+import { Type } from "@angular/core";
 import { NotificationsType } from "../shared/classes/notification-options";
 
 export enum ContentType {
@@ -40,12 +41,12 @@ declare const enum ContentTypeDescription {
 }
 
 export interface ContentComponent {
-    icon: string;
+    icon?: string;
     title: string;
-    description: string;
+    description?: string;
     type: string;
     state?: string | boolean;
-    routerlink?: string;
+    routerlink?: string | any
 }
 export interface SharedCarePlan extends ContentComponent {
     boolean_state?: boolean;
@@ -65,12 +66,76 @@ export const ListContentType: SCPContentType = [
     {icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
 ]
 
+/**
+ * Goals of Shared care Plan
+ */
+
+export enum GoalStateName {
+    APPROVED = 'shared_care_plan.goal_state.approved',
+    REJECTED = 'shared_care_plan.goal_state.rejected',
+    PENDING = 'shared_care_plan.goal_state.pending'
+}
+
+export enum GoalStateColor {
+    APPROVED = '#2ECC71',
+    REJECTED = '#E81111',
+    PENDING = '#FF8412'
+}
+
+export enum GoalStateIcons {
+    APPROVED = 'assets/icons/shared-care-plan/approved-icon.svg',
+    REJECTED = 'assets/icons/shared-care-plan/rejected-icon.svg',
+    PENDING = 'assets/icons/shared-care-plan/pending-icon.svg',
+}
+
+export enum GoalStateType {
+    APPROVED = 'approved',
+    REJECTED = 'rejected',
+    PENDING = 'pending'
+}
+
+export class GoalState {
+    icon: string;
+    color: string;
+    name: string; 
+    state?: string;
+
+    constructor(state){
+        this.state = state;
+        this.setGoalState(state)
+    }
+
+    setGoalState(state){
+        switch (state) {
+            case GoalStateType.APPROVED:
+                this.name = GoalStateName.APPROVED
+                this.color = GoalStateColor.APPROVED
+                this.icon = GoalStateIcons.APPROVED
+                break;
+            case GoalStateType.REJECTED:
+                this.name = GoalStateName.REJECTED
+                this.color = GoalStateColor.REJECTED
+                this.icon = GoalStateIcons.REJECTED
+                break;
+            default:
+                this.name = GoalStateName.PENDING
+                this.color = GoalStateColor.PENDING
+                this.icon = GoalStateIcons.PENDING
+                break;
+        }
+    }
+}
+
 export interface SharedCarePlanGoal extends SharedCarePlan  {
     id?: string | number;
     date: string;
     percentage: string | number;
     is_new_content: boolean;
 }
+
+/**
+ * LifeStyle of Shared care Plan
+ */
 export interface SharedCarePlanLifeStyle {
     img?: string,
     textHeader?: string,
@@ -92,7 +157,7 @@ export class LifeStyle implements SharedCarePlanLifeStyle{
     title: string;
     type: string;
     id?: string | number;
-    routerlink?: string | Object;  
+    routerlink?: string | any;  
 }
 
 export interface SharedCarePlanPrescribedApps {

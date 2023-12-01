@@ -925,7 +925,16 @@
       "title": "Plan de cuidados compartido",
       "description": "<p>Este es su <b>Plan de cuidados compartido</b></p>",
       "monitoring": "Monitorización",
-      "medical_procedure": "Procediments mèdics",
-      "informed_consent": "Consentiment Informat"
+      "medical_procedure": "Procedimentos médicos",
+      "informed_consent": "Consentimento Informado",
+      "new_scp_notification_title": "Se agregaron nuevos objetivos a su Plan de Atención Compartida",
+      "new_scp_notification_msg": "Por favor revise los cambios para aprobarlos o rechazarlos.",
+      "new_scp_alert_cancel": "Cerrar",
+      "new_scp_alert_review": "Revisar",
+      "goal_state":{
+        "approved": "Aprovado",
+        "rejected": "Rechazado",
+        "pending": "Pendiente"
+      }
     }
 }
