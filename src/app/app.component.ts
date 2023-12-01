@@ -431,6 +431,14 @@ export class AppComponent implements OnInit {
 
 
     switch (data.action) {
+
+      case "SHARED":
+        this._zone.run(() => {
+          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true} });
+        });
+
+       break;
+
       case "MESSAGE":
         let staff;
         // Different payloads for ios and android
