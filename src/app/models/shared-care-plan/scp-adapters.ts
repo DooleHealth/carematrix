@@ -71,14 +71,17 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
     adapterForView(list: any[], title: string, date: string, type: string, aderence:string, state:string, is_new_content: string){
         let newList: SharedCarePlanGoal[] = []
             list.forEach((goal) => {
+                const titleA = goal[title]
+                const percentage = goal[aderence]
+                //routerlink: this.routerlink,
                 let data: SharedCarePlanGoal = {
-                    id: goal?.id,
-                    title: goal[title],
-                    date: goal[date],
-                    type: goal[type],
-                    state: goal[state],
-                    percentage: goal[aderence],
-                    routerlink: this.routerlink,
+                    id: goal?.id, //Esto es el id de plan medicación
+                    title: goal[title], //Si es tipo MedicationPlan siempre va a ser drug.name
+                    date: goal[date], //Cúal es la fecha
+                    type: goal[type], //
+                    state: goal[state], //DEbería estar siempre en ingles o un nuúmero
+                    percentage: percentage?.total_percentage? percentage.total_percentage:0,
+
                     is_new_content: goal[is_new_content],
                 }                 
                 newList.push(data)
