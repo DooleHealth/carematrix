@@ -1,6 +1,4 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
@@ -16,15 +14,12 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items= [];
-  pushNotification:any = history.state.data;
   //itemsBackup= []
   //advices = []
-  //date = Date.now()
   isLoading = false
   private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
-    private datePipe: DatePipe,
     public role: RolesService
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "advices-detail")
@@ -34,17 +29,12 @@ export class AdvicesPage implements OnInit {
     this.getAdvicesList()
   }
 
-
-  transformDate(date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
-
   adapterForView(list){
     this.items = this.lifeStyle.adapterForView(
       list, // JSON
       'image',  //img
-      'name'
-    )   //title
+      'name'  //title
+    )  
   }
 
 // ADVICES
