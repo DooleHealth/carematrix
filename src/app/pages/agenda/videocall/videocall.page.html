@@ -1,9 +1,40 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-title>videocall</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="backButton()" icon="close" text=""></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>videocall</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content mode="md">
+
+  
+  <ion-grid style="text-align: center;" id="gridConectar" *ngIf="!connected && !activateIFrame">
+    <ion-row>
+      <ion-col size="12">
+        <img class="image-container" src="assets/icons/Video.svg" />
+        <br><br>
+        <h2 class="ion-margin-top">{{'notifications.videocall' | translate}}</h2>
+
+        <br>
+        <ion-button mode="md" expand="block" *ngIf="!connected" ion-button icon-left id="btnConectar"(click)="startVideocall()" [disabled]="connecting">
+          <ion-icon slot="start" name="videocam" style="color: white;"></ion-icon>
+          {{btnConectarStr}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <br>
+  </ion-grid>
+
+  <!-- <video *ngIf="activateIFrame" autoplay loop muted playsinline preload="metadata" webkit-playsinline="webkit-playsinline">
+    <source src="https://www.youtube.com/watch?v=o6WJqIW_d2M" type="video/mp4"/>
+</video> -->
+
+<!-- <video *ngIf="activateIFrame" autoplay playsinline 
+class="OT_video-element" style="transform: rotate(0deg);">Sorry, Web RTC is not available in your browser</video> -->
+
+  <iframe *ngIf="activateIFrame" id="iframeVideocall" [src]="this.safeUrl" allow="camera; microphone" scrolling="no" width="100%" height="100%" frameborder="0"></iframe>
 
 </ion-content>
+

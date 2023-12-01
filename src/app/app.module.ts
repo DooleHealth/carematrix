@@ -55,6 +55,7 @@ import { BLE } from "@awesome-cordova-plugins/ble/ngx";
 import { Market } from "@awesome-cordova-plugins/market/ngx";
 import { Device } from "@awesome-cordova-plugins/device/ngx";
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { VideocallPageModule } from "./pages/agenda/videocall/videocall.module";
 
 registerLocaleData(localeEn);
 registerLocaleData(localeEs);
@@ -87,7 +88,8 @@ export function createTranslateLoader(http: HttpClient) {
     AngularFireStorageModule,
     TestTypePageModule,
     ReminderAddPageModule,
-    NgCircleProgressModule
+    NgCircleProgressModule,
+    VideocallPageModule
   ],
   providers: [
     Ng2SearchPipeModule,

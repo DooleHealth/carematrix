@@ -1,0 +1,240 @@
+.image-container {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    //height: 100%;
+    margin-top: 10%;
+    width: 60%;
+    height: 40%;
+}
+
+.button-reject{
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#publisher {
+    position: absolute !important;
+    width: 580px !important;
+    height: 320px !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    z-index: 100 !important;
+    border: 3px solid white !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
+}
+
+// iframe::slotted::-webkit-media-controls-container{
+//   display:none !important;
+//   visibility: hidden!important;
+//   opacity: 0 !important;
+//  -webkit-appearance: none !important;
+// }
+
+// :host::shadow::-webkit-media-controls-container{
+//   display:none !important;
+//   visibility: hidden!important;
+//   opacity: 0 !important;
+//  -webkit-appearance: none !important;
+// }
+
+/* This used to work for the parent element of button divs */
+/* But it does not work with newer browsers, the below doesn't hide the play button parent div */
+
+// *::-webkit-media-controls-panel {
+//   display: none!important;
+//   -webkit-appearance: none;
+// }
+
+// /* Old shadow dom for play button */
+
+// *::-webkit-media-controls-play-button {
+//   display: none!important;
+//   -webkit-appearance: none;
+// }
+
+// /* New shadow dom for play button */
+
+// /* This one works! */
+
+// *::-webkit-media-controls-start-playback-button {
+//   display: none!important;
+//   -webkit-appearance: none;
+// }
+
+// .flex-container {
+//             display: flex;
+//             flex-wrap: wrap;
+//             min-height: 75vh;
+//         }
+
+// .flex-item {
+//     width: 50%;
+//     background-color:red;
+// }
+
+// .fit {
+//     width: 100%;
+//     height: 100vh;
+// }
+
+
+
+// .selected{
+//     border:none;
+//     border-radius: 10px;
+//     background-color: #000!important;
+//     color: #fff;
+// }
+
+// .selected:hover{
+//     background-color: none!important;
+// }
+
+
+// .tooltip {
+//     color: #000;
+// }
+
+ 
+
+//   video {
+//       width: 100% !important;
+//       height: auto !important;
+//   }
+
+
+
+//   #layoutContainer {
+//       position: relative;
+//       margin-top: 0px;
+//       top: -50px;
+//       left: 0;
+//       right: 0;
+//       bottom: 0;
+//       width: 100%;
+//       /*height:360px;*/
+//       text-align: center;
+//       overflow: visible !important;
+//       height: 90vh !important;
+//   }
+
+
+
+
+
+//   .OT_publisher {
+//       position: absolute !important;
+//       width: 100px !important;
+//       height: 100px !important;
+//       top: 73vh !important;
+//       z-index: 100 !important;
+//       border: 3px solid white !important;
+//       border-radius: 10px;
+//   }
+
+
+
+//   .OT_publisher video {
+//       height: 100% !important;
+//   }
+
+
+
+//   .OT_subscriber {
+//       position: absolute !important;
+//       width: 100% !important;
+//       height: 100vh !important;
+//       top: 0vh !important;
+//       left: 0px !important;
+//       /*top: 73vh!important;
+//       z-index: 100 !important;
+//       border: 3px solid white!important;
+//       border-radius: 10px;*/
+//   }
+
+
+
+//   .OT_subscriber video {
+//       height: 100% !important;
+//   }
+
+
+
+// #time {
+//    margin: 10px;
+// }
+
+ 
+
+//   .timer-value {
+//       font-size: 36px;
+//       margin-bottom: 8px;
+//       color: black;
+//       border-radius: 18px;
+//       padding-bottom: 12px;
+//       background-color: rgba(0, 0, 0, 0.15);
+//       text-align: center;
+//   }
+
+
+
+//   #currentConnections {
+//       text-align: center;
+//   }
+
+
+
+//   #form {
+//   width: 250px;
+//   margin: 0 auto;
+//   height: 50px;
+//   }
+
+
+
+//   #form p {
+//   text-align: center;
+//   }
+
+
+
+//   #form label {
+//   font-size: 20px;
+//   }
+
+
+
+//   input[type="radio"] {
+//   display: none;
+//   }
+
+
+
+//   label {
+//   color: grey;
+//   font-size: 40px;
+//   cursor: pointer;
+//   }
+
+
+
+//   .clasification {
+//   direction: rtl;
+//   unicode-bidi: bidi-override;
+//   text-align: center;
+//   }
+
+
+
+//   label:hover,
+//   label:hover ~ label {
+//   color: orange;
+//   }
+
+
+
+//   input[type="radio"]:checked ~ label {
+//   color: orange;
+//   }

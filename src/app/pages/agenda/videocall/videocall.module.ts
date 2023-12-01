@@ -7,14 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { VideocallPageRoutingModule } from './videocall-routing.module';
 
 import { VideocallPage } from './videocall.page';
+import { TranslateModule } from '@ngx-translate/core';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    VideocallPageRoutingModule
+    VideocallPageRoutingModule,
+    TranslateModule,
   ],
-  declarations: [VideocallPage]
+  declarations: [VideocallPage],
+  providers: [ InAppBrowser],
 })
 export class VideocallPageModule {}

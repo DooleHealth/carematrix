@@ -14,11 +14,13 @@
 </ion-header>
 
 <ion-content fullscreen class="whiteBackground">
-  <div class="whiteBackground">
-    <!-- floating action buttom -->
 
-    <ion-fab  *ngIf="this.event?.online === 1 && this.tokboxSession && event?.origin !== 1" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="this.startVideoCall()">
+  
+
+
+  <div class="whiteBackground" *ngIf="!this.isLoading">
+    <ion-fab  *ngIf="this.event?.online === 1" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button [disabled]="!this.enableVideocallButton" (click)="this.startDooleVideocall()" >
         <ion-icon name="videocam-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -114,7 +116,7 @@
     </div>
   <ng-template #buttons>
     <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
-      <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
+      <ion-button *ngIf="event?.origin === 1 && !this.isEditable" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_appointment' | translate}}</ion-button>
 
       <ion-button *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">

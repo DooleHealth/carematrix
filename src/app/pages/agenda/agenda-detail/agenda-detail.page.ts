@@ -30,7 +30,7 @@ export class AgendaDetailPage implements OnInit {
   event: any = {}
   id: any = {}
   coordenadas: any = {}
-  tokboxSession: any;
+  tokboxSession: any //= {};
   disabled : string;
   isSaving: boolean;
   isLoading: boolean = true;
@@ -38,6 +38,8 @@ export class AgendaDetailPage implements OnInit {
   public lon: string;
   cord: any = {}
   enableReminder = false;
+  enableVideocallButton = false;
+  isEditable: boolean = true;
 
   constructor(
     private router: Router,
@@ -85,10 +87,20 @@ export class AgendaDetailPage implements OnInit {
           this.lat = this.cord?.latitude
           this.opentokService.agendaId$ = this.event?.id;
           console.log(this.event);
-          let date = new Date(this.event.start_date_iso8601).toDateString()
-          let today = new Date().toDateString()
-          if(date !== today)
-          this.enableReminder = true
+          let startDate = new Date(this.event.start_date_iso8601)
+          let currentDate = new Date()
+
+          if(startDate !== currentDate && startDate.getTime() > currentDate.getTime()) {
+            this.enableReminder = true
+          }
+
+          this.enableVideocallButton = this.checkVideocallOnTime(startDate, currentDate);
+
+          let staff = this.event?.staff
+          if(staff?.length >0){
+            let edit  = staff?.find(item => (item?.id) )
+            this.isEditable = edit? true:false
+          }
         }
 
        },(err) => {
@@ -98,6 +110,24 @@ export class AgendaDetailPage implements OnInit {
       },()=>{
         this.isLoading = false;
       });
+  }
+
+
+  checkVideocallOnTime(currentDate: Date, todayDate: Date): boolean {
+    // If currentDate is greater than todayDate
+    if (currentDate > todayDate) {
+      // Check if it's the same day and the time difference is less than 15 minutes
+      const isSameDay = currentDate.getDate() === todayDate.getDate();
+      const timeDifference = Math.abs(currentDate.getTime() - todayDate.getTime()) / (1000 * 60); // in minutes
+      return isSameDay && timeDifference < 15;
+    } else if (currentDate < todayDate) {
+      // Check if currentDate + 1 hour is less than todayDate
+      const oneHourLater = new Date(currentDate.getTime() + 60 * 60 * 1000); // 1 hour later
+      return oneHourLater > todayDate;
+    }
+  
+    // Default case, return false
+    return false;
   }
 
   getVideocallToken(){
@@ -233,18 +263,8 @@ export class AgendaDetailPage implements OnInit {
     window.open(media.temporaryUrl, "");
   }
 
-  async startDooleVideocall(){
-
-    const modal = await this.modalCtrl.create({
-      component: VideoComponent,
-      componentProps: { },
-      cssClass: "modal-custom-class"
-    });
-
-    modal.onDidDismiss().then((result) => {
-    });
-
-    await modal.present();
+  public startDooleVideocall(){
+    this.router.navigate(['/agenda/videocall'], { state: { id: this.id } });
 
   }
 
@@ -256,7 +276,6 @@ export class AgendaDetailPage implements OnInit {
     var msg = `${header} ${title} ${date} ${description}`;
     this.socialSharing.share(msg, null, null, null);
   }
-
   addCalendar(agenda){
 
     var startDate = new Date(agenda.start_date_iso8601);
@@ -352,7 +371,6 @@ export class AgendaDetailPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: VideoComponent,
       componentProps: {},
-      cssClass: "modal-custom-class"
     });
 
     await modal.present();
@@ -364,8 +382,7 @@ export class AgendaDetailPage implements OnInit {
 
     const modal = await this.modalCtrl.create({
       component: VideocallIframePage,
-      componentProps: {"id": this.opentokService.agendaId$},
-      cssClass: "modal-custom-class"
+      componentProps: {"id": this.opentokService.agendaId$}
     });
 
     return await modal.present();
