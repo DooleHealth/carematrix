@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
-import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
+import { SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { NotificationsType } from 'src/app/shared/classes/notification-options';
 
@@ -15,12 +15,12 @@ export class GoalsPage implements OnInit {
   listGoal: any[] = []
   nameGoal: string = ContentTypeTranslatedName.Goals
   iconGoals = ContentTypeIcons.Goals
-  public lifeStyle:LifeStyle
+  public scpGoals:SharedCarePlanGoals
   isLoading = false
   constructor(
     public router:Router,
     private dooleService: DooleService) { 
-      this.lifeStyle = new LifeStyle( NotificationsType.GOALS, "/activity-goal")
+      this.scpGoals = new SharedCarePlanGoals()
     }
 
   ngOnInit() {
@@ -28,16 +28,21 @@ export class GoalsPage implements OnInit {
   }
 
   getGoalImformation(){
+    this.listGoal = []
     this.isLoading = true
-    this.dooleService.getAPIgoals().subscribe(
-    //this.dooleService.getAPI_SCP_goals().subscribe(
+    //this.dooleService.getAPIgoals().subscribe(
+    this.dooleService.getAPI_SCP_goals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
-        this.listGoal = this.lifeStyle.adapterForView(
-          res.goals, // JSON
-          'cover',  //img
-          'name')   //title
+        this.listGoal = this.scpGoals.adapterForView(
+          res.goals, // JSON 
+          'name',  //title
+          'from_date',  //date
+          'content_type', //type
+          'is_new_content' //is_new_content
+          )  
         this.isLoading = false
+        console.log('[GoalsPage] getGoalImformation() goals', await this.listGoal);
        },(err) => { 
           console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false

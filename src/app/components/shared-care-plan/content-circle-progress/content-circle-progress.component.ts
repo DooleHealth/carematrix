@@ -20,21 +20,22 @@ export class ContentCircleProgressComponent  implements OnInit {
   innerProgreesColor = CircleProgressColors.MALVA_TINT;
   percent: number;
   state: GoalState;
-  constructor() { 
+  constructor() { }
+
+  ngOnInit() {
     this.setState()
     this.setPercent()
     this.getProgress()
+    console.log('[ContentCircleProgressComponent] ngOnInit()', this.content);
   }
-
-  ngOnInit() {}
 
   goTo(type){
     this.redirect.emit({type: type})
   }
 
   setState(){
-    //this.content.type = 'pending'
-    this.state = new GoalState('pending')
+    this.state = new GoalState(this.content?.state)
+    console.log('[ContentCircleProgressComponent] setState()', this.state);
   }
 
   getProgress(){

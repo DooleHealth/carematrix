@@ -2,8 +2,18 @@ import { Type } from "@angular/core";
 import { NotificationsType } from "../shared/classes/notification-options";
 
 export enum ContentType {
+    ADVICE = "App\\Advice",
+    AGENDA = "App\\Agenda",
+    DIET = "App\\Diet",
+    GAMES =  "App\\Game",
     MEDICATIONS_PLAN = "App\\MedicationPlan",
-    AGENDA = "App\\Agenda"
+    MESSAGE = "App\\Message",
+    NEW = "App\\News",
+    REMINDER = "App\\Reminder",
+    EXERCISE = "App\\Exercise",
+    PROCEDURE = "App\\MedicalProcedure",
+    DIAGNOSTIC_TEST = "App\\DiagnosticTest",
+    LEVEL_ACCOMPLISHMENT = "App\\LevelAccomplishment"
 }
 
 export enum ContentTypePath {
@@ -91,7 +101,9 @@ export enum GoalStateIcons {
 export enum GoalStateType {
     APPROVED = 'approved',
     REJECTED = 'rejected',
-    PENDING = 'pending'
+    PENDING = 'pending',
+    DECLINED = 'declined',
+    ACCEPTED = 'accepted'
 }
 
 export class GoalState {
@@ -107,12 +119,12 @@ export class GoalState {
 
     setGoalState(state){
         switch (state) {
-            case GoalStateType.APPROVED:
+            case GoalStateType.ACCEPTED || GoalStateType.APPROVED:
                 this.name = GoalStateName.APPROVED
                 this.color = GoalStateColor.APPROVED
                 this.icon = GoalStateIcons.APPROVED
                 break;
-            case GoalStateType.REJECTED:
+            case GoalStateType.DECLINED ||  GoalStateType.REJECTED:
                 this.name = GoalStateName.REJECTED
                 this.color = GoalStateColor.REJECTED
                 this.icon = GoalStateIcons.REJECTED
@@ -152,13 +164,13 @@ export interface medication extends SharedCarePlanLifeStyle{
     accepted?: boolean
 }
 
-export class LifeStyle implements SharedCarePlanLifeStyle{
-    img?: string;
-    title: string;
-    type: string;
-    id?: string | number;
-    routerlink?: string | any;  
-}
+// export class LifeStyle implements SharedCarePlanLifeStyle{
+//     img?: string;
+//     title: string;
+//     type: string;
+//     id?: string | number;
+//     routerlink?: string | any;  
+// }
 
 export interface SharedCarePlanPrescribedApps {
     id?: number,
