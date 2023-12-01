@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GoalState, SharedCarePlanGoal } from 'src/app/models/shared-care-plan';
 
 enum CircleProgressColors {
-  GREEN_SHADE = '#C7E596',
-  GREEN_TINT = '#27C100',
+  GREEN_SHADE = '#78C000', //'#C7E596',
+  GREEN_TINT = '#C7E596', // '#27C100',
   MALVA_SHADE = '#BA0186',
   MALVA_TINT = '#FFE0F5'
 }
@@ -40,8 +40,8 @@ export class ContentCircleProgressComponent  implements OnInit {
 
   getProgress(){
     if(this.percent == 100){
-      this.outerProgreesColor = CircleProgressColors.GREEN_SHADE;
-      this.innerProgreesColor = CircleProgressColors.GREEN_TINT;
+      this.outerProgreesColor =  CircleProgressColors.GREEN_SHADE;
+      this.innerProgreesColor =  CircleProgressColors.GREEN_SHADE;
     }
   }
 

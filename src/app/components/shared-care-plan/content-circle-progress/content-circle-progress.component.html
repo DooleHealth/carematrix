@@ -21,6 +21,7 @@
         <ion-col size="3" size-md="2.8" size-lg="2.4">
           <!-- https://bootsoon.github.io/ng-circle-progress/ -->
           <circle-progress
+          [clockwise]="true"
           [percent]="this.percent"
           [showSubtitle]="false"
           [radius]="30"
@@ -32,6 +33,7 @@
           [innerStrokeColor]="this.innerProgreesColor"
           [animation]="true"
           [animationDuration]="1000"
+          [maxPercent]="100"
           ></circle-progress>
         </ion-col>
         <ion-col size="0.8" size-md="0.5" size-lg="0.3">
