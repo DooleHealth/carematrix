@@ -1,4 +1,4 @@
-<ion-card class="cardProfile" (click)="goTo(content.type)"  [routerLink]="content.routerlink" [state]="{id: content?.id}" routerLinkActive='active-item' >
+<ion-card class="cardProfile" (click)="goTo(content.type)"  [routerLink]="getRouterLink(content?.type, content?.id)" [state]="{id: content?.id}" routerLinkActive='active-item' >
   <ion-item lines="none" mode="ios">
     <ion-thumbnail slot="start">
       <img [src]="content?.img" 
@@ -16,8 +16,11 @@
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
              
       </ion-row>
-      <ion-row class="textMon-For-Med">
-        <p style="color: #BA0186;"> {{'medication.dose' | translate}}  {{ content?.description }}</p>
+      <ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
+        <p style="color: #BA0186;">{{'form.scheduled' | translate}} {{content?.description}}</p>
+      </ion-row>
+      <ion-row *ngIf="content.type === 'medication'" class="textMon-For-Med">
+        <p style="color: #BA0186;">{{'medication.dose' | translate}} {{content?.description}}</p>
       </ion-row>
      
      

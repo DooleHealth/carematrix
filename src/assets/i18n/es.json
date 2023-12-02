@@ -630,7 +630,14 @@
         "placeholder_search":"Busca por nombre o código",
 
         "snapshot_medication":"Toma instantanea",
-        "medication_plan":"Plan de Medicación"
+        "medication_plan":"Plan de Medicación",
+        "from": "From",
+        "to": "To",
+        "dose":"Dosis : ",
+        "accepted_rejected": "¿Desea aprobar o rechazar este plan de medicación?",
+        "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
+        "button_accepted": "Aprobar",
+        "button_rejected": "Rechazar"
     },
     "button":{
       "detail": "Detalle",
@@ -792,7 +799,9 @@
       "shipping_method":"Tipo de envío: ",
       "go_back": "Volver al paso anterior",
       "add_address": "Añadir dirección",
-      "edit_address": "Editar dirección"
+      "edit_address": "Editar dirección",
+      "head_card_text": "Aquí encontrará información sobre los planes de medicación prescritos. Puede ponerse en contacto con su equipo médico si tiene alguna duda al respecto"
+
     },
     "recipe": {
       "header": "Recetas",
@@ -898,7 +907,9 @@
       "goal":{
         "title": "Atención",
         "message": "Este formulario <strong>solo puntúa</strong> en el caso de ser respondido <strong>correctamente</strong>"
-      }
+      },
+      "scheduled": "Programada : ",
+      "head_card_text": "Le enviaremos periódicamente formularios y escalas para mantenernos informados sobre su estado de salud, y se le avisará cuando llegue el momento de cumplimentarlos."
     },
     "answer_form":{
       "title": "Formularios completados",

@@ -916,7 +916,9 @@
     "goal":{
       "title": "Attention",
       "message": "This form <strong>only scores</strong> if it is answered <strong>correctly</strong>"
-    }
+    },
+    "scheduled": "Scheduled : ",
+    "head_card_text":"We will periodically send you forms and scales to keep us informed about your health status, and you will be notified when it is time to fill them in."
   },
   "answer_form":{
     "title": "Completed forms",
