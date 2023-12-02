@@ -463,13 +463,13 @@
     "diet": "Diet",
     "week_day": "Days of the week",
     "day": {
-      "day1": "Sunday",
-      "day2": "Monday",
-      "day3": "Tuesday",
-      "day4": "Wednesday",
-      "day5": "Thursday",
-      "day6": "Friday",
-      "day7": "Saturday"
+      "day1": "Monday",
+      "day2": "Tuesday",
+      "day3": "Wednesday",
+      "day4": "Thursday",
+      "day5": "Friday",
+      "day6": "Saturday",
+      "day7": "Sunday"
 
     },
     "frequency": {
