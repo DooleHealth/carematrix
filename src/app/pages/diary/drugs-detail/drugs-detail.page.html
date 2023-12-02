@@ -21,18 +21,20 @@
           <label>
             <span slot="title">{{ 'medication.field_from_date' | translate}}</span>
           </label>
+          <ion-datetime-button slot="end" datetime="from_date"></ion-datetime-button>
         </ion-item>
 
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime [locale]="this.locale" presentation="date" id="from_date" (ionChange)="this.isSubmittedFromDate = false"  formControlName="from_date"></ion-datetime>
+          </ng-template>
+        </ion-modal>
 
-
-        <!-- FIXME:<ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime> -->
-        <ion-datetime presentation="date" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date">
-          <!-- <span slot="title">{{ 'medication.field_from_date' | translate}}</span> -->
+        <!-- <ion-datetime presentation="date" [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date">
           <span slot="time-label">{{'reminder.field_start' | translate}}</span>
 
-        </ion-datetime>
+        </ion-datetime> -->
 
-        <!-- <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedFromDate = false" formControlName="from_date"></ion-datetime> -->
         <ion-note *ngIf="this.isSubmittedFromDate && this.form.get('from_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </div>
     </ion-card>
@@ -43,12 +45,19 @@
           <label>
             <span slot="title">{{ 'medication.field_to_date' | translate}}</span>
           </label>
+          <ion-datetime-button slot="end" datetime="to_date"></ion-datetime-button>
         </ion-item>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime [locale]="this.locale" presentation="date" id="to_date" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date"></ion-datetime>
+          </ng-template>
+        </ion-modal>
         <!-- FIXME:<ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'medication.placeholder_chosse' | translate}}" [pickerFormat]="this.dateService.getShortDateFormat()"></ion-datetime> -->
-        <ion-datetime presentation="date"   [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date">
+        <!-- <ion-datetime presentation="date"   [locale]="this.locale" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date"> -->
           <!-- <span slot="title">{{ 'medication.field_to_date' | translate}} </span> -->
-          <span slot="time-label">{{'reminder.field_end' | translate}}</span>
-        </ion-datetime>
+          <!-- <span slot="time-label">{{'reminder.field_end' | translate}}</span>
+        </ion-datetime> -->
 
         <!-- <ion-datetime [max]="maxYear" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date" ></ion-datetime> -->
         <ion-note *ngIf="this.isSubmittedToDate && this.form.get('to_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
@@ -69,16 +78,22 @@
       <div *ngIf="!isInstant">
         <ion-item>
         <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_take_time' | translate}}</ion-label>
+        <ion-datetime-button slot="end" datetime="time"></ion-datetime-button>
         </ion-item>
-        <ion-datetime #datetime presentation="time" [locale]="this.locale" displayFormat="HH:mm" formControlName="time"  (ionChange)="inputDate(); this.isSubmittedTimes = false">
+        <!-- <ion-datetime #datetime presentation="time" [locale]="this.locale" displayFormat="HH:mm" formControlName="time"  (ionChange)="inputDate(); this.isSubmittedTimes = false"> -->
 
-          <ion-buttons slot="buttons">
-            <ion-button></ion-button>
-            <ion-button></ion-button>
-            <ion-button color="primary" (click)="datetime.confirm()" slot="primary">{{'button.add' | translate}}</ion-button>
-          </ion-buttons>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime [locale]="this.locale" #datetime presentation="time" displayFormat="HH:mm" id="time" (ionChange)="inputDate(); this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
+              <!-- <ion-buttons slot="buttons">
+                <ion-button></ion-button>
+                <ion-button></ion-button>
+                <ion-button color="primary" (click)="datetime.confirm()" slot="primary">{{'button.add' | translate}}</ion-button>
+              </ion-buttons> -->
+            </ng-template>
+          </ion-modal>
 
-        </ion-datetime>
+        <!-- </ion-datetime> -->
         <ion-note *ngIf="this.isSubmittedTimes && this.times.length == 0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
       </div>
       <div *ngIf="!isInstant">
