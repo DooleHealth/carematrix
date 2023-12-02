@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: FormListPage
-  }
+  },
+  {
+    path: 'form',
+    loadChildren: () => import('../form/form.module').then( m => m.FormPageModule)
+  },
 ];
 
 @NgModule({

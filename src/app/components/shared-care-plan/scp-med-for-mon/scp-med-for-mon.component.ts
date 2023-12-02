@@ -11,14 +11,25 @@ import { SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-
 export class ScpMedForMonComponent  implements OnInit {
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
+  getrouter;
   constructor(
     public translate: TranslateService, public alertController: AlertController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+   // this.getrouter=this.getRouterLink()
+  }
 
   goTo(type: any){   
     this.redirect.emit({type: type})   
+}
+getRouterLink(type: string, id: any): any[] {
+  if (type === "App\\Form") {
+    return ['form', { id: id }];
+  } else {
+    // Puedes manejar otros casos aquí si es necesario
+    return this.content.routerlink; // Otra opción si no hay un enlace para otros tipos
+  }
 }
 
 async presentAlert() {
