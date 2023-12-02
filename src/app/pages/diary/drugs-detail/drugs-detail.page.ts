@@ -1,21 +1,27 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, IonModal, IonPopover, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
+enum StatusMedicationCreated {
+  CENTER = 0,
+  USER = 1
+}
 @Component({
   selector: 'app-drugs-detail',
   templateUrl: './drugs-detail.page.html',
   styleUrls: ['./drugs-detail.page.scss'],
 })
+
 export class DrugsDetailPage implements OnInit {
-  days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
+  days = [{day1:1, disabled:false}, {day2:1, disabled:false}, {day3:1, disabled:false}, {day4:1, disabled:false}, {day5:1, disabled:false}, {day6:1, disabled:false}, {day7:1,disabled:false}]
+  @ViewChild('datetimePopover') popover: IonPopover;
   @Input()drug : any
   @Input()id: any;
-  drugID = history.state?.id
+  drugID = history.state?.id; // 26;//   //23 //
   form: FormGroup;
   times = []
   isLoading = false
@@ -35,6 +41,7 @@ export class DrugsDetailPage implements OnInit {
   date:any;
   time:any;
   locale:string;
+  modifyMedicationPlans:boolean = true;
   constructor(
     private dooleService: DooleService,
     private fb: FormBuilder,
@@ -240,20 +247,26 @@ export class DrugsDetailPage implements OnInit {
     return date.toISOString();
   }
 
-  inputDate(){
-
+  inputTimes(event){
+    console.log('[DrugsDetailPage] this.time()', event);
     console.log('[DrugsDetailPage] this.time()', this.time);
     if(this.isSubmited)
     return
     let time = this.form.get('time').value
     console.log('[DrugsDetailPage] time()', time);
-    this.form.get('time').setValue('')
-    if(time !== '' ){
+    //this.form.get('time').setValue('')
+    if(time && time !== '' ){
       let date = new Date(time)
       let hour = this.transformHour(date)
+      console.log('[DrugsDetailPage] hour', hour);
       if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
       this.times.push(hour)
     }
+  }
+
+  closeTimeAlert(event){
+    console.log('[DrugsDetailPage] this.time()', event);
+    this.popover.dismiss()
   }
 
   checkTreatmentDates(){
@@ -327,30 +340,32 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan(){
-    const medication_plan_id = this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
-    console.log('[DrugsDetailPage] getMedicationPlan()');
+    const medication_plan_id = 26// this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
+    console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] getMedicationPlan()', await res);
         if(res.success){
           let medicationPlan = res.medicationPlan
+
+          this.modifyMedicationPlans =  this.getStateModifyMedication(medicationPlan?.origin)
+
           let from_date = medicationPlan.from_date
           this.form.get('from_date').setValue(this.formatDate(from_date))
+
           let to_date = medicationPlan.to_date
           this.form.get('to_date').setValue(this.formatDate(to_date))
-          if(medicationPlan?.alias) this.form.get('alias').setValue(medicationPlan.alias)
+          
+          if(medicationPlan?.alias) 
+          this.form.get('alias').setValue(medicationPlan.alias)
+
           if(medicationPlan.frequency) {
             this.form.get('frequency').setValue(medicationPlan?.frequency)
             this.frequencySeleted = medicationPlan.frequency
           }
 
-          this.form.get('day1').setValue( medicationPlan.day1 )
-          this.form.get('day2').setValue( medicationPlan.day2 )
-          this.form.get('day3').setValue( medicationPlan.day3 )
-          this.form.get('day4').setValue( medicationPlan.day4 )
-          this.form.get('day5').setValue( medicationPlan.day5 )
-          this.form.get('day6').setValue( medicationPlan.day6 )
-          this.form.get('day7').setValue( medicationPlan.day7 )
+
+          this.setDaysMedicationPlan(medicationPlan)
           this.gettingDay()
 
           let plan = medicationPlan.medication_plan_times
@@ -359,12 +374,23 @@ export class DrugsDetailPage implements OnInit {
             this.times.push(`${hour[0]}:${hour[1]}`)
           });
           this.isInit = false
+
         }
        },(err) => {
           console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err;
       });
+  }
+
+  setDaysMedicationPlan(medicationPlan:any){
+    for (let index = 1; index < 8; index++) {
+      this.form.get(`day${index}`).setValue( medicationPlan[`day${index}`] )   
+      if(this.modifyMedicationPlans === false)  {
+        if( medicationPlan[`day${index}`] === 0)
+        this.form.get(`day${index}`)?.disable()
+      }   
+    }
   }
 
   selectedFrequency(){
@@ -398,6 +424,12 @@ export class DrugsDetailPage implements OnInit {
 
   }
 
+  getStateModifyMedication(state){
+      if(state === StatusMedicationCreated.CENTER) return false
+      if(state === StatusMedicationCreated.USER) return true
+      return true;
+  }
+
   settingBackupDay(){
     if(!this.isInit)
     this.days.forEach((day, i) =>{
@@ -415,7 +447,6 @@ export class DrugsDetailPage implements OnInit {
     index.forEach(i => {
       this.form.get('day'+(i+1)).setValue(1)
     });
-    //console.log('[DrugsDetailPage] settingDayForm() day', this.days);
   }
 
   setDay(event, day, i){
@@ -434,7 +465,7 @@ export class DrugsDetailPage implements OnInit {
       let d = this.form.get('day'+(i+1)).value? 1:0
       day['day'+(i +1)] = d
       if(d==0) ceros =0
-      //console.log('[DrugsDetailPage] gettingDay() day', d);
+      if(this.modifyMedicationPlans === false)  day.disabled = true
     })
     console.log('[DrugsDetailPage] gettingDay() day', this.days);
     if(ceros==0) this.form.get('frequency').setValue('custom')
