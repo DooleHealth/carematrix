@@ -24,7 +24,13 @@ export enum ContentTypePath {
     Monitoring= '/tracking/monitoring', 
     MedicalProcedure= '/tracking/procedures', 
     InformedConsent = '/tracking/informed-consent',
-    //
+    // LifeStyle
+    News = '/news',
+    Advices = '/advices',
+    Exercises= '/exercices', 
+    Games= '/games', 
+    Diets= '/diets', 
+    // Medication Plan
     MedicationID = '/drugs-detail'
 }
 
@@ -36,6 +42,12 @@ export enum ContentTypeIcons {
     Monitoring = 'assets/icons/shared-care-plan/scp-monitoring.svg',
     MedicalProcedure = 'assets/icons/shared-care-plan/scp-medical-procedures.svg',
     InformedConsent = 'assets/icons/shared-care-plan/scp-informed.svg',
+    // LifeStyle
+    News =  'assets/images/shared-care-plan/news.png',
+    Advices = 'assets/images/shared-care-plan/advices.png',
+    Exercises= 'assets/images/shared-care-plan/exercices.png', 
+    Games= 'assets/images/shared-care-plan/games.png', 
+    Diets= 'assets/images/shared-care-plan/diets.png', 
 }
 
 export enum ContentTypeTranslatedName {
@@ -46,6 +58,12 @@ export enum ContentTypeTranslatedName {
     Monitoring = 'shared_care_plan.monitoring',
     MedicalProcedure = 'shared_care_plan.medical_procedure',
     InformedConsent = 'shared_care_plan.informed_consent',
+    // LifeStyle
+    News = 'setting.subtitle_news',
+    Advices = 'setting.subtitle_advices',
+    Exercises= 'exercices.header', 
+    Games= 'setting.subtitle_games', 
+    Diets= 'setting.subtitle_diets', 
 }
 
 declare const enum ContentTypeDescription {
@@ -75,7 +93,7 @@ export const ListContentType: SCPContentType = [
     {icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.Description, type: NotificationsType.FORMS, state: '', boolean_state: false, routerlink: ContentTypePath.Forms},
     {icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.Description, type: NotificationsType.MONITORING, state: '', boolean_state: false, routerlink: ContentTypePath.Monitoring},
     {icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.Description, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
-    {icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
+    //{icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
 ]
 
 /**
@@ -151,6 +169,15 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
 /**
  * LifeStyle of Shared care Plan
  */
+
+export const ListSCPLifeStyle: SharedCarePlanLifeStyle [] = [
+    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:""},
+    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:""},
+    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
+    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:""},
+    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:""},
+]
+
 export interface SharedCarePlanLifeStyle {
     img?: string,
     textHeader?: string,
@@ -166,14 +193,6 @@ export interface medication extends SharedCarePlanLifeStyle{
     to?: string
     accepted?: boolean
 }
-
-// export class LifeStyle implements SharedCarePlanLifeStyle{
-//     img?: string;
-//     title: string;
-//     type: string;
-//     id?: string | number;
-//     routerlink?: string | any;  
-// }
 
 export interface SharedCarePlanPrescribedApps {
     id?: number,

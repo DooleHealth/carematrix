@@ -935,6 +935,9 @@
         "approved": "Aprovado",
         "rejected": "Rechazado",
         "pending": "Pendiente"
+      },
+      "exercices":{
+        "header": "Ejercicios"
       }
     }
 }

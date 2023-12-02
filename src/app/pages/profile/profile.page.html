@@ -11,7 +11,8 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <ion-img (click)="modeDevelopment()" [src]="this.userDoole?.temporaryUrl" class="img-wrapper"></ion-img>
+          <ion-img *ngIf="!this.isLoading" (click)="modeDevelopment()" [src]="this.userDoole?.temporaryUrl" class="img-wrapper"></ion-img>
+          <ion-spinner *ngIf="this.isLoading" class="img-wrapper-load"></ion-spinner>
         </ion-col>
       </ion-row>
       <ion-row>

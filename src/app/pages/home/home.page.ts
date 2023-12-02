@@ -308,9 +308,17 @@ export class HomePage implements OnInit {
         .then((available: boolean) => {
           //console.log(available);
           this.showGoogleFit = !available;
-          this.health.requestAuthorization([
-            'distance', 'steps', 'heart_rate', 'activity', 'weight', 'oxygen_saturation'  //read and write permissions
-          ])
+          this.health.requestAuthorization(
+            //read and write permissions
+            [
+              'distance', 
+              'steps', 
+              'heart_rate', 
+              'activity', 
+              'weight', 
+              'oxygen_saturation'  
+            ]
+          )
             .then(res => {
               //console.log(res);
               this.syncData(30);

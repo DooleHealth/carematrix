@@ -1,7 +1,8 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
+import { NotificationsType } from 'src/app/shared/classes/notification-options';
 
 @Component({
   selector: 'app-news',
@@ -11,59 +12,58 @@ import { RolesService } from 'src/app/services/roles.service';
 export class NewsPage implements OnInit {
 
   public items= [];
-  pushNotification:any = history.state.data;
-  itemsBackup= []
-  news = []
-  advices = []
-  date = Date.now()
+  // itemsBackup= []
+  // news = []
   isLoading = false
+  private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
-    private datePipe: DatePipe,
     public role: RolesService
-  ) { }
+  ) { 
+    this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "new-detail")
+  }
 
   ngOnInit() {
     this.getNewsList()
   }
-  transformDate(date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd');
+
+  adapterForView(list){
+    this.items = this.lifeStyle.adapterForView(
+      list, // JSON
+      'cover',  //img
+      'subject'  //title
+    )  
   }
 
   async getNewsList(){
-    console.log('[AdvicePage] getNewsList()');
+    console.log('[NewsPage] getNewsList()');
     this.items = []
     this.isLoading = true
-    let formattedDate = this.transformDate(this.date)
-    let date = {date: formattedDate}
     this.dooleService.getAPIlistNews().subscribe(
       async (res: any) =>{
-        console.log('[AdvicePage] getNewsList()', await res);
+        console.log('[NewsPage] getNewsList()', await res);
         if(res.news)
         this.adapterForView(res.news)
         this.isLoading = false
        },(err) => {
-          console.log('[AdvicePage] getNewsList() ERROR(' + err.code + '): ' + err.message);
+          console.log('[NewsPage] getNewsList() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false
           throw err;
       });
   }
 
-
-  adapterForView(list){
-    list.forEach(element => {
-    //Se adapta la respuesta de la API a lo que espera el componente  
-      let data={
-        img: element.cover,
-        title: element.subject,
-        description: "",
-        type: "news",
-        id:element.id,
-        routerlink: "new-detail"
-      }
-      this.items.push(data)
-    })
-  }
-
+  filterListNews(event){
+    var query = event //.target.value;
+    this.isLoading = true
+    this.dooleService.getAPISearchNews(query).subscribe(res=>{
+      console.log('[NewsPage] filterListNews()', res);
+      this.items = []
+      if(res.success)
+      this.adapterForView(res.news)
+      this.isLoading = false
+    },err => {
+      console.log('[NewsPage] filterListNews() ERROR(' + err.code + '): ' + err.message);
+    });
+  };
 }

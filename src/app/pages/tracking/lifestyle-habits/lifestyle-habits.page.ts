@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
+import { ContentTypeIcons, ContentTypePath, ContentTypeTranslatedName, ListSCPLifeStyle, SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
 import { NotificationsType } from 'src/app/shared/classes/notification-options';
 
 @Component({
@@ -9,43 +9,35 @@ import { NotificationsType } from 'src/app/shared/classes/notification-options';
   styleUrls: ['./lifestyle-habits.page.scss'],
 })
 export class LifestyleHabitsPage implements OnInit {
-
-  listContent: Array<SharedCarePlanLifeStyle> = [];
-  exampleContent: SharedCarePlanLifeStyle [] = [
-  {img: 'assets/images/shared-care-plan/news.png', title: 'News',  type: NotificationsType.NEWS, id:""},
-  {img: 'assets/images/shared-care-plan/advices.png', title: 'Advices',  type: NotificationsType.ADVICES, id:""},
-  {img: 'assets/images/shared-care-plan/exercices.png', title: 'Exercises',  type:NotificationsType.EXERCISES, id:""},
-  {img: 'assets/images/shared-care-plan/games.png', title: 'Games',  type:NotificationsType.GAMES, id:""},
-  {img: 'assets/images/shared-care-plan/diets.png', title: 'Diets',  type:NotificationsType.DIETS, id:""},
-
-] 
-
+  listContent: SharedCarePlanLifeStyle [] = [];
+  nameLifeStyle: string = ContentTypeTranslatedName.LifestyleHabits
+  iconLifeStyle = ContentTypeIcons.LifestyleHabits
   constructor(
     private router: Router
   ) {  
    }
 
   ngOnInit() {
-    this.listContent.push(...this.exampleContent)
+    this.listContent.push(...ListSCPLifeStyle)
   }
 
   handleRedirect(event: { type: string }) {   
     console.log("entro a la redireccion")     
     switch (event.type) {
       case NotificationsType.NEWS:           
-      this.router.navigate(['/news']);
+      this.router.navigate([ContentTypePath.News]);
       break;
       case NotificationsType.ADVICES:           
-      this.router.navigate(['/advices']);
+      this.router.navigate([ContentTypePath.Advices]);
       break;
       case NotificationsType.EXERCISES:             
-      this.router.navigate(['/exercices']);
+      this.router.navigate([ContentTypePath.Exercises]);
       break;
       case NotificationsType.GAMES:              
-      this.router.navigate(['/games']);
+      this.router.navigate([ContentTypePath.Games]);
       break;
       case NotificationsType.DIETS:             
-        this.router.navigate(['/diets']);
+        this.router.navigate([ContentTypePath.Diets]);
         break;     
     }
   }

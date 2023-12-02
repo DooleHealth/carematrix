@@ -1,6 +1,4 @@
 <ion-header>
-  <!-- <ion-toolbar> -->
-
     <ion-toolbar mode="ios">
       <ion-title>{{'advices.tag_news' | translate}}</ion-title>
       <ion-buttons slot="start">
@@ -9,7 +7,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
-
+  <!-- SegmentBar -->
+  <!--<ion-searchbar
+    [animated]="true"
+    (ionInput)="filterList($event)"
+    placeholder="{{ 'advices.searchbar' | translate}}">
+  </ion-searchbar>-->
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner ></ion-spinner>
+  </div>
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
         <app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>
