@@ -340,7 +340,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan(){
-    const medication_plan_id = this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
+    const medication_plan_id = 26// this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
       async (res: any) =>{
