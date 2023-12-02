@@ -623,6 +623,7 @@
         "field_to_date": "Fecha fin del tratamiento",
         "field_dose": "Ingesta",
         "field_take_time": "Añadir hora de toma",
+        "take_time": "Horas de toma",
         "field_alias": "Nombre alternativo",
         "placeholder_chosse":"Selecciona",
         "placeholder_dose":"Nº de dosis",
@@ -938,6 +939,9 @@
       },
       "exercices":{
         "header": "Ejercicios"
+      },
+      "medication_plan":{
+        "take_time": "Horas de toma"
       }
     }
 }

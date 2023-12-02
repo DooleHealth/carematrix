@@ -629,6 +629,7 @@
     "field_to_date": "Data de fim do tratamento",
     "field_dose": "Toma",
     "field_take_time": "Adicionar hora de injeção",
+    "take_time": "Horas de injeção",
     "field_alias": "Nome alternativo",
     "placeholder_chosse": "Selecionar",
     "placeholder_dose": "N.º de dosagem",

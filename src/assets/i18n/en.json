@@ -631,6 +631,7 @@
     "field_to_date": "End date of treatment",
     "field_dose": "Intake",
     "field_take_time": "Add shooting time",
+    "take_time": "Shooting time",
     "field_alias": "Alternative name",
     "placeholder_chosse": "Select",
     "placeholder_dose": "Nº of dose",
@@ -958,6 +959,9 @@
   },
   "exercices":{
     "header": "Exercises"
+  },
+  "medication_plan":{
+    "take_time": "Shooting time"
   }
       
 }

@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, IonModal, IonPopover, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -13,9 +13,10 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class DrugsDetailPage implements OnInit {
   days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
+  @ViewChild('datetimePopover') popover: IonPopover;
   @Input()drug : any
   @Input()id: any;
-  drugID = history.state?.id
+  drugID =  history.state?.id //23 //
   form: FormGroup;
   times = []
   isLoading = false
@@ -35,6 +36,7 @@ export class DrugsDetailPage implements OnInit {
   date:any;
   time:any;
   locale:string;
+
   constructor(
     private dooleService: DooleService,
     private fb: FormBuilder,
@@ -240,20 +242,26 @@ export class DrugsDetailPage implements OnInit {
     return date.toISOString();
   }
 
-  inputDate(){
-
+  inputTimes(event){
+    console.log('[DrugsDetailPage] this.time()', event);
     console.log('[DrugsDetailPage] this.time()', this.time);
     if(this.isSubmited)
     return
     let time = this.form.get('time').value
     console.log('[DrugsDetailPage] time()', time);
-    this.form.get('time').setValue('')
-    if(time !== '' ){
+    //this.form.get('time').setValue('')
+    if(time && time !== '' ){
       let date = new Date(time)
       let hour = this.transformHour(date)
+      console.log('[DrugsDetailPage] hour', hour);
       if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
       this.times.push(hour)
     }
+  }
+
+  closeTimeAlert(event){
+    console.log('[DrugsDetailPage] this.time()', event);
+    this.popover.dismiss()
   }
 
   checkTreatmentDates(){

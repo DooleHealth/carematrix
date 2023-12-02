@@ -28,8 +28,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate(); */
 /*                 case url.includes('/user/recovery_password') && method === 'POST':
                     return passwordRecovery(); */
-                case url.endsWith('/user/informationUser') && method === 'GET':
-                    return informationUser();
+                // case url.endsWith('/user/informationUser') && method === 'GET':
+                //     return informationUser();
 /*                 case url.endsWith('user/legalTerm/lastAccepted') && method === 'GET':
                     return legalInformation();
                 case url.endsWith('user/legalTerm/lastAccepted') && method === 'POST':
@@ -40,10 +40,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return userProfile(); */
 /*                 case url.endsWith('user/changePassword') && method === 'POST':
                     return changePassword();*/
-                case url.endsWith('user/email_verification') && method === 'POST':
-                    return smsVerification();
-                case url.endsWith('user/code_verification') && method === 'POST':
-                    return smsConfirmation(); 
+                // case url.endsWith('user/email_verification') && method === 'POST':
+                //     return smsVerification();
+                // case url.endsWith('user/code_verification') && method === 'POST':
+                //     return smsConfirmation(); 
 /*                 case url.endsWith('user/familyUnit') && method === 'GET':
                     return familyUnit(); */
 /*                 case url.endsWith('user/health_cards') && method === 'GET':
@@ -54,7 +54,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return putAPIhealthCard();
                 case url.includes('user/health_cards') && method === 'DELETE':
                     return deleteAPIhealthCards(); */
-                case url.endsWith('user/emergency_contact') && method === 'GET':
+/*                 case url.endsWith('user/emergency_contact') && method === 'GET':
                     return emergencyContact();
                 case url.endsWith('user/emergency_contact') && method === 'POST':
                     return saveEmergencyContact();
@@ -62,14 +62,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateEmergencyContact();
                 case url.endsWith('user/appointment') && method === 'GET':
                     return appointmentAgenda();
-                // case url.endsWith('user/appointment') && method === 'POST':
-                //     return appointmentAgenda();
+                 case url.endsWith('user/appointment') && method === 'POST':
+                     return appointmentAgenda();
                 case url.endsWith('user/tracking/documents') && method === 'GET':
                     return getAPIdocumentsTracking();
                 case url.endsWith('user/tracking/forms') && method === 'GET':
                     return getAPIformsTracking();
                 case url.endsWith('user/element_category') && method === 'GET':
-                    return getAPIcategoryElements();
+                    return getAPIcategoryElements(); */
                 /***
                  * Reminders
                  */
@@ -79,8 +79,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return postAPIaddReminder();
                 case url.includes('user/reminder/id') && method === 'GET':
                     return getAPIreminderID(); */
-                case url.includes('user/patients') && method === 'GET':
-                    return getAPIpatients();
+/*                 case url.includes('user/patients') && method === 'GET':
+                    return getAPIpatients(); */
                 case url.includes('sharecareplan/goals') && method === 'GET':
                     return getAPI_SCP_goals();
                 default:

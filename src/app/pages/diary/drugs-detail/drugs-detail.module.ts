@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -22,6 +22,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     DrugsDetailPageRoutingModule
   ],
   providers:[DatePipe],
-  declarations: [DrugsDetailPage]
+  declarations: [DrugsDetailPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DrugsDetailPageModule {}
