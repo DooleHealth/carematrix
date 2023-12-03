@@ -62,7 +62,7 @@
       </ion-item>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime [locale]="this.locale" presentation="date" id="issue_date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="issue_date"></ion-datetime>
+          <ion-datetime [locale]="this.locale" presentation="month-year" id="issue_date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="issue_date" required></ion-datetime>
         </ng-template>
       </ion-modal>
       <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01"></ion-datetime> -->
@@ -75,7 +75,7 @@
       </ion-item>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime (ionFocus)="checkDateEvent()"  [locale]="this.locale" presentation="date" id="expiration_date" [min]="this.date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="expiration_date"></ion-datetime>
+          <ion-datetime (ionFocus)="checkDateEvent()"  [locale]="this.locale" presentation="month-year" id="expiration_date" [min]="this.date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="expiration_date" required></ion-datetime>
         </ng-template>
       </ion-modal>
         <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->

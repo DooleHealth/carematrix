@@ -135,7 +135,10 @@ export class AddHealthCardPage implements OnInit {
 
   getErrorEndDate() {
     if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
+      console.log('[AddHealthCardPage] getErrorEndDate()' ,  this.translate.instant("add_health_card.error_end_date"));
+      return '';
       return this.translate.instant("add_health_card.error_end_date");
+      
     }
     return '';
   }
@@ -148,18 +151,21 @@ export class AddHealthCardPage implements OnInit {
   }
 
   showDetailCard(){
+    const expiration_date = this.card.expiration_date ? new Date(this.card.expiration_date).toISOString():this.date
+    const issue_date = this.card.issue_date? new Date(this.card.issue_date).toISOString():this.date;
+
     this.formHealthCard.get('id').setValue(this.card.id)
     //this.formHealthCard.get('health_card_type_id').setValue(this.card.type.id) //
     this.formHealthCard.get('name').setValue(this.card.name)
     this.formHealthCard.get('card_number').setValue(this.card.card_number)
 
-    var current = new Date(this.card?.expiration_date? this.card?.expiration_date: this.date)
-    let data_prestacio = this.dateService.ddMMyyyyFormat(current);  
-    this.formHealthCard.get('expiration_date').setValue(data_prestacio)
+    // var current = new Date(this.card?.expiration_date? this.card?.expiration_date: this.date)
+    // let data_prestacio = this.dateService.formatISOStringDate(current);  
+    this.formHealthCard.get('expiration_date').setValue(expiration_date)
 
-    var current2 = new Date(this.card?.issue_date? this.card?.issue_date: this.date)
-    let data_prestacio2 = this.dateService.ddMMyyyyFormat(current2); 
-    this.formHealthCard.get('issue_date').setValue(data_prestacio2)
+    // var current2 = new Date(this.card?.issue_date? this.card?.issue_date: this.date)
+    // let data_prestacio2 = this.dateService.formatISOStringDate(current2); 
+    this.formHealthCard.get('issue_date').setValue(issue_date)
   }
   compareFn(e1: any, e2: any): boolean {
     return  e1.id === e2.id
@@ -191,6 +197,9 @@ export class AddHealthCardPage implements OnInit {
           if(this.card?.type?.id){
             let type = this.healthCardTypes.find(type => (type.id === this.card.type.id))
             this.formHealthCard.get('health_card_type_id').setValue(type.id)
+          }else{
+            const id = this.healthCardTypes[0]?.id
+            if(id) this.formHealthCard.get('health_card_type_id').setValue(id)
           }
         }
        },(err) => {
@@ -205,7 +214,7 @@ export class AddHealthCardPage implements OnInit {
   }
 
   addCard(){
-    console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value);
+    console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value, this.formHealthCard.valid);
     this.isSubmittedFields(true);
     if(this.formHealthCard.valid){
 
