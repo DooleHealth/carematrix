@@ -118,9 +118,11 @@
              </p>
            </ion-item>
            <div class="main-container3" style="display: flex; align-items: center;">
-             <ion-button *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" size="small" color="transparent" class="buttonLink"
+            <!-- *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" -->
+             <ion-button  size="small" color="transparent" class="buttonLink"
                (click)="this.addDrugPlan(item.item, item.item.id)">{{ 'detail_contact.button_edit' | translate }}
              </ion-button>&nbsp;
+
              <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary"
                (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
 
@@ -133,6 +135,7 @@
                (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
                  style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
              </ion-button>&nbsp;&nbsp;&nbsp;
+
              <app-info info="{{'info.medication' | translate}}"></app-info> &nbsp; &nbsp;
              <app-info info="{{'info.medication' | translate}}" [title]="item.item.name" [info]="item.item.frequency"  [details]="true"></app-info>
            </div>

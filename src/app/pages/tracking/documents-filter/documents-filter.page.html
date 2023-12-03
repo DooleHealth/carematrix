@@ -32,16 +32,34 @@
   <ion-card class="cardProfile" *ngIf="toggle">
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'documents_filter.from' | translate}}</ion-label>
-        <!-- FIXME:: ionic 7 [displayFormat],placeholder removed-->
+        <ion-label  stacked>
+            <h5 >{{'documents_filter.from' | translate}}</h5>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="start_date"></ion-datetime-button>
+      </ion-item>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime  (ionChange)="getStartDate($event)" [locale]="this.locale" presentation="date" id="start_date" [max]="this.currentDate" formControlName="start_date"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+              <!-- FIXME:: ionic 7 [displayFormat],placeholder removed-->
         <!-- <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="start_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime> -->
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="start_date"  min="1990-01-01" [max]="this.currentDate"></ion-datetime>
-      </ion-item>
+
+
       <ion-item lines="none">
-        <ion-label>{{ 'documents_filter.until' | translate}}</ion-label>
-        <!-- FIXME:<ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime> -->
-        <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" min="1990-01-01" [max]="this.currentDate"></ion-datetime> -
+        <ion-label  stacked>
+          <h5 >{{'documents_filter.until' | translate}}</h5>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="end_date"></ion-datetime-button>
       </ion-item>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime (ionChange)="getEndDate($event)" [locale]="this.locale" presentation="date" id="end_date" [max]="currentDate" formControlName="end_date"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+
+              <!-- FIXME:<ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="end_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder=" {{  this.currentDate | date: 'dd/MM/YYYY' }} " min="1990-01-01" [max]="this.currentDate"></ion-datetime> -->
+
     </ion-list>
   </ion-card>
 

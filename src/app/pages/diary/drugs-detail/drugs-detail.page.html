@@ -137,8 +137,8 @@
 
           <ion-list mode="ios" *ngFor="let e of days;let i= index">
             <ion-item [lines]="(i==6)? 'none':'' ">
-              <ion-checkbox slot="start" *ngIf="e['day'+(i+1)]==0" color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox>
-              <ion-icon slot="start" *ngIf="e['day'+(i+1)]==1" color="primary" name="checkmark-circle"></ion-icon>
+              <ion-checkbox  *ngIf="e['day'+(i+1)]==0" color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox>
+              <ion-icon  *ngIf="e['day'+(i+1)]==1" color="primary" name="checkmark-circle"></ion-icon>
               <ion-text slot="end">
                 <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>
               </ion-text>

@@ -51,11 +51,9 @@ export class DrugsDetailPage implements OnInit {
     private modalCtrl: ModalController,
     public dateService: DateService
   ) {
-    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
-    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
     this.locale = this.dateService.getLocale();
-    this.time = localISOTime;
+    this.date = this.dateService.getToday()
+    this.time = this.date ;//  localISOTime;
   }
 
   ngOnInit() {
@@ -248,8 +246,8 @@ export class DrugsDetailPage implements OnInit {
   }
 
   inputTimes(event){
-    console.log('[DrugsDetailPage] this.time()', event);
-    console.log('[DrugsDetailPage] this.time()', this.time);
+    // console.log('[DrugsDetailPage] this.time()', event);
+    // console.log('[DrugsDetailPage] this.time()', this.time);
     if(this.isSubmited)
     return
     let time = this.form.get('time').value
@@ -340,7 +338,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan(){
-    const medication_plan_id = 26// this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
+    const medication_plan_id =  this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
       async (res: any) =>{

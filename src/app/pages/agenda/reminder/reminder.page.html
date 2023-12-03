@@ -66,7 +66,6 @@
       <ion-item lines="none">
         <ion-label>{{'reminder.field_repeat' | translate}}</ion-label>
         <ion-text class="textMedium">{{this.frequency}}</ion-text>
-        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
     </ion-list>
   </div>
@@ -84,9 +83,10 @@
       <!-- ACORDION -->
       <app-expandable expandHeight="400px" [expanded]="this.expanded">
         <ion-list mode="ios" *ngFor="let e of days;let i= index">
-          <ion-item [lines]="(i==6)? 'none':'full' " *ngIf="setDay(e, i)">
+          <ion-item [lines]="(i==6)? 'none':'' " *ngIf="setDay(e, i)">
            <!--  <ion-checkbox color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox> -->
-            <ion-text>
+           <ion-icon  color="primary" name="checkmark-circle"></ion-icon>
+            <ion-text slot="end">
               <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>
             </ion-text>
           </ion-item>

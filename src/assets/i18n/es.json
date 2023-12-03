@@ -947,12 +947,12 @@
         "approved": "Aprovado",
         "rejected": "Rechazado",
         "pending": "Pendiente"
-      },
-      "exercices":{
-        "header": "Ejercicios"
-      },
-      "medication_plan":{
-        "take_time": "Horas de toma"
       }
+    },
+    "exercices":{
+      "header": "Ejercicios"
+    },
+    "medication_plan":{
+      "take_time": "Horas de toma"
     }
 }

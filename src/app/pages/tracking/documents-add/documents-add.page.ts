@@ -47,9 +47,7 @@ export class DocumentsAddPage implements OnInit {
     public alertController: AlertController,
 
   ) {
-    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
-    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-    this.date = localISOTime// this.dateService.selectedDateFormat(localISOTime);
+    this.date = this.dateService.getToday()
     this.locale = this.dateService.getLocale();
    }
 
@@ -76,11 +74,38 @@ export class DocumentsAddPage implements OnInit {
       this.form.get('private').setValue(this.diagnosticTest.private)
       this.typeTest = this.test.diagnosticTest.diagnostic_test_type;
       this.form.get('type').setValue(this.typeTest.name)
-      this.form.get('title').setValue(this.diagnosticTest.title)
-      this.form.get('date').setValue(this.diagnosticTest.data)
+      this.form.get('title').setValue(this.diagnosticTest.title);
+      
+       var current = new Date(this.diagnosticTest.data)
+       let data_prestacio = this.dateService.yyyyMMddHHmm(current);
+      this.form.get('date').setValue(this.formatDate(this.diagnosticTest.data_formatted) )
+      
       this.form.get('description').setValue(this.diagnosticTest.description)
       this.media = this.test.diagnosticTest.media
     }
+  }
+
+  formatDate(d){
+    if(d === undefined || d === null)
+    return
+    var auxdate = d.split(' ')
+    //let date = new Date(auxdate[0]);
+    d = d.replace(' ', 'T')
+    let date0 = new Date(d).toUTCString();
+    let date = new Date(date0);
+    let time = auxdate[1];
+    date.setHours(time.substring(0,2));
+    date.setMinutes(time.substring(3,5));
+    return date.toISOString();
+  }
+
+  formatSelectedDate(date){
+
+    if(date)
+      return this.dateService.ddMMMyyyformat(date);
+    // let language = this.languageService.getCurrent()
+    // const datePipe: DatePipe = new DatePipe(language);
+    // return datePipe.transform(date, 'dd MMM yyy');
   }
 
 
@@ -99,6 +124,15 @@ export class DocumentsAddPage implements OnInit {
     if(this.form.invalid)
     return
     console.log("submit");
+
+
+    if(this.isEdit)
+      this.updateDiagnosticTest()
+    else
+      this.createDiagnosticTest()
+  }
+
+  setFields(){
     let date = this.form.get('date').value;
     var current = new Date(date)
     let data_prestacio = this.dateService.ddMMyyyyFormat(current);
@@ -107,18 +141,18 @@ export class DocumentsAddPage implements OnInit {
     let private_test = this.form.get('private').value ? 1 : 0;
     this.form.get('private').setValue(private_test);
 
-    let typeId = this.typeTest.id
-    this.form.get('type').setValue(typeId);
+    let params = this.form.value
+    params.type = this.typeTest.id
 
-    if(this.isEdit)
-      this.updateDiagnosticTest()
-    else
-      this.createDiagnosticTest()
+    return params
+
   }
+
 
   createDiagnosticTest(){
     this.isLoading = true
-    return this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
+    const params =   this.setFields()
+    return this.dooleService.postAPIdiagnosticTest(params).subscribe(
       async (data) => {
         console.log("[DocumentsAddPage] createDiagnosticTest() data:", data);
         if(data){
@@ -153,7 +187,8 @@ export class DocumentsAddPage implements OnInit {
 
   updateDiagnosticTest(){
     this.isLoading = true
-    this.dooleService.putAPIdiagnosticTest(this.diagnosticTest.id, this.form.value).subscribe(
+    const params =   this.setFields()
+    this.dooleService.putAPIdiagnosticTest(this.diagnosticTest.id, params).subscribe(
       async (data) => {
         console.log("[DocumentsAddPage] updateDiagnosticTest() data:", data);
         if(data.success){
