@@ -31,9 +31,9 @@ export class FormControlComponent implements OnInit {
   num_progressBar = 0;
   note_message: string
   constructor(
-    private resolver: ComponentFactoryResolver,
-    private formService: FormService,      
+    //private resolver: ComponentFactoryResolver,     
     //private dooleService: DooleService,
+    private formService: FormService, 
     public translate: TranslateService,
     ) { }
 
@@ -128,8 +128,8 @@ export class FormControlComponent implements OnInit {
     // this.orderIndexItem();
     this.item.forEach( (i, index)=>{
       //console.log('FormComponent loadComponent()', i , i.data.index)
-      const formComponent = this.resolver.resolveComponentFactory(i.component);
-      const componentRef = viewContainerRef.createComponent<ItemForm>(formComponent);
+      //const formComponent = this.resolver.resolveComponentFactory(i.component);
+      const componentRef = viewContainerRef.createComponent<ItemForm>(i.component);
       componentRef.instance.data = i.data;
       if(this.wizard){
         if(this.isFirstElement == false){   

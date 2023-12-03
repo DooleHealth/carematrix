@@ -889,7 +889,7 @@
     "error_no_valid": "Valor inválido, por favor, inserir um valor",
     "error_min_character": "Valor inválido, inserir mínimo",
     "character": "Caracteres",
-
+    "time": "Tempo",
     "send_success": "Evento enviado com sucesso",
     "send_error": "Ocorreu um erro ao submeter o formulário",
     "text1": "Para sabermos como se sente hoje, por favor, responda ao",

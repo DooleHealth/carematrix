@@ -7,11 +7,11 @@
         <app-tooltip *ngIf="this.data?.tooltip !== '' " style="margin-top: 2px; margin-right: 4px;" [info]="this.data.tooltip" ></app-tooltip>
         <div name="data.name" [innerHtml]="this.label | safeHtml"></div>
       </div>
-    </ion-row> 
-    <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>  
+    </ion-row>
+    <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>
     <ion-radio-group [value]="this.valueDefault" (ionChange)="setValue($event); checkValue()">
       <ion-item  lines="none1" class="item-option" *ngFor="let entry of this.options">
-        <ion-radio slot="start" mode="md" [value]="entry.value"></ion-radio>
+        <ion-radio [id]="entry?.value" slot="start" mode="md" [value]="entry?.id" ></ion-radio>
         <!-- <ion-text [innerHtml]="entry.label | safeHtml"></ion-text> -->
         <div [innerHtml]="entry.label | safeHtml"></div>
       </ion-item>

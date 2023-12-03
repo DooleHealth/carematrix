@@ -20,7 +20,7 @@ export class TextareaComponent implements OnInit {
   max
   min
   rows = '7'
-  constructor(private translate: TranslateService) { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit() {
     //this.data.required = true

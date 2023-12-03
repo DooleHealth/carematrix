@@ -9,9 +9,9 @@
       </div>
     </ion-row> 
     <ion-note class="ion-note-padding" color="danger">{{this.error_msg}}</ion-note> 
-    <div *ngIf="this.data.type == 'text' || this.data.type == 'number' || this.data.type == 'formula'|| this.data.type == 'logic' ">
+    <div *ngIf="this.data.type == 'text' || this.data.type == 'formula'|| this.data.type == 'logic' ">
       <ion-item lines="none" [ngClass]="error ? 'form-input-error-textarea' : 'form-input-textarea'" >
-        <ion-input [type]="(data?.type == 'number')? 'number':'text' " [placeholder]="this.placeholder"
+        <ion-input type="text" [placeholder]="this.placeholder"
           [value]="this.value"
           [maxlength]="this.max"
           (ionInput)="setValue($event)" 
@@ -24,12 +24,47 @@
         <span *ngIf="this.max" style="margin-right: 20px; text-align: end; width: 100%;">{{remainingText}}</span>
       </ion-row> 
     </div>
+    <div *ngIf="this.data.type == 'number'">
+      <ion-item lines="none" [ngClass]="error ? 'form-input-error-textarea' : 'form-input-textarea'" >
+        <ion-input type="text" [placeholder]="this.placeholder"
+          inputmode="decimal"
+          [value]="this.value"
+          [min]="min" [max]="max"
+          maxlength="20"
+          (ionInput)="setValueNum($event)" 
+          (ionChange)="checkValueNum(); valueChange()" 
+          (ionBlur)="checkValueNum()" 
+          [required]="this.data.required">
+        </ion-input>
+      </ion-item>
+    </div>
     <div *ngIf="this.data.type == 'date'">
       <ion-item  lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'" >
-         <ion-datetime style="text-align: center;" cancelText="{{'form.button.cancel' | translate}}" doneText="{{'form.button.accept' | translate}}" 
-         (ionChange)="setValue($event);checkValue()" (ionBlur)="checkValue()" [placeholder]="this.placeholder"
-         displayFormat="DD/MM/YYYY" [max]="max" [required]="this.data.required"></ion-datetime>
+         <ion-datetime 
+         presentation="date"
+         (ionChange)="setValue($event);checkValue()" 
+         (ionBlur)="checkValue()" 
+         [locale]="this.locale" 
+         [max]="max" 
+         [required]="this.data.required">
+         <span *ngIf="this.placeholder" slot="title">{{this.placeholder}}</span>
+         <span slot="time-label">{{'form.time' | translate}}</span>
+        </ion-datetime>
+         <!-- <ion-datetime-button slot="end" datetime="date"></ion-datetime-button> -->
       </ion-item> 
+      <!-- <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+          id="date" 
+          [max]="max" 
+          [locale]="this.locale" 
+          presentation="date" 
+          [required]="this.data.required"
+          (ionChange)="setValue($event);checkValue()" 
+          (ionBlur)="checkValue()" 
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal> -->
     </div>   
     <div *ngIf="this.data.type == 'button'">
       <ion-item lines="none">

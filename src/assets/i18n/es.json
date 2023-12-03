@@ -893,7 +893,7 @@
       "error_no_valid": "Valor no válido, ingrese un valor",
       "error_min_character": "Valor no válido, ingrese mínimo",
       "character": "caracteres",
-
+      "time": "Tiempo",
       "send_success": "Formulario enviado correctamente",
       "send_error": "Ha ocurrido un error al enviar el formulario",
       "text1": "Por favor, para conocer cómo se siente hoy necesitamos que responda el",

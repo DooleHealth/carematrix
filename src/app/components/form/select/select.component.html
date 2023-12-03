@@ -10,7 +10,7 @@
     </ion-row> 
     <ion-note class="ion-note-padding" color="danger">{{this.error_msg}}</ion-note>  
     <ion-item lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'">
-      <ion-select style="width: 100%;" [(ngModel)]="this.value" interface="action-sheet"
+      <ion-select  label-placement="stacked" style="width: 100%;" [(ngModel)]="this.value" interface="action-sheet"
       (ionChange)="setValue($event);checkValue()" (ionBlur)="checkValue()"
        [placeholder]="this.data.placeholder" cancelText="{{'form.button.cancel' | translate}}">
         <ion-select-option style="width: 100%;"  *ngFor="let entry of this.options" [value]="entry.value">

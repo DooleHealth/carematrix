@@ -902,7 +902,7 @@
     "error_no_valid": "Invalid value, please enter a value",
     "error_min_character": "Invalid value, enter minimum",
     "character": "Characters",
-
+    "time": "Time",
     "send_success": "Form submitted successfully",
     "send_error": "An error occurred while submitting the form",
     "text1": "Please, to know how you feel today we need you to answer the",
@@ -965,5 +965,5 @@
   "medication_plan":{
     "take_time": "Shooting time"
   }
-      
+
 }
