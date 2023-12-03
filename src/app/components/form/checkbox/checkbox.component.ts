@@ -16,7 +16,8 @@ export class CheckboxComponent implements OnInit {
   error_msg = ''
   valueDefault = ''
   options = []
-  constructor(private translate: TranslateService) { }
+  valueLabel = []
+  constructor(public translate: TranslateService) { }
 
   ngOnInit() {
     let translate = this.data?.translate[`label_${this.data.type}`]
@@ -44,12 +45,16 @@ export class CheckboxComponent implements OnInit {
     //console.log('CheckboxComponent options', this.options)
   }
 
-  setValue(event){
-    if(event.detail.checked)
-      this.value.push(event.target.value)
-    else
+  setValue(event, label){
+    if(event.detail.checked){
+      this.value.push(event.target.value);
+      this.valueLabel.push(label)
+    }
+    else{
       this.value =  this.value.filter( v => v !== event.target.value)
-    //console.log('CheckboxComponent', this.value)
+      this.valueLabel =  this.valueLabel.filter( v => v !== label)
+    }
+    //console.log('CheckboxComponent', this.value, this.valueLabel)
     this.change.emit({[this.data.name]: this.value});
   }
 

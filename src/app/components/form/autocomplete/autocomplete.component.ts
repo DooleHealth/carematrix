@@ -16,8 +16,9 @@ export class AutocompleteComponent implements OnInit {
   error = false
   error_msg = ''
   valueDefault = ''
+  valueLabel = ''
   options = []
-  constructor(private translate: TranslateService) { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit() {
     //this.data.required = true
@@ -45,7 +46,9 @@ export class AutocompleteComponent implements OnInit {
 
   setValue(event){
     this.value =  event.target.value
-    console.log('AutocompleteComponent', this.value)
+    let opt = this.options.find(opt => opt.value == this.value)
+    this.valueLabel = opt? opt.label:''
+    console.log('AutocompleteComponent', this.value, this.valueLabel)
     this.change.emit({[this.data.name]: this.value});
   }
 

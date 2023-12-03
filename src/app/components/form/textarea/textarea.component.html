@@ -10,7 +10,7 @@
     </ion-row> 
     <ion-note class="ion-note-padding" color="danger">{{this.error_msg}}</ion-note>  
     <ion-item lines="none" [ngClass]="error ? 'form-input-error-textarea' : 'form-input-textarea'" >
-      <ion-textarea autocapitalize="on" [placeholder]="this.placeholder" [rows]="this.rows" 
+      <ion-textarea labelPlacement="start"  autocapitalize="on" [placeholder]="this.placeholder" [rows]="this.rows" 
       [maxlength]="this.max"
       (ionInput)="setValue($event)" (ionChange)="checkValue(); valueChange() " (ionBlur)="checkValue()" [required]="this.data.required"></ion-textarea>
     </ion-item>

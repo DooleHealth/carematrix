@@ -22,66 +22,86 @@
     <ion-card class="cardProfile">
       <ion-list>
         <ion-item>
-          <ion-label>{{'reminder.field_title' | translate}}</ion-label>
+          <ion-label  stacked>
+            <h5 >{{'reminder.field_title' | translate}}</h5>
+            <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
+          </ion-label>
           <ion-input formControlName="title" class="textMedium" required  [placeholder]="this.titlePlaceholder"></ion-input>
-          <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
         </ion-item>
         <ion-item lines="none">
-          <ion-label>{{'reminder.field_notes' | translate}}</ion-label>
+          <ion-label  stacked>
+            <h5 >{{'reminder.field_notes' | translate}}</h5>
+          </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-textarea formControlName="description" class="textMedium" placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
+        <ion-item lines="none">
+          <ion-textarea formControlName="description" class="textMediumLeft" placeholder="{{'reminder.placeholder_comments' | translate}}"></ion-textarea>
         </ion-item>
-<!--         <ion-item lines="none">
-          <ion-label>{{'Tipo' | translate}}</ion-label>
-          <ion-input formControlName="type" class="textMedium"></ion-input>
-          <ion-note *ngIf="this.isSubmittedPlace && this.form.get('type').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-        </ion-item> -->
       </ion-list>
     </ion-card>
   </div>
   <ion-card class="cardProfile">
     <ion-list>
-<!--       <ion-item>
-        <ion-label>{{'reminder.field_all_day' | translate}}</ion-label>
-        <ion-toggle slot="end" color="success" checked></ion-toggle>
-      </ion-item> -->
-      <!-- TODO: ionic7 removed from iondatetime: [placeholder]="this.isSubmittedTimes? '': '+' "
-      [displayFormat]="this.dateService.getTimeFormat()" [pickerFormat]="this.dateService.getTimeFormat()" -->
+      
       <ion-item>
-        <ion-label>{{'reminder.field_start' | translate}}</ion-label>
-        <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        <ion-label  stacked>
+          <h5 >{{'reminder.field_start' | translate}}</h5>
+          <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="start_date"></ion-datetime-button>
       </ion-item>
-      <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" min="1990-01-01" [max]="dateMax" formControlName="start_date" class="textMedium" required></ion-datetime>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [locale]="this.locale" presentation="date" id="start_date" [min]="this.date" [max]="dateMax"  (ionChange)="this.isSubmittedStartDate = false"  formControlName="start_date"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+      
       <ion-item>
-        <ion-label lines="none">{{'reminder.field_end' | translate}}</ion-label>
-        <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error ion-padding" color="danger" slot="end">{{ getErrorEndDate() }}</ion-note>
+        <ion-label  stacked>
+          <h5 >{{ 'reminder.field_end' | translate}}</h5>
+          <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error " color="danger">{{ getErrorEndDate() }}</ion-note>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="end_date"></ion-datetime-button>
       </ion-item>
-      <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}"  min="1990-01-01" [max]="dateMax" formControlName="end_date" class="textMedium" required></ion-datetime>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [locale]="this.locale" presentation="date" id="end_date" (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates()" formControlName="end_date" [min]="this.date" [max]="dateMax"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+
       <ion-item>
-        <ion-label>{{'reminder.field_time' | translate}}</ion-label>
-        <!-- <ion-datetime [showDefaultButtons]="true" presentation="time" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" (ionChange)="inputDate(); this.isSubmittedTimes = false" formControlName="time"></ion-datetime> -->
-        <!-- <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}"  (ionChange)="inputDate(); this.isSubmittedTimes = false" formControlName="time"></ion-datetime> -->
-        <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error ion-padding" color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
+        <ion-label  stacked>
+          <h5 >{{ 'reminder.field_time' | translate}}</h5>
+          <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="time"></ion-datetime-button>
+        <ion-icon slot="end" color="primary" name="add-circle-outline"></ion-icon>
       </ion-item>
-      <ion-datetime presentation="time" (ionChange)="inputDate(); this.isSubmittedTimes = false" #datetime formControlName="time">
-        <ion-buttons slot="buttons">
-          <ion-button color="primary" (click)="datetime.confirm()">{{'button.accept' | translate}}</ion-button>
-        </ion-buttons>
-      </ion-datetime>
-      <ng-container *ngFor="let time of this.times;let i = index">
-        <ion-chip>
-          <ion-label class="txtTitleGoals">{{ this.dateService.format24h(time)}} </ion-label>
-          <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
-        </ion-chip>
-      </ng-container>
+
+      <ion-popover #datetimePopover [keepContentsMounted]="true" side="left" alignment="end">
+        <ng-template>
+          <ion-datetime mode="ios"  #datetime id="time" hourCycle="h23" [preferWheel]="true"  [locale]="this.locale" presentation="time" displayFormat="HH:mm" (ionChange)="this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
+          <ion-buttons slot="buttons">
+            <ion-button color="danger" (click)="closeTimeAlert($event);" slot="start">{{'notifications.close' | translate}}</ion-button>
+            <ion-button style="width: 50px;"></ion-button>
+            <ion-button color="primary" (click)="inputTimes($event);" slot="end">{{'button.add' | translate}}</ion-button>
+          </ion-buttons>
+        </ng-template>
+      </ion-popover>
+      <div style="padding: 5px;">
+        <ng-container>
+          <ion-chip *ngFor="let time of this.times;let i = index">
+            <ion-label class="txtTitleGoals">{{ this.dateService.format24h(time)}} </ion-label>
+            <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
+          </ion-chip>
+        </ng-container>
+      </div>
+
+
       <ion-item lines="none">
-        <ion-label lines="none">{{'reminder.field_repeat' | translate}}</ion-label>
-        <ion-select class="txtTitleGoals" interface="action-sheet" (ionChange)="this.selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+        <ion-select  label="{{'reminder.field_repeat' | translate}}" class="txtTitleGoals" interface="action-sheet" (ionChange)="this.selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
           <ion-select-option value="daily">{{'reminder.frequency.daily' | translate}}</ion-select-option>
           <ion-select-option value="custom">{{'reminder.frequency.custom' | translate}}</ion-select-option>
         </ion-select>
-        <!-- <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon> -->
       </ion-item>
     </ion-list>
   </ion-card>
@@ -100,7 +120,7 @@
       <!-- ACORDION -->
       <app-expandable expandHeight="400px" [expanded]="this.expanded">
         <ion-list mode="ios" *ngFor="let e of days;let i= index">
-          <ion-item [lines]="(i==6)? 'none':'full' ">
+          <ion-item [lines]="(i==6)? 'none':'' ">
             <ion-checkbox color="primary" (ionChange)="setDay($event, e, i)" [formControlName]=" 'day'+(i+1)"></ion-checkbox>
             <ion-text>
               <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}</p>

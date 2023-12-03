@@ -41,7 +41,7 @@ export class SliderComponent implements OnInit, ItemForm {
     showSelectionBar: true
   };
 
-  constructor(private translate: TranslateService, private appRef: ApplicationRef) {}
+  constructor(public translate: TranslateService, private appRef: ApplicationRef) {}
 
   ngOnInit() {
     console.log("this data:", this.data);

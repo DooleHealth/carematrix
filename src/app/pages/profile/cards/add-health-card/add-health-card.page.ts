@@ -26,6 +26,8 @@ export class AddHealthCardPage implements OnInit {
   isSubmittedIssueDate = false;
   isAddCard = true;
   isSubmitted: boolean;
+  locale:string;
+  date: any;
   constructor(
     private dooleService: DooleService,
     private formBuilder: FormBuilder,
@@ -40,8 +42,9 @@ export class AddHealthCardPage implements OnInit {
   ngOnInit() {
     this.setFormCard()
     this.getHealthCardTypes()
-    let year = (new Date(Date.now()).getFullYear()) + 20
-    this.dateMax =  year
+    this.locale = this.dateService.getLocale();
+    this.date = this.dateService.getToday()
+    this.dateMax = (new Date(Date.now()).getFullYear()) + 20
   }
 
   setFormCard(){
@@ -50,8 +53,8 @@ export class AddHealthCardPage implements OnInit {
       health_card_type_id: ['', [Validators.required]],
       name: ['', [Validators.required]],
       card_number: ['', [Validators.required]],
-      expiration_date: ['', [ this.checkDate.bind(this)]],
-      issue_date: ['', [ this.checkStartDate.bind(this)]],
+      expiration_date: [this.date, [ this.checkDate.bind(this)]],
+      issue_date: [this.date, [ this.checkStartDate.bind(this)]],
       /* description: ['description'], */
 
     })
@@ -98,8 +101,8 @@ export class AddHealthCardPage implements OnInit {
 
   if (this.formHealthCard.get('expiration_date').hasError('NotLess') && this.formHealthCard.get('issue_date').hasError('NotLess')) {
     console.log('[AddHealthCardPage] checkDateEvent() End y Start Hay error');
-    this.formHealthCard.get('issue_date').setValue('');
-    this.formHealthCard.get('expiration_date').setValue('');
+    this.formHealthCard.get('issue_date').setValue(this.date);
+    this.formHealthCard.get('expiration_date').setValue(this.date);
   }
 
   else if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
@@ -132,7 +135,10 @@ export class AddHealthCardPage implements OnInit {
 
   getErrorEndDate() {
     if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
+      console.log('[AddHealthCardPage] getErrorEndDate()' ,  this.translate.instant("add_health_card.error_end_date"));
+      return '';
       return this.translate.instant("add_health_card.error_end_date");
+      
     }
     return '';
   }
@@ -145,15 +151,40 @@ export class AddHealthCardPage implements OnInit {
   }
 
   showDetailCard(){
+    const expiration_date = this.card.expiration_date ? new Date(this.card.expiration_date).toISOString():this.date
+    const issue_date = this.card.issue_date? new Date(this.card.issue_date).toISOString():this.date;
+
     this.formHealthCard.get('id').setValue(this.card.id)
     //this.formHealthCard.get('health_card_type_id').setValue(this.card.type.id) //
     this.formHealthCard.get('name').setValue(this.card.name)
     this.formHealthCard.get('card_number').setValue(this.card.card_number)
-    this.formHealthCard.get('expiration_date').setValue(this.card.expiration_date? this.card.expiration_date:'')
-    this.formHealthCard.get('issue_date').setValue(this.card.issue_date? this.card.issue_date:'')
+
+    // var current = new Date(this.card?.expiration_date? this.card?.expiration_date: this.date)
+    // let data_prestacio = this.dateService.formatISOStringDate(current);  
+    this.formHealthCard.get('expiration_date').setValue(expiration_date)
+
+    // var current2 = new Date(this.card?.issue_date? this.card?.issue_date: this.date)
+    // let data_prestacio2 = this.dateService.formatISOStringDate(current2); 
+    this.formHealthCard.get('issue_date').setValue(issue_date)
   }
   compareFn(e1: any, e2: any): boolean {
     return  e1.id === e2.id
+  }
+
+  openMessageStartDate(){
+    const message = this.getErrorStartDate()
+    if(message && message !== ''){
+      const button = this.translate.instant('button.accept')
+      this.dooleService.presentAlert(message,button)
+    }
+  }
+
+  openMessageEndDate(){
+    const message = this.getErrorEndDate()
+    if(message && message !== ''){
+      const button = this.translate.instant('button.accept')
+      this.dooleService.presentAlert(message,button)
+    }
   }
 
   getHealthCardTypes(){
@@ -166,6 +197,9 @@ export class AddHealthCardPage implements OnInit {
           if(this.card?.type?.id){
             let type = this.healthCardTypes.find(type => (type.id === this.card.type.id))
             this.formHealthCard.get('health_card_type_id').setValue(type.id)
+          }else{
+            const id = this.healthCardTypes[0]?.id
+            if(id) this.formHealthCard.get('health_card_type_id').setValue(id)
           }
         }
        },(err) => {
@@ -180,7 +214,7 @@ export class AddHealthCardPage implements OnInit {
   }
 
   addCard(){
-    console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value);
+    console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value, this.formHealthCard.valid);
     this.isSubmittedFields(true);
     if(this.formHealthCard.valid){
 

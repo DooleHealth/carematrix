@@ -29,8 +29,7 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item lines="none">
-        <ion-label>{{ 'health_card.modality' | translate}}</ion-label>
-        <ion-select interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}" [compareWith]="compareFn"  formControlName="health_card_type_id" required>
+        <ion-select stacked style="font-size: 14px;" label="{{'health_card.modality' | translate}}" interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}" [compareWith]="compareFn"  formControlName="health_card_type_id" required>
           <ion-select-option *ngFor="let card of healthCardTypes" [value]="card?.id">{{card?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -39,31 +38,47 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
-        <ion-label >{{ 'health_card.name' | translate}}</ion-label>
-        <ion-input formControlName="name" placeholder="" slot="end" (ionFocus)="isSubmitted = false" maxlength="50" required></ion-input>
-        <ion-note *ngIf="this.isSubmittedName && this.formHealthCard.get('name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-label  stacked>
+          <h5 >{{'health_card.name' | translate}}</h5>
+          <ion-note *ngIf="this.isSubmittedName && this.formHealthCard.get('name').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
+        </ion-label>
+        <ion-input  class="textMedium" formControlName="name" placeholder="" slot="end" (ionFocus)="isSubmitted = false" maxlength="50" required></ion-input>
+      </ion-item>
 
-      </ion-item>
       <ion-item>
-        <ion-text>{{ 'health_card.affiliation_number' | translate}}</ion-text>
-        <ion-input formControlName="card_number" placeholder="" slot="end" (ionFocus)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
-        <ion-note *ngIf="this.isSubmittedAffiliationNumber && this.formHealthCard.get('card_number').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-label  stacked>
+          <h5 >{{'health_card.affiliation_number' | translate}}</h5>
+          <ion-note *ngIf="this.isSubmittedAffiliationNumber && this.formHealthCard.get('card_number').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
+        </ion-label>
+        <ion-input class="textMedium" formControlName="card_number" placeholder="" slot="end" (ionFocus)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
+      </ion-item>
 
-      </ion-item>
       <ion-item>
-        <ion-label>{{ 'health_card.expedition_date' | translate}}</ion-label>
-        <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01"></ion-datetime> -->
-        <ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" min="1990-01-01"></ion-datetime>
-        <ion-note *ngIf="this.isSubmittedIssueDate && this.formHealthCard.get('issue_date').invalid" class="error ion-padding" color="danger" slot="end">{{ getErrorStartDate() }}</ion-note>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-label  stacked>
+          <h5 >{{'health_card.expedition_date' | translate}}</h5>
+          <ion-note slot="start" (click)="openMessageStartDate()" *ngIf="this.isSubmittedIssueDate && this.formHealthCard.get('issue_date').invalid" class="error " color="danger">{{ getErrorStartDate() }}</ion-note>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="issue_date"></ion-datetime-button>
       </ion-item>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [locale]="this.locale" presentation="month-year" id="issue_date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="issue_date" required></ion-datetime>
+        </ng-template>
+      </ion-modal>
+      <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01"></ion-datetime> -->
       <ion-item lines="none">
-        <ion-label>{{ 'health_card.expiration_date' | translate}}</ion-label>
-        <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
-        <ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" min="1990-01-01" [max]="this.dateMax"></ion-datetime>
-        <ion-note *ngIf="this.isSubmittedExpiration && this.formHealthCard.get('expiration_date').invalid" class="error ion-padding" color="danger" slot="end">{{ getErrorEndDate() }}</ion-note>
-        <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+        <ion-label  stacked (click)="openMessageEndDate()">
+          <h5 >{{'health_card.expiration_date' | translate}}</h5>
+          <ion-note  slot="end" *ngIf="this.isSubmittedExpiration && this.formHealthCard.get('expiration_date').invalid" class="error " color="danger" slot="end">{{ getErrorEndDate() }}</ion-note>
+        </ion-label>
+        <ion-datetime-button slot="end" datetime="expiration_date"></ion-datetime-button>
       </ion-item>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime (ionFocus)="checkDateEvent()"  [locale]="this.locale" presentation="month-year" id="expiration_date" [min]="this.date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="expiration_date" required></ion-datetime>
+        </ng-template>
+      </ion-modal>
+        <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
     </ion-list>
   </ion-card>
 </form>

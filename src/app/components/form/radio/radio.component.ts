@@ -16,7 +16,8 @@ export class RadioComponent implements OnInit {
   error_msg = ''
   options = []
   valueDefault = ''
-  constructor(private translate: TranslateService) { }
+  valueLabel = ''
+  constructor(public translate: TranslateService) { }
 
   ngOnInit() {
     let translate = this.data?.translate[`label_${this.data.type}`]
@@ -26,6 +27,8 @@ export class RadioComponent implements OnInit {
       this.valueDefault = vDefault? vDefault: this.valueDefault
       this.value = this.valueDefault
     }
+
+    console.log("* this.valueDefault:", this.valueDefault);
     this.getOptions(this.data.options, this.data?.translate)
   }
 
@@ -38,21 +41,35 @@ export class RadioComponent implements OnInit {
       }
       this.options.push(option)
     }
-    //console.log('RadioComponent options', this.options)
+    console.log('RadioComponent options', this.options)
   }
 
   setValue(event){
-    this.value =  event.target.value
-    //console.log('CheckboxComponent', this.value)
+
+    // In order to fix multiple selection on the radiougroup due to same value
+    // I've switch the value of the radio html control equals to the object's id
+    let id = event.target.value
+    let selected = this.options.find(opt => opt.id === id);
+
+    if(selected)
+      this.value = selected?.value;
+    else
+      this.value = event.target?.id
+
+    let opt = this.options.find(opt => opt.value == this.value)
+    this.valueLabel = opt? opt.label:''
+    //console.log('RadioComponent', this.value, this.valueLabel)
+
     this.change.emit({[this.data.name]: this.value});
+
   }
 
   checkValue(){
+    console.log('checkValue', this.value)
     if(this.value.length === 0 && this.data?.required && this.value === ''){
       this.error_msg = this.translate.instant('form.error_required')
       this.error = true
-    }
-    else{
+    }else{
       this.error_msg = ''
       this.error = false
     }

@@ -145,7 +145,7 @@
         <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive="active-item"
           [state]="{segment: 'diets'}">
           <ion-img class="ion-no-margin" slot="start" src="assets/icons/checklist-pen.svg"></ion-img>
-          <ion-text class="card-title" slot="start">{{ 'home.forms_subtitle' | translate}}</ion-text>
+          <ion-text class="card-title" slot="start">{{ 'setting.subtitle_form' | translate}}</ion-text>
           <ion-text slot="end" *ngIf="infoForms">{{infoForms?.hour}}</ion-text>
 
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
@@ -180,7 +180,7 @@
         <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive="active-item"
           [state]="{segment: 'diets'}">
           <ion-img class="ion-no-margin" slot="start" src="assets/icons/exercises.svg"></ion-img>
-          <ion-text class="card-title" slot="start">{{ 'home.exercises_subtitle' | translate}}</ion-text>
+          <ion-text class="card-title" slot="start">{{ 'exercices.header' | translate}}</ion-text>
           <ion-text slot="end" *ngIf="infoExercises">{{infoExercises?.hour}}</ion-text>
           <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
         </ion-item>

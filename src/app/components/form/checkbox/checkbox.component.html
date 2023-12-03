@@ -10,7 +10,7 @@
     </ion-row> 
     <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>  
       <ion-item lines="none1" class="item-option" *ngFor="let entry of this.options">
-        <ion-checkbox slot="start" mode="md" [checked]="entry.isChecked" [value]="entry.value" (ionChange)="setValue($event); checkValue()"></ion-checkbox>
+        <ion-checkbox slot="start" mode="md" [checked]="entry.isChecked" [value]="entry.value" (ionChange)="setValue($event,entry.label); checkValue()"></ion-checkbox>
         <!-- <ion-text>{{entry.label}}</ion-text> -->
         <div [innerHtml]="entry.label | safeHtml"></div>
       </ion-item>

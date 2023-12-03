@@ -26,6 +26,10 @@ export class DocumentsFilterPage implements OnInit {
   currentDate = new Date().toISOString()
   form: FormGroup;
   isLoading = false
+  date: any;
+  locale:string;
+  start_date:string;
+  end_date:string;
   constructor(
     private fb: FormBuilder,
     private dooleService: DooleService,
@@ -34,12 +38,15 @@ export class DocumentsFilterPage implements OnInit {
     public navCtrl: NavController,
     private modalCtrl: ModalController,
     public dateService: DateService
-  ) { }
+  ) { 
+    this.date = this.dateService.getToday()
+    this.locale = this.dateService.getLocale();
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
-      start_date: [],
-      end_date: [],
+      start_date: [this.date],
+      end_date: [this.date],
       diagnosticTestTypes: [this.diagnosticTestTypes],
     });
     this.getDiagnosticTestType()
@@ -122,9 +129,17 @@ export class DocumentsFilterPage implements OnInit {
   submit(){
       let filter = this.isEmptyForm()? undefined:  this.form.value
       if(filter){
-        this.changeFormatFromDate()
-        this.changeFormatToDate()
+        // this.changeFormatFromDate()
+        // this.changeFormatToDate()
+        if(this.toggle === false){
+          filter.start_date = null
+          filter.end_date = null
+        }
+
+        if(this.toggle2 === false)
+        filter.diagnosticTestTypes = []
       }
+      console.log('[DocumentsFilterPage] submit()', filter);
       this.modalCtrl.dismiss({error:null, action: 'add', filter: filter});
   }
 
@@ -161,8 +176,12 @@ export class DocumentsFilterPage implements OnInit {
   changeToggleDate(event){
     console.log('[DocumentsFilterPage] changeToggleDate()', event);
     if(!event.detail.checked){
-      this.form.get('start_date').setValue('')
-      this.form.get('end_date').setValue('')
+      this.form.get('start_date').setValue(this.date)
+      this.form.get('end_date').setValue(this.date)
+      this.start_date = this.end_date = '';
+    }else{
+      this.start_date =  this.form.get('start_date').value
+      this.end_date =   this.form.get('end_date').value
     }
   }
 
@@ -176,6 +195,16 @@ export class DocumentsFilterPage implements OnInit {
       this.form.get('diagnosticTestTypes').setValue(this.diagnosticTestTypes)
       console.log('[DocumentsFilterPage] changeToggleTestType', this.diagnosticTestTypes);
     }
+  }
+
+  getStartDate(event){
+    //console.log('[DocumentsFilterPage] getStartDate()', event);
+    this.start_date = event.detail.value
+  }
+
+  getEndDate(event){
+    //console.log('[DocumentsFilterPage] getEndDate()', event);
+    this.end_date = event.detail.value
   }
 
 }
