@@ -1,30 +1,56 @@
-<ion-card class="cardProfile" (click)="goTo(content.type)"  [routerLink]="getRouterLink(content?.type, content?.id)" [state]="{id: content?.id}" routerLinkActive='active-item' >
+<ion-card
+  class="cardProfile"
+  (click)="goTo(content.type)"
+  [routerLink]="getRouterLink(content?.type, content?.id)"
+  [state]="{ id: content?.id }"
+  routerLinkActive="active-item"
+>
   <ion-item lines="none" mode="ios">
     <ion-thumbnail slot="start">
-      <img [src]="content?.img" 
-      onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt=""
+      <img
+        [src]="content?.img"
+        onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+        alt=""
       />
     </ion-thumbnail>
-    <ion-grid> 
+    <ion-grid>
       <ion-row class="imgPadding">
-        <p>{{ content?.from | date:'mediumDate'}}  --- {{ content?.to | date:'mediumDate' }}</p>
-        <ion-icon  *ngIf="content?.accepted === false"  src='assets/icons/ellipsis orange.svg' (click)="presentAlert()" ></ion-icon>
+        <p>
+          {{ content?.from | date : "mediumDate" }} ---
+          {{ content?.to | date : "mediumDate" }}
+        </p>
+        <ion-icon
+          *ngIf="content?.accepted === false"
+          src="assets/icons/ellipsis orange.svg"
+          (click)="presentAlert()"
+        ></ion-icon>
       </ion-row>
       <ion-row>
-        <ion-text  class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title}}</ion-text>
-      
-          <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-             
+        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{
+          content?.title.length > 40
+            ? (content?.title | slice : 0 : 40) + "..."
+            : content?.title
+        }}</ion-text>
+
+        <ion-icon
+          class="arrow"
+          slot="end"
+          size="small"
+          name="chevron-forward-outline"
+        ></ion-icon>
       </ion-row>
       <ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
-        <p style="color: #BA0186;">{{'form.scheduled' | translate}} {{content?.description}}</p>
+        <p style="color: #ba0186">
+          {{ "form.scheduled" | translate }} {{ content?.description }}
+        </p>
+        asdf
       </ion-row>
       <ion-row *ngIf="content.type === 'medication'" class="textMon-For-Med">
-        <p style="color: #BA0186;">{{'medication.dose' | translate}} {{content?.description}}</p>
+        <p style="color: #ba0186">
+          {{ "medication.dose" | translate }}
+          {{ content?.description }}
+        </p>
       </ion-row>
-     
-     
     </ion-grid>
   </ion-item>
-
 </ion-card>

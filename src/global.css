@@ -333,7 +333,7 @@ ion-back-button {
 }
 
 .textOrangeBold {
-  color: #F39C12;
+  color: #f39c12;
   font-size: 16px;
   font-weight: 600;
   text-align: left;
@@ -403,21 +403,21 @@ ion-back-button {
   font-size: 14px;
   font-weight: 600;
   text-align: left;
-  color: #2ECC71;
+  color: #2ecc71;
 }
 
 .txtTitleWarning {
   font-size: 14px;
   font-weight: 600;
   text-align: left;
-  color: #F39C12;
+  color: #f39c12;
 }
 
 .txtTitleDanger {
   font-size: 14px;
   font-weight: 600;
   text-align: left;
-  color: #E74C3C;
+  color: #e74c3c;
 }
 
 /*Custom Buttons*/
@@ -474,7 +474,7 @@ ion-back-button {
   display: block;
   margin: auto;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .img-wrapper-doctors {
@@ -524,7 +524,6 @@ ion-back-button {
   position: fixed;
   top: 50%;
   left: 50%;
-
 }
 
 ion-spinner {
@@ -535,16 +534,16 @@ ion-spinner {
 }
 
 .custom-class {
-  color: #DFF2BF;
-  background-color: #4F8A10;
+  color: #dff2bf;
+  background-color: #4f8a10;
 }
 
 .toast-custom-class {
   opacity: 0.9;
-  --border-color:#32BEA6;
-  --border-radius:50%;
-  --border-style:solid;
-  --border-width:3px;
+  --border-color: #32bea6;
+  --border-radius: 50%;
+  --border-style: solid;
+  --border-width: 3px;
   --background: url("/assets/images/cheque.svg");
   --height: 3.5em;
   --width: 3.5em;
@@ -640,27 +639,27 @@ ion-spinner {
 :root h1 > app-text-shell {
   --font-size: 32px;
   --text-shell-line-height: calc(var(--font-size) * 1.2);
-  --text-shell-line-color: #CCC;
+  --text-shell-line-color: #ccc;
 }
 :root h2 > app-text-shell {
   --font-size: 28px;
   --text-shell-line-height: calc(var(--font-size) * 1.2);
-  --text-shell-line-color: #DDD;
+  --text-shell-line-color: #ddd;
 }
 :root h3 > app-text-shell {
   --font-size: 24px;
   --text-shell-line-height: calc(var(--font-size) * 1.2);
-  --text-shell-line-color: #DDD;
+  --text-shell-line-color: #ddd;
 }
 :root h4 > app-text-shell {
   --font-size: 20px;
   --text-shell-line-height: calc(var(--font-size) * 1.2);
-  --text-shell-line-color: #DDD;
+  --text-shell-line-color: #ddd;
 }
 :root h5 > app-text-shell {
   --font-size: 18px;
   --text-shell-line-height: calc(var(--font-size) * 1.2);
-  --text-shell-line-color: #DDD;
+  --text-shell-line-color: #ddd;
 }
 
 .my-alert-class {
@@ -715,13 +714,22 @@ body {
   overflow: hidden;
 }
 
-.pyro > .before, .pyro > .after {
+.pyro > .before,
+.pyro > .after {
   position: absolute;
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
-  animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+  box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+    0 0 #fff, 0 0 #fff, 0 0 #fff;
+  animation: 1s bang ease-out infinite backwards,
+    1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
 }
 
 .pyro > .after {
@@ -730,7 +738,57 @@ body {
 }
 @keyframes bang {
   to {
-    box-shadow: -129px -282.6666666667px hsl(31, 100%, 50%), 55px -158.6666666667px hsl(104, 100%, 50%), -146px -199.6666666667px hsl(100, 100%, 50%), 41px -165.6666666667px hsl(27, 100%, 50%), 214px 28.3333333333px hsl(70, 100%, 50%), 57px -164.6666666667px hsl(196, 100%, 50%), 143px -408.6666666667px hsl(145, 100%, 50%), -146px -294.6666666667px hsl(72, 100%, 50%), -226px -332.6666666667px hsl(9, 100%, 50%), 197px -361.6666666667px hsl(106, 100%, 50%), -16px -329.6666666667px hsl(275, 100%, 50%), -70px -351.6666666667px hsl(36, 100%, 50%), -201px -387.6666666667px hsl(280, 100%, 50%), -120px -228.6666666667px hsl(154, 100%, 50%), 113px -154.6666666667px hsl(1, 100%, 50%), 132px -295.6666666667px hsl(118, 100%, 50%), 208px -130.6666666667px hsl(304, 100%, 50%), 45px -293.6666666667px hsl(86, 100%, 50%), 18px -242.6666666667px hsl(358, 100%, 50%), -116px -244.6666666667px hsl(140, 100%, 50%), 90px -75.6666666667px hsl(228, 100%, 50%), -26px -402.6666666667px hsl(74, 100%, 50%), 33px -325.6666666667px hsl(242, 100%, 50%), 126px -339.6666666667px hsl(183, 100%, 50%), -226px -286.6666666667px hsl(267, 100%, 50%), 192px -242.6666666667px hsl(304, 100%, 50%), 218px -122.6666666667px hsl(236, 100%, 50%), 97px -400.6666666667px hsl(5, 100%, 50%), -67px -182.6666666667px hsl(245, 100%, 50%), -118px -301.6666666667px hsl(32, 100%, 50%), 79px -109.6666666667px hsl(335, 100%, 50%), -121px -254.6666666667px hsl(194, 100%, 50%), 143px -222.6666666667px hsl(70, 100%, 50%), 233px -414.6666666667px hsl(131, 100%, 50%), 151px -348.6666666667px hsl(346, 100%, 50%), -59px -273.6666666667px hsl(189, 100%, 50%), -92px -30.6666666667px hsl(200, 100%, 50%), -227px -257.6666666667px hsl(106, 100%, 50%), 116px -271.6666666667px hsl(80, 100%, 50%), 41px -116.6666666667px hsl(72, 100%, 50%), -222px -412.6666666667px hsl(90, 100%, 50%), -146px -292.6666666667px hsl(341, 100%, 50%), -238px -399.6666666667px hsl(214, 100%, 50%), 208px -248.6666666667px hsl(206, 100%, 50%), -110px -96.6666666667px hsl(13, 100%, 50%), -15px -9.6666666667px hsl(110, 100%, 50%), -79px -236.6666666667px hsl(260, 100%, 50%), 150px -123.6666666667px hsl(185, 100%, 50%), -100px -173.6666666667px hsl(342, 100%, 50%), -82px -68.6666666667px hsl(141, 100%, 50%), -26px -354.6666666667px hsl(113, 100%, 50%);
+    box-shadow: -129px -282.6666666667px hsl(31, 100%, 50%),
+      55px -158.6666666667px hsl(104, 100%, 50%),
+      -146px -199.6666666667px hsl(100, 100%, 50%),
+      41px -165.6666666667px hsl(27, 100%, 50%),
+      214px 28.3333333333px hsl(70, 100%, 50%),
+      57px -164.6666666667px hsl(196, 100%, 50%),
+      143px -408.6666666667px hsl(145, 100%, 50%),
+      -146px -294.6666666667px hsl(72, 100%, 50%),
+      -226px -332.6666666667px hsl(9, 100%, 50%),
+      197px -361.6666666667px hsl(106, 100%, 50%),
+      -16px -329.6666666667px hsl(275, 100%, 50%),
+      -70px -351.6666666667px hsl(36, 100%, 50%),
+      -201px -387.6666666667px hsl(280, 100%, 50%),
+      -120px -228.6666666667px hsl(154, 100%, 50%),
+      113px -154.6666666667px hsl(1, 100%, 50%),
+      132px -295.6666666667px hsl(118, 100%, 50%),
+      208px -130.6666666667px hsl(304, 100%, 50%),
+      45px -293.6666666667px hsl(86, 100%, 50%),
+      18px -242.6666666667px hsl(358, 100%, 50%),
+      -116px -244.6666666667px hsl(140, 100%, 50%),
+      90px -75.6666666667px hsl(228, 100%, 50%),
+      -26px -402.6666666667px hsl(74, 100%, 50%),
+      33px -325.6666666667px hsl(242, 100%, 50%),
+      126px -339.6666666667px hsl(183, 100%, 50%),
+      -226px -286.6666666667px hsl(267, 100%, 50%),
+      192px -242.6666666667px hsl(304, 100%, 50%),
+      218px -122.6666666667px hsl(236, 100%, 50%),
+      97px -400.6666666667px hsl(5, 100%, 50%),
+      -67px -182.6666666667px hsl(245, 100%, 50%),
+      -118px -301.6666666667px hsl(32, 100%, 50%),
+      79px -109.6666666667px hsl(335, 100%, 50%),
+      -121px -254.6666666667px hsl(194, 100%, 50%),
+      143px -222.6666666667px hsl(70, 100%, 50%),
+      233px -414.6666666667px hsl(131, 100%, 50%),
+      151px -348.6666666667px hsl(346, 100%, 50%),
+      -59px -273.6666666667px hsl(189, 100%, 50%),
+      -92px -30.6666666667px hsl(200, 100%, 50%),
+      -227px -257.6666666667px hsl(106, 100%, 50%),
+      116px -271.6666666667px hsl(80, 100%, 50%),
+      41px -116.6666666667px hsl(72, 100%, 50%),
+      -222px -412.6666666667px hsl(90, 100%, 50%),
+      -146px -292.6666666667px hsl(341, 100%, 50%),
+      -238px -399.6666666667px hsl(214, 100%, 50%),
+      208px -248.6666666667px hsl(206, 100%, 50%),
+      -110px -96.6666666667px hsl(13, 100%, 50%),
+      -15px -9.6666666667px hsl(110, 100%, 50%),
+      -79px -236.6666666667px hsl(260, 100%, 50%),
+      150px -123.6666666667px hsl(185, 100%, 50%),
+      -100px -173.6666666667px hsl(342, 100%, 50%),
+      -82px -68.6666666667px hsl(141, 100%, 50%),
+      -26px -354.6666666667px hsl(113, 100%, 50%);
   }
 }
 @keyframes gravity {
@@ -744,24 +802,29 @@ body {
   }
 }
 @keyframes position {
-  0%, 19.9% {
+  0%,
+  19.9% {
     margin-top: 10%;
     margin-left: 40%;
   }
-  20%, 39.9% {
+  20%,
+  39.9% {
     margin-top: 40%;
     margin-left: 30%;
   }
-  40%, 59.9% {
+  40%,
+  59.9% {
     margin-top: 20%;
     margin-left: 70%;
   }
-  60%, 79.9% {
+  60%,
+  79.9% {
     margin-top: 30%;
     margin-left: 20%;
   }
-  80%, 99.9% {
+  80%,
+  99.9% {
     margin-top: 30%;
     margin-left: 80%;
   }
-}/*# sourceMappingURL=global.css.map */
+} /*# sourceMappingURL=global.css.map */

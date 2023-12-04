@@ -17,9 +17,9 @@
     "message_error_serve": "Server error",
     "message_failure_response": "An unexpected error has occurred Try again",
     "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again.",
-    "login_again":"Please sign in again",
-    "about_app":"About this app",
-    "usage-tips":"<div><p>Welcome to our safe and trusted application!</p><p>To ensure your safety and security, we have put together this short getting started guide to highlight the best practices that you can follow when using our app. Follow these tips for a secure and worry-free experience:</p><ul><li>Choose a strong password: To protect your data, it's important to select a strong and unique password. a combination of uppercase and lowercase letters, numbers, and special characters. Avoid using obvious passwords or easily identifiable personal information.</li><li>Turn on two-factor authentication: Further secure your account by enabling two-factor authentication. This it will require a second level of verification, such as a temporary access code sent to your mobile phone, so even if someone gets your password, they won't be able to get in without the additional verification code.</li><li>Keep the app updated: App updates not only add new features, but also fix potential security vulnerabilities. Make sure you always have the latest version of our app installed to take advantage of all the improvements and additional protections.</li><li>Privacy Settings: Explore our privacy settings options to personalize your experience. You can control what information you share and with whom you share it. Remember to regularly review and adjust these settings to maintain an optimal level of privacy.</li></ul><p>These are just a few essential tips to maximize security when using our app. We are committed to your protection and are constantly working to ensure the integrity of your data. We will always be here to help you in case you have any questions or concerns about the security of the app, you can contact us via email support@doolehealth.com.</p><p>Thank you for choosing our app and trusting us! on us!</p><p>Team Rosia.</p></div>"
+    "login_again": "Please sign in again",
+    "about_app": "About this app",
+    "usage-tips": "<div><p>Welcome to our safe and trusted application!</p><p>To ensure your safety and security, we have put together this short getting started guide to highlight the best practices that you can follow when using our app. Follow these tips for a secure and worry-free experience:</p><ul><li>Choose a strong password: To protect your data, it's important to select a strong and unique password. a combination of uppercase and lowercase letters, numbers, and special characters. Avoid using obvious passwords or easily identifiable personal information.</li><li>Turn on two-factor authentication: Further secure your account by enabling two-factor authentication. This it will require a second level of verification, such as a temporary access code sent to your mobile phone, so even if someone gets your password, they won't be able to get in without the additional verification code.</li><li>Keep the app updated: App updates not only add new features, but also fix potential security vulnerabilities. Make sure you always have the latest version of our app installed to take advantage of all the improvements and additional protections.</li><li>Privacy Settings: Explore our privacy settings options to personalize your experience. You can control what information you share and with whom you share it. Remember to regularly review and adjust these settings to maintain an optimal level of privacy.</li></ul><p>These are just a few essential tips to maximize security when using our app. We are committed to your protection and are constantly working to ensure the integrity of your data. We will always be here to help you in case you have any questions or concerns about the security of the app, you can contact us via email support@doolehealth.com.</p><p>Thank you for choosing our app and trusting us! on us!</p><p>Team Rosia.</p></div>"
   },
   "legal": {
     "header": "Terms of Use",
@@ -183,13 +183,13 @@
     "news": "Read the news ",
     "diet": "Read the diet ",
     "blocked_level": "This level is still locked",
-    "goal":"<p>You have <strong>{{ total }} points</strong>.</p>",
-    "goal1":"<div>Get {{ required }} more and move to the next level.</div>",
+    "goal": "<p>You have <strong>{{ total }} points</strong>.</p>",
+    "goal1": "<div>Get {{ required }} more and move to the next level.</div>",
 
     "goal_txt1": "You have",
     "goal_txt2": "get",
-    "goal_txt3":"more",
-    "goal_txt4":" and move to the next level.",
+    "goal_txt3": "more",
+    "goal_txt4": " and move to the next level.",
     "level_congratulations": "Congratulations!",
     "level_accomplished": "You have reached the next level",
     "done": "done!"
@@ -199,9 +199,9 @@
     "normal_value": "Normal values:",
     "out_range_value": "Out-of-range values:",
     "danger_value": "Anomalous values:",
-    "no_data_date":"No data has been recorded yet",
-    "no_data_help":"To load a data, use the + button.",
-    "no_data":"There is no data to show",
+    "no_data_date": "No data has been recorded yet",
+    "no_data_help": "To load a data, use the + button.",
+    "no_data": "There is no data to show",
     "daily": "daily",
     "weekly": "weekly",
     "monthly": "monthly",
@@ -402,15 +402,7 @@
       "Nov",
       "Dec"
     ],
-    "days": [
-      "L",
-      "M",
-      "X",
-      "J",
-      "In",
-      "S",
-      "D"
-    ],
+    "days": ["L", "M", "X", "J", "In", "S", "D"],
     "today": "Today",
     "yesterday": "Yesterday",
     "appointment_by_user": "Appointment added by user",
@@ -470,7 +462,6 @@
       "day5": "Friday",
       "day6": "Saturday",
       "day7": "Sunday"
-
     },
     "frequency": {
       "daily": "Daily",
@@ -590,10 +581,10 @@
     "field_health": "Health",
     "description": "Description",
     "dose": "Doses",
-    "morning": "tomorrow",
+    "morning": "morning",
     "noon": "midday",
-    "aftenoon": "late",
-    "night": "night",
+    "aftenoon": "afternoon",
+    "night": "nighttime",
     "midnight": "midnight",
     "dawning": "Dawn",
     "all_day": "All day"
@@ -642,12 +633,11 @@
     "button_details": "See details",
     "from": "From",
     "to": "To",
-    "dose":"Doses : ",
+    "dose": "Doses : ",
     "accepted_rejected": "Do you want to approve or reject this medication plan?",
     "rejected": "We would like you to give us a brief explanation of the reasons for your refusal.",
     "button_accepted": "Approve",
     "button_rejected": "Reject"
-    
   },
   "button": {
     "detail": "Detail",
@@ -658,7 +648,7 @@
     "ok": "OK",
     "add": "Add",
     "delete": "Eliminate",
-    "see_detail": "View details",
+    "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
     "taked": "Outlet",
@@ -873,27 +863,27 @@
     "subtitle1": "new notifications",
     "subtitle2": "new notification"
   },
-  "date":{
+  "date": {
     "week_abbr": "W",
     "day_abbr": "D",
-    "month_abbr":"M",
+    "month_abbr": "M",
     "year_abbr": "Y"
   },
-  "form":{
+  "form": {
     "info": {
       "button": "Agreed",
-      "title":"Information"
+      "title": "Information"
     },
-    "button":{
+    "button": {
       "accept": "Accept",
-      "cancel":"Cancel",
+      "cancel": "Cancel",
       "send": "Send"
     },
-    "file":{
+    "file": {
       "select": "Select",
       "camera": "Camera",
       "file": "Files",
-      "pictures":"Pictures",
+      "pictures": "Pictures",
       "delete_media_file": "Are you sure to delete the file?",
       "input_file_name": "Enter a name for the file",
       "button_add_file": "Add files",
@@ -915,35 +905,35 @@
     "score": "Points earned for completing the form:",
     "score1": "Points earned:",
 
-    "goal":{
+    "goal": {
       "title": "Attention",
       "message": "This form <strong>only scores</strong> if it is answered <strong>correctly</strong>"
     },
     "scheduled": "Scheduled : ",
-    "head_card_text":"We will periodically send you forms and scales to keep us informed about your health status, and you will be notified when it is time to fill them in."
+    "head_card_text": "We will periodically send you forms and scales to keep us informed about your health status, and you will be notified when it is time to fill them in."
   },
-  "answer_form":{
+  "answer_form": {
     "title": "Completed forms",
     "detail_answer": "Answer detail",
     "response_history": "Answer history",
     "date": "Date",
     "answer": "Answer"
   },
-  "exercise":{
+  "exercise": {
     "title": "Exercise Detail"
   },
-  "departments":{
+  "departments": {
     "text_description": "Meet the team"
   },
-  "trak":{
+  "trak": {
     "header": "Trak"
-  },  
-  "lifestyle":{
-    "header":"Lifestyle Habits",
-    "head_card_title":"Lifestyle Habits" , 
+  },
+  "lifestyle": {
+    "header": "Lifestyle Habits",
+    "head_card_title": "Lifestyle Habits",
     "head_card_text": "Lifestyle habits can have a significant impact on an individual's physical, mental, and emotional health"
   },
-  "shared_care_plan":{
+  "shared_care_plan": {
     "title": "Shared care plan",
     "description": "<p>This is your <b>Shared Care Plan</b></p>",
     "monitoring": "Monitoring",
@@ -953,21 +943,19 @@
     "new_scp_notification_msg": "Please review the changes to approve or reject",
     "new_scp_alert_cancel": "Close",
     "new_scp_alert_review": "Review",
-    "goal_state":{
+    "goal_state": {
       "approved": "Approved",
       "rejected": "Rejected",
       "pending": "Pending"
     }
-
   },
-  "exercices":{
+  "exercices": {
     "header": "Exercises"
   },
-  "medication_plan":{
+  "medication_plan": {
     "take_time": "Shooting time"
   },
-  "confirmation-answers":{
+  "confirmation-answers": {
     "title": "Please check your answers before confirming your submission."
   }
-
 }
