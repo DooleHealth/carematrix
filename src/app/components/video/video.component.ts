@@ -103,7 +103,7 @@ close() {
 
 ngAfterViewInit(): void {
 
-  if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+  if (Capacitor.isNativePlatform()) {
     this.session = OT.initSession(this.apiKey, this.sessionId);
     var publisherOptions = {
       height: "100%",

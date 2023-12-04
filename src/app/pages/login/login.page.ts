@@ -10,6 +10,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-login',
@@ -48,7 +49,7 @@ export class LoginPage implements OnInit {
 
 
   loginUser(){
-    if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    if (Capacitor.isNativePlatform()) {
       this.credentials['platform'] = this.device?.platform
       this.credentials['device_model'] = this.device?.model
       this.credentials['os_version'] = this.device?.version

@@ -16,6 +16,7 @@ import { Constants } from 'src/app/config/constants';
 import { Market } from '@awesome-cordova-plugins/market/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import moment from 'moment'
+import { Capacitor } from '@capacitor/core';
 
 
 
@@ -64,8 +65,9 @@ export class LandingPage implements OnInit {
 
   ) {
 
-    // if (!this.platform.is('mobileweb') && !this.platform.is('desktop'))
-    //   this.checkAppLastVersion();
+      if (Capacitor.isNativePlatform())
+      this.checkAppLastVersion();
+      
    }
 
   ngOnInit() {
@@ -445,7 +447,7 @@ export class LandingPage implements OnInit {
           handler: (data) => {
 
             // Open in store
-            if (!this.platform.is('mobileweb') && !this.platform.is('desktop')){
+            if (Capacitor.isNativePlatform()){
               let id: string = this.platform.is('ios') ? this.constants.appleAppId:this.constants.androidBundleId;
               console.log("OPENING: ", id);
               this.market.open(id);

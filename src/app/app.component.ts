@@ -23,11 +23,14 @@ import { ApiEndpointsService } from './services/api-endpoints.service';
 import { VideocallPage } from './pages/agenda/videocall/videocall.page';
 
 import { register } from 'swiper/element/bundle';
+import { Capacitor } from '@capacitor/core';
 register();
 
 declare let VoIPPushNotification: any;
 declare let cordova: any;
 declare let IRoot: any;
+declare const NUM_MINUTES_GO_LOGIN = 900;
+declare const NUM_MINUTES_SHOW_BIOMETRIC = 300
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -70,8 +73,7 @@ export class AppComponent implements OnInit {
     private endPoind: ApiEndpointsService
   ) {
     this.setLanguage();
-    
-    
+
   }
 
   async ngOnInit() {
@@ -88,7 +90,7 @@ export class AppComponent implements OnInit {
       // Secutity - Rooted
       this.isDeviceRooted()
 
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+      if (Capacitor.isNativePlatform()) {
         // Push
         this.initPushNotifications();
 
@@ -877,12 +879,12 @@ export class AppComponent implements OnInit {
         let longResume: Date = this.getLastResume()
         let secondsPassed2 = ((new Date).getTime() - longResume.getTime()) / 1000;
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
-        //900 sec are 10 minutes
-        if(secondsPassed2 >= 900 && !this.isNotification){
+        //900 sec are 10 minutes NUM_MINUTES_GO_LOGIN
+        if(secondsPassed2 >= NUM_MINUTES_GO_LOGIN && !this.isNotification){
           this.router.navigateByUrl('/landing');
         }
-        // App will lock after 2 minutes
-        else if (secondsPassed >= 120 && !this.isNotification) {
+        // App will lock after 5 minutes NUM_MINUTES_SHOW_BIOMETRIC
+        else if (secondsPassed >= NUM_MINUTES_SHOW_BIOMETRIC && !this.isNotification) {
           // Must implement lock-screen
          this.showFingerprintAuthDlg()
         }
@@ -1065,7 +1067,7 @@ export class AppComponent implements OnInit {
   backButton() {
     this.platform.backButton.subscribeWithPriority(10, () => {
       // this does work
-      if (this.router.url.includes('home')) {
+      if (this.router.url.endsWith('home')) {
         //Exit from app
         this.showExitConfirm()
       } else if (this.router.url.includes('landing')) {

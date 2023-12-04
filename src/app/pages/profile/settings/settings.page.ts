@@ -13,6 +13,7 @@ import { Constants } from 'src/app/config/constants';
 import { Router } from '@angular/router';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-settings',
@@ -358,7 +359,7 @@ export class SettingsPage implements OnInit {
 
     async showBioAuthDlg(faceId: boolean) {
 
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+      if (Capacitor.isNativePlatform()) {
         this.faio.isAvailable().then((result: any) => {
           console.log(result)
 
@@ -514,7 +515,7 @@ export class SettingsPage implements OnInit {
 
 
     async signOut(confirm, index) {
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+      if (Capacitor.isNativePlatform()) {
         await this.authService.logout(confirm).subscribe(res=>{
           console.log('[SettingsPage] signOut()', JSON.stringify(res))
           if(res.success){

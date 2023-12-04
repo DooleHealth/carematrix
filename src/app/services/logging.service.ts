@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
 
@@ -12,7 +13,7 @@ export class LoggingService {
   logError(message) {
 
     // Send errors to be saved here
-    if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    if (Capacitor.isNativePlatform()) {
       console.error("Error log: ", message);
     }else{
       console.error("Error log: ", message);
