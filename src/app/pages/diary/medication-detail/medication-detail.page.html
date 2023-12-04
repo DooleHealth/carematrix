@@ -1,19 +1,29 @@
-
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'medications.title' | translate}}</ion-title>
-    <ion-buttons slot="end" >
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDrug()"></ion-icon>
+    <ion-buttons slot="end">
+      <ion-icon
+        class="primaryIcon"
+        slot="icon-only"
+        name="add"
+        (click)="addDrug()"
+      ></ion-icon>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar mode="ios" [ngSwitch]="segment">
     <ion-row class="textBlueCentered1">
       <ion-col size="2">
         <ion-buttons>
-          <ion-button type="submit" float-left ion-button color="primary" (click)="prev()">
+          <ion-button
+            type="submit"
+            float-left
+            ion-button
+            color="primary"
+            (click)="prev()"
+          >
             <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -22,14 +32,25 @@
       <ion-col size="8" class="textBlueCentered1">
         <swiper-container #slides>
           <swiper-slide>
-            <p>{{ formatSelectedDate(date) | titlecase}}</p>
+            <p style="color: black">
+              {{ formatSelectedDate(date) | titlecase}}
+            </p>
           </swiper-slide>
         </swiper-container>
       </ion-col>
       <ion-col size="2">
         <ion-buttons>
-          <ion-button type="submit" float-right ion-button color="primary" (click)="next()">
-            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+          <ion-button
+            type="submit"
+            float-right
+            ion-button
+            color="primary"
+            (click)="next()"
+          >
+            <ion-icon
+              slot="icon-only"
+              name="chevron-forward-outline"
+            ></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-col>
@@ -37,132 +58,233 @@
     <!-- hide medication shipping cart -->
 
     <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDrug()"></ion-icon>
+      <ion-icon
+        class="primaryIcon"
+        slot="icon-only"
+        name="add"
+        (click)="addDrug()"
+      ></ion-icon>
     </ion-buttons>
 
     <ion-buttons slot="end" *ngSwitchCase="'health'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
+      <ion-icon
+        class="primaryIcon"
+        slot="icon-only"
+        name="add"
+        (click)="addElement()"
+      ></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content >
+<ion-content>
   <!--medication shipping cart buttton-->
- <ng-container *ngIf="this.isLoadingDrugs;else second">
-   <div class="spin" >
-     <ion-spinner ></ion-spinner>
-   </div>
+  <ng-container *ngIf="this.isLoadingDrugs;else second">
+    <div class="spin">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-container>
+  <ng-template #second>
+    <ng-container *ngIf="this.listDrug.length > 0;else third" class="details">
+      <br />
+      <ion-list *ngFor="let list of this.listDrug">
+        <ion-label class="txtTitle"
+          >{{'diary.field_drug' | translate}} {{list.date|
+          titlecase}}</ion-label
+        >
+        <ion-card
+          *ngFor="let item of list.itemDrugs"
+          class="cardProfilePaddingBottom"
+        >
+          <ion-item
+            *ngIf="item.expanded"
+            lines="none"
+            (click)="expandItem(item)"
+            class="ion-no-padding"
+          >
+            <ion-col size="1">
+              <ion-img
+                *ngIf="item.item.forgotten == 2"
+                src="assets/icons/Pill_primary.svg"
+                class="pill"
+                style="margin-right: 5px"
+              ></ion-img>
+              <ion-img
+                *ngIf="item.item.forgotten == 0"
+                src="assets/icons/Pill_green.svg"
+                class="pill"
+                style="margin-right: 5px"
+              >
+              </ion-img>
+              <ion-img
+                *ngIf="item.item.forgotten == 1"
+                src="assets/icons/Pill_red.svg"
+                class="pill"
+              >
+              </ion-img>
+            </ion-col>
+            <ion-label
+              *ngIf="item.item.forgotten == 2"
+              color="primary"
+              class="text"
+              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            </ion-label>
+            <ion-label
+              *ngIf="item.item.forgotten == 1"
+              color="danger"
+              class="text"
+              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            </ion-label>
+            <ion-label
+              *ngIf="item.item.forgotten == 0"
+              color="success"
+              class="text"
+              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            </ion-label>
+            <ion-text class="txtTitleTrackingLittle"
+              >{{item.item.hour_intake}}</ion-text
+            >
+            <ion-icon
+              name="chevron-up-outline"
+              slot="end"
+              size="small"
+              class="icon"
+            ></ion-icon>
+          </ion-item>
+          <ion-item
+            *ngIf="!item.expanded"
+            lines="none"
+            (click)="expandItem(item)"
+            class="ion-no-padding"
+          >
+            <ion-col size="1">
+              <ion-img
+                *ngIf="item.item.forgotten == 2"
+                src="assets/icons/Pill_primary.svg"
+                class="pill"
+              ></ion-img>
+              <ion-img
+                *ngIf="item.item.forgotten == 0"
+                src="assets/icons/Pill_green.svg"
+                class="pill"
+              >
+              </ion-img>
+              <ion-img
+                *ngIf="item.item.forgotten == 1"
+                src="assets/icons/Pill_red.svg"
+                class="pill"
+              >
+              </ion-img>
+            </ion-col>
+            <ion-label
+              *ngIf="item.item.forgotten == 2"
+              color="primary"
+              class="text"
+              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            </ion-label>
+            <ion-label
+              *ngIf="item.item.forgotten == 1"
+              color="danger"
+              class="text"
+              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            </ion-label>
+            <ion-label
+              *ngIf="item.item.forgotten == 0"
+              color="success"
+              class="text"
+              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            </ion-label>
+            <ion-text class="txtTitleTrackingLittle"
+              >{{item.item.hour_intake}}</ion-text
+            >
+            <ion-icon
+              name="chevron-down-outline"
+              slot="end"
+              size="small"
+              class="icon"
+            ></ion-icon>
+          </ion-item>
 
- </ng-container>
- <ng-template #second>
-   <ng-container *ngIf="this.listDrug.length > 0;else third" class="details">
-     <br>
-     <ion-list *ngFor="let list of this.listDrug">
-       <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
-         titlecase}}</ion-label>
-       <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" >
-         <ion-item *ngIf="item.expanded" lines="none" (click)="expandItem(item)">
-           <ion-col size="2">
-             <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
-               style="margin-right: 5px"></ion-img>
-             <ion-img *ngIf="item.item.forgotten == 0" src="assets/icons/Pill_green.svg" style="margin-right: 5px">
-             </ion-img>
-             <ion-img *ngIf="item.item.forgotten == 1" src="assets/icons/Pill_red.svg" style="margin-right: 5px">
-             </ion-img>
-           </ion-col>
-           <ion-label *ngIf="item.item.forgotten == 2" color="primary">{{ (item.item.alias !== null)?
-             item.item.alias: item.item.name
-             }}
-           </ion-label>
-           <ion-label *ngIf="item.item.forgotten == 1" color="danger">{{ (item.item.alias !== null)?
-             item.item.alias: item.item.name
-             }}
-           </ion-label>
-           <ion-label *ngIf="item.item.forgotten == 0" color="success">{{ (item.item.alias !== null)?
-             item.item.alias: item.item.name
-             }}
-           </ion-label>
-           <ion-text style="align-items: center;" class="txtTitleTrackingLittle">{{item.item.hour_intake}}</ion-text>
-           <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
-         </ion-item>
-         <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItem(item)">
-           <ion-col size="2">
-             <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
-               style="margin-right: 5px"></ion-img>
-             <ion-img *ngIf="item.item.forgotten == 0" src="assets/icons/Pill_green.svg" style="margin-right: 5px">
-             </ion-img>
-             <ion-img *ngIf="item.item.forgotten == 1" src="assets/icons/Pill_red.svg" style="margin-right: 5px">
-             </ion-img>
-           </ion-col>
-           <ion-label *ngIf="item.item.forgotten == 2" color="primary">{{ (item.item.alias !== null)?
-             item.item.alias: item.item.name
-             }}
-           </ion-label>
-           <ion-label *ngIf="item.item.forgotten == 1" color="danger">{{ (item.item.alias !== null)?
-             item.item.alias: item.item.name
-             }}
-           </ion-label>
-           <ion-label *ngIf="item.item.forgotten == 0" color="success">{{ (item.item.alias !== null)?
-             item.item.alias: item.item.name
-             }}
-           </ion-label>
-           <ion-text style="align-items: center;" class="txtTitleTrackingLittle">{{item.item.hour_intake}}</ion-text>
-           <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
-         </ion-item>
+          <app-expandable expandHeight="200px" [expanded]="item.expanded">
+            <ion-item lines="none">
+              <p class="txtTitleTrackingDate">
+                {{item.item.name}} (Dosi: {{item.item.dose}})
+              </p>
+            </ion-item>
+            <div
+              class="main-container3"
+              style="display: flex; align-items: center"
+            >
+              <!-- *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" -->
+              <ion-button
+                size="small"
+                color="transparent"
+                class="buttonLink"
+                (click)="this.addDrugPlan(item.item, item.item.id)"
+                >{{ 'detail_contact.button_edit' | translate }} </ion-button
+              >&nbsp;
 
-         <app-expandable expandHeight="200px" [expanded]="item.expanded">
-           <ion-item lines="none">
-             <p class="txtTitleTrackingDate">
-               {{item.item.name}} (Dosi: {{item.item.dose}})
-             </p>
-           </ion-item>
-           <div class="main-container3" style="display: flex; align-items: center;">
-            <!-- *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" -->
-             <ion-button  size="small" color="transparent" class="buttonLink"
-               (click)="this.addDrugPlan(item.item, item.item.id)">{{ 'detail_contact.button_edit' | translate }}
-             </ion-button>&nbsp;
+              <ion-badge
+                *ngIf="item.item.forgotten == 2 && !this.isFutureDay"
+                class="primary"
+                (click)="changeTake(item.item.id, item.item.state)"
+              >
+                {{ 'button.take' | translate }}
+              </ion-badge>
 
-             <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary"
-               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
+              <ion-badge
+                color="danger"
+                *ngIf="item.item.forgotten == 1 && !this.isFutureDay"
+              >
+                {{ 'button.forgotten' | translate }}
+                <ion-icon
+                  style="margin-left: 5px"
+                  name="alert-outline"
+                  color="light"
+                ></ion-icon>
+              </ion-badge>
 
-             <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" color="danger"
-               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon
-                 style="margin-left: 5px" name="alert-outline" color="light"></ion-icon>
-             </ion-button>
+              <ion-badge
+                color="success"
+                (click)="changeTake(item.item.id, item.item.state)"
+                *ngIf="item.item.forgotten == 0 && !this.isFutureDay"
+              >
+                {{ 'button.taked' | translate }}<ion-icon
+                  style="margin-left: 5px"
+                  name="checkmark-outline"
+                  color="light"
+                ></ion-icon>
+              </ion-badge>
+              &nbsp;&nbsp;&nbsp;
 
-             <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" color="success"
-               (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
-                 style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
-             </ion-button>&nbsp;&nbsp;&nbsp;
-
-             <app-info info="{{'info.medication' | translate}}"></app-info> &nbsp; &nbsp;
-             <app-info info="{{'info.medication' | translate}}" [title]="item.item.name" [info]="item.item.frequency"  [details]="true"></app-info>
-           </div>
-         </app-expandable>
-       </ion-card>
-     </ion-list>
-
-   </ng-container>
-
-   
-
-
- </ng-template>
- <ng-template #third>
-   <ion-grid>
-     <ion-row>
-       <ion-col size="12">
-         <ion-icon class="iconNoData" name="heart"></ion-icon>
-       </ion-col>
-     </ion-row>
-     <ion-row>
-       <ion-col>
-         <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-       </ion-col>
-     </ion-row>
-   </ion-grid>
- </ng-template>
+              <app-info info="{{'info.medication' | translate}}"></app-info>
+              &nbsp; &nbsp;
+              <app-info
+                info="{{'info.medication' | translate}}"
+                [title]="item.item.name"
+                [info]="item.item.frequency"
+                [details]="true"
+              ></app-info>
+            </div>
+          </app-expandable>
+        </ion-card>
+      </ion-list>
+    </ng-container>
+  </ng-template>
+  <ng-template #third>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-icon class="iconNoData" name="heart"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
 </ion-content>
 
 <ion-footer>
