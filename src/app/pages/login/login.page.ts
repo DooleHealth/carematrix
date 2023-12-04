@@ -70,6 +70,7 @@ export class LoginPage implements OnInit {
         // this.role.setProfessional(false)
         // this.role.customAllComponents(true,false,true,false,false,false,false,true,true,true,true, false, true)
         this.setLocalLanguages(res.language)
+        localStorage.setItem('userId', res.idUser);
         this.pusherConnection.subscribePusher(res.token, res.idUser)
         console.log('[LoginPage] loginUser() this.pushNotification', this.pushNotification);
         if(this.pushNotification){

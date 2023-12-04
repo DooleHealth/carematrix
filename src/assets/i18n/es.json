@@ -777,7 +777,7 @@
     },
     "medications":{
       "list":"Listado de pedidos",
-      "title":"Envío de medicación",
+      "title":"Medicación",
       "direction":"Nuevo pedido",
       "directions_title":"1.-Selecciona una dirección de envío",
       "directions_title_2":"2.-Selecciona un tipo de envío",
@@ -948,6 +948,9 @@
         "approved": "Aprovado",
         "rejected": "Rechazado",
         "pending": "Pendiente"
+      },
+      "monitoringList": {
+        "text" : "El seguimiento es crucial para evaluar su estado de salud, detectar cambios tempranos y ajustar el tratamiento."
       }
     },
     "exercices":{

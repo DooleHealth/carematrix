@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ this.nameContent | translate}}</ion-title>
+    <ion-title>{{ 'shared_care_plan.monitoring' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
         <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
@@ -12,10 +12,47 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">monitoring</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<ion-content view-cached=”false”>
+
+  <ion-card class="cardProfile">
+    <ion-item lines="none">
+      <ion-grid> 
+        <ion-row>
+          <ion-icon style="height: 20px; width: 20px;"  src="assets/icons/shared-care-plan/scp-monitoring.svg"></ion-icon>
+          <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{ 'shared_care_plan.monitoring' | translate}}</ion-text>
+        </ion-row>
+        <ion-row >
+          <p>{{ 'shared_care_plan.monitoringList.text' | translate}}</p>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  
+  </ion-card>
+
+  <div>
+    <ion-list *ngIf="items.length > 0; else noData">
+        <app-scp-med-for-mon *ngFor="let content of items" [content]="content"></app-scp-med-for-mon>
+    </ion-list>
+  </div>
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+  </ng-template>
+  </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

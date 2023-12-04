@@ -906,6 +906,19 @@ export class DooleService {
   }
   
   //forms-Tracking
+  getAPISharedcareFormList(patient){
+    let path = `/rehabilify/sharedcareplan/monitoring/${patient}`;   
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIreminders(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+
+
   getAPIformLists(): Observable<any> {
     let path = 'forms/user';
     const endpoint = this.api.getEndpoint(path);

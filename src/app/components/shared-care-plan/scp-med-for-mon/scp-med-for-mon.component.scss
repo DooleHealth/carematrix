@@ -6,7 +6,9 @@
   color: #4192f1; /* Color del texto */
 }
 
-.custom-textarea {
-  min-height: 150px;
-  min-width: 250px;
+
+
+.custom-textarea textarea {
+  height: 150px; /* Adjust the height as per your requirement */
+  width: 150px;
 }

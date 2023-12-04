@@ -192,6 +192,8 @@ export interface medication extends SharedCarePlanLifeStyle{
     from? : string,
     to?: string
     accepted?: boolean
+    model_id?: string,
+    model?: string
 }
 
 export interface SharedCarePlanPrescribedApps {
