@@ -1,59 +1,94 @@
-import { DatePipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { CameraSource,CameraResultType, Camera } from '@capacitor/camera';
-import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
-import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { ActionSheetController, AlertController, ModalController, Platform } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { DooleService } from 'src/app/services/doole.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
-import { Capacitor } from '@capacitor/core';
+import { DatePipe } from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { CameraSource, CameraResultType, Camera } from "@capacitor/camera";
+import { Chooser } from "@awesome-cordova-plugins/chooser/ngx";
+import {
+  InAppBrowser,
+  InAppBrowserOptions,
+} from "@awesome-cordova-plugins/in-app-browser/ngx";
+import {
+  ActionSheetController,
+  AlertController,
+  ModalController,
+  Platform,
+} from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { Observable } from "rxjs";
+import { DooleService } from "src/app/services/doole.service";
+import { NotificationService } from "src/app/services/notification.service";
+import { PdfViewerComponent } from "../pdf-viewer/pdf-viewer.component";
+import { Capacitor } from "@capacitor/core";
 
 @Component({
-  selector: 'app-file-upload',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  selector: "app-file-upload",
+  templateUrl: "./file-upload.component.html",
+  styleUrls: ["./file-upload.component.scss"],
 })
 export class FileUploadComponent implements OnInit {
-  @Input('media') media: any = [];
-  @Input('disableNames') disableNames: boolean;
-  constructor(private dooleService: DooleService, private platform: Platform, private iab: InAppBrowser, private modalCtrl: ModalController, private alertController : AlertController, private translate: TranslateService,private actionSheetCtrl: ActionSheetController,private notification: NotificationService, private chooser: Chooser, private sanitizer: DomSanitizer, private datepipe: DatePipe,) { }
-  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
-  @Input('text') text: string;
-  @Input('form') form: FormGroup;
-  @Input('files') files:  Array<{ name: string, file: string, type: string, url:string }> = [];
-  @Input('length') file_length: number = 6;
+  @Input("media") media: any = [];
+  @Input("disableNames") disableNames: boolean;
+  constructor(
+    private dooleService: DooleService,
+    private platform: Platform,
+    private iab: InAppBrowser,
+    private modalCtrl: ModalController,
+    private alertController: AlertController,
+    private translate: TranslateService,
+    private actionSheetCtrl: ActionSheetController,
+    private notification: NotificationService,
+    private chooser: Chooser,
+    private sanitizer: DomSanitizer,
+    private datepipe: DatePipe
+  ) {}
+  @ViewChild("fileInput", { static: false }) fileInput: ElementRef;
+  @Input("text") text: string;
+  @Input("form") form: FormGroup;
+  @Input("files") files: Array<{
+    name: string;
+    file: string;
+    type: string;
+    url: string;
+  }> = [];
+  @Input("length") file_length: number = 6;
   @Output() numFilesChange: EventEmitter<number> = new EventEmitter<number>();
   file64: SafeResourceUrl;
-  enableButtonAddFile = false
+  enableButtonAddFile = false;
   ngOnInit() {
     console.log("[FileUploadComponent] ngOnInit() media ", this.media.length);
   }
 
-  checkPermission(){
-    return Camera.checkPermissions().then(result =>{
-      console.log('[FileUploadComponent] checkPermission(): ', result?.camera);
-      if( result?.camera == 'granted')
-        this.getSource()
-      else
-        this.getPermission();
-    }).catch(error =>{
-      console.log(`[FileUploadComponent] checkPermission(): ${error}`);
-    })
+  checkPermission() {
+    return Camera.checkPermissions()
+      .then((result) => {
+        console.log(
+          "[FileUploadComponent] checkPermission(): ",
+          result?.camera
+        );
+        if (result?.camera == "granted") this.getSource();
+        else this.getPermission();
+      })
+      .catch((error) => {
+        console.log(`[FileUploadComponent] checkPermission(): ${error}`);
+      });
   }
 
-  getPermission(){
+  getPermission() {
     Camera.requestPermissions().then((response) => {
-      console.log('Camera permission response: ', response?.camera);
-      if (response?.camera == 'granted') {
-        console.log('Granted permissions for camera');
-        this.getSource()
-        
+      console.log("Camera permission response: ", response?.camera);
+      if (response?.camera == "granted") {
+        console.log("Granted permissions for camera");
+        this.getSource();
       }
     });
   }
@@ -69,87 +104,89 @@ export class FileUploadComponent implements OnInit {
   }
 
   async selectSource() {
-    this.checkPermission()
+    this.checkPermission();
   }
-  
-  async getSource() {
 
-    if(this.media.length >= this.file_length){
+  async getSource() {
+    if (this.media.length >= this.file_length) {
       this.presentAlert();
-      return
+      return;
     }
     const buttons = [
       {
-        text: this.translate.instant('documents_add.camera'),
-        icon: 'camera',
+        text: this.translate.instant("documents_add.camera"),
+        icon: "camera",
         handler: () => {
           this.addImage(CameraSource.Camera);
-        }
+        },
       },
       {
-        text: this.translate.instant('documents_add.pictures'),
-        icon: 'image',
+        text: this.translate.instant("documents_add.pictures"),
+        icon: "image",
         handler: () => {
           this.addImage(CameraSource.Photos);
-        }
+        },
       },
       {
-        text: this.translate.instant('documents_add.file'),
-        icon: 'document',
+        text: this.translate.instant("documents_add.file"),
+        icon: "document",
         handler: () => {
           this.addFile();
-        }
-      }
+        },
+      },
     ];
 
     // Only allow file selection inside a browser
 
-    if (!this.platform.is('hybrid')) {
+    if (!this.platform.is("hybrid")) {
       buttons.push({
-        text: 'Choose a File',
-        icon: 'attach',
+        text: "Choose a File",
+        icon: "attach",
         handler: () => {
           this.fileInput.nativeElement.click();
-        }
+        },
       });
     }
 
     const actionSheet = await this.actionSheetCtrl.create({
-      mode: 'ios',
-      buttons
+      mode: "ios",
+      buttons,
     });
     await actionSheet.present();
   }
 
-  getName(m){
-    if(m?.name && m?.name !== "")
-      return m.name
-    else if(m?.file_name)
-      return m?.file_name.split('/').pop();
-    else if(m?.file)
-      return m?.file.split('/').pop();
-    else
-      return 'new image...'
-   }
+  getName(m) {
+    if (m?.name && m?.name !== "") return m.name;
+    else if (m?.file_name) return m?.file_name.split("/").pop();
+    else if (m?.file) return m?.file.split("/").pop();
+    else return "new image...";
+  }
 
   async addFile() {
-    this.chooser.getFile().then(async file => {
-      if (file) {
-        console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
-        if(this.disableNames){
-          if(this.files.length >= this.file_length){
-            this.files.pop()
+    this.chooser
+      .getFile()
+      .then(async (file) => {
+        if (file) {
+          console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
+          if (this.disableNames) {
+            if (this.files.length >= this.file_length) {
+              this.files.pop();
+            }
+            this.files.push({
+              name: file.name,
+              file: file.path,
+              type: file.mimeType,
+              url: null,
+            });
+            this.numFilesChange.emit(this.files.length);
+          } else {
+            this.presentPrompt(file.path, file.name, file.mimeType);
           }
-          this.files.push({ name: file.name, file: file.dataURI, type: file.mimeType, url: null })
-          this.numFilesChange.emit(this.files.length)
         }
-        else{
-          this.presentPrompt(file.dataURI, file.name, file.mimeType)
-        }
-      }
-    }).catch((error: any) => {
-      console.error(error)
-    });
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
   }
 
   async addImage(source: CameraSource) {
@@ -157,24 +194,31 @@ export class FileUploadComponent implements OnInit {
       quality: 60,
       allowEditing: false,
       resultType: CameraResultType.Base64,
-      source
+      source,
     }).catch((e) => {
-      console.log('cancelled');
+      console.log("cancelled");
     });
-    var image = imageA
+    var image = imageA;
     if (image) {
-      var filename= 'img_'+this.transformDate(Date.now(), 'd-M-y_hmmss')+ '.' + image.format;
+      var filename =
+        "img_" +
+        this.transformDate(Date.now(), "d-M-y_hmmss") +
+        "." +
+        image.format;
       console.log("[FileUploadComponent] addImage()", JSON.stringify(image));
-      let img = `data:image/${image.format};base64,`+image.base64String
-      if(this.disableNames){
-        if(this.files.length >= this.file_length){
-          this.files.pop()
+      let img = `data:image/${image.format};base64,` + image.base64String;
+      if (this.disableNames) {
+        if (this.files.length >= this.file_length) {
+          this.files.pop();
         }
-        this.files.push({ name: filename, file: img, type: image.format, url: null })
-        this.numFilesChange.emit(this.files.length)
-      }
-      else
-      this.presentPrompt(img, filename, image.format)
+        this.files.push({
+          name: filename,
+          file: img,
+          type: image.format,
+          url: null,
+        });
+        this.numFilesChange.emit(this.files.length);
+      } else this.presentPrompt(img, filename, image.format);
     }
   }
 
@@ -186,20 +230,26 @@ export class FileUploadComponent implements OnInit {
     const eventObj: any = event as any;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file: File = target.files[0];
-    const toBase64 = file => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
-    if(file){
-      const result = await toBase64(file).catch(e => Error(e));
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    if (file) {
+      const result = await toBase64(file).catch((e) => Error(e));
       var base64result = result as string;
-      if(this.files.length >= this.file_length){
-        this.files.pop()
+      if (this.files.length >= this.file_length) {
+        this.files.pop();
       }
-      this.files.push({ name: file.name, file: base64result, type: file.type, url: null })
-      this.numFilesChange.emit(this.files.length)
+      this.files.push({
+        name: file.name,
+        file: base64result,
+        type: file.type,
+        url: null,
+      });
+      this.numFilesChange.emit(this.files.length);
     }
   }
 
@@ -210,92 +260,104 @@ export class FileUploadComponent implements OnInit {
   removeFile(name: string) {
     //console.log("removeFile: ", name);
     this.files.forEach((element, index) => {
-      if (element.name == name){
+      if (element.name == name) {
         this.files.splice(index, 1);
-        this.numFilesChange.emit(this.files.length)
+        this.numFilesChange.emit(this.files.length);
       }
     });
   }
 
-  openFileMedia(media){
+  openFileMedia(media) {
     console.log("media", media);
     window.open(media.temporaryUrl, "");
   }
 
-  openFile(file){
+  openFile(file) {
     console.log("openFile", file);
     console.log("openFile", file.file);
-    let type : string = file.type;
+    let type: string = file.type;
 
-    const formatStartIndex = file.file.indexOf('/') + 1;
-    const formatEndIndex = file.file.indexOf(';');
+    const formatStartIndex = file.file.indexOf("/") + 1;
+    const formatEndIndex = file.file.indexOf(";");
     const imageFormat = file.file.substring(formatStartIndex, formatEndIndex);
 
-    console.log(imageFormat)
-    if(imageFormat.includes('image') || imageFormat.includes('jpeg') || imageFormat.includes('jpg') || imageFormat.includes('png')){
+    console.log(imageFormat);
+    if (
+      imageFormat.includes("image") ||
+      imageFormat.includes("jpeg") ||
+      imageFormat.includes("jpg") ||
+      imageFormat.includes("png")
+    ) {
       var image = new Image();
       //image.src = "data:"+ file.type + ";base64," + file.file;
-      image.src = file.file;      
-        if (Capacitor.isNativePlatform()) {
-        var pageContent = '<html><head></head><body>'+ image.outerHTML +'</body></html>';
-        var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+      image.src = file.file;
+      if (Capacitor.isNativePlatform()) {
+        var pageContent =
+          "<html><head></head><body>" + image.outerHTML + "</body></html>";
+        var pageContentUrl = "data:text/html;base64," + btoa(pageContent);
         this.openWithInAppBrowser(pageContentUrl);
-      }else{
+      } else {
         var w = window.open("");
         w.document.write(image.outerHTML);
       }
-
-    }else if(imageFormat.includes('pdf')){
-      
-        if (Capacitor.isNativePlatform()) {
-        var pageContent = "<html><head></head><body><iframe width='100%' height='100%' src='data:application/pdf;base64, " + file.file + "'></iframe></body></html>";
-        var pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+    } else if (imageFormat.includes("pdf")) {
+      if (Capacitor.isNativePlatform()) {
+        var pageContent =
+          "<html><head></head><body><iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+          file.file +
+          "'></iframe></body></html>";
+        var pageContentUrl = "data:text/html;base64," + btoa(pageContent);
         //this.openWithInAppBrowser(pageContentUrl);
-        this.actionOpenFiles(file.file)
-
-      }else{
-        let pdfWindow = window.open("")
-        pdfWindow.document.write("<iframe width='100%' height='100%' src='" + encodeURI(file.file) + "'></iframe>")
+        this.actionOpenFiles(file.file);
+      } else {
+        let pdfWindow = window.open("");
+        pdfWindow.document.write(
+          "<iframe width='100%' height='100%' src='" +
+            encodeURI(file.file) +
+            "'></iframe>"
+        );
       }
-    }else
-      this.presentAlert();
-
+    } else this.presentAlert();
   }
 
-  public openWithInAppBrowser(url : string){
-    let options : InAppBrowserOptions = {
-      location : 'yes',//Or 'no'
-      hideurlbar:'yes',
-      hidden : 'no', //Or  'yes'
-      clearcache : 'yes',
-      clearsessioncache : 'yes',
-      enableViewPortScale: 'yes',
-      zoom : 'yes',//Android only ,shows browser zoom controls
-      hardwareback : 'yes',
-      mediaPlaybackRequiresUserAction : 'no',
-      shouldPauseOnSuspend : 'no', //Android only
-      closebuttoncaption : 'Close', //iOS only
-      disallowoverscroll : 'no', //iOS only
-      toolbar : 'yes', //iOS only
-      enableViewportScale : 'no', //iOS only
-      allowInlineMediaPlayback : 'no',//iOS only
-      presentationstyle : 'pagesheet',//iOS only
-      fullscreen : 'yes',//Windows only
+  public openWithInAppBrowser(url: string) {
+    let options: InAppBrowserOptions = {
+      location: "yes", //Or 'no'
+      hideurlbar: "yes",
+      hidden: "no", //Or  'yes'
+      clearcache: "yes",
+      clearsessioncache: "yes",
+      enableViewPortScale: "yes",
+      zoom: "yes", //Android only ,shows browser zoom controls
+      hardwareback: "yes",
+      mediaPlaybackRequiresUserAction: "no",
+      shouldPauseOnSuspend: "no", //Android only
+      closebuttoncaption: "Close", //iOS only
+      disallowoverscroll: "no", //iOS only
+      toolbar: "yes", //iOS only
+      enableViewportScale: "no", //iOS only
+      allowInlineMediaPlayback: "no", //iOS only
+      presentationstyle: "pagesheet", //iOS only
+      fullscreen: "yes", //Windows only
     };
-      let target = "_blank";
+    let target = "_blank";
 
-      this.iab.create(url,target, options);
+    this.iab.create(url, target, options);
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
+      cssClass: "my-alert-class",
       //mode: 'ios',
-      message: this.translate.instant("documents_add.alert_media", {num: this.file_length}),
-      buttons: [{
-        cssClass: 'primary',
-        text: 'Ok',
-      }]
+      message: this.translate.instant("documents_add.alert_media", {
+        num: this.file_length,
+      }),
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+        },
+      ],
     });
 
     await alert.present();
@@ -303,166 +365,172 @@ export class FileUploadComponent implements OnInit {
 
   async presentPrompt(file, filename, type) {
     const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
+      cssClass: "my-alert-class",
       //mode: 'ios',
-      subHeader: this.translate.instant('documents_add.input_file_name'),
+      subHeader: this.translate.instant("documents_add.input_file_name"),
       inputs: [
         {
-          name: 'filename',
-          type: 'text',
-          placeholder: this.translate.instant('documents_add.name'),
-        }
+          name: "filename",
+          type: "text",
+          placeholder: this.translate.instant("documents_add.name"),
+        },
       ],
-        buttons: [
-          {
-            text: this.translate.instant("button.cancel"),
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: (blah) => {
-              if(this.files.length >= this.file_length){
-                this.files.pop()
-              }
-              this.files.push({ name: filename, file: file, type: type, url: null })
-              this.numFilesChange.emit(this.files.length)
+      buttons: [
+        {
+          text: this.translate.instant("button.cancel"),
+          role: "cancel",
+          cssClass: "secondary",
+          handler: (blah) => {
+            if (this.files.length >= this.file_length) {
+              this.files.pop();
             }
-          }, {
-            text: this.translate.instant("button.accept"),
-            role: 'confirm',
-            cssClass: 'primary',
-            handler: (data) => {
-              //console.log('[FileUploadComponent] AlertConfirm Okay', data.filename );
-              if (data.filename && data.filename !== '') {
-                 let name = data.filename +'.'+filename.split('.').pop()
-                 if(this.files.length >= this.file_length){
-                  this.files.pop()
-                }
-                 this.files.push({ name: name, file: file, type: type, url: null })
-                 this.numFilesChange.emit(this.files.length)
-              } else {
-                return false;
+            this.files.push({
+              name: filename,
+              file: file,
+              type: type,
+              url: null,
+            });
+            this.numFilesChange.emit(this.files.length);
+          },
+        },
+        {
+          text: this.translate.instant("button.accept"),
+          role: "confirm",
+          cssClass: "primary",
+          handler: (data) => {
+            //console.log('[FileUploadComponent] AlertConfirm Okay', data.filename );
+            if (data.filename && data.filename !== "") {
+              let name = data.filename + "." + filename.split(".").pop();
+              if (this.files.length >= this.file_length) {
+                this.files.pop();
               }
+              this.files.push({
+                name: name,
+                file: file,
+                type: type,
+                url: null,
+              });
+              this.numFilesChange.emit(this.files.length);
+            } else {
+              return false;
             }
-          }
-        ]
+          },
+        },
+      ],
     });
 
     await alert.present();
   }
 
-  isEmptyFiles():boolean{
-    if(this.files.length == 0){
-      return true
-    }
-    else false
+  isEmptyFiles(): boolean {
+    if (this.files.length == 0) {
+      return true;
+    } else false;
   }
 
-
-   uploadFiles(id, model: string):Observable<any>{
+  uploadFiles(id, model: string): Observable<any> {
     let n: any = [];
     let f: any = [];
-    this.files.forEach(element => {
-      f.push(element.file)
+    this.files.forEach((element) => {
+      f.push(element.file);
       n.push(element.name);
     });
 
     let params = {
-      'model': model,
-      'id':  id,
-      'file': f,
-      'name': n
-    }
+      model: model,
+      id: id,
+      file: f,
+      name: n,
+    };
 
     //console.log("[FileUploadComponent] postAPIAddMedia:", params);
-    return this.dooleService.postAPIAddMedia(params)
-
+    return this.dooleService.postAPIAddMedia(params);
   }
 
-  getParamsToSend(id, model: string){
+  getParamsToSend(id, model: string) {
     let n: any = [];
     let f: any = [];
-    this.files.forEach(element => {
-      f.push(element.file)
+    this.files.forEach((element) => {
+      f.push(element.file);
       n.push(element.name);
     });
 
     return {
-      'model': model,
-      'id':  id,
-      'file': f,
-      'name': n
-    }
-
+      model: model,
+      id: id,
+      file: f,
+      name: n,
+    };
   }
 
-  async actionOpenFiles(pdf){
-      console.log('[StudiesPage] actionOpenFiles()',pdf);
-      const modal = await this.modalCtrl.create({
-        component:  PdfViewerComponent,
-        componentProps: { pdfSrc: pdf},
-        cssClass: "modal-custom-class"
-      });
-    
-      modal.onDidDismiss()
-        .then((result) => {      
-        });
-    
-        await modal.present(); 
+  async actionOpenFiles(pdf) {
+    console.log("[StudiesPage] actionOpenFiles()", pdf);
+    const modal = await this.modalCtrl.create({
+      component: PdfViewerComponent,
+      componentProps: { pdfSrc: pdf },
+      cssClass: "modal-custom-class",
+    });
 
+    modal.onDidDismiss().then((result) => {});
+
+    await modal.present();
   }
 
-
-  deleteMediaFile(m){
+  deleteMediaFile(m) {
     this.dooleService.deleteFile(m.id).subscribe(
       async (data) => {
         //console.log("data:", data);
-        if(data)
-          this.notification.displayToastSuccessful()
-        else{
-          let message = this.translate.instant('documents_add.error_alert_message')
-          alert(message)
+        if (data) this.notification.displayToastSuccessful();
+        else {
+          let message = this.translate.instant(
+            "documents_add.error_alert_message"
+          );
+          alert(message);
         }
       },
       (error) => {
-        alert( 'ERROR(' + error.code + '): ' + error.message)
+        alert("ERROR(" + error.code + "): " + error.message);
         console.log("error: ", error);
         throw new HttpErrorResponse(error);
       },
       () => {
         // Called when operation is complete (both success and error)
-      });
+      }
+    );
   }
 
   async presentAlertConfirm(mediaFile, index?, isNewFile?) {
-    let message = this.translate.instant("documents_add.delete_media_file")
+    let message = this.translate.instant("documents_add.delete_media_file");
     const alert = await this.alertController.create({
-      cssClass: 'my-alert-class',
+      cssClass: "my-alert-class",
       //mode: 'ios',
       //header: this.translate.instant("alert.header_confirmation"),
       message: message,
       buttons: [
         {
           text: this.translate.instant("alert.button_cancel"),
-          role: 'cancel',
-          cssClass: 'secondary',
+          role: "cancel",
+          cssClass: "secondary",
           handler: (blah) => {
             //console.log('[FileUploadComponent] AlertConfirm Cancel');
-          }
-        }, {
+          },
+        },
+        {
           text: this.translate.instant("button.continue"),
-          role: 'confirm',
-          cssClass: 'primary',
+          role: "confirm",
+          cssClass: "primary",
           handler: () => {
             //console.log('[FileUploadComponent] AlertConfirm Okay');
-              if(isNewFile){
-                this.files.splice(index,1)
-                this.numFilesChange.emit(this.files.length)
-                return
-              }
-              this.deleteMediaFile(mediaFile);
-              this.media.splice(index,1)
-          }
-        }
-      ]
+            if (isNewFile) {
+              this.files.splice(index, 1);
+              this.numFilesChange.emit(this.files.length);
+              return;
+            }
+            this.deleteMediaFile(mediaFile);
+            this.media.splice(index, 1);
+          },
+        },
+      ],
     });
 
     await alert.present();
