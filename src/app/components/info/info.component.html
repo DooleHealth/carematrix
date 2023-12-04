@@ -1,12 +1,7 @@
+<div [ngSwitch]="details">
+  <ion-label (click)="presentAlert()" *ngSwitchCase="true" color="primary">{{
+    "button.see_detail" | translate
+  }}</ion-label>
 
-<div [ngSwitch]="details"> 
-   
-
-    <ion-label (click)="presentAlert()" *ngSwitchCase="true" color="primary">{{ 'button.see_detail' | translate }}</ion-label>
-  
-    
-
-  <ion-icon *ngSwitchCase=""  name="information-circle-outline" (click)="presentAlert()" ></ion-icon>
-
- 
+  <!-- <ion-icon *ngSwitchCase=""  name="information-circle-outline" (click)="presentAlert()" ></ion-icon> -->
 </div>
