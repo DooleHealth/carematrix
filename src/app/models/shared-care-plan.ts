@@ -207,8 +207,9 @@ export interface SharedCarePlanPrescribedApps {
  * Medical Procedure of Shared care Plan
  */
 export interface SharedCarePlanProcedure extends SharedCarePlan {
+    id?: string | number;
     date: string;
-    staff?: string;
-    center?: string
+    staff?: string | any;
+    department?: string
     img?: string;
 }

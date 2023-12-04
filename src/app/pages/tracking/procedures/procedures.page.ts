@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
-import { SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
+import { MedicalPlanGoalsAdapter, SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
@@ -13,7 +13,7 @@ export class ProceduresPage implements OnInit {
   listItem: any[] = []
   nameContent: string = ContentTypeTranslatedName.MedicalProcedure
   iconContent = ContentTypeIcons.MedicalProcedure
-  private scpGoals:SharedCarePlanGoals
+  private scpProcedures:MedicalPlanGoalsAdapter
   isLoading = false
   constructor(
     private scpService: SharedCarePlanService,
@@ -21,7 +21,7 @@ export class ProceduresPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.scpGoals = new SharedCarePlanGoals()
+    this.scpProcedures = new MedicalPlanGoalsAdapter()
   }
 
   ionViewWillEnter() {
@@ -35,13 +35,13 @@ export class ProceduresPage implements OnInit {
     this.scpService.getAPI_SCP_procedures(this.authService.user.idUser).subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getProceduresImformation()', await res);
-        if(res.length >0)
-        this.listItem = this.scpGoals.adapterForView(
-          res.goals, // JSON 
-          'name',  //title
-          'from_date',  //date
-          'content_type', //type
-          'is_new_content' //is_new_content
+        this.listItem = this.scpProcedures.adapterForView(
+          res, // JSON 
+          'title',  //title
+          'data',  //date
+          'type', //type
+          'staff', //staff
+          'department'
           )  
         this.isLoading = false
         //console.log('[GoalsPage] getProceduresImformation() goals', await this.listItem);

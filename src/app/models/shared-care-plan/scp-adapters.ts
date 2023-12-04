@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanProcedure,  } from "../shared-care-plan";
+import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanProcedure} from "../shared-care-plan";
 
 export class ScpAdapters extends ContentComponent {
     img?: string;
@@ -70,6 +70,7 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
 
     adapterForView(list: any[], title: string, date: string, type: string, is_new_content: string, aderence?:string, state?:string){
         let newList: SharedCarePlanGoal[] = []
+            if(list?.length >0)
             list.forEach((goal) => {
                 const percentage = goal?.aderence?.total_percentage;
                 const state = goal?.last_accepted_or_declined?.type
@@ -129,14 +130,39 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
 export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePlanProcedure {
     date: string;
     staff?: string;
-    center?: string;
-    boolean_state?: boolean;
-    icon?: string;
+    department?: string;
     title: string;
     description?: string;
     type: string;
-    state?: string | boolean;
     routerlink?: any;
+
+    constructor(){
+        super();
+    }
+
+    adapterForView(list: any[], title: string, date: string, type: string, staff:string, department){
+        let newList: SharedCarePlanProcedure[] = []
+            if(list?.length >0)
+            list.forEach((procedure) => {
+                
+                let data: SharedCarePlanProcedure = {
+                    id: procedure?.id,       // id -> id procedure
+                    title: procedure[title],
+                    date: procedure[date],   //  from_date
+                    type: procedure[type],     // "App\\MedicationPlan"
+                    staff: procedure[staff],  
+                }                 
+                newList.push(data)
+            });
+            return newList
+         
+    }
+
+    setStaff(staff,department){
+        
+    }
+
+
 
 }
 // type Class = {

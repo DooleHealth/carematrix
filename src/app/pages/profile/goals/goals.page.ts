@@ -41,7 +41,6 @@ export class GoalsPage implements OnInit {
     this.scpService.getAPI_SCP_goals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
-        if(res?.goals?.length >0)
         this.listItem = this.scpGoals.adapterForView(
           res.goals, // JSON 
           'name',  //title
