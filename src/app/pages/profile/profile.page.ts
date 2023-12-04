@@ -14,6 +14,7 @@ import { VideocallIframePage } from '../agenda/videocall-iframe/videocall-iframe
 import { PatientsPage } from './patients/patients.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-profile',
@@ -52,7 +53,7 @@ export class ProfilePage implements OnInit {
     this.modeNumDev = 0
     this.getPersonalInformation()
 
-    if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    if (Capacitor.isNativePlatform()) {
     this.appVersion.getVersionNumber().then((version)=>{
       this.version = version;
     });
@@ -83,7 +84,7 @@ export class ProfilePage implements OnInit {
 
 
     async signOut(confirm) {
-      if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+      if (Capacitor.isNativePlatform()) {
 
         this.authService.logout(confirm).subscribe(
           async (res: any)=>{

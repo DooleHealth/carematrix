@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
+import { Capacitor } from '@capacitor/core';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/config/constants';
@@ -46,7 +47,7 @@ export class BiometricAuthPage implements OnInit {
 
   async showBioAuthDlg() {
 
-    if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+    if (Capacitor.isNativePlatform()) {
       this.faio.isAvailable().then((result: any) => {
         console.log(result)
 

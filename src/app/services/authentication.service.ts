@@ -11,6 +11,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FamilyUnit } from '../models/user';
 import { TranslateService } from '@ngx-translate/core';
 import { TokenService } from './token.service';
+import { Capacitor } from '@capacitor/core';
 
 const INTRO_KEY = 'intro';
 //const TOKENS = 'tokens';
@@ -118,7 +119,7 @@ export class AuthenticationService {
 
         // Set indexEndPoint ios_dev if it is QA
           this.getIndexEndPoint()
-            if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+            if (Capacitor.isNativePlatform()) {
               //console.log(data);
               let access = true;
               if(this.deviceToken && this.devicePlatform)

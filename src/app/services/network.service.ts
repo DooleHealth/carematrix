@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
+import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { fromEvent, merge, of, Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -16,7 +17,7 @@ export class NetworkService {
             observer.next(true);
         }).pipe(mapTo(true));
 
-        if (!this.platform.is('mobileweb') && !this.platform.is('desktop')) {
+        if (Capacitor.isNativePlatform()) {
             // on Device
             console.log('on Device');
             this.online$ = merge(
