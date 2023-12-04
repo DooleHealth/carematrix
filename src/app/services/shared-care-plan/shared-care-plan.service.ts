@@ -26,7 +26,7 @@ export class SharedCarePlanService {
   }
 
   getAPI_SCP_procedures(id): Observable<any> {
-    let path = `rehabilify/medical-procedures/${id}`;
+    let path = `rehabilify/sharedcareplan/medical-procedures/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

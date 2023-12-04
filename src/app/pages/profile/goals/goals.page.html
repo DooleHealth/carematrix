@@ -17,7 +17,7 @@
     <ion-spinner></ion-spinner>
   </div>
 
-  <ion-card class="cardProfile">
+  <ion-card class="cardProfile" *ngIf="listItem.length > 0; else noData">
     <ion-item lines="none">
       <ion-icon [src]="iconContent"></ion-icon>
       <ion-text>{{nameContent | translate}}</ion-text>

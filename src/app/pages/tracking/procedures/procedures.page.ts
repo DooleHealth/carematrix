@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
@@ -16,20 +17,25 @@ export class ProceduresPage implements OnInit {
   isLoading = false
   constructor(
     private scpService: SharedCarePlanService,
-    
+    private authService: AuthenticationService,
   ) { }
 
   ngOnInit() {
     this.scpGoals = new SharedCarePlanGoals()
   }
 
+  ionViewWillEnter() {
+    this.getProceduresImformation()
+  }
 
-  getGoalImformation(){
+
+  getProceduresImformation(){
     this.listItem = []
     this.isLoading = true
-    this.scpService.getAPI_SCP_goals().subscribe(
+    this.scpService.getAPI_SCP_procedures(this.authService.user.idUser).subscribe(
       async (res: any) =>{
-        console.log('[GoalsPage] getGoalImformation()', await res);
+        console.log('[GoalsPage] getProceduresImformation()', await res);
+        if(res.length >0)
         this.listItem = this.scpGoals.adapterForView(
           res.goals, // JSON 
           'name',  //title
@@ -38,9 +44,9 @@ export class ProceduresPage implements OnInit {
           'is_new_content' //is_new_content
           )  
         this.isLoading = false
-        //console.log('[GoalsPage] getGoalImformation() goals', await this.listItem);
+        //console.log('[GoalsPage] getProceduresImformation() goals', await this.listItem);
        },(err) => { 
-          console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
+          console.log('getProceduresImformation() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false
           throw err; 
       });

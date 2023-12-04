@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle } from "../shared-care-plan";
+import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanProcedure,  } from "../shared-care-plan";
 
 export class ScpAdapters extends ContentComponent {
     img?: string;
@@ -126,7 +126,19 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
     
 }
 
+export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePlanProcedure {
+    date: string;
+    staff?: string;
+    center?: string;
+    boolean_state?: boolean;
+    icon?: string;
+    title: string;
+    description?: string;
+    type: string;
+    state?: string | boolean;
+    routerlink?: any;
 
+}
 // type Class = {
 //     new (...args: any[]): unknown
 // }

@@ -50,6 +50,7 @@ import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-me
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { FileUploadV2Component } from './file-upload-v2/file-upload-v2.component';
 import { ConfirmationAnswersComponent } from './form/confirmation-answers/confirmation-answers.component';
+import { ContentDateComponent } from './shared-care-plan/content-date/content-date.component';
 
 @NgModule({
     imports: [
@@ -104,7 +105,8 @@ import { ConfirmationAnswersComponent } from './form/confirmation-answers/confir
     ScpMedForMonComponent,
     PdfViewerComponent,
     ConfirmationAnswersComponent,
-    FileUploadV2Component
+    FileUploadV2Component,
+    ContentDateComponent
   ],
   exports: [
     ShellModule,
@@ -146,7 +148,8 @@ import { ConfirmationAnswersComponent } from './form/confirmation-answers/confir
     ScpMedForMonComponent,
     PdfViewerComponent,
     ConfirmationAnswersComponent,
-    FileUploadV2Component
+    FileUploadV2Component,
+    ContentDateComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
