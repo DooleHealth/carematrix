@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
-import { DooleService } from 'src/app/services/doole.service';
 import { DrugsDetailPage } from '../../diary/drugs-detail/drugs-detail.page';
 import { ModalController } from '@ionic/angular';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -17,7 +16,7 @@ export class GoalsPage implements OnInit {
   listItem: any[] = []
   nameContent: string = ContentTypeTranslatedName.Goals
   iconContent = ContentTypeIcons.Goals
-  public scpGoals:SharedCarePlanGoals
+  private scpGoals:SharedCarePlanGoals
   isLoading = false
   constructor(
     public router:Router,
