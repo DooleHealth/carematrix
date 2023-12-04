@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SharedCarePlanProcedure } from 'src/app/models/shared-care-plan';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-content-date',
@@ -7,17 +8,23 @@ import { SharedCarePlanProcedure } from 'src/app/models/shared-care-plan';
   styleUrls: ['./content-date.component.scss'],
 })
 export class ContentDateComponent implements OnInit {
-    @Input() content: SharedCarePlanProcedure
-    @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor() {
+  @Input() content: SharedCarePlanProcedure
+  @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
+  date: string;
+  constructor(public dateService: DateService) {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setDate()
+  }
 
   goTo(type){
     this.redirect.emit({type: type})
+  }
+
+  setDate(){
+    this.date = this.dateService.getFormatTime(this.content?.date)
   }
 
 }

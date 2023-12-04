@@ -42,13 +42,13 @@
         ></ion-icon>
       </ion-row>
       <!--<ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
-        <p style="color: var(--enabled-alert)">
+        <p style="color: var(--malva)">
           {{ "form.scheduled" | translate }} {{ content?.description }}
         </p>
         
       </ion-row>-->
       <ion-row *ngIf="content.type === 'medication'" class="textMon-For-Med">
-        <p style="color: var(--enabled-alert)">
+        <p style="color: var(--malva)">
           {{ "medication.dose" | translate }}
           {{ content?.description }}
         </p>

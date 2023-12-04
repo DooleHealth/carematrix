@@ -960,5 +960,8 @@
   },
   "confirmation-answers": {
     "title": "Please check your answers before confirming your submission."
+  },
+  "medical_procedure_list":{
+    "text":"Here you will find all your medical procedures and diagnostic tests scheduled on a timeline."
   }
 }

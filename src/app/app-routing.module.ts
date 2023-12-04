@@ -168,10 +168,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pdf/pdf.module').then( m => m.PdfPageModule)
   },
   {
-    path: 'shared-care-plan',
-    loadChildren: () => import('./pages/shared-care-plan/shared-care-plan.module').then( m => m.SharedCarePlanPageModule)
-  },
-  {
     path: 'lifestyle-habits',
     loadChildren: () => import('./pages/tracking/lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsPageModule)
   },

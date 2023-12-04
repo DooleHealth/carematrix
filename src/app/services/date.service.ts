@@ -195,6 +195,19 @@ export class DateService {
     return day[0].toUpperCase() + day.slice(1);
   }
 
+  public selectedDateFormat2(date:string){
+
+  let lang =  this.translate.currentLang;
+  let format = 'EEEE, d MMM yyyy';
+
+  if(lang === 'en' )
+    format = 'MMM, ddd yyyy';
+
+    let day = this.transformDate(date, format);
+    return day[0].toUpperCase() + day.slice(1);
+  }
+
+
 
 
   ddMMyyyyHHmm(date){
@@ -317,6 +330,13 @@ export class DateService {
         return this.transformDate(date, format)
       }
 
+    }
+  }
+
+  public getFormatTime(date){
+    if(date){
+      date = new Date(date)
+      return this.datePipe.transform(date,  this.getTimeFormat())
     }
   }
 

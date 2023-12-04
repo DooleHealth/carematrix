@@ -961,5 +961,8 @@
     },
     "confirmation-answers":{
       "title": "Por favor, verifique as suas respostas antes de confirmar o envio."
+    },
+    "medical_procedure_list":{
+      "text":"Aquí encontrará todos sus procedimientos médicos y pruebas diagnósticas programados en un calendario."
     }
 }

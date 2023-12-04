@@ -8,10 +8,12 @@ import { ProceduresPageRoutingModule } from './procedures-routing.module';
 
 import { ProceduresPage } from './procedures.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     IonicModule,
     TranslateModule,

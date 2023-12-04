@@ -12,7 +12,7 @@ export class LifeStyle extends ScpAdapters {
     title: string;
     type: string;
     routerlink?: string | Object;
-
+    temporaryUrl?: string = "temporaryUrl"
     constructor(type: string, routerlink: string){
         super();
         this.type = type;
@@ -35,7 +35,7 @@ export class LifeStyle extends ScpAdapters {
             list.forEach((element) => {
                 const temporaryUrl = element[field1]
                 let image = element[field1]
-                if(temporaryUrl?.hasOwnProperty("temporaryUrl")){
+                if(temporaryUrl?.hasOwnProperty(this.temporaryUrl)){
                       image = temporaryUrl.temporaryUrl
                 }
                 let data: SharedCarePlanLifeStyle = {
@@ -134,23 +134,23 @@ export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePl
     title: string;
     description?: string;
     type: string;
-    routerlink?: any;
 
     constructor(){
         super();
     }
 
-    adapterForView(list: any[], title: string, date: string, type: string, staff:string, department){
+    adapterForView(list: any[], title: string, date: string, type: string, staff:string, department, img){
         let newList: SharedCarePlanProcedure[] = []
             if(list?.length >0)
             list.forEach((procedure) => {
-                
+                this.setStaff(procedure[staff], procedure[department])
                 let data: SharedCarePlanProcedure = {
                     id: procedure?.id,       // id -> id procedure
                     title: procedure[title],
-                    date: procedure[date],   //  from_date
-                    type: procedure[type],     // "App\\MedicationPlan"
-                    staff: procedure[staff],  
+                    date: procedure[date],  
+                    type: procedure[type],    
+                    staff: 'Dr. Valarexo León, David', //this.staff,  
+                    img: procedure[img],
                 }                 
                 newList.push(data)
             });
@@ -158,8 +158,13 @@ export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePl
          
     }
 
-    setStaff(staff,department){
-        
+    setStaff(staff, department){
+        if(staff?.name)
+            this.staff = staff.name
+        else if(department?.name)
+            this.staff = department?.name
+        else
+            this.staff = null
     }
 
 

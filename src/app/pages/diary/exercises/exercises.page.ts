@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
@@ -10,12 +11,9 @@ import { NotificationsType } from 'src/app/shared/classes/notification-options';
   styleUrls: ['./exercises.page.scss'],
 })
 export class ExercisesPage implements OnInit {
-
-  public items= [];
-  pushNotification:any = history.state.data;
-  itemsBackup= []
-  news = []
-  advices = []
+  items: any[] = []
+  nameContent: string = ContentTypeTranslatedName.Exercises
+  iconContent = ContentTypeIcons.Exercises
   isLoading = false
   public lifeStyle:LifeStyle
   constructor(
@@ -41,6 +39,7 @@ export class ExercisesPage implements OnInit {
             'cover',  //img
             'name')   //title
          }
+         this.isLoading = false 
        },(err) => {
           console.log('[ExercisesPage] getExercisesList() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
