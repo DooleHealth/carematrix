@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { MonitoringPageRoutingModule } from './monitoring-routing.module';
 
 import { MonitoringPage } from './monitoring.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     MonitoringPageRoutingModule
   ],
   declarations: [MonitoringPage]
