@@ -30,7 +30,8 @@ export class FormPage implements OnInit {
   mode_wizard: boolean;
   backDisnable: boolean = false;
   title:string;
-  note_message: string
+  confirmAnswers:boolean = true;
+  note_message: string;
   constructor(
     private navCtrl: NavController,   
     private auth: AuthenticationService,
@@ -101,7 +102,7 @@ export class FormPage implements OnInit {
               this.formService.formFieldConditionals = res.conditionals
             }
         }else{
-        //  this.dialogNotFind(res.message)
+          this.dialogNotFind(res.message)
         }
         this.isLoading = false;
        },(err) => { 
@@ -123,7 +124,7 @@ export class FormPage implements OnInit {
 
     console.log('[FormPage] send()', event)
     this.isLoading = true;
-    return
+
     this.dooleService.postAPIFormFill(event).subscribe( (res) =>{
       console.log(res)
       this.isLoading = false;

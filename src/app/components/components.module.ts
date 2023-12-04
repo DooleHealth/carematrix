@@ -49,6 +49,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ScpMedForMonComponent } from './shared-care-plan/scp-med-for-mon/scp-med-for-mon.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { FileUploadV2Component } from './file-upload-v2/file-upload-v2.component';
+import { ConfirmationAnswersComponent } from './form/confirmation-answers/confirmation-answers.component';
 
 @NgModule({
     imports: [
@@ -102,6 +103,7 @@ import { FileUploadV2Component } from './file-upload-v2/file-upload-v2.component
     ContentCircleProgressComponent,
     ScpMedForMonComponent,
     PdfViewerComponent,
+    ConfirmationAnswersComponent,
     FileUploadV2Component
   ],
   exports: [
@@ -143,6 +145,7 @@ import { FileUploadV2Component } from './file-upload-v2/file-upload-v2.component
     ContentCircleProgressComponent,
     ScpMedForMonComponent,
     PdfViewerComponent,
+    ConfirmationAnswersComponent,
     FileUploadV2Component
   ],
   schemas: [

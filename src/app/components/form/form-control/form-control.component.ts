@@ -1,5 +1,5 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { IonContent, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { DooleService } from 'src/app/services/doole.service';
@@ -7,6 +7,7 @@ import { FormItem } from '../shared/form-item';
 import { FormDirective } from '../shared/form.directive';
 import { FormService } from '../shared/form.service';
 import { ItemForm } from '../shared/item-form';
+import { ConfirmationAnswersComponent } from '../confirmation-answers/confirmation-answers.component';
 
 @Component({
   selector: 'app-form-control',
@@ -20,6 +21,7 @@ export class FormControlComponent implements OnInit {
   @Input() buttonPreview: boolean;
   @Input() title;
   @Input() goalsByAlarms: any;
+  @Input() confirmAnswers: any;
   index: number = 0;
   indexArray: number = 0;
   @ViewChild(FormDirective, {static: true}) appFormD!: FormDirective;
@@ -30,11 +32,11 @@ export class FormControlComponent implements OnInit {
   isFirstElement = false
   num_progressBar = 0;
   note_message: string
-  constructor(
-    //private resolver: ComponentFactoryResolver,     
+  constructor(    
     //private dooleService: DooleService,
     private formService: FormService, 
     public translate: TranslateService,
+    private modalCtrl: ModalController
     ) { }
 
   ngOnInit() { 
@@ -128,7 +130,6 @@ export class FormControlComponent implements OnInit {
     // this.orderIndexItem();
     this.item.forEach( (i, index)=>{
       //console.log('FormComponent loadComponent()', i , i.data.index)
-      //const formComponent = this.resolver.resolveComponentFactory(i.component);
       const componentRef = viewContainerRef.createComponent<ItemForm>(i.component);
       componentRef.instance.data = i.data;
       if(this.wizard){
@@ -269,6 +270,7 @@ export class FormControlComponent implements OnInit {
   send(){
     let error_question = []
     let success_question = []
+    let listAnswer = []
     this.listComponentRef.forEach( (component, index) =>{
       if(!component.instance.data.hidden){
         component.instance?.checkValue()
@@ -276,11 +278,11 @@ export class FormControlComponent implements OnInit {
         if(component.instance?.error)
           error_question.push(component)
       }
-     
-    }) 
+
+    })
     console.log('send() error_question', error_question)
     if(error_question.length > 0){
-      this.scrollTo(error_question[0].instance.data.id) 
+      this.scrollTo(error_question[0].instance.data.id)
       return
     }
 
@@ -292,14 +294,24 @@ export class FormControlComponent implements OnInit {
         formData[key] = value
         //console.log('activeConditionals()', value)
       }
-      else if(component.instance.data.type === 'formula' || component.instance.data.type === 'logic' 
+      else if(component.instance.data.type === 'formula' || component.instance.data.type === 'logic'
           || component.instance.data.type === 'hidden'){
             if(value !== '')
             formData[key] = value
-      }   
-    }) 
-    console.log('[FormsComponent] send()', formData)
-    this.sendForm.emit(formData);
+      }
+      //console.log('activeConditionals()', component.instance)
+      if(this.confirmAnswers && component.instance.data?.validation?.assert == true)
+      listAnswer.push(this.formService.getAnswersConfirmation(value, key, component.instance))
+    })
+    console.log('[FormsComponent] answers()', listAnswer)
+    if(this.confirmAnswers && listAnswer.length > 0){
+      //console.log('[FormsComponent] answers()', formData)
+      this.showAnswersConfirmation(formData, listAnswer)
+    }
+    else{
+      console.log('[FormsComponent] send()', formData)
+      this.sendForm.emit(formData);
+    }
   }
 
   isHiddenComponent(type){
@@ -307,6 +319,25 @@ export class FormControlComponent implements OnInit {
     if(type === 'formula' || type === 'logic'  || type === 'hidden' || type === 'button')
     return true
     else return false
+  }
+
+  async showAnswersConfirmation(formData, listAnswer){
+    const modal = await this.modalCtrl.create({
+      component: ConfirmationAnswersComponent,
+      componentProps: {answers: listAnswer},
+      cssClass: 'modalConfirmationAnswer',
+      backdropDismiss: true,
+      //swipeToClose:true
+    });
+
+    modal.onDidDismiss()
+      .then(async (result) => {
+        if(result?.data?.accept){
+          console.log('[FormsComponent] send()', formData)
+          this.sendForm.emit(formData);
+        }
+      });
+      return await modal.present();
   }
   
 }

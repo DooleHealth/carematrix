@@ -199,4 +199,50 @@ export class FormService {
     console.log('[FormService] getConditional()',this.itemsForm); 
 
   }
+
+  getAnswersConfirmation(value, name, instance){
+    let data = instance.data
+    console.log('[FormService] getAnswersConfirmation()', instance); 
+    let translate = data?.translate[`label_${data.type}`]
+    let label = translate[data?.userLang]?.replace(/<\/?[^>]+(>|$)/g, "");
+    let value1
+    switch (data.type) {
+      case 'radio':
+        value1 = instance.valueLabel?.replace(/<\/?[^>]+(>|$)/g, "");
+        break;
+      case 'radio-group':
+        value1 = instance.valueLabel?.replace(/<\/?[^>]+(>|$)/g, "");
+        break;
+      case 'checkbox':
+        value1 = ''
+        instance.valueLabel.forEach(l=>{
+          l?.replace(/<\/?[^>]+(>|$)/g, "");
+          value1 = l +' '+ value1
+        })
+        break;
+      case 'checkbox-group':
+        value1 = ''
+        instance.valueLabel.forEach(l=>{
+          l?.replace(/<\/?[^>]+(>|$)/g, "");
+          value1 = l +' '+ value1
+        })
+        break;
+      case 'autocomplete':
+        value1 = instance.valueLabel?.replace(/<\/?[^>]+(>|$)/g, "");
+        break;
+      case 'select':
+        value1 = instance.valueLabel?.replace(/<\/?[^>]+(>|$)/g, "");
+      break;
+      case 'file':
+        value1 = instance.valueLabel?.replace(/<\/?[^>]+(>|$)/g, "");
+        break;
+      case 'date':
+        value1 = instance.valueLabel;
+        break;
+      default:
+        value1 = value
+        break;
+    }
+    return {value: value1, name: name, label: label, type: data.type}
+  }
 }

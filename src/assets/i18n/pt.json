@@ -658,6 +658,7 @@
     "open": "Abrir",
     "exit": "Sair",
     "reject": "Recusar",
+    "confirm": "Confirme",
     "yes": "Sim",
     "no": "Não"
   },
@@ -933,5 +934,8 @@
     "monitoring": "Monitorização",
     "medical_procedure": "Medical Procedure",
     "informed_consent": "Informed Consent"
+  },
+  "confirmation-answers":{
+    "title": "Por favor, verifique as suas respostas antes de confirmar o envio."
   }
 }

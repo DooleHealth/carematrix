@@ -660,6 +660,7 @@
       "open": "Abrir",
       "exit": "Salir",
       "reject": "Rechazar",
+      "confirm": "Confirmar",
       "yes": "Si",
       "no": "No"
     },
@@ -954,5 +955,8 @@
     },
     "medication_plan":{
       "take_time": "Horas de toma"
+    },
+    "confirmation-answers":{
+      "title": "Por favor, verifique as suas respostas antes de confirmar o envio."
     }
 }
