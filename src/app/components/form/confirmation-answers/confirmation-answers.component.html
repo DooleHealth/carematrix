@@ -1,0 +1,34 @@
+
+<ion-content #content [scrollEvents]="true" scroll-y="true">
+  <ion-row style="margin-top:5%; margin-bottom: 5%;">
+    <ion-text  class="txtTitleBlack">{{'confirmation-answers.title'| translate}}</ion-text>
+    <!-- <div *ngIf="this.showArrow" style="float:right">
+      <ion-fab-button (click)="scrollToBottom()" mode="ios" size="small" >
+        <ion-icon name="chevron-down-sharp"></ion-icon>
+      </ion-fab-button>
+    </div> -->
+  </ion-row>
+
+    <item-list>
+      <ion-item *ngFor="let item of answers">
+      <ion-row style="width: 100%;">
+        <ion-col size="9">
+          <ion-text class="question" [innerHtml]="item.label | safeHtml"></ion-text>
+        </ion-col>
+        <ion-col size="3">
+          <ion-text class="answer" [innerHtml]="item?.value? (item.value | safeHtml):'' "></ion-text>
+        </ion-col>
+      </ion-row>
+      </ion-item>
+    </item-list>
+</ion-content>
+<ion-footer>
+  <ion-row style="width: 100%; margin: 5% 0 5%;">
+    <ion-col size="6">
+      <ion-button (click)="close()" color="danger" fill="outline" expand="block" size="medium">{{'button.cancel'| translate}}</ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button (click)="send()" expand="block" size="medium">{{'button.confirm'| translate}}</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

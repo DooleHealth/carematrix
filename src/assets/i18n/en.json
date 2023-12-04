@@ -669,6 +669,7 @@
     "open": "Open",
     "exit": "Get out",
     "reject": "Reject",
+    "confirm": "Confirm",
     "yes": "Yes",
     "no": "No"
   },
@@ -953,9 +954,9 @@
     "new_scp_alert_cancel": "Close",
     "new_scp_alert_review": "Review",
     "goal_state":{
-      "approved": "Aprovado",
-      "rejected": "Rechazado",
-      "pending": "Pendiente"
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
     }
 
   },
@@ -964,6 +965,9 @@
   },
   "medication_plan":{
     "take_time": "Shooting time"
+  },
+  "confirmation-answers":{
+    "title": "Please check your answers before confirming your submission."
   }
 
 }
