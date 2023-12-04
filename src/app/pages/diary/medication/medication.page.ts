@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationsType } from 'src/app/shared/classes/notification-options';
 import { Router } from '@angular/router';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
 @Component({
   selector: 'app-medication',
@@ -35,6 +36,7 @@ export class MedicationPage implements OnInit {
     public nav: NavController,
     private router: Router,
     private datePipe: DatePipe,
+    public sharedCarePlan:SharedCarePlanService, 
 
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
@@ -48,77 +50,29 @@ export class MedicationPage implements OnInit {
 
  async loadData(){
     console.log('hola');
-    this.items = []
-     let dat = [{
-            "id": 551,
-            "from_date": "2022-02-16 00:00:00",
-            "to_date": "2022-11-02 14:45:00",
-            "frequency": "daily",
-            "frequencyName": "Cada día",
-            "last_accepted_or_declined": "null",
-            /*"last_accepted_or_declined": {
-              "id": 10792,
-              "user_id": 470,
-              "target_type": "App\\MedicationPlan",
-              "target_id": 551,
-              "type": "declined",
-              "value": "Lo he rechazado desde API",
-              "date": "2023-11-28 15:21:56",
-              "created_at": "2023-11-28T14:21:56.000000Z",
-              "updated_at": "2023-11-28T14:21:56.000000Z",
-              "deleted_at": null
-            },*/
-            "drug": {
-              "id": 470,
-              "name": "AMOXICILINA/ACIDO CLAVULANICO NORMON 875 mg/125 mg POLVO PARA SUSPENSION ORAL EN SOBRES EFG , 500 sobres"
-            }
-          }];
-    this.adapterForView(dat)
-    
-    /*
-    this.dooleService.getAPImedicationAlls().subscribe(
+    this.items = []   
+    let id=  localStorage.getItem('userId');
+    this. sharedCarePlan.get_APi_ACP_medication(id).subscribe( 
+   // this.dooleService.getAPImedicationAlls().subscribe(
       async (data: any) =>{
         console.log('[MedicationPage] loadData()', await data);
-        if(data){
-          let dat : {
-            "id": 551,
-            "from_date": "2022-02-16 00:00:00",
-            "to_date": "2022-10-02 14:45:00",
-            "frequency": "daily",
-            "frequencyName": "Cada día",
-            "last_accepted_or_declined": {
-              "id": 10792,
-              "user_id": 470,
-              "target_type": "App\\MedicationPlan",
-              "target_id": 551,
-              "type": "declined",
-              "value": "Lo he rechazado desde API",
-              "date": "2023-11-28 15:21:56",
-              "created_at": "2023-11-28T14:21:56.000000Z",
-              "updated_at": "2023-11-28T14:21:56.000000Z",
-              "deleted_at": null
-            },
-            "drug": {
-              "id": 470,
-              "name": "AMOXICILINA/ACIDO CLAVULANICO NORMON 875 mg/125 mg POLVO PARA SUSPENSION ORAL EN SOBRES EFG , 500 sobres"
-            }
-          }
-          this.adapterForView(dat)
+        if(data){        
+          this.adapterForView(data)
          /* this.items = this.exerLifeStyle.adapterForView(
             data.medication, // JSON
             'cover',  //img
             'name',   //title
             'id')     //id*/
-     /*    }
+         }
         
-      /* },(err) => {
+       },(err) => {
           console.log('[MedicationPage] loadData() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err;
       }, ()=>{
         this.loadingList = false
       });
-*/
+
   }
 
   
@@ -152,7 +106,7 @@ export class MedicationPage implements OnInit {
     }
 
     accepterOrDecline(datos){
-      if(datos.length){
+      if(datos === null){
         return false;
       }else{
         return true;
@@ -164,16 +118,16 @@ export class MedicationPage implements OnInit {
       list.forEach(element => {       
       //Se adapta la respuesta de la API a lo que espera el componente  
         let data={
-          img: element.cover,
-          title: element.drug.name,
-          //from: this.transformDate(element.from_date),
-         // to: this.transformDate(element.to_date),
-         from: element.from_date,
+          img: element.cover.temporaryUrl,
+          title: element.drup_name,
+          from: element.start_date,
           to: element.to_date,
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
           type: "medication",
-          description:  element.frequencyName,
+          description:  element.frequency,
           id:element.id,
+          model_id:element.model_id,
+          model:element.model
           //routerlink: "new-detail"
         }
         this.items.push(data)

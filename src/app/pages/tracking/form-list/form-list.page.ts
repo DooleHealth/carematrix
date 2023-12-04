@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
 @Component({
   selector: 'app-form-list',
@@ -14,6 +15,7 @@ export class FormListPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     public loadingCtrl: LoadingController,
+    public sharedCarePlan:SharedCarePlanService,  
   ) { }
 
   ngOnInit() {
@@ -22,11 +24,12 @@ export class FormListPage implements OnInit {
 
 
   async getFormList(){
-    this.dooleService.getAPIformLists().subscribe(
+let id=  localStorage.getItem('userId');
+    this.sharedCarePlan.get_APi_ACP_forms(id).subscribe(
       async (res: any) =>{
-        console.log("")
+        console.log("formularios", res)
         this.forms = []
-        this.forms = res.forms
+        this.forms = res
         this.adapterForView(this.forms)
        },async (err) => {
           alert(`Error: ${err.code }, Message: ${err.message}`)

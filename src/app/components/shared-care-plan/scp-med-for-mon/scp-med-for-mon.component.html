@@ -2,8 +2,10 @@
   class="cardProfile"
   (click)="goTo(content.type)"
   [routerLink]="getRouterLink(content?.type, content?.id)"
-  [state]="{ id: content?.id }"
+  [state]="{ id: content?.id, header: content?.title}"
   routerLinkActive="active-item"
+
+  
 >
   <ion-item lines="none" mode="ios">
     <ion-thumbnail slot="start">
@@ -14,7 +16,7 @@
       />
     </ion-thumbnail>
     <ion-grid>
-      <ion-row class="imgPadding">
+      <ion-row class="imgPadding" *ngIf="content?.type === 'medication'">
         <p>
           {{ content?.from | date : "mediumDate" }} ---
           {{ content?.to | date : "mediumDate" }}
@@ -27,9 +29,9 @@
       </ion-row>
       <ion-row>
         <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{
-          content?.title.length > 40
-            ? (content?.title | slice : 0 : 40) + "..."
-            : content?.title
+          content?.title
+          ? (content.title.length > 40 ? (content.title | slice: 0:40) + '...' : content.title)
+          : ''
         }}</ion-text>
 
         <ion-icon
@@ -39,14 +41,14 @@
           name="chevron-forward-outline"
         ></ion-icon>
       </ion-row>
-      <ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
-        <p style="color: #ba0186">
+      <!--<ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
+        <p style="color: var(--enabled-alert)">
           {{ "form.scheduled" | translate }} {{ content?.description }}
         </p>
-        asdf
-      </ion-row>
+        
+      </ion-row>-->
       <ion-row *ngIf="content.type === 'medication'" class="textMon-For-Med">
-        <p style="color: #ba0186">
+        <p style="color: var(--enabled-alert)">
           {{ "medication.dose" | translate }}
           {{ content?.description }}
         </p>

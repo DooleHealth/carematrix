@@ -947,6 +947,9 @@
       "approved": "Approved",
       "rejected": "Rejected",
       "pending": "Pending"
+    },
+    "monitoringList": {
+      "text" : "Monitoring is crucial to assess your health status, detect early changes and adjust treatment."
     }
   },
   "exercices": {
