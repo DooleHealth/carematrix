@@ -185,7 +185,7 @@ export interface SharedCarePlanLifeStyle {
     description?: string;
     type: string,
     id?: string | number;
-    routerlink?: string | any
+    routerlink?: string | any;
 }
 
 export interface medication extends SharedCarePlanLifeStyle{
@@ -203,4 +203,15 @@ export interface SharedCarePlanPrescribedApps {
     description: string,
     iframe_url:string;
     open_market_app_pkg:string;
+}
+
+/**
+ * Medical Procedure of Shared care Plan
+ */
+export interface SharedCarePlanProcedure extends SharedCarePlan {
+    id?: string | number;
+    date: string;
+    staff?: string | any;
+    department?: string
+    img?: string;
 }

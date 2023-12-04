@@ -81,8 +81,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIreminderID(); */
 /*                 case url.includes('user/patients') && method === 'GET':
                     return getAPIpatients(); */
-                case url.includes('sharecareplan/goals') && method === 'GET':
-                    return getAPI_SCP_goals();
+                // case url.includes('sharecareplan/goals') && method === 'GET':
+                //     return getAPI_SCP_goals();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);

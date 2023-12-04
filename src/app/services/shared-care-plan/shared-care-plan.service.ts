@@ -19,18 +19,18 @@ export class SharedCarePlanService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIagendaID(${path}) res: `, res);
+        //console.log(`[DooleService] getAPI_SCP_goals(${path}) res: `, res);
         return res;
       })
     );
   }
 
   getAPI_SCP_procedures(id): Observable<any> {
-    let path = `rehabilify/medical-procedures/${id}`;
+    let path = `rehabilify/sharedcareplan/medical-procedures/${id}`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {
-        //console.log(`[DooleService] getAPIagendaID(${path}) res: `, res);
+        //console.log(`[DooleService] getAPI_SCP_procedures(${path}) res: `, res);
         return res;
       })
     );

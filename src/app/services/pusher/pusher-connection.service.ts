@@ -16,6 +16,13 @@ export class PusherConnectionService {
       secret: "2972f138fed48a358a61",
       cluster: "eu"
     },
+    {
+      name: 'Rosia Producción',
+      app_id: "1632528",
+      key: "3591d99947685b0e45e4",
+      secret: "2972f138fed48a358a61",
+      cluster: "eu"
+    }
   ]
   pusher
   constructor(

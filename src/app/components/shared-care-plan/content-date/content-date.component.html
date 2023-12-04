@@ -1,0 +1,37 @@
+<ion-card class="cardProfile" (click)="goTo(content.type)"  routerLinkActive="active-item" [routerLink]="content.routerlink" >
+  <ion-item lines="none">
+    <ion-thumbnail class="thumbnail" slot="start">
+      <img
+        class="img"
+        [src]="content?.img"
+        onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+        alt=""
+      />
+    </ion-thumbnail>
+    <ion-grid> 
+      <ion-row>
+        <!-- <ion-text class="imgPadding">{{content?.title | translate}}</ion-text> -->
+        <p>{{content?.title}}</p>
+      </ion-row>
+      <ion-row>
+        <ion-text class="imgPadding">
+          <h4>
+            {{content?.description}}
+          </h4>
+        </ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-col size="10.5" size-md="10.5" size-lg="11">
+          <ion-text class="imgPadding">
+            <h5>
+              {{content?.staff}}
+            </h5>
+          </ion-text>
+        </ion-col>
+        <ion-col size="1.5" size-md="1.5" size-lg="1">
+          <ion-text class="imgPadding">{{content?.date}}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-card>
