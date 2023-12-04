@@ -1,45 +1,52 @@
-<ion-card class="cardProfile"  
-  routerLinkActive="active-item" 
-  [routerLink]="content?.routerlink" 
+<ion-card
+  class="cardProfile"
+  routerLinkActive="active-item"
+  [routerLink]="content?.routerlink"
   [state]="{ id: content?.id }"
-  >
+>
   <ion-item lines="none">
-    <ion-grid> 
+    <ion-grid>
       <ion-row>
         <ion-col size="8.2" size-md="8.7" size-lg="8.3">
           <!-- <ion-text class="imgPadding">{{content?.title | translate}}</ion-text> -->
           <ion-row>
-            <ion-text>{{ content?.date }}</ion-text>&nbsp;&nbsp;
-            <ion-badge *ngIf="content?.is_new_content" mode="ios">{{ 'new'}}</ion-badge>
+            <ion-text class="date">{{ content?.date }}</ion-text
+            >&nbsp;&nbsp;
+            <ion-badge *ngIf="content?.is_new_content" mode="ios">{{
+              "new"
+            }}</ion-badge>
           </ion-row>
           <ion-row>
-            <ion-text>{{ content?.title }}</ion-text>
-          </ion-row>        
+            <ion-text class="title">{{
+              content?.title.length > 40
+                ? (content?.title | slice : 0 : 40) + "..."
+                : content?.title
+            }}</ion-text>
+          </ion-row>
           <ion-row class="verticalAlignItem">
-            <ion-text 
-              [ngStyle]="{'color': this.state?.color  }">
-                {{ this.state?.name | translate }}&nbsp;
+            <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
+              {{ this.state?.name | translate }}&nbsp;
             </ion-text>
-            <ion-icon [src]="this.state?.icon"></ion-icon>
+            <ion-icon class="status-icon" [src]="this.state?.icon"></ion-icon>
           </ion-row>
         </ion-col>
         <ion-col size="3" size-md="2.8" size-lg="2.4">
           <!-- https://bootsoon.github.io/ng-circle-progress/ -->
           <circle-progress
-          *ngIf="this.isShowProgrress"
-          [clockwise]="true"
-          [percent]="this.percent"
-          [showSubtitle]="false"
-          [radius]="30"
-          [space]="-5"
-          [responsive]="true"
-          [outerStrokeWidth]="5"
-          [innerStrokeWidth]="5"
-          [outerStrokeColor]="this.outerProgreesColor"
-          [innerStrokeColor]="this.innerProgreesColor"
-          [animation]="true"
-          [animationDuration]="1000"
-          [maxPercent]="100"
+            *ngIf="this.isShowProgrress"
+            [clockwise]="true"
+            [percent]="this.percent"
+            [showSubtitle]="false"
+            [radius]="30"
+            [space]="-5"
+            [responsive]="true"
+            [outerStrokeWidth]="5"
+            [innerStrokeWidth]="5"
+            [outerStrokeColor]="this.outerProgreesColor"
+            [innerStrokeColor]="this.innerProgreesColor"
+            [animation]="true"
+            [animationDuration]="1000"
+            [maxPercent]="100"
           ></circle-progress>
         </ion-col>
         <ion-col size="0.8" size-md="0.5" size-lg="0.3">
@@ -49,4 +56,3 @@
     </ion-grid>
   </ion-item>
 </ion-card>
-

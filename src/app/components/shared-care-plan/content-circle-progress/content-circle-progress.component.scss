@@ -1,0 +1,24 @@
+.date {
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+.title {
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  color: var(--azul-petroleo);
+}
+
+.status {
+  font-size: 12px !important;
+}
+
+.status-icon {
+  font-size: 12px !important;
+}
+
+.cardProfile {
+  border-radius: 10px !important;
+  box-shadow: none;
+  border: 1px solid rgba(203, 205, 205, 0.3) !important;
+}
