@@ -6,6 +6,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { DrugsDetailPage } from '../../diary/drugs-detail/drugs-detail.page';
 import { ModalController } from '@ionic/angular';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-goals',
@@ -13,16 +14,16 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./goals.page.scss'],
 })
 export class GoalsPage implements OnInit {
-  listGoal: any[] = []
-  nameGoal: string = ContentTypeTranslatedName.Goals
-  iconGoals = ContentTypeIcons.Goals
+  listItem: any[] = []
+  nameContent: string = ContentTypeTranslatedName.Goals
+  iconContent = ContentTypeIcons.Goals
   public scpGoals:SharedCarePlanGoals
   isLoading = false
   constructor(
     public router:Router,
-    private dooleService: DooleService,
-    private modalCtrl: ModalController,
-    private notification: NotificationService,
+    private scpService: SharedCarePlanService,
+    // private modalCtrl: ModalController,
+    // private notification: NotificationService,
     ) { 
       this.scpGoals = new SharedCarePlanGoals()
     }
@@ -32,12 +33,12 @@ export class GoalsPage implements OnInit {
   }
 
   getGoalImformation(){
-    this.listGoal = []
+    this.listItem = []
     this.isLoading = true
-    this.dooleService.getAPI_SCP_goals().subscribe(
+    this.scpService.getAPI_SCP_goals().subscribe(
       async (res: any) =>{
         console.log('[GoalsPage] getGoalImformation()', await res);
-        this.listGoal = this.scpGoals.adapterForView(
+        this.listItem = this.scpGoals.adapterForView(
           res.goals, // JSON 
           'name',  //title
           'from_date',  //date
@@ -45,7 +46,7 @@ export class GoalsPage implements OnInit {
           'is_new_content' //is_new_content
           )  
         this.isLoading = false
-        //console.log('[GoalsPage] getGoalImformation() goals', await this.listGoal);
+        //console.log('[GoalsPage] getGoalImformation() goals', await this.listItem);
        },(err) => { 
           console.log('getGoalImformation() ERROR(' + err.code + '): ' + err.message); 
           this.isLoading = false

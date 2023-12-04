@@ -77,14 +77,14 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
                 const titleGoal = this.getTitle(goal, typeGoal, title); //if it is  MedicationPlan type -> For example:  drug.name
  
                 let data: SharedCarePlanGoal = {
-                    id: goal?.id, // id -> id MedicationPlan
+                    id: goal?.id,       // id -> id MedicationPlan
                     title: titleGoal,
-                    date: goal[date], //from_date
-                    type: typeGoal, // "App\\MedicationPlan"
+                    date: goal[date],   //  from_date
+                    type: typeGoal,     // "App\\MedicationPlan"
                     state: goal[state]? goal[state]:state,
                     percentage: percentage? percentage:0,
                     is_new_content: goal[is_new_content],
-                    routerlink: this.routerlink,
+                    routerlink: ContentTypePath.Medication //this.routerlink,
                 }                 
                 newList.push(data)
             });

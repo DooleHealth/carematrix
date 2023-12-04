@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
+      <ion-back-button text="" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ this.nameGoal | translate}}</ion-title>
+    <ion-title>{{ this.nameContent | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/profile">
+        <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,14 +19,14 @@
 
   <ion-card class="cardProfile">
     <ion-item lines="none">
-      <ion-icon [src]="iconGoals"></ion-icon>
-      <ion-text>{{nameGoal | translate}}</ion-text>
+      <ion-icon [src]="iconContent"></ion-icon>
+      <ion-text>{{nameContent | translate}}</ion-text>
       <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
     </ion-item>
 
-    <div *ngIf="listGoal.length > 0; else noData">
+    <div *ngIf="listItem.length > 0; else noData">
       <scp-content-circle-progress
-        *ngFor="let content of this.listGoal"
+        *ngFor="let content of this.listItem"
         [content]="content"
       ></scp-content-circle-progress>
     </div>
