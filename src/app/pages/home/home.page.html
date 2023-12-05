@@ -111,7 +111,7 @@
     <!-- TEMPORARY Prescribed apps TRAK-->
     <ion-row class="paddingTopNoMarginBottom">
 
-      <ion-text class="txtTitle" style="white-space: nowrap">
+      <ion-text class="txtTitle" style="white-space: nowrap" *ngIf="this.prescribedApps?.length > 0">
         {{ 'home.prescribed_apps_title' | translate}}</ion-text>
           <swiper-container [config]="this.config" [slidesPerView]="this.prescribedApps?.length == 1 ? 1:2">
             <swiper-slide *ngFor="let slide of this.prescribedApps" class="ion-no-padding">

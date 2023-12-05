@@ -295,10 +295,6 @@ export class ListNotificationsPage implements OnInit {
         this.setRead(notification.id)
         this.router.navigate([`/new-detail`],{state:{data:null, id: data.id}}); //Bien
         break;
-      case "App\\Agenda":
-        this.setRead(notification.id)
-        this.router.navigate([`/agenda/detail`],{state:{data:null, id:data.id}}); //Bien
-        break;
       case "App\\Reminder":
         this.setRead(notification.id)
         this.router.navigate([`/agenda/reminder`],{state:{data:null, id: data.id}}); //Bien

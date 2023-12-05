@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
-import { MedicalPlanGoalsAdapter, SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MedicalPlanProceduresAdapter, SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
@@ -14,16 +13,15 @@ export class ProceduresPage implements OnInit {
   listItem: any[] = []
   nameContent: string = ContentTypeTranslatedName.MedicalProcedure
   iconContent = ContentTypeIcons.MedicalProcedure
-  private scpProcedures:MedicalPlanGoalsAdapter
+  private scpProcedures:MedicalPlanProceduresAdapter
   isLoading = false
   constructor(
     private scpService: SharedCarePlanService,
-    private authService: AuthenticationService,
     private dateService: DateService
   ) { }
 
   ngOnInit() {
-    this.scpProcedures = new MedicalPlanGoalsAdapter()
+    this.scpProcedures = new MedicalPlanProceduresAdapter()
   }
 
   ionViewWillEnter() {
@@ -34,7 +32,7 @@ export class ProceduresPage implements OnInit {
   getProceduresImformation(){
     this.listItem = []
     this.isLoading = true
-    this.scpService.getAPI_SCP_procedures(this.authService.user.idUser).subscribe(
+    this.scpService.getAPI_SCP_procedures().subscribe(
       async (res: any) =>{
         console.log('[ProceduresPage] getProceduresImformation()', await res);
         this.listItem = this.scpProcedures.adapterForView(
@@ -44,7 +42,7 @@ export class ProceduresPage implements OnInit {
           'type', //type
           'staff', //staff
           'department',
-          null // se espera una imagen
+          'media' // se espera una imagen
           )  
         this.isLoading = false
         console.log('[ProceduresPage] getProceduresImformation() procedures', await this.listItem);
