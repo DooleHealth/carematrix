@@ -25,6 +25,7 @@ import { NativeMarket } from "@capacitor-community/native-market";
 import { HttpParams } from "@angular/common/http";
 import { Constants } from 'src/app/config/constants';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
+import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapters';
 //import { ScpAlertService } from 'src/app/services/scp-alert.service';
 
 
@@ -196,12 +197,12 @@ export class HomePage implements OnInit {
   infoGoals: UserInformation
 
   textGoals = ''
-  prescribedApps: SharedCarePlanPrescribedApps[];
+  prescribedApps: SharedCarePlanPrescribedApps[] = [];
   safeUrl;
 
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
-
+  scpProcedures:PrescribedAppsAdapter = new PrescribedAppsAdapter()
 
   constructor(
     public router: Router,
@@ -401,9 +402,10 @@ export class HomePage implements OnInit {
 
   async getPrescribedApps(){
     try {
+      const platform = this.platform.is('ios')? 'ios':'android'
+      const url = `url_${platform}`
       const res: any = await new Promise((resolve, reject) => {
-        this.scpService.
-        getAPI_SCP_prescribedApp().subscribe(
+        this.scpService.getAPI_SCP_prescribedApp().subscribe(
           (data: any) => {
             console.log('[HomePage] getPrescribedApp()', data);
             resolve(data);
@@ -415,7 +417,14 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.userImage = res.temporary_url;
+      this.prescribedApps = this.scpProcedures.adapterForView(
+        res.apps, // JSON 
+        'name',  //title
+        'cover',  //date
+        'description', //type
+        url, //staff
+        ) 
+        //console.error(' this.prescribedApps:',  this.prescribedApps);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching user image:', error);
@@ -454,31 +463,7 @@ export class HomePage implements OnInit {
       const res: any = await new Promise((resolve, reject) => {
         this.dooleService.getAPIuserProfile().subscribe(
           (data: any) => {
-            console.log('[HomePage] getPersonalInformation()', data);
-
-            const params = new HttpParams().set('user_id', this.authService.user.idUser);
-            const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
-            this.safeUrl = urlWithParams
-
-            this.prescribedApps = [
-              {
-                id: 1,
-                icon: 'assets/icons/trak_logo.png',
-                title: 'TRAK',
-                description: 'TRAK App',
-                iframe_url: this.safeUrl,
-                open_market_app_pkg: null,
-              },
-              {
-                id: 2,
-                icon: 'assets/icons/trak_logo.png',
-                title: 'TRAK',
-                description: 'TRAK App',
-                iframe_url: this.safeUrl,
-                open_market_app_pkg: null,
-              },
-            ];
-
+            console.log('[HomePage] getPersonalInformation()', data)
             resolve(data);
           },
           (error) => {

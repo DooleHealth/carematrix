@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanProcedure} from "../shared-care-plan";
+import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanPrescribedApps, SharedCarePlanProcedure} from "../shared-care-plan";
 
 export class ScpAdapters extends ContentComponent {
     img?: string;
@@ -168,9 +168,62 @@ export class MedicalPlanProceduresAdapter extends ScpAdapters implements SharedC
             this.staff = null
     }
 
-
-
 }
+
+export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
+    id?: number;
+    icon: string;
+    title: string;
+    description: string;
+    iframe_url: string;
+    open_market_app_pkg: string;
+
+    constructor(){ }
+
+    adapterForView(list: any[], name: string, cover: string, description: string, url:string){
+        let newList: SharedCarePlanPrescribedApps[] = []
+            if(list?.length >0)
+            list.forEach((app) => {
+                let data: SharedCarePlanPrescribedApps = {
+                    id: app?.id,
+                    icon: app[cover],
+                    title: app[name],
+                    description: app[description],
+                    iframe_url: url,
+                    open_market_app_pkg: url,
+                }     
+            if(data?.iframe_url)            
+                newList.push(data)
+            });
+            return newList
+         
+    }
+}
+
+
+
+// const params = new HttpParams().set('user_id', this.authService.user.idUser);
+// const urlWithParams = `${this.constants.TRAK_URL}?${params.toString()}`;
+// this.safeUrl = urlWithParams
+
+// this.prescribedApps = [
+//   {
+//     id: 1,
+//     icon: 'assets/icons/trak_logo.png',
+//     title: 'TRAK',
+//     description: 'TRAK App',
+//     iframe_url: this.safeUrl,
+//     open_market_app_pkg: null,
+//   },
+//   {
+//     id: 2,
+//     icon: 'assets/icons/trak_logo.png',
+//     title: 'TRAK',
+//     description: 'TRAK App',
+//     iframe_url: this.safeUrl,
+//     open_market_app_pkg: null,
+//   },
+// ];
 // type Class = {
 //     new (...args: any[]): unknown
 // }
