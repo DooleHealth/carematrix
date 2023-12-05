@@ -23,8 +23,7 @@ export class MonitoringPage implements OnInit {
 
 
   async getFormList(){
-let id=  localStorage.getItem('userId');
-    this.sharedCarePlan.get_APi_ACP_monitoring(id).subscribe(
+    this.sharedCarePlan.get_APi_ACP_monitoring().subscribe(
       async (res: any) =>{
         console.log("monitoring", res)  
         this.adapterForView(res)  
@@ -37,16 +36,26 @@ let id=  localStorage.getItem('userId');
 
 
 adapterForView(list){
-  list.forEach(element => {       
+  list.forEach(element => {  
+    let image = "" ;
+    const temporaryUrl = element.media;
+    if(temporaryUrl?.hasOwnProperty("temporaryUrl")){
+          image = temporaryUrl.temporaryUrl
+    }   
+    let goals = "" ;
+    const typeString = element.goals;
+    if(typeString?.hasOwnProperty("typeString")){
+      goals = typeString.typeString
+    }  
   //Se adapta la respuesta de la API a lo que espera el componente  
     let data={
-      img: "",//element.temporaryUrl,
+      img: image  ,//element.temporaryUrl,
       title: element.name,
       from: "",//element.from_date,
       to:  "",//element.to_date,
      // accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
       type: "App\\Monitoring",
-      description: "", //element.frequencyName,
+      description: goals, //element.frequencyName,
       id:element.id,
       routerLink: ""//['form', { id: element?.id }]
     }

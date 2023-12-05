@@ -51,7 +51,7 @@ export class FormPage implements OnInit {
     // console.log('FormPage ngOnInit() goalsByAlarms', this.goalsByAlarms)
     // this.note_message = this.translate.instant('form.goal.message')
     this.getLanguage()
-    this.getForm()
+   // this.getForm()
     
     if(this.activatedRoute.snapshot.paramMap.get('id'))
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -82,7 +82,7 @@ export class FormPage implements OnInit {
   }
 
   getForm(){
-    
+    debugger
     this.isLoading = true;
     let params = {formAnswer: this.formAnswer, game_play_id: this.gamePlayId}
 
