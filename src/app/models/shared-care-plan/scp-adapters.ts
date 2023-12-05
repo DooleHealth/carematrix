@@ -127,14 +127,14 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
     
 }
 
-export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePlanProcedure {
+export class MedicalPlanProceduresAdapter extends ScpAdapters implements SharedCarePlanProcedure {
     date: string;
     staff?: string;
     department?: string;
     title: string;
     description?: string;
     type: string;
-
+    temporaryUrl: string = 'thumbnailTemporaryUrl'
     constructor(){
         super();
     }
@@ -143,6 +143,7 @@ export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePl
         let newList: SharedCarePlanProcedure[] = []
             if(list?.length >0)
             list.forEach((procedure) => {
+                const temporaryUrl = procedure[img]
                 this.setStaff(procedure[staff], procedure[department])
                 let data: SharedCarePlanProcedure = {
                     id: procedure?.id,       // id -> id procedure
@@ -150,7 +151,7 @@ export class MedicalPlanGoalsAdapter extends ScpAdapters implements SharedCarePl
                     date: procedure[date],  
                     type: procedure[type],    
                     staff: 'Dr. Valarexo León, David', //this.staff,  
-                    img: procedure[img],
+                    img: procedure.media?.thumbnailTemporaryUrl // temporaryUrl[this.temporaryUrl],
                 }                 
                 newList.push(data)
             });

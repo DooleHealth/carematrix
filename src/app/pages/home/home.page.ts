@@ -24,6 +24,7 @@ import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
 import { NativeMarket } from "@capacitor-community/native-market";
 import { HttpParams } from "@angular/common/http";
 import { Constants } from 'src/app/config/constants';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 //import { ScpAlertService } from 'src/app/services/scp-alert.service';
 
 
@@ -206,6 +207,7 @@ export class HomePage implements OnInit {
     public router: Router,
     public platform: Platform,
     private dooleService: DooleService,
+    private scpService: SharedCarePlanService,
     public authService: AuthenticationService,
     private datePipe: DatePipe,
     private health: Health,
@@ -364,7 +366,7 @@ export class HomePage implements OnInit {
         this.getPersonalInformation(),
         this.getChallenges(),
 
-        //this.getPrescribedApps() PENDING*
+        this.getPrescribedApps(),
 
         this.getFormsList(),
         this.getExercisesList(),
@@ -394,6 +396,30 @@ export class HomePage implements OnInit {
       console.log('Entro sense esperar');
 
       this.isLoading = false;
+    }
+  }
+
+  async getPrescribedApps(){
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.scpService.
+        getAPI_SCP_prescribedApp().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getPrescribedApp()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getPrescribedApp() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.userImage = res.temporary_url;
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching user image:', error);
+      throw error;
     }
   }
 

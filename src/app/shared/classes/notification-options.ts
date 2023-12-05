@@ -30,6 +30,50 @@ export enum NotificationsType {
     INFORMED_CONSENT = 'informed-consent'
 }
 
+export enum NotificationsTypeBO {
+    ADVICES = "App\\Advice",
+    APPOINTMENTS = "App\\Agenda",
+    REMINDERS = "App\\Reminder", 
+    REMINDERS_EXECUTION ="App\\ReminderExecution",
+    DIETS = "App\\Diet",
+    MEDICATIONS = 'medication',
+    CHALLENGE_LEVEL = "App\\LevelAccomplishment",
+    DRUG = "App\\DrugIntake",
+    GOALS = 'goals',
+    FORMS = 'forms',
+    MESSAGES = "App\\Message",
+    NEWS = "App\\News",
+    GAMES = "App\\Game",
+    GAME_PLAY = "App\\GamePlay",
+    EXERCISES = "App\\Exercise",
+    MEDICAL_PROCEDURE = "App\\MedicalProcedure",
+    DIAGNOSTIC_TEST = "App\\DiagnosticTest",
+    PROGRAMABLE_PLAY = "App\\ProgramablePlay",
+}
+
+export enum NOTIFICATIONS_TYPE_BO {
+    APPOINTMENTS = "App\\Agenda",
+    REMINDERS = "App\\Reminder", 
+    REMINDERS_EXECUTION ="App\\ReminderExecution",
+    DIETS = "App\\Diet",
+    MEDICATIONS = 'medication',
+
+    GOALS = 'goals',
+    NEWS = "App\\News",
+    GAMES = "App\\Game",
+    GAME_PLAY = "App\\GamePlay",
+    EXERCISES = "App\\Exercise",
+    MEDICAL_PROCEDURE = "App\\MedicalProcedure",
+    DIAGNOSTIC_TEST = "App\\DiagnosticTest",
+    PROGRAMABLE_PLAY = "App\\ProgramablePlay",
+
+    FORMS = "App\\Notifications\\FormAnswerSchedule",
+    CHALLENGE_LEVEL = "App\\Notifications\\LevelAccomplishmentCompletedNotification",
+    DRUG = "App\\Notifications\\DrugIntakeTime",
+    ADVICES = "App\\Notifications\\VisitOnlineNotification",
+    MESSAGES = "App\\Message",
+}
+
 
 export class NotificationOptions {
 
