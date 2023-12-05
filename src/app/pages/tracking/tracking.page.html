@@ -40,7 +40,10 @@
     <ion-segment-button value="sharedcareplan">
       <ion-label>{{ 'shared_care_plan.title' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.doc_diagnostic" value="documents">
+    <ion-segment-button
+      *ngIf="role?.component?.doc_diagnostic"
+      value="documents"
+    >
       <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
     </ion-segment-button>
     <!-- <ion-segment-button *ngIf="role?.component?.form" value="forms">
@@ -51,25 +54,26 @@
     </ion-segment-button> -->
   </ion-segment>
 
-  
-
   <div [ngSwitch]="segment">
     <!-- Shared Care Plan -->
     <div *ngSwitchCase="'sharedcareplan'">
       <ion-list>
-          <scp-content *ngFor="let content of this.listContent" [content]="content"></scp-content>
+        <scp-content
+          *ngFor="let content of this.listContent"
+          [content]="content"
+        ></scp-content>
       </ion-list>
     </div>
 
     <!-- Documents -->
     <div *ngSwitchCase="'documents'">
       <div class="spin" *ngIf="this.loadingTests">
-        <ion-spinner ></ion-spinner>
+        <ion-spinner></ion-spinner>
       </div>
       <div
         *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0; else noData"
       >
-      <br>
+        <br />
         <ion-list
           *ngFor="let list of this.listDiagnostic; let i = index"
           (mouseover)="fireEvent($event,i)"
@@ -85,15 +89,14 @@
               [state]="{id: doc.id}"
               routerLinkActive="active-item"
             >
-              <ion-item lines="none">
+              <ion-item lines="none" class="ion-no-padding">
                 <div class="verticalLine"></div>
                 <ion-grid>
                   <ion-row>
                     <ion-col size="1.5">
                       <ion-img
-                        style="align-items: left"
+                        class="iconDocumento"
                         src="assets/icons/document-attach.svg"
-                        style="margin-right: 5px"
                       >
                       </ion-img>
                     </ion-col>
@@ -123,12 +126,10 @@
                   </ion-col>
                   <ion-col size="12">
                     <ion-card-title class="txtTitleTrackingLittle">
-                      <div [innerHtml]="doc?.description? (doc.description | safeHtml):'' ">
-
-                      </div>
-
-                      </ion-card-title
-                    >
+                      <div
+                        [innerHtml]="doc?.description? (doc.description | safeHtml):'' "
+                      ></div>
+                    </ion-card-title>
                   </ion-col>
                   <ion-col size="12">
                     <ion-card-title class="textBlue">
@@ -153,7 +154,7 @@
     <!-- Forms -->
     <div *ngSwitchCase="'forms'">
       <div class="spin" *ngIf="this.loadingForms">
-        <ion-spinner ></ion-spinner>
+        <ion-spinner></ion-spinner>
       </div>
       <div
         *ngIf="!this.loadingForms && this.forms && this.forms.length > 0; else noData"
@@ -212,12 +213,12 @@
     <!-- Graphics -->
     <div *ngSwitchCase="'graphics'">
       <div class="spin" *ngIf="this.loadingGraphics">
-        <ion-spinner ></ion-spinner>
+        <ion-spinner></ion-spinner>
       </div>
       <div
         *ngIf="!this.loadingGraphics && this.groupedElements && this.groupedElements.length > 0; else noData"
       >
-      <br>
+        <br />
         <ion-list *ngFor="let group of this.groupedElements">
           <ion-label *ngIf="group.elements.length > 0" class="txtTitle"
             >{{group.group }}</ion-label
@@ -262,10 +263,16 @@
                   </ion-col>
                 </ion-row>
                 <ion-col size="12">
-                  <ion-card-title *ngIf="element?.value" style="padding-left: 2px;" class="txtTitleGoals"
+                  <ion-card-title
+                    *ngIf="element?.value"
+                    style="padding-left: 2px"
+                    class="txtTitleGoals"
                     >{{element.value}} {{element.units}}
                   </ion-card-title>
-                  <ion-card-title *ngIf="!element?.value" style="padding-left: 2px;" class="txtTitleGoals"
+                  <ion-card-title
+                    *ngIf="!element?.value"
+                    style="padding-left: 2px"
+                    class="txtTitleGoals"
                     >{{ 'home.get_firts_data' | translate }}
                   </ion-card-title>
                 </ion-col>
@@ -278,7 +285,9 @@
   </div>
 
   <ng-template #noData>
-    <div *ngIf="!this.loadingForms && !this.loadingTests && !this.loadingGraphics">
+    <div
+      *ngIf="!this.loadingForms && !this.loadingTests && !this.loadingGraphics"
+    >
       <ion-grid>
         <ion-row>
           <ion-col size="12">
@@ -292,7 +301,6 @@
         </ion-row>
       </ion-grid>
     </div>
-
   </ng-template>
 </ion-content>
 

@@ -1,26 +1,26 @@
 .verticalLine {
   width: 1%;
   height: 85%;
-  background: #2ECC71;
+  background: #2ecc71;
   margin-left: 2%;
 }
 
 .verticalLinePurple {
   width: 1%;
   height: 85%;
-  background: #9B59B6;
+  background: #9b59b6;
   margin-left: 2%;
 }
 
 .verticalLineRed {
   width: 1%;
   height: 85%;
-  background: #E74C3C;
+  background: #e74c3c;
   margin-left: 2%;
 }
 
 .verticalLine2 {
-  border-left: 2px solid #7F8C8D;
+  border-left: 2px solid #7f8c8d;
   margin-left: 2%;
   z-index: 1;
 }
@@ -30,7 +30,7 @@
   position: absolute;
   top: 6px;
   left: 20px;
-  background: #7F8C8D;
+  background: #7f8c8d;
   width: 17px;
   height: 17px;
   border-radius: 50%;
@@ -39,7 +39,7 @@
 
 ion-img {
   height: 30px;
-  color: #2ECC71;
+  color: #2ecc71;
 }
 
 card {
@@ -52,4 +52,17 @@ card {
   height: 900px !important;
   position: unset !important;
   overflow: visible !important;
-}/*# sourceMappingURL=tracking.page.css.map */
+} /*# sourceMappingURL=tracking.page.css.map */
+
+.txtTitleGoals {
+  font-size: 16px !important;
+}
+
+.iconDocumento {
+  align-items: left;
+  margin-right: 5px;
+}
+
+.txtTracking {
+  margin-top: 0px !important;
+}
