@@ -9,6 +9,7 @@ import { NotificationsType } from 'src/app/shared/classes/notification-options';
 import { Router } from '@angular/router';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-medication',
@@ -37,6 +38,7 @@ export class MedicationPage implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public sharedCarePlan:SharedCarePlanService, 
+    public dateService: DateService,
 
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
@@ -52,7 +54,7 @@ export class MedicationPage implements OnInit {
     console.log('hola');
     this.items = []   
     let id=  localStorage.getItem('userId');
-    this. sharedCarePlan.get_APi_ACP_medication(id).subscribe( 
+    this.sharedCarePlan.get_APi_ACP_medication().subscribe( 
    // this.dooleService.getAPImedicationAlls().subscribe(
       async (data: any) =>{
         console.log('[MedicationPage] loadData()', await data);
@@ -77,7 +79,6 @@ export class MedicationPage implements OnInit {
 
   
   goTo(){  
-    console.log("prueba") 
     this.router.navigate(['/medication-details']);
     //this.router.navigate(['/medication-details']);
 }
@@ -120,7 +121,7 @@ export class MedicationPage implements OnInit {
         let data={
           img: element.cover.temporaryUrl,
           title: element.drup_name,
-          from: element.start_date,
+          from:  this.transformDate(element.start_date),  //(element.start_date),
           to: element.to_date,
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
           type: "medication",

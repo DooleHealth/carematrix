@@ -1,7 +1,7 @@
 <ion-card
   class="cardProfile"
-  (click)="goTo(content.type)"
-  [routerLink]="getRouterLink(content?.type, content?.id)"
+  (click)="goTo(content.type, content?.showAlert)"
+  [routerLink]="getRouterLink(content?.type, content?.form_id)"
   [state]="{ id: content?.id, header: content?.title}"
   routerLinkActive="active-item"
 
@@ -16,16 +16,22 @@
       />
     </ion-thumbnail>
     <ion-grid>
-      <ion-row class="imgPadding" *ngIf="content?.type === 'medication'">
+      <ion-row style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
         <p>
-          {{ content?.from | date : "mediumDate" }} ---
-          {{ content?.to | date : "mediumDate" }}
+          {{ content?.from  }} ---
+          {{ content?.to  }}
         </p>
         <ion-icon
           *ngIf="content?.accepted === false"
           src="assets/icons/ellipsis orange.svg"
           (click)="presentAlert()"
         ></ion-icon>
+      </ion-row>
+      <ion-row class="imgPadding" *ngIf="content?.type === 'App\\Monitoring'">
+        <p>
+          {{ "form.goals" | translate }} {{ content?.description }}
+        </p>
+        
       </ion-row>
       <ion-row>
         <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{

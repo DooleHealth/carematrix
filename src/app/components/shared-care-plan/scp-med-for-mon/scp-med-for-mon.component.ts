@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
+import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
 @Component({
@@ -12,30 +13,62 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
 export class ScpMedForMonComponent  implements OnInit {
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
+   routerLink: any[];
   getrouter;
   constructor(
-    public translate: TranslateService, public alertController: AlertController, public sharedCarePlan:SharedCarePlanService, 
+    public translate: TranslateService, public alertController: AlertController, public sharedCarePlan:SharedCarePlanService, public dateService: DateService
   ) { }
 
   ngOnInit() {
    // this.getrouter=this.getRouterLink()
   }
 
-  goTo(type: any){   
-    this.redirect.emit({type: type})   
-}
-getRouterLink(type: string, id: any): any[] {
-  if (type === "App\\Form") {
-    return ['form', { id: id }];
-  } if(type === "App\\Monitoring") {
-    return ["/activity-goal"]
-  }
+  async goTo(type: any, showAlerts) {
+   
+      // If routerLink is not null, emit the redirect event
+      this.redirect.emit({ type: type, showAlerts });
+    }
+ 
   
-  else {
-    // Puedes manejar otros casos aquí si es necesario
-    return this.content.routerlink; // Otra opción si no hay un enlace para otros tipos
-  }
+
+  async getRouterLink(type: string, form_id: any): Promise<any[]> {
+
+  
+ 
+    if (type === "App\\Form") {  
+      return ['form', { id: form_id }];
+     
+    } if(type === "App\\Monitoring") {
+      return ["/activity-goal"]
+    } 
+         
+    else {
+        // Puedes manejar otros casos aquí si es necesario
+        return ; // Otra opción si no hay un enlace para otros tipos
+      }
+    
+ 
 }
+
+async alertForm(){
+
+    this.translate.get('info.button').subscribe(
+      async button => {
+        // value is our translated string
+        const alert = await this.alertController.create({
+          cssClass: "alertClass",
+          header: this.translate.instant('form.alert_title'),
+          // subHeader: 'Subtitle',
+          message: this.translate.instant('form.alert_forms'),
+          buttons: [button]
+        });
+
+        await alert.present();
+      });
+
+ 
+}
+
 
 async presentAlert() {
   let model= this.content?.model;
@@ -75,7 +108,9 @@ async presentAlert() {
   
 }
 
+ async showAlertForm() {
 
+ }
  
 async dismissAndRejectAlert(model, model_id) {
   let type= "declined"   
