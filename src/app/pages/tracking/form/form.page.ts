@@ -82,7 +82,7 @@ export class FormPage implements OnInit {
   }
 
   getForm(){
-    debugger
+    
     this.isLoading = true;
     let params = {formAnswer: this.formAnswer, game_play_id: this.gamePlayId}
 

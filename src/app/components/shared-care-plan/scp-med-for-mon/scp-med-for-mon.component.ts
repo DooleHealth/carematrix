@@ -23,10 +23,9 @@ export class ScpMedForMonComponent  implements OnInit {
    // this.getrouter=this.getRouterLink()
   }
 
-  async goTo(type: any, showAlerts) {
-   
+  async goTo(type: any, form_id: any,  showAlerts) {   
       // If routerLink is not null, emit the redirect event
-      this.redirect.emit({ type: type, showAlerts });
+      this.redirect.emit({ type: type, form_id,  showAlerts });
     }
  
   
@@ -39,7 +38,7 @@ export class ScpMedForMonComponent  implements OnInit {
       return ['form', { id: form_id }];
      
     } if(type === "App\\Monitoring") {
-      return ["/activity-goal"]
+      return ["activity-goal"]
     } 
          
     else {

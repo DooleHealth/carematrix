@@ -51,9 +51,7 @@ export class MedicationPage implements OnInit {
 
 
  async loadData(){
-    console.log('hola');
-    this.items = []   
-    let id=  localStorage.getItem('userId');
+    this.items = []  
     this.sharedCarePlan.get_APi_ACP_medication().subscribe( 
    // this.dooleService.getAPImedicationAlls().subscribe(
       async (data: any) =>{

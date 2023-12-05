@@ -88,6 +88,7 @@ export class ActivityGoalPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("mostrar")
     this.id = history.state.id;
     this.header = history.state.header;
     //this.viewTitle = this.formatSelectedDate(this.minDate, 'EEEE d MMMM')

@@ -1,6 +1,6 @@
 <ion-card
   class="cardProfile"
-  (click)="goTo(content.type, content?.showAlert)"
+  (click)="goTo(content.type, content?.form_id, content?.showAlert)"
   [routerLink]="getRouterLink(content?.type, content?.form_id)"
   [state]="{ id: content?.id, header: content?.title}"
   routerLinkActive="active-item"

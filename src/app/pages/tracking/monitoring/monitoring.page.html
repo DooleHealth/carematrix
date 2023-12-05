@@ -31,7 +31,7 @@
 
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
-        <app-scp-med-for-mon *ngFor="let content of items" [content]="content"></app-scp-med-for-mon>
+        <app-scp-med-for-mon *ngFor="let content of items" [content]="content" (redirect)="handleRedirect($event)"></app-scp-med-for-mon>
     </ion-list>
   </div>
   <ng-template #noData>

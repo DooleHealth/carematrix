@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
@@ -20,7 +22,9 @@ export class FormListPage implements OnInit {
     public loadingCtrl: LoadingController,
     public sharedCarePlan:SharedCarePlanService, 
     private datePipe: DatePipe, 
-    private dateService : DateService
+    private dateService : DateService,
+    public translate: TranslateService, public alertController: AlertController,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -54,6 +58,24 @@ showAlert(date){
   return this.dateService.isToday(new Date(date) )
 }
 
+async alertForm(){
+
+  this.translate.get('info.button').subscribe(
+    async button => {
+      // value is our translated string
+      const alert = await this.alertController.create({
+        cssClass: "alertClass",
+        header: this.translate.instant('form.alert_title'),
+        // subHeader: 'Subtitle',
+        message: this.translate.instant('form.alert_forms'),
+        buttons: [button]
+      });
+
+      await alert.present();
+    });
+
+
+}
 
 adapterForView(list){
   list.forEach(element => {  
@@ -76,8 +98,8 @@ adapterForView(list){
       type: "App\\Form",
       description: "", //element.frequencyName,
       id:element.id,
-      showAlert: this.showAlert(element.from_date)
-    //  routerLink: ['form', { id: element?.id }]
+      showAlert: this.showAlert(element.from_date),
+      routerLink: null
     }
 
 
@@ -85,10 +107,12 @@ adapterForView(list){
     this.items.push(data)
   })
 }
-handleRedirect(event: { type: string,  showAlertForm:boolean }) {   
+handleRedirect(event: { type: string, form_id: string, showAlerts:boolean }) {   
   console.log("entro a la redireccion")     
- if(event.showAlertForm === true){
-
+ if(event.showAlerts === true){
+  this.alertForm();
+ }else{
+  this.router.navigate([`/tracking/form`, { id: event.form_id }], { state: { data: null } });
  }
 }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
@@ -14,7 +15,7 @@ export class MonitoringPage implements OnInit {
   nameContent: string = ContentTypeTranslatedName.Monitoring
   iconContent = ContentTypeIcons.Monitoring
   constructor(
-    public sharedCarePlan:SharedCarePlanService, 
+    public sharedCarePlan:SharedCarePlanService, private router: Router,
   ) { }
 
   ngOnInit() {
@@ -56,7 +57,7 @@ adapterForView(list){
      // accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
       type: "App\\Monitoring",
       description: goals, //element.frequencyName,
-      id:element.id,
+      form_id:element.id,
       routerLink: ""//['form', { id: element?.id }]
     }
 
@@ -64,6 +65,12 @@ adapterForView(list){
     console.log("cdata", data)
     this.items.push(data)
   })
+}
+handleRedirect(event: { type: string, form_id: string, showAlerts:boolean }) {   
+  console.log("entro a la redireccion")     
+
+  this.router.navigate([`/activity-goal`], { state: { id: event.form_id } });
+ 
 }
 
 }
