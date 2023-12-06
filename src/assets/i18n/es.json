@@ -911,7 +911,7 @@
         "message": "Este formulario <strong>solo puntúa</strong> en el caso de ser respondido <strong>correctamente</strong>"
       },
       "scheduled": "Programada : ",
-      "goals": "Meta:",
+      "goals": "Objetivos:",
       "head_card_text": "Le enviaremos periódicamente formularios y escalas para mantenernos informados sobre su estado de salud, y se le avisará cuando llegue el momento de cumplimentarlos.",
       "alert_forms": "Sólo puede rellenar este formulario cuando esté programado; le enviaremos una notificación el día especificado.",
       "alert_title": "Acción no autorizada"

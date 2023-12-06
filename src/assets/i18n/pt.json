@@ -905,7 +905,12 @@
     "goal":{
       "title": "Atenção",
       "message": "Este formulário <strong>só pontua</strong> se for respondido <strong>corretamente</strong>"
-    }
+    },
+    "scheduled": "Agendado : ",
+    "goals": "Meta:",
+    "head_card_text": "Enviar-lhe-emos periodicamente formulários e escalas para nos mantermos informados sobre o seu estado de saúde, e será notificado quando chegar a altura de os preencher.",
+    "alert_forms": "Só pode preencher este formulário quando estiver agendado; iremos enviar-lhe uma notificação no dia especificado.",
+    "alert_title": "Ação não permitida"
   },
   "answer_form":{
     "title": "Formulários preenchidos",
@@ -958,7 +963,5 @@
   },
   "medical_procedure_list": {
     "text": "Aqui encontrará todos os seus procedimentos médicos e testes diagnósticos agendados numa linha temporal."
-  },
-  "alert_forms": "Só pode preencher este formulário quando estiver agendado; iremos enviar-lhe uma notificação no dia especificado.",
-  "alert_title": "Ação não permitida"
+  }
 }
