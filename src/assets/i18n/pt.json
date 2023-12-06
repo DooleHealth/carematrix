@@ -923,19 +923,42 @@
   "trak":{
     "header": "Trak"
   },
-  "lifestyle":{
-    "header":"Hábitos de Vida",
-    "head_card_title":"Hábitos de Vida" , 
+  "lifestyle": {
+    "header": "Hábitos de Vida",
+    "head_card_title": "Hábitos de Vida",
     "head_card_text": "Os hábitos de vida podem ter um impacto significativo na saúde física, mental e emocional de um indivíduo"
   },
-  "shared_care_plan":{
-    "title": "Plano de Cuidados Partilhado",
-    "description": "<p>Este é o seu <b>Plano de Cuidados Partilhado</b></p>",
+  "shared_care_plan": {
+    "title": "Plano de Cuidados Compartilhado",
+    "description": "<p>Este é o seu <b>Plano de Cuidados Compartilhado</b></p>",
     "monitoring": "Monitorização",
-    "medical_procedure": "Medical Procedure",
-    "informed_consent": "Informed Consent"
+    "medical_procedure": "Procedimento Médico",
+    "informed_consent": "Consentimento Informado",
+    "new_scp_notification_title": "Novas metas foram adicionadas ao seu Plano de Cuidados Compartilhado",
+    "new_scp_notification_msg": "Por favor, revise as alterações para aprovar ou rejeitar",
+    "new_scp_alert_cancel": "Fechar",
+    "new_scp_alert_review": "Rever",
+    "goal_state": {
+      "approved": "Aprovado",
+      "rejected": "Rejeitado",
+      "pending": "Pendente"
+    },
+    "monitoringList": {
+      "text": "A monitorização é crucial para avaliar o estado de saúde, detetar alterações precoces e ajustar o tratamento."
+    }
   },
-  "confirmation-answers":{
+  "exercices": {
+    "header": "Exercícios"
+  },
+  "medication_plan": {
+    "take_time": "Horário de Administração"
+  },
+  "confirmation-answers": {
     "title": "Por favor, verifique as suas respostas antes de confirmar o envio."
-  }
+  },
+  "medical_procedure_list": {
+    "text": "Aqui encontrará todos os seus procedimentos médicos e testes diagnósticos agendados numa linha temporal."
+  },
+  "alert_forms": "Só pode preencher este formulário quando estiver agendado; iremos enviar-lhe uma notificação no dia especificado.",
+  "alert_title": "Ação não permitida"
 }
