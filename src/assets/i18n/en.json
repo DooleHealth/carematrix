@@ -633,11 +633,12 @@
     "button_details": "See details",
     "from": "From",
     "to": "To",
-    "dose": "Doses : ",
+    "dose": "Dose : ",
     "accepted_rejected": "Do you want to approve or reject this medication plan?",
     "rejected": "We would like you to give us a brief explanation of the reasons for your refusal.",
     "button_accepted": "Approve",
-    "button_rejected": "Reject"
+    "button_rejected": "Reject",
+    "placeholder": "Write a message."
   },
   "button": {
     "detail": "Detail",

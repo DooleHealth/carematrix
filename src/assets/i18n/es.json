@@ -638,7 +638,8 @@
         "accepted_rejected": "¿Desea aprobar o rechazar este plan de medicación?",
         "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
         "button_accepted": "Aprobar",
-        "button_rejected": "Rechazar"
+        "button_rejected": "Rechazar",
+        "placeholder": "Write a message."
     },
     "button":{
       "detail": "Detalle",

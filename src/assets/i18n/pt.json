@@ -636,7 +636,17 @@
     "placeholder_alias": "Nome alternativo",
     "placeholder_search": "Pesquisar por nome ou código",
     "snapshot_medication": "Injeção instantânea",
-    "medication_plan": "Plano de medicação"
+    "medication_plan": "Plano de medicação",
+    "button_details": "Ver pormenores",
+    "from": "De",
+    "to": "Para",
+    "dose": "Doses : ",
+    "accepted_rejected": "Deseja aprovar ou rejeitar este plano de medicação?",
+    "rejected": "Gostaríamos que nos desse uma breve explicação dos motivos da sua recusa.",
+    "button_accepted": "Aprovar",
+    "button_rejected": "Rejeitar",
+    "placeholder": "Escrever uma mensagem."
+
   },
   "button": {
     "detail": "Detalhe",
@@ -799,7 +809,9 @@
     "shipping_method": "Tipo de envio: ",
     "go_back": "Voltar ao passo anterior",
     "add_address": "Adicionar morada",
-    "edit_address": "Editar morada"
+    "edit_address": "Editar morada",
+    "head_card_text": "Aqui encontra informações sobre os planos de medicação prescritos. Pode contactar a sua equipa médica se tiver alguma dúvida sobre o assunto"
+
   },
   "recipe": {
     "header": "Receitas",
