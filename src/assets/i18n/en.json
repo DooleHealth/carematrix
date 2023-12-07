@@ -515,11 +515,11 @@
     "button_chat": "Open Chat"
   },
   "tracking": {
-    "header": "Follow up",
+    "header": "Follow-up",
     "tap_documents": "Documents",
     "tap_forms": "Forms",
     "tap_graphics": "Graphics",
-    "tap_test": "Tests"
+    "tap_test": "Medical tests"
   },
   "documents": {
     "subtitle_information": "Information",

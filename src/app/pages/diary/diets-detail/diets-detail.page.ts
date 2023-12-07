@@ -62,6 +62,7 @@ export class DietsDetailPage implements OnInit {
         
         if((this.diet.url!='') && (this.diet.url!=null)){
           this.link=this.sanitizer.bypassSecurityTrustResourceUrl(this.diet.url);
+          console.log("link", this.link)
         }
   
         this.diet.media.forEach(element => {
@@ -97,6 +98,8 @@ export class DietsDetailPage implements OnInit {
     window.open(this.linkpdf2.changingThisBreaksApplicationSecurity, "");
   
   }
+
+  
 
   openVideo(){
     console.log("media", this.diet.media);
