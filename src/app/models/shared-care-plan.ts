@@ -1,5 +1,5 @@
 import { Type } from "@angular/core";
-import { NotificationsType } from "../shared/classes/notification-options";
+import { NotificationsType } from "./notifications/notification-options";
 
 export enum ContentType {
     ADVICE = "App\\Advice",

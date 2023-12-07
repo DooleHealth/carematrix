@@ -434,7 +434,7 @@ export class AppComponent implements OnInit {
 
     switch (data.action) {
 
-      case "SHARED":
+      case "SHARECAREPLAN":
         this._zone.run(() => {
           this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true} });
         });

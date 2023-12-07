@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypePath, ContentTypeTranslatedName, ListSCPLifeStyle, SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
-import { NotificationsType } from 'src/app/shared/classes/notification-options';
+import { NotificationsType } from 'src/app/models/notifications/notification-options';
 
 @Component({
   selector: 'app-lifestyle-habits',

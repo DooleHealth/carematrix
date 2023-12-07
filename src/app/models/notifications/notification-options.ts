@@ -10,74 +10,98 @@ export interface notificationOpt {
 }
 
 export enum NotificationsType {
-    APPOINTMENTS = 'appointments',
-    REMINDERS = 'reminder',
-    DIETS = 'diets',
-    MEDICATIONS = 'medication',
-    GOALS = 'goals',
     ADVICES = 'advices',
+    AGENDA = 'agenda',
+    COMMUNICATIONS = 'communications',
+    DIETS = 'diets',
+    EXERCISES = 'exercises',
     FORMS = 'forms',
+    GAMES = 'games',
+    GOALS = 'goals',
+    MEDICATIONS = 'medication',
     MESSAGES = 'messages',
     NEWS = 'news',
-    GAMES = 'games',
-    EXERCISES = 'exercises',
-    COMMUNICATIONS = 'communications',
+    OFFERS = 'offers',
     PROMOTE_CONTENT = 'promote-content',
     PROCEDURES = 'procedures',
-    OFFERS = 'offers',
-    LIFE_STILE_HABITS = 'life-style-habits',
+    REMINDERS = 'reminder',
+    //Shared care plan
     MONITORING = 'monitoring', 
-    INFORMED_CONSENT = 'informed-consent'
+    INFORMED_CONSENT = 'informed-consent',
+    LIFE_STILE_HABITS = 'life-style-habits',
+    SHARED_CARE_PLAN = 'shared-care-plan'
 }
 
 export enum NotificationsTypeBO {
     ADVICES = "App\\Advice",
-    APPOINTMENTS = "App\\Agenda",
-    REMINDERS = "App\\Reminder", 
-    REMINDERS_EXECUTION ="App\\ReminderExecution",
-    DIETS = "App\\Diet",
-    MEDICATIONS = 'medication',
+    AGENDA = "App\\Agenda",
     CHALLENGE_LEVEL = "App\\LevelAccomplishment",
+    DIAGNOSTIC_TEST = "App\\DiagnosticTest",
+    DIETS = "App\\Diet",
     DRUG = "App\\DrugIntake",
-    GOALS = 'goals',
-    FORMS = 'forms',
-    MESSAGES = "App\\Message",
-    NEWS = "App\\News",
+    EXERCISES = "App\\Exercise",
+    FORMS = "App\\FormAnswer",
     GAMES = "App\\Game",
     GAME_PLAY = "App\\GamePlay",
-    EXERCISES = "App\\Exercise",
+    //GOALS = "App\\Goalable",
     MEDICAL_PROCEDURE = "App\\MedicalProcedure",
-    DIAGNOSTIC_TEST = "App\\DiagnosticTest",
+    MEDICATIONS = "App\\MedicationPlan",
+    MESSAGES = "App\\Message",
+    NEWS = "App\\News",
     PROGRAMABLE_PLAY = "App\\ProgramablePlay",
+    REMINDERS = "App\\Reminder", 
+    REMINDERS_EXECUTION ="App\\ReminderExecution",
+    SHARED_CARE_PLAN = "App\\ShareCarePlan"
 }
 
 export enum NOTIFICATIONS_TYPE_BO {
-    APPOINTMENTS = "App\\Agenda",
-    REMINDERS = "App\\Reminder", 
-    REMINDERS_EXECUTION ="App\\ReminderExecution",
-    DIETS = "App\\Diet",
-    MEDICATIONS = 'medication',
-
-    GOALS = 'goals',
-    NEWS = "App\\News",
-    GAMES = "App\\Game",
-    GAME_PLAY = "App\\GamePlay",
-    EXERCISES = "App\\Exercise",
-    MEDICAL_PROCEDURE = "App\\MedicalProcedure",
-    DIAGNOSTIC_TEST = "App\\DiagnosticTest",
-    PROGRAMABLE_PLAY = "App\\ProgramablePlay",
-
-    FORMS = "App\\Notifications\\FormAnswerSchedule",
+    AGENDA = "App\\Notifications\\AgendaCreated",
+    APPOINTMENTS_VISIT = "App\\Notifications\\VisitOnlineNotification", 
+    ADVICES = "App\\Notifications\\AdviceCreated",
     CHALLENGE_LEVEL = "App\\Notifications\\LevelAccomplishmentCompletedNotification",
+    DIETS = "App\\Notifications\\DietCreated",
     DRUG = "App\\Notifications\\DrugIntakeTime",
-    ADVICES = "App\\Notifications\\VisitOnlineNotification",
-    MESSAGES = "App\\Message",
+    EXERCISES = "App\\Notifications\\ExerciseCreated",
+    EXERCISES_PLAY = "App\\Notifications\\ExercisePlaySchedule", 
+    FORMS = "App\\Notifications\\FormAnswerSchedule",
+    GAMES = "App\\Notifications\\GamePlaySchedule",
+    MESSAGES = "App\\Notifications\\MessageNotification",
+    NEWS = "App\\Notifications\\NewsNotification",
+    REMINDERS = "App\\Notifications\\ReminderTime", 
+    SHARED_CARE_PLAN = "App\\Notifications\\SharedCarePlanAddContentNotification"
+    // MEDICATIONS = "",
+    // GOALS =  "",
+    // MEDICAL_PROCEDURE = "",
+    // DIAGNOSTIC_TEST = "",
+    // PROGRAMABLE_PLAY = "",
+}
+
+export enum NotificationsTypeColor {
+    ADVICES =  '#2356f9',
+    AGENDA = '#6950ce',
+    CHALLENGE_LEVEL = '#BDC3C7',
+    DIAGNOSTIC_TEST = '#1A8E92',
+    DIETS = '#E67E22',
+    DRUG = '#5AC445',
+    EXERCISES = '#f53d3d',
+    FORMS = '#2356f9',
+    GAMES = '#9B59B6',
+    GAME_PLAY = '#9B59B6',
+    //GOALS = '#1A8E92',
+    MEDICAL_PROCEDURE = '#EC7579',
+    MEDICATIONS = '#25CAD0',
+    MESSAGES = '#25CAD0',
+    NEWS = '#2356f9',
+    PROGRAMABLE_PLAY = '#7F8C8D',
+    REMINDERS =  '#6950ce', 
+    REMINDERS_EXECUTION =  '#6950ce',
+    SHARED_CARE_PLAN = '#BA0186'
 }
 
 
 export class NotificationOptions {
 
-    public readonly appointments: any = {type:  NotificationsType.APPOINTMENTS, mail: 'agendaNotificationMail', app: 'agendaNotificationApp', old: null};
+    public readonly agenda: any = {type:  NotificationsType.AGENDA, mail: 'agendaNotificationMail', app: 'agendaNotificationApp', old: null};
     public readonly reminder: any = {type:  NotificationsType.REMINDERS, mail: 'reminderNotificationMail', app: 'reminderNotificationApp', old: null};
     public readonly diets: any = {type: NotificationsType.DIETS, mail: 'dietsNotificationMail', app: 'dietsNotificationApp', old: 'dietsNotificaton'};
     public readonly medication: any = {type: NotificationsType.MEDICATIONS, mail: ['drugIntakeNotificationMail', 'medicationPlanExpiredNotificationEmail'], app: ['drugIntakeNotificationApp', 'medicationPlanExpiredNotificationApp'], old: null};
@@ -92,7 +116,7 @@ export class NotificationOptions {
     
     private list_options: notificationOpt[] = [];
     //Aqui se añaden todas las notificaciones que queremos que aparezca en setting.page
-    private options = [ this.appointments, this.reminder, this.diets, this.medication, this.goals, this.advices, this.forms, this.messages, this.news, this.games, this.exercises];
+    private options = [ this.agenda, this.reminder, this.diets, this.medication, this.goals, this.advices, this.forms, this.messages, this.news, this.games, this.exercises];
     constructor() {
         this.setAllNotifications()
     }
@@ -131,7 +155,7 @@ export class NotificationOptions {
         switch (opt?.type) {
             case NotificationsType.COMMUNICATIONS:
                 return 'setting.subtitle_communications';
-            case NotificationsType.APPOINTMENTS:
+            case NotificationsType.AGENDA:
                 return 'setting.subtitle_appointment';
             case NotificationsType.REMINDERS:
                 return 'setting.subtitle_reminders';
