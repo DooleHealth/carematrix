@@ -34,6 +34,8 @@ export class Constants {
         endpoint: 'https://salud.rehabilify.com'
         // api: 'https://deneb.doole.io/api',
         // endpoint: 'https://deneb.doole.io'
+        // api: 'https://salud-pre.rehabilify.com/api',
+        // endpoint: 'https://salud-pre.rehabilify.com'
       })
 
       this.LIST_ENPOINT.push({

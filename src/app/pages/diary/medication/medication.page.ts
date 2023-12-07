@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { NotificationsType } from 'src/app/shared/classes/notification-options';
+import { NotificationsType } from 'src/app/models/notifications/notification-options';
 import { Router } from '@angular/router';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';

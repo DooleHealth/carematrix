@@ -228,7 +228,6 @@ export class ListNotificationsPage implements OnInit {
         notification['message'] = this.translate.instant('list_notifications.procedure')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
         notification['title'] = notification?.notification_origin?.title
-        notification['centro'] = 'En el ' + notification?.notification_origin?.originString
         notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
         notification['color'] = '#EC7579'
         notification['checked'] = false
@@ -240,6 +239,16 @@ export class ListNotificationsPage implements OnInit {
         //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
         //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
         notification['color'] = '#1A8E92'
+        notification['checked'] = false
+        break;
+      case "App\\ShareCarePlan":
+        notification['message'] = this.translate.instant('shared_care_plan.new_scp_notification_title')
+        notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
+        notification['title'] = notification?.notification_origin?.title
+        //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
+        //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
+        notification['color'] = '#BA0186'
+        notification['checked'] = false
         break;
       // case "App\\Goalable":
       //   notification['message'] = this.translate.instant('list_notifications.diagnostic')
@@ -338,6 +347,9 @@ export class ListNotificationsPage implements OnInit {
       case "App\\DiagnosticTest":
         this.setRead(notification.id)
         this.router.navigate([`/document-detail`],{state:{data:null, procedure:params}});
+      case "App\\ShareCarePlan": 
+        this.setRead(notification.id)
+        this.router.navigate([`/tracking`],{state:{data:null, segment: 'sharedcareplan'  }});
       case "App\\ProgramablePlay":
         this.setRead(notification.id)
         this.router.navigate([`/home`],{state:{data:null, id:data.id}});

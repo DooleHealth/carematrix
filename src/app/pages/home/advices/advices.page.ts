@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
-import { NotificationsType } from 'src/app/shared/classes/notification-options';
+import { NotificationsType } from 'src/app/models/notifications/notification-options';
 export interface ItemAdvice {
   expanded?: boolean;
   item?: any;
