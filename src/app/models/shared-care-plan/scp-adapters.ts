@@ -183,14 +183,14 @@ export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
     adapterForView(list: any[], name: string, cover: string, description: string, url:string){
         let newList: SharedCarePlanPrescribedApps[] = []
             if(list?.length >0)
-            list.forEach((app) => {
+            list.forEach((app) => {        
                 let data: SharedCarePlanPrescribedApps = {
                     id: app?.id,
                     icon: app[cover],
                     title: app[name],
                     description: app[description],
-                    iframe_url: url,
-                    open_market_app_pkg: url,
+                    iframe_url: app[url],
+                    open_market_app_pkg: app[url],
                 }     
             if(data?.iframe_url)            
                 newList.push(data)

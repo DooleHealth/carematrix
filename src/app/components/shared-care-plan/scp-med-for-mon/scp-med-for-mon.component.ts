@@ -121,13 +121,13 @@ async dismissAndRejectAlert(model, model_id) {
         name: 'campoInput',
         id: 'campoInput',
         type: 'textarea',
-        placeholder: 'Escribe algo aquí',
+        placeholder: this.translate.instant('medication.placeholder'),
         cssClass: 'custom-textarea'
       }
     ],
     buttons: [
       {
-        text: 'Cancelar',
+        text: this.translate.instant('medication.button_rejected'), 
         role: 'cancel',
         cssClass: 'secondary',
         handler: () => {
@@ -135,7 +135,7 @@ async dismissAndRejectAlert(model, model_id) {
         }
       },
       {
-        text: 'Aceptar',
+        text: this.translate.instant('medication.button_accepted'), 
         handler: (data) => {
          // aceptarButton.disabled = value.trim() === '';
           console.log('Botón Aceptar presionado', data.campoInput);

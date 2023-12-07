@@ -49,9 +49,12 @@ export class FormListPage implements OnInit {
 
 
 transformDate(date) {
-  console.log("locale", this.locale)
- // return this.datePipe.transform(date, 'MMM d, y', this.locale);
-  return this.dateService.ddMMyyyy(date)
+  if(date != null){
+return this.dateService.ddMMyFormat(date)
+}else{
+return ""
+}
+
 }
 
 showAlert(date){

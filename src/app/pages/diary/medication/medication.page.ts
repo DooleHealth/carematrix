@@ -49,6 +49,8 @@ export class MedicationPage implements OnInit {
    this.loadData()
   }
 
+  
+
 
  async loadData(){
     this.items = []  
@@ -101,7 +103,12 @@ export class MedicationPage implements OnInit {
 
    
     transformDate(date) {
-      return this.datePipe.transform(date, 'MMM d');
+          if(date != null){
+        return this.dateService.ddMMyFormat(date)
+      }else{
+        return ""
+      }
+   
     }
 
     accepterOrDecline(datos){
@@ -119,8 +126,8 @@ export class MedicationPage implements OnInit {
         let data={
           img: element.cover.temporaryUrl,
           title: element.drup_name,
-          from:  this.transformDate(element.start_date),  //(element.start_date),
-          to: element.to_date,
+          from:  this.transformDate(element.from_date),
+          to:  this.transformDate(element.to_date),
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
           type: "medication",
           description:  element.frequency,
