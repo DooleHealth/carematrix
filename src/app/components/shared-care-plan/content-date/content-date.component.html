@@ -1,5 +1,10 @@
-<ion-card class="cardProfile" (click)="goTo(content.type)"  routerLinkActive="active-item" [routerLink]="content.routerlink" >
-  <ion-item lines="none">
+<ion-card 
+class="cardProfile ion-no-padding" 
+(click)="goTo(content.type)"  
+routerLinkActive="active-item" 
+[routerLink]="content.routerlink" >
+
+  <ion-item class="ion-no-padding item" lines="none" mode="ios">
     <ion-thumbnail class="thumbnail" slot="start">
       <img
         class="img"
@@ -8,7 +13,7 @@
         alt=""
       />
     </ion-thumbnail>
-    <ion-grid> 
+    <ion-grid class="ion-no-padding" style="height: 100% !important"> 
       <ion-row>
         <!-- <ion-text class="imgPadding">{{content?.title | translate}}</ion-text> -->
         <p>{{content?.title}}</p>
@@ -21,13 +26,13 @@
 
       <ion-row>
         <ion-col size="9.5" size-md="10" size-lg="11">
-          <p style="color: var(--malva)">
+          <p class="txtSubtitle3" style="color: var(--malva)">
             {{content?.staff}}
           </p>
 
         </ion-col>
         <ion-col size="2.5" size-md="2" size-lg="1">
-          <p  style="color: var(--malva)">
+          <p class="txtSubtitleDate" style="color: var(--malva)">
             {{this.date}}
           </p>
         </ion-col>

@@ -15,7 +15,7 @@
 <ion-content [fullscreen]="true">
 
   <ion-card class="cardProfile">
-    <ion-item lines="none">
+    <ion-item lines="none" >
       <ion-grid>
         <ion-row>
           <ion-icon
@@ -35,14 +35,14 @@
 
   <div>
     <ion-list *ngIf="listItem.length > 0; else noData">
-      <ion-grid *ngFor="let content of listItem" class="ion-no-padding">  
+      <ion-grid *ngFor="let content of listItem" class="ion-no-padding item">  
         <ion-row>
-          <ion-col size="1" >    
+          <ion-col size="0.8" >    
             <ion-icon class="center"
             src='/assets/icons/shared-care-plan/ellipse.svg'
             ></ion-icon>&nbsp; 
           </ion-col>
-          <ion-col size="11">   
+          <ion-col size="11.2">   
             <ion-text class="center" style="color: var(--malva)">
               <h5>&nbsp; 
                 {{ this.setDate(content?.date) }}
@@ -52,10 +52,10 @@
 
         </ion-row>
         <ion-row>
-          <ion-col size="1" style="align-items: center;">  
+          <ion-col size="0.8" style="align-items: center;">  
           <ion-icon style="font-size: large; width: 100%; height: 100%;"  src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
           </ion-col>
-          <ion-col size="11">    
+          <ion-col size="11.2">    
             <app-content-date  [content]="content"></app-content-date>
           </ion-col>
           
@@ -63,6 +63,8 @@
       </ion-grid>
 
     </ion-list>
+
+    <app-content-date *ngFor="let content of listItem" [content]="content"></app-content-date>
   </div>
 
   <ng-template #noData>
