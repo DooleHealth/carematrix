@@ -1,5 +1,5 @@
 <ion-card
-  class="cardProfile"
+  class="cardProfile ion-no-padding"
   (click)="goTo(content.type, content?.form_id, content?.showAlert)"
   [routerLink]="getRouterLink(content?.type, content?.form_id)"
   [state]="{ id: content?.id, header: content?.title}"
@@ -7,15 +7,16 @@
 
   
 >
-  <ion-item lines="none" mode="ios">
-    <ion-thumbnail slot="start">
+  <ion-item class="ion-no-padding item" lines="none" mode="ios">
+    <ion-thumbnail class="thumbnail" slot="start">
       <img
+        class="img"
         [src]="content?.img"
         onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
         alt=""
       />
     </ion-thumbnail>
-    <ion-grid>
+    <ion-grid class="ion-no-padding item" style="height: 100% !important">
       <ion-row style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
         <p>
           {{ content?.from  }} ---

@@ -1,43 +1,50 @@
 <ion-card 
-class="cardProfile ion-no-padding" 
+class="ion-no-padding" 
 (click)="goTo(content.type)"  
 routerLinkActive="active-item" 
 [routerLink]="content.routerlink" >
 
-  <ion-item class="ion-no-padding item" lines="none" mode="ios">
-    <ion-thumbnail class="thumbnail" slot="start">
-      <img
-        class="img"
-        [src]="content?.img"
-        onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
-        alt=""
-      />
-    </ion-thumbnail>
+  <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
+
     <ion-grid class="ion-no-padding" style="height: 100% !important"> 
       <ion-row>
-        <!-- <ion-text class="imgPadding">{{content?.title | translate}}</ion-text> -->
-        <p>{{content?.title}}</p>
-      </ion-row>
-      <ion-row>
-        <ion-text class="imgPadding">
-            {{content?.type}}
-        </ion-text>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size="9.5" size-md="10" size-lg="11">
-          <p class="txtSubtitle3" style="color: var(--malva)">
-            {{content?.staff}}
-          </p>
-
+        <ion-col size="4">
+          <ion-thumbnail class="thumbnail">
+            <img
+              class="paddingRight imagefit"
+              [src]="content?.img"
+              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+              alt=""
+            />
+          </ion-thumbnail>
         </ion-col>
-        <ion-col size="2.5" size-md="2" size-lg="1">
-          <p class="txtSubtitleDate" style="color: var(--malva)">
-            {{this.date}}
-          </p>
+  
+        <ion-col size="8">
+          <ion-row>
+            <p>{{content?.title}}</p>
+          </ion-row>
+          <ion-row>
+            <ion-text class="txtSubtitle2">
+                {{content?.type}}
+            </ion-text>
+          </ion-row>
+    
+          <ion-row>
+            <ion-col size="9.5" size-md="10" size-lg="11">
+              <p class="txtSubtitle3" style="color: var(--malva)">
+                {{content?.staff}}
+              </p>
+    
+            </ion-col>
+            <ion-col size="2.5" size-md="2" size-lg="1">
+              <p class="txtSubtitleDate" style="color: var(--malva)">
+                {{this.date}}
+              </p>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
 
     </ion-grid>
-  </ion-item>
+  <!-- </ion-item> -->
 </ion-card>
