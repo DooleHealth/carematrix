@@ -17,11 +17,12 @@
       />
     </ion-thumbnail>
     <ion-grid class="ion-no-padding item" style="height: 100% !important">
-      <ion-row style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
-        <p>
-          {{ content?.from  }} ---
-          {{ content?.to  }}
-        </p>
+      <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
+        <ion-text style="display: inline-flex !important;">
+          <p>{{ content?.from  }} </p>&nbsp; 
+          <p *ngIf="content?.to"> ---  {{ content?.to  }}</p>
+        </ion-text>
+        &nbsp; 
         <ion-icon
           *ngIf="content?.accepted === false"
           src="assets/icons/ellipsis orange.svg"
