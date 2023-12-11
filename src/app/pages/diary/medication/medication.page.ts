@@ -22,9 +22,6 @@ export class MedicationPage implements OnInit {
   isLoading:boolean = true
   id:any
   isSubmitted = false;
-  loading : any;
-  loadingList : any;
-
   public lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
@@ -53,7 +50,8 @@ export class MedicationPage implements OnInit {
 
 
  async loadData(){
-    this.items = []  
+    this.items = [] 
+    this.isLoading = true; 
     this.sharedCarePlan.get_APi_ACP_medication().subscribe( 
    // this.dooleService.getAPImedicationAlls().subscribe(
       async (data: any) =>{
@@ -72,7 +70,7 @@ export class MedicationPage implements OnInit {
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err;
       }, ()=>{
-        this.loadingList = false
+        this.isLoading = false
       });
 
   }
@@ -121,6 +119,7 @@ export class MedicationPage implements OnInit {
   
 
     adapterForView(list){
+      if(list.length > 0)
       list.forEach(element => {       
       //Se adapta la respuesta de la API a lo que espera el componente  
         let data={

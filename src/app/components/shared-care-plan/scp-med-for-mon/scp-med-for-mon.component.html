@@ -31,7 +31,7 @@
           (click)="presentAlert()"
         ></ion-icon>
       </ion-row>
-      <ion-row class="imgPadding" *ngIf="content?.type === 'App\\Monitoring'">
+      <ion-row class="txtSubtitle"  *ngIf="content?.type === 'App\\Monitoring'">
         <p>
           {{ "form.goals" | translate }} {{ content?.description }}
         </p>
