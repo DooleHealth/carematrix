@@ -19,7 +19,7 @@
   <ion-row class="textBlueCentered1, header-change-month">
     <!-- Move back one screen of the slides -->
     <ion-col size="2">
-      <ion-button fill="clear" (click)="back()" class="textBlueCentered1">
+      <ion-button fill="clear" [disabled]="buttonAvailable" (click)="back()" class="textBlueCentered1">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-col>

@@ -40,6 +40,8 @@ export class ShowcaseShellModel extends ShellModel {
 export class MedicalCalendarPage implements OnInit, AfterViewInit {
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
   @Input()id: number;
+  currentDate: Date;
+  buttonAvailable = true
   constructor(
     @Inject(LOCALE_ID) public locale: string,
     private translate: TranslateService,
@@ -50,7 +52,9 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     private modalCtrl: ModalController,
     public dateService: DateService,
 
-  ) {}
+  ) {
+    this.currentDate = new Date()
+  }
   eventSource = [];
   tagDefaultColor: Array<string> = [];
   event: any
@@ -213,13 +217,31 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 };
 
   // Change current month/week/day
-   next() {
-    this.myCal.slideNext();
-  }
+  //  next() {
+  //   this.myCal.slideNext();
+  // }
 
-  back() {
-    this.myCal.slidePrev();
-  }
+  // back() {
+  //   this.myCal.slidePrev();
+  // }
+
+    // Change current month/week/day
+    next() {
+      this.buttonAvailable = false
+      this.myCal.slideNext();
+    }
+  
+    back() {
+      const currentTime = this.currentDate.setHours(0, 0, 0, 0);
+      const calTime = this.myCal.currentDate.setHours(0, 0, 0, 0);
+      //console.log('[MedicalCalendarPage] back() !', currentTime+' '+ calTime);
+      if (currentTime >= calTime){
+        this.buttonAvailable = true
+      }else {
+        this.buttonAvailable = false
+        this.myCal.slidePrev();
+      }  
+    }
 
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
