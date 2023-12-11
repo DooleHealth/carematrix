@@ -285,7 +285,7 @@ export class ListNotificationsPage implements OnInit {
       case "App\\DrugIntake":
         this.setRead(notification.id)
         this._zone.run(() => {
-          this.router.navigate([`/journal`], { state: { data: data, segment: 'medication' } });
+          this.router.navigate([`/medication-details`], { state: { data: data, segment: 'medication' } });
         });
         break;
       case "App\\Agenda":
@@ -315,7 +315,7 @@ export class ListNotificationsPage implements OnInit {
       case "App\\Exercise":
         this.setRead(notification.id)
         //this.router.navigate([`/tracking/exercise`],{state:{data:null, id: data.id, programable_id: notification.notification_origin_id}}); //Bien
-        this.router.navigate([`/home`]);
+        this.router.navigate([`/exercices/exercices-detail`],{state:{data:null, id: data.id}});
         break;
       case "App\\Diet":
         this.setRead(notification.id)
