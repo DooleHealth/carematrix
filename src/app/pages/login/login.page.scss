@@ -17,7 +17,7 @@ body {
   stroke: rgb(147,202,235)
 }
 .loading svg polyline#front {
-  stroke: #5250da;
+  stroke: var(--ion-color-primary);
   stroke-dasharray: 12, 36;
   stroke-dashoffset: 48;
   animation: dash 1s linear infinite;

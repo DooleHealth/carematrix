@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -32,6 +32,7 @@ registerLocaleData(localeDe);
   declarations: [MedicalCalendarPage],
   providers: [DatePipe,
     { provide: LOCALE_ID, useValue: 'ca-ES' }
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MedicalCalendarPageModule {}
