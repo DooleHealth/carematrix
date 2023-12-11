@@ -1,5 +1,6 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
 import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanPrescribedApps, SharedCarePlanProcedure} from "../shared-care-plan";
+import { Platform } from "@ionic/angular";
 
 export class ScpAdapters extends ContentComponent {
     img?: string;
@@ -176,27 +177,35 @@ export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
     title: string;
     description: string;
     iframe_url: string;
-    open_market_app_pkg: string;
+    id_pkg: string;
+   
+    constructor(public platform: Platform){ 
+        this.platform = platform;
+    }
 
-    constructor(){ }
-
-    adapterForView(list: any[], name: string, cover: string, description: string, url:string){
+    adapterForView(list: any[], name: string, cover: string, description: string, url_android: string, url_ios:string){
         let newList: SharedCarePlanPrescribedApps[] = []
             if(list?.length >0)
+
             list.forEach((app) => {        
                 let data: SharedCarePlanPrescribedApps = {
                     id: app?.id,
                     icon: app[cover],
                     title: app[name],
                     description: app[description],
-                    iframe_url: app[url],
-                    open_market_app_pkg: app[url],
+                    iframe_url: null,
+                    id_pkg: this.platform.is('android') || this.platform.is('mobileweb') ? this.getIdFromUrl(app[url_android], /id=([^&]+)/) : this.getIdFromUrl(app[url_ios], /id(\d+)/)
                 }     
-            if(data?.iframe_url)            
+
+            /* if(data?.iframe_url)      */       
                 newList.push(data)
-            });
+             }); 
             return newList
          
+    }
+
+    getIdFromUrl(url, regex) {
+        return url !== null ? url.match(regex)[1] : null;
     }
 }
 

@@ -115,17 +115,18 @@
         {{ 'home.prescribed_apps_title' | translate}}</ion-text>
           <swiper-container [config]="this.config" [slidesPerView]="this.prescribedApps?.length == 1 ? 2:2">
             <swiper-slide *ngFor="let slide of this.prescribedApps" class="ion-no-padding">
-             <ng-container *ngIf="slide.iframe_url !== null else openMarketApp">
+
+            <!--  <ng-container *ngIf="slide.iframe_url !== null else openMarketApp">
                 <ion-card style="background: white; box-shadow: none;" [href]="slide.iframe_url" >
                   <img [src]="slide.icon" />
                 </ion-card>
-              </ng-container>
+              </ng-container>  #openMarketApp-->
     
-              <ng-template #openMarketApp (click)="openMarketApp(slide.open_market_app_pkg)">
-                <ion-card style="background: white; box-shadow: none;">
-                  <img style="width: 30%;" [src]="slide.icon" />
+              <!-- <ng-template > -->
+                <ion-card class="prescribbedAppsCard" (click)="openMarketApp(slide.id_pkg)">
+                  <img style="width: auto;" [src]="slide.icon" />
                 </ion-card>
-              </ng-template>
+              <!-- </ng-template> -->
             </swiper-slide>
           </swiper-container>
     </ion-row>
@@ -209,7 +210,7 @@
     <!-- Drugs -->
     <ion-row>
       <ion-card class="vertical-card">
-        <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive="active-item"
+      <ion-item lines="none" class="noMargin" routerLink="/journal" routerLinkActive="active-item"
           [state]="{segment: 'medication'}">
           <ion-img slot="start" class="ion-no-margin" src="assets/icons/medicina.svg"></ion-img>
           <ion-text class="card-title" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
@@ -218,17 +219,17 @@
         </ion-item>
 
         <ion-card-content>
-          <div class="txtTitleGoalsLittle3" style="width: 100%;" *ngIf="!this.drugs || this.drugs?.length == 0">
+          
+           <div class="txtTitleGoalsLittle3" style="width: 100%;" *ngIf="!this.drugs || this.drugs?.length == 0">
             {{ 'no_data' | translate}}
           </div>
           <swiper-container #sliderDrug (slidechange)="slideDrugChange()" direction="vertical" pagination="true"
-            [config]="this.sliderDrugsConfigVertical" class="slider-vertical">
-            <swiper-slide *ngFor="let slide of this.drugs">
+             class="slider-vertical">
+            <swiper-slide *ngFor="let slide of this.drugs;">
               <ion-grid>
                 <ion-row routerLink="/tracking" [state]="{segment: 'medication'}">
                   <p style="text-align: left">
-                    {{(slide.alias !== null)? slide.alias:
-                    (slide?.name?.substring(25,-1) + '...') }}
+                    {{(slide.alias !== null)? slide.alias: (slide?.name?.substring(25,-1) + '...') }}
                   </p>
                 </ion-row>
                 <ion-row>
@@ -245,7 +246,7 @@
                 </ion-row>
               </ion-grid>
             </swiper-slide>
-          </swiper-container>
+          </swiper-container> 
         </ion-card-content>
       </ion-card>
     </ion-row>

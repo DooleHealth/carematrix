@@ -198,11 +198,11 @@ export class HomePage implements OnInit {
 
   textGoals = ''
   prescribedApps: SharedCarePlanPrescribedApps[] = [];
+  scpProcedures:PrescribedAppsAdapter;
   safeUrl;
 
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
-  scpProcedures:PrescribedAppsAdapter = new PrescribedAppsAdapter()
 
   constructor(
     public router: Router,
@@ -229,7 +229,10 @@ export class HomePage implements OnInit {
     private constants: Constants,
 
 
-  ) { }
+  ) { 
+    this.scpProcedures = new PrescribedAppsAdapter(this.platform)
+
+  }
 
   async ngOnInit() {
     console.log("ENTER")
@@ -417,14 +420,20 @@ export class HomePage implements OnInit {
         );
       });
 
+
+      
+      console.log(res.apps)
       this.prescribedApps = this.scpProcedures.adapterForView(
         res.apps, // JSON 
         'name',  //title
         'cover',  //date
         'description', //type
-        url, //staff
+        'url_android',
+        'url_ios'
         ) 
         
+        console.log(this.prescribedApps);
+
         //console.error(' this.prescribedApps:',  this.prescribedApps);
     } catch (error) {
       // Handle errors if needed
@@ -792,6 +801,8 @@ export class HomePage implements OnInit {
   }
   updateExercisesSlider(exercises) {
     this.exercises = exercises?.length > 0 ? exercises : [];
+    this.sliderExercises.nativeElement.swiper.activeIndex = this.currentIndexExercise;
+
     this.setSliderOption('exercises')
   }
 
@@ -802,6 +813,7 @@ export class HomePage implements OnInit {
 
   updateFormsSlider(forms) {
     this.forms = forms?.length > 0 ? forms : [];
+    this.sliderForms.nativeElement.swiper.activeIndex = this.currentIndexForm;
     this.setSliderOption('forms')
   }
 
@@ -835,9 +847,10 @@ export class HomePage implements OnInit {
     this.exercises = exercises?.length > 0 ? exercises : [];
 
     if (this.exercises.length > 0) {
+      this.searchIndexExercise();
       this.infoExercises = {
         title: this.exercises[this.currentIndexExercise]?.exercise?.name,
-        hour: this.exercises[this.currentIndexExercise]?.from_date !== null ? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
+        hour: this.exercises[this.currentIndexExercise]?.scheduled_date !== null ? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
       }
 
       this.setSliderOption('exercises')
@@ -862,6 +875,8 @@ export class HomePage implements OnInit {
     this.forms = forms?.length > 0 ? forms : [];
 
     if (this.forms.length > 0) {
+
+      this.searchIndexForm();
       this.infoForms = {
         title: this.forms[this.currentIndexForm]?.form?.title,
         hour: this.forms[this.currentIndexForm]?.scheduled_date !== null ? this.transformDate(new Date(this.forms[this.currentIndexForm]?.scheduled_date), 'HH:mm') : ''
@@ -1523,16 +1538,16 @@ export class HomePage implements OnInit {
     console.log('[HomePage] filterDrugsByStatus()');
     if (this.drugs !== undefined && this.drugs?.length > 0) {
       console.log('[HomePage] filterDrugsByStatus()', event);
-      this.drugs = this.drugs.filter(drug => drug.forgotten != 0)
+      this.drugs = this.drugs.filter(drug => drug.forgotten !== 0)
 
       this.searchIndexDrug()
       this.infoDrugs = {
         title: this.drugs[this.currentIndexDrug]?.name,
         hour: this.drugs[this.currentIndexDrug]?.hour_intake
       }
-
-      console.log(this.drugs)
       this.setSliderOption('drugs')
+      this.sliderDrug.nativeElement.swiper.activeIndex = this.currentIndexDrug;
+ 
     } else {
       this.infoDrugs = null;
     }
@@ -1558,6 +1573,17 @@ export class HomePage implements OnInit {
       this.currentIndexDrug = (index > -1) ? index : 0
     }
   }
+
+  searchIndexExercise() {
+    if (this.exercises !== undefined && this.exercises?.length > 0) {
+      let exercise = this.exercises?.find(element =>
+        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+      )
+      let index = this.exercises.indexOf(exercise);
+      this.currentIndexExercise = (index > -1) ? index : 0
+    }
+  }
+
 
   searchIndexForm() {
     if (this.forms !== undefined && this.forms?.length > 0) {
@@ -1840,5 +1866,11 @@ export class HomePage implements OnInit {
     if (0.999 === value) value = 0.99
     //console.log('[HomePage] returnValueProgressBarr()',  value);
     return value
+  }
+
+  openMarketApp(id) {
+    NativeMarket.openStoreListing({
+      appId: id
+    });
   }
 }

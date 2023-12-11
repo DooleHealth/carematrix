@@ -204,7 +204,7 @@ export interface SharedCarePlanPrescribedApps {
     title: string,
     description: string,
     iframe_url:string;
-    open_market_app_pkg:string;
+    id_pkg: string;
 }
 
 /**
