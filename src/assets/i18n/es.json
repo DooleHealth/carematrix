@@ -170,7 +170,8 @@
       "description2": "y suma",
       "subtitle_information": "Información",
       "subtitle_advices": "Consejos",
-      "points": "Puntos"
+      "points": "Puntos",
+      "new": "nuevo"
     },
     "health_path": {
       "title":"Camino de la salud",

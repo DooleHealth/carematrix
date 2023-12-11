@@ -13,6 +13,10 @@
   align-items: center !important;
 }
 
+.verticalAlignTopItem {
+  align-items: start !important
+}
+
 a {
   color: var(--blue);
   text-decoration: none;
@@ -43,7 +47,7 @@ a {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-height: 14px;
-  height: 28px;
+  height: 30px;
   //max-height: 30px;
   -webkit-box-orient: vertical;
 }
@@ -69,9 +73,9 @@ a {
   //min-height: 110 !important;
 }
 
-.item{
-  height: 100% !important;
-}
+// .item{
+//   height: 100% !important;
+// }
 
 
 .imagefit{

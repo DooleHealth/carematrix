@@ -166,7 +166,8 @@
     "description2": "and sum",
     "subtitle_information": "Information",
     "subtitle_advices": "Advices",
-    "points": "Points"
+    "points": "Points",
+    "new": "new"
   },
   "health_path": {
     "title": "Health Path",

@@ -164,7 +164,8 @@
     "description2": "e soma",
     "subtitle_information": "Informação",
     "subtitle_advices": "Conselhos",
-    "points": "Pontos"
+    "points": "Pontos",
+    "new": "novo"
   },
   "health_path": {
     "title": "Percurso de Saúde",

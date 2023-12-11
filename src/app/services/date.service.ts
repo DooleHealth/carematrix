@@ -152,6 +152,12 @@ export class DateService {
       return day[0].toUpperCase() + day.slice(1);
   }
 
+  public ddMMyEuroFormat(date){
+    let format = 'dd MMM y';
+    let day = this.transformDate(date, format);
+    return day[0].toUpperCase() + day.slice(1);
+  }
+
   public ddMMMyyyformat(date){
     let lang =  this.translate.currentLang;
     let format = 'dd MMM yyy';
@@ -336,7 +342,7 @@ export class DateService {
   public getFormatTime(date){
     if(date){
       date = new Date(date)
-      return this.datePipe.transform(date,  this.getTimeFormat())
+      return this.datePipe.transform(date,  this.getTimeFormat2())
     }
   }
 
@@ -452,6 +458,11 @@ export class DateService {
     if(lang === 'en' )
       format =  'hh:mm a';
 
+    return format;
+  }
+
+  getTimeFormat2(){
+    let format =  'HH:mm'
     return format;
   }
 
