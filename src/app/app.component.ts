@@ -925,7 +925,7 @@ export class AppComponent implements OnInit {
     let lang = this.translate.getBrowserLang();
     console.log("BROWSER LANG: ", lang);
     if (lang !== 'ca' && lang !== 'es' && lang !== 'en')
-      lang = 'es'
+      lang = 'en' //es
 
     lang = 'en'
     

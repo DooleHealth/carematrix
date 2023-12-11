@@ -26,8 +26,7 @@ import { HttpParams } from "@angular/common/http";
 import { Constants } from 'src/app/config/constants';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapters';
-//import { ScpAlertService } from 'src/app/services/scp-alert.service';
-
+import { ContentTypePath } from 'src/app/models/shared-care-plan';
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
@@ -1708,11 +1707,7 @@ export class HomePage implements OnInit {
     return this.datePipe.transform(date, 'dd-MM-yyyy');
   }
 
-  goDetailRecipe(e) {
-    let id = e.id
-    if (id)
-      this.nav.navigateForward("/journal/diets-detail", { state: { id: id } });
-  }
+  
 
   goUnitName(unitName) {
     let name = JSON.parse(unitName)
@@ -1873,4 +1868,47 @@ export class HomePage implements OnInit {
       appId: id
     });
   }
+
+
+  navigateToDietsPage() {
+    this.router.navigate([ContentTypePath.Diets], { state: { segment: 'diets'}});
+  }
+
+  goDetailRecipe(e) {
+    let id = e.id
+    if (id)
+      this.nav.navigateForward([ContentTypePath.DietsDetail], { state: { id: id } });
+  }
+
+
+  navigateToMedicationPage() {
+    this.router.navigate([ContentTypePath.Medication], { state: { segment: 'medication'}});
+  }
+
+  navigateToFormsPage() {
+    this.router.navigate([ContentTypePath.Forms], { state: { segment: 'forms'}});
+  }
+
+  navigateToExercisesPage() {
+    this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+  }
+
+  navigateToGamesPage(){
+    this.router.navigate([ContentTypePath.Games], { state: { segment: 'games'}});
+  }
+
+  navigateToMonitoringPage(){
+    this.router.navigate([ContentTypePath.Monitoring], { state: { segment: 'health'}});
+  }
+
+  navigateToChallengesPage(challenge:any) {
+    this.router.navigate([ContentTypePath.Challenges], { state: { challenge: challenge}});
+  }
+
+  navigateToChallengeDetailPage(challenge:any) {
+    this.router.navigate([ContentTypePath.ChallengesDetail], { state: { challenge: challenge}});
+
+  }
+
+
 }
