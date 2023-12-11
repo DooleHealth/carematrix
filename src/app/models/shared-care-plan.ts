@@ -24,12 +24,15 @@ export enum ContentTypePath {
     Monitoring= '/tracking/monitoring', 
     MedicalProcedure= '/tracking/procedures', 
     InformedConsent = '/tracking/informed-consent',
+    Challenges = '/home/health-path',
+    ChallengesDetail = '/home/health-path/detail',
     // LifeStyle
     News = '/news',
     Advices = '/advices',
     Exercises= '/exercices', 
     Games= '/games', 
     Diets= '/diets', 
+    DietsDetail='/diets/diets-detail',
     // Medication Plan
     MedicationID = '/drugs-detail'
 }
@@ -204,7 +207,7 @@ export interface SharedCarePlanPrescribedApps {
     title: string,
     description: string,
     iframe_url:string;
-    open_market_app_pkg:string;
+    id_pkg: string;
 }
 
 /**

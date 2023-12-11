@@ -79,6 +79,10 @@
   --progress-background: purple;
 }
 
+ion-item {
+  height: auto !important;
+}
+
 .vertical-card {
   margin-bottom: 1px !important;
   background-color: white !important;
@@ -139,6 +143,16 @@ ion-card {
   border-radius: 8px;
   background-color: #fff;
   box-shadow: none !important;
+  //height: 130px
+}
+
+.prescribbedAppsCard {
+  background: white; 
+  box-shadow: none; 
+  height: 150px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
 }
 
 .challenge-txt {
@@ -151,6 +165,7 @@ ion-card {
 .customCardHealthPath {
   background-color: white;
   box-shadow: none !important;
+  //height: 230px
 }
 .strechCardContent {
   min-width: 300px !important;
@@ -294,7 +309,7 @@ strong {
 
 .bell {
   margin-top: 10%; //7px;
-  width: -webkit-fill-available;
+  width: auto;
   margin-left: -9px;
   position: absolute;
   z-index: 99999;

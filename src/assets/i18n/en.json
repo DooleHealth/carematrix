@@ -87,7 +87,7 @@
     "slider7_text1": "Set your data and notification preferences so you can always be informed. Enjoy your experience at Rosia!"
   },
   "home": {
-    "hello": "Hello",
+    "hello": "Hi",
     "goals_title": "Your goal",
     "goals_no_data": "No data",
     "advices_title": "News & Advices",
@@ -170,7 +170,7 @@
   },
   "health_path": {
     "title": "Health Path",
-    "card_title": "My challenges",
+    "card_title": "Challenges",
     "goals": "Goals",
     "start": "Start",
     "detail": "How to reach my goal?",

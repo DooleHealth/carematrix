@@ -113,10 +113,11 @@ export class DietsDetailPage implements OnInit {
     const modal = await this.modalCtrl.getTop();
     if (modal)
       await modal.dismiss({error:null});
-    else if(this.data)
-      this.router.navigate([`/home`]);
+      
+   /*  else if(this.data)
+      this.router.navigate([`/diets`]);
     else
-    this.router.navigate([`/diets`]);
+    this.router.navigate([`/home`]); */
   }
 
 }
