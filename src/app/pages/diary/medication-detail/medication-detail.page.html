@@ -221,7 +221,7 @@
                 color="transparent"
                 class="buttonLink"
                 (click)="this.addDrugPlan(item.item, item.item.id)"
-                >{{ 'detail_contact.button_edit' | translate }} </ion-button
+                >{{ 'button.see_detail' | translate }} </ion-button
               >&nbsp;
 
               <ion-badge
@@ -259,12 +259,12 @@
 
               <app-info info="{{'info.medication' | translate}}"></app-info>
               &nbsp; &nbsp;
-              <app-info
+              <!-- <app-info
                 info="{{'info.medication' | translate}}"
                 [title]="item.item.name"
                 [info]="item.item.frequency"
                 [details]="true"
-              ></app-info>
+              ></app-info> -->
             </div>
           </app-expandable>
         </ion-card>
