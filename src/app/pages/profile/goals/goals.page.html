@@ -12,14 +12,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="cardProfile">
+<ion-content>
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner></ion-spinner>
   </div>
 
   <ion-card class="cardProfile" *ngIf="listItem.length > 0; else noData">
-    <ion-item lines="none">
-      <ion-icon [src]="iconContent"></ion-icon>
+    <ion-item class="verticalAlignItem" lines="none">
+      <ion-icon [src]="iconContent"></ion-icon>&nbsp;&nbsp;
       <ion-text>{{nameContent | translate}}</ion-text>
       <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
     </ion-item>

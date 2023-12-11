@@ -44,7 +44,7 @@ export class ContentCircleProgressComponent  implements OnInit {
   }
 
   setDate(){
-    this.content.date = this.dateService.selectedDateFormat(this.content?.date)
+    this.content.date = this.dateService.selectedDateFormat2(this.content?.date)
   }
 
   getProgress(){

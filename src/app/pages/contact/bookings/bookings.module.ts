@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -28,7 +28,8 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
     ComponentsModule,
   ],
   declarations: [BookingsPage],
-  providers:[Chooser,DatePipe,InAppBrowser]
+  providers:[Chooser,DatePipe,InAppBrowser],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
 })
 export class BookingsPageModule {}
