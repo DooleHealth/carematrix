@@ -207,8 +207,8 @@
 
     <!-- Drugs -->
     <ion-row>
-      <ion-card class="vertical-card" (click)="navigateToMedicationPage()">
-        <ion-item lines="none" class="noMargin" routerLinkActive="active-item">
+      <ion-card class="vertical-card">
+        <ion-item lines="none" class="noMargin" (click)="navigateToMedicationPage()" routerLinkActive="active-item">
           <ion-img slot="start" class="ion-no-margin" src="assets/icons/medicina.svg"></ion-img>
           <ion-text class="card-title" slot="start">{{ 'home.medication_subtitle' | translate}}</ion-text>
           <ion-text slot="end" *ngIf="infoDrugs">{{infoDrugs?.hour}}</ion-text>
@@ -309,7 +309,7 @@
 
 
     <!-- Physical Activity -->
-    <ion-row>
+    <ion-row style="padding-bottom: 6%;">
       <ng-container *ngIf="(!this.activity || this.activity?.length == 0); else elseBlock">
         <ion-card class="vertical-card margin-bottom" (click)="navigateToMonitoringPage()">
           <ion-item lines="none" class="noMargin" routerLinkActive="active-item">
