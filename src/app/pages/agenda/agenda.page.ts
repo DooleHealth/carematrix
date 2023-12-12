@@ -9,6 +9,7 @@ import { AgendaEditPage } from './agenda-edit/agenda-edit.page';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
+import { SwiperOptions } from 'swiper/types/swiper-options';
 
 @Component({
   selector: 'app-agenda',
@@ -35,6 +36,12 @@ export class AgendaPage implements OnInit {
   viewTitle: string;
   // months = this.getTranslation('agenda.month')
   // days = this.getTranslation('agenda.days')
+
+  calendarSliderOptions: SwiperOptions = {
+    spaceBetween: 10,
+    threshold: 50
+  };
+
   isLoading:boolean;
   selectedDate: Date;
   calendar = {

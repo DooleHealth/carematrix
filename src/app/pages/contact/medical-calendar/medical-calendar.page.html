@@ -39,7 +39,8 @@
     endHour="20" step="30" [startingDayWeek]="this.dateService.getStartingDayWeek()"
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
     [dateFormatter]="calendar.dateFormatter" (onTimeSelected)="onTimeSelected($event)" [markDisabled]="markDisabled"
-    [startingDayMonth]="this.dateService.getStartingDayMonth()">
+    [startingDayMonth]="this.dateService.getStartingDayMonth()"
+    [sliderOptions]="calendarSliderOptions">
   </calendar>
 
 

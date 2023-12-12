@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { ShellModel } from 'src/app/utils/shell/data-store';
 import { DateService } from 'src/app/services/date.service';
+import { SwiperOptions } from 'swiper/types/swiper-options';
 
 
 export class slot {
@@ -55,6 +56,12 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   ) {
     this.currentDate = new Date()
   }
+
+  calendarSliderOptions: SwiperOptions = {
+    spaceBetween: 10,
+    threshold: 50
+  };
+
   eventSource = [];
   tagDefaultColor: Array<string> = [];
   event: any

@@ -25,8 +25,10 @@
     (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30"
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
-    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter" [startingDayMonth]="this.dateService.getStartingDayMonth()">
+    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter" [startingDayMonth]="this.dateService.getStartingDayMonth()"
+    [sliderOptions]="calendarSliderOptions">
   </calendar>
+  
   <ng-template #template let-view="view" let-row="row" let-col="col">
     <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">
       {{view.dates[row*7+col].label}}
