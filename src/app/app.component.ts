@@ -22,6 +22,8 @@ import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-i
 import { ApiEndpointsService } from './services/api-endpoints.service';
 import { VideocallPage } from './pages/agenda/videocall/videocall.page';
 
+import { ContentTypePath } from './models/shared-care-plan';
+
 import { register } from 'swiper/element/bundle';
 import { Capacitor } from '@capacitor/core';
 register();
@@ -460,12 +462,12 @@ export class AppComponent implements OnInit {
         break;
       case "FORM":
         this._zone.run(() => {
-          this.router.navigate([`/tracking/form`, { id: data.id }], { state: { data: data } });
+          this.router.navigate([ContentTypePath.Forms, { id: data.id }], { state: { data: data } });
         });
         break;
       case "DRUGINTAKE":
         this._zone.run(() => {
-          this.router.navigate([`/journal`], { state: { data: data, segment: 'medication' } });
+          this.router.navigate([ContentTypePath.Medication], { state: { data: data, segment: 'medication' } });
         });
         break;
       case "VIDEOCALL":
@@ -475,17 +477,17 @@ export class AppComponent implements OnInit {
         break;
       case "ADVICE":
         this._zone.run(() => {
-          this.router.navigate([`/advices-detail`], { state: { data: data, id: data.id } });
+          this.router.navigate([ContentTypePath.AdvicesDetail], { state: { data: data, id: data.id } });
         });
         break;
       case "NEWS":
         this._zone.run(() => {
-          this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
+          this.router.navigate([ContentTypePath.NewsDetail],{state:{data:data, id:data.id}});
         });
         break;
       case "DIET":
         this._zone.run(() => {
-          this.router.navigate([`/journal/diets-detail`], { state: { data: data, id: data.id } });
+          this.router.navigate([ContentTypePath.DietsDetail], { state: { data: data, id: data.id } });
         });
         break;
       case "AGENDA":
@@ -501,14 +503,14 @@ export class AppComponent implements OnInit {
       case "GAME":
         this._zone.run(() => {
           if (data.type == 'form') {
-            this.router.navigate([`/tracking/form`, { id: data.form_id }], { state: { data: data, game_play_id: data?.game_play_id } });
+            this.router.navigate([ContentTypePath.FormDetail, { id: data.form_id }], { state: { data: data, game_play_id: data?.game_play_id } });
           } else
-            this.router.navigate([`/journal/games-detail`], { state: { data: data, id: data.id, server_url: data?.server_url } });
+            this.router.navigate([ContentTypePath.GamesDetail], { state: { data: data, id: data.id, server_url: data?.server_url } });
         });
         break;
       case "EXERCISE":
         this._zone.run(() => {
-          this.router.navigate([`/tracking/exercise`], { state: { data: data, id: data.id, programable_id: data.programable_play_id } });
+          this.router.navigate([ContentTypePath.ExercisesDetail], { state: { data: data, id: data.id, programable_id: data.programable_play_id } });
         });
         break;
       default:

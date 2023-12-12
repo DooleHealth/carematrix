@@ -239,15 +239,12 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     }
   
     back() {
-      const currentTime = this.currentDate.setHours(0, 0, 0, 0);
-      const calTime = this.myCal.currentDate.setHours(0, 0, 0, 0);
+      //const currentTime = this.currentDate.setHours(0, 0, 0, 0);
+      //const calTime = this.myCal.currentDate.setHours(0, 0, 0, 0);
       //console.log('[MedicalCalendarPage] back() !', currentTime+' '+ calTime);
-      if (currentTime >= calTime){
-        this.buttonAvailable = true
-      }else {
-        this.buttonAvailable = false
-        this.myCal.slidePrev();
-      }  
+
+     
+      this.myCal.slidePrev();
     }
 
   // Selected date reange and hence title changed
@@ -255,6 +252,14 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
     if(this.myCal?.currentDate)
       this.viewTitle = this.formatMonths();
+
+    
+    
+      const currentMonth = new Date().getMonth()
+      const currentYear = new Date().getFullYear()
+
+      const calTimeMonth = this.myCal?.currentDate.getMonth()
+      const calTimeYear = this.myCal?.currentDate.getFullYear()
 
 
   }
@@ -349,6 +354,34 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
     let date =this.datepipe.transform(event, 'yyyy-MM-dd');
     this.isToday ? this.getSlots(): this.getSlots(date);
+
+    const currentMonth = new Date().getMonth()
+      const currentYear = new Date().getFullYear()
+
+      const calTimeMonth = this.myCal?.currentDate.getMonth()
+      const calTimeYear = this.myCal?.currentDate.getFullYear()
+      
+
+
+      console.log(currentMonth)
+      console.log(currentYear)
+
+      console.log(calTimeMonth)
+      console.log(calTimeYear)
+     
+
+      if (currentYear >= calTimeYear){
+        if (currentMonth === calTimeMonth) {
+          this.buttonAvailable = true
+        }
+        else {
+          this.buttonAvailable = false
+        }
+      }
+      
+      else {
+        this.buttonAvailable = false
+      }  
 
   }
 

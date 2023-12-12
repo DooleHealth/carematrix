@@ -65,7 +65,7 @@ export class DateService {
   public formatSelectedDate(date){
     if(date){
       let day = this.transformDate(date, this.getformatSelectedDate());
-      console.log("selected Day", day);
+      //console.log("selected Day", day);
       return day[0].toUpperCase() + day.slice(1);
     }
   }

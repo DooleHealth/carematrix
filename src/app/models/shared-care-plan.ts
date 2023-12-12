@@ -32,7 +32,15 @@ export enum ContentTypePath {
     Exercises= '/exercices', 
     Games= '/games', 
     Diets= '/diets', 
-    DietsDetail='/diets/diets-detail',
+
+    DietsDetail= Diets + '/diets-detail',
+    AdvicesDetail= Advices+ '/advices-detail',
+    NewsDetail = News + '/new-detail',
+    FormDetail = '/tracking/form',
+    GamesDetail = Games + '/games-detail',
+    ExercisesDetail = Exercises + '/exercices-detail',
+
+
     // Medication Plan
     MedicationID = '/drugs-detail'
 }

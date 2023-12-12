@@ -40,7 +40,8 @@
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
     [dateFormatter]="calendar.dateFormatter" (onTimeSelected)="onTimeSelected($event)" [markDisabled]="markDisabled"
     [startingDayMonth]="this.dateService.getStartingDayMonth()"
-    [sliderOptions]="calendarSliderOptions">
+    [sliderOptions]="calendarSliderOptions"
+    [lockSwipeToPrev]="buttonAvailable">
   </calendar>
 
 
