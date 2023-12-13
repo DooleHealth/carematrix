@@ -1,5 +1,5 @@
 import { CalendarComponent } from 'ionic2-calendar';
-import { Component, ViewChild, OnInit, Inject, LOCALE_ID, Input, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Inject, LOCALE_ID, Input, AfterViewInit, NgZone } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
@@ -52,6 +52,7 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
     public datepipe: DatePipe,
     private modalCtrl: ModalController,
     public dateService: DateService,
+    private ngZone: NgZone,
 
   ) {
     this.currentDate = new Date()
@@ -234,34 +235,27 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
     // Change current month/week/day
     next() {
-      this.buttonAvailable = false
-      this.myCal.slideNext();
+
+      this.ngZone.run(() => {
+        this.buttonAvailable = false
+        this.myCal.slideNext();
+      });
+
+      
     }
   
     back() {
-      //const currentTime = this.currentDate.setHours(0, 0, 0, 0);
-      //const calTime = this.myCal.currentDate.setHours(0, 0, 0, 0);
-      //console.log('[MedicalCalendarPage] back() !', currentTime+' '+ calTime);
-
-     
-      this.myCal.slidePrev();
+      this.ngZone.run(() => {
+        this.myCal.slidePrev();
+      });
     }
 
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
-
-    if(this.myCal?.currentDate)
+    this.ngZone.run(() => {
+      if(this.myCal?.currentDate)
       this.viewTitle = this.formatMonths();
-
-    
-    
-      const currentMonth = new Date().getMonth()
-      const currentYear = new Date().getFullYear()
-
-      const calTimeMonth = this.myCal?.currentDate.getMonth()
-      const calTimeYear = this.myCal?.currentDate.getFullYear()
-
-
+    });
   }
 
   formatMonths(){
@@ -284,7 +278,9 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   }
 
   async onEventSelected(event){
-    this.event = event
+    this.ngZone.run(() => {
+      this.event = event
+    });
   }
 
 
@@ -294,14 +290,15 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
 
   onTimeSelected(ev) {
 
-    console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
-    (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
-    this.onViewTitleChanged(ev);
-
-    this.timeSlots = (ev.events !== undefined && ev.events.length !== 0) ?  ev.events : [] ;
-    this.tagDefaultColor = Array(ev.events.length).fill("secondary");
-    this.currentSelection = -1; // Keep the index of selected timeslot, none for -1
-
+    this.ngZone.run(() => {
+      console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
+      (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
+      this.onViewTitleChanged(ev);
+  
+      this.timeSlots = (ev.events !== undefined && ev.events.length !== 0) ?  ev.events : [] ;
+      this.tagDefaultColor = Array(ev.events.length).fill("secondary");
+      this.currentSelection = -1; // Keep the index of selected timeslot, none for -1
+    });
   }
 
   async presentAlertConfirm(date) {
@@ -344,44 +341,45 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
   }
 
   onCurrentDateChanged(event:Date) {
-    console.log('[MedicalCalendarPage] onCurrentDateChanged()',event);
-    this.timeSlots = [];
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    event.setHours(0, 0, 0, 0);
-    this.isToday = today.getTime() === event.getTime();
-    this.page = 1;
-
-    let date =this.datepipe.transform(event, 'yyyy-MM-dd');
-    this.isToday ? this.getSlots(): this.getSlots(date);
-
-    const currentMonth = new Date().getMonth()
-      const currentYear = new Date().getFullYear()
-
-      const calTimeMonth = this.myCal?.currentDate.getMonth()
-      const calTimeYear = this.myCal?.currentDate.getFullYear()
-      
-
-
-      console.log(currentMonth)
-      console.log(currentYear)
-
-      console.log(calTimeMonth)
-      console.log(calTimeYear)
-     
-
-      if (currentYear >= calTimeYear){
-        if (currentMonth === calTimeMonth) {
-          this.buttonAvailable = true
+    this.ngZone.run(() => {
+      console.log('[MedicalCalendarPage] onCurrentDateChanged()',event);
+      this.timeSlots = [];
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      event.setHours(0, 0, 0, 0);
+      this.isToday = today.getTime() === event.getTime();
+      this.page = 1;
+  
+      let date =this.datepipe.transform(event, 'yyyy-MM-dd');
+      this.isToday ? this.getSlots(): this.getSlots(date);
+  
+      const currentMonth = new Date().getMonth()
+        const currentYear = new Date().getFullYear()
+  
+        const calTimeMonth = this.myCal?.currentDate.getMonth()
+        const calTimeYear = this.myCal?.currentDate.getFullYear()
+        
+        console.log(currentMonth)
+        console.log(currentYear)
+  
+        console.log(calTimeMonth)
+        console.log(calTimeYear)
+       
+        if (currentYear === calTimeYear){
+          if (currentMonth === calTimeMonth) {
+            this.buttonAvailable = true
+          }
+          else {
+            this.buttonAvailable = false
+          }
         }
+        
         else {
           this.buttonAvailable = false
-        }
-      }
-      
-      else {
-        this.buttonAvailable = false
-      }  
+        }  
+    });
+
+   
 
   }
 

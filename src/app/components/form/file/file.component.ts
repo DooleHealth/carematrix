@@ -124,13 +124,20 @@ export class FileComponent implements OnInit {
         //console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
         if(this.disableNames){
          // this.files.push({ name: file.name, file: file.dataURI, type: file.mediaType })
-          this.files = { name: file.name, file: file.path, type: file.mimeType }
+        // this.files.push({ name: file.name, file: file.dataURI, type: file.mimeType })
+
+          console.log("[FileUploadComponent] addFile()", JSON.stringify(file));
+
+          this.files = { name: file.name, file: file.dataURI, type: file.mimeType }
           this.value = { type: this.data.type, file: this.files.file}
+
+          this.value = { type: this.data.type, file: file.dataURI}
           this.change.emit({[this.data.name]: this.value});
 
         }
         else{
-          this.presentPrompt(file.path, file.name, file.mimeType)
+          console.log("file  "+ file.dataURI)
+          this.presentPrompt(file.dataURI, file.name, file.mimeType)
         }
       }
       this.checkValue()
@@ -188,22 +195,25 @@ export class FileComponent implements OnInit {
             cssClass: 'secondary',
             handler: (blah) => {
               console.log('[FileUploadComponent] AlertConfirm Cancel');
+
               this.files = { name: filename, file: file, type: type }
-              //this.outputFiles.files = this.files
               this.value = { type: this.data.type, file: this.files.file}
               this.change.emit({[this.data.name]: this.value});
+
 
               this.checkValue()
             }
           }, {
             text: this.translate.instant("form.button.accept"),
             handler: (data) => {
-              console.log('[FileUploadComponent] AlertConfirm Okay', data.filename );
+              console.log('[FileUploadComponent] AlertConfirm Okay', data );
+              console.log('[FileUploadComponent] AlertConfirm gfile', this.files );
               if (data.filename && data.filename !== '') {
                  let name = data.filename +'.'+filename.split('.').pop()
+
                  this.files = { name: name, file: file, type: type }
-                  //this.outputFiles.files = this.files
-                  this.value = { type: this.data.type, file: this.files.file}
+                 this.value = { type: this.data.type, file: this.files.file}
+
                   this.change.emit({[this.data.name]: this.value});
                   this.checkValue()
               }else {

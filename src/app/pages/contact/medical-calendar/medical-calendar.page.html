@@ -17,9 +17,9 @@
 
 <ion-content>
   <ion-row class="textBlueCentered1, header-change-month">
-    <!-- Move back one screen of the slides -->
+    <!-- Move back one screen of the slides [disabled]="buttonAvailable"-->
     <ion-col size="2">
-      <ion-button fill="clear" [disabled]="buttonAvailable" (click)="back()" class="textBlueCentered1">
+      <ion-button fill="clear"  [disabled]="buttonAvailable" (click)="back()" class="textBlueCentered1">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-col>
@@ -44,6 +44,7 @@
     [lockSwipeToPrev]="buttonAvailable">
   </calendar>
 
+  
 
   <ng-template #template let-view="view" let-row="row" let-col="col">
     <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">
