@@ -236,13 +236,21 @@ export interface medication extends SharedCarePlanLifeStyle{
     showAlert?: boolean,
 }
 
+export enum ACCESS_TYPE {
+    IFRAME = 'iframe',
+    APP = 'app',
+    WINDOW = 'windows-app'
+}
+
 export interface SharedCarePlanPrescribedApps {
     id?: number,
     icon:string,
     title: string,
     description: string,
     iframe_url:string;
-    id_pkg: string;
+    id_pkg?: string;
+    access_type?: string;
+    configurations?: any;
 }
 
 /**
