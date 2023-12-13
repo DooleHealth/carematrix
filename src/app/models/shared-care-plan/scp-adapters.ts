@@ -151,7 +151,7 @@ export class MedicalPlanProceduresAdapter extends ScpAdapters implements SharedC
                     title: procedure[title],
                     date: procedure[date],  
                     type: procedure[type],    
-                    staff: 'Dr. Valarexo León, David', //this.staff,  
+                    staff: this.staff,  
                     img: procedure.media?.thumbnailTemporaryUrl // temporaryUrl[this.temporaryUrl],
                 }                 
                 newList.push(data)

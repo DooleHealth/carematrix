@@ -434,7 +434,7 @@ export class HomePage implements OnInit {
         'configurations_array'
         ) 
         
-        console.error(' this.prescribedApps:',  this.prescribedApps);
+       // console.error(' this.prescribedApps:',  this.prescribedApps);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching user image:', error);
