@@ -171,7 +171,8 @@
       "subtitle_information": "Información",
       "subtitle_advices": "Consejos",
       "points": "Puntos",
-      "new": "nuevo"
+      "new": "nuevo",
+      "de": " de "
     },
     "health_path": {
       "title":"Camino de la salud",
@@ -640,7 +641,9 @@
         "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
         "button_accepted": "Aprobar",
         "button_rejected": "Rechazar",
-        "placeholder": "Write a message."
+        "placeholder": "Escribe un mensaje.",
+        "rejectd_send": " Mensaje enviado a su equipo médico"
+       
     },
     "button":{
       "detail": "Detalle",

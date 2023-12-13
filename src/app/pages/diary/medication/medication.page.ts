@@ -42,7 +42,6 @@ export class MedicationPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("mostrar")
    this.loadData()
   }
 
@@ -50,13 +49,49 @@ export class MedicationPage implements OnInit {
 
 
  async loadData(){
+/*
+const aaa =  [{
+  id: 25,
+  drug_id: 3,
+  drup_name: "Clopidogrel",
+  cover: [],
+  from_date: "2023-12-01 17:26:00",
+  to_date: null,
+  start_date: "2023-12-01 17:26:00",
+  end_date: null,
+  frequency: "daily",
+  observations: null,
+  day1: 1,
+  day2: 1,
+  day3: 1,
+  day4: 1,
+  day5: 1,
+  day6: 1,
+  day7: 1,
+  last_accepted_or_declined: null,
+  medication_plan_times: [
+      {
+          dose: "1",
+          time: "12:00:00",
+          unit: "\u00b5g\/dosis"
+      }
+  ],
+  model: "MedicationPlan",
+  model_id: 25
+}]*/
+
+
+
     this.items = [] 
     this.isLoading = true; 
+   // this.adapterForView(aaa),
+   // this.isLoading = false
     this.sharedCarePlan.get_APi_ACP_medication().subscribe( 
    // this.dooleService.getAPImedicationAlls().subscribe(
       async (data: any) =>{
         console.log('[MedicationPage] loadData()', await data);
-        if(data){        
+        if(data){   
+
           this.adapterForView(data)
          /* this.items = this.exerLifeStyle.adapterForView(
             data.medication, // JSON
@@ -135,6 +170,7 @@ export class MedicationPage implements OnInit {
           model:element.model
           //routerlink: "new-detail"
         }
+        console.log("sss", data)
         this.items.push(data)
       })
     }

@@ -15,6 +15,7 @@ export class ScpMedForMonComponent  implements OnInit {
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
    routerLink: any[];
   getrouter;
+  public isButtonEnabled = false;
   constructor(
     public translate: TranslateService, public alertController: AlertController, public sharedCarePlan:SharedCarePlanService, public dateService: DateService
   ) { }
@@ -30,9 +31,7 @@ export class ScpMedForMonComponent  implements OnInit {
  
   
 
-  async getRouterLink(type: string, form_id: any): Promise<any[]> {
-
-  
+  async getRouterLink(type: string, form_id: any): Promise<any[]> {    
  
     if (type === "App\\Form") {  
       return ['form', { id: form_id }];
@@ -40,13 +39,7 @@ export class ScpMedForMonComponent  implements OnInit {
     } if(type === "App\\Monitoring") {
       return ["activity-goal"]
     } 
-         
-    else {
-        // Puedes manejar otros casos aquí si es necesario
-        return ; // Otra opción si no hay un enlace para otros tipos
-      }
     
- 
 }
 
 async alertForm(){
@@ -118,41 +111,65 @@ async dismissAndRejectAlert(model, model_id) {
     header: this.translate.instant('medication.rejected'),
     inputs: [
       {
+        label: 'Option 1',
+        type: 'radio',
+        value: 'red',
+      },
+      {
+        label: 'Option 2',
+        type: 'radio',
+        value: 'blue',
+      },{
+        label: 'Option 3',
+        type: 'radio',
+        value: 'other',
+      },
+      {
         name: 'campoInput',
         id: 'campoInput',
         type: 'textarea',
+        disabled: true,
         placeholder: this.translate.instant('medication.placeholder'),
         cssClass: 'custom-textarea'
       }
     ],
     buttons: [
       {
-        text: this.translate.instant('medication.button_rejected'), 
+        text: this.translate.instant('alert.button_cancel'), 
         role: 'cancel',
+        
         cssClass: 'secondary',
         handler: () => {
           console.log('Botón Cancelar presionado');
         }
       },
       {
-        text: this.translate.instant('medication.button_accepted'), 
-        handler: (data) => {
-         // aceptarButton.disabled = value.trim() === '';
+        text: this.translate.instant('alert.button_send'), 
+        id: "sendButtons",
+        
+       // disabled: !this.isButtonEnabled,
+        handler: async (data) => {
           console.log('Botón Aceptar presionado', data.campoInput);
-          let coments = '';
-          const comentsInput = document.getElementById('campoInput') as HTMLInputElement;
-          if (comentsInput) {
-            coments = comentsInput.value;
-            console.log("escrito", coments)
-          // enviar a la api, lo que se escribe ademas de el id del medicamento que viene por el content.id
-         this.sharedCarePlan.post_API_ACP_declined_acepted(model,model_id,type,coments).subscribe();
-        }
-      }
-    }
-    ]
-  });
+         // const comentsInput = document.getElementById('campoInput') as HTMLTextAreaElement;
+          let comments = data.campoInput || '';
+          if(comments != ''){
+            await this.sharedCarePlan.post_API_ACP_declined_acepted(model, model_id, type, comments).toPromise();
+            this.alertSendReject()}
 
- 
+
+}
+}
+]
+}); 
+
+alert.addEventListener('ionChange', (event) => {
+  const selectedValue = (event.target as HTMLInputElement).value;
+  const campoInput = alert.inputs.find(input => input.name === 'campoInput');
+
+  // Enable campoInput if 'other' is selected, otherwise disable it
+  console.log("ssssss")
+  campoInput.disabled = selectedValue !== 'other';
+});
 
   // Cerrar el primer alert antes de mostrar el segundo
   const firstAlert = document.querySelector('ion-alert');
@@ -162,4 +179,24 @@ async dismissAndRejectAlert(model, model_id) {
 
   await alert.present();
 }
+
+async alertSendReject(){
+
+  this.translate.get('info.button').subscribe(
+    async button => {
+      // value is our translated string
+      const alert = await this.alertController.create({
+        cssClass: "alertClass",
+        header: this.translate.instant('medication.rejectd_send'),
+        // subHeader: 'Subtitle',
+      //  message: this.translate.instant('medication.alert_forms'),
+        buttons: [button]
+      });
+
+      await alert.present();
+    });
+
+
+}
+
 }

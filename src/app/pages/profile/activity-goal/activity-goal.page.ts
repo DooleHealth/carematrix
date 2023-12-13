@@ -525,8 +525,8 @@ export class ActivityGoalPage implements OnInit {
     let now = this.maxDate
     now.setDate(this.maxDate.getDate() - 1);
     this.minDate = now;
-    this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d')) + ' de ' +
-      this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
+    this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))  +  this.translate.instant('goals.de')  +
+       this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
 
     this._firstDay = this.minDate
     this._lastDay = this.minDate

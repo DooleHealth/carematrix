@@ -1,4 +1,4 @@
-<ion-card
+<ion-card *ngIf="content?.type != 'medication'; else noRouterLink"
   class="cardProfile1 ion-no-padding"
   (click)="goTo(content.type, content?.form_id, content?.showAlert)"
   [routerLink]="getRouterLink(content?.type, content?.form_id)"
@@ -66,3 +66,73 @@
 </ion-grid>
 
 </ion-card>
+
+
+<ng-template #noRouterLink>  <!-- Contenido del ion-card cuando el tipo no es 1 -->
+  
+  <ion-card
+  class="cardProfile1 ion-no-padding"  
+  [state]="{ id: content?.id, header: content?.title}"
+>
+<ion-grid class="ion-no-padding" style="height: 100% !important"> 
+  <ion-row>
+    <ion-col size="3.5" size-md="2" size-lg="1">
+      <ion-thumbnail class="thumbnail">
+        <img
+          class="paddingRight imagefit"
+          [src]="content?.img"
+          onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+          alt=""
+        />
+      </ion-thumbnail>
+    </ion-col>
+    
+    <ion-col size="8.5" size-md="10" size-lg="11">
+      <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
+        <ion-text class="txtSubtitle" style="display: inline-flex !important;">
+          <p>{{ content?.from  }} </p>&nbsp; 
+          <p *ngIf="content?.to"> ---  {{ content?.to  }}</p>
+        </ion-text>
+        &nbsp; 
+        <ion-icon
+          *ngIf="content?.accepted === false"
+          src="assets/icons/ellipsis orange.svg"
+          (click)="presentAlert()"
+        ></ion-icon>
+      </ion-row>
+      <ion-row class="txtSubtitle"  *ngIf="content?.type === 'App\\Monitoring'">
+        <p>
+          {{ "form.goals" | translate }} {{ content?.description }}
+        </p>
+        
+      </ion-row>
+      <ion-row>
+        <ion-text class="txtSubtitle2 textlines2">{{
+          content?.title
+        }}</ion-text>
+
+        <ion-icon
+          class="arrow"
+          slot="end"
+          size="small"
+          name="chevron-forward-outline"
+        ></ion-icon>
+      </ion-row>
+      <!--<ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
+        <p style="color: var(--malva)">
+          {{ "form.scheduled" | translate }} {{ content?.description }}
+        </p>
+        
+      </ion-row>-->
+      <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
+        <p style="color: var(--malva)">
+          {{ "medication.dose" | translate }}
+          {{ content?.description }}
+        </p>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</ion-card>
+</ng-template>

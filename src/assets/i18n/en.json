@@ -167,7 +167,8 @@
     "subtitle_information": "Information",
     "subtitle_advices": "Advices",
     "points": "Points",
-    "new": "new"
+    "new": "new",
+    "de": " of "
   },
   "health_path": {
     "title": "Health Path",
@@ -639,7 +640,8 @@
     "rejected": "We would like you to give us a brief explanation of the reasons for your refusal.",
     "button_accepted": "Approve",
     "button_rejected": "Reject",
-    "placeholder": "Write a message."
+    "placeholder": "Write a message.",
+    "rejectd_send": "Message sent to your medical team"
   },
   "button": {
     "detail": "Detail",

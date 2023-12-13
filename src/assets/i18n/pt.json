@@ -165,7 +165,8 @@
     "subtitle_information": "Informação",
     "subtitle_advices": "Conselhos",
     "points": "Pontos",
-    "new": "novo"
+    "new": "novo",
+    "de": " de "
   },
   "health_path": {
     "title": "Percurso de Saúde",
@@ -646,8 +647,9 @@
     "rejected": "Gostaríamos que nos desse uma breve explicação dos motivos da sua recusa.",
     "button_accepted": "Aprovar",
     "button_rejected": "Rejeitar",
-    "placeholder": "Escrever uma mensagem."
-
+    "placeholder": "Escrever uma mensagem.",
+    "rejectd_send": "Mensagem enviada para a sua equipa médica"
+   
   },
   "button": {
     "detail": "Detalhe",
