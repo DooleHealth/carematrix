@@ -45,7 +45,9 @@ export class MedicationPage implements OnInit {
    this.loadData()
   }
 
-  
+  loaderAgain(event: { type: string }) {  
+    this.loadData()
+  }
 
 
  async loadData(){
@@ -155,7 +157,8 @@ const aaa =  [{
 
     adapterForView(list){
       if(list.length > 0)
-      list.forEach(element => {       
+      list.forEach(element => {  
+         
       //Se adapta la respuesta de la API a lo que espera el componente  
         let data={
           img: element.cover.temporaryUrl,

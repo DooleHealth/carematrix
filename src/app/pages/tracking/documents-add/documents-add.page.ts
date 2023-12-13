@@ -10,6 +10,8 @@ import { DatePipe } from '@angular/common';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
 import { DateService } from 'src/app/services/date.service';
+import { FileUploadV2Component } from 'src/app/components/file-upload-v2/file-upload-v2.component';
+
 
 @Component({
   selector: 'app-documents-add',
@@ -30,7 +32,9 @@ export class DocumentsAddPage implements OnInit {
   isSubmittedType = false;
   isSubmittedTitle = false;
   isSubmittedDate = false;
-  @ViewChild('uploadFile') uploadFile: FileUploadComponent;
+   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
+  @ViewChild('uploadFile1') uploadFileV1: FileUploadV2Component;
+  @ViewChild('uploadFile2') uploadFileV2: FileUploadV2Component;
   isLoading: boolean;
   date: any;
   locale:string;
@@ -124,6 +128,7 @@ export class DocumentsAddPage implements OnInit {
     if(this.form.invalid)
     return
     console.log("submit");
+   this.setFields();
 
 
     if(this.isEdit)
@@ -135,24 +140,22 @@ export class DocumentsAddPage implements OnInit {
   setFields(){
     let date = this.form.get('date').value;
     var current = new Date(date)
-    let data_prestacio = this.dateService.ddMMyyyyFormat(current);
+    let data_prestacio = this.dateService.ddMMyyyyFormatES(current);
     this.form.get('date').setValue(data_prestacio);
 
     let private_test = this.form.get('private').value ? 1 : 0;
     this.form.get('private').setValue(private_test);
 
-    let params = this.form.value
-    params.type = this.typeTest.id
-
-    return params
+    this.form.value.type = this.typeTest.id;
 
   }
 
 
   createDiagnosticTest(){
+    
     this.isLoading = true
-    const params =   this.setFields()
-    return this.dooleService.postAPIdiagnosticTest(params).subscribe(
+
+    return this.dooleService.postAPIdiagnosticTest(this.form.value).subscribe(
       async (data) => {
         console.log("[DocumentsAddPage] createDiagnosticTest() data:", data);
         if(data){
@@ -187,8 +190,7 @@ export class DocumentsAddPage implements OnInit {
 
   updateDiagnosticTest(){
     this.isLoading = true
-    const params =   this.setFields()
-    this.dooleService.putAPIdiagnosticTest(this.diagnosticTest.id, params).subscribe(
+    this.dooleService.putAPIdiagnosticTest(this.diagnosticTest.id, this.form.value).subscribe(
       async (data) => {
         console.log("[DocumentsAddPage] updateDiagnosticTest() data:", data);
         if(data.success){
@@ -264,8 +266,10 @@ export class DocumentsAddPage implements OnInit {
 
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null && dataReturned.data !== undefined) {
+        
         this.typeTest = dataReturned.data;
         this.form.get('type').setValue(this.typeTest.name)
+       // this.form.get('type').setValue(this.typeTest.id)
       }
     });
 

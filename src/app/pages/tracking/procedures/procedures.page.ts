@@ -15,6 +15,8 @@ export class ProceduresPage implements OnInit {
   iconContent = ContentTypeIcons.MedicalProcedure
   private scpProcedures:MedicalPlanProceduresAdapter
   isLoading = false
+  currentDate;
+  isDateInPast = false;
   constructor(
     private scpService: SharedCarePlanService,
     private dateService: DateService
@@ -22,10 +24,17 @@ export class ProceduresPage implements OnInit {
 
   ngOnInit() {
     this.scpProcedures = new MedicalPlanProceduresAdapter()
+    this.getCurrentDate();
   }
 
   ionViewWillEnter() {
     this.getProceduresImformation()
+  }
+
+  getIsDateInPast(date){
+    this.isDateInPast = new Date(date) < this.currentDate;
+    return this.isDateInPast
+
   }
 
 
@@ -54,9 +63,18 @@ export class ProceduresPage implements OnInit {
   }
 
   setDate(date){
-    if(date)
+    if(date){
+     
       return this.dateService.selectedDateFormat2(date) 
+    }
     return ''
   }
+
+  getCurrentDate() {    
+    // Obtener la fecha actual en el mismo formato que content.date
+    this.currentDate = new Date();
+    // ... Realizar cualquier formato necesario para que coincida con content.date
+    return this.currentDate;
+}
 
 }

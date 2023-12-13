@@ -13,6 +13,7 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
 export class ScpMedForMonComponent  implements OnInit {
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
    routerLink: any[];
   getrouter;
   public isButtonEnabled = false;
@@ -87,9 +88,17 @@ async presentAlert() {
             text: this.translate.instant('medication.button_accepted'), 
             cssClass: "boton-accepted",
             handler: () => {
-              let type= "acepted"              
-              this.sharedCarePlan.post_API_ACP_declined_acepted(model,model_id,type).subscribe()
-              // Lógica para manejar aceptar
+              let type= "accepted"              
+              this.sharedCarePlan.post_API_ACP_declined_acepted(model,model_id,type).subscribe(              
+                async (data: any) =>{
+                  if(data){
+                    this.dataUpdated.emit();
+                  }
+                  
+                }
+                
+              )
+             
             }
           }
         ]
@@ -111,18 +120,21 @@ async dismissAndRejectAlert(model, model_id) {
     header: this.translate.instant('medication.rejected'),
     inputs: [
       {
-        label: 'Option 1',
+        label: this.translate.instant('medication.rejectd_option1'),
         type: 'radio',
-        value: 'red',
+        value:  this.translate.instant('medication.rejectd_option1'),
+        name: 'rejectOption'
       },
       {
-        label: 'Option 2',
+        label: this.translate.instant('medication.rejectd_option2'),
         type: 'radio',
-        value: 'blue',
+        value:  this.translate.instant('medication.rejectd_option2'),
+        name: 'rejectOption'
       },{
-        label: 'Option 3',
+        label: this.translate.instant('medication.rejectd_option3'),
         type: 'radio',
-        value: 'other',
+        value:  this.translate.instant('medication.rejectd_option3'),
+        name: 'rejectOption'
       },
       {
         name: 'campoInput',
@@ -149,12 +161,20 @@ async dismissAndRejectAlert(model, model_id) {
         
        // disabled: !this.isButtonEnabled,
         handler: async (data) => {
-          console.log('Botón Aceptar presionado', data.campoInput);
-         // const comentsInput = document.getElementById('campoInput') as HTMLTextAreaElement;
-          let comments = data.campoInput || '';
-          if(comments != ''){
-            await this.sharedCarePlan.post_API_ACP_declined_acepted(model, model_id, type, comments).toPromise();
-            this.alertSendReject()}
+          this.alertSendReject()
+                  
+            await this.sharedCarePlan.post_API_ACP_declined_acepted(model, model_id, type, data).subscribe(
+              
+              async (data: any) =>{
+                
+                if(data){
+                  this.dataUpdated.emit();
+                }
+                
+              }
+              
+            )
+           
 
 
 }
@@ -167,7 +187,6 @@ alert.addEventListener('ionChange', (event) => {
   const campoInput = alert.inputs.find(input => input.name === 'campoInput');
 
   // Enable campoInput if 'other' is selected, otherwise disable it
-  console.log("ssssss")
   campoInput.disabled = selectedValue !== 'other';
 });
 

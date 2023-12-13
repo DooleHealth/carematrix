@@ -141,6 +141,14 @@ export class DateService {
     return day[0].toUpperCase() + day.slice(1);
   }
 
+  public ddMMyyyyFormatES(date){
+    let lang =  this.translate.currentLang;
+    let format = 'dd/MM/yyyy';  
+
+    let day = this.transformDate(date, format);
+    return day[0].toUpperCase() + day.slice(1);
+  }
+
   public ddMMyFormat(date){
     let lang =  this.translate.currentLang;
     let format = 'dd MMM y';
@@ -207,7 +215,7 @@ export class DateService {
   let format = 'EEEE, d MMM yyyy';
 
   if(lang === 'en' )
-    format = 'MMM, ddd yyyy';
+    format = 'MMM, dd yyyy';
 
     let day = this.transformDate(date, format);
     return day[0].toUpperCase() + day.slice(1);
