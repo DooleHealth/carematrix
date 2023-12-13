@@ -18,6 +18,13 @@
   flex-shrink: 0;
 }
 
+.slidersHeader{
+  width: 100%; 
+  display: inline-flex !important; 
+  align-items: center;
+  font-weight: bolder;
+}
+
 
 .imgProfile {
   width: 30px;
