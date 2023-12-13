@@ -320,7 +320,7 @@
 
       
         <ion-card-content>
-          <div class="txtTitleGoalsLittle3" *ngIf="!this.games|| this.games?.length == 0 ">
+          <div class="txtTitleGoalsLittle3">
             {{ 'no_data' | translate}}
           </div>
 
@@ -353,16 +353,17 @@
 
           
           <ion-card-content>
-            <div class="txtTitleGoalsLittle3">
+            <div class="txtTitleGoalsLittle3" *ngIf="!this.activity|| this.activity?.length == 0 ">
               {{ 'no_data' | translate}}
             </div>
           </ion-card-content>
         </ion-card>
+
       </ng-container>
 
       <ng-template #elseBlock>
         <ion-card class="vertical-card">
-          <swiper-container #sliderPhysical *ngIf="this.activity?.length > 0" pagination="true">
+          <swiper-container #sliderPhysical pagination="true">
             <swiper-slide *ngFor="let slide of this.activity; let i = index">
 
               <ion-item lines="none" mode="md" class="noMargin">
@@ -375,13 +376,30 @@
               </ion-item>
 
               <ion-card-content>
+
+              
+                
+
                 <swiper-container direction="vertical" pagination="true" [config]="this.configVertical">
+
+
+                  <div class="txtTitleGoalsLittle3"  *ngIf="slide.elements.length === 0">
+                    {{ 'no_data' | translate}}
+                  </div>
+                 
+
                   <swiper-slide *ngFor="let element of slide.elements; let j = index">
-                    <div class="txtTitleGoalsLittle3">
+
+
+                    
+
+                    <div class="txtTitleGoalsLittle3" >
                       {{ element?.name}}
                       {{ element.value }}
                       {{element.units}}
                     </div>
+
+
                   </swiper-slide>
                 </swiper-container>
               </ion-card-content>

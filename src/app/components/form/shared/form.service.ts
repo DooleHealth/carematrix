@@ -32,6 +32,11 @@ export class FormService {
     json.forEach((data, index) => {
       let formfieldType = data.layout.formFieldType;
       let obj = this.getFormFormat(data)
+
+     
+
+      console.log(obj);
+
       switch (formfieldType) {
         case 'header':
           this.itemsForm.push(new FormItem(HeaderComponent, obj))
