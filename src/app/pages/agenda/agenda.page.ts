@@ -1,5 +1,5 @@
 import { CalendarComponent } from 'ionic2-calendar';
-import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
+import { Component, ViewChild, OnInit, Inject, LOCALE_ID, NgZone } from '@angular/core';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { DatePipe, formatDate } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
@@ -25,7 +25,8 @@ export class AgendaPage implements OnInit {
     private dooleService: DooleService,
     private modalCtrl: ModalController,
     public authService: AuthenticationService,
-    public dateService: DateService
+    public dateService: DateService,
+    private ngZone: NgZone
   ) {
     // this.analyticsService.setScreenName('agenda','AgendaPage')
   }
@@ -151,8 +152,10 @@ async getTranslation(literal): Promise<string> {
   }
 
   onCurrentDateChanged(event:Date) {
-    console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
-    this.getallAgenda();
+    this.ngZone.run(() => {
+      console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
+      this.getallAgenda();
+    });
   }
 
   transformDate(date) {
@@ -291,7 +294,9 @@ async getTranslation(literal): Promise<string> {
 
   // Selected date reange and hence title changed
   onViewTitleChanged(title : any){
-    this.viewTitle = this.formatMonths()
+    this.ngZone.run(() => {
+      this.viewTitle = this.formatMonths()
+    });
   }
 
   setLocale(){
@@ -315,7 +320,9 @@ async getTranslation(literal): Promise<string> {
   }
 
   async onEventSelected(event){
-    this.event = event
+    this.ngZone.run(() => {
+      this.event = event
+    });
   }
 
   async addAgenda(){
