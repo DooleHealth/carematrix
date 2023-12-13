@@ -119,7 +119,7 @@
       <ion-text mode="md" class="txtTitle" style="white-space: nowrap" *ngIf="this.prescribedApps?.length > 0">
         {{ 'home.prescribed_apps_title' | translate}}</ion-text>
 
-      <swiper-container mode="md" [config]="this.config" [slidesPerView]="this.prescribedApps?.length == 1 ? 2:2">
+      <swiper-container mode="md" [config]="this.config" [slidesPerView]="2" *ngIf="this.prescribedApps?.length > 0">
         <swiper-slide mode="md" *ngFor="let slide of this.prescribedApps" class="ion-no-padding">
 
           <!--  <ng-container *ngIf="slide.iframe_url !== null else openMarketApp">

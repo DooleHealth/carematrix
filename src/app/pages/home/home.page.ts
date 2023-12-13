@@ -405,6 +405,7 @@ export class HomePage implements OnInit {
 
   async getPrescribedApps(){
     try {
+      this.prescribedApps = []
       const platform = this.platform.is('ios')? 'ios':'android'
       const url = `url_${platform}`
       const res: any = await new Promise((resolve, reject) => {
