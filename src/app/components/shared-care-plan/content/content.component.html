@@ -2,12 +2,17 @@
   <ion-item lines="none">
     <div class="verticalLineMalva"></div>
     <ion-grid> 
-      <ion-row>
+      <ion-row class="verticalAlignItem">
         <ion-col size="0.9" size-md="0.5" size-lg="0.4">
           <ion-icon [src]="content.icon"></ion-icon>
         </ion-col>
         <ion-col size="10.3" size-md="10.5" size-lg="11.3">
-          <ion-text class="imgPadding">{{content?.title | translate}}</ion-text>
+          <ion-row class="ion-no-padding">
+            <ion-text class="imgPadding">{{content?.title | translate}}</ion-text>&nbsp;&nbsp;
+            <ion-badge style="height: 20px;" *ngIf="content?.boolean_state" mode="ios">{{
+              'goals.new' | translate}}
+            </ion-badge>
+          </ion-row>
         </ion-col>
         <ion-col size="0.8" size-md="0.8" size-lg="0.3">
           <ion-icon name="chevron-forward-outline"></ion-icon>

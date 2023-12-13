@@ -94,6 +94,7 @@ export interface SharedCarePlan extends ContentComponent {
 }
 
 export interface SCPContentType {
+    [x: string]: any;
     [id: number]: SharedCarePlan
 }
 
@@ -106,6 +107,32 @@ export const ListContentType: SCPContentType = [
     {icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.Description, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
     //{icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
 ]
+
+export function setStatusContentType(status, content:SharedCarePlan){
+    let option = content.type
+    switch (option) {
+        case NotificationsType.GOALS:
+            content.boolean_state = status[NotificationsType.GOALS]
+            break;
+        case NotificationsType.LIFE_STILE_HABITS:
+            content.boolean_state = status[NotificationsType.LIFE_STILE_HABITS]
+            break;
+        case NotificationsType.MEDICATIONS:
+            content.boolean_state = status[NotificationsType.MEDICATIONS]
+            break;
+        case NotificationsType.FORMS:
+            content.boolean_state = status[NotificationsType.FORMS]
+            break;
+        case NotificationsType.MONITORING:
+            content.boolean_state = status[NotificationsType.MONITORING]
+            break;
+        case NotificationsType.PROCEDURES:
+            content.boolean_state = status[NotificationsType.PROCEDURES]
+            break;
+        default:
+            break;
+    }
+}
 
 /**
  * Goals of Shared care Plan
