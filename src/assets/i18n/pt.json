@@ -649,7 +649,10 @@
     "button_accepted": "Aprovar",
     "button_rejected": "Rejeitar",
     "placeholder": "Escrever uma mensagem.",
-    "rejectd_send": "Mensagem enviada para a sua equipa médica"
+    "rejectd_send": "Mensagem enviada para a sua equipa médica",
+    "rejectd_option1": "Tenho dúvidas, preciso de mais informação",
+    "rejectd_option2": "Não estou de acordo com a medicação prescrita",
+    "rejectd_option3": "Outros"
    
   },
   "button": {
