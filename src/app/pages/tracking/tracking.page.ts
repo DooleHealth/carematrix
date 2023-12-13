@@ -11,8 +11,9 @@ import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { DateService } from 'src/app/services/date.service';
-import { ListContentType, SCPContentType, SharedCarePlan } from 'src/app/models/shared-care-plan';
+import { ListContentType, SCPContentType, SharedCarePlan, setStatusContentType } from 'src/app/models/shared-care-plan';
 import { Router } from '@angular/router';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -55,12 +56,12 @@ export class TrackingPage implements OnInit {
   filter: Filter;
   constructor(
     private dooleService: DooleService,
+    private scpService: SharedCarePlanService,
     public authService: AuthenticationService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
     private dateService: DateService,
     public role: RolesService,
-    private router: Router
   ) { }
 
 
@@ -68,9 +69,23 @@ export class TrackingPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.setSegment()
+    //this.setSegment()
     this.segmentChanged();
     this.fireEvent(null, 0)
+  }
+
+  getStatusContent(){
+    this.scpService.getAPI_SCP_StatusContent().subscribe(
+      async (res: any) =>{
+        console.log('[TrackingPage] getStatusContent()', await res);
+        this.listContent.forEach(content => {
+          setStatusContentType(res,content)
+        })
+        console.log('[TrackingPage] getStatusContent() this.listContent', this.listContent);
+       },(err) => {
+          console.log('[TrackingPage] getStatusContent() ERROR(' + err.code + '): ' + err.message);
+          throw err;
+      });
   }
 
   getDiagnosticTestsList(){
@@ -228,23 +243,26 @@ export class TrackingPage implements OnInit {
       case 'graphics':
         this.getElementsList()
         break;
+      case 'sharedcareplan':
+        this.getStatusContent()
+        break;
       default:
-        this.getDiagnosticTestsList()
+        this.getStatusContent()
         break;
     }
   }
 
-  setSegment(){
-    if(!this.role?.component?.doc_diagnostic){
-      this.segment = 'forms'
-      if(!this.role?.component?.form){
-          this.segment = 'graphics'
-          if(!this.role?.component?.element){
-          this.segment = ''
-      }
-      }
-    }
-  }
+  // setSegment(){
+  //   if(!this.role?.component?.doc_diagnostic){
+  //     this.segment = 'forms'
+  //     if(!this.role?.component?.form){
+  //         this.segment = 'graphics'
+  //         if(!this.role?.component?.element){
+  //         this.segment = ''
+  //     }
+  //     }
+  //   }
+  // }
 
   fireEvent(e, i){
     this.listDiagnostic?.forEach( (diagnostic, index) =>{
@@ -326,3 +344,5 @@ async addDocument(){
     
 
 }
+
+

@@ -18,18 +18,18 @@ export enum NotificationsType {
     FORMS = 'forms',
     GAMES = 'games',
     GOALS = 'goals',
-    MEDICATIONS = 'medication',
+    MEDICATIONS = 'medication_plans',
     MESSAGES = 'messages',
     NEWS = 'news',
     OFFERS = 'offers',
     PROMOTE_CONTENT = 'promote-content',
-    PROCEDURES = 'procedures',
+    PROCEDURES = 'medical_procedures',
     REMINDERS = 'reminder',
     //Shared care plan
     MONITORING = 'monitoring', 
-    INFORMED_CONSENT = 'informed-consent',
-    LIFE_STILE_HABITS = 'life-style-habits',
-    SHARED_CARE_PLAN = 'shared-care-plan'
+    INFORMED_CONSENT = 'informed_consent',
+    LIFE_STILE_HABITS = 'life_style_habits',
+    SHARED_CARE_PLAN = 'shared_care_plan'
 }
 
 export enum NotificationsTypeBO {
