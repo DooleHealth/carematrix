@@ -350,9 +350,11 @@ export class ListNotificationsPage implements OnInit {
       case "App\\ShareCarePlan": 
         this.setRead(notification.id)
         this.router.navigate([`/tracking`],{state:{data:null, segment: 'sharedcareplan'  }});
+        break;
       case "App\\ProgramablePlay":
         this.setRead(notification.id)
         this.router.navigate([`/home`],{state:{data:null, id:data.id}});
+        break;
       default:
         this.router.navigate([`/home`],{state:{data:null, id:data.id}});
         break;

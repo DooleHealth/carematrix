@@ -4,7 +4,7 @@ import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesys
 import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
 import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
 
-import { AlertController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@awesome-cordova-plugins/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.service';
@@ -70,7 +70,8 @@ export class AppComponent implements OnInit {
     private dooleService: DooleService,
     private faio: FingerprintAIO,
     private _zone: NgZone,
-    private endPoind: ApiEndpointsService
+    private endPoind: ApiEndpointsService,
+    private navCtrl: NavController
   ) {
     this.setLanguage();
 
@@ -1073,6 +1074,9 @@ export class AppComponent implements OnInit {
       } else if (this.router.url.includes('landing')) {
         //Exit from app
         navigator['app'].exitApp();
+      }else {
+        //this.router.lastSuccessfulNavigation()
+        this.navCtrl.pop()
       }
     });
   }
