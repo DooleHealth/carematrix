@@ -92,10 +92,14 @@ export class ActivityGoalPage implements OnInit {
     this.id = history.state.id;
     this.header = history.state.header;
     //this.viewTitle = this.formatSelectedDate(this.minDate, 'EEEE d MMMM')
-    this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))
-    +  this.translate.instant('goals.de')  + this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
+   this.firstView()
+   
   }
 
+  firstView(){   
+    this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))  +"" +
+    this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
+  }
   ionViewDidEnter() {
     if (this.id) {
       this.interval = {
