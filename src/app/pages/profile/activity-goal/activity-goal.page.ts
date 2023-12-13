@@ -93,7 +93,7 @@ export class ActivityGoalPage implements OnInit {
     this.header = history.state.header;
     //this.viewTitle = this.formatSelectedDate(this.minDate, 'EEEE d MMMM')
     this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))
-      + ' de ' + this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
+    +  this.translate.instant('goals.de')  + this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
   }
 
   ionViewDidEnter() {
