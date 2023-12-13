@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanPrescribedApps, SharedCarePlanProcedure} from "../shared-care-plan";
+import { ACCESS_TYPE, ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanPrescribedApps, SharedCarePlanProcedure} from "../shared-care-plan";
 import { Platform } from "@ionic/angular";
 
 export class ScpAdapters extends ContentComponent {
@@ -178,23 +178,28 @@ export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
     description: string;
     iframe_url: string;
     id_pkg: string;
+    configurations: any;
+    access_type: string;
+
    
     constructor(public platform: Platform){ 
         this.platform = platform;
     }
 
-    adapterForView(list: any[], name: string, cover: string, description: string, url_android: string, url_ios:string){
+    adapterForView(list: any[], name: string, cover: string, description: string, url_android: string, url_ios:string, configurations_array){
         let newList: SharedCarePlanPrescribedApps[] = []
             if(list?.length >0)
-
-            list.forEach((app) => {        
+            list.forEach((app) => {   
+                this. configurations = app[configurations_array]
                 let data: SharedCarePlanPrescribedApps = {
                     id: app?.id,
                     icon: app[cover],
                     title: app[name],
                     description: app[description],
                     iframe_url: null,
-                    id_pkg: this.platform.is('android') || this.platform.is('mobileweb') ? this.getIdFromUrl(app[url_android], /id=([^&]+)/) : this.getIdFromUrl(app[url_ios], /id(\d+)/)
+                    id_pkg: this.platform.is('android') || this.platform.is('mobileweb') ? this.getIdFromUrl(app[url_android], /id=([^&]+)/) : this.getIdFromUrl(app[url_ios], /id(\d+)/),
+                    access_type: this.configurations?.access_type,
+                    configurations: this.configurations
                 }     
 
             /* if(data?.iframe_url)      */       
@@ -205,7 +210,8 @@ export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
     }
 
     getIdFromUrl(url, regex) {
-        return url !== null ? url.match(regex)[1] : null;
+        if(this.configurations?.access_type === ACCESS_TYPE.APP)
+        return url !== null ? url?.match(regex)[1] : null;
     }
 }
 

@@ -20,13 +20,14 @@ import { PusherNotificationService } from 'src/app/services/pusher/pusher-notifi
 import { ExceptionCode } from '@capacitor/core';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { SwiperOptions } from 'swiper/types/swiper-options';
-import { SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
+import { ACCESS_TYPE, SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
 import { NativeMarket } from "@capacitor-community/native-market";
 import { HttpParams } from "@angular/common/http";
 import { Constants } from 'src/app/config/constants';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapters';
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
+import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-iframe/show-iframe.component';
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
@@ -428,12 +429,11 @@ export class HomePage implements OnInit {
         'cover',  //date
         'description', //type
         'url_android',
-        'url_ios'
+        'url_ios',
+        'configurations_array'
         ) 
         
-        console.log(this.prescribedApps);
-
-        //console.error(' this.prescribedApps:',  this.prescribedApps);
+        console.error(' this.prescribedApps:',  this.prescribedApps);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching user image:', error);
@@ -1865,10 +1865,39 @@ export class HomePage implements OnInit {
     return value
   }
 
+  openActionPrescribedApps(app){
+      if(app.access_type === ACCESS_TYPE.APP)
+        this.openMarketApp(app.id_pkg)
+      else
+        this.openShowIframe(app)
+  }
+
   openMarketApp(id) {
     NativeMarket.openStoreListing({
       appId: id
     });
+  }
+
+  async openShowIframe(slide) {
+    console.log('openActionPrescribedApps()', slide);
+    const modal = await this.modalCtrl.create({
+      component: ShowIframeComponent,
+      componentProps: {configurations: slide.configurations
+      },
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log('openActionPrescribedApps()', result);
+
+        if (result?.data?.error) {
+
+        } else if (result?.data?.action == 'add') {
+
+        }
+      });
+
+    await modal.present();
   }
 
 
