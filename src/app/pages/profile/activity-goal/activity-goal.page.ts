@@ -92,15 +92,10 @@ export class ActivityGoalPage implements OnInit {
     this.id = history.state.id;
     this.header = history.state.header;
     //this.viewTitle = this.formatSelectedDate(this.minDate, 'EEEE d MMMM')
-   this.firstView()
+
    
   }
 
-  firstView(){  
-    console.log("prueba",  this.translate.instant('agenda.year')) 
-    this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))  +"" +
-    this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
-  }
   ionViewDidEnter() {
     if (this.id) {
       this.interval = {
@@ -110,6 +105,9 @@ export class ActivityGoalPage implements OnInit {
       }
       this.loadData(this.interval);
     }
+
+    this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))  +  this.translate.instant('goals.de')  +
+    this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
   }
 
   setLocale() {
