@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,6 +20,7 @@ import { AlarmFormPageModule } from './alarm-form/alarm-form.module';
     FormPageRoutingModule,
     AlarmFormPageModule,
     TranslateModule  ],
-  declarations: [FormPage]
+  declarations: [FormPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FormPageModule {}

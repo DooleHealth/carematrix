@@ -51,6 +51,7 @@ import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { FileUploadV2Component } from './file-upload-v2/file-upload-v2.component';
 import { ConfirmationAnswersComponent } from './form/confirmation-answers/confirmation-answers.component';
 import { ContentDateComponent } from './shared-care-plan/content-date/content-date.component';
+import { ShowIframeComponent } from './shared-care-plan/show-iframe/show-iframe.component';
 
 @NgModule({
     imports: [
@@ -106,7 +107,8 @@ import { ContentDateComponent } from './shared-care-plan/content-date/content-da
     PdfViewerComponent,
     ConfirmationAnswersComponent,
     FileUploadV2Component,
-    ContentDateComponent
+    ContentDateComponent,
+    ShowIframeComponent
   ],
   exports: [
     ShellModule,
@@ -149,7 +151,8 @@ import { ContentDateComponent } from './shared-care-plan/content-date/content-da
     PdfViewerComponent,
     ConfirmationAnswersComponent,
     FileUploadV2Component,
-    ContentDateComponent
+    ContentDateComponent,
+    ShowIframeComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

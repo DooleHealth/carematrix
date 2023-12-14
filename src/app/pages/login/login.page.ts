@@ -191,6 +191,12 @@ export class LoginPage implements OnInit {
 
   redirecPushNotification(data){
     switch (data.action) {
+      case "SHARECAREPLAN":
+        this.ngZone.run(() => {
+          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true} });
+        });
+
+       break;
       case "MESSAGE":
         let staff;
         // Different payloads for ios and android
