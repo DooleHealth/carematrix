@@ -26,6 +26,9 @@ import { ContentTypePath } from './models/shared-care-plan';
 
 import { register } from 'swiper/element/bundle';
 import { Capacitor } from '@capacitor/core';
+
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
+
 register();
 
 declare let VoIPPushNotification: any;
@@ -73,7 +76,9 @@ export class AppComponent implements OnInit {
     private faio: FingerprintAIO,
     private _zone: NgZone,
     private endPoind: ApiEndpointsService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private screenOrientation: ScreenOrientation
+
   ) {
     this.setLanguage();
 
@@ -96,6 +101,9 @@ export class AppComponent implements OnInit {
       if (Capacitor.isNativePlatform()) {
         // Push
         this.initPushNotifications();
+
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).catch((err) => { console.log('Setting screen orientation failed:', err); });
+
 
         // VOIP calls for IOS
         if (this.platform.is('ios')) {
