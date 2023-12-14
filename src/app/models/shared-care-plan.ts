@@ -224,6 +224,7 @@ export interface SharedCarePlanLifeStyle {
     type: string,
     id?: string | number;
     routerlink?: string | any;
+    state?: string;
 }
 
 export interface medication extends SharedCarePlanLifeStyle{
