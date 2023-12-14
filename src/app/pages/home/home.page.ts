@@ -1818,7 +1818,7 @@ export class HomePage implements OnInit {
 
   async getallAgenda() {
     try {
-      const params = { from_date: this.date, to_date: null, with_medical_procedures: 0, filter_by_date: 1 };
+      const params = { from_date: this.date, to_date: null, with_medical_procedures: 0, filter_by_date: 1, order: 1 };
       console.log('[HomePage] getallAgenda() init', params, this.date);
 
       const res: any = await new Promise((resolve, reject) => {

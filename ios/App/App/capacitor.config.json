@@ -32,7 +32,11 @@
 				"sound",
 				"alert"
 			]
-		}
+		},
+        "Badge": {
+            "persist": true,
+            "autoClear": false
+        }
 	},
 	"cordova": {
 		"staticPlugins": [

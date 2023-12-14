@@ -1604,6 +1604,8 @@ export class DooleService {
     httpParams = params?.to_date? httpParams.append('to_date', params?.to_date) : httpParams
     httpParams = params?.filter_by_date? httpParams.append('filter_by_date', params?.filter_by_date) : httpParams
     httpParams = (params?.with_medical_procedures != undefined)? httpParams.append('with_medical_procedures', params?.with_medical_procedures) : httpParams
+    httpParams = (params?.order != undefined)? httpParams.append('order', params?.order) : httpParams
+
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
