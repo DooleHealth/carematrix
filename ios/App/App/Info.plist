@@ -22,29 +22,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>To find bluetooth medical devices</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
@@ -54,15 +31,15 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Se utiliza la cámara para poder subir imágenes de pruebas diagnósticas y enviar imágenes a tu médico</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Allow to read user&apos;s contacts </string>
+	<string>Allow to read user's contacts </string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Unlock phone with FaceID</string>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
 	<string>Share your health records activity</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Query user&apos;s activity</string>
+	<string>Query user's activity</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>To query user&apos;s health activity</string>
+	<string>To query user's health activity</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Always allow Geolocation?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -80,5 +57,19 @@
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>
