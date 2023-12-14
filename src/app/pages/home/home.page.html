@@ -166,7 +166,7 @@
           <div class="txtTitleGoalsLittle3" *ngIf="!this.forms|| this.forms?.length == 0 ">
             {{ 'no_data' | translate}}
           </div>
-          <swiper-container #sliderForms *ngIf="this.forms?.length > 0" direction="vertical" pagination="true"
+          <swiper-container #sliderForms direction="vertical" pagination="true"
             [config]="this.sliderFormsConfigVertical" (slidechange)="slideFormChange()">
 
             <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.forms">
