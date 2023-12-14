@@ -646,7 +646,8 @@
         "rejectd_send": " Mensaje enviado a su equipo médico",
         "rejectd_option1": "Tengo dudas, necesito más información",
         "rejectd_option2": "No estoy de acuerdo con la medicación prescrita",
-        "rejectd_option3": "Otros"
+        "rejectd_option3": "Otros",
+        "medication_status": "pendiente de aceptación"
        
     },
     "button":{

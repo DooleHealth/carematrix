@@ -96,7 +96,8 @@ export class ActivityGoalPage implements OnInit {
    
   }
 
-  firstView(){   
+  firstView(){  
+    console.log("prueba",  this.translate.instant('agenda.year')) 
     this.viewTitle = this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'EEEE d'))  +"" +
     this.titlecasePipe.transform(this.formatSelectedDate(this.minDate, 'MMMM'))
   }

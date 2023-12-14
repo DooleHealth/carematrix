@@ -167,7 +167,7 @@ const aaa =  [{
           to:  this.transformDate(element.to_date),
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
           type: "medication",
-          description:  element.frequency,
+          description:  element.frequency_string,
           id:element.id,
           model_id:element.model_id,
           model:element.model

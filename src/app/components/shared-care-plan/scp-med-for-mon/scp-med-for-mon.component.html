@@ -94,11 +94,18 @@
           <p *ngIf="content?.to"> ---  {{ content?.to  }}</p>
         </ion-text>
         &nbsp; 
+       
+       
+      </ion-row>
+      <ion-row class="verticalAlignItem"  *ngIf="content?.accepted === false">
+        <ion-text class="status" style="color: #FF8412">
+          {{ "medication.medication_status" | translate }}&nbsp;
+        </ion-text>
         <ion-icon
-          *ngIf="content?.accepted === false"
-          src="assets/icons/ellipsis orange.svg"
-          (click)="presentAlert()"
-        ></ion-icon>
+       
+        src="assets/icons/ellipsis orange.svg"
+        (click)="presentAlert()"
+      ></ion-icon>
       </ion-row>
       <ion-row class="txtSubtitle"  *ngIf="content?.type === 'App\\Monitoring'">
         <p>
