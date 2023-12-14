@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
+import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { GoalState, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
@@ -14,15 +15,18 @@ export class ScpMedForMonComponent  implements OnInit {
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
-   routerLink: any[];
+  routerLink: any[];
   getrouter;
+  state: GoalState;
   public isButtonEnabled = false;
   constructor(
     public translate: TranslateService, public alertController: AlertController, public sharedCarePlan:SharedCarePlanService, public dateService: DateService
   ) { }
 
   ngOnInit() {
-   // this.getrouter=this.getRouterLink()
+    console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
+    if(this.content.type === "medication")//, NotificationsType.MEDICATIONS)
+    this.state = new GoalState(this.content?.state)
   }
 
   async goTo(type: any, form_id: any,  showAlerts) {   
@@ -88,7 +92,7 @@ async presentAlert() {
             text: this.translate.instant('medication.button_accepted'), 
             cssClass: "boton-accepted",
             handler: () => {
-              let type= "accepted"              
+              let type= "accepted"            
               this.sharedCarePlan.post_API_ACP_declined_acepted(model,model_id,type).subscribe(              
                 async (data: any) =>{
                   if(data){
@@ -161,6 +165,9 @@ async dismissAndRejectAlert(model, model_id) {
         
        // disabled: !this.isButtonEnabled,
         handler: async (data) => {
+          console.log('[ScpMedForMonComponent] presentAlert()', data); 
+          if(data === undefined) 
+          return false
           this.alertSendReject()
                   
             await this.sharedCarePlan.post_API_ACP_declined_acepted(model, model_id, type, data).subscribe(

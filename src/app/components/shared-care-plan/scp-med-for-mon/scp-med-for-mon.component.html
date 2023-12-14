@@ -24,7 +24,7 @@
           <p>{{ content?.from  }} </p>&nbsp; 
           <p *ngIf="content?.to"> ---  {{ content?.to  }}</p>
         </ion-text>
-        &nbsp; 
+        &nbsp;
         <ion-icon
           *ngIf="content?.accepted === false"
           src="assets/icons/ellipsis orange.svg"
@@ -91,10 +91,10 @@
       <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
         <ion-text class="txtSubtitle" style="display: inline-flex !important;">
           <p>{{ content?.from  }} </p>&nbsp; 
-          <p *ngIf="content?.to"> ---  {{ content?.to  }}</p>
+          <p *ngIf="content?.to"> ---  {{ content?.to }}</p>
         </ion-text>
-        &nbsp; 
-        <ion-row class="verticalAlignItem"  *ngIf="content?.accepted === false">
+        &nbsp;&nbsp; 
+        <!-- <ion-row class="verticalAlignItem"  *ngIf="content?.accepted === false">
           <ion-text class="status" style="color: #FF8412">
             {{ "medication.medication_status" | translate }}&nbsp;
           </ion-text>
@@ -103,6 +103,13 @@
           src="assets/icons/ellipsis orange.svg"
           (click)="presentAlert()"
         ></ion-icon>
+        </ion-row> -->
+
+        <ion-row class="verticalAlignItem">
+          <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
+            {{ this.state?.name | translate }}&nbsp;
+          </ion-text>
+          <ion-icon class="status-icon" [src]="this.state?.icon" (click)="presentAlert()"></ion-icon>
         </ion-row>
        
       </ion-row>
@@ -125,12 +132,7 @@
           name="chevron-forward-outline"
         ></ion-icon>
       </ion-row>
-      <!--<ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
-        <p style="color: var(--malva)">
-          {{ "form.scheduled" | translate }} {{ content?.description }}
-        </p>
-        
-      </ion-row>-->
+
       <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
         <p style="color: var(--malva)">
           {{ "medication.dose" | translate }}

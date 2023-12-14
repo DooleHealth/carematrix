@@ -186,3 +186,5 @@ Quedaría:
                         .setContentText(body)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
                     notificationManager.notify(0, builder.build());
+
+## Otra alternantiva es actualizar el capacitor                 

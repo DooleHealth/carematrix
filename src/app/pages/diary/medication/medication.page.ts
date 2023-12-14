@@ -41,8 +41,10 @@ export class MedicationPage implements OnInit {
     this.lifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
   }
 
-  ngOnInit() {
-   this.loadData()
+  ngOnInit() {}
+
+  ionViewWillEnter(){
+    this.loadData()
   }
 
   loaderAgain(event: { type: string }) {  
@@ -166,11 +168,13 @@ const aaa =  [{
           from:  this.transformDate(element.from_date),
           to:  this.transformDate(element.to_date),
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
-          type: "medication",
+          type: "medication",// NotificationsType.MEDICATIONS,
           description:  element.frequency_string,
           id:element.id,
           model_id:element.model_id,
-          model:element.model
+          model:element.model,
+          state: element?.last_accepted_or_declined?.type
+
           //routerlink: "new-detail"
         }
         console.log("sss", data)
