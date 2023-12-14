@@ -362,10 +362,9 @@
       </ng-container>
 
       <ng-template #elseBlock>
-        <ion-card class="vertical-card">
+        <ion-card class="vertical-card" (click)="navigateToMonitoringPage()">
           <swiper-container #sliderPhysical pagination="true">
             <swiper-slide *ngFor="let slide of this.activity; let i = index">
-
               <ion-item lines="none" mode="md" class="noMargin">
                 <div class="slidersHeader">
                   <ion-img slot="start" class="ion-no-margin" src="assets/icons/flame.svg"></ion-img>
@@ -377,28 +376,17 @@
 
               <ion-card-content>
 
-              
-                
-
                 <swiper-container direction="vertical" pagination="true" [config]="this.configVertical">
-
-
                   <div class="txtTitleGoalsLittle3"  *ngIf="slide.elements.length === 0">
                     {{ 'no_data' | translate}}
                   </div>
-                 
 
                   <swiper-slide *ngFor="let element of slide.elements; let j = index">
-
-
-                    
-
                     <div class="txtTitleGoalsLittle3" >
                       {{ element?.name}}
                       {{ element.value }}
                       {{element.units}}
                     </div>
-
 
                   </swiper-slide>
                 </swiper-container>
