@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
-import { GoalState, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
+import { GoalState, GoalStateType, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
@@ -18,6 +18,7 @@ export class ScpMedForMonComponent  implements OnInit {
   routerLink: any[];
   getrouter;
   state: GoalState;
+  isPending: boolean = true;
   public isButtonEnabled = false;
   constructor(
     public translate: TranslateService, public alertController: AlertController, public sharedCarePlan:SharedCarePlanService, public dateService: DateService
@@ -25,8 +26,12 @@ export class ScpMedForMonComponent  implements OnInit {
 
   ngOnInit() {
     console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
-    if(this.content.type === "medication")//, NotificationsType.MEDICATIONS)
-    this.state = new GoalState(this.content?.state)
+    if(this.content.type === "medication"){
+      this.state = new GoalState(this.content?.state)
+      this.isPending = this.state?.state === GoalStateType.PENDING? true:false
+    }
+
+
   }
 
   async goTo(type: any, form_id: any,  showAlerts) {   

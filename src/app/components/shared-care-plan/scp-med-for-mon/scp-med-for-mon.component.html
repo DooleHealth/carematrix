@@ -109,7 +109,7 @@
           <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
             {{ this.state?.name | translate }}&nbsp;
           </ion-text>
-          <ion-icon class="status-icon" [src]="this.state?.icon" (click)="presentAlert()"></ion-icon>
+          <ion-icon *ngIf="this.isPending" class="status-icon" [src]="this.state?.icon" (click)="presentAlert()"></ion-icon>
         </ion-row>
        
       </ion-row>
