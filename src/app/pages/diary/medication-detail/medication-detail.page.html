@@ -217,12 +217,14 @@
             >
               <!-- *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" -->
               <ion-button
+                mode="ios"
                 size="small"
                 color="transparent"
+                fill="outline"
                 class="buttonLink"
                 (click)="this.addDrugPlan(item.item, item.item.id)"
                 >{{ 'button.see_detail' | translate }} </ion-button
-              >&nbsp;
+              >&nbsp;&nbsp;
 
               <ion-badge
                 *ngIf="item.item.forgotten == 2 && !this.isFutureDay"
@@ -235,6 +237,7 @@
               <ion-badge
                 color="danger"
                 *ngIf="item.item.forgotten == 1 && !this.isFutureDay"
+                (click)="changeTake(item.item.id, item.item.state)"
               >
                 {{ 'button.forgotten' | translate }}
                 <ion-icon
