@@ -130,7 +130,14 @@ export class ReminderAddPage implements OnInit {
         this.frequencySeleted = this.event.frequency
       }
 
-      this.setDaysEvent(this.event)
+      //this.setDaysEvent(this.event)
+      this.form.get('day1').setValue( this.event.day1 )
+      this.form.get('day2').setValue( this.event.day2 )
+      this.form.get('day3').setValue( this.event.day3 )
+      this.form.get('day4').setValue( this.event.day4 )
+      this.form.get('day5').setValue( this.event.day5 )
+      this.form.get('day6').setValue( this.event.day6 )
+      this.form.get('day7').setValue( this.event.day7 )
       this.gettingDay();
 
       if(this.event?.reminderable_type) this.form.get('type').setValue( this.event?.reminderable_type.split('\\')[1] )
