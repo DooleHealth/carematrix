@@ -99,12 +99,13 @@ export class FormListPage implements OnInit {
           from: this.transformDate(element.from_date),
           to: this.transformDate(element.to_date),
           form_id: element.form_id,
-          // accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
+          accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
           type: "App\\Form",
           description: "", //element.frequencyName,
           id: element.id,
           showAlert: this.showAlert(element.from_date),
-          routerLink: null
+          routerLink: null,
+          state: element?.last_accepted_or_declined?.type
         }
 
 
@@ -119,6 +120,14 @@ export class FormListPage implements OnInit {
       this.alertForm();
     } else {
       this.router.navigate([`/tracking/form`, { id: event.form_id }], { state: { data: null } });
+    }
+  }
+
+  accepterOrDecline(datos){
+    if(datos === null || datos === undefined){
+      return false;
+    }else{
+      return true;
     }
   }
 }
