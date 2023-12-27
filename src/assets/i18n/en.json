@@ -645,6 +645,8 @@
     "rejectd_send": "Message sent to your medical team",
     "rejectd_option1": "I have doubts, I need more information",
     "rejectd_option2": "I don't agree with the prescribed medication",
+    "rejectd_option2F": "I do not agree with the form",
+    "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
     "medication_status": "pending"
   },
