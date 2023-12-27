@@ -17,6 +17,7 @@ export class ScpMedForMonComponent  implements OnInit {
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
   routerLink: any[];
   getrouter;
+  other= false;
   state: GoalState;
   isPending: boolean = true;
   public isButtonEnabled = false;
@@ -26,7 +27,7 @@ export class ScpMedForMonComponent  implements OnInit {
 
   ngOnInit() {
     console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
-    if(this.content.type === "medication"){
+    if(this.content.type === "medication" || this.content.type === "App\\Form"){
       this.state = new GoalState(this.content?.state)
       this.isPending = this.state?.state === GoalStateType.PENDING? true:false
     }
@@ -34,9 +35,20 @@ export class ScpMedForMonComponent  implements OnInit {
 
   }
 
-  async goTo(type: any, form_id: any,  showAlerts) {   
-      // If routerLink is not null, emit the redirect event
+  async goTo(type: any, form_id: any,  showAlerts) { 
+   
+      if(this.other != true){
+       // if (type === "App\\Form") {  
+        this.other = false;
       this.redirect.emit({ type: type, form_id,  showAlerts });
+     // }
+    }else{
+      if (type != "App\\Form") { 
+      this.redirect.emit({ type: type, form_id,  showAlerts });
+    }
+  }
+      // If routerLink is not null, emit the redirect event
+     
     }
  
   
@@ -44,8 +56,11 @@ export class ScpMedForMonComponent  implements OnInit {
   async getRouterLink(type: string, form_id: any): Promise<any[]> {    
  
     if (type === "App\\Form") {  
+     /* if(this.other != true){
+        this.other = false;
       return ['form', { id: form_id }];
-     
+      }
+     */
     } if(type === "App\\Monitoring") {
       return ["activity-goal"]
     } 
@@ -73,6 +88,7 @@ async alertForm(){
 
 
 async presentAlert() {
+  this.other= true;
   let model= this.content?.model;
   let model_id= this.content.model_id; 
 
@@ -89,7 +105,7 @@ async presentAlert() {
             cssClass: "boton-reject",
             handler: () => {
               // Lógica para rechazar                         
-             
+              
               this.dismissAndRejectAlert(model, model_id);
             }
           },
@@ -162,6 +178,7 @@ async dismissAndRejectAlert(model, model_id) {
         cssClass: 'secondary',
         handler: () => {
           console.log('Botón Cancelar presionado');
+          this.other= false;
         }
       },
       {
@@ -181,6 +198,7 @@ async dismissAndRejectAlert(model, model_id) {
                 
                 if(data){
                   this.dataUpdated.emit();
+                  this.other= false;
                 }
                 
               }

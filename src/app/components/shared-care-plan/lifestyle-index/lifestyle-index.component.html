@@ -19,6 +19,14 @@
         <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{
           content?.title | translate
         }}</ion-text>
+        
+       
+      </ion-row>
+      <ion-row class="verticalAlignItem">
+        <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
+          {{ this.state?.name | translate }}&nbsp;
+        </ion-text>
+        <ion-icon *ngIf="this.isPending" class="status-icon" [src]="this.state?.icon" (click)="presentAlert($event)"></ion-icon>
       </ion-row>
     </ion-grid>
     <ion-buttons slot="end">

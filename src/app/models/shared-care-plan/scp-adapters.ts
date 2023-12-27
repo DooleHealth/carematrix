@@ -44,13 +44,24 @@ export class LifeStyle extends ScpAdapters {
                     title: element[field2],
                     type:  this.type,
                     id: element?.id,
-                    routerlink: this.routerlink,                  
+                    routerlink: this.routerlink,  
+                    accepted: this.accepterOrDecline(element.last_accepted_or_declined),
+                    state: element?.last_accepted_or_declined?.type                 
                 }                 
                 newList.push(data)
             });
             return newList
          
     }
+
+    accepterOrDecline(datos){
+        console.log("accepted", datos)
+        if(datos === null || datos === undefined){
+          return false;
+        }else{
+          return true;
+        }
+      }
     
 }
 

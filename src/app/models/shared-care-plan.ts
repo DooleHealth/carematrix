@@ -225,6 +225,7 @@ export interface SharedCarePlanLifeStyle {
     id?: string | number;
     routerlink?: string | any;
     state?: string;
+    accepted?: boolean
 }
 
 export interface medication extends SharedCarePlanLifeStyle{
