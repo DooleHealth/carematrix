@@ -4,6 +4,8 @@ import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { Router } from '@angular/router';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-exercises',
@@ -19,6 +21,8 @@ export class ExercisesPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     public role: RolesService,
+    private router: Router,
+    private scp: SharedCarePlanService
   ) { 
     this.lifeStyle = new LifeStyle( NotificationsType.EXERCISES, "exercices-detail")
   }
@@ -27,17 +31,24 @@ export class ExercisesPage implements OnInit {
     this.getExercisesList()
   }
 
+  loaderAgain(event: { type: string }) {  
+    this.getExercisesList()
+  }
+
   async getExercisesList(){
     console.log('[ExercisesPage] getExercisesList()');
     this.items = []
     this.isLoading = true,  
-    this.dooleService.getAPIExercises().subscribe(
+  //  this.dooleService.getAPIExercises().subscribe(
+    this.scp.getAPIExercises().subscribe(
       async (res: any) =>{      
-        if(res.success){
+        if(res){
+          console.log("aaa", res)
           this.items = this.lifeStyle.adapterForView(
-            res.exercises, // JSON
+            res, // JSON
             'cover',  //img
-            'name')   //title
+            'name',   //title
+            'exercise')   //id
          }
          this.isLoading = false 
        },(err) => {
@@ -46,6 +57,13 @@ export class ExercisesPage implements OnInit {
           this.isLoading = false
           throw err;
       });
+  }
+
+  handleRedirect(event: { type: string, routerlink: string,  }) {   
+    console.log("entro a la redireccion")  
+   // this.router.navigate([`/activity-goal`]);
+    this.router.navigate([event.routerlink]);
+   
   }
 
 }

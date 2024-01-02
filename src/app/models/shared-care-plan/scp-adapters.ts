@@ -1,5 +1,5 @@
 import { ContentComponent } from "src/app/components/shared-care-plan/content/content.component";
-import { ACCESS_TYPE, ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanPrescribedApps, SharedCarePlanProcedure} from "../shared-care-plan";
+import { ACCESS_TYPE, ContentType, ContentTypePath, SharedCarePlanGoal, SharedCarePlanLifeStyle, SharedCarePlanPrescribedApps, SharedCarePlanProcedure, medication} from "../shared-care-plan";
 import { Platform } from "@ionic/angular";
 
 export class ScpAdapters extends ContentComponent {
@@ -31,24 +31,46 @@ export class LifeStyle extends ScpAdapters {
    * @memberof LifestyleIndexComponent
    */
 
-    adapterForView(list: any[], field1: string, field2: string){
-        let newList: SharedCarePlanLifeStyle[] = []
+    adapterForView(list: any[], field1: string, field2: string, field3?: string){
+        let newList: medication[] = []
             list.forEach((element) => {
-                const temporaryUrl = element[field1]
+                let temporaryUrl;
+                if(field3){
+                     temporaryUrl = element[field3][field1]
+                }else{
+                     temporaryUrl = element[field1]
+                }
+               
                 let image = element[field1]
                 if(temporaryUrl?.hasOwnProperty(this.temporaryUrl)){
                       image = temporaryUrl.temporaryUrl
                 }
-                let data: SharedCarePlanLifeStyle = {
-                    img: image,
-                    title: element[field2],
-                    type:  this.type,
-                    id: element?.id,
-                    routerlink: this.routerlink,  
-                    accepted: this.accepterOrDecline(element.last_accepted_or_declined),
-                    state: element?.last_accepted_or_declined?.type                 
-                }                 
-                newList.push(data)
+                if(field3){
+                    let data: medication = {
+                        img: image,
+                        title: element[field3][field2],
+                        type:  this.type,
+                        id: element[field3].id,
+                        routerlink: this.routerlink,  
+                        accepted: this.accepterOrDecline(element.last_accepted_or_declined),
+                        state: element?.last_accepted_or_declined?.type, 
+                        model: element?.content_type,
+                        model_id:  element.id              
+                    }                 
+                    newList.push(data)
+                }else{
+                    let data: SharedCarePlanLifeStyle = {
+                        img: image,
+                        title: element[field2],
+                        type:  this.type,
+                        id: element?.id,
+                        routerlink: this.routerlink,  
+                        accepted: this.accepterOrDecline(element.last_accepted_or_declined),
+                        state: element?.last_accepted_or_declined?.type                 
+                    }                 
+                    newList.push(data)
+                }
+                
             });
             return newList
          

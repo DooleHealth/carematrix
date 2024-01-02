@@ -212,10 +212,10 @@ export class DateService {
   public selectedDateFormat2(date:string){
 
   let lang =  this.translate.currentLang;
-  let format = 'EEEE, d MMM yyyy';
+  //let format = 'EEEE, d MMM yyyy';
 
-  if(lang === 'en' )
-    format = 'MMM, dd yyyy';
+ // if(lang === 'en' )
+   let format = 'MMM, dd yyyy';
 
     let day = this.transformDate(date, format);
     return day[0].toUpperCase() + day.slice(1);

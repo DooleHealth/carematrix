@@ -173,6 +173,7 @@ export class GoalState {
     constructor(state){
         this.state = state;
         this.setGoalState(state)
+        
     }
 
     setGoalState(state){
