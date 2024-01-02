@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypePath, ContentTypeTranslatedName, ListSCPLifeStyle, SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-lifestyle-habits',
@@ -13,12 +14,21 @@ export class LifestyleHabitsPage implements OnInit {
   nameLifeStyle: string = ContentTypeTranslatedName.LifestyleHabits
   iconLifeStyle = ContentTypeIcons.LifestyleHabits
   constructor(
-    private router: Router
+    private router: Router,
+    public translate: TranslateService,
   ) {  
    }
 
   ngOnInit() {
+    console.log("aaa", ListSCPLifeStyle)
     this.listContent.push(...ListSCPLifeStyle)
+    
+    this.listContent.forEach(element => {
+      element.title = this.translate.instant(element.title)
+    });
+
+    console.log("after", this.listContent)
+  
   }
 
   handleRedirect(event: { type: string }) {   

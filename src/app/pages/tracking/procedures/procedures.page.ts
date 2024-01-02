@@ -63,8 +63,7 @@ export class ProceduresPage implements OnInit {
   }
 
   setDate(date){
-    if(date){
-     
+    if(date){     
       return this.dateService.selectedDateFormat2(date) 
     }
     return ''

@@ -638,6 +638,7 @@
     "to": "To",
     "dose": "Dose : ",
     "accepted_rejected": "Do you want to approve or reject this medication plan?",
+    "accepted_rejectedExercises": "Do you want to approve or reject this exercise?",
     "rejected": "We would like you to give us a brief explanation of the reasons for your refusal.",
     "button_accepted": "Approve",
     "button_rejected": "Reject",

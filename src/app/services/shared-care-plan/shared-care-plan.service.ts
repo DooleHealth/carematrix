@@ -57,4 +57,15 @@ export class SharedCarePlanService {
       })
     );
   }
+
+  getAPIExercises(): Observable<any> {
+    let path = 'rehabilify/sharedcareplan/exercises';
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 }

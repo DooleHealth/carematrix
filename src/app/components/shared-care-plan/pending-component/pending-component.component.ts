@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { GoalState, GoalStateType, SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
+import { GoalState, GoalStateType, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
 @Component({
-  selector: 'app-lifestyle-index',
-  templateUrl: './lifestyle-index.component.html',
-  styleUrls: ['./lifestyle-index.component.scss'],
+  selector: 'app-pending-component',
+  templateUrl: './pending-component.component.html',
+  styleUrls: ['./pending-component.component.scss'],
 })
-export class LifestyleIndexComponent  implements OnInit {
-  @Input() content: SharedCarePlanLifeStyle
+export class PendingComponentComponent  implements OnInit {
+  @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
   state: GoalState;
@@ -24,18 +24,24 @@ export class LifestyleIndexComponent  implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.content)    
+    console.log(this.content)
+    if(this.content.id != ""){
+     //if(this.content.type === "exercises"){
+        this.state = new GoalState(this.content?.state)
+        this.isPending = this.state?.state === GoalStateType.PENDING? true:false
+     // }
+    }   
   }
 
-  goTo(type: any){   
-   
+  goTo(type: any){ 
       this.redirect.emit({type: type})
    
+   
 }
-async presentAlert(event: Event) {
-  this.alert = true;
-  let model= ""; //this.content?.model;
-  let model_id= "";//this.content.model_id; 
+async presentAlert(event: Event) { 
+  const models = this.content?.model.split('\\');
+  let model= models[1];
+  let model_id= this.content.model_id; 
 
   this.translate.get('info.button').subscribe(
    
@@ -186,4 +192,5 @@ async alertSendReject(){
 
 
 }
+
 }

@@ -645,6 +645,7 @@
     "to": "Para",
     "dose": "Doses : ",
     "accepted_rejected": "Deseja aprovar ou rejeitar este plano de medicação?",
+    "accepted_rejectedExercises": "Deseja aprovar ou rejeitar este exercício?",
     "rejected": "Gostaríamos que nos desse uma breve explicação dos motivos da sua recusa.",
     "button_accepted": "Aprovar",
     "button_rejected": "Rejeitar",
@@ -883,10 +884,10 @@
     "subtitle2": "nova notificação"
   },
   "date":{
-    "week_abbr": "W",
+    "week_abbr": "S",
     "day_abbr": "D",
     "month_abbr":"M",
-    "year_abbr": "Y"
+    "year_abbr": "A"
   },
   "form":{
     "info": {

@@ -306,6 +306,7 @@ export class HighchartsService {
   }
 
   groupByCategory(interval, element){
+   let language= this.languageService.getCurrent();
     //console.log('[HighchartsService] groupByCategory ', element.date_value);
     let elementDate = new Date(element.date_value);
     let groupByDate = "";
@@ -321,7 +322,7 @@ export class HighchartsService {
         break;
       case '1w':
         let date = this.formatSelectedDate(element.date_value)
-        let day = date.toLocaleString('es-ES', { weekday: 'short' })
+        let day = date.toLocaleString(language, { weekday: 'short' })
         groupByDate = this.titleCase(day) +' '+ this.formatSelectedDate2(element.date_value, 'd')
         tooltip = moment(elementDate, "YYYY-MM-DD").locale('es').date() + '/' + elementDate.toLocaleString('es-ES', { month: 'short' }) + '/' + elementDate.getFullYear();
         break;
@@ -332,9 +333,9 @@ export class HighchartsService {
         break;
       case '1y':
         let month = new Date(); month.setMonth(Number(element.date_value)-1); 
-        groupByDate = month.toLocaleString('es-ES', { month: 'short' })
+        groupByDate = month.toLocaleString(language, { month: 'short' })
         groupByDate = this.titleCase(groupByDate) ;
-        tooltip =  month.toLocaleString('es-ES', { month: 'short' }) + '/' + month.getFullYear();
+        tooltip =  month.toLocaleString(language, { month: 'short' }) + '/' + month.getFullYear();
         break;
       default:
         break

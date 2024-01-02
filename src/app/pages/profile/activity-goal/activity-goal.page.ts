@@ -38,7 +38,9 @@ export class ActivityGoalPage implements OnInit {
 
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
-
+  en = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  pt = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'] 
+ 
   private id;
   viewTitle = ''
   normalValue
@@ -182,6 +184,7 @@ export class ActivityGoalPage implements OnInit {
         this.minY = this.highchartsService.setMinY( this.series[0].data, this.series[1].data);
         this.maxY = this.highchartsService.setMaxY( this.series[0].data, this.series[1].data);
         this.setRangesElement(json?.blood_pressure_systolic, json?.blood_pressure_diastolic, this.minY, this.maxY)
+        debugger
         this.generateMuiltiChart()
       }
       else{
@@ -451,9 +454,14 @@ export class ActivityGoalPage implements OnInit {
     });
 
     HighCharts.setOptions({
+      
       lang: {
+        
         /*  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], */
-        weekdays: (this.setLocale() == 'es') ? this.es : this.ca
+        weekdays: 
+        (this.setLocale() === 'es') ? this.es : 
+        (this.setLocale() === 'pt') ? this.pt : 
+        (this.setLocale() === 'en') ? this.en : this.ca
       }
     });
   }

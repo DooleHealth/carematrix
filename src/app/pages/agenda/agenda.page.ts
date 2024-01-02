@@ -45,21 +45,33 @@ export class AgendaPage implements OnInit {
 
   isLoading:boolean;
   selectedDate: Date;
+  date = new Date();
+  
   calendar = {
     mode: 'month',
-    currentDate: new Date(),
+    currentDate:  this.date,
       dateFormatter: {
           formatMonthViewDay: function(date:Date) {
               return date.getDate().toString();
           },
 
           formatMonthViewDayHeader: function(date:Date) {
-
-            let days = [ "D","L", "M", "X", "J", "V", "S"]
-            if(this.locale === 'ca'){
-              days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
-            }else if(this.locale === 'en')
-              days = [ "Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+            let days;
+            switch (this.locale) {
+              case 'es':
+                days = [ "D","L", "M", "M", "J", "V", "S"]
+              break;              
+              case 'pt':
+                days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+              break;            
+              case 'ca':
+                days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
+              break;               
+              default:
+               
+                days = [ "D","L", "M", "X", "J", "V", "S"]
+                break;
+            }
 
             let num = date.getDay()
             return days[num]
@@ -78,6 +90,7 @@ export class AgendaPage implements OnInit {
 
   ngOnInit() {
     console.log('[AgendaPage] this.languageService.getCurrent()', this.languageService.getCurrent());
+   // this.dateService.selectedDateFormat2(this.date);
 
   }
 
@@ -175,6 +188,9 @@ async getTranslation(literal): Promise<string> {
     let time = auxdate[1];
     date.setHours(time.substring(0,2));
     date.setMinutes(time.substring(3,5));
+
+    const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+  const formattedDate = date0.toLocaleString();
     return date;
   }
 
