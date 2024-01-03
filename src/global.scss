@@ -335,7 +335,7 @@ swiper-slide img {
   max-height: 100%;
 }
 
-ion-datetime{
-  --background: var(--white-ligh);
+ion-modal {
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.08) !important;
 }
 

@@ -97,6 +97,7 @@ export class ExercisesPage implements OnInit {
           type: "exercises",
           description: "",
           id: element.id,
+          programable_id: element.programable_id,
           model_id: element.id,
           model: modelType,
           showAlert: this.showAlert(element.from_date),

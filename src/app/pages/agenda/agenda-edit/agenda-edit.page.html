@@ -75,8 +75,18 @@
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
             <ion-datetime color="primary" [locale]="this.locale" [min]="this.date" presentation="date-time" id="date" (ionChange)="this.isSubmittedStartDate = false;" formControlName="date"></ion-datetime>
+            <ion-buttons mode="ios" slot="buttons">
+              <ion-button mode="ios" color="danger"  slot="start">{{'notifications.close' | translate}}</ion-button>
+              <ion-button mode="ios" style="width: 50px;"></ion-button>
+              <ion-button mode="ios" color="primary" slot="end">{{'button.add' | translate}}</ion-button>
+            </ion-buttons>
           </ng-template>
         </ion-modal>         
+
+        
+        
+          
+        
 
 
         <ion-item lines="none">

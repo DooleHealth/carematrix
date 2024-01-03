@@ -1,7 +1,5 @@
 <ion-card *ngIf="content?.type != this.segment; else noRouterLink" class="cardProfile1 ion-no-padding"
-  (click)="goTo(content.type, content?.form_id, content?.showAlert)"
-  [routerLink]="getRouterLink(content?.type, content?.form_id)" [state]="{ id: content?.id, header: content?.title}"
-  routerLinkActive="active-item">
+  (click)="goTo(content)">
   <ion-grid class="ion-no-padding" style="height: 100% !important">
     <ion-row>
       <ion-col size="3.5" size-md="2" size-lg="1">
@@ -111,11 +109,14 @@
     </ion-card>
   </div>
 
+<!--   [routerLink]="getRouterLink(content?.type, content?.id)" [state]="{ id: content?.id, header: content?.title}"  routerLinkActive="active-item"
+ -->  <div *ngIf="(content?.type == 'form' && content?.accepted) || (content?.type == 'exercises' && content?.accepted)"> 
+    <ion-card class="cardProfile1 ion-no-padding" 
 
-  <div *ngIf="(content?.type == 'form' && content?.accepted) || (content?.type == 'exercises' && content?.accepted)"> 
-    <ion-card class="cardProfile1 ion-no-padding" (click)="goTo(content.type, content?.id, content?.showAlert)"
-    [routerLink]="getRouterLink(content?.type, content?.id)" [state]="{ id: content?.id, header: content?.title}"
-    routerLinkActive="active-item">
+    (click)="goTo(content)"
+
+    
+    >
       <ion-grid class="ion-no-padding" style="height: 100% !important">
         <ion-row>
           <ion-col size="3.5" size-md="2" size-lg="1">

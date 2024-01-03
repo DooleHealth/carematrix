@@ -93,6 +93,10 @@ export class ActivityGoalPage implements OnInit {
     console.log("mostrar")
     this.id = history.state.id;
     this.header = history.state.header;
+
+    console.log(this.id)
+
+    console.log(this.header)
     //this.viewTitle = this.formatSelectedDate(this.minDate, 'EEEE d MMMM')
 
    

@@ -29,6 +29,12 @@ export class FormListPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    //this.getFormList();
+    //this.locale = this.dateService.getLocale();
+  }
+
+
+  ionViewWillEnter() {
     this.getFormList();
     this.locale = this.dateService.getLocale();
   }
@@ -120,11 +126,13 @@ export class FormListPage implements OnInit {
           model: modelType,
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
-          state: element?.last_accepted_or_declined?.type
+          state: element?.last_accepted_or_declined?.type,
+          form_programmation_id: element.formProgrammationTimes[0].form_programmation_id
         }
         this.items.push(data)
       })
     }
+    console.log(this.items);
   }
   handleRedirect(event: { type: string, form_id: string, showAlerts: boolean }) {
     console.log("entro a la redireccion")

@@ -35,8 +35,10 @@ export class ExercicesDetailComponent  implements OnInit {
   getDetailExercise() {
     console.log('[ExercisePage] getDetailExercise()', this.programable_id);
     this.isLoading = true
-    let params = {programable_play: this.programable_id, challenge_id: this.challengeId}
-    this.dooleService.getAPIExerciseDetail(this.id, params).subscribe(
+    let params = {programable_play: this.programable_id, challenge_id: this.challengeId} 
+
+    console.log(params)
+    this.dooleService.getAPIExerciseDetail(this.programable_id, null/* , params */).subscribe(
       async (res: any) =>{
         console.log('[ExercisePage] getDetailExercise()', await res);
         if(res.success){
