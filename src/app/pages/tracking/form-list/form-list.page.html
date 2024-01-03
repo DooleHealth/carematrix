@@ -18,22 +18,24 @@
 
   <ion-card class="cardProfile">
     <ion-item lines="none">
-      <ion-grid> 
+      <ion-grid>
         <ion-row>
-          <ion-icon style="height: 20px; width: 20px;"  src="assets/icons/shared-care-plan/scp-form.svg"></ion-icon>&nbsp; 
+          <ion-icon style="height: 20px; width: 20px;"
+            src="assets/icons/shared-care-plan/scp-form.svg"></ion-icon>&nbsp;
           <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{ 'tracking.tap_forms' | translate}}</ion-text>
         </ion-row>
-        <ion-row >
+        <ion-row>
           <p>{{ 'form.head_card_text' | translate}}</p>
         </ion-row>
       </ion-grid>
     </ion-item>
-  
+
   </ion-card>
 
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
-        <app-pending-component *ngFor="let content of items" [content]="content" (dataUpdated)="loaderAgain($event)" (redirect)="handleRedirect($event)"></app-pending-component>
+      <app-pending-component *ngFor="let content of items" [content]="content"
+        (dataUpdated)="loaderAgain($event)"></app-pending-component>
     </ion-list>
   </div>
   <ng-template #noData>
@@ -45,14 +47,14 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col >
+          <ion-col>
             <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
           </ion-col>
         </ion-row>
       </ion-grid>
-  </div>
+    </div>
   </ng-template>
-  </ion-content>
+</ion-content>
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

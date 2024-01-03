@@ -27,7 +27,7 @@ export class ScpMedForMonComponent  implements OnInit {
 
   ngOnInit() {
     console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
-    if(this.content.type === "medication" || this.content.type === "App\\Form"){
+    if(this.content.type === "medication"){
       this.state = new GoalState(this.content?.state)
       this.isPending = this.state?.state === GoalStateType.PENDING? true:false
     }
@@ -55,7 +55,7 @@ export class ScpMedForMonComponent  implements OnInit {
 
   async getRouterLink(type: string, form_id: any): Promise<any[]> {    
  
-    if (type === "App\\Form") {  
+    if (type === "form") {  
      /* if(this.other != true){
         this.other = false;
       return ['form', { id: form_id }];
@@ -148,7 +148,8 @@ async dismissAndRejectAlert(model, model_id) {
         label: this.translate.instant('medication.rejectd_option1'),
         type: 'radio',
         value:  this.translate.instant('medication.rejectd_option1'),
-        name: 'rejectOption'
+        name: 'rejectOption',
+        checked: true
       },
       {
         label: this.translate.instant('medication.rejectd_option2'),

@@ -34,6 +34,9 @@ export class FormListPage implements OnInit {
 
 
   async getFormList() {
+
+    this.items = [] 
+    this.isLoading = true; 
     this.sharedCarePlan.get_APi_ACP_forms().subscribe(
       async (res: any) => {
         console.log("formularios", res)
@@ -44,6 +47,8 @@ export class FormListPage implements OnInit {
         alert(`Error: ${err.code}, Message: ${err.message}`)
         console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
         throw err;
+      }, ()=>{
+        this.isLoading = false
       });
   }
 
@@ -83,6 +88,8 @@ export class FormListPage implements OnInit {
   adapterForView(list) {
     if (Array.isArray(list)) {
 
+
+      console.log(list);
       list.forEach(element => {
         let image = "";
         const temporaryUrl = element.media;
@@ -93,6 +100,8 @@ export class FormListPage implements OnInit {
         // let show=this.IsAllowed(element.from_date);
 
         //Se adapta la respuesta de la API a lo que espera el componente  
+
+        console.log(element.last_accepted_or_declined);
         let data = {
           img: image,
           title: element.title,
@@ -100,16 +109,15 @@ export class FormListPage implements OnInit {
           to: this.transformDate(element.to_date),
           form_id: element.form_id,
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
-          type: "App\\Form",
+          type: "form",
           description: "", //element.frequencyName,
           id: element.id,
+          model_id:element.model_id,
+          model:element.model,
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
           state: element?.last_accepted_or_declined?.type
         }
-
-
-        console.log("cdata", data)
         this.items.push(data)
       })
     }
@@ -124,10 +132,18 @@ export class FormListPage implements OnInit {
   }
 
   accepterOrDecline(datos){
+    console.log(datos)
     if(datos === null || datos === undefined){
       return false;
     }else{
       return true;
     }
   }
+
+
+  loaderAgain(event: { type: string }) {  
+    this.getFormList()
+  }
+  
+  
 }

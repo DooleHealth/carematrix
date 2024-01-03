@@ -49,12 +49,7 @@
           name="chevron-forward-outline"
         ></ion-icon>
       </ion-row>
-      <!--<ion-row *ngIf="content.type !== 'medication'" class="textMon-For-Med">
-        <p style="color: var(--malva)">
-          {{ "form.scheduled" | translate }} {{ content?.description }}
-        </p>
-        
-      </ion-row>-->
+      
       <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
         <p style="color: var(--malva)">
           {{ "medication.dose" | translate }}
@@ -94,16 +89,7 @@
           <p *ngIf="content?.to"> ---  {{ content?.to }}</p>
         </ion-text>
         &nbsp;&nbsp; 
-        <!-- <ion-row class="verticalAlignItem"  *ngIf="content?.accepted === false">
-          <ion-text class="status" style="color: #FF8412">
-            {{ "medication.medication_status" | translate }}&nbsp;
-          </ion-text>
-          <ion-icon
-         
-          src="assets/icons/ellipsis orange.svg"
-          (click)="presentAlert()"
-        ></ion-icon>
-        </ion-row> -->
+
 
         <ion-row class="verticalAlignItem">
           <ion-text class="status" [ngStyle]="{ color: this.state?.color }">

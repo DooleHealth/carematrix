@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { GoalState, GoalStateType, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
+import { GoalState, GoalStateType, medication } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
+import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { ContentTypePath } from 'src/app/models/shared-care-plan';
 
 @Component({
   selector: 'app-pending-component',
@@ -14,33 +17,89 @@ export class PendingComponentComponent  implements OnInit {
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
+  items: any[] = []
+  isLoading = false
+  routerLink: any[];
+  getrouter;
+  other= false;
   state: GoalState;
-  alert: boolean = false;
   isPending: boolean = true;
+  public isButtonEnabled = false;
+  public lifeStyle:LifeStyle
+
   constructor(
-    public translate: TranslateService, public alertController: AlertController,public dateService: DateService, public sharedCarePlan:SharedCarePlanService,
-  ) {
-   
+    public translate: TranslateService, public alertController: AlertController, public sharedCarePlan:SharedCarePlanService, public dateService: DateService
+  ) { 
+    this.lifeStyle = new LifeStyle( NotificationsType.FORMS, ContentTypePath.FormDetail)
   }
 
   ngOnInit() {
-    console.log(this.content)
-    if(this.content.id != ""){
-     //if(this.content.type === "exercises"){
-        this.state = new GoalState(this.content?.state)
-        this.isPending = this.state?.state === GoalStateType.PENDING? true:false
-     // }
-    }   
+    console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
+    if(this.content.type === "form"){
+      this.state = new GoalState(this.content?.state)
+      this.isPending = this.state?.state === GoalStateType.PENDING? true:false
+    }
+
+
   }
 
-  goTo(type: any){ 
-      this.redirect.emit({type: type})
+  async goTo(type: any, form_id: any,  showAlerts) { 
    
-   
+      if(this.other != true){
+       // if (type === "App\\Form") {  
+        this.other = false;
+      this.redirect.emit({ type: type, form_id,  showAlerts });
+     // }
+    }else{
+      if (type != "App\\Form") { 
+      this.redirect.emit({ type: type, form_id,  showAlerts });
+    }
+  }
+      // If routerLink is not null, emit the redirect event
+     
+    }
+ 
+  
+
+  async getRouterLink(type: string, form_id: any): Promise<any[]> {    
+ 
+    if (type === "App\\Form") {  
+     /* if(this.other != true){
+        this.other = false;
+      return ['form', { id: form_id }];
+      }
+     */
+    } if(type === "App\\Monitoring") {
+      return ["activity-goal"]
+    } 
+    
 }
-async presentAlert(event: Event) { 
-  const models = this.content?.model.split('\\');
-  let model= models[1];
+
+async alertForm(){
+
+    this.translate.get('info.button').subscribe(
+      async button => {
+        // value is our translated string
+        const alert = await this.alertController.create({
+          cssClass: "alertClass",
+          header: this.translate.instant('form.alert_title'),
+          // subHeader: 'Subtitle',
+          message: this.translate.instant('form.alert_forms'),
+          buttons: [button]
+        });
+
+        await alert.present();
+      });
+
+ 
+}
+
+
+async presentAlert() {
+  this.other= true;
+
+  console.log(this.content)
+  let model= this.content?.model;
   let model_id= this.content.model_id; 
 
   this.translate.get('info.button').subscribe(
@@ -49,14 +108,14 @@ async presentAlert(event: Event) {
       // value is our translated string
       const alert = await this.alertController.create({
         cssClass: "alertClass",
-        header: this.translate.instant('medication.accepted_rejectedExercises'),
+        header: this.translate.instant('medication.accepted_rejected'),
         buttons: [
           {
             text: this.translate.instant('medication.button_rejected'), 
             cssClass: "boton-reject",
             handler: () => {
               // Lógica para rechazar                         
-             
+              
               this.dismissAndRejectAlert(model, model_id);
             }
           },
@@ -82,9 +141,13 @@ async presentAlert(event: Event) {
   
       await alert.present();
     });
-   // event.stopPropagation();
+  
 }
 
+ async showAlertForm() {
+
+ }
+ 
 async dismissAndRejectAlert(model, model_id) {
   let type= "declined"   
   const alert = await this.alertController.create({
@@ -95,12 +158,13 @@ async dismissAndRejectAlert(model, model_id) {
         label: this.translate.instant('medication.rejectd_option1'),
         type: 'radio',
         value:  this.translate.instant('medication.rejectd_option1'),
-        name: 'rejectOption'
+        name: 'rejectOption',
+        checked: true
       },
       {
-        label: this.translate.instant('medication.rejectd_option2E'),
+        label: this.translate.instant('medication.rejectd_option2'),
         type: 'radio',
-        value:  this.translate.instant('medication.rejectd_option2E'),
+        value:  this.translate.instant('medication.rejectd_option2'),
         name: 'rejectOption'
       },{
         label: this.translate.instant('medication.rejectd_option3'),
@@ -125,6 +189,7 @@ async dismissAndRejectAlert(model, model_id) {
         cssClass: 'secondary',
         handler: () => {
           console.log('Botón Cancelar presionado');
+          this.other= false;
         }
       },
       {
@@ -144,6 +209,7 @@ async dismissAndRejectAlert(model, model_id) {
                 
                 if(data){
                   this.dataUpdated.emit();
+                  this.other= false;
                 }
                 
               }
@@ -189,8 +255,5 @@ async alertSendReject(){
 
       await alert.present();
     });
-
-
 }
-
 }
