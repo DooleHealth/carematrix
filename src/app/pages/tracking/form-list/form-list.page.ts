@@ -13,6 +13,7 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
   styleUrls: ['./form-list.page.scss'],
 })
 export class FormListPage implements OnInit {
+  segment = "form"
   forms: Array<any>;
   items = [];
   isLoading = false;
@@ -102,6 +103,9 @@ export class FormListPage implements OnInit {
         //Se adapta la respuesta de la API a lo que espera el componente  
 
         console.log(element.last_accepted_or_declined);
+
+        let modelType = element.content_type.replace(/App\\/, '')
+        console.log(modelType)
         let data = {
           img: image,
           title: element.title,
@@ -112,8 +116,8 @@ export class FormListPage implements OnInit {
           type: "form",
           description: "", //element.frequencyName,
           id: element.id,
-          model_id:element.model_id,
-          model:element.model,
+          model_id: element.id,
+          model: modelType,
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
           state: element?.last_accepted_or_declined?.type

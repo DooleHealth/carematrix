@@ -933,7 +933,21 @@
     "goals": "Meta:",
     "head_card_text": "Enviar-lhe-emos periodicamente formulários e escalas para nos mantermos informados sobre o seu estado de saúde, e será notificado quando chegar a altura de os preencher.",
     "alert_forms": "Só pode preencher este formulário quando estiver agendado; iremos enviar-lhe uma notificação no dia especificado.",
-    "alert_title": "Ação não permitida"
+    "alert_title": "Ação não permitida",
+
+
+    "accepted_rejected": "Deseja aprovar ou rejeitar este exercício?",
+    "button_accepted": "Aprovar",
+    "button_rejected": "Declínio",
+    "rejected": "Gostaríamos que nos desse uma breve explicação dos motivos da sua recusa.",
+    "rejectd_send": "Mensagem enviada para sua equipe médica",
+    "rejectd_option1": "Tenho dúvidas, preciso de mais informações.",
+    "rejectd_option2": "Não concordo com o exercício prescrito",
+    "rejectd_option2F": "Não concordo com o exercício.",
+    "rejectd_option2E": "Não concordo com o exercício recomendado.",
+    "rejectd_option3": "Outros",
+    "placeholder": "Escreve uma mensagem.",
+    "form_status": "brinco"
   },
   "answer_form":{
     "title": "Formulários preenchidos",

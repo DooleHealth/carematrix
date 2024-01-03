@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
-import { GoalState, GoalStateType, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
+import { ContentTypePath, GoalState, GoalStateType, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
@@ -12,6 +12,9 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
   styleUrls: ['./scp-med-for-mon.component.scss'],
 })
 export class ScpMedForMonComponent  implements OnInit {
+
+  @Input() segment: string;
+
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
@@ -27,7 +30,7 @@ export class ScpMedForMonComponent  implements OnInit {
 
   ngOnInit() {
     console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
-    if(this.content.type === "medication"){
+    if(this.content.type === this.segment){
       this.state = new GoalState(this.content?.state)
       this.isPending = this.state?.state === GoalStateType.PENDING? true:false
     }
@@ -53,18 +56,17 @@ export class ScpMedForMonComponent  implements OnInit {
  
   
 
-  async getRouterLink(type: string, form_id: any): Promise<any[]> {    
+  async getRouterLink(type: string, id: any): Promise<any[]> {    
  
     if (type === "form") {  
-     /* if(this.other != true){
-        this.other = false;
-      return ['form', { id: form_id }];
-      }
-     */
-    } if(type === "App\\Monitoring") {
+      return [ContentTypePath.FormDetail, { id: id }];
+    } 
+    else if (type === 'exercises') {
+      return [ContentTypePath.ExercisesDetail, { id: id }];
+    }
+    if(type === "App\\Monitoring") {
       return ["activity-goal"]
     } 
-    
 }
 
 async alertForm(){
@@ -98,10 +100,10 @@ async presentAlert() {
       // value is our translated string
       const alert = await this.alertController.create({
         cssClass: "alertClass",
-        header: this.translate.instant('medication.accepted_rejected'),
+        header: this.translate.instant(this.segment+'.accepted_rejected'),
         buttons: [
           {
-            text: this.translate.instant('medication.button_rejected'), 
+            text: this.translate.instant(this.segment+'.button_rejected'), 
             cssClass: "boton-reject",
             handler: () => {
               // Lógica para rechazar                         
@@ -110,7 +112,7 @@ async presentAlert() {
             }
           },
           {
-            text: this.translate.instant('medication.button_accepted'), 
+            text: this.translate.instant(this.segment+'.button_accepted'), 
             cssClass: "boton-accepted",
             handler: () => {
               let type= "accepted"            
@@ -142,24 +144,24 @@ async dismissAndRejectAlert(model, model_id) {
   let type= "declined"   
   const alert = await this.alertController.create({
     cssClass: 'alertClass',
-    header: this.translate.instant('medication.rejected'),
+    header: this.translate.instant(this.segment+'.rejected'),
     inputs: [
       {
-        label: this.translate.instant('medication.rejectd_option1'),
+        label: this.translate.instant(this.segment+'.rejectd_option1'),
         type: 'radio',
-        value:  this.translate.instant('medication.rejectd_option1'),
+        value:  this.translate.instant(this.segment+'.rejectd_option1'),
         name: 'rejectOption',
         checked: true
       },
       {
-        label: this.translate.instant('medication.rejectd_option2'),
+        label: this.translate.instant(this.segment+'.rejectd_option2'),
         type: 'radio',
-        value:  this.translate.instant('medication.rejectd_option2'),
+        value:  this.translate.instant(this.segment+'.rejectd_option2'),
         name: 'rejectOption'
       },{
-        label: this.translate.instant('medication.rejectd_option3'),
+        label: this.translate.instant(this.segment+'.rejectd_option3'),
         type: 'radio',
-        value:  this.translate.instant('medication.rejectd_option3'),
+        value:  this.translate.instant(this.segment+'.rejectd_option3'),
         name: 'rejectOption'
       },
       {
@@ -167,7 +169,7 @@ async dismissAndRejectAlert(model, model_id) {
         id: 'campoInput',
         type: 'textarea',
         disabled: true,
-        placeholder: this.translate.instant('medication.placeholder'),
+        placeholder: this.translate.instant(this.segment+'.placeholder'),
         cssClass: 'custom-textarea'
       }
     ],
@@ -237,7 +239,7 @@ async alertSendReject(){
       // value is our translated string
       const alert = await this.alertController.create({
         cssClass: "alertClass",
-        header: this.translate.instant('medication.rejectd_send'),
+        header: this.translate.instant(this.segment+'.rejectd_send'),
         // subHeader: 'Subtitle',
       //  message: this.translate.instant('medication.alert_forms'),
         buttons: [button]

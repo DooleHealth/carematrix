@@ -17,6 +17,7 @@ import { DateService } from 'src/app/services/date.service';
   styleUrls: ['./medication.page.scss'],
 })
 export class MedicationPage implements OnInit {
+  segment = "medication"
   @Input()event: any;
   items = []
   isLoading:boolean = true

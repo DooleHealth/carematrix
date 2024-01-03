@@ -927,8 +927,22 @@
       "goals": "Objetivos:",
       "head_card_text": "Le enviaremos periódicamente formularios y escalas para mantenernos informados sobre su estado de salud, y se le avisará cuando llegue el momento de cumplimentarlos.",
       "alert_forms": "Sólo puede rellenar este formulario cuando esté programado; le enviaremos una notificación el día especificado.",
-      "alert_title": "Acción no autorizada"
+      "alert_title": "Acción no autorizada",
+
+      "accepted_rejected": "¿Quieres aprobar o rechazar este formulario?",
+      "button_accepted": "Aprobar",
+      "button_rejected": "Rechazar",
+      "rejected": "Nos gustaría que nos diera una breve explicación de los motivos de su negativa.",
+      "rejectd_send": "Mensaje enviado a su equipo médico",
+      "rejectd_option1": "Tengo dudas, necesito más información.",
+      "rejectd_option2": "No estoy de acuerdo con el formulario prescrito",
+      "rejectd_option2F": "No estoy de acuerdo con el formulario.",
+      "rejectd_option2E": "No estoy de acuerdo con el formulario recomendado.",
+      "rejectd_option3": "Otros",
+      "placeholder": "Escribe un mensaje.",
+      "form_status": "pendiente"
     },
+    
     "answer_form":{
       "title": "Formularios completados",
       "detail_answer": "Detalle de respuestas",

@@ -801,8 +801,6 @@ export class HomePage implements OnInit {
   }
   updateExercisesSlider(exercises) {
     this.exercises = exercises?.length > 0 ? exercises : [];
-    this.sliderExercises.nativeElement.swiper.activeIndex = this.currentIndexExercise;
-
     this.setSliderOption('exercises')
   }
 
@@ -813,7 +811,6 @@ export class HomePage implements OnInit {
 
   updateFormsSlider(forms) {
     this.forms = forms?.length > 0 ? forms : [];
-    this.sliderForms.nativeElement.swiper.activeIndex = this.currentIndexForm;
     this.setSliderOption('forms')
   }
 
