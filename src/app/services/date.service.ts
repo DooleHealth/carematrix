@@ -79,14 +79,21 @@ export class DateService {
 
   public getLocale(){
     let lang =  this.translate.currentLang;
-    let locale = 'es-ES'
+    console.log(lang)
+
     if(lang === 'ca'){
-      locale = 'ca-ES'
-    }else if(lang === 'en')
-      locale = 'en-US';
-
-    return locale;
-
+      return 'ca-ES'
+    }else if(lang === 'en') {
+      return 'en-US';
+    }
+    else if(lang === 'es') {
+      return 'es-ES';
+    } else if (lang === 'pt') {
+      return 'pt'
+    }
+    else {
+      return 'es-ES'
+    } 
   }
 
   public getStartingDayWeek(){
