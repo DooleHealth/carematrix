@@ -8,12 +8,13 @@ import { DrugAddPage } from "../drug-add/drug-add.page";
 import { ElementsAddPage } from "../../tracking/elements-add/elements-add.page";
 import { DateService } from "src/app/services/date.service";
 import { LanguageService } from "src/app/services/language.service";
-import { ModalController, NavController } from "@ionic/angular";
+import { ModalController, NavController, AlertController } from "@ionic/angular";
 import { NotificationService } from "src/app/services/notification.service";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { StorageService } from "src/app/services/storage.service";
 import { RolesService } from "src/app/services/roles.service";
 import { Router } from "@angular/router";
+
 export interface ListDrugByDate {
   date?: string;
   itemDrugs?: ItemDiary[];
@@ -56,7 +57,8 @@ export class MedicationDetailPage implements OnInit {
     private storageService: StorageService,
     private nav: NavController,
     public role: RolesService,
-    private router: Router
+    private router: Router,
+    public alertController: AlertController,
   ) {}
 
   ngOnInit() {
@@ -409,4 +411,23 @@ export class MedicationDetailPage implements OnInit {
       this.dateService.format24h(hour);
     } else return "";
   }
+
+  showDetailAlert(title:string, observations:string) {
+
+    this.translate.get('info.button').subscribe(
+      async button => {
+        // value is our translated string
+        const alert = await this.alertController.create({
+          cssClass: "alertClass",
+          header: title,
+          // subHeader: 'Subtitle',
+          message: observations,
+          buttons: [button]
+        });
+
+        await alert.present();
+      });
+  }
+
+ 
 }

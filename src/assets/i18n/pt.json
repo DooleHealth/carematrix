@@ -660,6 +660,7 @@
    
   },
   "button": {
+    "see_details": "Ver detalhes",
     "detail": "Detalhe",
     "fill": "Preencher",
     "cancel": "Cancelar",

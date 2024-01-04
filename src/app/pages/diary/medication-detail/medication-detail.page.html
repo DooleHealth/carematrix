@@ -85,124 +85,59 @@
     </div>
   </ng-container>
   <ng-template #second>
-    <ng-container *ngIf="this.listDrug.length > 0;else third" class="details">
-      <br />
+    <ng-container *ngIf="this.listDrug.length > 0;else third">
+      <br>
       <ion-list *ngFor="let list of this.listDrug">
-        <ion-label class="txtTitle"
-          >{{'diary.field_drug' | translate}} {{list.date|
-          titlecase}}</ion-label
-        >
-        <ion-card
-          *ngFor="let item of list.itemDrugs"
-          class="cardProfilePaddingBottom"
-        >
-          <ion-item
-            *ngIf="item.expanded"
-            lines="none"
-            (click)="expandItem(item)"
-            class="ion-no-padding"
-          >
-            <ion-col size="1">
-              <ion-img
-                *ngIf="item.item.forgotten == 2"
-                src="assets/icons/Pill_primary.svg"
-                class="pill"
-                style="margin-right: 5px"
-              ></ion-img>
-              <ion-img
-                *ngIf="item.item.forgotten == 0"
-                src="assets/icons/Pill_green.svg"
-                class="pill"
-                style="margin-right: 5px"
-              >
+        <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
+          titlecase}}</ion-label>
+        <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" >
+          <ion-item *ngIf="item.expanded" lines="none" (click)="expandItem(item)">
+            <ion-col size="2">
+              <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
+                style="margin-right: 5px"></ion-img>
+              <ion-img *ngIf="item.item.forgotten == 0" src="assets/icons/Pill_green.svg" style="margin-right: 5px">
               </ion-img>
-              <ion-img
-                *ngIf="item.item.forgotten == 1"
-                src="assets/icons/Pill_red.svg"
-                class="pill"
-              >
+              <ion-img *ngIf="item.item.forgotten == 1" src="assets/icons/Pill_red.svg" style="margin-right: 5px">
               </ion-img>
             </ion-col>
-            <ion-label
-              *ngIf="item.item.forgotten == 2"
-              color="primary"
-              class="text"
-              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            <ion-label *ngIf="item.item.forgotten == 2" color="primary">{{ (item.item.alias !== null)?
+              item.item.alias: item.item.name
+              }}
             </ion-label>
-            <ion-label
-              *ngIf="item.item.forgotten == 1"
-              color="danger"
-              class="text"
-              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            <ion-label *ngIf="item.item.forgotten == 1" color="danger">{{ (item.item.alias !== null)?
+              item.item.alias: item.item.name
+              }}
             </ion-label>
-            <ion-label
-              *ngIf="item.item.forgotten == 0"
-              color="success"
-              class="text"
-              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            <ion-label *ngIf="item.item.forgotten == 0" color="success">{{ (item.item.alias !== null)?
+              item.item.alias: item.item.name
+              }}
             </ion-label>
-            <ion-text class="txtTitleTrackingLittle"
-              >{{item.item.hour_intake}}</ion-text
-            >
-            <ion-icon
-              name="chevron-up-outline"
-              slot="end"
-              size="small"
-              class="icon"
-            ></ion-icon>
+            <ion-text style="align-items: center;" class="txtTitleTrackingLittle">{{item.item.hour_intake}}</ion-text>
+            <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
           </ion-item>
-          <ion-item
-            *ngIf="!item.expanded"
-            lines="none"
-            (click)="expandItem(item)"
-            class="ion-no-padding"
-          >
-            <ion-col size="1">
-              <ion-img
-                *ngIf="item.item.forgotten == 2"
-                src="assets/icons/Pill_primary.svg"
-                class="pill"
-              ></ion-img>
-              <ion-img
-                *ngIf="item.item.forgotten == 0"
-                src="assets/icons/Pill_green.svg"
-                class="pill"
-              >
+          <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItem(item)">
+            <ion-col size="2">
+              <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
+                style="margin-right: 5px"></ion-img>
+              <ion-img *ngIf="item.item.forgotten == 0" src="assets/icons/Pill_green.svg" style="margin-right: 5px">
               </ion-img>
-              <ion-img
-                *ngIf="item.item.forgotten == 1"
-                src="assets/icons/Pill_red.svg"
-                class="pill"
-              >
+              <ion-img *ngIf="item.item.forgotten == 1" src="assets/icons/Pill_red.svg" style="margin-right: 5px">
               </ion-img>
             </ion-col>
-            <ion-label
-              *ngIf="item.item.forgotten == 2"
-              color="primary"
-              class="text"
-              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            <ion-label *ngIf="item.item.forgotten == 2" color="primary">{{ (item.item.alias !== null)?
+              item.item.alias: item.item.name
+              }}
             </ion-label>
-            <ion-label
-              *ngIf="item.item.forgotten == 1"
-              color="danger"
-              class="text"
-              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            <ion-label *ngIf="item.item.forgotten == 1" color="danger">{{ (item.item.alias !== null)?
+              item.item.alias: item.item.name
+              }}
             </ion-label>
-            <ion-label
-              *ngIf="item.item.forgotten == 0"
-              color="success"
-              class="text"
-              >{{ (item.item.alias !== null)? item.item.alias: item.item.name }}
+            <ion-label *ngIf="item.item.forgotten == 0" color="success">{{ (item.item.alias !== null)?
+              item.item.alias: item.item.name
+              }}
             </ion-label>
-            <ion-text class="txtTitleTrackingLittle"
-              >{{item.item.hour_intake}}</ion-text
-            >
-            <ion-icon
-              name="chevron-down-outline"
-              slot="end"
-              size="small"
-              class="icon"
-            ></ion-icon>
+            <ion-text style="align-items: center;" class="txtTitleTrackingLittle">{{item.item.hour_intake}}</ion-text>
+            <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
           </ion-item>
 
           <app-expandable expandHeight="200px" [expanded]="item.expanded">
@@ -211,68 +146,34 @@
                 {{item.item.name}} (Dosi: {{item.item.dose}})
               </p>
             </ion-item>
-            <div
-              class="main-container3"
-              style="display: flex; align-items: center"
-            >
-              <!-- *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" -->
-              <ion-button
-                mode="ios"
-                size="small"
-                color="transparent"
-                fill="outline"
-                class="buttonLink"
-                (click)="this.addDrugPlan(item.item, item.item.id)"
-                >{{ 'button.see_detail' | translate }} </ion-button
-              >&nbsp;&nbsp;
+            <div class="main-container3">
+              <ion-button *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" size="small" color="transparent" class="buttonLink"
+                (click)="this.addDrugPlan(item.item, item.item.id)">{{ 'detail_contact.button_edit' | translate }}
+              </ion-button>&nbsp;
+              <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary"
+                (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
 
-              <ion-badge
-                *ngIf="item.item.forgotten == 2 && !this.isFutureDay"
-                class="primary"
-                (click)="changeTake(item.item.id, item.item.state)"
-              >
-                {{ 'button.take' | translate }}
-              </ion-badge>
+              <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" color="danger"
+                (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon
+                  style="margin-left: 5px" name="alert-outline" color="light"></ion-icon>
+              </ion-button>
 
-              <ion-badge
-                color="danger"
-                *ngIf="item.item.forgotten == 1 && !this.isFutureDay"
-                (click)="changeTake(item.item.id, item.item.state)"
-              >
-                {{ 'button.forgotten' | translate }}
-                <ion-icon
-                  style="margin-left: 5px"
-                  name="alert-outline"
-                  color="light"
-                ></ion-icon>
-              </ion-badge>
+              <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" color="success"
+                (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
+                  style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
+              </ion-button>&nbsp;&nbsp;&nbsp;
+              
+              <ion-button *ngIf="item.item.observations !== null" color="primary" (click)="showDetailAlert(item.item.name, item.item.observations)">
+                {{ 'button.see_details' | translate }}
+              </ion-button>
 
-              <ion-badge
-                color="success"
-                (click)="changeTake(item.item.id, item.item.state)"
-                *ngIf="item.item.forgotten == 0 && !this.isFutureDay"
-              >
-                {{ 'button.taked' | translate }}<ion-icon
-                  style="margin-left: 5px"
-                  name="checkmark-outline"
-                  color="light"
-                ></ion-icon>
-              </ion-badge>
-              &nbsp;&nbsp;&nbsp;
-
-              <app-info info="{{'info.medication' | translate}}"></app-info>
-              &nbsp; &nbsp;
-              <!-- <app-info
-                info="{{'info.medication' | translate}}"
-                [title]="item.item.name"
-                [info]="item.item.frequency"
-                [details]="true"
-              ></app-info> -->
             </div>
           </app-expandable>
         </ion-card>
       </ion-list>
+
     </ng-container>
+
   </ng-template>
   <ng-template #third>
     <ion-grid>

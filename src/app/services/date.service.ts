@@ -79,7 +79,6 @@ export class DateService {
 
   public getLocale(){
     let lang =  this.translate.currentLang;
-    console.log(lang)
 
     if(lang === 'ca'){
       return 'ca-ES'
