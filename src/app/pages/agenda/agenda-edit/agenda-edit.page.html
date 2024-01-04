@@ -72,13 +72,14 @@
           </ion-label>
           <ion-datetime-button slot="end" datetime="date"></ion-datetime-button>
         </ion-item>
-        <ion-modal [keepContentsMounted]="true">
+
+        <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
           <ng-template>
-            <ion-datetime color="primary" [locale]="this.locale" [min]="this.date" presentation="date-time" id="date" (ionChange)="this.isSubmittedStartDate = false;" formControlName="date"></ion-datetime>
-            <ion-buttons mode="ios" slot="buttons">
-              <ion-button mode="ios" color="danger"  slot="start">{{'notifications.close' | translate}}</ion-button>
-              <ion-button mode="ios" style="width: 50px;"></ion-button>
-              <ion-button mode="ios" color="primary" slot="end">{{'button.add' | translate}}</ion-button>
+            <ion-datetime mode="ios" color="primary" [locale]="this.locale" [min]="this.date" presentation="date-time" id="date" (ionChange)="this.isSubmittedStartDate = false;" formControlName="date"></ion-datetime>
+            <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+              <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+              <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+              <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
             </ion-buttons>
           </ng-template>
         </ion-modal>         

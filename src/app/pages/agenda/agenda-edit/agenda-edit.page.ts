@@ -204,4 +204,6 @@ export class AgendaEditPage implements OnInit {
     this.modalCtrl.dismiss({error:null});
   }
 
+ 
+
 }

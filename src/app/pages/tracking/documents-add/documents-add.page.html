@@ -42,9 +42,14 @@
         </ion-label>
         <ion-datetime-button slot="end" datetime="date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime [locale]="this.locale" (ionInput)="isSubmittedDate = false" presentation="date" id="date" (ionChange)="this.isSubmittedDate = false;" formControlName="date"></ion-datetime>
+          <ion-datetime mode="ios" [locale]="this.locale" (ionInput)="isSubmittedDate = false" presentation="date" id="date" (ionChange)="this.isSubmittedDate = false;" formControlName="date"></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
               <!-- FIXME: <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" [displayFormat]="this.dateService.getShortDateFormat()" (ionInput)="isSubmittedDate = false" [placeholder]="this.dateService.ddMMyyyyFormat(this.currentDate)" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
