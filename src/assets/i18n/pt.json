@@ -659,6 +659,25 @@
     "medication_status": "aceitação"
    
   },
+
+
+  "exercises": {
+    "accepted_rejected": "Deseja aprovar ou rejeitar este exercício?",
+    "accepted_rejectedExercises": "Deseja aprovar ou rejeitar este exercício?",
+    "rejected": "Gostaríamos que nos desse uma breve explicação dos motivos da sua recusa.",
+    "button_accepted": "Aprovar",
+    "button_rejected": "Rejeitar",
+    "placeholder": "Escrever uma mensagem.",
+    "rejectd_send": "Mensagem enviada para a sua equipa médica",
+    "rejectd_option1": "Tenho dúvidas, preciso de mais informação",
+    "rejectd_option2": "Não estou de acordo com a medicação prescrita",
+    "rejectd_option2F": "Não concordo com a forma",
+    "rejectd_option2E": "Não concordo com o exercício recomendado,",
+    "rejectd_option3": "Outros",
+    "medication_status": "aceitação"
+  },
+
+
   "button": {
     "see_details": "Ver detalhes",
     "detail": "Detalhe",

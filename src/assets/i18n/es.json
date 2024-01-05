@@ -653,6 +653,21 @@
         "medication_status": "pendiente"
        
     },
+    "exercises": {
+      "accepted_rejected": "¿Desea aprobar o rechazar este ejercicio?",
+      "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
+      "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
+      "button_accepted": "Aprobar",
+      "button_rejected": "Rechazar",
+      "placeholder": "Escribe un mensaje.",
+      "rejectd_send": " Mensaje enviado a su equipo médico",
+      "rejectd_option1": "Tengo dudas, necesito más información",
+      "rejectd_option2": "No estoy de acuerdo con la medicación prescrita",
+      "rejectd_option2F": "No estoy de acuerdo con el formulario",
+      "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
+      "rejectd_option3": "Otros",
+      "medication_status": "pendiente"
+    },
     "button":{
       "see_details": "Ver detalles",
       "detail": "Detalle",
