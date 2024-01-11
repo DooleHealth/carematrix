@@ -1864,10 +1864,33 @@ export class HomePage implements OnInit {
   }
 
   openActionPrescribedApps(app){
+
+    console.log(app.access_type)
       if(app.access_type === ACCESS_TYPE.APP)
         this.openMarketApp(app.id_pkg)
-      else
+      else if (app.access_type === ACCESS_TYPE.IFRAME)
         this.openShowIframe(app)
+      else 
+        this.showInstructionsAlert(app);
+  }
+
+
+
+
+  async showInstructionsAlert(app:any) {
+    this.translate.get('info.button').subscribe(
+      async button => {
+        // value is our translated string
+        const alert = await this.alertController.create({
+          cssClass: "alertClass",
+          header: this.translate.instant('home.instructions'),
+          // subHeader: 'Subtitle',
+          message: app.configurations.access_description,
+          buttons: [button]
+        });
+    
+        await alert.present();
+      });
   }
 
   openMarketApp(id) {
