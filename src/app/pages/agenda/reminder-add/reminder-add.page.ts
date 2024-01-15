@@ -530,7 +530,6 @@ export class ReminderAddPage implements OnInit {
       if(new Date(from_date) > new Date(to_date) ){
         let messagge = this.translate.instant('medication.message_error_treatment_date')
         this.dooleService.presentAlert(messagge)
-        this.form.get('to_date').setValue('')
       }
   }
 
