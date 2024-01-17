@@ -9,15 +9,15 @@ import { ACCESS_TYPE } from 'src/app/models/shared-care-plan';
   styleUrls: ['./show-iframe.component.scss'],
 })
 export class ShowIframeComponent  implements OnInit {
-  @Input()configurations: any;
+  @Input()app: any;
   IFRAME = ACCESS_TYPE.IFRAME
   safeUrl: SafeResourceUrl
   constructor( private modalCtrl: ModalController,   private sanitizer: DomSanitizer,) { }
 
   ngOnInit() {
-    console.log(`[ShowIframeComponent] configurations: `, this.configurations)
-    if(this.configurations?.iframe_url)
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.configurations.iframe_url);
+    console.log(`[ShowIframeComponent] configurations: `, this.app)
+    if(this.app.configurations?.iframe_url)
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.app.configurations.iframe_url);
   }
 
 

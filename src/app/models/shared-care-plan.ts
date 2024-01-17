@@ -250,6 +250,7 @@ export interface SharedCarePlanPrescribedApps {
     icon:string,
     title: string,
     description: string,
+    instructions?:string
     iframe_url:string;
     id_pkg?: string;
     access_type?: string;

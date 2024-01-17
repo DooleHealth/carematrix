@@ -6,10 +6,10 @@
 </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
-  <div style="height: 100% !important;" *ngIf="this.configurations.access_type === IFRAME; else windowsApp">
-    <iframe width="100%" height="100%" *ngIf="this.configurations.iframe_url" [src]="this.safeUrl" class="iframe" allow="camera; microphone" scrolling="yes" ></iframe>    
+  <div style="height: 100% !important;" *ngIf="this.app.configurations.access_type === IFRAME; else windowsApp">
+    <iframe width="100%" height="100%" *ngIf="this.app.configurations.iframe_url" [src]="this.safeUrl" class="iframe" allow="camera; microphone" scrolling="yes" ></iframe>    
   </div>
   <ng-template #windowsApp>
-    <div style="padding: 5px;" *ngIf="this.configurations?.access_description" [innerHTML]="this.configurations?.access_description | safeHtml"></div>
+    <div style="padding: 5px;" *ngIf="this.app?.instructions" [innerHTML]="this.app.instructions | safeHtml"></div>
   </ng-template>
 </ion-content>

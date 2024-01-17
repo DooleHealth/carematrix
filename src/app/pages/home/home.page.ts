@@ -429,6 +429,7 @@ export class HomePage implements OnInit {
         'name',  //title
         'cover',  //date
         'description', //type
+        'instructions',
         'url_android',
         'url_ios',
         'configurations_array'
@@ -1880,8 +1881,7 @@ export class HomePage implements OnInit {
     console.log('openActionPrescribedApps()', slide);
     const modal = await this.modalCtrl.create({
       component: ShowIframeComponent,
-      componentProps: {configurations: slide.configurations
-      },
+      componentProps: {app: slide},
     });
 
     modal.onDidDismiss()

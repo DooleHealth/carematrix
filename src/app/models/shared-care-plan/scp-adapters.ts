@@ -219,7 +219,7 @@ export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
         this.platform = platform;
     }
 
-    adapterForView(list: any[], name: string, cover: string, description: string, url_android: string, url_ios:string, configurations_array){
+    adapterForView(list: any[], name: string, cover: string, description: string, instructions : string, url_android: string, url_ios:string, configurations_array){
         let newList: SharedCarePlanPrescribedApps[] = []
             if(list?.length >0)
             list.forEach((app) => {   
@@ -229,6 +229,7 @@ export class PrescribedAppsAdapter implements SharedCarePlanPrescribedApps {
                     icon: app[cover],
                     title: app[name],
                     description: app[description],
+                    instructions: app[instructions],
                     iframe_url: null,
                     id_pkg: this.platform.is('android') || this.platform.is('mobileweb') ? this.getIdFromUrl(app[url_android], /id=([^&]+)/) : this.getIdFromUrl(app[url_ios], /id(\d+)/),
                     access_type: this.configurations?.access_type,
