@@ -16,8 +16,8 @@ export class ShowIframeComponent  implements OnInit {
 
   ngOnInit() {
     console.log(`[ShowIframeComponent] configurations: `, this.app)
-    if(this.app.configurations?.iframe_url)
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.app.configurations.iframe_url);
+    if(this.app?.iframe_url)
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.app.iframe_url);
   }
 
 

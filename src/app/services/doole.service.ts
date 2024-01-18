@@ -2108,4 +2108,19 @@ export class DooleService {
     );
   }
 
+  
+  getAPI_prescribedApps_ByDate(from_date?,to_date?): Observable<any> {
+    let path = 'rehabilify/prescribed-apps/activities/pending';
+    let httpParams = new HttpParams();
+    httpParams = httpParams? httpParams.append('from', from_date) : httpParams
+    httpParams = httpParams? httpParams.append('to', to_date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPI_prescribedApps_ByDate(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
 }

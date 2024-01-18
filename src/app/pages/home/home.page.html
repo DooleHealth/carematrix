@@ -186,7 +186,7 @@
 
     <!-- Exercises -->
     <ion-row>
-      <ion-card class="vertical-card" (click)="navigateToExercisesPage()">
+      <ion-card class="vertical-card">
 
       
 
@@ -207,7 +207,7 @@
           <swiper-container #sliderExercises *ngIf="this.exercises?.length > 0" direction="vertical" pagination="true"
             [config]="this.sliderExercisesConfigVertical" (slidechange)="slideExerciseChange()">
 
-            <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.exercises">
+            <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.exercises" (click)="navigateToExercisesPage(slide)">
               <ion-grid class="zeroMarginPadding" style="width: 100%;">
                 <ion-row>
                   <p style="text-align: left;margin-left: 0px;">- {{slide?.exercise?.name}}</p>

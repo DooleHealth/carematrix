@@ -373,7 +373,10 @@ export class HomePage implements OnInit {
         this.getPrescribedApps(),
 
         this.getFormsList(),
+        //this.getExercisesListOld(),
         this.getExercisesList(),
+
+
         (this.drugs = [], this.getDrugIntake()),
 
 
@@ -668,8 +671,61 @@ export class HomePage implements OnInit {
     }
   }
 
-
   async getExercisesList() {
+    try {
+        const exercisesPromise = new Promise((resolve, reject) => {
+            this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
+                res => resolve(res),
+                error => reject(error)
+            );
+        });
+
+        const prescribedAppsApiPromise = new Promise((resolve, reject) => {
+            this.dooleService.getAPI_prescribedApps_ByDate(this.date, this.date).subscribe(
+                res => resolve(res),
+                error => reject(error)
+            );
+        });
+
+        
+        let [exercisesResponse, prescribedAppsResponse] = await Promise.all([exercisesPromise, prescribedAppsApiPromise]) as [any, any[]];;
+
+        prescribedAppsResponse.forEach(item => {
+          let newExercisePlay = {
+              "id": item.id, 
+              "user_id": this.authService.id_user, 
+              "start_date": item.next_session.date, 
+              "end_date": item.next_session.date, 
+
+              "day": null, 
+              "exercise": {
+                  "id": item.next_session.id,
+                  "name": item.name,
+                  "description": item.description,
+                  "scheduled_date": null,
+                  "url": false, 
+                  "cover": item.image,
+                  "internal_name": false 
+              },
+              configurations : {
+                "access_type": "iframe",
+                "iframe_url": item.next_session.iframe_url
+              }
+          };
+      
+          exercisesResponse.exercisePlays.push(newExercisePlay);
+          this.setExercisesSlider(exercisesResponse?.exercisePlays);
+      });
+
+    } catch (error) {
+        // Handle errors if needed
+        console.error('Error fetching elements list:', error);
+        throw error;
+    }
+}
+
+
+  async getExercisesListOld() {
     try {
 
       const data: any = await new Promise((resolve, reject) => {
@@ -1865,6 +1921,7 @@ export class HomePage implements OnInit {
   }
 
   openActionPrescribedApps(app){
+    console.log(app)
       if(app.access_type === ACCESS_TYPE.APP)
         this.openMarketApp(app.id_pkg)
       else
@@ -1881,7 +1938,7 @@ export class HomePage implements OnInit {
     console.log('openActionPrescribedApps()', slide);
     const modal = await this.modalCtrl.create({
       component: ShowIframeComponent,
-      componentProps: {app: slide},
+      componentProps: {app: slide.configurations},
     });
 
     modal.onDidDismiss()
@@ -1918,8 +1975,11 @@ export class HomePage implements OnInit {
     this.router.navigate([ContentTypePath.Forms], { state: { segment: 'forms'}});
   }
 
-  navigateToExercisesPage() {
-    this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+  navigateToExercisesPage(slide: any) {
+    if (!slide?.configurations) this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+    else {
+      this.openShowIframe(slide)
+    }
   }
 
   navigateToGamesPage(){
