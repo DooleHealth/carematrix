@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypePath, ContentTypeTranslatedName, ListSCPLifeStyle, SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
 import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-lifestyle-habits',
@@ -16,6 +17,7 @@ export class LifestyleHabitsPage implements OnInit {
   constructor(
     private router: Router,
     public translate: TranslateService,
+    public language: LanguageService
   ) {  
    }
 
@@ -23,8 +25,28 @@ export class LifestyleHabitsPage implements OnInit {
     console.log("aaa", ListSCPLifeStyle)
     this.listContent.push(...ListSCPLifeStyle)
     
+
+    console.log(this.language.getCurrent());
+
     this.listContent.forEach(element => {
-      element.title = this.translate.instant(element.title)
+      element.traduction = element.title;
+      element.title = this.translate.instant(element.traduction)
+      element 
+    }); 
+
+    console.log("after", this.listContent)
+  
+  }
+
+  ionViewWillEnter() {
+    //console.log("aaa", ListSCPLifeStyle)
+    //this.listContent.push(...ListSCPLifeStyle)
+    
+
+    console.log("LANG: " + this.language.getCurrent());
+
+    this.listContent.forEach(element => {
+      element.title = this.translate.instant(element.traduction)
     });
 
     console.log("after", this.listContent)

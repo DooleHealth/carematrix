@@ -210,11 +210,11 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
  */
 
 export const ListSCPLifeStyle: SharedCarePlanLifeStyle [] = [
-    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:""},
-    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:""},
-    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
-    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:""},
-    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:""},
+    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:"", traduction: ""},
+    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:"", traduction: ""},
+    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:"", traduction: ""},
+    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: ""},
+    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:"", traduction: ""},
 ]
 
 export interface SharedCarePlanLifeStyle {
@@ -226,7 +226,9 @@ export interface SharedCarePlanLifeStyle {
     id?: string | number;
     routerlink?: string | any;
     state?: string;
-    accepted?: boolean
+    accepted?: boolean;
+    traduction?:string;
+
 }
 
 export interface medication extends SharedCarePlanLifeStyle{
