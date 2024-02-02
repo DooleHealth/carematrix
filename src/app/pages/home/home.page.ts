@@ -1967,6 +1967,12 @@ export class HomePage implements OnInit {
   }
 
 
+  navigateToExercises() {
+    this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+
+  }
+
+
   navigateToMedicationPage() {
     this.router.navigate([ContentTypePath.Medication], { state: { segment: 'medication'}});
   }
