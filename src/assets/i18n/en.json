@@ -984,7 +984,11 @@
   },
   "shared_care_plan": {
     "title": "Shared care plan",
-    "description": "<p>This is your <b>Shared Care Plan</b></p>",
+    "descriptionGL": "News that might interest you.",
+    "descriptionForms":"Health remommendations.",
+    "descriptionMMpHc":"To keep you in shape.",
+    "medicalTestSub":"Laboratory result",
+
     "monitoring": "Monitoring",
     "medical_procedure": "Medical Procedure",
     "informed_consent": "Informed Consent",
@@ -999,6 +1003,9 @@
     },
     "monitoringList": {
       "text" : "Monitoring is crucial to assess your health status, detect early changes and adjust treatment."
+    },
+    "addButton":{
+      "MedicalTest":"Add a medical test"
     }
   },
   "exercices": {

@@ -46,19 +46,23 @@ export enum ContentTypePath {
 }
 
 export enum ContentTypeIcons {
-    Goals = 'assets/icons/shared-care-plan/scp-goals.svg',
-    LifestyleHabits = 'assets/icons/shared-care-plan/scp-lifestyle.svg',
-    Medication = 'assets/icons/shared-care-plan/scp-medication.svg',
-    Forms = 'assets/icons/shared-care-plan/scp-form.svg',
-    Monitoring = 'assets/icons/shared-care-plan/scp-monitoring.svg',
-    MedicalProcedure = 'assets/icons/shared-care-plan/scp-medical-procedures.svg',
-    InformedConsent = 'assets/icons/shared-care-plan/scp-informed.svg',
+    Goals = 'assets/images/shared-care-plan/goals.png',
+    LifestyleHabits = 'assets/images/shared-care-plan/lifestyle.png',
+    Forms = 'assets/images/shared-care-plan/forms.png',
+    Medication = 'assets/images/shared-care-plan/medication.png',
+    MedicalProcedure = 'assets/images/shared-care-plan/medicalProcedure.png',
+    Monitoring = 'assets/images/shared-care-plan/healthcharts.png',
+   
+    InformedConsent = 'assets/images/shared-care-plan/news.png',
     // LifeStyle
     News =  'assets/images/shared-care-plan/news.png',
     Advices = 'assets/images/shared-care-plan/advices.png',
     Exercises= 'assets/images/shared-care-plan/exercices.png', 
     Games= 'assets/images/shared-care-plan/games.png', 
     Diets= 'assets/images/shared-care-plan/diets.png', 
+
+    //AddBUtton
+    buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',
 }
 
 export enum ContentTypeTranslatedName {
@@ -75,13 +79,19 @@ export enum ContentTypeTranslatedName {
     Exercises= 'exercices.header', 
     Games= 'setting.subtitle_games', 
     Diets= 'setting.subtitle_diets', 
+
+    //AddButtons
+    addButtonMeditaltest = 'shared_care_plan.addButton.MedicalTest',
 }
 
 declare const enum ContentTypeDescription {
-    Description = 'shared_care_plan.description',
+    descriptionGL = 'shared_care_plan.descriptionGL',
+    descriptionForms= 'shared_care_plan.descriptionForms',
+    descriptionMMpHc= 'shared_care_plan.descriptionMMpHc',
 }
 
 export interface ContentComponent {
+    img?: string;
     icon?: string;
     title: string;
     description?: string;
@@ -99,13 +109,13 @@ export interface SCPContentType {
 }
 
 export const ListContentType: SCPContentType = [
-    {icon: ContentTypeIcons.Goals, title: ContentTypeTranslatedName.Goals, description: ContentTypeDescription.Description, type: NotificationsType.GOALS, state: '', boolean_state: false, routerlink: ContentTypePath.Goals},
-    {icon: ContentTypeIcons.LifestyleHabits, title: ContentTypeTranslatedName.LifestyleHabits, description: ContentTypeDescription.Description, type: NotificationsType.LIFE_STILE_HABITS, state: '', boolean_state: false, routerlink: ContentTypePath.LifestyleHabits},
-    {icon: ContentTypeIcons.Medication, title:ContentTypeTranslatedName.Medication, description: ContentTypeDescription.Description, type: NotificationsType.MEDICATIONS, state: '', boolean_state: false, routerlink: ContentTypePath.Medication},
-    {icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.Description, type: NotificationsType.FORMS, state: '', boolean_state: false, routerlink: ContentTypePath.Forms},
-    {icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.Description, type: NotificationsType.MONITORING, state: '', boolean_state: false, routerlink: ContentTypePath.Monitoring},
-    {icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.Description, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
-    //{icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
+    {img: ContentTypeIcons.Goals, icon: ContentTypeIcons.Goals, title: ContentTypeTranslatedName.Goals, description: ContentTypeDescription.descriptionGL, type: NotificationsType.GOALS, state: '', boolean_state: false, routerlink: ContentTypePath.Goals},
+    {img: ContentTypeIcons.LifestyleHabits, icon: ContentTypeIcons.LifestyleHabits, title: ContentTypeTranslatedName.LifestyleHabits, description: ContentTypeDescription.descriptionGL, type: NotificationsType.LIFE_STILE_HABITS, state: '', boolean_state: false, routerlink: ContentTypePath.LifestyleHabits},
+    {img: ContentTypeIcons.Forms, icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.descriptionForms, type: NotificationsType.FORMS, state: '', boolean_state: false, routerlink: ContentTypePath.Forms},
+    {img: ContentTypeIcons.Medication, icon: ContentTypeIcons.Medication, title:ContentTypeTranslatedName.Medication, description: ContentTypeDescription.descriptionMMpHc, type: NotificationsType.MEDICATIONS, state: '', boolean_state: false, routerlink: ContentTypePath.Medication},
+    {img: ContentTypeIcons.MedicalProcedure, icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.descriptionMMpHc, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
+    {img: ContentTypeIcons.Monitoring, icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.descriptionMMpHc, type: NotificationsType.MONITORING, state: '', boolean_state: false, routerlink: ContentTypePath.Monitoring},
+   //{icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
 ]
 
 export function setStatusContentType(status, content:SharedCarePlan){
@@ -269,3 +279,18 @@ export interface SharedCarePlanProcedure extends SharedCarePlan {
     department?: string
     img?: string;
 }
+
+/**Medical test of Shared care Plan */
+export interface AddButtonComponent {
+    id?: string | number;
+    title: string;
+    icon?: string;
+    type?: string;
+}
+
+export const AddButtonList: AddButtonComponent [] = [
+    {icon: ContentTypeIcons.buttonMeditalTest, title: ContentTypeTranslatedName.addButtonMeditaltest,  type: NotificationsType.AddButtonMedicalTest, id:""},
+    //{icon: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:""},
+   // {icon: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
+   
+]
