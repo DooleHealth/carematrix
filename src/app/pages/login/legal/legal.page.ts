@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-legal',
@@ -12,6 +13,9 @@ import { DooleService } from 'src/app/services/doole.service';
 })
 export class LegalPage implements OnInit {
   //KEY_LOCAL_STORAGE = 'showIntro';
+
+  fromLandingPage = false;
+
   legal:any = {};
   isChecked = false;
   isLoading = false;
@@ -20,36 +24,65 @@ export class LegalPage implements OnInit {
     private translate: TranslateService,
     private authService: AuthenticationService,
     private alertController: AlertController,
-    private dooleService: DooleService) { }
+    private dooleService: DooleService,
+    private activatedRoute: ActivatedRoute) { 
+
+      // If directly accessing in the constructor, ensure navigation is completed
+      const currentNavigation = this.router.getCurrentNavigation();
+      if (currentNavigation && currentNavigation.extras && currentNavigation.extras.state) {
+        console.log("AAAAA " + currentNavigation.extras.state.fromLanding); // Access your state here
+      }
+    }
 
   ngOnInit() {
     this.getLegalInformation()
   }
 
+
   getLegalInformation(){
     this.isLoading = true
-    this.dooleService.getAPILegalInformation().subscribe(
-      async (res: any) =>{
-        console.log('[LegalPage] getAPILegalInformation()', await res);
-        if(res?.success){
-          this.legal = res.legalTerm
-          if(this.legal === undefined || this.legal === null ){
-            let message = this.translate.instant('legal.no_get_conditions_label')
-            this.showAlert(message)
+
+    if (!this.fromLandingPage) {
+      this.dooleService.getAPILegalInformation().subscribe(
+        async (res: any) =>{
+          console.log('[LegalPage] getAPILegalInformation()', await res);
+          if(res?.success){
+            this.legal = res.legalTerm
+            if(this.legal === undefined || this.legal === null ){
+              let message = this.translate.instant('legal.no_get_conditions_label')
+              this.showAlert(message)
+            }
           }
-        }
-        else{
-          let message = this.translate.instant('legal.error_conditions_label')
-          this.showAlert(message, 'error')
-        }
-        this.isLoading = false
-       },(err) => { 
-          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          else{
+            let message = this.translate.instant('legal.error_conditions_label')
+            this.showAlert(message, 'error')
+          }
           this.isLoading = false
-          let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
-          this.showAlert(message, 'error')
-          throw err; 
-      });
+         },(err) => { 
+            console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+            this.isLoading = false
+            let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
+            this.showAlert(message, 'error')
+            throw err; 
+        });
+    }
+    else {
+      this.dooleService.getAPILegalAndPolicy().subscribe(
+        async (res: any) =>{
+          console.log('[LegalPage] getAPILegalInformation()', await res);
+          if(res?.success){
+            this.legal = res.legalTerm
+          }
+          this.isLoading = false
+         },(err) => { 
+            console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+            this.isLoading = false
+            let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
+            this.showAlert(message, 'error')
+            throw err; 
+        });
+    }
+    
   }
 
   showAlert(message, type?){

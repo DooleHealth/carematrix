@@ -483,12 +483,8 @@ export class LandingPage implements OnInit {
 
   }
 
-
-  onSwiper([swiper]) {
-    console.log('onSwiper: ', swiper);
-  }
-  onSlideChange() {
-    console.log('slide change');
+  navigateToLegalPage() {
+    this.router.navigate(['/legal'], { state: {fromLanding: true} });
   }
 
 }

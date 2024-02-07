@@ -1,7 +1,7 @@
 <ion-header mode="md" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button class="skip-btn" fill="clear" color="primary">{{'intro.skip' | translate| titlecase}}</ion-button>
+      <ion-button class="skip-btn" fill="clear" color="primary">{{'intro.skip' | translate| titlecase}} {{this.currentSlideIndex}}/4</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -64,10 +64,18 @@
 
 
 <footer>
-  <div>
+  <ng-container *ngIf="!this.isLastSlide; else noLast">
+    <ion-button class="intro-btn" type="button" color="primary" shape="round" mode="ios"
+      expand="block" (click)="swipeNext()">
+      {{'intro.continue' | translate}}
+    </ion-button>
+  </ng-container>
+
+
+  <ng-template #noLast>
     <ion-button class="intro-btn" type="button" color="primary" shape="round" mode="ios" expand="block"
       (click)="introAction()">
-      {{'button.continue' | translate}}
+      {{'intro.continue' | translate}}
     </ion-button>
-  </div>
+  </ng-template>
 </footer>

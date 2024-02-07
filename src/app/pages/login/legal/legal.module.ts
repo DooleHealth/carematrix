@@ -17,7 +17,7 @@ import { ShareModule } from 'src/app/shared/share/share.module';
     IonicModule,
     TranslateModule,
     ShareModule,
-    LegalPageRoutingModule
+    LegalPageRoutingModule,
   ],
   declarations: [LegalPage]
 })

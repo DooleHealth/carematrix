@@ -87,12 +87,28 @@
 }
 
 
+p#isPasted {
+  color: var(--ion-color-primary);
+  font-family: 'Poppins-SemiBoldItalic';
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+
 h2 {
   font-family: 'Poppins-Bold';
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 36px;
+}
+
+
+ion-text {
+  font-family: 'Poppins-Regular';
+  color: var(--default-text)
 }
 
 ion-button {
@@ -190,6 +206,13 @@ ion-toolbar {
 }
 
 .toolbarTitle {
+  text-align: center;
+  font-family: 'Poppins-Bold';
+  color: var(--default-text);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 21px;
   text-align: center;
 }
 

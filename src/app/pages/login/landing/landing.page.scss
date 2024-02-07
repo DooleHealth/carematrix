@@ -9,7 +9,6 @@
   text-transform: none;
 }
 
-
 .bio-btn {
   border-radius: 5px;
   --background: var(--ion-color-secondary);
@@ -22,14 +21,13 @@
 }
 
 a {
+  color: var(--ion-color-primary);
   font-family: 'Poppins-Bold';
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 21px;
 }
-
-
 
 .slides {
   background-color: lightblue;
@@ -60,14 +58,6 @@ a {
 
 }
 
-
-a {
-  color: var(--ion-color-primary);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px;
-}
 
 ion-input {
   font-family: 'Poppins-Regular';

@@ -32,6 +32,15 @@
                           <ion-text (click)="passwordRecovery()" class="password-recovery">
                               <a>{{ 'landing.password_recovery' | translate}}</a>
                            </ion-text>
+
+
+                           <br>
+                           <br>
+                           <br>
+                           <ion-title [routerLink]="['/landing/legal']" class="text-align-center">
+                            <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
+                        </ion-title>
+
                        </div>
                 </form>
   
@@ -67,6 +76,13 @@
                   <ion-text (click)="passwordRecovery()" class="password-recovery">
                       <a>{{ 'landing.password_recovery' | translate}}</a>
                    </ion-text>
+
+
+                   <br><br>
+
+                   <ion-title (click)="navigateToLegalPage()" class="text-align-center">
+                    <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
+                </ion-title>
                </div>
   
                 
@@ -76,10 +92,10 @@
   
     </div>
   </ion-content>
-  <ion-footer class="ion-no-border justify-content-center">
+<!--   <ion-footer class="ion-no-border justify-content-center">
     <ion-toolbar>
         <ion-title [routerLink]="['/landing/legal']" class="text-align-center">
             <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
         </ion-title>
     </ion-toolbar>
-  </ion-footer>
+  </ion-footer> -->
