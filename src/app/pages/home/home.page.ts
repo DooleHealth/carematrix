@@ -489,7 +489,10 @@ export class HomePage implements OnInit {
 
       this.userDoole = res.user;
       this.first_name = this.userDoole?.first_name?.split(' ')[0];
-      this.greeting = this.translate.instant('home.hello') + ', ' + this.first_name;
+
+      this.greeting = this.translate.instant('home.hello') + ', ' + "<b>"+this.first_name+"</b>";
+
+
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching personal information:', error);
@@ -1953,6 +1956,13 @@ export class HomePage implements OnInit {
       });
 
     await modal.present();
+  }
+
+
+   nChallengesNotCompleted() {
+    
+  
+    return this.challenges.filter(challenge => !challenge.completed).length;
   }
 
 
