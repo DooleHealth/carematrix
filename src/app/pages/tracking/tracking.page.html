@@ -7,16 +7,19 @@
       <ion-icon
         class="primaryIcon"
         slot="icon-only"
-        name="filter-outline"
+        name="options-outline"
         (click)="addFilters()"
       ></ion-icon
       >&nbsp;
-      <ion-icon
+      <!--<ion-icon
         class="primaryIcon"
         slot="icon-only"
         name="add"
         (click)="addDocument()"
-      ></ion-icon>
+      ></ion-icon>-->
+      <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="/profile" mode="ios">
+        <ion-icon class="icon-menu" style="margin-left: -5px;" src="../../assets/icons/menu.svg"></ion-icon>
+      </ion-tab-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'graphics'">
       <ion-icon
@@ -60,7 +63,7 @@
       <ion-list>
         <scp-content
           *ngFor="let content of this.listContent"
-          [content]="content"
+          [content]="content" 
         ></scp-content>
       </ion-list>
     </div>
@@ -70,6 +73,7 @@
       <div class="spin" *ngIf="this.loadingTests">
         <ion-spinner></ion-spinner>
       </div>
+     
       <div
         *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0; else noData"
       >
@@ -79,9 +83,9 @@
           (mouseover)="fireEvent($event,i)"
           (click)="fireEvent($event,i)"
         >
-          <ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}"
+          <!--<ion-label class="txtTitleGray" [ngStyle]="{'color': list.color}"
             >{{ setDayMonthYearTimeFormat(list.date)}}</ion-label
-          >
+          >-->
           <ion-list *ngFor="let doc of list.diagnosticTests">
             <ion-card
               class="cardProfile"
@@ -89,61 +93,36 @@
               [state]="{id: doc.id}"
               routerLinkActive="active-item"
             >
-              <ion-item lines="none" class="ion-no-padding">
-                <div class="verticalLine"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="1.5">
-                      <ion-img
-                        class="iconDocumento"
-                        src="assets/icons/document-attach.svg"
-                      >
-                      </ion-img>
-                    </ion-col>
-                    <ion-col size="6.5">
-                      <ion-text class="txtTitleGoals"
-                        >{{doc.diagnostic_test_type?.name}}</ion-text
-                      >
-                    </ion-col>
-                    <ion-col size="3.5">
-                      <ion-text class="txtTitleTrackingDate"
-                        >{{ddMMyFormat(doc.data)}}</ion-text
-                      >
-                    </ion-col>
-                    <ion-col size="0.5">
-                      <ion-icon
-                        class="arrow"
-                        size="small"
-                        name="chevron-forward-outline"
-                      ></ion-icon>
-                    </ion-col>
-                  </ion-row>
+            <ion-item class="ion-no-padding item" lines="none" mode="ios">
+              <ion-thumbnail class="thumbnail" slot="start">
+                <img
+                  class="img"
+                  src="assets/images/shared-care-plan/medicalTest.png"
+                  alt=""
+                />
+              </ion-thumbnail>
+              <ion-grid style="height: 100% !important">
+                <ion-row>
+                  <ion-text style="color: var(--malva)" >{{'tracking.tap_test' | translate}}</ion-text>
+                </ion-row>
+                <ion-row>
+                  <ion-text >{{'shared_care_plan.medicalTestSub' | translate}}</ion-text>
+                </ion-row>
+                <ion-row>
+                  <ion-text class="txtTitleGoalsDarker textAdvicesSlider"> {{doc.diagnostic_test_type?.name}}</ion-text>
+                </ion-row>
+                <ion-row  class="txtTitleGoals textAdvicesSlider">
+                  <ion-col size="11.1"size-md="11.5" size-lg="11.6">
+                    <ion-text class="txtTitleTrackingDate">
+                      {{ddMMyFormat(doc.data)}}
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+             
+            </ion-item>
 
-                  <ion-col size="12">
-                    <ion-card-title class="txtTracking"
-                      >{{doc.title}}
-                    </ion-card-title>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-card-title class="txtTitleTrackingLittle">
-                      <div
-                        [innerHtml]="doc?.description? (doc.description | safeHtml):'' "
-                      ></div>
-                    </ion-card-title>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-card-title class="textBlue">
-                      <p
-                        routerLink="/document-detail"
-                        [state]="{id: doc.id}"
-                        routerLinkActive="active-item"
-                      >
-                        {{ 'documents.button_detail' | translate}}
-                      </p>
-                    </ion-card-title>
-                  </ion-col>
-                </ion-grid>
-              </ion-item>
+              
             </ion-card>
           </ion-list>
           <!-- </div> -->
@@ -302,6 +281,11 @@
       </ion-grid>
     </div>
   </ng-template>
+
+  <div *ngIf="this.showButton">
+    <app-button-add  [content]="this.addButton[0]" (dataUpdated)="addDocument()" ></app-button-add>
+  </div>
+ 
 </ion-content>
 
 <ion-footer>

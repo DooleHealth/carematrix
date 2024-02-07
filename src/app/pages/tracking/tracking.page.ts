@@ -11,14 +11,15 @@ import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { DateService } from 'src/app/services/date.service';
-import { ListContentType, SCPContentType, SharedCarePlan, setStatusContentType } from 'src/app/models/shared-care-plan';
+import { AddButtonComponent, AddButtonList, ListContentType, SCPContentType, SharedCarePlan, setStatusContentType } from 'src/app/models/shared-care-plan';
 import { Router } from '@angular/router';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
-  color?: string
+  color?: string;
+ 
 }
 export interface Filter {
   start_date?: string,
@@ -34,7 +35,8 @@ export interface Filter {
 })
 export class TrackingPage implements OnInit {
   listContent: SCPContentType = ListContentType;
-
+  addButton = AddButtonList;
+  showButton: boolean = false;
   listDiagnostic:  ListDiagnosticTests[];
   diagnosticTests : Array<any>;
   forms: Array<any>;
@@ -66,15 +68,18 @@ export class TrackingPage implements OnInit {
 
 
   ngOnInit() {
+    console.log("asasd", this.addButton)
   }
 
   ionViewWillEnter(){
     //this.setSegment()
+    this.showButton= false;
     this.segmentChanged();
     this.fireEvent(null, 0)
   }
 
   getStatusContent(){
+    this.showButton= false,
     this.scpService.getAPI_SCP_StatusContent().subscribe(
       async (res: any) =>{
         console.log('[TrackingPage] getStatusContent()', await res);
@@ -89,6 +94,7 @@ export class TrackingPage implements OnInit {
   }
 
   getDiagnosticTestsList(){
+   this.showButton= true,
     console.log('[TrackingPage] getDiagnosticTestsList()' ,  this.filter);
     if(this.filter){
       this.getFilteredDiagnosticTests()

@@ -53,6 +53,7 @@ import { ConfirmationAnswersComponent } from './form/confirmation-answers/confir
 import { ContentDateComponent } from './shared-care-plan/content-date/content-date.component';
 import { ShowIframeComponent } from './shared-care-plan/show-iframe/show-iframe.component';
 import { PendingComponentComponent } from './shared-care-plan/pending-component/pending-component.component';
+import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.component';
 
 @NgModule({
     imports: [
@@ -110,7 +111,8 @@ import { PendingComponentComponent } from './shared-care-plan/pending-component/
     FileUploadV2Component,
     ContentDateComponent,
     ShowIframeComponent,
-    PendingComponentComponent
+    PendingComponentComponent,
+    ButtonAddComponent
   ],
   exports: [
     ShellModule,
@@ -155,7 +157,8 @@ import { PendingComponentComponent } from './shared-care-plan/pending-component/
     FileUploadV2Component,
     ContentDateComponent,
     ShowIframeComponent,
-    PendingComponentComponent
+    PendingComponentComponent,
+    ButtonAddComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

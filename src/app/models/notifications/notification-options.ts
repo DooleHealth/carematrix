@@ -29,7 +29,8 @@ export enum NotificationsType {
     MONITORING = 'monitoring', 
     INFORMED_CONSENT = 'informed_consent',
     LIFE_STILE_HABITS = 'life_style_habits',
-    SHARED_CARE_PLAN = 'shared_care_plan'
+    SHARED_CARE_PLAN = 'shared_care_plan',
+    AddButtonMedicalTest= 'add_document'
 }
 
 export enum NotificationsTypeBO {

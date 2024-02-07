@@ -1,0 +1,7 @@
+<ion-button expand="block" color="primary" class="floating-button" (click)="goTo(content.type)" >
+ 
+  <ion-label>{{content?.title | translate}}</ion-label>
+  <ion-icon slot="end" [src]="this.content?.icon" ></ion-icon>
+</ion-button>
+
+

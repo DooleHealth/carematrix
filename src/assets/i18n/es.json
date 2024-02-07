@@ -971,7 +971,10 @@
     },
     "shared_care_plan":{
       "title": "Plan de cuidados compartido",
-      "description": "<p>Este es su <b>Plan de cuidados compartido</b></p>",
+      "descriptionGL": "Noticias que te pueden interesar.",
+      "descriptionForms":"Recomendaciones de salud.",
+      "descriptionMMpHc":"Para mantenerte en forma.",
+      "medicalTestSub":"Resultados del laboratorio",
       "monitoring": "Monitorización",
       "medical_procedure": "Procedimentos médicos",
       "informed_consent": "Consentimento Informado",
@@ -986,6 +989,9 @@
       },
       "monitoringList": {
         "text" : "El seguimiento es crucial para evaluar su estado de salud, detectar cambios tempranos y ajustar el tratamiento."
+      },
+      "addButton":{
+        "MedicalTest":"Add a medical test"
       }
     },
     "exercices":{
