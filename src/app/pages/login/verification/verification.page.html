@@ -22,9 +22,6 @@
             <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.code.hasError('minlength')">
               {{ 'verification.error_min_lenght' | translate}}
             </ion-label>
-<!--             <ion-label class="error ion-padding" color="danger" *ngIf="isSubmitted && this.code.hasError('pattern') && !this.code.hasError('minlength')">
-              {{ 'verification.error_no_numeric' | translate}}
-            </ion-label> -->
           </ion-item-divider>
           <ion-button type="button" color="primary" expand="block" style="margin-top:15%;" (click)="goIntro()">
             {{ 'verification.next_button' | translate}}

@@ -1,98 +1,130 @@
-.titleBold{
-    font-weight: 1000;
-    font-size: 35px;
-    text-align: left;
-}
-.iconPadding{
-    padding-top: 90%;
-}
-.titleBoldCentered{
-    font-weight: 1000;
-    font-size: 35px;
-    text-align: left;
-}
-.iconPadddingCenter{
-    padding-top: 20%;
-}
-
-.buttonPadding{
-    margin-bottom:3%;
-    margin-top: 7%;
-}
-.buttonPadding2{
-    margin-bottom:3%;
-    margin-top: 10%;
-
-}
-.buttonPaddingIphone{
-    opacity: 0%;
-}
-
-.justify-content-center{
-    align-content: center;
+.center-container {
+    display: flex;
     align-items: center;
-    height: 100%;
-    margin-top: 50%;
+    justify-content: center;
+
+    img {
+        margin-top: 15%;
+        width: 70%;
+    }
 }
+
+h2 {
+    color: var(--default-text);
+    text-align: left;
+}
+
+
+.main-container {
+    margin-left: 2%;
+    margin-right: 2%
+}
+
+.main-container2 {
+    margin-left: 4%;
+    margin-right: 4%
+}
+
+p {
+    color: var(--default-text);
+    text-align: left;
+    font-family: 'Poppins-Regular';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.intro-btn {
+    margin-bottom: 20%;
+    border-radius: 5px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    height: 50px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+
+.skip-btn {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    text-transform: none;
+}
+
+
+ion-header {
+    --ion-background-color: unset !important;
+    box-shadow: unset !important;
+}
+
+ion-footer {
+    box-shadow: unset !important;
+    background: white;
+}
+
+
+
 .swiper-container-wrapper {
     display: flex;
-    height: 80vh; /* Set the height as needed */
-  }
+    height: 80vh;
+    /* Set the height as needed */
+}
 
 /* ----------- iPhone 10 ----------- */
-@media only screen
-  and (min-device-height : 800px)
-  and (orientation: portrait)
-{
-    .buttonPadding{
-        margin-top:40%;
+@media only screen and (min-device-height : 800px) and (orientation: portrait) {
+    .buttonPadding {
+        margin-top: 40%;
     }
 
 }
 
 /* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
-@media only screen
-  and (min-device-width : 320px)
-  and (max-device-width : 360px)
-{
+@media only screen and (min-device-width : 320px) and (max-device-width : 360px) {
     .main-container {
         margin-left: 5%;
         margin-right: 5%;
-        margin-top:0%;
+        margin-top: 0%;
         margin-bottom: 5%;
-      }
-      .buttonPadding{
+    }
+
+    .buttonPadding {
         opacity: 0%;
     }
-    .buttonPaddingIphone{
+
+    .buttonPaddingIphone {
         opacity: 100%;
     }
-    ion-segment{
+
+    ion-segment {
         font-size: small;
     }
 }
+
 /* ----------- Galaxy s3 ----------- */
-@media only screen
-  and (min-device-width : 360px)
-  and (max-device-width : 390px)
-  and (max-device-height: 670px)
-{
+@media only screen and (min-device-width : 360px) and (max-device-width : 390px) and (max-device-height: 670px) {
 
     .main-container {
         margin-left: 5%;
         margin-right: 5%;
-        margin-top:0%;
+        margin-top: 0%;
         margin-bottom: 5%;
-      }
-      .buttonPadding{
+    }
+
+    .buttonPadding {
         opacity: 0%;
     }
-    .buttonPaddingIphone{
+
+    .buttonPaddingIphone {
         opacity: 100%;
     }
 
 }
 
-center{
+center {
     padding: auto;
 }

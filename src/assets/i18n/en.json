@@ -8,7 +8,7 @@
     "button_registre": "Create user",
     "user": "User",
     "too": "Or:",
-    "biometrics": "Biometric authentication",
+    "biometrics": "Biometric login",
     "header_message_password_recovery": "Enter your username",
     "message_password_recovery": "If the username is correct, an email will be sent to recover your password",
     "message_email_sent": "The mail has been sent",
@@ -19,6 +19,7 @@
     "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again.",
     "login_again": "Please sign in again",
     "about_app": "About this app",
+    "legal": "Privacy policy and legal terms",
     "usage-tips": "<div><p>Welcome to our safe and trusted application!</p><p>To ensure your safety and security, we have put together this short getting started guide to highlight the best practices that you can follow when using our app. Follow these tips for a secure and worry-free experience:</p><ul><li>Choose a strong password: To protect your data, it's important to select a strong and unique password. a combination of uppercase and lowercase letters, numbers, and special characters. Avoid using obvious passwords or easily identifiable personal information.</li><li>Turn on two-factor authentication: Further secure your account by enabling two-factor authentication. This it will require a second level of verification, such as a temporary access code sent to your mobile phone, so even if someone gets your password, they won't be able to get in without the additional verification code.</li><li>Keep the app updated: App updates not only add new features, but also fix potential security vulnerabilities. Make sure you always have the latest version of our app installed to take advantage of all the improvements and additional protections.</li><li>Privacy Settings: Explore our privacy settings options to personalize your experience. You can control what information you share and with whom you share it. Remember to regularly review and adjust these settings to maintain an optimal level of privacy.</li></ul><p>These are just a few essential tips to maximize security when using our app. We are committed to your protection and are constantly working to ensure the integrity of your data. We will always be here to help you in case you have any questions or concerns about the security of the app, you can contact us via email support@doolehealth.com.</p><p>Thank you for choosing our app and trusting us! on us!</p><p>Team Rehabilify.</p></div>"
   },
   "legal": {
@@ -66,25 +67,21 @@
     "journal": "My Journal"
   },
   "intro": {
-    "title1": "Welcome to",
-    "slider1_text1": "All-in-one",
-    "slider1_text2": "All your medical information in one app",
-    "slider1_text3": "Contact your doctor",
-    "slider1_text4": "Talk directly with your specialist or request a face-to-face consultation",
-    "slider1_text5": "Health and sport",
-    "slider1_text6": "Connect other health apps to measure your progress",
+
+    "skip": "Skip intro",
+    "title1": "Contact",
+    "slider1_text": "Get in touch with health staff through messaging and video calls.",
+    
     "title2": "Agenda",
-    "slider2_text1": "The Rosia agenda allows you to include all your appointments and medical reminders. You won't be able to live without it!",
-    "title3": "Contact",
-    "slider3_text1": "Talk to your doctor and specialist through video or chat and request a face to face appointment. It's never been so fast and comfortable!",
-    "title4": "Tracking",
-    "slider4_text1": "Review clinical results, answer forms or check the evolution of your constants. Now you can review them whenever you want!",
-    "title5": "Journal",
-    "slider5_text1": "At a glance review your diet, medication, games and health information for the day. Taking care of your health has never been easier!",
-    "title6": "News & Advices",
-    "slider6_text1": "Have the latest health news and advice from the medical team Stay updated at all times!",
-    "title7": "Profile",
-    "slider7_text1": "Set your data and notification preferences so you can always be informed. Enjoy your experience at Rosia!"
+    "slider2_text": "Keep your appointment diary up to date with our reminder system.",
+
+    "title3": "Shared Care Plan",
+    "slider3_text": "Explore your shared care plan, designed by your healthcare team to promote collaboration and improve health through personalised and accessible strategies.",
+
+    "title4": "My Daily Tasks",
+    "slider4_text": "All your tasks in one place so you can keep your health on track.",
+    
+    "continue": "Next!"
   },
   "home": {
     "hello": "Hi",
