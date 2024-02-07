@@ -11,7 +11,7 @@
 
   <div class="main-container swiper-container-wrapper">
 
-    <swiper-container [slidesPerView]="1">
+    <swiper-container #swiper (slidechange)="onSlideChange()" [slidesPerView]="1">
 
       <swiper-slide>
         <div class="center-container">
