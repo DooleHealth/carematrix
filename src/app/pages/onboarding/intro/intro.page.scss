@@ -1,3 +1,7 @@
+ion-content {
+    --background: white !important
+}
+
 .center-container {
     display: flex;
     align-items: center;
@@ -57,9 +61,18 @@ p {
 }
 
 
+ion-toolbar {
+    --background: white !important;
+}
+
 ion-header {
+    background: white;
     --ion-background-color: unset !important;
     box-shadow: unset !important;
+}
+
+ion-content {
+    --background: white !important
 }
 
 ion-footer {

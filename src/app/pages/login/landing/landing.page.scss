@@ -92,3 +92,23 @@ ion-input {
   font-weight: 600;
   line-height: 21px;
 }
+
+
+ion-toolbar {
+  --background: white !important;
+}
+
+ion-header {
+  background: white;
+  --ion-background-color: unset !important;
+  box-shadow: unset !important;
+}
+
+ion-content {
+  --background: white !important
+}
+
+ion-footer {
+  box-shadow: unset !important;
+  background: white;
+}

@@ -1,7 +1,7 @@
 <ion-header mode="md" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button class="skip-btn" fill="clear" color="primary">{{'intro.skip' | translate| titlecase}} {{this.currentSlideIndex}}/4</ion-button>
+      <ion-button (click)="introAction()" class="skip-btn" fill="clear" color="primary">{{'intro.skip' | translate| titlecase}} {{this.currentSlideIndex}}/4</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

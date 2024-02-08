@@ -239,14 +239,34 @@ ion-card {
   letter-spacing: 0.035px;
 }
 
+.txt-card-advices {
+  color: var(--default-text);
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.035px;
+  text-align: start;
+  padding-left: 0px;
+}
+
 .customCardHealthPath {
   background-color: white;
   box-shadow: none !important;
-  height: 210px
+  height: auto;
 }
 .strechCardContent {
   min-width: 300px !important;
   padding-top: 0%;
+}
+
+.imagefitAdvices {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 .zeroMarginPadding {
