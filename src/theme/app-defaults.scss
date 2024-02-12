@@ -87,6 +87,22 @@
 }
 
 
+ion-content {
+  --background: var(--default-bkg) !important;
+}
+
+
+ion-header {
+  ion-toolbar {
+    --background: var(--default-bkg) !important;
+  }
+}
+
+ion-footer {
+  --background: var(--default-bkg) !important;
+}
+
+
 p#isPasted {
   color: var(--ion-color-primary);
   font-family: 'Poppins-SemiBoldItalic';
@@ -257,8 +273,12 @@ ion-toolbar {
 /*Custom Text*/
 
 .txtTitle {
+  color: var(--default-text);
+  font-family: 'Poppins-Bold';
   font-size: 18px;
+  font-style: normal;
   font-weight: 700;
+  line-height: normal;
   padding-left: 3%;
 }
 
@@ -706,11 +726,11 @@ ion-spinner {
 }
 
 .ios .paddingTopNoMarginBottom {
-  padding-top: 6%;
+  padding-top: 3%;
 }
 
 .ios .paddingTopNoMarginBottomBlue {
-  padding-top: 6%;
+  padding-top: 3%;
   color: var(--ion-color-primary);
 }
 

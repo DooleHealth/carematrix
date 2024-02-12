@@ -71,7 +71,7 @@ export class PusherNotificationService {
       let message = `
       <ion-row>
         <ion-col class="text-align-center" style="padding: 0px" >
-          <img src="${'../../assets/images/shared-care-plan/scp-alert.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
+          <img src="${'../../assets/images/shared-care-plan/scp-alert-new.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
           <h1>`+ this.translate.instant('shared_care_plan.new_scp_notification_title') + `</h1>
           <ion-text> <p>`+ this.translate.instant('shared_care_plan.new_scp_notification_msg') + ` </p> </ion-text>
         </ion-col>
