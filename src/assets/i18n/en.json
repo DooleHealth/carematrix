@@ -417,7 +417,10 @@
     "day": "DAY",
     "week": "WEEK",
     "months": "MONTH",
-    "year": "YEAR"
+    "year": "YEAR",
+    "calendar": "Calendar",
+    "reminders": "Reminders",
+    "create_reminder": "Create reminder"
   },
   "reminder": {
     "header": "Reminder",
