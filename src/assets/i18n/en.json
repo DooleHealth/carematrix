@@ -731,7 +731,8 @@
     "recent_conversations": "Recent conversations",
     "text_recent_conversations": "Access your latest conversations with your regular doctors",
     "new_conversation": "New conversation",
-    "text_new_conversation": "Open a new conversation with your regular doctors"
+    "text_new_conversation": "Open a new conversation with your regular doctors",
+    "new_message": "Add a new message"
   },
   "medical_directory": {
     "header": "Select",
