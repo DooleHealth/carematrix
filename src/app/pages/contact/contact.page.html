@@ -17,13 +17,21 @@
 <ion-content>
 
 
-  <ion-row>
+  <ion-row style="background-color: var(--secondary-bkg); padding-top: 5%; padding-bottom: 5%;">
     <ion-col size="0.5"></ion-col>
     <ion-col size="11" style="display: flex; justify-content: center;">
       <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
 
         <ion-segment-button *ngIf="role?.component?.chat" value="chat">
           <ion-label>{{ 'contact.tap_chat' | translate}}</ion-label>
+        </ion-segment-button>
+
+        <ion-segment-button *ngIf="role?.component?.agenda" value="medical-visits">
+          <ion-label>{{ 'contact.tap_medical_visits' | translate}}</ion-label>
+        </ion-segment-button>
+
+        <ion-segment-button *ngIf="role?.component?.agenda" value="my-centers">
+          <ion-label>{{ 'contact.tap_my_centers' | translate}}</ion-label>
         </ion-segment-button>
 
         <ion-segment-button *ngIf="role?.component?.agenda" value="video">
@@ -45,143 +53,216 @@
   <div class="verticalLine2" [ngSwitch]="segment">
 
 
+
+    <div *ngSwitchCase="'medical-visits'">
+
+      <ng-container  *ngIf="this.isLoading; else medicalVisits">
+        <div class="spin">
+          <ion-spinner ></ion-spinner>
+        </div>
+       
+      </ng-container>
+
+      <ng-template #medicalVisits>
+
+        <div *ngFor="let slide of this.appointment" class="ion-margin">
+
+
+          <ion-card class="customCardAppointment">
+            
+
+            <div class="txtTitleGoalsLittle3" *ngIf="!this.appointment || this.appointment?.length == 0 ">
+              {{ 'no_data' | translate}}
+            </div>
+
+            <ion-card-content routerLink="/agenda/reminder/detail" routerLinkActive="active-item"
+              [state]="{ event: slide}">
+              <ion-grid>
+                <ion-row class="alingLeft zeroMarginPadding">
+                  <ion-col size="2.5" class="alingLeft zeroMarginPadding" style="display: flex; align-items: center;">
+                    <ion-img src="assets/icons/agenda_new.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="9.5" class="alingLeft zeroMarginPadding">
+                    <br>
+                    <ion-text class="date-txt" class="ion-margin-start">
+                      {{slide.title | uppercase }}
+                    </ion-text>
+                    <br>
+
+                    <ion-text class="date-txt" class="ion-margin-start">
+                      {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
+                      }}
+                    </ion-text>
+
+                    <br>
+                    <ion-text class="staff-txt" class="ion-margin-start">
+                      {{slide?.staff[0]?.name}}
+                    </ion-text>
+
+
+                    <ion-row>
+                      <a class="see-more-appointment" style="padding-left: 5%">{{ 'health_path.see_more' | translate}}!</a>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+
+
+      </ng-template>
+
+    </div>
+
     <!-- Chat -->
 
     <div *ngSwitchCase="'chat'">
 
-      <br>
-      <div class="spin" *ngIf="this.isLoading">
-        <ion-spinner ></ion-spinner>
-      </div>
+      
+
+      <ng-container  *ngIf="this.isLoading; else chat">
+        <div class="spin">
+          <ion-spinner ></ion-spinner>
+        </div>
+       
+      </ng-container>
 
 
-      <ion-list lines="full"  *ngIf="this.data && this.data?.length > 0; else noData">
-        <div *ngFor="let post of this.data; let i = index" >
-  
-          <span *ngIf="post?.recipients?.length == 1">
-            <div *ngFor="let item of post?.recipients; let i = index">
-
-              <ion-item *ngIf="item.id == this.authService?.user.idUser" lines="full" mode="ios" routerLink="conversation"
-                [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
-                <ion-thumbnail slot="start">
-                  <app-aspect-ratio [ratio]="{w:1, h:1}">
-                    <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
-                      class="img-wrapper-doctors"></app-image-shell>
-                  </app-aspect-ratio>
-                </ion-thumbnail>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col class="strech" size=7.8 class="user-name">
-                      <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
-                    </ion-col>
-                    <ion-col class="strech" size=4.2 style="display: flex; justify-content: end; align-items: center;">
-                      <ion-text class="txt-updated" *ngIf="post?.message?.updated_at">
-                        {{ formatDate(post?.message?.updated_at) }}</ion-text>
-
-                        <ion-icon style="padding-left: 5%; font-size: 20px;" src="assets/icons/challenge_card_btn.svg"></ion-icon>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col>
-                      <p class="strech txtTitleGoals">{{ showMessage(post?.message)}}</p>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-item> 
-              
-            </div>
-          </span>
+      <ng-template #chat>
+      
+        <ion-list lines="full"  *ngIf="this.data && this.data?.length > 0; else noData">
+          <div *ngFor="let post of this.data; let i = index" >
     
-          <span *ngIf="post?.recipients?.length == 2">
-            <div *ngFor="let item of post?.recipients; let i = index">
-              <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" mode="md" [routerLink]="['/contact/chat/conversation']"
-                [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
-
-                <ion-thumbnail slot="start">
-                  <app-aspect-ratio [ratio]="{w:1, h:1}">
-                    <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
-                      class="img-wrapper-doctors"></app-image-shell>
-                  </app-aspect-ratio>
-                </ion-thumbnail>
-
-                <ion-grid>
-                  <ion-row>
-                    <ion-col class="strech" size=7.8 class="user-name">
-                      <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
-                    </ion-col>
-                    <ion-col class="strech" size=4.2 style="display: flex; justify-content: end; align-items: center;">
-                      <ion-text class="txt-updated" *ngIf="post?.message?.updated_at">
-                        {{ formatDate(post?.message?.updated_at) }}</ion-text>
-
-                        <ion-icon style="padding-left: 5%; font-size: 20px;" src="assets/icons/challenge_card_btn.svg"></ion-icon>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col style="padding-top: 0px;">
-                      <ion-text class="txt-message">{{ showMessage(post?.message)}}</ion-text>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-
-              </ion-item>
-            </div>
-          </span>
-
-          <span *ngIf="post?.recipients?.length >= 3">
-            <div *ngFor="let item of post?.recipients; let i = index">
-              <span *ngIf="i === (post?.recipients?.length - 1)">
-                <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" md="ios" routerLink="conversation"
-                  [state]="{staff:item, chat: post.message?.message_header_id }" routerLinkActive='active-item'>
+            <span *ngIf="post?.recipients?.length == 1">
+              <div *ngFor="let item of post?.recipients; let i = index">
+  
+                <ion-item *ngIf="item.id == this.authService?.user.idUser" lines="full" mode="ios" routerLink="conversation"
+                  [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
                   <ion-thumbnail slot="start">
                     <app-aspect-ratio [ratio]="{w:1, h:1}">
-                      <app-image-shell animation="spinner" src="assets/images/group.png" [alt]="'Sample Image'"
+                      <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
                         class="img-wrapper-doctors"></app-image-shell>
                     </app-aspect-ratio>
                   </ion-thumbnail>
                   <ion-grid>
                     <ion-row>
-                      <ion-col class="strech" size=5.8 class="user-name" style="display: flex; align-items: center;">
+                      <ion-col class="strech" size=7.8 class="user-name">
                         <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
-                      </ion-col>
-                      <ion-col class="strech" size=1 class="user-name" style="display: flex; align-items: center;"> +</ion-col>
-                      <ion-col class="strech" size=1 class="user-name" style="display: flex; align-items: center;">
-                        <app-text-shell class="user-name" *ngIf="post?.recipients?.length >= 3"
-                          [data]="post?.recipients?.length-1"></app-text-shell>
                       </ion-col>
                       <ion-col class="strech" size=4.2 style="display: flex; justify-content: end; align-items: center;">
                         <ion-text class="txt-updated" *ngIf="post?.message?.updated_at">
                           {{ formatDate(post?.message?.updated_at) }}</ion-text>
+  
                           <ion-icon style="padding-left: 5%; font-size: 20px;" src="assets/icons/challenge_card_btn.svg"></ion-icon>
                       </ion-col>
                     </ion-row>
                     <ion-row>
                       <ion-col>
+                        <p class="strech txtTitleGoals">{{ showMessage(post?.message)}}</p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item> 
+                
+              </div>
+            </span>
+      
+            <span *ngIf="post?.recipients?.length == 2">
+              <div *ngFor="let item of post?.recipients; let i = index">
+                <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" mode="md" [routerLink]="['/contact/chat/conversation']"
+                  [state]="{staff:item, chat: post.message?.message_header_id }"  routerLinkActive='active-item'>
+  
+                  <ion-thumbnail slot="start">
+                    <app-aspect-ratio [ratio]="{w:1, h:1}">
+                      <app-image-shell animation="spinner" [src]="item?.image" [alt]="'Sample Image'"
+                        class="img-wrapper-doctors"></app-image-shell>
+                    </app-aspect-ratio>
+                  </ion-thumbnail>
+  
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col class="strech" size=7.8 class="user-name">
+                        <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
+                      </ion-col>
+                      <ion-col class="strech" size=4.2 style="display: flex; justify-content: end; align-items: center;">
+                        <ion-text class="txt-updated" *ngIf="post?.message?.updated_at">
+                          {{ formatDate(post?.message?.updated_at) }}</ion-text>
+  
+                          <ion-icon style="padding-left: 5%; font-size: 20px;" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col style="padding-top: 0px;">
                         <ion-text class="txt-message">{{ showMessage(post?.message)}}</ion-text>
                       </ion-col>
                     </ion-row>
                   </ion-grid>
+  
                 </ion-item>
-              </span>
-            </div>
-          </span>
-        </div>
-      </ion-list>
-      <ng-template #noData>
-        <div *ngIf=" !this.isLoading">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="12">
-                <ion-icon class="iconNoData" name="chatbubbles-outline"></ion-icon>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
+              </div>
+            </span>
+  
+            <span *ngIf="post?.recipients?.length >= 3">
+              <div *ngFor="let item of post?.recipients; let i = index">
+                <span *ngIf="i === (post?.recipients?.length - 1)">
+                  <ion-item *ngIf="item.id != this.authService?.user.idUser" lines="full" md="ios" routerLink="conversation"
+                    [state]="{staff:item, chat: post.message?.message_header_id }" routerLinkActive='active-item'>
+                    <ion-thumbnail slot="start">
+                      <app-aspect-ratio [ratio]="{w:1, h:1}">
+                        <app-image-shell animation="spinner" src="assets/images/group.png" [alt]="'Sample Image'"
+                          class="img-wrapper-doctors"></app-image-shell>
+                      </app-aspect-ratio>
+                    </ion-thumbnail>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col class="strech" size=5.8 class="user-name" style="display: flex; align-items: center;">
+                          <app-text-shell class="user-name" [data]="item?.name" animation="bouncing"></app-text-shell>
+                        </ion-col>
+                        <ion-col class="strech" size=1 class="user-name" style="display: flex; align-items: center;"> +</ion-col>
+                        <ion-col class="strech" size=1 class="user-name" style="display: flex; align-items: center;">
+                          <app-text-shell class="user-name" *ngIf="post?.recipients?.length >= 3"
+                            [data]="post?.recipients?.length-1"></app-text-shell>
+                        </ion-col>
+                        <ion-col class="strech" size=4.2 style="display: flex; justify-content: end; align-items: center;">
+                          <ion-text class="txt-updated" *ngIf="post?.message?.updated_at">
+                            {{ formatDate(post?.message?.updated_at) }}</ion-text>
+                            <ion-icon style="padding-left: 5%; font-size: 20px;" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col>
+                          <ion-text class="txt-message">{{ showMessage(post?.message)}}</ion-text>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-item>
+                </span>
+              </div>
+            </span>
+          </div>
+        </ion-list>
+        <ng-template #noData>
+          <div *ngIf=" !this.isLoading">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-icon class="iconNoData" name="chatbubbles-outline"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ng-template>
+
       </ng-template>
+
+      
 
 
 
@@ -356,6 +437,14 @@
     <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item' color="primary" shape="round" class="floating-button ion-margin" >
       {{'contact.new_message' | translate}}
       <ion-icon style="padding-left: 2%;"  src="../../assets/icons/message.svg"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div *ngIf="this.segment === 'medical-visits'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <!-- Floating Button -->
+    <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item' color="primary" shape="round" class="floating-button ion-margin" >
+      {{'contact.new_visit' | translate}}
+      <ion-icon style="padding-left: 2%;"  src="../../assets/icons/new_visit.svg"></ion-icon>
     </ion-button>
   </div>
 

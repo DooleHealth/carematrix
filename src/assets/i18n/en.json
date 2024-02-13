@@ -719,6 +719,8 @@
     "tap_appointment": "Face to face",
     "tap_chat": "Chat",
     "tap_pusher": "Pusher",
+    "tap_medical_visits": "Medical visits",
+    "tap_my_centers": "My centers",
     "text_video": "Talk directly to your regular doctor or a specialist from wherever you want. You will be attended at the selected time",
     "regular_professional": "Regular Doctor",
     "text_regular_professional": "Book an appointment with your doctor or usual healthcare professional to make a video consultation",
@@ -732,7 +734,9 @@
     "text_recent_conversations": "Access your latest conversations with your regular doctors",
     "new_conversation": "New conversation",
     "text_new_conversation": "Open a new conversation with your regular doctors",
-    "new_message": "Add a new message"
+    "new_message": "Add a new message",
+    "new_visit": "Request a visit"
+
   },
   "medical_directory": {
     "header": "Select",

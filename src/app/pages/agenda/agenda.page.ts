@@ -376,8 +376,6 @@ export class AgendaPage implements OnInit {
   formatSelectedDate2(date) {
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
-
-    console.log(date)
     return datePipe.transform(date, 'EEEE, d MMMM, HH:mm');
   }
 

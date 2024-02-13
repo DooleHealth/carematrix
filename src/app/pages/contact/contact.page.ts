@@ -10,7 +10,6 @@ import { DatePipe, formatDate } from '@angular/common';
 import { DooleService } from 'src/app/services/doole.service';
 
 
-
 export class ShellRecipientModel extends ShellModel {
   id: string;
   image: string;
@@ -61,12 +60,14 @@ export class ContactPage implements OnInit {
   data: Array<ShellChatModel> & ShellModel;
   routeResolveData: ShellChatModel[];
   myDate: String = new Date().toISOString();
-  isLoading: boolean = true
+  isLoading: boolean = false
   @HostBinding('class.is-shell') get isShell() {
     return (this.data && this.data.isShell) ? true : false;
   }
 
   segment = 'chat';
+  appointment:any[];
+
   constructor(
     private dooleService: DooleService,
     public authService: AuthenticationService,
@@ -75,14 +76,17 @@ export class ContactPage implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
     @Inject(LOCALE_ID) private locale: string,
-    private dateService: DateService) { }
+    private dateService: DateService,
+    private languageService: LanguageService) { }
 
   ngOnInit() {
     this.setSegment()
+    this.segmentChanged()
   }
 
   ionViewWillEnter() {
     this.setSegment()
+    this.segmentChanged()
   }
 
   setSegment() {
@@ -93,30 +97,6 @@ export class ContactPage implements OnInit {
       }
     }
 
-    if (this.segment === 'chat') {
-      const dataSource = this.dooleService.getAPIUserMessages();
-      // Initialize the model specifying that it is a shell model
-      const shellModel: Array<ShellChatModel> = [
-        new ShellChatModel(),
-        new ShellChatModel()
-      ];
-      this.dataStore = new DataStore(shellModel);
-      // Trigger the loading mechanism (with shell) in the dataStore
-      this.dataStore.load(dataSource);
-      this.dataStore.state.subscribe(res => {
-        console.log('[ChatPage] getAPIUserMessages()', res);
-        this.chat = res;
-        this.data = res;
-        console.log(this.data);
-        console.log(this.myDate);
-        this.isLoading = false;
-      },
-        (err) => {
-          this.isLoading = false;
-          console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message);
-          throw err;
-        });
-    }
   }
 
   goMedicalDirectory(isOnline) {
@@ -125,6 +105,41 @@ export class ContactPage implements OnInit {
   }
 
   segmentChanged(event?) {
+
+    this.isLoading = true;
+    switch (this.segment) {
+      case 'chat':
+        
+        const dataSource = this.dooleService.getAPIUserMessages();
+        const shellModel: Array<ShellChatModel> = [
+          new ShellChatModel(),
+          new ShellChatModel()
+        ];
+        this.dataStore = new DataStore(shellModel);
+        this.dataStore.load(dataSource);
+        this.dataStore.state.subscribe(res => {
+          console.log('[ChatPage] getAPIUserMessages()', res);
+          this.chat = res;
+          this.data = res;
+          console.log(this.data);
+          console.log(this.myDate);
+          this.isLoading = false;
+        },
+          (err) => {
+            this.isLoading = false;
+            console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message);
+            throw err;
+          });
+        break;
+
+        case 'medical-visits':
+          this.getallAgenda()
+          break;
+
+        default:
+          break;
+
+    }
 
     // Fix to Focus on the selected segment
     console.log("event: ", event);
@@ -172,4 +187,47 @@ isToday(mDate: Date){
     return true
   return false
 }
+
+
+async getallAgenda() {
+
+  this.isLoading = true;
+  let date = this.transformDate(Date.now(), 'yyyy-MM-dd')
+
+  try {
+    const params = { from_date: date, to_date: null, with_medical_procedures: 0, filter_by_date: 1, order: 1 };
+    console.log('[HomePage] getallAgenda() init', params, date);
+
+    const res: any = await new Promise((resolve, reject) => {
+      this.dooleService.getAPIallAgenda(params).subscribe(
+        (data: any) => {
+          console.log('[HomePage] getallAgenda()', data);
+          resolve(data);
+        },
+        (error) => {
+          console.log('[HomePage] getallAgenda() ERROR(' + error.code + '): ' + error.message);
+          alert('ERROR(' + error.code + '): ' + error.message);
+          reject(error);
+        }
+      );
+    });
+
+    if (res.agenda) {
+      this.appointment = res.agenda;
+    }
+  } catch (error) {
+    // Handle errors if needed
+    console.error('Error fetching agenda:', error);
+    throw error;
+  } finally {
+    this.isLoading = false;
+  }
+}
+
+formatSelectedDate(date) {
+  let language = this.languageService.getCurrent();
+  const datePipe: DatePipe = new DatePipe(language);
+  return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+}
+
 }

@@ -2,12 +2,12 @@
   <ion-toolbar mode="ios">
 
     <ion-buttons slot="start">
-      <ion-button fill="clear" (click)="back()">
+      <ion-button [disabled]="!(this.segment === 'calendar')"  fill="clear" (click)="back()">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
       <h3 class="textBlueCentered1">{{ viewTitle | titlecase }}</h3>
 
-      <ion-button fill="clear" (click)="next()">
+      <ion-button [disabled]="!(this.segment === 'calendar')"  fill="clear" (click)="next()">
         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -102,7 +102,7 @@
                       <br>
 
 
-                      <ion-text *ngIf="event.origin == 1 && (event?.staff?.length ==0) || event.is_reminder"
+                      <ion-text
                         class="txt-appointment">
                         {{event.title}}
                       </ion-text>
