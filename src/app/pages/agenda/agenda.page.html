@@ -140,9 +140,9 @@
       </ng-template>
 
     </div>
-    <div *ngSwitchCase="'reminders'">
+    <div *ngSwitchCase="'reminders'" style="margin-bottom: 20%;">
       
-        <ng-container *ngIf="this.appointment || this.appointment.length !== 0; else noData">
+        <ng-container *ngIf="this.appointment || this.appointment.length !== 0; else noData" >
           <ion-card *ngFor="let event of this.appointment" class="custom-card">
             <ion-card-content class="ion-no-padding">
               <ion-grid>
@@ -191,14 +191,15 @@
 
     </div>
   </div>
+  
+  
 
   
 </ion-content>
 
 <ion-footer>
  
-    <div *ngIf="this.segment === 'reminders'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
-      <!-- Floating Button -->
+   <div *ngIf="this.segment === 'reminders'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
       <ion-button (click)="addAgenda()" color="primary" shape="round" class="floating-button ion-margin" >
         {{'agenda.create_reminder' | translate}}
         <ion-icon style="padding-left: 2%;"  src="../../assets/icons/notifications_reminder.svg"></ion-icon>

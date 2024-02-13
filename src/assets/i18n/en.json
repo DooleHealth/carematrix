@@ -735,7 +735,9 @@
     "new_conversation": "New conversation",
     "text_new_conversation": "Open a new conversation with your regular doctors",
     "new_message": "Add a new message",
-    "new_visit": "Request a visit"
+    "new_visit": "Request a visit",
+    "center": "Medical center",
+    "emergency": "Emergency call"
 
   },
   "medical_directory": {
@@ -1028,5 +1030,6 @@
   },
   "medical_procedure_list":{
     "text":"Here you will find all your medical procedures and diagnostic tests scheduled on a timeline."
-  }
+  },
+  "content": "There is currently no data available to show"
 }

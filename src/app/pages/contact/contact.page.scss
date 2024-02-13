@@ -117,7 +117,40 @@ ion-segment {
     letter-spacing: 0.175px;
   }
 
+  .title-center {
+    color: var(--games-home-color);
+    font-family: "Poppins-Medium";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 21px; 
+  }
+  
+  .center-name {
+    color: var(--Dark-text, #3F3F3F);
+    font-family: 'Poppins-SemiBold';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.03px;
+  }
+
+  .phone-txt {
+    color: var(--Dar-Grey, #7F8C8D);
+    font-family: 'Poppins-SemiBold';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.03px;
+  }
+
   ion-card-content {
     padding-top: 0px;
     padding-bottom: 0px;
+  }
+
+  ion-text {
+    margin: 0px
   }

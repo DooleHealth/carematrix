@@ -1,0 +1,21 @@
+.customTitle {
+    padding-left: 15%;
+    padding-right: 15%;
+    margin-bottom: 10%;
+    color: var(--Deep-Purple, #612D85);
+    text-align: center;
+    font-family: 'Poppins-Bold';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21px;
+
+}
+
+.centered-grid {
+    height: 70vh; /* Ensure it takes the full height of its parent */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    text-align: center; /* Center text horizontally */
+  }

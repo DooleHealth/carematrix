@@ -2123,4 +2123,25 @@ export class DooleService {
     );
   }
 
+  getAPIallowedDepartments(): Observable<any> {
+    let path = `user/departments`;
+  const endpoint = this.api.getEndpoint(path);
+  return this.http.get(endpoint).pipe(
+    map((res: any) => {
+  
+      return res;
+    })
+  );
+  }
+  getAPIdetailDepartments(id: any): Observable<any> {
+    let path = `department/show/${id}`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+  
+        return res;
+      })
+    );
+  }
+
 }

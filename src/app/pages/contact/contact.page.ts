@@ -67,6 +67,7 @@ export class ContactPage implements OnInit {
 
   segment = 'chat';
   appointment:any[];
+  departments:any[];
 
   constructor(
     private dooleService: DooleService,
@@ -134,6 +135,10 @@ export class ContactPage implements OnInit {
 
         case 'medical-visits':
           this.getallAgenda()
+          break;
+
+        case 'my-centers': 
+          this.getAPIallowedDepartments();
           break;
 
         default:
@@ -223,6 +228,25 @@ async getallAgenda() {
     this.isLoading = false;
   }
 }
+
+
+async getAPIallowedDepartments(){ 
+  this.isLoading = true
+  this.dooleService.getAPIallowedDepartments().subscribe(
+    async (res: any) =>{
+      this.departments = []
+      console.log('[ContactPage] getdepartments(', await res);
+      this.departments = res.departments
+      this.isLoading = false
+      console.log(this.departments);
+     },async (err) => { 
+        alert(`Error: ${err.code }, Message: ${err.message}`)
+        console.log('[ContactPage]  getdepartments( ERROR(' + err.code + '): ' + err.message); 
+        this.isLoading = false
+        throw err; 
+    });
+}
+
 
 formatSelectedDate(date) {
   let language = this.languageService.getCurrent();
