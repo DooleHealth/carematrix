@@ -54,7 +54,10 @@ import { ContentDateComponent } from './shared-care-plan/content-date/content-da
 import { ShowIframeComponent } from './shared-care-plan/show-iframe/show-iframe.component';
 import { PendingComponentComponent } from './shared-care-plan/pending-component/pending-component.component';
 import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.component';
+import { ViewMoreInformationComponent } from './shared-care-plan/view-more-information/view-more-information.component';
+
 import { NoDataComponent } from './no-data/no-data.component';
+
 
 @NgModule({
     imports: [
@@ -114,6 +117,7 @@ import { NoDataComponent } from './no-data/no-data.component';
     ShowIframeComponent,
     PendingComponentComponent,
     ButtonAddComponent,
+    ViewMoreInformationComponent,
     NoDataComponent
   ],
   exports: [
@@ -161,6 +165,7 @@ import { NoDataComponent } from './no-data/no-data.component';
     ShowIframeComponent,
     PendingComponentComponent,
     ButtonAddComponent,
+    ViewMoreInformationComponent,
     NoDataComponent
   ],
   schemas: [

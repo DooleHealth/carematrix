@@ -267,6 +267,7 @@
       "subtitle_release": "Novedades",
       "lenguage_ca": "Catalán",
       "lenguage_es": "Castellano",
+      "testimonials": "Testimonios",
       "password":{
         "password": "Contrasenya",
         "title_change_password": "Cambiar Contraseña",
@@ -570,6 +571,9 @@
         "field_drug": "Medicación",
         "field_game": "Juegos",
         "field_health": "Salud",
+        "field_recipes": "Recetas",
+        "field_today": "Hoy",
+        "calories": "calorias",
         "description": "Descripción",
         "dose": "Dosi",
         "morning": "mañana",
@@ -992,7 +996,13 @@
       },
       "addButton":{
         "MedicalTest":"Add a medical test"
-      }
+      },
+      "readingTime": "minutos de lectura",
+      "preparationTime": "minutos de preparación",
+      "exercicesTime": "minutos de ejercicio",
+      "button_info": "Más Información",
+      "like": "afiliados likes",
+      "source": "Fuente: "
     },
     "exercices":{
       "header": "Ejercicios"

@@ -52,6 +52,14 @@ const routes: Routes = [
     path: 'monitoring',
     loadChildren: () => import('./monitoring/monitoring.module').then( m => m.MonitoringPageModule)
   },
+  {
+    path: 'testimonials',
+    loadChildren: () => import('./testimonials/testimonials.module').then( m => m.TestimonialsPageModule)
+  },
+  {
+    path: 'testimonials-details',
+    loadChildren: () => import('./testimonials-details/testimonials-details.module').then( m => m.TestimonialsDetailsPageModule)
+  },
 ];
 
 @NgModule({

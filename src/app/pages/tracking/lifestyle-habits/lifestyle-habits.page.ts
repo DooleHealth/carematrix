@@ -71,6 +71,9 @@ export class LifestyleHabitsPage implements OnInit {
       case NotificationsType.DIETS:             
         this.router.navigate([ContentTypePath.Diets]);
         break;     
+        case NotificationsType.TESTIMONIALS:             
+        this.router.navigate([ContentTypePath.Testimonials]);
+        break;  
     }
   }
 

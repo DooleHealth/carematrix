@@ -45,7 +45,8 @@ export class AdvicesPage implements OnInit {
       async (res: any) =>{
         console.log('[AdvicePage] getAdvicesList()', await res);
         if(res.advices)
-        this.adapterForView(res.advices)
+       // this.adapterForView(res.advices)
+      this.items= res.advices
         this.isLoading = false
        },(err) => {
           console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message);

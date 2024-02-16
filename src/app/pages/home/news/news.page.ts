@@ -3,6 +3,7 @@ import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { FakeBackendInterceptor } from 'src/app/interceptors/fake-backend.interceptor';
 
 @Component({
   selector: 'app-news',
@@ -14,11 +15,13 @@ export class NewsPage implements OnInit {
   public items= [];
   // itemsBackup= []
   // news = []
+  contents = [];
   isLoading = false
   private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
-    public role: RolesService
+    public role: RolesService,
+    public fakeBackend: FakeBackendInterceptor
   ) { 
     this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "new-detail")
   }
@@ -39,11 +42,14 @@ export class NewsPage implements OnInit {
     console.log('[NewsPage] getNewsList()');
     this.items = []
     this.isLoading = true
-    this.dooleService.getAPIlistNews().subscribe(
+   
+   this.dooleService.getAPIlistNews().subscribe(
       async (res: any) =>{
         console.log('[NewsPage] getNewsList()', await res);
         if(res.news)
-        this.adapterForView(res.news)
+       // this.adapterForView(res.news)
+        this.items = res.news
+        console.log('[NewsPage] getNewsList(content)', this.items);
         this.isLoading = false
        },(err) => {
           console.log('[NewsPage] getNewsList() ERROR(' + err.code + '): ' + err.message);

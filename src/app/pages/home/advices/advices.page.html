@@ -23,7 +23,8 @@
   </div>
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
-        <app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>
+        <!--<app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>-->
+        <app-view-more-information  [content]="items" ></app-view-more-information>
     </ion-list>
   </div>
 

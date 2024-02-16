@@ -273,6 +273,7 @@
     "subtitle_release": "Updates",
     "lenguage_ca": "Catalan",
     "lenguage_es": "Spanish",
+    "testimonials": "Testimonials",
     "password": {
       "password": "Password",
       "title_change_password": "Change Password",
@@ -586,6 +587,9 @@
     "field_drug": "Medication",
     "field_game": "Games",
     "field_health": "Health",
+    "field_recipes": "Recipes",
+    "field_today": "Today",
+    "calories": "calories",
     "description": "Description",
     "dose": "Doses",
     "morning": "morning",
@@ -602,7 +606,7 @@
     "brunch": "Lunch",
     "lunch": "Food",
     "afternoon_snack": "Snack",
-    "dinner": "Price"
+    "dinner": "Dinner"
   },
   "game": {
     "games": "Games",
@@ -1017,7 +1021,13 @@
     },
     "addButton":{
       "MedicalTest":"Add a medical test"
-    }
+    },
+    "readingTime": "minutes reading",
+    "preparationTime": "minutes of preparation",
+    "exercicesTime": "minutes of exercice",
+    "button_info": "More Information",
+    "like": "Members Likes",
+    "source": "Source: "
   },
   "exercices": {
     "header": "Exercises"

@@ -8,7 +8,7 @@ import { DateService } from 'src/app/services/date.service';
   styleUrls: ['./content-date.component.scss'],
 })
 export class ContentDateComponent implements OnInit {
-  @Input() content: SharedCarePlanProcedure
+  @Input() content: any
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   date: string;
   constructor(public dateService: DateService) {
@@ -16,6 +16,7 @@ export class ContentDateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("que llego aca", this.content)
     this.setDate()
   }
 
@@ -24,7 +25,7 @@ export class ContentDateComponent implements OnInit {
   }
 
   setDate(){
-    this.date = this.dateService.getFormatTime(this.content?.date)
+    this.date = this.dateService.getFormatTime(this.content?.date_intake)
   }
 
 }

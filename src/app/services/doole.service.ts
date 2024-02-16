@@ -1121,10 +1121,35 @@ export class DooleService {
     );
   }
 
-  getAPIdietsByDate(date: any): Observable<any> {
+  getAPIListRecipe(): Observable<any> {
+    let path = `user/receipt`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  /*getAPIdietsByDate(date: any): Observable<any> {
     let path = `user/dietaryIntakes`
     let httpParams = new HttpParams();
     httpParams = (date) ? httpParams.append('date', date) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdietsByDate(${path}) res: `, res);
+        return res;
+      })
+    );
+  }*/
+
+  getAPIdietsByDate(params: any): Observable<any> {
+    let path = `user/dietaryIntakes`
+    let httpParams = new HttpParams();
+    httpParams = (params?.date) ? httpParams.append('date', params.date) : httpParams
+    httpParams = (params?.grouped_by_times) ? httpParams.append('grouped_by_times', params.grouped_by_times) : httpParams
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
@@ -1155,6 +1180,18 @@ export class DooleService {
       })
     );
   }
+
+  getAPIlistTestimonials(): Observable<any> {
+    let path = `user/testimonials`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  
 
   /** get advices  **/
   getAPIlistAdvices(): Observable<any> {

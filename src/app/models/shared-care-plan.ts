@@ -31,7 +31,9 @@ export enum ContentTypePath {
     Advices = '/advices',
     Exercises= '/exercices', 
     Games= '/games', 
-    Diets= '/diets', 
+   // Diets= '/diets', 
+    Diets= '/journal', 
+    Testimonials= '/testimonials',
 
     DietsDetail= Diets + '/diets-detail',
     AdvicesDetail= Advices+ '/advices-detail',
@@ -57,9 +59,11 @@ export enum ContentTypeIcons {
     // LifeStyle
     News =  'assets/images/shared-care-plan/news.png',
     Advices = 'assets/images/shared-care-plan/advices.png',
-    Exercises= 'assets/images/shared-care-plan/exercices.png', 
+    Exercises= 'assets/images/shared-care-plan/exercises.png',
+    Diets= 'assets/images/shared-care-plan/diets.png',  
+    Testimonials= 'assets/images/shared-care-plan/testimonials.png', 
     Games= 'assets/images/shared-care-plan/games.png', 
-    Diets= 'assets/images/shared-care-plan/diets.png', 
+   
 
     //AddBUtton
     buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',
@@ -77,8 +81,10 @@ export enum ContentTypeTranslatedName {
     News = 'setting.subtitle_news',
     Advices = 'setting.subtitle_advices',
     Exercises= 'exercices.header', 
-    Games= 'setting.subtitle_games', 
     Diets= 'setting.subtitle_diets', 
+    Testimonials= 'setting.testimonials',
+    Games= 'setting.subtitle_games', 
+   
 
     //AddButtons
     addButtonMeditaltest = 'shared_care_plan.addButton.MedicalTest',
@@ -223,8 +229,10 @@ export const ListSCPLifeStyle: SharedCarePlanLifeStyle [] = [
     {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:"", traduction: ""},
     {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:"", traduction: ""},
     {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:"", traduction: ""},
-    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: ""},
     {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:"", traduction: ""},
+    {img: ContentTypeIcons.Testimonials, title: ContentTypeTranslatedName.Testimonials,  type:NotificationsType.TESTIMONIALS, id:"", traduction: ""},
+    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: ""},
+   
 ]
 
 export interface SharedCarePlanLifeStyle {
