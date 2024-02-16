@@ -83,6 +83,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIpatients(); */
                 // case url.includes('sharecareplan/goals') && method === 'GET':
                 //     return getAPI_SCP_goals();
+                case url.includes('user/news') && method === 'GET':
+                    return getAPI_News();
+          //  case url.includes('user/dietaryIntakes') && method === 'GET':
+                //        return getAPI_DietsToday();
+                        case url.includes('user/receipt') && method === 'GET':
+                            return getAPI_Recipes();
+                            case url.includes('user/testimonials') && method === 'GET':
+                            return getAPI_Testimonials();
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -1221,7 +1229,562 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 ]
             })
         }
-
+        
+        function getAPI_News(){
+            return ok({
+                success: true,
+                status: 200,
+                news: [
+                    {
+                        id: 4,
+                        filtersCompleted: {
+                            gender: true
+                        },
+                        subject: "An unclickbait headline",
+                        url: false,
+                        content: "<p>Again, this is an unclickbait news with an unclickbait headline.</p>",
+                        scheduled_date: "2023-12-14 18:30:00",
+                        created_at: "2023-12-11T12:01:05.000000Z",
+                        from_date: "2023-12-11 21:00:00",
+                        to_date: null,
+                        cover: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=07614e7ba88259d10156439c5c411f7d91cf68c19b6508b8614bd9792c652b66",
+                        files: [
+                            {
+                                id: 75,
+                                mediable_type: "App\\News",
+                                mediable_id: 4,
+                                collection_name: "",
+                                name: "cover",
+                                description: null,
+                                file_name: "private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png",
+                                mime_type: "image/png",
+                                disk: "s3",
+                                size: 11731,
+                                manipulations: "",
+                                custom_properties: "",
+                                responsive_images: "",
+                                order_column: null,
+                                created_at: "2023-12-11T12:03:07.000000Z",
+                                updated_at: "2023-12-11T12:03:07.000000Z",
+                                deleted_at: null,
+                                temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=bbf0d20c5c6242485c584cb998524bb84e3cd3339f83557875cc3189ac7698fc",
+                                thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=07614e7ba88259d10156439c5c411f7d91cf68c19b6508b8614bd9792c652b66",
+                                createdDiffForHumans: "2 months ago",
+                                size_mb: 0.01
+                            }
+                        ],
+                        statusable: [],
+                        source: null,
+                        listResearch: [
+                            {
+                                id: 1,
+                                name: "Research"
+                            },
+                            {
+                                id: 4,
+                                name: "Multimorbidity"
+                            }
+                        ],
+                        timeReading: 20,
+                        description: "esto es una pequeña descripcion",
+                        likes: 123,
+                        routerlink: "new-detail"
+                    },
+                    {
+                        id: 3,
+                        filtersCompleted: {
+                            gender: true
+                        },
+                        subject: "everyone",
+                        url: false,
+                        content: "<p>everyone</p>",
+                        scheduled_date: "2023-12-14 18:30:00",
+                        created_at: "2023-12-11T12:01:05.000000Z",
+                        from_date: "2023-12-11 21:00:00",
+                        to_date: null,
+                        cover:  "https://via.placeholder.com/300x300.png?text=Th",
+                        files: [
+                           
+                        ],
+                        statusable: [],
+                        source: null,
+                        listResearch: [
+                            {
+                                id: 1,
+                                name: "Research"
+                            },
+                            {
+                                id: 4,
+                                name: "Multimorbidity"
+                            }
+                        ],
+                        timeReading: 20,
+                        description: "esto es una pequeña descripcion",
+                        likes: 123,
+                        routerlink: "new-detail"
+                    },
+                    {
+                        id: 2,
+                        filtersCompleted: {
+                            gender: true
+                        },
+                        routerlink: "new-detail",
+                        subject: "An unclickbait headline",
+                        url: false,
+                        content: "<p>Again, this is an unclickbait news with an unclickbait headline.</p>",
+                        scheduled_date: "2023-12-14 18:30:00",
+                        created_at: "2023-12-11T12:01:05.000000Z",
+                        from_date: "2023-12-11 21:00:00",
+                        to_date: null,
+                        cover: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=07614e7ba88259d10156439c5c411f7d91cf68c19b6508b8614bd9792c652b66",
+                        files: [
+                           
+                        ],
+                        statusable: [],
+                        source: null,
+                        listResearch: [
+                            {
+                                id: 1,
+                                name: "Research"
+                            },
+                            {
+                                id: 4,
+                                name: "Multimorbidity"
+                            }
+                        ],
+                        timeReading: 20,
+                        description: "esto es una pequeña descripcion",
+                        likes: 123
+                    }
+                ]
+            })
+        }
+        function getAPI_Testimonials(){
+            return ok({
+                success: true,
+                status: 200,
+                testimonials: [
+                    {
+                        id: 4,
+                        filtersCompleted: {
+                            gender: true
+                        },
+                        subject: "An unclickbait headline",
+                        url: false,
+                        content: "<p>Again, this is an unclickbait news with an unclickbait headline.</p>",
+                        scheduled_date: "2023-12-14 18:30:00",
+                        created_at: "2023-12-11T12:01:05.000000Z",
+                        from_date: "2023-12-11 21:00:00",
+                        to_date: null,
+                        cover: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=07614e7ba88259d10156439c5c411f7d91cf68c19b6508b8614bd9792c652b66",
+                        files: [
+                            {
+                                id: 75,
+                                mediable_type: "App\\News",
+                                mediable_id: 4,
+                                collection_name: "",
+                                name: "cover",
+                                description: null,
+                                file_name: "private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png",
+                                mime_type: "image/png",
+                                disk: "s3",
+                                size: 11731,
+                                manipulations: "",
+                                custom_properties: "",
+                                responsive_images: "",
+                                order_column: null,
+                                created_at: "2023-12-11T12:03:07.000000Z",
+                                updated_at: "2023-12-11T12:03:07.000000Z",
+                                deleted_at: null,
+                                temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=bbf0d20c5c6242485c584cb998524bb84e3cd3339f83557875cc3189ac7698fc",
+                                thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=07614e7ba88259d10156439c5c411f7d91cf68c19b6508b8614bd9792c652b66",
+                                createdDiffForHumans: "2 months ago",
+                                size_mb: 0.01
+                            }
+                        ],
+                        statusable: [],
+                        source: null,
+                        listResearch: [
+                            {
+                                id: 1,
+                                name: "Research"
+                            },
+                            {
+                                id: 4,
+                                name: "Multimorbidity"
+                            }
+                        ],
+                        timeReading: 20,
+                        description: "esto es una pequeña descripcion",
+                        likes: 123,
+                        routerlink: "testimonials-detail"
+                    },
+                    {
+                        id: 3,
+                        filtersCompleted: {
+                            gender: true
+                        },
+                        subject: "everyone",
+                        url: false,
+                        content: "<p>everyone</p>",
+                        scheduled_date: "2023-12-14 18:30:00",
+                        created_at: "2023-12-11T12:01:05.000000Z",
+                        from_date: "2023-12-11 21:00:00",
+                        to_date: null,
+                        cover:  "https://via.placeholder.com/300x300.png?text=Th",
+                        files: [
+                           
+                        ],
+                        statusable: [],
+                        source: null,
+                        listResearch: [
+                            {
+                                id: 1,
+                                name: "Research"
+                            },
+                            {
+                                id: 4,
+                                name: "Multimorbidity"
+                            }
+                        ],
+                        timeReading: 20,
+                        description: "esto es una pequeña descripcion",
+                        likes: 123,
+                        routerlink: "testimonials-detail"
+                    },
+                    {
+                        id: 2,
+                        filtersCompleted: {
+                            gender: true
+                        },
+                        routerlink: "testimonials-detail",
+                        subject: "An unclickbait headline",
+                        url: false,
+                        content: "<p>Again, this is an unclickbait news with an unclickbait headline.</p>",
+                        scheduled_date: "2023-12-14 18:30:00",
+                        created_at: "2023-12-11T12:01:05.000000Z",
+                        from_date: "2023-12-11 21:00:00",
+                        to_date: null,
+                        cover: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/SXD3m7lEbGpPZr0IyaXhWHoZfiL8i76DZQuDMFr8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T093103Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=07614e7ba88259d10156439c5c411f7d91cf68c19b6508b8614bd9792c652b66",
+                        files: [
+                           
+                        ],
+                        statusable: [],
+                        source: null,
+                        listResearch: [
+                            {
+                                id: 1,
+                                name: "Research"
+                            },
+                            {
+                                id: 4,
+                                name: "Multimorbidity"
+                            }
+                        ],
+                        timeReading: 20,
+                        description: "esto es una pequeña descripcion",
+                        likes: 123
+                    }
+                ]
+            })
+        }
+        function getAPI_DietsToday(){
+            return ok({
+                success: true,
+                status: 200,
+                diets: [
+                    {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T07:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    },
+                     {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T13:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    },
+                    {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T12:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    },
+                    {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T21:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    }
+                ]
+            })
+        }
+        
+        function getAPI_Recipes(){
+            return ok({
+                success: true,
+                status: 200,
+                recipes: [
+                    {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T07:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    },
+                     {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T13:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    },
+                    {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T12:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    },
+                    {
+                        name: "Chicken soup",
+                        id: 3,
+                        image: {
+                            id: 64,
+                            mediable_type: "App\\Diet",
+                            mediable_id: 3,
+                            collection_name: "",
+                            name: "cover",
+                            description: null,
+                            file_name: "private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg",
+                            mime_type: "image/jpeg",
+                            disk: "s3",
+                            size: 55629,
+                            manipulations: "",
+                            custom_properties: "{\"thumbnail\":\"private_content\\/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg\"}",
+                            responsive_images: "",
+                            order_column: null,
+                            created_at: "2023-12-07T15:44:17.000000Z",
+                            updated_at: "2023-12-07T15:44:17.000000Z",
+                            deleted_at: null,
+                            temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=f6349b7f572e64364ef474d173dfcb1f929ba0bc003cc14f2ac6ac5fe41da634",
+                            thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/Fm5OJBboXDHu7EoOxFEvv3SGEbtq9q0cBltsnC2s-thumb.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240215%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240215T134842Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=486844b233c723bece6953bffd1c33640238b1e33dae143f7ba98645d6bfe73b",
+                            createdDiffForHumans: "2 months ago",
+                            size_mb: 0.05
+                        },
+                        assigned: "directly",
+                        from_date: null,
+                        to_date: null,
+                        currentlyActive: true,
+                        date:"2024-02-15T21:30:05.000000Z",
+                        source: "<p>test_test</p>",
+                        calories: 300,
+                        description: "breakfast"
+                    }
+                ]
+            })
+        }
         
     
     }

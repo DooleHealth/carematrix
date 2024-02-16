@@ -54,6 +54,7 @@ import { ContentDateComponent } from './shared-care-plan/content-date/content-da
 import { ShowIframeComponent } from './shared-care-plan/show-iframe/show-iframe.component';
 import { PendingComponentComponent } from './shared-care-plan/pending-component/pending-component.component';
 import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.component';
+import { ViewMoreInformationComponent } from './shared-care-plan/view-more-information/view-more-information.component';
 
 @NgModule({
     imports: [
@@ -112,7 +113,8 @@ import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.com
     ContentDateComponent,
     ShowIframeComponent,
     PendingComponentComponent,
-    ButtonAddComponent
+    ButtonAddComponent,
+    ViewMoreInformationComponent
   ],
   exports: [
     ShellModule,
@@ -158,7 +160,8 @@ import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.com
     ContentDateComponent,
     ShowIframeComponent,
     PendingComponentComponent,
-    ButtonAddComponent
+    ButtonAddComponent,
+    ViewMoreInformationComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

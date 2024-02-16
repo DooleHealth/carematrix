@@ -2,7 +2,8 @@
 class="ion-no-padding" 
 (click)="goTo(content.type)"  
 routerLinkActive="active-item" 
-[routerLink]="content.routerlink" >
+routerLink="diets-detail/recipe"
+ [state]="{id: content?.item_id}" >
 
   <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
 
@@ -12,7 +13,7 @@ routerLinkActive="active-item"
           <ion-thumbnail class="thumbnail">
             <img
               class="paddingRight imagefit"
-              [src]="content?.img"
+              [src]="content?.media?.temporaryUrl"
               onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
               alt=""
             />
@@ -21,18 +22,18 @@ routerLinkActive="active-item"
   
         <ion-col size="8">
           <ion-row>
-            <p>{{content?.title}}</p>
+            <p>{{content?.item.name}}</p>
           </ion-row>
           <ion-row>
             <ion-text class="txtSubtitle2">
-                {{content?.type}}
+                {{content?.item.description__corta}}
             </ion-text>
           </ion-row>
     
           <ion-row>
             <ion-col size="9.5" size-md="10" size-lg="11">
               <p class="txtSubtitle3" style="color: var(--malva)">
-                {{content?.staff}}
+                {{content?.item.calories}} {{'diary.calories' | translate}}
               </p>
     
             </ion-col>

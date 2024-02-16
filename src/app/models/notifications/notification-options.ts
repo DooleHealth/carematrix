@@ -30,7 +30,8 @@ export enum NotificationsType {
     INFORMED_CONSENT = 'informed_consent',
     LIFE_STILE_HABITS = 'life_style_habits',
     SHARED_CARE_PLAN = 'shared_care_plan',
-    AddButtonMedicalTest= 'add_document'
+    AddButtonMedicalTest= 'add_document',
+    TESTIMONIALS= 'testimonials',
 }
 
 export enum NotificationsTypeBO {

@@ -82,3 +82,16 @@ ion-spinner {
   margin-inline: 16px;
 }
 
+.center{
+  height: 100%; 
+  width: 100%; 
+  align-items: center; 
+  justify-content: center;
+}
+
+
+hr {
+  height: 80%; //del contenedor en el que se encuentre por ejemplo
+}
+
+

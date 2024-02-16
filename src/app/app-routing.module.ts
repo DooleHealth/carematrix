@@ -190,7 +190,11 @@ const routes: Routes = [
   {
     path: 'drugs-detail',
     loadChildren: () => import('./pages/diary/drugs-detail/drugs-detail.module').then( m => m.DrugsDetailPageModule)
-  },   
+  },
+  {
+    path: 'testimonials',
+    loadChildren: () => import('./pages/tracking/testimonials/testimonials.module').then(m => m.TestimonialsPageModule)
+  }   
     
  
   
