@@ -1,3 +1,7 @@
+ion-content {
+    --background: white !important
+}
+
 .center-container {
     display: flex;
     align-items: center;
@@ -5,7 +9,8 @@
 
     img {
         margin-top: 15%;
-        width: 70%;
+        width: 270px;
+        height: 270px;
     }
 }
 
@@ -57,9 +62,18 @@ p {
 }
 
 
+ion-toolbar {
+    --background: white !important;
+}
+
 ion-header {
+    background: white;
     --ion-background-color: unset !important;
     box-shadow: unset !important;
+}
+
+ion-content {
+    --background: white !important
 }
 
 ion-footer {

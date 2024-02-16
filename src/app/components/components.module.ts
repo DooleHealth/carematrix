@@ -56,6 +56,9 @@ import { PendingComponentComponent } from './shared-care-plan/pending-component/
 import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.component';
 import { ViewMoreInformationComponent } from './shared-care-plan/view-more-information/view-more-information.component';
 
+import { NoDataComponent } from './no-data/no-data.component';
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -114,7 +117,8 @@ import { ViewMoreInformationComponent } from './shared-care-plan/view-more-infor
     ShowIframeComponent,
     PendingComponentComponent,
     ButtonAddComponent,
-    ViewMoreInformationComponent
+    ViewMoreInformationComponent,
+    NoDataComponent
   ],
   exports: [
     ShellModule,
@@ -161,7 +165,8 @@ import { ViewMoreInformationComponent } from './shared-care-plan/view-more-infor
     ShowIframeComponent,
     PendingComponentComponent,
     ButtonAddComponent,
-    ViewMoreInformationComponent
+    ViewMoreInformationComponent,
+    NoDataComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -110,7 +110,9 @@
     "enable_notifications": "Turn on notifications",
     "message_enable_notifications": "Want to turn on all notifications?",
     "close_app": "Want to close the app?",
-    "get_firts_data": "Enter your first data"
+    "get_firts_data": "Enter your first data",
+    "advices": "Advices",
+    "see_advices": "See all Advices"
   },
   "profile": {
     "title_profile": "My Profile",
@@ -172,8 +174,10 @@
     "title": "Health Path",
     "card_title": "Challenges",
     "goals": "Goals",
+    "see_all_goals": "See all Goals",
     "start": "Start",
     "detail": "How to reach my goal?",
+    "see_more": "See more",
     "weight": "Take your ",
     "measure": "Enter the measurement: ",
     "form": "Complete the form ",
@@ -414,7 +418,10 @@
     "day": "DAY",
     "week": "WEEK",
     "months": "MONTH",
-    "year": "YEAR"
+    "year": "YEAR",
+    "calendar": "Calendar",
+    "reminders": "Reminders",
+    "create_reminder": "Create reminder"
   },
   "reminder": {
     "header": "Reminder",
@@ -716,6 +723,8 @@
     "tap_appointment": "Face to face",
     "tap_chat": "Chat",
     "tap_pusher": "Pusher",
+    "tap_medical_visits": "Medical visits",
+    "tap_my_centers": "My centers",
     "text_video": "Talk directly to your regular doctor or a specialist from wherever you want. You will be attended at the selected time",
     "regular_professional": "Regular Doctor",
     "text_regular_professional": "Book an appointment with your doctor or usual healthcare professional to make a video consultation",
@@ -728,7 +737,12 @@
     "recent_conversations": "Recent conversations",
     "text_recent_conversations": "Access your latest conversations with your regular doctors",
     "new_conversation": "New conversation",
-    "text_new_conversation": "Open a new conversation with your regular doctors"
+    "text_new_conversation": "Open a new conversation with your regular doctors",
+    "new_message": "Add a new message",
+    "new_visit": "Request a visit",
+    "center": "Medical center",
+    "emergency": "Emergency call"
+
   },
   "medical_directory": {
     "header": "Select",
@@ -1026,5 +1040,6 @@
   },
   "medical_procedure_list":{
     "text":"Here you will find all your medical procedures and diagnostic tests scheduled on a timeline."
-  }
+  },
+  "content": "There is currently no data available to show"
 }

@@ -4,7 +4,8 @@
 /** Ionic CSS Variables **/
 
 $txtColors: (
-  default-text: var(--Text-Normal, #2C3E50)
+  default-text: var(--Text-Normal, #2C3E50),
+  
 );
 
 $chat: (
@@ -26,6 +27,20 @@ $chat-bubble: (
   /** Default font-family **/
 
   --default-text: #2C3E50;
+  --secondary-bkg: #F6F6F6;
+  --default-bkg: #EFEFEF;
+  --seeAllColor: #1100D4;
+
+  --form-home-color: #E67E22;
+  --exercises-home-color:#1100D4;
+  --medication-home-color: #612D85;
+  --diet-home-color:#4D7A05;
+  --games-home-color: #A2047F;
+  --monitoring-home-color: #0B7F90;
+
+  --purple-light: #ECDDFE;
+
+
 
   --ion-font-family: 'Poppins-Regular' !important;
 

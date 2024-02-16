@@ -50,4 +50,5 @@ export class IntroPage implements OnInit {
     this.swiperRef?.nativeElement.swiper.slideNext();
   }
 
+
 }

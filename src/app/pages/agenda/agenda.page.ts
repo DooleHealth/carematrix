@@ -18,6 +18,7 @@ import { SwiperOptions } from 'swiper/types/swiper-options';
 })
 export class AgendaPage implements OnInit {
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
+  segment:string = 'calendar';
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService,
@@ -43,44 +44,44 @@ export class AgendaPage implements OnInit {
     threshold: 50
   };
 
-  isLoading:boolean;
+  isLoading: boolean;
   selectedDate: Date;
   date = new Date();
-  
+
   calendar = {
     mode: 'month',
-    currentDate:  this.date,
-      dateFormatter: {
-          formatMonthViewDay: function(date:Date) {
-              return date.getDate().toString();
-          },
+    currentDate: this.date,
+    dateFormatter: {
+      formatMonthViewDay: function (date: Date) {
+        return date.getDate().toString();
+      },
 
-          formatMonthViewDayHeader: function(date:Date) {
-            let days;
-            switch (this.locale) {
-              case 'es':
-                days = [ "D","L", "M", "M", "J", "V", "S"]
-              break;              
-              case 'pt':
-                days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-              break;            
-              case 'ca':
-                days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
-              break;               
-              default:
-               
-                days = [ "D","L", "M", "X", "J", "V", "S"]
-                break;
-            }
+      formatMonthViewDayHeader: function (date: Date) {
+        let days;
+        switch (this.locale) {
+          case 'es':
+            days = ["D", "L", "M", "M", "J", "V", "S"]
+            break;
+          case 'pt':
+            days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+            break;
+          case 'ca':
+            days = ["DG", "DL", "DT", "DC", "DJ", "DV", "DS"]
+            break;
+          default:
 
-            let num = date.getDay()
-            return days[num]
-          },
-          /*
-           formatMonthViewTitle: function(date:Date) {
-              return date.getMonth().toString();
-          } */
-      }
+            days = ["D", "L", "M", "X", "J", "V", "S"]
+            break;
+        }
+
+        let num = date.getDay()
+        return days[num]
+      },
+      /*
+       formatMonthViewTitle: function(date:Date) {
+          return date.getMonth().toString();
+      } */
+    }
 
   };
 
@@ -90,81 +91,81 @@ export class AgendaPage implements OnInit {
 
   ngOnInit() {
     console.log('[AgendaPage] this.languageService.getCurrent()', this.languageService.getCurrent());
-   // this.dateService.selectedDateFormat2(this.date);
+    // this.dateService.selectedDateFormat2(this.date);
 
   }
 
- async ionViewDidEnter(){
+  async ionViewDidEnter() {
 
-  let date = history.state.date;
+    let date = history.state.date;
     console.log('[AgendaPage] ionViewDidEnter()', date);
-    if(date)
+    if (date)
       this.myCal.currentDate = this.formatDate(date)
     else
-    this.getallAgenda()
+      this.getallAgenda()
   }
 
   markDisabled = (date: Date) => {
     //return date.getDay() == 0 || date.getDay() == 6;
     return 0
-};
+  };
 
-async getTranslation(literal): Promise<string> {
-  return await this.translate.instant(literal)
- }
+  async getTranslation(literal): Promise<string> {
+    return await this.translate.instant(literal)
+  }
 
-/* getallAgenda(){
-    this.isLoading = true;
-    return this.dooleService.getAPIagenda().subscribe(
-      async (res: any) =>{
-        console.log('[AgendaPage] getAgenda()', await res);
-        if(res.agenda){
-          this.addScheduleToCalendar(res.agenda)
-        }
-        this.getReminders()
-       },(err) => {
-          console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message);
-          alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err;
-      });
-  } */
+  /* getallAgenda(){
+      this.isLoading = true;
+      return this.dooleService.getAPIagenda().subscribe(
+        async (res: any) =>{
+          console.log('[AgendaPage] getAgenda()', await res);
+          if(res.agenda){
+            this.addScheduleToCalendar(res.agenda)
+          }
+          this.getReminders()
+         },(err) => {
+            console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message);
+            alert( 'ERROR(' + err.code + '): ' + err.message)
+            throw err;
+        });
+    } */
 
-  getallAgenda(){
+  getallAgenda() {
     this.isLoading = true;
     return this.dooleService.getAPIallAgenda().subscribe(
-      async (res: any) =>{
+      async (res: any) => {
         console.log('[AgendaPage] getallAgenda()', await res);
-        if(res.agenda){
+        if (res.agenda) {
           this.addScheduleToCalendar(res.agenda)
         }
         this.getReminders()
-       },(err) => {
-          console.log('[AgendaPage] getallAgenda() ERROR(' + err.code + '): ' + err.message);
-          alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err;
+      }, (err) => {
+        console.log('[AgendaPage] getallAgenda() ERROR(' + err.code + '): ' + err.message);
+        alert('ERROR(' + err.code + '): ' + err.message)
+        throw err;
       });
   }
 
-  getReminders(){
+  getReminders() {
     return this.dooleService.getAPIreminders().subscribe(
-      async (res: any) =>{
+      async (res: any) => {
         console.log('[AgendaPage] getReminders()', await res);
-        if(res.reminders && res.reminders?.length > 0){
+        if (res.reminders && res.reminders?.length > 0) {
           this.addReminderToCalendar(res.reminders)
           this.eventSource = [].concat(this.appointment, this.reminders)
-        }else{
+        } else {
           this.eventSource = this.appointment
         }
-       },(err) => {
-          console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message);
-          alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err;
-      },()=>{
+      }, (err) => {
+        console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message);
+        alert('ERROR(' + err.code + '): ' + err.message)
+        throw err;
+      }, () => {
         this.isLoading = false;
       });
   }
 
-  onCurrentDateChanged(event:Date) {
+  onCurrentDateChanged(event: Date) {
     this.ngZone.run(() => {
       console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
       this.getallAgenda();
@@ -174,88 +175,89 @@ async getTranslation(literal): Promise<string> {
   transformDate(date) {
     let auxDate = `${date.year}-${date.month}-${date.day}T${date.end_time}:00`
     let d = new Date(auxDate);
-    d.setHours(date.end_time.substring(0,2));
-    d.setMinutes(date.end_time.substring(3,5));
+    d.setHours(date.end_time.substring(0, 2));
+    d.setMinutes(date.end_time.substring(3, 5));
     return d;
   }
 
-  formatDate(d){
+  formatDate(d) {
     var auxdate = d.split(' ')
     //let date = new Date(auxdate[0]);
     d = d.replace(' ', 'T')
     let date0 = new Date(d).toISOString();
     let date = new Date(date0);
     let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
+    date.setHours(time.substring(0, 2));
+    date.setMinutes(time.substring(3, 5));
 
     const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
-  const formattedDate = date0.toLocaleString();
+    const formattedDate = date0.toLocaleString();
     return date;
   }
 
-  formatDate2(d){
+  formatDate2(d) {
     var auxdate = d.split('T')
     let date0 = new Date(d).toISOString();
     let date = new Date(date0);
     let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
+    date.setHours(time.substring(0, 2));
+    date.setMinutes(time.substring(3, 5));
     return date;
   }
 
-  addScheduleToCalendar(appointments: any[]){
+  addScheduleToCalendar(appointments: any[]) {
     var events = [];
-    appointments.forEach((e) =>{
+    appointments.forEach((e) => {
       let isAllDay = false
-      if(e.start_date !== undefined && e.end_date !== undefined ){
-        var startTime =   this.formatDate2(e.start_date_iso8601)
+      if (e.start_date !== undefined && e.end_date !== undefined) {
+        var startTime = this.formatDate2(e.start_date_iso8601)
         var endTime = this.transformDate(e)
-      }else{
+      } else {
         isAllDay = true
       }
-        let type = this.translate.instant((e?.staff?.length > 0)?'agenda.appointment_by_user': 'agenda.event_by_user')
-        events.push({
-          id: e.id,
-          title:  e.title,
-          origin: e.origin,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: isAllDay,
-          type: (e.agenda_type.type === "Added_By_User")? type:e.agenda_type.name,
-          color: e.agenda_type?.color,
-          site: e.site,
-          staff: e.staff,
-          agenda_type: e.agenda_type
-        });
-      })
-      this.appointment = []
-      this.appointment = events ;
+      let type = this.translate.instant((e?.staff?.length > 0) ? 'agenda.appointment_by_user' : 'agenda.event_by_user')
+      events.push({
+        id: e.id,
+        title: e.title,
+        origin: e.origin,
+        startTime: startTime,
+        endTime: endTime,
+        allDay: isAllDay,
+        type: (e.agenda_type.type === "Added_By_User") ? type : e.agenda_type.name,
+        color: e.agenda_type?.color,
+        site: e.site,
+        staff: e.staff,
+        agenda_type: e.agenda_type
+      });
+    })
+    this.appointment = []
+    this.appointment = events;
+    console.log(this.appointment)
   }
 
-  setTypeEvent(type: any){
+  setTypeEvent(type: any) {
 
-    if(type?.type === "Added_By_User")
+    if (type?.type === "Added_By_User")
       return this.translate.instant('agenda.appointment_by_user')
-    if(type?.name)  type?.name
+    if (type?.name) type?.name
   }
 
-  addReminderToCalendar(reminders: any[]){
+  addReminderToCalendar(reminders: any[]) {
     var events = [];
     var startTime;
     var endTime
-    reminders.forEach((e) =>{
+    reminders.forEach((e) => {
 
-      if(e.executions && e.executions.length > 0){
+      if (e.executions && e.executions.length > 0) {
         e.executions.forEach(element => {
           let isAllDay = false
-          if(element.date)
-          startTime =   this.formatDate(element.date)
+          if (element.date)
+            startTime = this.formatDate(element.date)
           else isAllDay = true
 
           events.push({
             id: e.id,
-            title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
+            title: (e.title) ? e.title : this.translate.instant('reminder.personal_reminder'),
             origin: e.origin,
             startTime: startTime,
             endTime: startTime,
@@ -268,35 +270,35 @@ async getTranslation(literal): Promise<string> {
             is_reminder: true
           });
         });
-      }else{
+      } else {
         let isAllDay = false
-        if(e.from_date  && e.to_date ){
-           startTime =   this.formatDate(e.from_date)
-           endTime =  this.formatDate(e.to_date)
+        if (e.from_date && e.to_date) {
+          startTime = this.formatDate(e.from_date)
+          endTime = this.formatDate(e.to_date)
 
-        }else{
+        } else {
           isAllDay = true
         }
-          events.push({
-            id: e.id,
-            title: (e.title)? e.title: this.translate.instant('reminder.personal_reminder'),
-            origin: e.origin,
-            startTime: startTime,
-            endTime: startTime,
-            allDay: isAllDay,
-            type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
-            color: e.agenda_type?.color,
-            site: e.site,
-            staff: e.staff,
-            agenda_type: e.agenda_type,
-            is_reminder: true
-          });
+        events.push({
+          id: e.id,
+          title: (e.title) ? e.title : this.translate.instant('reminder.personal_reminder'),
+          origin: e.origin,
+          startTime: startTime,
+          endTime: startTime,
+          allDay: isAllDay,
+          type: this.translate.instant('reminder.header'),// e.agenda_type?.name,
+          color: e.agenda_type?.color,
+          site: e.site,
+          staff: e.staff,
+          agenda_type: e.agenda_type,
+          is_reminder: true
+        });
       }
 
-      })
-      this.reminders = [];
-      this.reminders = events;
-      //console.log('[AgendaPage] addReminderToCalendar() all:',  this.eventSource );
+    })
+    this.reminders = [];
+    this.reminders = events;
+    //console.log('[AgendaPage] addReminderToCalendar() all:',  this.eventSource );
   }
 
   // Change current month/week/day
@@ -309,42 +311,42 @@ async getTranslation(literal): Promise<string> {
   }
 
   // Selected date reange and hence title changed
-  onViewTitleChanged(title : any){
+  onViewTitleChanged(title: any) {
     this.ngZone.run(() => {
       this.viewTitle = this.formatMonths()
     });
   }
 
-  setLocale(){
+  setLocale() {
     return this.languageService.getCurrent();
   }
 
-  formatMonths(){
+  formatMonths() {
     let language = this.setLocale()
     const datePipe: DatePipe = new DatePipe(language);
     let month = datePipe.transform(this.myCal.currentDate, 'MMM');
-    if(language === 'ca'){
+    if (language === 'ca') {
       month = datePipe.transform(this.myCal.currentDate, 'MMM').split(' ')[1]
-      if(month == undefined)
-      month = datePipe.transform(this.myCal.currentDate, 'MMM').split('’')[1]
+      if (month == undefined)
+        month = datePipe.transform(this.myCal.currentDate, 'MMM').split('’')[1]
     }
     return month.split('.')[0] + ' ' + this.myCal.currentDate.getFullYear()
   }
 
-  formatSelectedDate(date){
+  formatSelectedDate(date) {
     return this.dateService.selectedDateFormat(date);
   }
 
-  async onEventSelected(event){
+  async onEventSelected(event) {
     this.ngZone.run(() => {
       this.event = event
     });
   }
 
-  async addAgenda(){
+  async addAgenda() {
     const modal = await this.modalCtrl.create({
-      component:  AgendaEditPage,
-      componentProps: { },
+      component: AgendaEditPage,
+      componentProps: {},
       cssClass: "modal-custom-class"
     });
 
@@ -352,25 +354,51 @@ async getTranslation(literal): Promise<string> {
       .then((result) => {
         console.log('addAgenda()', result);
 
-        if(result?.data?.error){
-         // let message = this.translate.instant('landing.message_wrong_credentials')
+        if (result?.data?.error) {
+          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
-        }else if(result?.data?.action == 'add'){
+        } else if (result?.data?.action == 'add') {
           let agenda = result?.data['data']
-          if(agenda?.start_date)
-          this.myCal.currentDate = this.formatDate(agenda.start_date)
-        }else if(result?.data?.action == 'update'){
+          if (agenda?.start_date)
+            this.myCal.currentDate = this.formatDate(agenda.start_date)
+        } else if (result?.data?.action == 'update') {
           let agenda = result?.data['data']
-          if(agenda?.start_date)
-          this.myCal.currentDate = this.formatDate(agenda.start_date)
+          if (agenda?.start_date)
+            this.myCal.currentDate = this.formatDate(agenda.start_date)
         }
         this.getallAgenda();
-    });
+      });
 
     await modal.present();
 
   }
 
+  formatSelectedDate2(date) {
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM, HH:mm');
+  }
 
+
+  segmentChanged(event?) {
+    console.log("event: ", event);
+    setTimeout(() => {
+      if (event) {
+        const s = event.target.getBoundingClientRect();
+        const sw = (s.right - s.left);
+        for (const button of event.target.childNodes) {
+          if (button.className?.indexOf('segment-button-checked') > -1) {
+            const bc = button.offsetLeft + (button.offsetWidth / 2);
+            const diff = bc - (sw / 2);
+            event.target.scrollTo({
+              left: diff,
+              behavior: 'smooth'
+            });
+            break;
+          }
+        }
+      }
+    }, 200);
+  }
 
 }

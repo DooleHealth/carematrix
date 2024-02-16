@@ -30,10 +30,10 @@ export class Constants {
       this.LIST_ENPOINT.push({ //Por defecto index 0
         id:0,
         name: 'Producción',
-        api: 'https://salud.rehabilify.com/api',
-        endpoint: 'https://salud.rehabilify.com'
-        // api: 'https://deneb.doole.io/api',
-        // endpoint: 'https://deneb.doole.io'
+        //api: 'https://salud.rehabilify.com/api',
+        //endpoint: 'https://salud.rehabilify.com'
+        api: 'https://deneb.doole.io/api',
+        endpoint: 'https://deneb.doole.io'
         // api: 'https://salud-pre.rehabilify.com/api',
         // endpoint: 'https://salud-pre.rehabilify.com'
       })

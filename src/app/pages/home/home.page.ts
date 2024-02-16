@@ -240,6 +240,10 @@ export class HomePage implements OnInit {
     this.checkHealthAccess();
     this.checkStorageNotification();
     this.initPushers()
+
+
+    //this.getUserInformation()
+    //this.getNumNotification();
   }
 
 
@@ -248,8 +252,13 @@ export class HomePage implements OnInit {
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
-    this.getUserInformation()
-    this.getNumNotification();
+
+    
+      this.getUserInformation()
+      this.getNumNotification();
+    
+
+    
 
     this.update()
 
@@ -364,40 +373,27 @@ export class HomePage implements OnInit {
 
     try {
       await Promise.all([
-
-
         this.getUserImage(),
         this.getPersonalInformation(),
-        this.getChallenges(),
-
-        this.getPrescribedApps(),
-
+        this.getChallenges(), 
+        //this.getPrescribedApps(),
         this.getFormsList(),
-        //this.getExercisesListOld(),
+        this.getAdvicesList(), 
         this.getExercisesList(),
-
-
         (this.drugs = [], this.getDrugIntake()),
-
-
         this.getDietList(),
-
         this.getGoalImformation(),
-
         this.getGamesList(),
         this.getElementsList(),
         this.getallAgenda(),
-        this.getProcedures()
+        this.getProcedures() 
 
 
         // Add other asynchronous calls as needed
       ]);
 
-      // Analytics
-      // this.setAnalyticsUserProperty();
     } catch (error) {
       console.error('Error fetching user information:', error);
-      // Handle errors if needed
     } finally {
 
       console.log('Entro sense esperar');
@@ -489,7 +485,10 @@ export class HomePage implements OnInit {
 
       this.userDoole = res.user;
       this.first_name = this.userDoole?.first_name?.split(' ')[0];
-      this.greeting = this.translate.instant('home.hello') + ', ' + this.first_name;
+
+      this.greeting = this.translate.instant('home.hello') + ', ' + "<b>"+this.first_name+"</b>";
+
+
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching personal information:', error);
@@ -513,7 +512,14 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.getNewsList(res.advices);
+
+      if (res?.goals?.length > 0) {
+        this.setGoalsSlider(res.goals);
+      }
+
+      if (res.advices.length > 0) this.setAdvicesSlider(res.advices/* , res.news */);
+
+      //this.getNewsList(res.advices);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching advices list:', error);
@@ -537,7 +543,7 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.setAdvicesSlider(advices, res.news);
+      //this.setAdvicesSlider(advices, res.news);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching news list:', error);
@@ -625,6 +631,8 @@ export class HomePage implements OnInit {
     }
   }
 
+  
+
   async getFormsList() {
     try {
 
@@ -689,6 +697,7 @@ export class HomePage implements OnInit {
 
         
         let [exercisesResponse, prescribedAppsResponse] = await Promise.all([exercisesPromise, prescribedAppsApiPromise]) as [any, any[]];;
+        
 
         prescribedAppsResponse.forEach(item => {
           let newExercisePlay = {
@@ -712,10 +721,10 @@ export class HomePage implements OnInit {
                 "iframe_url": item.next_session.iframe_url
               }
           };
-      
           exercisesResponse.exercisePlays.push(newExercisePlay);
-          this.setExercisesSlider(exercisesResponse?.exercisePlays);
       });
+
+      this.setExercisesSlider(exercisesResponse?.exercisePlays);
 
     } catch (error) {
         // Handle errors if needed
@@ -835,16 +844,18 @@ export class HomePage implements OnInit {
     }) */
   }
 
-  setAdvicesSlider(advices, news) {
+  setAdvicesSlider(advices/* , news */) {
     this.advices = advices?.length > 0 ? advices : [];
-    if (news?.length > 0)
+    /* if (news?.length > 0)
       news.forEach(element => {
         element['new'] = true
         this.advices.push(element)
-      });
+      }); */
     this.advices = this.advices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
     this.setSliderOption('advices')
     this.updateAdvicesSlider(advices)
+
+    console.log(this.advices)
   }
 
   updateDietSlider(diets) {
@@ -1953,6 +1964,13 @@ export class HomePage implements OnInit {
       });
 
     await modal.present();
+  }
+
+
+   nChallengesNotCompleted() {
+    
+  
+    return this.challenges.filter(challenge => !challenge.completed).length;
   }
 
 

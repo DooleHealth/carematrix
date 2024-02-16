@@ -1,105 +1,212 @@
 <ion-header>
   <ion-toolbar mode="ios">
+
     <ion-buttons slot="start">
-      <ion-button fill="clear" (click)="back()">
+      <ion-button [disabled]="!(this.segment === 'calendar')"  fill="clear" (click)="back()">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
       <h3 class="textBlueCentered1">{{ viewTitle | titlecase }}</h3>
-        <ion-button fill="clear" (click)="next()">
-          <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button routerLink="list-appointment" [state]="{calendar:eventSource}" routerLinkActive='active-item'>
-          <ion-icon slot="icon-only" name="list-outline" color="primary"></ion-icon>
-        </ion-button>
-        <ion-button (click)="addAgenda()">
-          <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+
+      <ion-button [disabled]="!(this.segment === 'calendar')"  fill="clear" (click)="next()">
+        <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-col size="12">
+      <ion-text class="toolbarTitle">{{ 'tab.agenda' | translate}}</ion-text>
+    </ion-col>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink="list-appointment" [state]="{calendar:eventSource}" routerLinkActive='active-item'>
+        <ion-icon slot="icon-only" src="../../assets/icons/menu.svg" color="primary"></ion-icon>
+      </ion-button>
+      <!-- <ion-button (click)="addAgenda()">
+            <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
+          </ion-button> -->
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
-    (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
-    (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30"
-    [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
-    [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter" [startingDayMonth]="this.dateService.getStartingDayMonth()"
-    [sliderOptions]="calendarSliderOptions">
-  </calendar>
+
+ 
+
+  <ion-row>
+    <ion-col size="0.5"></ion-col>
+    <ion-col size="11" style="display: flex; justify-content: center;">
+      <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+        <ion-segment-button value="calendar">
+          <ion-label>{{ 'agenda.calendar' | translate}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="reminders">
+          <ion-label>{{ 'agenda.reminders' | translate}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col size="0.5"></ion-col>
+  </ion-row>
   
-  <ng-template #template let-view="view" let-row="row" let-col="col">
-    <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">
-      {{view.dates[row*7+col].label}}
-      <div class="indicator-container">
-        <div class="event-indicator" [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"
-          *ngFor="let e of view.dates[row*7+col].events"></div>
-      </div>
-    </div>
-  </ng-template>
-  <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail"
-    let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-    <ion-row class="rowPadding">
-      <ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text>
-    </ion-row>
-    <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
-      <ion-item class="rowPadding2">
-        <ion-list class="list" *ngIf="selectedDate?.events.length >0">
-          <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco"
-            *ngFor="let event of selectedDate?.events; let i = index"
-            [routerLink]="(event?.is_reminder)? 'reminder':'detail'" [state]="{id:event.id, event: event}">
-            <div [ngStyle]="{'background-color': (event?.color)? event?.color: '#F1C40F'  }" class="verticalLine"></div>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="1">
-                  <ion-icon style="align-items: left" [ngStyle]="{'color': (event?.color)? event?.color: '#F1C40F'  }"
-                    name="calendar"></ion-icon>
-                </ion-col>
-                <ion-col size="10">
-                  <ion-label class="event-detail2" text-wrap>{{event.type}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="event.origin == 1 && (event?.staff?.length ==0) || event.is_reminder">
-                <ion-col class="event-detail">{{event.title}}</ion-col>
-              </ion-row>
-              <ion-row *ngFor="let doctor of event.staff;">
-                <ion-col class="event-detail">{{ 'appointment.field_specially' | translate }}:
-                  {{doctor.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn">
-                  {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
-                  this.dateService.getTimeFormat()}}
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{selectedDate.date | date:
-                  this.dateService.getformatSelectedDate()}}</ion-col>
-              </ion-row>
-            </ion-grid>
+
+
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'calendar'">
+      <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+        (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
+        (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30"
+        [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
+        [locale]="this.languageService.getCurrent()" [dateFormatter]="calendar.dateFormatter"
+        [startingDayMonth]="this.dateService.getStartingDayMonth()" [sliderOptions]="calendarSliderOptions">
+      </calendar>
+
+      <ng-template #template let-view="view" let-row="row" let-col="col">
+        <div class="dayWeek" [class.with-event]="view.dates[row*7+col].events.length">
+          {{view.dates[row*7+col].label}}
+          <div class="indicator-container">
+            <div class="event-indicator" [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"
+              *ngFor="let e of view.dates[row*7+col].events"></div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template class="showDetail" #monthviewDefaultEventDetailTemplate let-showEventDetail="showEventDetail"
+        let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+
+        <ion-row class="rowPadding">
+          <ion-text class="event-detail-title">{{ formatSelectedDate(selectedDate.date) | uppercase}}</ion-text>
+        </ion-row>
+
+        <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
+          <ion-item class="rowPadding2">
+            <ion-list class="list" *ngIf="selectedDate?.events.length >0">
+              <ion-item [lines]="(i == selectedDate?.events.length-1)? 'none': 'full'" class="blanco"
+                *ngFor="let event of selectedDate?.events; let i = index"
+                [routerLink]="(event?.is_reminder)? 'reminder':'detail'" [state]="{id:event.id, event: event}">
+
+                <ion-grid>
+                  <ion-row style="display: flex; justify-content: center;">
+                    <ion-col size="3" style="display: flex; justify-content: center;">
+                      <ion-icon style="align-items: left; font-size: 100px;"
+                        src="/assets/icons/bell-appointment.svg"></ion-icon>
+                    </ion-col>
+
+                    <ion-col size="9" style="margin: auto">
+
+                      <ion-text *ngIf="event.allDay" class="txt-date">
+                        {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
+                        this.dateService.getTimeFormat()}}
+                      </ion-text>
+
+                      <ion-text *ngIf="!event.allDay" class="txt-date">
+                        {{ formatSelectedDate2(event?.startTime) | titlecase
+                        }}
+                      </ion-text>
+                      <br>
+
+
+                      <ion-text
+                        class="txt-appointment">
+                        {{event.title}}
+                      </ion-text>
+
+                      <br>
+
+                      <div *ngFor="let doctor of event.staff;">
+                        <ion-text class="txt-appointment">
+                          {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                        </ion-text>
+                        <br>
+                      </div>
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-list>
+
+            <ion-spinner *ngIf="this.isLoading && selectedDate?.events.length==0" class="spinnerCenter"></ion-spinner>
+            <div *ngIf="!this.isLoading && selectedDate?.events.length==0">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="2" class="iconNoDataRow">
+                    <ion-icon name="calendar-clear-outline"></ion-icon>
+                  </ion-col>
+                  <ion-col size="10">
+                    <p class="textMedium">{{'agenda.no_events' | translate}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
           </ion-item>
         </ion-list>
-        <ion-spinner *ngIf="this.isLoading && selectedDate?.events.length==0"  class="spinnerCenter"></ion-spinner>
-        <div *ngIf="!this.isLoading && selectedDate?.events.length==0">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2" class="iconNoDataRow">
-                <ion-icon name="calendar-clear-outline"></ion-icon>
-              </ion-col>
-              <ion-col size="10">
-                <p class="textMedium">{{'agenda.no_events' | translate}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-      </ion-item>
-    </ion-list>
-  </ng-template>
+      </ng-template>
 
+    </div>
+    <div *ngSwitchCase="'reminders'" style="margin-bottom: 20%;">
+      
+        <ng-container *ngIf="this.appointment || this.appointment.length !== 0; else noData" >
+          <ion-card *ngFor="let event of this.appointment" class="custom-card">
+            <ion-card-content class="ion-no-padding">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3" style="display: flex; justify-content: center;">
+                    <ion-icon style="align-items: left; font-size: 100px;"
+                      src="/assets/icons/bell-appointment.svg"></ion-icon>
+                  </ion-col>
+                  
+                  <ion-col size="9">
+                    <ion-text *ngIf="event.allDay" class="txt-date">
+                      {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
+                      this.dateService.getTimeFormat()}}
+                    </ion-text>
+
+                    <br>
+                    <ion-text *ngIf="!event.allDay" class="txt-date">
+                      {{ formatSelectedDate2(event?.startTime) | titlecase
+                      }}
+                    </ion-text>
+                    <br>
+    
+                    <ion-text
+                      class="txt-appointment">
+                      {{event.title}}
+                    </ion-text>
+    
+                    <br>
+    
+                    <div *ngFor="let doctor of event.staff;">
+                      <ion-text class="txt-appointment">
+                        {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                      </ion-text>
+                      <br>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+
+        <ng-template #noData></ng-template>
+
+       
+
+    </div>
+  </div>
+  
+  
+
+  
 </ion-content>
 
 <ion-footer>
+ 
+   <div *ngIf="this.segment === 'reminders'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+      <ion-button (click)="addAgenda()" color="primary" shape="round" class="floating-button ion-margin" >
+        {{'agenda.create_reminder' | translate}}
+        <ion-icon style="padding-left: 2%;"  src="../../assets/icons/notifications_reminder.svg"></ion-icon>
+      </ion-button>
+    </div>
+
+
   <ion-toolbar>
     <app-tabs></app-tabs>
   </ion-toolbar>

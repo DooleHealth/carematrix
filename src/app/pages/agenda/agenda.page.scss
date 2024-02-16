@@ -15,8 +15,11 @@
 :host ::ng-deep {
 
   table,
-  th{
+  tbody {
     background-color: white;
+  };
+  th{
+    background-color: var(--purple-light);
     border: 0px !important;
     border-bottom:  0.5px solid #BDC3C7 !important;//  rgb(143, 143, 143)
     color: #7F8C8D;
@@ -39,36 +42,47 @@
     height: 36px;
     border-radius: 50%;
 
+    text-align: center;
+    font-family: 'Poppins-Regular';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
   }
 
   .monthview-disabled{
-    color: #BDC3C7 !important;
+    color: white !important;
   }
 
   .monthview-container {
-      background-color: #F0F0F0 !important;
+      background-color: white !important;
   }
 
   .monthview-primary-with-event {
-    background-color: #F0F0F0 !important;
+    background-color: white !important;
     color: black !important;;
   }
 
   .monthview-secondary-with-event{
-    background-color: #F0F0F0 !important;
+    background-color: white!important;
     color: #7F8C8D !important;
   }
   .monthview-eventdetail-timecolumn{
-    color: #7f8c8d!important;
+    color: white!important;
   }
   .monthview-selected  {
-    background-color: rgba(255, 255, 255, 0) !important;
+    background-color: white !important;
   }
   .monthview-selected  .dayWeek {
     background-color: var(--ion-color-primary) !important;
     border-radius: 50%;
     max-width: 100px!important;
     color: white !important;
+    box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.13);
+  }
+  .monthview-current {
+    color: var(--default-text);
+    background-color: white !important;
   }
 
 .blanco{
@@ -93,11 +107,17 @@
 
 .event-detail-title {
     color:  var(--ion-color-primary) !important;
-    background-color: rgb(255, 255, 255)!important;
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 21px; 
 }
 .event-detail-container {
   color: var(--ion-color-secondary) !important;
   --ion-background-color: transparent !important;
+  padding-top: 0px;
+  
 .event-detail2{
   font-size: medium;
   font-weight: 600;
@@ -113,13 +133,11 @@
 }
 }
 .rowPadding{
-  background-color: rgb(255, 255, 255)!important;
+  background-color: var(--purple-light) !important;
   padding: 3%;
 }
 .rowPadding2{
   background-color: rgb(255, 255, 255)!important;
-  padding-bottom: 50%;
-
 }
 
 .verticalLine {
@@ -155,7 +173,10 @@ ion-segment {
 }
 /*remove item native padding*/
 ion-list {
+  background-color: white;
   ion-item {
+    --background: white;
+    background-color: white;
   --padding-start: 0px;
   --inner-padding-end: 0px;
   }
@@ -164,4 +185,88 @@ ion-list {
 
 .list{
   width: 100%;
+}
+.txt-date {
+  color: var(--default-text);
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.035px;
+}
+
+.txt-appointment {
+  color: var(--default-text);
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.03px;
+
+  b {
+    font-family: 'Poppins-SemiBold' !important;
+    font-weight: 400 !important;
+    color:var(--ion-color-primary)
+  }
+}
+
+ion-segment {
+  width: 100%;
+  height: 80%;
+  border-radius: 10px;
+  background: var(--default-bkg);
+  ion-label {
+    text-transform: none;
+  }
+}
+
+ion-segment-button {
+  height: fit-content;
+  font-size: 16px;
+  text-transform: none;
+  --color-checked: var(--ion-color-primary) !important;
+  --background-checked: transparent !important;
+  --indicator-color: transparent !important;
+  text-align: center;
+  font-family: 'Poppins-Medium';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; 
+  color: #7F8C8D;
+}
+
+ion-segment-button.segment-button-checked {
+  background: #ECDDFE;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.05);
+  color: var(--default-text) !important;
+    border-top: 0% !important;
+  border-left: 0% !important;
+  border-right: 0% !important;
+  --indicator-color: transparent !important;
+}
+
+ion-segment-button.segment-button-after-checked {
+  color: #7F8C8D !important;
+}
+
+.custom-card {
+  border-radius: 15px;
+  box-shadow: none !important;
+  padding: 0px;
+}
+
+.floating-button {
+  width: 90%;
+  position: absolute;
+  bottom: 100%; 
+  --background: transparent; 
+  text-transform: none;
+  height: 50px !important;
+}
+
+ion-footer {
+  position: relative; 
 }
