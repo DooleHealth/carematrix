@@ -34,13 +34,13 @@
           <ion-label>{{ 'contact.tap_my_centers' | translate}}</ion-label>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="role?.component?.agenda" value="video">
+       <!--  <ion-segment-button *ngIf="role?.component?.agenda" value="video">
           <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
         </ion-segment-button>
 
         <ion-segment-button *ngIf="role?.component?.agenda" value="appointment">
           <ion-label>{{ 'contact.tap_appointment' | translate}}</ion-label>
-        </ion-segment-button>
+        </ion-segment-button> -->
 
 
       </ion-segment>
@@ -467,7 +467,7 @@
   <div *ngIf="this.segment === 'medical-visits'" style="background-color: var(--default-bkg);"
     style="display: flex; justify-content: center;">
     <!-- Floating Button -->
-    <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item' color="primary"
+    <ion-button (click)="requestVisit()" color="primary"
       shape="round" class="floating-button ion-margin">
       {{'contact.new_visit' | translate}}
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/new_visit.svg"></ion-icon>

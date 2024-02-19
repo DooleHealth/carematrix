@@ -514,7 +514,9 @@
     "add_appointment": "Add appointment",
     "edit_event": "Edit Event",
     "add_event": "Add Event",
-    "delete_event": "Delete Event"
+    "delete_event": "Delete Event",
+    "video": "Video Consultation",
+    "presential": "Face to Face Consultation" 
   },
   "doctor": {
     "header_doctor": "Medical Detail",
@@ -742,7 +744,6 @@
     "new_visit": "Request a visit",
     "center": "Medical center",
     "emergency": "Emergency call"
-
   },
   "medical_directory": {
     "header": "Select",
@@ -769,11 +770,27 @@
     "header": "Booking",
     "field_date": "Date",
     "reason_appointment": "Reason for the appointment",
+    "type": "Type of appointment",
     "attachments": "Attachments",
     "text_attachments": "You can attach files or images that help us make a better diagnosis",
     "button_videocall": "Confirm appointment",
     "button_videocall_charge": "Confirm appointment with payment",
-    "error_upload_files": "Error attaching files"
+    "error_upload_files": "Error attaching files",
+
+    "placeholder": "Select...",
+    "profesional": "Select Profesional",
+
+    "types": {
+      "online": "Online",
+      "presential": "Face to Face"
+    },
+
+    "reasons": {
+        "1": "Common disease",
+        "2": "prescription",
+        "3": "Doubt",
+        "4": "Other reasons"
+    }
   },
   "chat": {
     "header": "Chat",

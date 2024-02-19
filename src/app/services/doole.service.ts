@@ -2180,5 +2180,4 @@ export class DooleService {
       })
     );
   }
-
 }

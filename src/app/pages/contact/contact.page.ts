@@ -8,7 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/services/language.service';
 import { DatePipe, formatDate } from '@angular/common';
 import { DooleService } from 'src/app/services/doole.service';
-
+import {  ModalController } from '@ionic/angular';
+import { RequestVisitPage } from '../request-visit/request-visit.page';
 
 export class ShellRecipientModel extends ShellModel {
   id: string;
@@ -66,8 +67,8 @@ export class ContactPage implements OnInit {
   }
 
   segment = 'chat';
-  appointment:any[];
-  departments:any[];
+  appointment: any[];
+  departments: any[];
 
   constructor(
     private dooleService: DooleService,
@@ -110,7 +111,7 @@ export class ContactPage implements OnInit {
     this.isLoading = true;
     switch (this.segment) {
       case 'chat':
-        
+
         const dataSource = this.dooleService.getAPIUserMessages();
         const shellModel: Array<ShellChatModel> = [
           new ShellChatModel(),
@@ -133,16 +134,16 @@ export class ContactPage implements OnInit {
           });
         break;
 
-        case 'medical-visits':
-          this.getallAgenda()
-          break;
+      case 'medical-visits':
+        this.getallAgenda()
+        break;
 
-        case 'my-centers': 
-          this.getAPIallowedDepartments();
-          break;
+      case 'my-centers':
+        this.getAPIallowedDepartments();
+        break;
 
-        default:
-          break;
+      default:
+        break;
 
     }
 
@@ -168,90 +169,94 @@ export class ContactPage implements OnInit {
   }
 
 
-  showMessage(message){
-    if(message?.content)
-     return message.content
-    else if(message?.file)
+  showMessage(message) {
+    if (message?.content)
+      return message.content
+    else if (message?.file)
       return this.translate.instant('chat.attached_file')
     else return ''
-}
-
-formatDate(date){
-
-  return this.dateService.formatDate(date)
-
-}
-
-transformDate(date, format) {
-  return this.datePipe.transform(date, format);
-}
-
-isToday(mDate: Date){
-  let date = new Date()
-  if(date.getDate() === mDate.getDate() && date.getMonth() === mDate.getMonth() && date.getFullYear() === mDate.getFullYear())
-    return true
-  return false
-}
-
-
-async getallAgenda() {
-
-  this.isLoading = true;
-  let date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-
-  try {
-    const params = { from_date: date, to_date: null, with_medical_procedures: 0, filter_by_date: 1, order: 1 };
-    console.log('[HomePage] getallAgenda() init', params, date);
-
-    const res: any = await new Promise((resolve, reject) => {
-      this.dooleService.getAPIallAgenda(params).subscribe(
-        (data: any) => {
-          console.log('[HomePage] getallAgenda()', data);
-          resolve(data);
-        },
-        (error) => {
-          console.log('[HomePage] getallAgenda() ERROR(' + error.code + '): ' + error.message);
-          alert('ERROR(' + error.code + '): ' + error.message);
-          reject(error);
-        }
-      );
-    });
-
-    if (res.agenda) {
-      this.appointment = res.agenda;
-    }
-  } catch (error) {
-    // Handle errors if needed
-    console.error('Error fetching agenda:', error);
-    throw error;
-  } finally {
-    this.isLoading = false;
   }
-}
+
+  formatDate(date) {
+
+    return this.dateService.formatDate(date)
+
+  }
+
+  transformDate(date, format) {
+    return this.datePipe.transform(date, format);
+  }
+
+  isToday(mDate: Date) {
+    let date = new Date()
+    if (date.getDate() === mDate.getDate() && date.getMonth() === mDate.getMonth() && date.getFullYear() === mDate.getFullYear())
+      return true
+    return false
+  }
 
 
-async getAPIallowedDepartments(){ 
-  this.isLoading = true
-  this.dooleService.getAPIallowedDepartments().subscribe(
-    async (res: any) =>{
-      this.departments = []
-      console.log('[ContactPage] getdepartments(', await res);
-      this.departments = res.departments
-      this.isLoading = false
-      console.log(this.departments);
-     },async (err) => { 
-        alert(`Error: ${err.code }, Message: ${err.message}`)
-        console.log('[ContactPage]  getdepartments( ERROR(' + err.code + '): ' + err.message); 
+  async getallAgenda() {
+
+    this.isLoading = true;
+    let date = this.transformDate(Date.now(), 'yyyy-MM-dd')
+
+    try {
+      const params = { from_date: date, to_date: null, with_medical_procedures: 0, filter_by_date: 1, order: 1 };
+      console.log('[HomePage] getallAgenda() init', params, date);
+
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIallAgenda(params).subscribe(
+          (data: any) => {
+            console.log('[HomePage] getallAgenda()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getallAgenda() ERROR(' + error.code + '): ' + error.message);
+            alert('ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      if (res.agenda) {
+        this.appointment = res.agenda;
+      }
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching agenda:', error);
+      throw error;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+
+  async getAPIallowedDepartments() {
+    this.isLoading = true
+    this.dooleService.getAPIallowedDepartments().subscribe(
+      async (res: any) => {
+        this.departments = []
+        console.log('[ContactPage] getdepartments(', await res);
+        this.departments = res.departments
         this.isLoading = false
-        throw err; 
-    });
-}
+        console.log(this.departments);
+      }, async (err) => {
+        alert(`Error: ${err.code}, Message: ${err.message}`)
+        console.log('[ContactPage]  getdepartments( ERROR(' + err.code + '): ' + err.message);
+        this.isLoading = false
+        throw err;
+      });
+  }
 
 
-formatSelectedDate(date) {
-  let language = this.languageService.getCurrent();
-  const datePipe: DatePipe = new DatePipe(language);
-  return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
-}
+  formatSelectedDate(date) {
+    let language = this.languageService.getCurrent();
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+  }
+
+  requestVisit() {
+    this.router.navigate([`request-visit`]);
+  }
 
 }

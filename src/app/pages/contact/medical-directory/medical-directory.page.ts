@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { DooleService } from 'src/app/services/doole.service';
 import { DataStore, ShellModel } from 'src/app/utils/shell/data-store'; 
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+
 export class ShowcaseShellUserModel extends ShellModel {
   id: string;
   name: string;
@@ -29,7 +31,7 @@ isLoading = false
   return (this.data && this.data.isShell) ? true : false;
 }
 
-  constructor(private dooleService: DooleService, private router: Router) { }
+  constructor(private dooleService: DooleService, private router: Router, private modalCtrl: ModalController) { }
   
   ngOnInit() {
     this.isLoading = true
@@ -63,7 +65,10 @@ isLoading = false
       if(this.isChat){
         this.router.navigate(['/contact/chat/conversation'],{state:{staff:staff, chat:staff.message_header_id}})
       }else{
-        this.router.navigate(['bookings'], {state:{staff:staff, isOnline:history.state.isOnline}});
+
+        ///this.router.navigate(['bookings'], {state:{staff:staff, isOnline:history.state.isOnline}});
+        this.modalCtrl.dismiss({staff: staff});
+
       }
     }
 

@@ -1,0 +1,23 @@
+.select-text {
+    font-size: 80px;
+}
+
+ion-select::part(text) {
+    color: var(--Label-Light-Secondary, rgba(60, 60, 67, 0.60));
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: 'Poppins-Regular';
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; 
+    letter-spacing: -0.078px;
+}
+
+ion-select::part(icon) {
+    font-size: 20px;
+    width: 30px;
+}
+
+ion-list {
+    background-color: transparent;
+}

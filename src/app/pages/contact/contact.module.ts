@@ -9,6 +9,9 @@ import { ContactPageRoutingModule } from './contact-routing.module';
 import { ContactPage } from './contact.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 @NgModule({
   imports: [
@@ -17,8 +20,10 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     TranslateModule,
     ComponentsModule,
-    ContactPageRoutingModule
+    ContactPageRoutingModule,
+    NgxPaginationModule
   ],
-  declarations: [ContactPage]
+  declarations: [ContactPage],
+  providers: [Chooser]
 })
 export class ContactPageModule {}

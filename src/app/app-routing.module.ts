@@ -194,7 +194,11 @@ const routes: Routes = [
   {
     path: 'testimonials',
     loadChildren: () => import('./pages/tracking/testimonials/testimonials.module').then(m => m.TestimonialsPageModule)
-  }   
+  },   {
+    path: 'request-visit',
+    loadChildren: () => import('./pages/request-visit/request-visit.module').then( m => m.RequestVisitPageModule)
+  }
+  
     
  
   
