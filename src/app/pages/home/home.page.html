@@ -467,38 +467,43 @@
               </div>
 
               <ion-card-content routerLink="/agenda/reminder/detail" routerLinkActive="active-item"
-                [state]="{ event: slide}">
-                <ion-grid>
-                  <ion-row class="alingLeft zeroMarginPadding">
-                    <ion-col size="2.5" class="alingLeft zeroMarginPadding">
-                      <ion-img src="assets/icons/agenda_new.svg"></ion-img>
-                    </ion-col>
-                    <ion-col size="9.5" class="alingLeft zeroMarginPadding">
-                      <br>
-                      <ion-text class="date-txt" class="ion-margin-start">
-                        {{slide.title | uppercase }}
+              [state]="{ event: slide}">
+              <ion-grid>
+                <ion-row class="alingLeft zeroMarginPadding">
+                  <ion-col size="2.5" class="alingLeft zeroMarginPadding" style="display: flex; align-items: center;">
+                    <ion-img src="assets/icons/agenda_new.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="9.5" class="alingLeft zeroMarginPadding" style="padding-top: 3%;">
+                    <ion-text class="datetxt ion-margin-start">
+
+                      {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
+                      }}
+                    </ion-text>
+                    <br>
+                    <ion-text class="date-txt ion-margin-start">
+                      {{slide.title}}
+                    </ion-text>
+                    <br>
+                    <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
+                      
+                      <ion-text class="staff-txt ion-margin-start">
+                        {{slide?.staff[0]?.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
                       </ion-text>
-                      <br>
+                    </ng-container>
 
-                      <ion-text class="date-txt" class="ion-margin-start">
-                        {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
-                        }}
+                    <ng-template #noProfesional>
+                      <ion-text class="staff-txt ion-margin-start">
+                        <b>{{ 'appointment.no_field_specially' | translate }}</b>
                       </ion-text>
-
-                      <br>
-                      <ion-text class="staff-txt" class="ion-margin-start">
-                        {{slide?.staff[0]?.name}}
-                      </ion-text>
-
-
-                      <ion-row>
-                        <a class="see-more-appointment" style="padding-left: 5%">{{ 'health_path.see_more' | translate
-                          }}!</a>
-                      </ion-row>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
+                    </ng-template>
+                    
+                    <ion-row>
+                      <a class="see-more-appointment ion-margin-start">{{ 'health_path.see_more' | translate}}!</a>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
             </ion-card>
           </swiper-slide>
         </swiper-container>

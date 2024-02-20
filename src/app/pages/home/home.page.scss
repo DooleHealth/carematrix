@@ -403,13 +403,19 @@ ion-progress-bar {
   }
 }
 
-.staff-text {
+.staff-txt {
   font-family: 'Poppins-Regular';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.03px;
+
+  b {
+    font-family: 'Poppins-SemiBold' !important;
+    font-weight: 400 !important;
+    color:var(--ion-color-primary)
+  }
 }
 
 .see-more-appointment {

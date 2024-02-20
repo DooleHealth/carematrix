@@ -72,8 +72,8 @@ export class DateService {
   public getformatSelectedDate(){
     let lang =  this.translate.currentLang;
     let format = 'EEEE, d MMMM'
-    if(lang === 'en' )
-      format = 'MMMM d, EEEE';
+    /* if(lang === 'en' )
+      format = 'MMMM d, EEEE'; */
     return format;
   }
 
@@ -208,8 +208,8 @@ export class DateService {
     let lang =  this.translate.currentLang;
     let format = 'EEEE, d MMMM'
 
-    if(lang === 'en' )
-      format = 'MMMM d, YYYY';
+   /*  if(lang === 'en' )
+      format = 'MMMM d, YYYY'; */
 
     let day = this.transformDate(date, format);
     return day[0].toUpperCase() + day.slice(1);

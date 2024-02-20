@@ -105,7 +105,25 @@ ion-segment {
     font-weight: 400;
     line-height: normal;
     letter-spacing: 0.035px;
+
+   
   }
+
+  .staff-txt {
+    font-family: 'Poppins-Regular';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.03px;
+
+    b {
+      font-family: 'Poppins-SemiBold' !important;
+      font-weight: 400 !important;
+      color:var(--ion-color-primary)
+    }
+  }
+
 
   .see-more-appointment {
     color: var(--seeAllColor);
@@ -154,3 +172,10 @@ ion-segment {
   ion-text {
     margin: 0px
   }
+
+  .sc-ion-input-md-h{
+
+    color: #7F8C8D;
+  }
+
+  

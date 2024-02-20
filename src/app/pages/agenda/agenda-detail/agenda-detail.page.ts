@@ -100,6 +100,7 @@ export class AgendaDetailPage implements OnInit {
           if(staff?.length >0){
             let edit  = staff?.find(item => (item?.id) )
             this.isEditable = edit? true:false
+            console.log(this.isEditable)
           }
         }
 

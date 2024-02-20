@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button (click)="redirect(undefined)" text="" ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'medical_directory.header' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{'medical_directory.header' | translate}}</ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,7 @@
     <ion-text class="txtTitle2">{{'medical_directory.your_professionals' | translate}}</ion-text>
   </ion-row>
   <ion-list >
-    <ion-card class="cardProfile" *ngFor="let s of staff">
+    <ion-card class="cardProfile" *ngFor="let s of staff" style="margin-top: 0px;">
       <ion-card-content style="padding-left: 0%;">
         <ion-item lines="none" (click)="this.redirect(s)" >
           <ion-thumbnail slot="start">

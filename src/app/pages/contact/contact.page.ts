@@ -230,6 +230,10 @@ export class ContactPage implements OnInit {
     }
   }
 
+  checkAppointmentsNoStaff(){
+    return this.appointment.every(appointment => appointment.staff.length === 0);
+  }
+
 
   async getAPIallowedDepartments() {
     this.isLoading = true
@@ -252,7 +256,7 @@ export class ContactPage implements OnInit {
   formatSelectedDate(date) {
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+    return datePipe.transform(date, 'EEEE, d MMMM, HH:mm');
   }
 
   requestVisit() {
