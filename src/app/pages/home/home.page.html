@@ -485,10 +485,12 @@
                     </ion-text>
                     <br>
                     <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
-                      
-                      <ion-text class="staff-txt ion-margin-start">
-                        {{slide?.staff[0]?.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
-                      </ion-text>
+                      <div *ngFor="let doctor of slide.staff;">
+                        <ion-text class="staff-txt ion-margin-start">
+                          {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                        </ion-text>
+                        <br>
+                      </div>
                     </ng-container>
 
                     <ng-template #noProfesional>

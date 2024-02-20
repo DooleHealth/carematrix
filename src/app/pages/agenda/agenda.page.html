@@ -2,14 +2,12 @@
   <ion-toolbar mode="ios">
 
     <ion-buttons slot="start">
-      <!-- [disabled]="!(this.segment === 'calendar')" -->
       <ion-button   fill="clear" (click)="back()">
         <ion-icon name="chevron-back-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
       <h3 class="textBlueCentered1">{{ viewTitle | titlecase }}</h3>
 
-<!--       [disabled]="!(this.segment === 'calendar')"
- -->      <ion-button   fill="clear" (click)="next()">
+    <ion-button  fill="clear" (click)="next()">
         <ion-icon name="chevron-forward-outline" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -18,13 +16,11 @@
       <ion-text class="toolbarTitle">{{ 'tab.agenda' | translate}}</ion-text>
     </ion-col>
 
-    <ion-buttons slot="end">
-      <ion-button routerLink="list-appointment" [state]="{calendar:eventSource}" routerLinkActive='active-item'>
+    <ion-buttons slot="end" routerLink="/profile">
+<!--       routerLink="list-appointment" [state]="{calendar:eventSource}" routerLinkActive='active-item'
+ -->      <ion-button >
         <ion-icon slot="icon-only" src="../../assets/icons/menu.svg" color="primary"></ion-icon>
       </ion-button>
-      <!-- <ion-button (click)="addAgenda()">
-            <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
-          </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -113,7 +109,8 @@
                       </ion-text>
                       <br>
 
-
+                      <ion-text class="txt-appointment" text-wrap><b>{{event.type}}</b></ion-text>
+                      <br>
                       <ion-text
                         class="txt-appointment">
                         {{event.title}}
@@ -154,141 +151,82 @@
     </div>
     <div *ngSwitchCase="'reminders'" style="margin-bottom: 20%;">
       
-      <!-- (check) -->
         <ng-container *ngIf="this.dayEvents && this.dayEvents.length > 0; else noData" >
 
           <div *ngFor="let events of this.dayEvents">
             <ion-row class="rowPadding"><ion-text class="event-detail-title">{{ formatSelectedDateReminder(events.date) }}</ion-text></ion-row>
             
-            <ion-card *ngFor="let event of events.events; let i = index" class="custom-card">
-              <ion-card-content class="ion-no-padding">
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="3" style="display: flex; justify-content: center;">
-                      <ng-container *ngIf="event?.is_reminder; else otherEventType">
-                        <ion-icon style="align-items: left; font-size: 100px;"
-                        src="/assets/icons/bell-appointment.svg"></ion-icon>
-                      </ng-container>
-
-                      <ng-template #otherEventType>
-                        <ion-icon style="align-items: left; font-size: 100px;"
-                        src="assets/icons/agenda_new.svg"></ion-icon>
-                      </ng-template>
-
-                    </ion-col>
-                    
-                    <ion-col size="9">
-                      <ion-text *ngIf="event.allDay" class="txt-date">
-                        {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
-                        this.dateService.getTimeFormat()}}
-                      </ion-text>
+            <div *ngFor="let event of events.events; let i = index">
+              <ion-card  [routerLink]="(event?.is_reminder)? 'reminder':'detail'" [state]="{event: event, id: event.id}" class="custom-card">
+                <ion-card-content class="ion-no-padding">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="3" style="display: flex; justify-content: center;">
+                        <ng-container *ngIf="event?.is_reminder; else otherEventType">
+                          <ion-icon style="align-items: left; font-size: 100px;"
+                          src="/assets/icons/bell-appointment.svg"></ion-icon>
+                        </ng-container>
   
-                      <br>
-                      <ion-text *ngIf="!event.allDay" class="txt-date">
-                        {{ formatSelectedDate2(event?.startTime) | titlecase
-                        }}
-                      </ion-text>
-                      <br>
-      
-
-                      <ion-text class="txt-appointment" text-wrap><b>{{event.type}}</b></ion-text>
-
-                      <br>
-                      <ion-text
-                        class="txt-appointment">
-                        {{event.title}}
-                      </ion-text>
-      
-                      <br>
-      
-                      <div *ngFor="let doctor of event.staff;">
-                        <ion-text class="txt-appointment">
-                          {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                        <ng-template #otherEventType>
+                          <ion-icon style="align-items: left; font-size: 100px;"
+                          src="assets/icons/agenda_new.svg"></ion-icon>
+                        </ng-template>
+  
+                      </ion-col>
+                      
+                      <ion-col size="9">
+                        <ion-text *ngIf="event.allDay" class="txt-date">
+                          {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
+                          this.dateService.getTimeFormat()}}
+                        </ion-text>
+    
+                        <br>
+                        <ion-text *ngIf="!event.allDay" class="txt-date">
+                          {{ formatSelectedDate2(event?.startTime) | titlecase
+                          }}
                         </ion-text>
                         <br>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
-            </ion-card>
-
-           <!--  <ion-list *ngFor="let e of events.events; let i = index"lines="full" class="blanco" >
+        
+  
+                        <ion-text class="txt-appointment" text-wrap><b>{{event.type}}</b></ion-text>
+  
+                        <br>
+                        <ion-text
+                          class="txt-appointment">
+                          {{event.title}}
+                        </ion-text>
+        
+                        <br>
+                        <ng-container *ngIf="event.staff !== undefined">
+                          <ng-container *ngIf="event?.staff || event?.staff.length > 0; else noProfesional">
+                            <div *ngFor="let doctor of event.staff;">
+                              <ion-text class="txt-appointment">
+                                {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                              </ion-text>
+                              <br>
+                            </div>
+                          </ng-container>
       
-              
-              <ion-item [routerLink]="(e?.is_reminder)? '../reminder':'detail'" [state]="{event: e, id: e.id}" [lines]="(i == events?.events.length-1)? 'none': 'full'" class="blanco" >
-                <div [ngStyle]="{'background-color': (e?.color)? e?.color: '#F1C40F'  }"  class="verticalLine"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="1">
-                      <ion-icon style="align-items: left" [ngStyle]="{'color': (e?.color)? e?.color: '#F1C40F'  }" name="calendar"></ion-icon>
-                    </ion-col>
-                    <ion-col size="10">
-                      <ion-text class="event-detail2" text-wrap>{{e.type}}</ion-text>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row *ngIf="e.origin == 1 && (e?.staff?.length ==0) || e.is_reminder">{{e.title}}</ion-row>
-                  <ion-row *ngFor="let doctor of e.staff; let i = index">
-                    <ion-col class="event-detail">{{ 'appointment.field_specially' | translate }}: {{doctor.name}}</ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col style="color: #7f8c8d;" >{{e?.startTime | date:this.dateService.getTimeFormat() }} {{ this.dateService.getTimeFormat() == 'HH:mm' ? ' h': ''}} - {{e?.endTime |date:this.dateService.getTimeFormat() }} {{ this.dateService.getTimeFormat() == 'HH:mm' ? ' h': ''}}</ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-item>
-            </ion-list> -->
+                          <ng-template #noProfesional>
+                            <ion-text class="txt-appointment">
+                              <b>{{ 'appointment.no_field_specially' | translate }}</b>
+                            </ion-text>
+                          </ng-template>
+                        </ng-container>
+                       
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-card-content>
+              </ion-card>
+            </div>
           </div>
-
-          <!-- <ion-card *ngFor="let event of this.appointment" class="custom-card">
-            <ion-card-content class="ion-no-padding">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="3" style="display: flex; justify-content: center;">
-                    <ion-icon style="align-items: left; font-size: 100px;"
-                      src="/assets/icons/bell-appointment.svg"></ion-icon>
-                  </ion-col>
-                  
-                  <ion-col size="9">
-                    <ion-text *ngIf="event.allDay" class="txt-date">
-                      {{event.startTime|date: this.dateService.getTimeFormat()}} - {{event?.endTime|date:
-                      this.dateService.getTimeFormat()}}
-                    </ion-text>
-
-                    <br>
-                    <ion-text *ngIf="!event.allDay" class="txt-date">
-                      {{ formatSelectedDate2(event?.startTime) | titlecase
-                      }}
-                    </ion-text>
-                    <br>
-    
-                    <ion-text
-                      class="txt-appointment">
-                      {{event.title}}
-                    </ion-text>
-    
-                    <br>
-    
-                    <div *ngFor="let doctor of event.staff;">
-                      <ion-text class="txt-appointment">
-                        {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
-                      </ion-text>
-                      <br>
-                    </div>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card-content>
-          </ion-card> -->
         </ng-container>
-
         <ng-template #noData>
           <app-no-data></app-no-data>
         </ng-template>
     </div>
   </div>
-  
-  
-
   
 </ion-content>
 
@@ -300,8 +238,6 @@
         <ion-icon style="padding-left: 2%;"  src="../../assets/icons/notifications_reminder.svg"></ion-icon>
       </ion-button>
     </div>
-
-
   <ion-toolbar>
     <app-tabs></app-tabs>
   </ion-toolbar>

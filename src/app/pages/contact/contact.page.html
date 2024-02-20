@@ -131,9 +131,22 @@
                         {{slide.title}}
                       </ion-text>
                       <br>
-                      <ion-text class="staff-txt ion-margin-start">
-                        {{slide?.staff[0]?.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
-                      </ion-text>
+
+                      <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
+                        <div *ngFor="let doctor of slide.staff;">
+                          <ion-text class="staff-txt ion-margin-start">
+                            {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                          </ion-text>
+                          <br>
+                        </div>
+                      </ng-container>
+  
+                      <ng-template #noProfesional>
+                        <ion-text class="staff-txt ion-margin-start">
+                          <b>{{ 'appointment.no_field_specially' | translate }}</b>
+                        </ion-text>
+                      </ng-template>
+
                       <ion-row>
                         <a class="see-more-appointment">{{ 'health_path.see_more' | translate}}!</a>
                       </ion-row>
