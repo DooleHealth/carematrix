@@ -19,8 +19,9 @@ enum StatusMedicationCreated {
 export class DrugsDetailPage implements OnInit {
   days = [{day1:1, disabled:false}, {day2:1, disabled:false}, {day3:1, disabled:false}, {day4:1, disabled:false}, {day5:1, disabled:false}, {day6:1, disabled:false}, {day7:1,disabled:false}]
   @ViewChild('datetimePopover') popover: IonPopover;
-  @Input()drug : any
-  @Input()id: any;
+  //@Input()drug : any
+ // @Input()id: any;
+ drug;
   drugID = history.state?.id; // 26;//   //23 //
   form: FormGroup;
   times = []
@@ -57,8 +58,8 @@ export class DrugsDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.drugID? this.drugID:this.id
-    console.log('[DrugsDetailPage] ngOnInit() id: ',this.id);
+    //this.id = this.drugID? this.drugID:this.id
+   // console.log('[DrugsDetailPage] ngOnInit() id: ',this.id);
     this.form = this.fb.group({
       from_date: [this.date, [Validators.required]],
       to_date: [this.date, [Validators.required]],
@@ -76,23 +77,27 @@ export class DrugsDetailPage implements OnInit {
       day6: [1],
       day7: [1],
     });
-    if(this.drug)
-    this.form.get('drug').setValue(this.drug.id)
-    if(this.id){
+   // if(this.drug)
+  //  this.form.get('drug').setValue(this.drug.id)
+  /*  if(this.id){
       console.log('[DrugsDetailPage] ngOnInit()',this.drug);
       this.showDetailsDrug()
       this.getMedicationPlan()
       this.isEditDrug = true
-    }
+    }*/
     if(!this.isEditDrug) this.isInit = false
   }
 
-  showDetailsDrug(){
+  /*showDetailsDrug(){
     this.form.get('from_date').setValue(this.drug?.from_date)
     this.form.get('to_date').setValue(this.drug?.to_date)
     this.form.get('dose').setValue(this.drug?.dose)
     if(this.drug?.alias) this.form.get('alias').setValue(this.drug?.alias)
 
+  }*/
+
+  drugSelecting(drug){
+    this.drug= drug;
   }
 
   isSubmittedFields(isSubmitted){
@@ -109,7 +114,7 @@ export class DrugsDetailPage implements OnInit {
 
   submit(){
     //console.log('[DrugsDetailPage] submit()',this.form.value);
-
+debugger
     if(this.isInstant){
       this.isSubmittedDosis = true;
       let error = this.form.get('dose').errors
@@ -143,7 +148,7 @@ export class DrugsDetailPage implements OnInit {
         to_date: this.transformDate(date),
         alias: '',
         dose: this.form.get('dose').value,
-        drug: this.drug.id,
+        drug:this.drug.id,
         time: [this.transformHour(date)],
         addedByUser: '1',
         frequency: 'instant',
@@ -168,6 +173,7 @@ export class DrugsDetailPage implements OnInit {
       let f = this.form.get('frequency').value
       if(f !== 'daily')
       this.form.get('frequency').setValue('daily');
+      this.form.get('drug').setValue(this.drug.id)
 
       return this.form.value
     }
@@ -205,7 +211,7 @@ export class DrugsDetailPage implements OnInit {
     const form = this.setFields()
     console.log('[DrugsDetailPage] updateDrug()', form);
 
-    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id , form).subscribe(async json=>{
+    this.dooleService.putAPImedicationPlan(form.medication_plan_id , form).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
       if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'update'});
@@ -315,7 +321,7 @@ export class DrugsDetailPage implements OnInit {
 
   async deleteDrug(){
     this.isLoading = true
-    this.dooleService.deleteAPImedicationPlan(this.drug.medication_plan_id).subscribe(
+    this.dooleService.deleteAPImedicationPlan(this.form).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] deleteDrug()', await res);
         if(res.success){
@@ -338,7 +344,8 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan(){
-    const medication_plan_id =  this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
+    debugger
+    const medication_plan_id = "" //this.form?.medication_plan_id? this.drug.medication_plan_id: this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
       async (res: any) =>{

@@ -14,7 +14,8 @@ export class ComponentsApp {
   chat: boolean;
   doc_diagnostic: boolean;
   contacta: boolean;
-  constructor(goal: boolean,advices: boolean,news: boolean, agenda: boolean, reminder: boolean, diet: boolean, drug: boolean, game: boolean, element: boolean, form: boolean, chat: boolean,doc_diagnostic: boolean, contacta: boolean){
+  medication: boolean;
+  constructor(goal: boolean,advices: boolean,news: boolean, agenda: boolean, reminder: boolean, diet: boolean, drug: boolean, game: boolean, element: boolean, form: boolean, chat: boolean,doc_diagnostic: boolean, contacta: boolean, medication: boolean){
     this.goal = goal
     this.advices = advices
     this.news = news
@@ -28,6 +29,7 @@ export class ComponentsApp {
     this.chat = chat
     this.doc_diagnostic = doc_diagnostic
     this.contacta = contacta
+    this.medication = medication
   }
 }
 
@@ -45,11 +47,11 @@ export class RolesService {
   }
 
    activatedAllComponents(enable: boolean){
-      this.component = new ComponentsApp(enable, enable,enable,enable,enable,enable,enable,enable,enable,enable,enable, enable,enable )
+      this.component = new ComponentsApp(enable, enable,enable,enable,enable,enable,enable,enable,enable,enable,enable, enable,enable, enable )
   }
 
-   customAllComponents(goal: boolean,advices: boolean,news: boolean, agenda: boolean, reminder: boolean, diet: boolean, drug: boolean, game: boolean, element: boolean, form: boolean, chat: boolean, doc_diagnostic: boolean, contacta: boolean){
-    this.component = new ComponentsApp(goal, advices, news, agenda, reminder, diet, drug, game, element, form, chat, doc_diagnostic, contacta )
+   customAllComponents(goal: boolean,advices: boolean,news: boolean, agenda: boolean, reminder: boolean, diet: boolean, drug: boolean, game: boolean, element: boolean, form: boolean, chat: boolean, doc_diagnostic: boolean, contacta: boolean, medication: boolean){
+    this.component = new ComponentsApp(goal, advices, news, agenda, reminder, diet, drug, game, element, form, chat, doc_diagnostic, contacta, medication )
   }
 
   setProfessional(professional){

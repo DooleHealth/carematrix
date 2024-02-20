@@ -32,6 +32,7 @@ export enum NotificationsType {
     SHARED_CARE_PLAN = 'shared_care_plan',
     AddButtonMedicalTest= 'add_document',
     TESTIMONIALS= 'testimonials',
+    AddButtonTodayDrug = 'drugs-detail',
 }
 
 export enum NotificationsTypeBO {

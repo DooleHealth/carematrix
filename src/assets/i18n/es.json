@@ -603,7 +603,7 @@
         "add_medication":"Añadir medicamento",
         "edit_medication":"Editar medicamento",
         "send_medication":"Solicitar envío de medicación",
-        "save_medication":"Guardar medicamento",
+        "save_medication":"Guardar",
         "delete_medication":"Eliminar medicamento",
         "message_add_medication":"Se ha añadido un nuevo medicamento",
         "message_edit_medication":"Se ha editado el medicamento con éxito",
@@ -995,7 +995,8 @@
         "text" : "El seguimiento es crucial para evaluar su estado de salud, detectar cambios tempranos y ajustar el tratamiento."
       },
       "addButton":{
-        "MedicalTest":"Add a medical test"
+        "MedicalTest":"Añadir una prueba médica",
+        "Medication":"Añadir un nuevo medicamento"
       },
       "readingTime": "minutos de lectura",
       "preparationTime": "minutos de preparación",

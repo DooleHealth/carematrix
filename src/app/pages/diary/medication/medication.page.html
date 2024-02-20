@@ -1,3 +1,7 @@
+
+
+
+
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
@@ -13,55 +17,107 @@
   
 </ion-header>
 
-<ion-content view-cached="”false”">
-  <ion-card class="cardProfile" (click)="goTo()">
-    <ion-item lines="none" style="padding-right: 0%;">
-      <ion-grid>
-        <ion-row>
-          <ion-icon
-            style="height: 20px; width: 20px"
-            src="assets/icons/shared-care-plan/scp-medication.svg"
-          ></ion-icon>&nbsp;
-          <ion-text class="txtTitleGoalsDarker textAdvicesSlider"
-            >{{ 'medications.title' | translate}}</ion-text
-          >
+<ion-content>
+  <!-- SegmentBar -->
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+    <ion-segment-button *ngIf="role?.component?.diet" value="today">
+      <ion-label>{{'diary.field_today' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button *ngIf="role?.component?.drug" value="medications">
+      <ion-label>{{'medications.title' | translate}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <!-- segment -->
+  
+<div class="verticalLine2" [ngSwitch]="segment">
+<div *ngSwitchCase="'today'">
+  <div>
+    <ion-list *ngIf="listDrugIntakes.length > 0; else noData">
+      <ion-grid *ngFor="let content of listDrugIntakes" class="ion-no-padding" >  
+        <ion-row *ngIf="getDateInPast(content?.period,  content?.date_intake)">
+          <ion-col size="0.8">
+            <ion-icon class="center"  *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+            <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp;
+          </ion-col>
+          <ion-col size="11.2"  class="text-column">
+            <ion-text class="center" [style.color]="isDateInPast ? '#575757' : 'var(--malva)'">
+              <h5>{{ selectMealTime(content?.date_intake) }}</h5>
+            </ion-text>
+          </ion-col>
         </ion-row>
         <ion-row>
-          <p class="txtSubtitle">
-            {{ 'medications.head_card_text' | translate}}
-          </p>
+          <ion-col size="0.8" style="align-items: center;">  
+          <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/lineStroke.svg'></ion-icon>
+          <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
+          
+        </ion-col>
+          <ion-col size="11.2">    
+            <app-content-date [content]="content" (takeMedication)="changeTake($event)"></app-content-date>
+          </ion-col>
+          
         </ion-row>
       </ion-grid>
-      <ion-buttons slot="end">
-        <ion-icon name="chevron-forward-outline"></ion-icon>
-      </ion-buttons>
-    </ion-item>
-  </ion-card>
 
-  <div>
-    <ion-list *ngIf="items.length > 0; else noData">
-      <app-scp-med-for-mon
-        *ngFor="let content of items"
-        [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"
-      ></app-scp-med-for-mon>
     </ion-list>
   </div>
+
+
+
   <ng-template #noData>
-    <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-icon class="iconNoData" name="heart"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ng-template>
+
+  <app-button-add  [content]="this.addButton[1]"  (dataUpdated)="addDrugPlan()"></app-button-add>
+</div>
+ 
+<div *ngSwitchCase="'medications'">
+  
+  
+  
+    <div>
+      <ion-list *ngIf="items.length > 0; else noData">
+        
+        <app-scp-med-for-mon
+          *ngFor="let content of items"
+          [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"
+        ></app-scp-med-for-mon>
+      </ion-list>
+    </div>
+    <ng-template #noData>
+      <div *ngIf="!this.isLoading">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-icon class="iconNoData" name="newspaper"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ng-template>
+  
+</div>
+
+
+</div>
+
 </ion-content>
 <ion-footer>
   <ion-toolbar>

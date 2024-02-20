@@ -19,7 +19,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     TranslateModule,
     ComponentsModule,
    /*  NgxPaginationModule, */
-    DrugsDetailPageRoutingModule
+    DrugsDetailPageRoutingModule,
   ],
   providers:[DatePipe],
   declarations: [DrugsDetailPage],

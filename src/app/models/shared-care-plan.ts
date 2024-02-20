@@ -67,6 +67,7 @@ export enum ContentTypeIcons {
 
     //AddBUtton
     buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',
+    buttomTodayDrug = 'assets/images/shared-care-plan/drug.svg'
 }
 
 export enum ContentTypeTranslatedName {
@@ -88,6 +89,8 @@ export enum ContentTypeTranslatedName {
 
     //AddButtons
     addButtonMeditaltest = 'shared_care_plan.addButton.MedicalTest',
+    addButtonTodayDrug= 'shared_care_plan.addButton.Medication',
+
 }
 
 declare const enum ContentTypeDescription {
@@ -298,7 +301,7 @@ export interface AddButtonComponent {
 
 export const AddButtonList: AddButtonComponent [] = [
     {icon: ContentTypeIcons.buttonMeditalTest, title: ContentTypeTranslatedName.addButtonMeditaltest,  type: NotificationsType.AddButtonMedicalTest, id:""},
-    //{icon: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:""},
+    {icon: ContentTypeIcons.buttomTodayDrug, title: ContentTypeTranslatedName.addButtonTodayDrug,  type: NotificationsType.AddButtonTodayDrug, id:""},
    // {icon: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
    
 ]
