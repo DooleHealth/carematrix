@@ -57,6 +57,7 @@ import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.com
 import { ViewMoreInformationComponent } from './shared-care-plan/view-more-information/view-more-information.component';
 
 import { NoDataComponent } from './no-data/no-data.component';
+import { AddDrugFilterComponent } from './shared-care-plan/add-drug-filter/add-drug-filter.component';
 
 
 @NgModule({
@@ -118,7 +119,8 @@ import { NoDataComponent } from './no-data/no-data.component';
     PendingComponentComponent,
     ButtonAddComponent,
     ViewMoreInformationComponent,
-    NoDataComponent
+    NoDataComponent,
+    AddDrugFilterComponent
   ],
   exports: [
     ShellModule,
@@ -166,7 +168,8 @@ import { NoDataComponent } from './no-data/no-data.component';
     PendingComponentComponent,
     ButtonAddComponent,
     ViewMoreInformationComponent,
-    NoDataComponent
+    NoDataComponent,
+    AddDrugFilterComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

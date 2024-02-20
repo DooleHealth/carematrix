@@ -10,6 +10,8 @@ import { DateService } from 'src/app/services/date.service';
 export class ContentDateComponent implements OnInit {
   @Input() content: any
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
+  @Output() takeMedication: EventEmitter<any> = new EventEmitter<any>();
+
   date: string;
   constructor(public dateService: DateService) {
 
@@ -28,4 +30,8 @@ export class ContentDateComponent implements OnInit {
     this.date = this.dateService.getFormatTime(this.content?.date_intake)
   }
 
+  changeTake(id,taked){
+this.takeMedication.emit({id: id, taked: taked})
+
+  }
 }

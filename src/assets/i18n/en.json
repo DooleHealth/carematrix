@@ -621,7 +621,7 @@
     "add_medication": "Add medication",
     "edit_medication": "Edit medication",
     "send_medication": "Request medication shipment",
-    "save_medication": "Save medication",
+    "save_medication": "Save",
     "delete_medication": "Remove medication",
     "message_add_medication": "A new drug has been added",
     "message_edit_medication": "The drug has been successfully edited",
@@ -1037,7 +1037,8 @@
       "text" : "Monitoring is crucial to assess your health status, detect early changes and adjust treatment."
     },
     "addButton":{
-      "MedicalTest":"Add a medical test"
+      "MedicalTest":"Add a medical test",
+      "Medication":"Add a new drug"
     },
     "readingTime": "minutes reading",
     "preparationTime": "minutes of preparation",

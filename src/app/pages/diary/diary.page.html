@@ -34,7 +34,7 @@
           <ion-grid *ngFor="let content of listDietsToday" class="ion-no-padding" >  
             <ion-row *ngIf="getLastName(content?.item_time_string, content?.date_intake)">
               <ion-col size="0.8" >    
-                <ion-icon class="center" *ngIf="isDateInPast"
+                <ion-icon class="center" *ngIf="!isDateInPast"
                 src='/assets/icons/shared-care-plan/ellipse.svg'
                 ></ion-icon>&nbsp; 
                 <ion-icon class="center" *ngIf="!isDateInPast"

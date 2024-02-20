@@ -1,16 +1,97 @@
-.verticalLineOrange {
+.verticalLine {
   width: 1%;
   height: 85%;
   margin-left: 2%;
-  background: #f39c12;
-}
-.verticalLineBlue {
-  width: 1%;
-  height: 85%;
-  margin-left: 2%;
-  background: var(--ion-color-primary);
 }
 
-.cardProfile {
-  padding: 9px !important;
+/*  .verticalLine2 {
+   border-left: 2px solid  #5250da,;
+   margin-left: 5%;
+  }*/
+ion-img {
+  height: 30px;
+  color: #2ecc71;
 }
+
+ion-segment-button {
+  font-size: smaller;
+}
+
+ion-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 5em;
+  width: em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.backBtn {
+  position: absolute;
+  left: 20vw;
+  top: 40vh;
+  width: 15vw;
+  height: 15vw;
+  border-radius: 50%;
+  border: none;
+  background: red;
+}
+
+.nextBtn {
+  position: absolute;
+  right: 20vw;
+  top: 40vh;
+  width: 15vw;
+  height: 15vw;
+  border-radius: 50%;
+  border: none;
+  background: green;
+}
+#custom-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #ffffff;
+}
+#custom-overlay img {
+  display: block;
+  margin: 10em auto 1em;
+  width: 60%;
+  height: auto;
+}
+.iconGif {
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 40;
+  left: 40;
+  position: absolute;
+}
+
+.send-drugs {
+
+  margin-inline: 16px;
+}
+
+.center{
+  height: 100%; 
+  width: 100%; 
+  align-items: center; 
+  justify-content: center;
+}
+
+
+hr {
+  height: 80%; //del contenedor en el que se encuentre por ejemplo
+}
+
+
