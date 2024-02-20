@@ -249,6 +249,8 @@ export interface SharedCarePlanLifeStyle {
     state?: string;
     accepted?: boolean;
     traduction?:string;
+    frequency?: string;
+    isAnswers?: string;
 
 }
 

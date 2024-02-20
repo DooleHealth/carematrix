@@ -1,0 +1,30 @@
+.card{
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.textsize{
+    font-size: 14px;
+}
+
+.txtTitleGoals {
+    font-size: 16px;
+    // text-align: left;
+    // font-weight: bolder;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+div[scrollx=true],div[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+}
+
+div[scrollx=true] {
+   overflow-x: auto;
+}
+
+div[scrolly=true] {
+   overflow-y: auto;
+}

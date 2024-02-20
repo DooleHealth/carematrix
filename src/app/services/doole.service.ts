@@ -1159,6 +1159,21 @@ export class DooleService {
     );
   }
 
+  getAPIFormsByDate(params: any): Observable<any> {
+    let path = `rehabilify/sharedcareplan/formsToday`;
+    let httpParams = new HttpParams();
+    httpParams = (params?.date) ? httpParams.append('date', params.date) : httpParams
+    httpParams = (params?.grouped_by_times) ? httpParams.append('grouped_by_times', params.grouped_by_times) : httpParams
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        //console.log(`[DooleService] getAPIdietsByDate(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+ 
+
   getAPIdetailDiets(id: any): Observable<any> {
     let path = `diet/${id}`;
     const endpoint = this.api.getEndpoint(path);
@@ -2176,6 +2191,17 @@ export class DooleService {
     return this.http.get(endpoint).pipe(
       map((res: any) => {
   
+        return res;
+      })
+    );
+  }
+
+  getAPIAnswers(id): Observable<any> {
+    let path = `sharedcareplan/form/${id}/answers/detail?html=true`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIAnswers(${path}) res: `, res);
         return res;
       })
     );

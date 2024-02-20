@@ -1,0 +1,11 @@
+.chart {
+    display: flex;
+    flex: 1 1 100%;
+}
+
+:host ::ng-deep {
+  .highcharts-title{
+    font-size: small !important;
+  }
+}
+

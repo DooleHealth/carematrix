@@ -60,6 +60,10 @@ const routes: Routes = [
     path: 'testimonials-details',
     loadChildren: () => import('./testimonials-details/testimonials-details.module').then( m => m.TestimonialsDetailsPageModule)
   },
+  {
+    path: 'answers',
+    loadChildren: () => import('./answers/answers.module').then( m => m.AnswersPageModule)
+  },
 ];
 
 @NgModule({
