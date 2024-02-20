@@ -360,6 +360,14 @@ export class DateService {
     }
   }
 
+  public getDateMonDay(date){
+    let format = 'MMM. d';
+    if(date){
+      date = new Date(date)
+      return this.transformDate(date,  format)
+    }
+  }
+
 
   ddMMyyyy(date){
     let lang =  this.translate.currentLang;

@@ -238,4 +238,11 @@ export class ScpMedForMonComponent implements OnInit {
 
   }
 
+
+  SeeAnswers(event: any, content: any){
+    console.log("llego al tezt")
+    event.stopPropagation();
+    this.router.navigate(['/tracking/answers'], {state:{id: content.id, title: content.title}});
+      }
+     
 }

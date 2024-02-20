@@ -645,7 +645,7 @@
     "medication_plan": "Medication Plan",
     "button_details": "See details",
     "from": "From",
-    "to": "To",
+    "to": "to",
     "dose": "Dose : ",
     "accepted_rejected": "Do you want to approve or reject this medication plan?",
     "accepted_rejectedExercises": "Do you want to approve or reject this exercise?",
@@ -940,7 +940,8 @@
     "button": {
       "accept": "Accept",
       "cancel": "Cancel",
-      "send": "Send"
+      "send": "Send",
+      "see_answer": "See Answers"
     },
     "file": {
       "select": "Select",

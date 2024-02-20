@@ -39,6 +39,17 @@
             {{ content?.description }}
           </p>
         </ion-row>
+        <ion-row *ngIf="content.type === 'form'" class="txtSubtitle3">
+          <ion-col><p style="color: var(--malva)">
+            {{ content?.frequency }}
+          </p></ion-col>
+          <ion-col>
+                <ion-text *ngIf="content?.isAnswers === true" style="color: #1100D4;"  class="ion-float-right custom-button" 
+                    (click)="SeeAnswers($event, content)">{{ 'form.button.see_answer' | translate }}
+                  </ion-text>
+          </ion-col>
+          
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -165,6 +176,7 @@
                 {{ content?.description }}
               </p>
             </ion-row>
+            
           </ion-col>
         </ion-row>
       </ion-grid>

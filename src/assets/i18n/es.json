@@ -900,7 +900,8 @@
       "button":{
         "accept": "Aceptar",
         "cancel":"Cancelar",
-        "send": "Enviar"
+        "send": "Enviar",
+        "see_answer": "Ver Respuestas"
       },
       "file":{
         "select": "Seleccionar",

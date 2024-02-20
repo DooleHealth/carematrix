@@ -91,6 +91,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             return getAPI_Recipes();
                             case url.includes('user/testimonials') && method === 'GET':
                             return getAPI_Testimonials();
+                            case url.includes('sharedcareplan/formsToday') && method === 'GET':
+                            return getAPI_FormsToday()
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);
@@ -1784,6 +1786,145 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     }
                 ]
             })
+        }
+
+        function getAPI_FormsToday(){
+            return ok({
+                success: true,
+                status: 200,
+                forms: [
+                    {
+                id: 16,
+                form_id: 4,
+                title: "QUESTIONÁRIO SF-36",
+                description: null,
+                from_date: "2024-02-20 15:59:00",
+                to_date: null,
+                minutes_from: null,
+                minutes_to: null,
+                forgotten: 0,
+                active: 1,
+                frequency: "daily",
+                frequency_modality_asign: null,
+                computed_until: null,
+                computed_until_to_future: null,
+                observations: null,
+                content_type: "App\\FormProgrammation",
+                alarms: [],
+                formProgrammationTimes: [
+                    {
+                        id: 16,
+                        form_programmation_id: 16,
+                        time: "16:01:00",
+                        created_at: "2024-01-18T15:00:06.000000Z",
+                        updated_at: "2024-01-18T15:00:06.000000Z",
+                        deleted_at: null
+                    }
+                ],
+                formAnswers: [],
+                media: {
+                    id: 5,
+                    mediable_type: "App\\Form",
+                    mediable_id: 4,
+                    collection_name: "",
+                    name: "cover",
+                    description: null,
+                    file_name: "private_content/eKhMlYT7HAbVyTkP3MMoG5tZNCGbGVFuSGAitJec.png",
+                    mime_type: "image/png",
+                    disk: "s3",
+                    size: 2367364,
+                    manipulations: "",
+                    custom_properties: "",
+                    responsive_images: "",
+                    order_column: null,
+                    created_at: "2023-07-19T11:14:35.000000Z",
+                    updated_at: "2023-07-19T11:14:35.000000Z",
+                    deleted_at: null,
+                    temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/eKhMlYT7HAbVyTkP3MMoG5tZNCGbGVFuSGAitJec.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240220%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240220T092017Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=acbef26ac5f3bd8d6b6c94243b325a669ef108fa2c7a18c42ee901b85127cfcf",
+                    thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/eKhMlYT7HAbVyTkP3MMoG5tZNCGbGVFuSGAitJec.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240220%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240220T092017Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=b015175b5fa151b1990bc4b51742d71bd30cffe79557bb24f7a404fe8dfd54b1",
+                    createdDiffForHumans: "há 7 meses",
+                    size_mb: 2.26
+                },
+                last_accepted_or_declined: {
+                    id: 259,
+                    user_id: 129,
+                    target_type: "App\\FormProgrammation",
+                    target_id: 16,
+                    type: "declined",
+                    value: "I don't agree with the prescribed form",
+                    date: "2024-02-02 12:44:51",
+                    created_at: "2024-02-02T11:44:51.000000Z",
+                    updated_at: "2024-02-02T11:44:51.000000Z",
+                    deleted_at: null
+                }
+            },
+            {
+                id: 17,
+                form_id: 5,
+                title: "Escala de medição da dor",
+                description: null,
+                from_date: "2024-02-20 16:00:00",
+                to_date: "2024-02-23 16:00:00",
+                minutes_from: null,
+                minutes_to: null,
+                active: 1,
+                forgotten: 1,
+                frequency: "daily",
+                frequency_modality_asign: null,
+                computed_until: null,
+                computed_until_to_future: null,
+                observations: "Rechazar",
+                content_type: "App\\FormProgrammation",
+                alarms: [],
+                formProgrammationTimes: [
+                    {
+                        id: 17,
+                        form_programmation_id: 17,
+                        time: "19:00:00",
+                        created_at: "2024-01-18T15:00:23.000000Z",
+                        updated_at: "2024-01-18T15:00:23.000000Z",
+                        deleted_at: null
+                    }
+                ],
+                formAnswers: [],
+                media: {
+                    id: 3,
+                    mediable_type: "App\\Form",
+                    mediable_id: 5,
+                    collection_name: "",
+                    name: "cover",
+                    description: null,
+                    file_name: "private_content/ZGlAO7dOJZkPWdHhEp6dyX7Ben0NMG2TzzjiHBtN.png",
+                    mime_type: "image/png",
+                    disk: "s3",
+                    size: 81188,
+                    manipulations: "",
+                    custom_properties: "",
+                    responsive_images: "",
+                    order_column: null,
+                    created_at: "2023-07-19T11:13:26.000000Z",
+                    updated_at: "2023-07-19T11:13:26.000000Z",
+                    deleted_at: null,
+                    temporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/ZGlAO7dOJZkPWdHhEp6dyX7Ben0NMG2TzzjiHBtN.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240220%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240220T092017Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=8a2a53a907500525b8b84cb5da041658052b577d5905a811a4e2e4183a5e6c45",
+                    thumbnailTemporaryUrl: "https://doole-rosia.s3.eu-south-2.amazonaws.com/private_content/ZGlAO7dOJZkPWdHhEp6dyX7Ben0NMG2TzzjiHBtN.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240220%2Feu-south-2%2Fs3%2Faws4_request&X-Amz-Date=20240220T092017Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=b65aa6eb024c35d1fef3f4096efd6955c99a94843d98c5b08126de2795231507",
+                    createdDiffForHumans: "há 7 meses",
+                    size_mb: 0.08
+                },
+                last_accepted_or_declined: {
+                    id: 254,
+                    user_id: 129,
+                    target_type: "App\\FormProgrammation",
+                    target_id: 17,
+                    type: "accepted",
+                    value: null,
+                    date: "2024-02-02 12:08:30",
+                    created_at: "2024-02-02T11:08:30.000000Z",
+                    updated_at: "2024-02-02T11:08:30.000000Z",
+                    deleted_at: null
+                }
+            }
+        ]
+    })
         }
         
     

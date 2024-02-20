@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SharedCarePlanProcedure } from 'src/app/models/shared-care-plan';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { ContentTypePath, SharedCarePlanProcedure } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 
 @Component({
@@ -13,7 +16,8 @@ export class ContentDateComponent implements OnInit {
   @Output() takeMedication: EventEmitter<any> = new EventEmitter<any>();
 
   date: string;
-  constructor(public dateService: DateService) {
+  constructor(public dateService: DateService, private router: Router,
+    public translate: TranslateService, public alertController: AlertController,) {
 
   }
 
@@ -22,16 +26,52 @@ export class ContentDateComponent implements OnInit {
     this.setDate()
   }
 
-  goTo(type){
-    this.redirect.emit({type: type})
+  goTo(content){
+    let h = content.content_type.split("Form");
+    if ( h[1] === "Programmation") {
+      if (content.showAlert) this.alertForm();
+      else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
+    }else{
+      this.redirect.emit({type: content})
+    }
+    
   }
 
   setDate(){
-    this.date = this.dateService.getFormatTime(this.content?.date_intake)
+
+    if(this.content?.date_intake != null){
+      this.date = this.dateService.getFormatTime(this.content?.date_intake)
+    }else{
+      this.date = this.dateService.getFormatTime(this.content?.from_date)
+    }
+   
+  }
+
+  setFormatDate(date){
+   return this.dateService.getDateMonDay(date)
   }
 
   changeTake(id,taked){
 this.takeMedication.emit({id: id, taked: taked})
+
+  }
+
+  async alertForm() {
+
+    this.translate.get('info.button').subscribe(
+      async button => {
+        // value is our translated string
+        const alert = await this.alertController.create({
+          cssClass: "alertClass",
+          header: this.translate.instant('form.alert_title'),
+          // subHeader: 'Subtitle',
+          message: this.translate.instant('form.alert_forms'),
+          buttons: [button]
+        });
+
+        await alert.present();
+      });
+
 
   }
 }
