@@ -110,9 +110,9 @@
 
       <ng-template #medicalVisits>
 
-        <ng-container *ngIf="this.appointment?.length > 0; else noData ">
+        <ng-container *ngIf="this.appointment?.length > 0 && !checkAppointmentsNoStaff(); else noData ">
           <div *ngFor="let slide of this.appointment" class="ion-margin">
-            <ion-card class="customCardAppointment">
+            <ion-card class="customCardAppointment" *ngIf="slide.staff.length > 0">
               <ion-card-content routerLink="/agenda/reminder/detail" routerLinkActive="active-item"
                 [state]="{ event: slide}">
                 <ion-grid>
@@ -122,17 +122,31 @@
                     </ion-col>
                     <ion-col size="9.5" class="alingLeft zeroMarginPadding" style="padding-top: 3%;">
                       <ion-text class="date-txt ion-margin-start">
-                        {{slide.title | uppercase }}
-                      </ion-text>
-                      <br>
-                      <ion-text class="date-txt ion-margin-start">
+
                         {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
                         }}
                       </ion-text>
                       <br>
-                      <ion-text class="staff-txt ion-margin-start">
-                        {{slide?.staff[0]?.name}}
+                      <ion-text class="date-txt ion-margin-start">
+                        {{slide.title}}
                       </ion-text>
+                      <br>
+
+                      <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
+                        <div *ngFor="let doctor of slide.staff;">
+                          <ion-text class="staff-txt ion-margin-start">
+                            {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                          </ion-text>
+                          <br>
+                        </div>
+                      </ng-container>
+  
+                      <ng-template #noProfesional>
+                        <ion-text class="staff-txt ion-margin-start">
+                          <b>{{ 'appointment.no_field_specially' | translate }}</b>
+                        </ion-text>
+                      </ng-template>
+
                       <ion-row>
                         <a class="see-more-appointment">{{ 'health_path.see_more' | translate}}!</a>
                       </ion-row>

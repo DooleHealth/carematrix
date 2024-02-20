@@ -28,6 +28,7 @@ export class RequestVisitPage implements OnInit {
   dateMax:any;
   slot_id: any;
   duration:string = "5";
+  numFile = 0;
 
   isSubmittedTitle = false;
   isSubmittedDuration = false;
@@ -115,8 +116,41 @@ export class RequestVisitPage implements OnInit {
     this.dooleService.postAPIaddAgenda(params).subscribe(
       async (res: any) =>{
         console.log('[BookingsPage] addAgenda()', await res);  
+
         if(res.success){
-          if(!this.uploadFile.isEmptyFiles()){
+
+          if(this.files.length >0){
+            let n: any = [];
+            let f: any = [];
+            this.files.forEach(element => {
+              f.push(element.file)
+              n.push(element.name);
+            });
+        
+            let paramsAgenda = {
+              'model': 'Agenda',
+              'id':  res.agenda.id,
+              'file': f,
+              'name': n
+            }
+
+            this.dooleService.postAPIAddMedia(paramsAgenda).subscribe(res =>{
+              if(res.success){
+                let date = params.date
+                this.nav.navigateForward('/agenda', { state: {date: date} });
+                this.notification.displayToastSuccessful()
+              }else{
+                let message = this.translate.instant('documents_add.error_alert_message')
+                alert(message)
+              }
+            })
+          }else{
+            let date = params.date
+            this.nav.navigateForward('/agenda', { state: {date: date} });
+            this.notification.displayToastSuccessful()
+          }
+          }
+          /* if(!this.uploadFile.isEmptyFiles()){
             this.uploadFile.uploadFiles(res.agenda.id, 'Agenda').subscribe(res =>{
               if(res.success){
                 this.nav.navigateForward('/agenda', { state: {date: params.date} });
@@ -131,7 +165,9 @@ export class RequestVisitPage implements OnInit {
             this.nav.navigateForward('/agenda', { state: {date: params.date} });
             this.notification.displayToastSuccessful()
           }
-        }
+        } */
+
+       
         this.isLoading = false
        },(err) => { 
         this.isLoading = false
@@ -157,6 +193,8 @@ export class RequestVisitPage implements OnInit {
       return 
     }
 
+    this.files = this.uploadFile.files
+    
     this.setTitle()
     this.addAgenda()
   }
@@ -202,6 +240,7 @@ export class RequestVisitPage implements OnInit {
     this.router.navigate(['bookings/payment'],{state:{agenda:this.form.value, staff:this.staff, files: this.files}});
   }
 
+
   async openProfesionalModal() {
     const modal = await this.modalCtrl.create({
       component: MedicalDirectoryPage,
@@ -224,5 +263,12 @@ export class RequestVisitPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  enableButtonAddFile(){
+    this.numFile = this.uploadFile.files.length
+    if(this.numFile >= 6)
+    this.uploadFile.enableButtonAddFile = true
+    else this.uploadFile.enableButtonAddFile = false
   }
 }

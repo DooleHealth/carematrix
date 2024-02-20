@@ -1757,7 +1757,7 @@ export class HomePage implements OnInit {
   formatSelectedDate(date) {
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+    return datePipe.transform(date, 'EEEE, d MMMM, HH:mm');
   }
 
   formatDate(d) {

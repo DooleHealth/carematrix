@@ -10,15 +10,29 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { SwiperOptions } from 'swiper/types/swiper-options';
+import { ReminderAddPage } from './reminder-add/reminder-add.page';
+import { IEvent } from 'ionic2-calendar/calendar.interface';
+
+export interface DayEvent {
+  date?: string;
+  events?: IEvent[];
+}
 
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.page.html',
   styleUrls: ['./agenda.page.scss'],
 })
-export class AgendaPage implements OnInit {
+export class AgendaPage implements OnInit{
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
   segment:string = 'calendar';
+  dayEvents: DayEvent[] =[]
+  eventMonth = [];
+  listAppointment: any[] = []
+  inReminders = false;
+  month = 0;
+  year;
+
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private translate: TranslateService,
@@ -31,14 +45,16 @@ export class AgendaPage implements OnInit {
   ) {
     // this.analyticsService.setScreenName('agenda','AgendaPage')
   }
+  ngOnInit(): void {
+    this.segment = 'calendar'
+  }
+
   eventSource = [];
   appointment = [];
   reminders = [];
   event: any
   viewTitle: string;
-  // months = this.getTranslation('agenda.month')
-  // days = this.getTranslation('agenda.days')
-
+  
   calendarSliderOptions: SwiperOptions = {
     spaceBetween: 10,
     threshold: 50
@@ -77,36 +93,17 @@ export class AgendaPage implements OnInit {
         let num = date.getDay()
         return days[num]
       },
-      /*
-       formatMonthViewTitle: function(date:Date) {
-          return date.getMonth().toString();
-      } */
     }
-
   };
 
-
-
-
-
-  ngOnInit() {
-    console.log('[AgendaPage] this.languageService.getCurrent()', this.languageService.getCurrent());
-    // this.dateService.selectedDateFormat2(this.date);
-
-  }
-
   async ionViewDidEnter() {
-
-    let date = history.state.date;
-    console.log('[AgendaPage] ionViewDidEnter()', date);
-    if (date)
-      this.myCal.currentDate = this.formatDate(date)
-    else
-      this.getallAgenda()
+    if (this.segment === 'calendar') this.myCal.currentDate = new Date();
+    else {
+      this.getallAgenda();
+    }
   }
 
   markDisabled = (date: Date) => {
-    //return date.getDay() == 0 || date.getDay() == 6;
     return 0
   };
 
@@ -114,21 +111,6 @@ export class AgendaPage implements OnInit {
     return await this.translate.instant(literal)
   }
 
-  /* getallAgenda(){
-      this.isLoading = true;
-      return this.dooleService.getAPIagenda().subscribe(
-        async (res: any) =>{
-          console.log('[AgendaPage] getAgenda()', await res);
-          if(res.agenda){
-            this.addScheduleToCalendar(res.agenda)
-          }
-          this.getReminders()
-         },(err) => {
-            console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message);
-            alert( 'ERROR(' + err.code + '): ' + err.message)
-            throw err;
-        });
-    } */
 
   getallAgenda() {
     this.isLoading = true;
@@ -156,6 +138,13 @@ export class AgendaPage implements OnInit {
         } else {
           this.eventSource = this.appointment
         }
+
+        if (this.inReminders) {
+          this.listAppointment = this.eventSource
+          this.filterMonth()
+        }
+      
+        console.log(this.eventSource)
       }, (err) => {
         console.log('[AgendaPage] getReminders() ERROR(' + err.code + '): ' + err.message);
         alert('ERROR(' + err.code + '): ' + err.message)
@@ -301,21 +290,43 @@ export class AgendaPage implements OnInit {
     //console.log('[AgendaPage] addReminderToCalendar() all:',  this.eventSource );
   }
 
-  // Change current month/week/day
   next() {
-    this.myCal.slideNext();
+    if (!this.inReminders) {
+      this.myCal.slideNext();
+    }
+    else {
+      ++this.month
+      this.filterMonth()
+    }
+    
   }
 
   back() {
-    this.myCal.slidePrev();
+
+    if (!this.inReminders) {
+      this.myCal.slidePrev();
+    }
+    else {
+      --this.month
+      this.filterMonth()
+    }
   }
 
   // Selected date reange and hence title changed
   onViewTitleChanged(title: any) {
     this.ngZone.run(() => {
-      this.viewTitle = this.formatMonths()
+      if(!this.inReminders) this.viewTitle = this.formatMonths()
     });
   }
+
+  onViewTitleChangedReminders(date: Date) {
+
+    this.ngZone.run(() => {
+      this.viewTitle = this.formatMonthReminder(date)
+    });
+
+  }
+
 
   setLocale() {
     return this.languageService.getCurrent();
@@ -333,10 +344,26 @@ export class AgendaPage implements OnInit {
     return month.split('.')[0] + ' ' + this.myCal.currentDate.getFullYear()
   }
 
+  formatMonthReminder(date: Date){
+    const datePipe: DatePipe = new DatePipe(this.languageService.getCurrent());
+    let month = datePipe.transform(date, 'MMM');
+    if(this.languageService.getCurrent() === 'ca'){
+      month = datePipe.transform(date , 'MMM').split(' ')[1]
+      if(month == undefined)
+      month = datePipe.transform(date , 'MMM').split('’')[1]
+    }
+    return month.split('.')[0] + ' ' + date.getFullYear()
+  }
+
   formatSelectedDate(date) {
     return this.dateService.selectedDateFormat(date);
   }
 
+  formatSelectedDateReminder(date) {
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getformatSelectedDate());
+  }
   async onEventSelected(event) {
     this.ngZone.run(() => {
       this.event = event
@@ -382,7 +409,31 @@ export class AgendaPage implements OnInit {
 
   segmentChanged(event?) {
     console.log("event: ", event);
+
+
+
     setTimeout(() => {
+
+      switch (this.segment) {
+        case 'calendar':
+          
+          this.inReminders=false
+          this.myCal.currentDate = new Date();
+          this.month = 0;
+          this.year = this.myCal.currentDate.getFullYear();
+          break;
+  
+        case 'reminders':
+          this.inReminders=true
+          this.listAppointment = this.eventSource;
+          this.onViewTitleChangedReminders(new Date())
+          //this.getallAgenda();
+          this.getListAppointment()
+          break;
+        default:
+          break;
+      }
+
       if (event) {
         const s = event.target.getBoundingClientRect();
         const sw = (s.right - s.left);
@@ -401,4 +452,111 @@ export class AgendaPage implements OnInit {
     }, 200);
   }
 
+  getListAppointment(){
+    this.dooleService.getAPIagenda().subscribe(
+      async (res: any) =>{
+        console.log('[AgendaPage] getAgenda()', await res);
+        if(res.agenda){
+          this.addScheduleToCalendar(res.agenda)
+          this.filterMonth()
+        }
+       },(err) => {
+          console.log('[AgendaPage] getAgenda() ERROR(' + err.code + '): ' + err.message);
+          throw err;
+      });
+  }
+
+  async addReminder(){
+    const modal = await this.modalCtrl.create({
+      component: ReminderAddPage,
+      componentProps: { typeId: undefined, type: undefined, origin_id: this.event?.id/* isNewReminder:true */ },
+      cssClass: "modal-custom-class"
+    });
+
+    modal.onDidDismiss()
+      .then((result) => {
+        console.log("Entro despres de posar reminder")
+
+        this.getallAgenda();
+    });
+    await modal.present();
+  }
+
+  filterMonth(){
+    this.dayEvents = []
+    var date = new Date();
+    console.log(date);
+    date.setDate(1);
+    date.setMonth(date.getMonth() + this.month);
+
+
+    console.log("date" + date)
+
+    this.onViewTitleChangedReminders(date)
+    let year = date.getFullYear()
+    this.year = year;
+    let month = date.getMonth()
+    console.log('[ListAppointmentPage] filteMonth()', date.toDateString() );
+    console.log('[ListAppointmentPage] list', this.listAppointment );
+    this.eventMonth = this.listAppointment?.filter( event =>
+      (new Date(event.startTime).getMonth() === month
+      && new Date(event.startTime).getFullYear() === year)
+      )
+    //console.log('[ListAppointmentPage] filteMonth()', this.eventMonth );
+     this.sortAppointment()
+     this.showDayEvents()
+  }
+
+  sortAppointment(){
+    this.eventMonth.sort( function (a, b) {
+      if (a.startTime > b.startTime)
+        return 1;
+      if (a.startTime < b.startTime)
+        return -1;
+      return 0;
+    })
+  }
+
+
+  showDayEvents(){
+    this.eventMonth.forEach( (e, index) =>{
+      let day = new Date(e.startTime).getDate()
+      if(index == 0 || day !== new Date(this.eventMonth[index-1].startTime).getDate()){
+        let events = this.eventMonth.filter( event =>
+          (new Date(event.startTime).getDate() == day)
+        )
+        this.dayEvents.push({date: e.startTime, events: events})
+      }
+    })
+
+    let currentDate = new Date()
+
+    console.log(currentDate.getFullYear())
+    console.log(this.month+1);
+    console.log(this.year);
+
+    if (currentDate.getMonth() === (this.month+1) && currentDate.getFullYear() === this.year){
+      console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
+      this.dayEvents = this.filterByDate()
+    } 
+    console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
+  }
+
+
+   filterByDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    return this.dayEvents.filter(eventGroup => {
+      const groupDate = new Date(eventGroup.date);
+      console.log(groupDate)
+
+      return groupDate.getDay() >= today.getDay();
+    });
+  }
+
+  check() {
+    console.log(this.dayEvents)
+    return this.dayEvents && this.dayEvents.length >= 0;
+  }
 }

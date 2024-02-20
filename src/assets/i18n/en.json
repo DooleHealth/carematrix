@@ -496,6 +496,7 @@
     "field_doctor": "Doctor",
     "field_center": "Center",
     "field_specially": "Professional",
+    "no_field_specially": "No Profesional Assigned",
     "field_appointment_type": "Type of appointment",
     "field_instructions": "Instructions",
     "field_information": "Information",
@@ -777,7 +778,7 @@
     "button_videocall_charge": "Confirm appointment with payment",
     "error_upload_files": "Error attaching files",
 
-    "placeholder": "Select...",
+    "placeholder": "Not specified",
     "profesional": "Select Profesional",
 
     "types": {
