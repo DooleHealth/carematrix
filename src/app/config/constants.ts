@@ -12,7 +12,7 @@ export class Constants {
     public  API_DOOLE_ENDPOINT: string = 'https://salud.rehabilify.com/api';
     public  DOOLE_ENDPOINT: string = 'https://salud.rehabilify.com';
     public readonly appleAppId = '1672263053'
-    public readonly androidBundleId = 'com.doole.rosia'
+    public readonly androidBundleId = 'com.doole.inca'
 
     public readonly TRAK_URL = "https://salud.rehabilify.com/app/trak/patient";
     public readonly VIDEOCALL_URL = 'https://videocalls.doole.io/';
@@ -32,8 +32,8 @@ export class Constants {
         name: 'Producción',
         //api: 'https://salud.rehabilify.com/api',
         //endpoint: 'https://salud.rehabilify.com'
-        api: 'https://deneb.doole.io/api',
-        endpoint: 'https://deneb.doole.io'
+        api: 'https://carematrix-dev.doole.io/api',
+        endpoint: 'https://carematrix-dev.doole.io'
         // api: 'https://salud-pre.rehabilify.com/api',
         // endpoint: 'https://salud-pre.rehabilify.com'
       })

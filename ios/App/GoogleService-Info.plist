@@ -2,24 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>429887824166-o4k55sno941s67o9kkbk7sfpaefm2k87.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.429887824166-o4k55sno941s67o9kkbk7sfpaefm2k87</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>429887824166-6i15pjot1omo6ke0oksqi00vrug95vqk.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA2lYBpQ7rXKRF5q_IAb5_gV53Tfo_e8Gs</string>
+	<string>AIzaSyAo3FFiZKRlrEpdggUqhD9-tMZddIAScas</string>
 	<key>GCM_SENDER_ID</key>
-	<string>429887824166</string>
+	<string>786292298290</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.doole.rosia</string>
+	<string>com.doole.inca</string>
 	<key>PROJECT_ID</key>
-	<string>deneb-65a05</string>
+	<string>carematrix-inca</string>
 	<key>STORAGE_BUCKET</key>
-	<string>deneb-65a05.appspot.com</string>
+	<string>carematrix-inca.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:429887824166:ios:42a9aaf3c6315fe2d121e7</string>
-	<key>DATABASE_URL</key>
-	<string>https://deneb-65a05-default-rtdb.firebaseio.com</string>
+	<string>1:786292298290:ios:4f7f3cff57a6c093e6a22b</string>
 </dict>
 </plist>

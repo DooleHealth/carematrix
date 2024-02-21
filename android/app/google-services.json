@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "442183935102",
-    "project_id": "rosia-pro",
-    "storage_bucket": "rosia-pro.appspot.com"
+    "project_number": "786292298290",
+    "project_id": "carematrix-inca",
+    "storage_bucket": "carematrix-inca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:442183935102:android:0ecee86f6354ae1a51242f",
+        "mobilesdk_app_id": "1:786292298290:android:9ea71378f4821784e6a22b",
         "android_client_info": {
-          "package_name": "com.doole.rosia"
+          "package_name": "com.doole.inca"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "442183935102-3kfv09chh92ktdq4bbfme6gbp4gqtq8m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.doole.rosia",
-            "certificate_hash": "c359dc81caa3c86b1e6529ee1bd70e0eb9192212"
-          }
-        },
-        {
-          "client_id": "442183935102-cmlbv1i48c0rke181mnsutsi3naa28si.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCP1Zrfl21cGEaMaJEcrGNzNex4KDZz9N4"
+          "current_key": "AIzaSyBvkfprfElOShLqJ-apOeiOHPfOBMsNtmM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "442183935102-cmlbv1i48c0rke181mnsutsi3naa28si.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
