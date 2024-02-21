@@ -339,3 +339,16 @@ ion-modal {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.08) !important;
 }
 
+ion-datetime {
+  --background: white;
+  --background-rgb: white;
+
+  border-radius: 16px;
+  //box-shadow: rgba(white, 0.3) 0px 10px 15px -3px;
+}
+
+
+.btn-style-1 {
+  width: 100%;
+  background-color: white;
+}

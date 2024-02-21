@@ -5,12 +5,12 @@
         <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title text-wrap>{{'reminder.personal_reminder'| translate }}</ion-title>
-    <ion-buttons slot="end">
+    <ion-title class="toolbarTitle" text-wrap>{{'reminder.personal_reminder'| translate }}</ion-title>
+   <!--  <ion-buttons slot="end">
       <ion-button  slot="end" fill="clear" (click)="submit()">
         <ion-icon name="checkmark" slot="icon-only"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -23,14 +23,14 @@
       <ion-list>
         <ion-item>
           <ion-label  stacked>
-            <h5 >{{'reminder.field_title' | translate}}</h5>
+            <p class="reminder-fields-txt">{{'reminder.field_title' | translate}}</p>
             <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
           <ion-input formControlName="title" class="textMedium" required  [placeholder]="this.titlePlaceholder"></ion-input>
         </ion-item>
         <ion-item lines="none">
           <ion-label  stacked>
-            <h5 >{{'reminder.field_notes' | translate}}</h5>
+            <p class="reminder-fields-txt">{{'reminder.field_notes' | translate}}</p>
           </ion-label>
         </ion-item>
         <ion-item lines="none">
@@ -43,34 +43,47 @@
     <ion-list>
       
       <ion-item>
-        <ion-label  stacked>
-          <h5 >{{'reminder.field_start' | translate}}</h5>
+        <ion-label stacked>
+          <p class="reminder-fields-txt">{{'reminder.field_start' | translate}}</p>
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label>
         <ion-datetime-button slot="end" datetime="start_date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+
+
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
           <ion-datetime [locale]="this.locale" presentation="date" id="start_date" [min]="this.date" [max]="dateMax"  (ionChange)="this.isSubmittedStartDate = false"  formControlName="start_date"></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
       
+
       <ion-item>
         <ion-label  stacked>
-          <h5 >{{ 'reminder.field_end' | translate}}</h5>
+          <p class="reminder-fields-txt">{{ 'reminder.field_end' | translate}}</p>
           <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error " color="danger">{{ getErrorEndDate() }}</ion-note>
         </ion-label>
         <ion-datetime-button slot="end" datetime="end_date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
           <ion-datetime [locale]="this.locale" presentation="date" id="end_date" (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates()" formControlName="end_date" [min]="this.date" [max]="dateMax"></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
 
       <ion-item>
         <ion-label  stacked>
-          <h5 >{{ 'reminder.field_time' | translate}}</h5>
+          <p class="reminder-fields-txt">{{ 'reminder.field_time' | translate}}</p>
           <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label>
         <ion-datetime-button slot="end" datetime="time"></ion-datetime-button>
@@ -98,7 +111,7 @@
 
 
       <ion-item lines="none">
-        <ion-select  label="{{'reminder.field_repeat' | translate}}" class="txtTitleGoals" interface="action-sheet" (ionChange)="this.selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}">
+        <ion-select  label="{{'reminder.field_repeat' | translate}}" class="txtTitleGoals" interface="action-sheet" (ionChange)="this.selectedFrequency()" cancelText="{{'button.cancel' | translate}}" formControlName="frequency"  okText="{{'button.ok' | translate}}" toggleIcon="assets/icons/challenge_card_btn.svg">
           <ion-select-option value="daily">{{'reminder.frequency.daily' | translate}}</ion-select-option>
           <ion-select-option value="custom">{{'reminder.frequency.custom' | translate}}</ion-select-option>
         </ion-select>
@@ -106,14 +119,14 @@
     </ion-list>
   </ion-card>
 
-  <ion-card class="cardProfile" *ngIf="this.frequencySeleted === 'custom' ">
+  <ion-card class="cardProfile" *ngIf="this.frequencySeleted === 'custom' " style="margin-bottom: 20%;">
     <div>
-      <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="this.expanded" lines="none">
-        <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+      <ion-item (click)="expandItem()"  *ngIf="this.expanded" lines="none">
+        <p class="reminder-fields-txt">{{'reminder.week_day' | translate}}</p>
         <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
       </ion-item>
-      <ion-item (click)="expandItem()" class="txtTitleGoals" *ngIf="!this.expanded"  lines="none">
-        <ion-label>{{'reminder.week_day' | translate}}</ion-label>
+      <ion-item (click)="expandItem()"  *ngIf="!this.expanded"  lines="none">
+        <p class="reminder-fields-txt">{{'reminder.week_day' | translate}}</p>
         <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
       </ion-item>
 
@@ -121,11 +134,10 @@
       <app-expandable expandHeight="500px" [expanded]="this.expanded">
         <ion-list *ngFor="let e of days;let i= index">
           <ion-item [lines]="(i==6)? 'none':'' ">
-            <ion-checkbox labelPlacement="end" color="success" (ionChange)="setDay($event, e, i)"
+            <ion-checkbox labelPlacement="end" color="primary" (ionChange)="setDay($event, e, i)"
               [formControlName]=" 'day'+(i+1)">
               <ion-text>
-                <p class="txtTitleGoals" style="color: black; font-size: 14px;">{{'reminder.day.day'+(i+1) | translate}}
-                </p>
+                <p class="reminder-fields-txt">{{'reminder.day.day'+(i+1) | translate}}</p>
               </ion-text>
             </ion-checkbox>
           </ion-item>
@@ -140,4 +152,18 @@
 <section *ngIf="!this.isNewEvent">
   <ion-button class="deleteButton"  expand="block" (click)="presentAlertConfirm()">{{ 'reminder.button_delete' | translate}}</ion-button>
   </section>
+
+  
 </ion-content>
+
+<ion-footer mode="ios">
+
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center; margin-bottom: 50px;">
+    <ion-button (click)="submit()" color="primary" shape="round" class="floating-button ion-margin" >
+      {{'reminder.save' | translate}}
+      <!-- <ion-icon style="padding-left: 2%;"  src="../../assets/icons/notifications_reminder.svg"></ion-icon> -->
+    </ion-button>
+  </div>
+
+  
+</ion-footer>

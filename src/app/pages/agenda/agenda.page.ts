@@ -538,6 +538,9 @@ export class AgendaPage implements OnInit{
     if (currentDate.getMonth() === (this.month+1) && currentDate.getFullYear() === this.year){
       console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
       this.dayEvents = this.filterByDate()
+
+      console.log('[ListAppointmentPage] showDayEvents() Filter', this.dayEvents);
+
     } 
     console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
   }
@@ -545,13 +548,12 @@ export class AgendaPage implements OnInit{
 
    filterByDate() {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+     
   
+    console.log(today.getDate())
     return this.dayEvents.filter(eventGroup => {
       const groupDate = new Date(eventGroup.date);
-      console.log(groupDate)
-
-      return groupDate.getDay() >= today.getDay();
+      return groupDate.getDate() >= today.getDate();
     });
   }
 

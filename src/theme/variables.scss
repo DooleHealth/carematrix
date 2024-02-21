@@ -26,6 +26,8 @@ $chat-bubble: (
 
   /** Default font-family **/
 
+  --ion-font-family: 'Poppins-Regular' !important;
+
   --default-text: #2C3E50;
   --secondary-bkg: #F6F6F6;
   --default-bkg: #EFEFEF;
@@ -39,11 +41,6 @@ $chat-bubble: (
   --monitoring-home-color: #0B7F90;
 
   --purple-light: #ECDDFE;
-
-
-
-  --ion-font-family: 'Poppins-Regular' !important;
-
 
   --ion-color-primary: #8E44AD;
   --ion-color-primary-rgb: 142, 68, 173;

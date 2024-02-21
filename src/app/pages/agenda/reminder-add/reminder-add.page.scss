@@ -2,4 +2,50 @@
     text-align: right;
     color: #7f8c8d;
   }
-  
+
+
+  .reminder-fields-txt {
+    font-family: 'Poppins-Medium';
+    color: var(--default-text);
+    font-size: 14px ;
+    line-height: 21px;
+    font-weight: 500;
+  }
+
+
+  .floating-button {
+    width: 90%;
+    position: absolute;
+    bottom: 100%; 
+    --background: transparent; 
+    text-transform: none;
+    height: 50px !important;
+  }
+
+
+  .footer-ios ion-toolbar:last-of-type {
+    --border-width: 0 0 0 ;
+    //--background: auto;
+  }
+
+  ion-footer {
+    box-shadow: unset !important;
+    //background: var(--default-bkg);
+
+   
+    --border-width: 0 0 0 ;
+    
+
+    ion-toolbar {
+      background: var(--default-bkg);
+    }
+}
+
+:host .calendar-days-of-week {
+  font-size: 30px;
+}
+
+.calendar-days-of-week {
+
+  font-family: 'Poppins-Regular';
+}
