@@ -35,7 +35,9 @@
       <a (click)="openMedia(message)">{{'conversation.open_file' | translate}}</a>
     </div>
     <div class="message-detail" style="float:right">
-      <span>{{formatEpoch(message.timestamp)}}</span>
+      
+<!--       formatEpoch(message.timestamp)
+ -->      <span>{{this.convertTimestampToGMTToLocalTime(message.timestamp)}}</span>
     </div>
   </div>
 </div>

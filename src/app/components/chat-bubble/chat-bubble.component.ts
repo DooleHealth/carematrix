@@ -4,7 +4,7 @@ import moment from 'moment';
 import { DooleService } from 'src/app/services/doole.service';
 import { DocumentViewer } from '@awesome-cordova-plugins/document-viewer/ngx';
 import { TranslateService } from '@ngx-translate/core';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'chat-bubble',
@@ -29,7 +29,7 @@ export class ChatBubbleComponent implements OnInit {
   public lat: string;
   public lon: string;
   patient: string = 'message_response';
-  constructor(private dooleService : DooleService, private document: DocumentViewer, private  translate : TranslateService) { 
+  constructor(private dooleService : DooleService, private document: DocumentViewer, private  translate : TranslateService, private datePipe: DatePipe) { 
     ChatBubbleComponent.translate = this.translate
   }
 
@@ -80,7 +80,41 @@ export class ChatBubbleComponent implements OnInit {
     return moment().unix();
   }
 
+
+  convertTimestampToGMTToLocalTime(timestamp: number): string {
+    if (!timestamp) {
+      return '';
+    }
+
+    return this.datePipe.transform(timestamp, 'HH:mm');
+    
+    // Convert the timestamp to a moment object in UTC, then adjust to local timezone
+    //return moment.utc(timestamp).local().format('h:mm A');
+  }
+
   static getCalendarDay(epoch: number): string {
+    if (!epoch) {
+      return null;
+    }
+    let timeString = 'h:mm A';
+    const today = this.translate.instant('agenda.today');
+    const yesterday = this.translate.instant('agenda.yesterday');
+  
+    // Convert epoch to moment object and use .local() to convert to local time zone
+    const localMoment = moment(epoch).local();
+    console.log(localMoment)
+  
+    return localMoment.calendar(null, {
+      sameDay: `[${today}] ` + timeString, // Today in local time
+      lastDay: `[${yesterday}] ` + timeString, // Yesterday in local time
+      lastWeek: 'DD/MM/YY ' + timeString, // Last week date in local time
+      sameElse: 'DD/MM/YY ' + timeString, // Other dates in local time
+      nextDay: 'DD/MM/YY ' + timeString, // Next day in local time
+    });
+  }
+  
+
+  /* static getCalendarDay(epoch: number): string {
     if (!epoch) {
       return null;
     }
@@ -94,7 +128,7 @@ export class ChatBubbleComponent implements OnInit {
       sameElse: 'DD/MM/YY ' + timeString,
       nextDay : 'DD/MM/YY ' + timeString,
     });
-  }
+  } */
 
   formatEpoch(epoch): string {
     return ChatBubbleComponent.getCalendarDay(epoch);

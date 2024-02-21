@@ -41,10 +41,10 @@
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
 
-      <ion-list no-lines>
+      <ion-list no-lines style="background: none;">
         <div  *ngFor="let message of this.messagesList; let i = index">
-          <ion-badge mode="ios" *ngIf="this.currentPage == this.lastPage && i==0" color="primary">{{'chat.end'| translate}}</ion-badge>
-          <ion-badge mode="ios" *ngIf="message.showDay" color="primary">{{formatDate(message?.created_at)}}</ion-badge>
+          <ion-badge mode="ios" *ngIf="this.currentPage == this.lastPage && i==0">{{'chat.end'| translate}}</ion-badge>
+          <ion-badge mode="ios" *ngIf="message.showDay">{{message?.date}}</ion-badge>
           <ion-item class="itemChat">
             <ion-label>
               <chat-bubble [chatMessage]="message"></chat-bubble>
@@ -87,7 +87,7 @@
         </elastic-textarea>
       </div>
       <ion-buttons >
-        <app-file-upload-v2 color="dark" icon="camera-outline" #uploadFile2 [enableFiles]="false" [enablePhotos]="false" (numFilesChange)="sendFile2()"></app-file-upload-v2>
+        <app-file-upload-v2 color="primary" icon="camera" #uploadFile2 [enableFiles]="false" [enablePhotos]="false" (numFilesChange)="sendFile2()"></app-file-upload-v2>
          <!--<ion-button (click)="this.addImage()">
           <ion-icon name="camera-outline"></ion-icon>
         </ion-button>
