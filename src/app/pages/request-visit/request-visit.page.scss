@@ -56,3 +56,8 @@ ion-card {
     --placeholder-color: black;
     --placeholder-opacity : 0.6 !important
 }
+
+
+ion-label {
+    --color: var(--default-text) !important;
+  }

@@ -49,3 +49,7 @@
 
   font-family: 'Poppins-Regular';
 }
+
+ion-label {
+  --color: var(--default-text) !important;
+}
