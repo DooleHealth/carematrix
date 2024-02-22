@@ -251,6 +251,7 @@ export interface SharedCarePlanLifeStyle {
     traduction?:string;
     frequency?: string;
     isAnswers?: string;
+    hasFormAnswered?: string;
 
 }
 

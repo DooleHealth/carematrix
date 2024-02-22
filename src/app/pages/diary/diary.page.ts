@@ -212,6 +212,7 @@ export class DiaryPage implements OnInit {
   }
 
   treeIterateDiets(obj, stack) {
+    this.listDietsToday=[];
     for (var property in obj) {
       console.log('[DiaryPage] treeIterateDiets()', property);
       if (obj.hasOwnProperty(property)) {
@@ -343,7 +344,12 @@ export class DiaryPage implements OnInit {
         this.items = []
         ///let formattedDate = this.transformDate(this.date)
        //// let date = {date: formattedDate}
-        await this.dooleService.getAPIListRecipe().subscribe(
+       let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1
+      }
+        await this.dooleService.getAPIListRecipe(params).subscribe(
           async (res: any) =>{
             
     

@@ -14,7 +14,7 @@ import { DateService } from 'src/app/services/date.service';
   styleUrls: ['./exercises.page.scss'],
 })
 export class ExercisesPage implements OnInit {
-  segment="exercises"
+  segment="Exercises"
   exercises: Array<any>;
   items: any[] = []
   nameContent: string = ContentTypeTranslatedName.Exercises
@@ -42,9 +42,14 @@ export class ExercisesPage implements OnInit {
   async getExercisesList(){
     console.log('[ExercisesPage] getExercisesList()');
     this.items = []
-    this.isLoading = true,  
+    this.isLoading = true 
+    let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1
+    }
   //  this.dooleService.getAPIExercises().subscribe(
-    this.scp.getAPIExercises().subscribe(
+    this.scp.getAPIExercises(params).subscribe(
       async (res: any) =>{      
         if(res){
           console.log("aaa", res)
@@ -88,12 +93,10 @@ export class ExercisesPage implements OnInit {
 
         console.log(element.last_accepted_or_declined);
         let data = {
-          img: image === "" ? element.exercise.cover: image,
-          title: element.exercise.name,
-          from: this.transformDate(element?.from_date),
-          to: this.transformDate(element?.to_date),
+          image: image === "" ? element.exercise.cover: image,
+          name: element.exercise.name,
+          scheduled_date: this.transformDate(element?.from_date),
           form_id: element.form_id,
-          accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
           type: "exercises",
           description: "",
           id: element.id,

@@ -1,0 +1,25 @@
+<ion-card class="cardProfile" (click)="goTo(content.type)"  routerLinkActive="active-item" [routerLink]="content.routerlink" >
+  <ion-item class="ion-no-padding item" lines="none" mode="ios">
+    <ion-thumbnail class="thumbnail" slot="start">
+      <img
+        class="img"
+        [src]="content?.img"
+        onError="this.onerror=null; this.src='/assets/images/shared-care-plan/medicalProcedure.png' "
+        alt=""
+      />
+    </ion-thumbnail>
+    <ion-grid style="height: 100% !important">
+      <ion-row>
+        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title | translate}}</ion-text>
+      </ion-row>
+      <ion-row  class="txtTitleGoals textAdvicesSlider">
+        <ion-col size="11.1"size-md="11.5" size-lg="11.6">
+          <ion-tex>
+            {{content?.type | translate}}
+          </ion-tex>
+        </ion-col>
+      </ion-row>
+     
+    </ion-grid>
+  </ion-item>
+</ion-card>

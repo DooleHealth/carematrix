@@ -83,16 +83,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAPIpatients(); */
                 // case url.includes('sharecareplan/goals') && method === 'GET':
                 //     return getAPI_SCP_goals();
-                case url.includes('user/news') && method === 'GET':
-                    return getAPI_News();
+              //  case url.includes('user/news') && method === 'GET':
+                //    return getAPI_News();
           //  case url.includes('user/dietaryIntakes') && method === 'GET':
                 //        return getAPI_DietsToday();
-                        case url.includes('user/receipt') && method === 'GET':
-                            return getAPI_Recipes();
-                            case url.includes('user/testimonials') && method === 'GET':
-                            return getAPI_Testimonials();
-                            case url.includes('sharedcareplan/formsToday') && method === 'GET':
-                            return getAPI_FormsToday()
+                       // case url.includes('user/receipt') && method === 'GET':
+                         //   return getAPI_Recipes();
+                            //case url.includes('user/testimonials') && method === 'GET':
+                            //return getAPI_Testimonials();
+                           //7 case url.includes('sharedcareplan/formsToday') && method === 'GET':
+                            //return getAPI_FormsToday()
                 default:
                     // pass through any requests not handled above 
                     return next.handle(request);

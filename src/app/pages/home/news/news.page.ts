@@ -11,7 +11,7 @@ import { FakeBackendInterceptor } from 'src/app/interceptors/fake-backend.interc
   styleUrls: ['./news.page.scss'],
 })
 export class NewsPage implements OnInit {
-
+  segment="News"
   public items= [];
   // itemsBackup= []
   // news = []
@@ -41,9 +41,14 @@ export class NewsPage implements OnInit {
   async getNewsList(){
     console.log('[NewsPage] getNewsList()');
     this.items = []
-    this.isLoading = true
+    this.isLoading = true;
+   let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1
+    }
    
-   this.dooleService.getAPIlistNews().subscribe(
+   this.dooleService.getAPIlistNews(params).subscribe(
       async (res: any) =>{
         console.log('[NewsPage] getNewsList()', await res);
         if(res.news)

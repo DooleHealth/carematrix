@@ -499,8 +499,13 @@ export class HomePage implements OnInit {
 
   async getAdvicesList() {
     try {
+      let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1
+      }
       const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIlistAdvices().subscribe(
+        this.dooleService.getAPIlistAdvices(params).subscribe(
           (data: any) => {
             console.log('[HomePage] getAdvicesList()', data);
             resolve(data);
@@ -530,8 +535,13 @@ export class HomePage implements OnInit {
 
   async getNewsList(advices) {
     try {
+      let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1
+      }
       const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIlistNews().subscribe(
+        this.dooleService.getAPIlistNews(params).subscribe(
           (data: any) => {
             console.log('[HomePage] getNewsList()', data);
             resolve(data);
