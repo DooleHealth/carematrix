@@ -204,6 +204,22 @@ export class HomePage implements OnInit {
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
 
+  fakeData:string[] = [
+    'Amsterdam',
+    'Buenos Aires',
+    'Cairo',
+    'Geneva',
+    'Hong Kong',
+    'Istanbul',
+    'London',
+    'Madrid',
+    'New York',
+    'Panama City',
+  ];
+  public results :any[];
+  activateFocus: boolean = false;
+
+
   constructor(
     public router: Router,
     public platform: Platform,
@@ -234,6 +250,13 @@ export class HomePage implements OnInit {
 
   }
 
+  handleInput(event) {
+    const query = event.target.value.toLowerCase();
+    this.results = this.listFamilyUnit.filter(item => 
+      item.name.toLowerCase().includes(query)
+    );  }
+
+
   async ngOnInit() {
     console.log("ENTER")
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
@@ -249,13 +272,14 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
 
+    this.activateFocus = false;
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
 
     
-      this.getUserInformation()
-      this.getNumNotification();
+    this.getUserInformation()
+    this.getNumNotification();
     
 
     
@@ -272,6 +296,22 @@ export class HomePage implements OnInit {
     if (this.openNotificationAlertDialog) {
       this.pusherNotifications.openScpNotificationDialog();
     }
+  }
+
+
+  activateList() {
+    this.ngZone.run(() => {
+      console.log("Acivate/des Focus")
+    this.activateFocus = true;
+    });
+  }
+
+  onCancel($event) {
+    this.activateFocus = false;
+  }
+
+  checkBlur() {
+    this.activateFocus = false;
   }
 
 
@@ -373,6 +413,7 @@ export class HomePage implements OnInit {
 
     try {
       await Promise.all([
+        this.getFamilyUnitData(),
         this.getUserImage(),
         this.getPersonalInformation(),
         this.getChallenges(), 
@@ -402,7 +443,86 @@ export class HomePage implements OnInit {
     }
   }
 
-  async getPrescribedApps(){
+  async getFamilyUnitData(){
+
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIFamilyUnit().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getFamilyUnitData()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getFamilyUnitData() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.listFamilyUnit = res
+      this.results = [...this.listFamilyUnit];
+      console.log(this.listFamilyUnit)
+
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching user image:', error);
+      throw error;
+    }
+  }
+
+  async onCaregiverSelect(event: any) {
+    console.log(event.detail.value)
+
+    let caregiverSelected = this.results[event.detail.value];
+
+
+    this.alertCaregiver(caregiverSelected);
+
+  }
+
+  async alertCaregiver(caregiverSelected) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      header: caregiverSelected.name,
+      message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'warning',
+          handler: (blah) => {
+            console.log('[LandingPage] AlertConfirm Cancel');
+          }
+        }, {
+          text: this.translate.instant("alert.button_change"),
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: (data) => {
+            this.changeUser(caregiverSelected)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  changeUser(user?){
+    console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
+    this.pusherConnection.unsubscribePusher()
+    this.authService.setFamilyUnit(user).then((val) => {
+      this.ngZone.run(()=>{
+        setTimeout(()=>{
+          this.ionViewWillEnter()
+        }, 500)
+      });
+    });
+      
+   
+  }
+
+  /* async getPrescribedApps(){
     try {
       this.prescribedApps = []
       const platform = this.platform.is('ios')? 'ios':'android'
@@ -424,23 +544,21 @@ export class HomePage implements OnInit {
       
       console.log(res.apps)
       this.prescribedApps = this.scpProcedures.adapterForView(
-        res.apps, // JSON 
-        'name',  //title
-        'cover',  //date
-        'description', //type
+        res.apps,  
+        'name',  
+        'cover',  
+        'description', 
         'instructions',
         'url_android',
         'url_ios',
         'configurations_array'
         ) 
         
-       // console.error(' this.prescribedApps:',  this.prescribedApps);
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching user image:', error);
       throw error;
     }
-  }
+  } */
 
 
 

@@ -112,7 +112,9 @@
     "close_app": "Want to close the app?",
     "get_firts_data": "Enter your first data",
     "advices": "Advices",
-    "see_advices": "See all Advices"
+    "see_advices": "See all Advices",
+    "caregiver_title": "Caregiver's responsible",
+    "caregiver_change": "You are going to change "
   },
   "profile": {
     "title_profile": "My Profile",
@@ -246,7 +248,8 @@
     "button_send": "Send",
     "header_error": "Error",
     "header_info": "Information",
-    "header_confirmation": "Confirmation"
+    "header_confirmation": "Confirmation",
+    "header_atention": "Attention"
   },
   "error_required": "Required",
   "setting": {

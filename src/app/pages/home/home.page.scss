@@ -111,6 +111,24 @@ ion-card-content {
 
 ion-item {
   height: auto !important;
+
+ 
+}
+
+ion-searchbar {
+  --background: white; 
+  color: var(--default-text);
+  
+}
+
+
+.item-radio-checked{
+  --background: #F9F4FF;
+}
+
+.dependants-list {
+  border-radius: 10px;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.05);
 }
 
 .vertical-card {

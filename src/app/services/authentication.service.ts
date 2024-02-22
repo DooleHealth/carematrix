@@ -215,6 +215,7 @@ export class AuthenticationService {
   public async setUserFamilyId(id) {
 
     await this.getUserLocalstorage().then(user => {
+      this.isFamily = false;
       console.log(`[AuthenticationService] MEMBER(${id})`, user);
       let s: string = user['name'];
       let fullname = s.split(',');
