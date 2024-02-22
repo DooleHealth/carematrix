@@ -204,6 +204,8 @@ export class HomePage implements OnInit {
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
 
+  caregiverSelected = '';
+
   fakeData:string[] = [
     'Amsterdam',
     'Buenos Aires',
@@ -216,6 +218,8 @@ export class HomePage implements OnInit {
     'New York',
     'Panama City',
   ];
+
+  public resultsFake: any[];
   public results :any[];
   activateFocus: boolean = false;
 
@@ -251,6 +255,8 @@ export class HomePage implements OnInit {
   }
 
   handleInput(event) {
+
+    
     const query = event.target.value.toLowerCase();
     this.results = this.listFamilyUnit.filter(item => 
       item.name.toLowerCase().includes(query)
@@ -306,7 +312,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  onCancel($event) {
+  onCancel($event?:any) {
     this.activateFocus = false;
   }
 
@@ -447,7 +453,7 @@ export class HomePage implements OnInit {
 
     try {
       const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIFamilyUnit().subscribe(
+        this.dooleService.getAPIFamilyUnit2().subscribe(
           (data: any) => {
             console.log('[HomePage] getFamilyUnitData()', data);
             resolve(data);
@@ -459,8 +465,10 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.listFamilyUnit = res
+      this.listFamilyUnit = res.othersCanAccess;
       this.results = [...this.listFamilyUnit];
+      this.resultsFake = [...this.fakeData];
+
       console.log(this.listFamilyUnit)
 
     } catch (error) {
@@ -473,10 +481,12 @@ export class HomePage implements OnInit {
   async onCaregiverSelect(event: any) {
     console.log(event.detail.value)
 
-    let caregiverSelected = this.results[event.detail.value];
+
+    this.caregiverSelected = '';
+    this.caregiverSelected = this.results[event.detail.value];
 
 
-    this.alertCaregiver(caregiverSelected);
+    this.alertCaregiver(this.caregiverSelected);
 
   }
 
@@ -484,7 +494,7 @@ export class HomePage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
       //mode: 'ios',
-      header: caregiverSelected.name,
+      header: caregiverSelected?.name,
       message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
       buttons: [
         {
@@ -492,8 +502,9 @@ export class HomePage implements OnInit {
           role: 'cancel',
           cssClass: 'warning',
           handler: (blah) => {
+            this.onCancel()
             console.log('[LandingPage] AlertConfirm Cancel');
-          }
+          } 
         }, {
           text: this.translate.instant("alert.button_change"),
           role: 'confirm',
@@ -510,7 +521,7 @@ export class HomePage implements OnInit {
 
   changeUser(user?){
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
-    this.pusherConnection.unsubscribePusher()
+    //this.pusherConnection.unsubscribePusher()
     this.authService.setFamilyUnit(user).then((val) => {
       this.ngZone.run(()=>{
         setTimeout(()=>{

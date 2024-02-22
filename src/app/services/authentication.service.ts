@@ -28,12 +28,16 @@ export class User {
   familyUnit: string;
   name: string;
   listFamilyUnit: FamilyUnit[] = [];
+
+  selectedPatientResponsible;
+
   constructor(idUser: string, secret: string, name: string, first_name: string, image: string) {
     this.idUser = idUser
     this.secret = secret
     this.name = name
     this.first_name = first_name
     this.image = image
+
   };
 
 }
@@ -135,11 +139,13 @@ export class AuthenticationService {
 
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
-        this.setUserLocalstorage(this.user)
-        this.setTwoFactor(res.twoFactorCenter)
+        
         if (res?.familyUnit.length > 0) {
           this.user.listFamilyUnit = res.familyUnit;
         }
+
+        this.setUserLocalstorage(this.user)
+        this.setTwoFactor(res.twoFactorCenter)
 
         return res;
 
@@ -198,6 +204,7 @@ export class AuthenticationService {
     let fullname = s.split(',');
     this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
     this.user.familyUnit = user.id;
+    this.user.selectedPatientResponsible = user;
     Preferences.set({
       key: String(user.id),
       value: JSON.stringify(this.user)
