@@ -900,8 +900,8 @@
     "mode_activate": "Developer mode enabled",
     "mode_desactivate": "Developer mode disabled",
     "mode_0": "Production",
-    "mode_1": "Quality",
-    "mode_2": "Development"
+    "mode_1": "Development",
+    "mode_2": "Quality"
   },
   "list_notifications": {
     "header": "Notifications",
