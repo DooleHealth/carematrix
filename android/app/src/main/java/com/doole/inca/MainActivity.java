@@ -1,4 +1,4 @@
-package com.doole.rosia;
+package com.doole.inca;
 
 import com.getcapacitor.BridgeActivity;
 

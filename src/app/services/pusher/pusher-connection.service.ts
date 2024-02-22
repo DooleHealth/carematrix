@@ -10,14 +10,14 @@ declare const Pusher: any;
 export class PusherConnectionService {
   public  LIST_APP_KEY: Array<any> = [
     {
-      name: 'Rosia Producción',
+      name: 'Inca Health Producción',
       app_id: "1632528",
       key: "3591d99947685b0e45e4",
       secret: "2972f138fed48a358a61",
       cluster: "eu"
     },
     {
-      name: 'Rosia Producción',
+      name: 'Inca Health Producción',
       app_id: "1632528",
       key: "3591d99947685b0e45e4",
       secret: "2972f138fed48a358a61",
