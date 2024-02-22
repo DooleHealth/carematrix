@@ -1,37 +1,37 @@
 <ion-card *ngFor="let listcontets of content">
-  <img *ngIf="listcontets.cover" class="imagefit" [src]="listcontets.cover" 
+  <img   *ngIf="listcontets.cover || listcontets.image" class="imagefit" [src]="getImageSource(listcontets)"  
   onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
   <ion-item  lines="none">
-    <div *ngFor="let list of listcontets?.listResearch">
-      <ion-text class="study">{{ list.name }}</ion-text>
+    <div *ngFor="let list of listcontets?.tags_name">
+      <ion-text class="study">{{ list.name}}</ion-text>
   </div>
     
     <!--<ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
     <!--<ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
-    <ion-icon name="volume-low-outline" slot="end" style="margin-left: 5%;"></ion-icon><!--(click)= "setContentStatus('favourite')"-->
-    <ion-icon name="heart-outline" slot="end" (click)= "setContentStatus('like')" ></ion-icon>
+    <!--<ion-icon name="volume-low-outline" slot="end" style="margin-left: 5%;"></ion-icon>(click)= "setContentStatus('favourite')"-->
+    <ion-icon  [color]="getColorLike(listcontets?.statusable)"  name="heart" slot="end" (click)= "setContentStatus(listcontets.id, 'like')" ></ion-icon>
    
   </ion-item>
   <ion-card-header mode="md">
     <ion-card-subtitle class="card_title_comp">
-     <ion-text> {{listcontets?.subject}} </ion-text>
+     <ion-text> {{listcontets?.subject || listcontets?.name}} </ion-text>
 
       </ion-card-subtitle>
-      <ion-card-subtitle class="card_source">{{'shared_care_plan.source' | translate}}{{listcontets?.source}}</ion-card-subtitle>
-      <ion-card-subtitle class="card_date">{{listcontets?.scheduled_date | date:'mediumDate'}}</ion-card-subtitle>
-      <ion-card-subtitle class="time_reading" [ngSwitch]="listcontets?.segment">
-        {{ listcontets?.timeReading }}
+      <ion-card-subtitle class="card_source" *ngIf="listcontets?.source">{{'shared_care_plan.source' | translate}}{{extractText(listcontets?.source)}}</ion-card-subtitle>
+      <ion-card-subtitle class="card_date">{{listcontets?.scheduled_date || listcontets?.created_at | date:'mediumDate'}}</ion-card-subtitle>
+      <ion-card-subtitle class="time_reading" [ngSwitch]="this.segment">
+        {{ listcontets?.reading_time }}
         
-        <ng-container *ngSwitchCase="'exercices'">
-          {{ 'shared_care_plan.exercicesTime' | translate }}
+        <ng-container *ngSwitchCase="'exercises'">
+         {{ 'shared_care_plan.exercicesTime' | translate }}
         </ng-container>
         
         <ng-container *ngSwitchCase="'diets'">
-          {{ 'shared_care_plan.dietsime' | translate }}
+         {{ 'shared_care_plan.dietsime' | translate }}
         </ng-container>
         
         <ng-container *ngSwitchDefault>
-          {{ 'shared_care_plan.readingTime' | translate }}
+         {{ 'shared_care_plan.readingTime' | translate }}
         </ng-container>
       </ion-card-subtitle>
    
@@ -40,14 +40,14 @@
   </ion-card-header>
 
   <ion-card-content>
-    <ion-text>{{ truncateDescription(listcontets?.description, 100) }}</ion-text>
+    <ion-text>{{ truncateDescription(listcontets?.content || listcontets?.description, 100) }}</ion-text>
 
 
-    <div> <ion-text class="likes">{{listcontets?.likes}} {{'shared_care_plan.like' | translate}}</ion-text> <ion-text>🔥</ion-text></div>
+    <div> <ion-text class="likes" *ngIf="listcontets?.interections">{{listcontets?.interactions.like}} {{'shared_care_plan.like' | translate}}</ion-text> <ion-text *ngIf="listcontets?.interactions.like > 100">🔥</ion-text></div>
   </ion-card-content>
 
  
-  <ion-button expand="block" color="primary" class="floating-button" [routerLink]="listcontets.routerlink"  [state]="{ id: listcontets?.id }">
+  <ion-button expand="block" color="primary" class="floating-button" [routerLink]="this.toLink"  [state]="getStateObject(listcontets)">
     <ion-label>{{'shared_care_plan.button_info' | translate}}</ion-label>
    
   </ion-button>

@@ -168,7 +168,12 @@
     "subtitle_advices": "Advices",
     "points": "Points",
     "new": "new",
-    "de": " of "
+    "de": " of ",
+    "achievements":"achievements",
+    "text_goals1":"Be proud of yourself!",
+    "text_goals2":"You have successfully passed this objective 🏆",
+    "go": "Go",
+    "accordion_goals":"These are the tasks you must perform:"
   },
   "health_path": {
     "title": "Health Path",
@@ -659,7 +664,8 @@
     "rejectd_option2F": "I do not agree with the form",
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
-    "medication_status": "pending"
+    "medication_status": "pending",
+    "name":"Name"
   },
 
   

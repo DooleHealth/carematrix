@@ -1,24 +1,23 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController, ModalController } from '@ionic/angular';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { DietsDetailPage } from 'src/app/pages/diary/diets-detail/diets-detail.page';
+import { AdvicesDetailPage } from 'src/app/pages/home/advices-detail/advices-detail.page';
+import { NewDetailPage } from 'src/app/pages/home/new-detail/new-detail.page';
 import { ElementsAddPage } from 'src/app/pages/tracking/elements-add/elements-add.page';
 import { FormPage } from 'src/app/pages/tracking/form/form.page';
 import { DooleService } from 'src/app/services/doole.service';
-import { NotificationService } from 'src/app/services/notification.service';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
-import { AdvicesDetailPage } from '../../advices-detail/advices-detail.page';
-import { AdvicesPage } from '../../advices/advices.page';
-import { NewDetailPage } from '../../new-detail/new-detail.page';
-import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.page.html',
-  styleUrls: ['./detail.page.scss'],
+  selector: 'app-goals-components',
+  templateUrl: './goals.component.html',
+  styleUrls: ['./goals.component.scss'],
 })
-export class DetailPage {
+export class GoalsComponent  implements OnInit {
+  @Input() content: any
   note = ''
   fetching = true;
   id = history.state?.challenge?.id;
@@ -30,40 +29,24 @@ export class DetailPage {
   goals = [];
   isRequired = false
   isChallengeCompleted = false
-  constructor(public translate: TranslateService, private dooleService: DooleService, private modalCtrl: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone) { }
+  constructor(public translate: TranslateService,   private changeDetectorRef: ChangeDetectorRef,private modalCtrl: ModalController, private alertController: AlertController, 
+    private pusher: PusherChallengeNotificationsService, private router: Router, private iab: InAppBrowser, private ngZone: NgZone) { }
 
   ionViewWillEnter() {
-    this.note = this.translate.instant('health_path.goal_note')
-    this.getChallenge();
+    
+    this.note = this.translate.instant('health_path.goal_note') 
+    //this.setChallenge(this.content);
   }
 
-
-  getChallenge() {
-
-    this.dooleService.getAPIChallenge(this.id).subscribe(
-      async (res: any) => {
-
-        await res;
-        console.log('[DetailPage] getAPIChallenge()', res);
-        if(res?.current_level == null && res.challenge_completed){
-          console.error('[DetailPage] challenge_completed');
-          setTimeout(()=>{
-            this.ngZone.run(()=>{
-              this.router.navigate([`/home`]);
-            });
-          }, 1000);
-
-        }else
-        this.setChallenge(res);
-
-      }, (err) => {
-        console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
-        throw err;
-      });
+  ngOnInit(){
+    this.goals = [];
+    this.current_level = [];
+    this.challenge = [];
+    this.setChallenge(this.content);
+    console.log("goals..", this.content)
   }
-
   setChallenge(res) {
-    debugger
+    
     this.goals = res?.current_level?.goals;
     this.current_level = res?.current_level;
     this.challenge = res?.challenge;
@@ -144,15 +127,20 @@ export class DetailPage {
       }
       tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed, required: goal?.required, type: type })
     });
+    
     this.goalsList = tempGoals;
     console.log("gsetChallenge() ", this.goalsList)
-    this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
+    if(this.isChallengeCompleted=== true){
+      this.progressBarValue = 100
+    }else{
+      this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
+    }
+   
     this.fetching = false;
     this.changeDetectorRef.detectChanges();
 
   }
-
-
+ 
   async openGoal(goal) {
 
     console.log('goal', goal)
@@ -217,7 +205,7 @@ export class DetailPage {
           this.pusher.presentChallengeNotification(this.pusher?.pendingNotification?.data);
         }
         this.ngZone.run(() => {
-        this.getChallenge();
+        //this.getChallenge();
       });
 
 
@@ -232,7 +220,7 @@ export class DetailPage {
       this.pusher.presentChallengeNotification(this.pusher?.pendingNotification?.data);
     }
     this.ngZone.run(() => {
-      this.getChallenge();
+    //  this.getChallenge();
     });
   }
 
@@ -284,4 +272,5 @@ export class DetailPage {
 
 
     }
+
 }

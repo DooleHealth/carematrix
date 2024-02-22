@@ -59,6 +59,8 @@ import { ViewMoreInformationComponent } from './shared-care-plan/view-more-infor
 import { NoDataComponent } from './no-data/no-data.component';
 import { AddDrugFilterComponent } from './shared-care-plan/add-drug-filter/add-drug-filter.component';
 import { HighChartsComponent } from './high-charts/high-charts.component';
+import { GoalsComponent } from './shared-care-plan/goals/goals.component';
+import { ProcedureComponent } from './shared-care-plan/procedure/procedure.component';
 
 
 @NgModule({
@@ -122,7 +124,9 @@ import { HighChartsComponent } from './high-charts/high-charts.component';
     ViewMoreInformationComponent,
     NoDataComponent,
     AddDrugFilterComponent,
-    HighChartsComponent
+    HighChartsComponent,
+    GoalsComponent,
+    ProcedureComponent
   ],
   exports: [
     ShellModule,
@@ -172,7 +176,9 @@ import { HighChartsComponent } from './high-charts/high-charts.component';
     ViewMoreInformationComponent,
     NoDataComponent,
     AddDrugFilterComponent,
-    HighChartsComponent
+    HighChartsComponent,
+    GoalsComponent,
+    ProcedureComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -34,8 +34,13 @@ export class TestimonialsPage implements OnInit {
     console.log('[NewsPage] getNewsList()');
     this.items = []
     this.isLoading = true
-   
-   this.dooleService.getAPIlistTestimonials().subscribe(
+    let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1,
+      testimonials:1
+    }
+   this.dooleService.getAPIlistTestimonials(params).subscribe(
       async (res: any) =>{
         console.log('[TestimonailsPage] getTestimonialsList()', await res);
         if(res.testimonials)
