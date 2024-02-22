@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   })
 export class Constants {
     public  LIST_ENPOINT: Array<any> = []
-    public  INDEX:number = 0
+    public  INDEX:number = 1
 
     public  API_ENDPOINT: string = 'https://salud.rehabilify.com/api';
     public  API_DOOLE_ENDPOINT: string = 'https://salud.rehabilify.com/api';
@@ -30,21 +30,15 @@ export class Constants {
       this.LIST_ENPOINT.push({ //Por defecto index 0
         id:0,
         name: 'Producción',
-        //api: 'https://salud.rehabilify.com/api',
-        //endpoint: 'https://salud.rehabilify.com'
-        api: 'https://carematrix-dev.doole.io/api',
-        endpoint: 'https://carematrix-dev.doole.io'
-        // api: 'https://salud-pre.rehabilify.com/api',
-        // endpoint: 'https://salud-pre.rehabilify.com'
+        api: 'https://carematrix.doole.io/api',
+        endpoint: 'https://carematrix.doole.io'
       })
 
       this.LIST_ENPOINT.push({
         id:1,
         name: 'Desarrollo',
-        // api: 'https://deneb.doole.io/api',
-        // endpoint: 'https://deneb.doole.io'
-        api: 'https://salud-pre.rehabilify.com/api',
-        endpoint: 'https://salud-pre.rehabilify.com'
+        api: 'https://carematrix-dev.doole.io/api',
+        endpoint: 'https://carematrix-dev.doole.io'
       })
     }
 }
