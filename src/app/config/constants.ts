@@ -43,8 +43,10 @@ export class Constants {
         name: 'Desarrollo',
         // api: 'https://deneb.doole.io/api',
         // endpoint: 'https://deneb.doole.io'
-        api: 'https://salud-pre.rehabilify.com/api',
-        endpoint: 'https://salud-pre.rehabilify.com'
+        api: 'https://carematrix-dev.doole.io/api',
+        endpoint: 'https://carematrix-dev.doole.io'
+        //api: 'https://salud-pre.rehabilify.com/api',
+       //endpoint: 'https://salud-pre.rehabilify.com'
       })
     }
 }

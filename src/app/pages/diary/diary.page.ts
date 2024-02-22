@@ -99,10 +99,9 @@ export class DiaryPage implements OnInit {
     }
   }
 
-  getIsDateInPast(date){
-    
-    const dateToCompare = new Date(date);
-    this.isDateInPast = dateToCompare < this.currentDate;
+  getIsDateInPast(date: string | number | Date){
+  
+    this.isDateInPast = new Date(date) < this.currentDate;
     return this.isDateInPast
 
   }
@@ -303,8 +302,8 @@ export class DiaryPage implements OnInit {
     
   }
 
-  getLastName(name, date_intake){
-    this.getIsDateInPast(date_intake);
+  getLastName(name, date){
+    this.getIsDateInPast(date)
     if(name != this.Lasttimestring){
       this.Lasttimestring = name;
       return true

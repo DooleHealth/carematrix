@@ -97,7 +97,7 @@ export class ExercisesPage implements OnInit {
           name: element.exercise.name,
           scheduled_date: this.transformDate(element?.from_date),
           form_id: element.form_id,
-          type: "exercises",
+          type: "Exercises",
           description: "",
           id: element.id,
           programable_id: element.programable_id,
@@ -105,7 +105,10 @@ export class ExercisesPage implements OnInit {
           model: modelType,
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
-          state: element?.last_accepted_or_declined?.type
+          state: element?.last_accepted_or_declined?.type,
+          frequency: element.frequency,
+          from_date: element.from_date,
+          to_date: element.to_date
         }
         this.items.push(data)
       })
