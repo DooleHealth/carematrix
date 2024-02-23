@@ -807,8 +807,8 @@
         "mode_activate": "Manera desenvolupador activat",
         "mode_desactivate": "Manera desenvolupador desactivat",
         "mode_0":"Producció",
-        "mode_1": "Qualitat",
-        "mode_2": "Desenvolupament"
+        "mode_1": "Desenvolupament",
+        "mode_2": "Qualitat"
       },
       "list_notifications": {
         "header": "Notificacions",

@@ -29,24 +29,16 @@ export class Constants {
       this.LIST_ENPOINT = []
       this.LIST_ENPOINT.push({ //Por defecto index 0
         id:0,
-        name: 'Producción',
-        //api: 'https://salud.rehabilify.com/api',
-        //endpoint: 'https://salud.rehabilify.com'
+        name: 'Desarrollo',
         api: 'https://carematrix-dev.doole.io/api',
         endpoint: 'https://carematrix-dev.doole.io'
-        // api: 'https://salud-pre.rehabilify.com/api',
-        // endpoint: 'https://salud-pre.rehabilify.com'
       })
 
       this.LIST_ENPOINT.push({
         id:1,
-        name: 'Desarrollo',
-        // api: 'https://deneb.doole.io/api',
-        // endpoint: 'https://deneb.doole.io'
-        api: 'https://carematrix-dev.doole.io/api',
-        endpoint: 'https://carematrix-dev.doole.io'
-        //api: 'https://salud-pre.rehabilify.com/api',
-       //endpoint: 'https://salud-pre.rehabilify.com'
+        name: 'Producción',
+        api: 'https://carematrix.doole.io/api',
+        endpoint: 'https://carematrix.doole.io'
       })
     }
 }

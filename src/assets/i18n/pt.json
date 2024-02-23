@@ -875,8 +875,8 @@
     "mode_activate": "Modo de desenvolvedor ativado",
     "mode_desactivate": "Modo de desenvolvedor desativado",
     "mode_0": "Produção",
-    "mode_1": "Qualidade",
-    "mode_2": "Desenvolvimento"
+    "mode_1": "Desenvolvimento",
+    "mode_2": "Qualidade"
   },
   "list_notifications": {
     "header": "Notificações",
