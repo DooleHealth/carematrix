@@ -63,6 +63,7 @@ export class DetailPage {
   }
 
   setChallenge(res) {
+    debugger
     this.goals = res?.current_level?.goals;
     this.current_level = res?.current_level;
     this.challenge = res?.challenge;

@@ -13,11 +13,43 @@
 </ion-header>
 
 <ion-content>
-  <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner></ion-spinner>
+  <!-- SegmentBar -->
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+    <ion-segment-button  value="goals">
+      <ion-label>{{'diary.field_today' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button  value="achievements">
+      <ion-label>{{'goals.achievements' | translate}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+
+  <div class="verticalLine2" [ngSwitch]="segment">
+    <div *ngSwitchCase="'goals'">
+      <ion-list *ngIf="goalsList.length > 0; else noData">
+        
+        <app-goals-components
+          *ngFor="let content of goalsList"
+          [content]="content" 
+        ></app-goals-components>
+      </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'achievements'">
+      <ion-list *ngIf="goalsList.length > 0; else noData">
+        
+        <app-goals-components
+          *ngFor="let content of goalsList"
+          [content]="content" 
+        ></app-goals-components>
+      </ion-list>
+    </div>
+
   </div>
 
-  <ion-card class="cardProfile" *ngIf="listItem.length > 0; else noData">
+
+  <!--<ion-card class="cardProfile" *ngIf="listItem.length > 0; else noData">
     <ion-item class="verticalAlignItem" lines="none">
       <ion-icon [src]="iconContent"></ion-icon>&nbsp;&nbsp;
       <ion-text>{{nameContent | translate}}</ion-text>
@@ -30,7 +62,7 @@
         [content]="content"
       ></scp-content-circle-progress>
     </div>
-  </ion-card>
+  </ion-card>-->
 
   <ng-template #noData>
     <div *ngIf="!this.isLoading">

@@ -41,12 +41,12 @@ export class ScpMedForMonComponent implements OnInit {
   }
 
   async goTo(content:any) {
-    if (content.type == "form") {
+    if (content.type == "forms") {
       if (content.showAlert) this.alertForm();
       else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
     }
 
-    if (content.type == "exercises") {
+    if (content.type == "Exercises") {
       this.router.navigate([ContentTypePath.ExercisesDetail], { state: {id: content.id, programable_id: content.programable_id}});
     }
     

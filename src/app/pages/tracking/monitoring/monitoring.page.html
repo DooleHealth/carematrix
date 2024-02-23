@@ -13,23 +13,6 @@
 </ion-header>
 
 <ion-content view-cached=”false”>
-
-  <ion-card class="cardProfile">
-    <ion-item lines="none">
-      <ion-grid> 
-        <ion-row>
-          <ion-icon style="height: 20px; width: 20px;"  src="assets/icons/shared-care-plan/scp-monitoring.svg">
-          </ion-icon>&nbsp;
-          <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{ 'shared_care_plan.monitoring' | translate}}</ion-text>
-        </ion-row>
-        <ion-row >
-          <p class="txtSubtitle">{{ 'shared_care_plan.monitoringList.text' | translate}}</p>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  
-  </ion-card>
-
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
         <app-scp-med-for-mon *ngFor="let content of items" [content]="content" (redirect)="handleRedirect($event)"></app-scp-med-for-mon>

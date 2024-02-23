@@ -171,7 +171,12 @@
     "subtitle_advices": "Advices",
     "points": "Points",
     "new": "new",
-    "de": " of "
+    "de": " of ",
+    "achievements":"achievements",
+    "text_goals1":"Be proud of yourself!",
+    "text_goals2":"You have successfully passed this objective 🏆",
+    "go": "Go",
+    "accordion_goals":"These are the tasks you must perform:"
   },
   "health_path": {
     "title": "Health Path",
@@ -665,7 +670,8 @@
     "rejectd_option2F": "I do not agree with the form",
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
-    "medication_status": "pending"
+    "medication_status": "pending",
+    "name":"Name"
   },
 
   
@@ -891,7 +897,7 @@
   "security": {
     "rooted": "This device has been detected to have been initialized with unusual user rights (root). For reasons of security and data integrity, access has been blocked.",
     "alert_security": "Security Alert",
-    "ens_message": "<p>Dear user,<br><br> We have detected that your device is rooted (Android) or jailbroken (Apple). We would like to inform you about the risks associated with using an unlocked device for security purposes data.<br><br>Unlocking your device removes any factory restrictions imposed by the operating system, which may compromise the integrity of data stored on your device.This may open the door to potential security threats, such as installation of malicious applications without your knowledge, unauthorized access to your personal data or loss of sensitive information.<br><br>As a telemedicine application, we take the privacy and security of your personal and medical data very seriously. We strongly recommend that you use an unlocked device to ensure adequate protection of your information and to prevent potential security breaches.<br><br>If you continue to use our app on this device, you do so at your own risk. We are not responsible for any loss, damage, or unauthorized access to your data that may occur as a result of using an unlocked device.<br><br>We strongly recommend that you restore your device to its original factory settings or use an alternative device not unlocked to ensure the safety of your data while using our app.<br><br>If you have any questions or concerns, please feel free to contact our support team at email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a> <br><br>Sincerely,<br>The Rosia S.L. Team</p> "
+    "ens_message": "<p>Dear user,<br><br> We have detected that your device is rooted (Android) or jailbroken (Apple). We would like to inform you about the risks associated with using an unlocked device for security purposes data.<br><br>Unlocking your device removes any factory restrictions imposed by the operating system, which may compromise the integrity of data stored on your device.This may open the door to potential security threats, such as installation of malicious applications without your knowledge, unauthorized access to your personal data or loss of sensitive information.<br><br>As a telemedicine application, we take the privacy and security of your personal and medical data very seriously. We strongly recommend that you use an unlocked device to ensure adequate protection of your information and to prevent potential security breaches.<br><br>If you continue to use our app on this device, you do so at your own risk. We are not responsible for any loss, damage, or unauthorized access to your data that may occur as a result of using an unlocked device.<br><br>We strongly recommend that you restore your device to its original factory settings or use an alternative device not unlocked to ensure the safety of your data while using our app.<br><br>If you have any questions or concerns, please feel free to contact our support team at email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a> <br><br>Sincerely,<br>The Inca Health S.L. Team</p> "
   },
   "commons": {
     "error-network": "Internet connection lost",

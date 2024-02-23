@@ -65,6 +65,7 @@ export class MedicationPage implements OnInit {
 
   ionViewWillEnter(){
    // this.loadData()
+   this.getCurrentDate();
    this.segmentChanged()
   }
 
@@ -190,7 +191,7 @@ export class MedicationPage implements OnInit {
           //await this.getDietList()
           await this.getDrugIntakeList()
           break;
-        case 'medications':
+        case 'medication':
           await this.loadData()
           break;
         default:
@@ -231,8 +232,8 @@ export class MedicationPage implements OnInit {
       
     }
   
-    getDateInPast(name, date_intake){
-      this.getIsDateInPast(date_intake);
+    async getDateInPast(name){
+    
       if(name != this.Lasttimestring){
         this.Lasttimestring = name;
         return true
@@ -243,11 +244,8 @@ export class MedicationPage implements OnInit {
     }
 
     getIsDateInPast(date){
-    
-      const dateToCompare = new Date(date);
-      this.isDateInPast = dateToCompare < this.currentDate;
+      this.isDateInPast = new Date(date) < this.currentDate;
       return this.isDateInPast
-  
     }
 
     async getDrugIntakeList() {
@@ -298,6 +296,7 @@ export class MedicationPage implements OnInit {
       drugs.forEach((drug) => {
         let date = this.selectDayPeriod(drug.hour_intake);
         drug.period = date;
+        drug.item_type = "medication"
         this.items.push(drug);
       });
       console.log("[DiaryPage] groupDiagnosticsByDate()", this.items);

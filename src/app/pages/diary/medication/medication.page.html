@@ -23,7 +23,7 @@
     <ion-segment-button *ngIf="role?.component?.diet" value="today">
       <ion-label>{{'diary.field_today' | translate}}</ion-label>
     </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.drug" value="medications">
+    <ion-segment-button *ngIf="role?.component?.drug" value="medication">
       <ion-label>{{'medications.title' | translate}}</ion-label>
     </ion-segment-button>
 
@@ -36,9 +36,9 @@
   <div>
     <ion-list *ngIf="listDrugIntakes.length > 0; else noData">
       <ion-grid *ngFor="let content of listDrugIntakes" class="ion-no-padding" >  
-        <ion-row *ngIf="getDateInPast(content?.period,  content?.date_intake)">
+        <ion-row *ngIf="getDateInPast(content?.period)">
           <ion-col size="0.8">
-            <ion-icon class="center"  *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+            <ion-icon class="center"  *ngIf="getIsDateInPast(content?.date_intake)" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
             <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp;
           </ion-col>
           <ion-col size="11.2"  class="text-column">
@@ -83,7 +83,7 @@
   <app-button-add  [content]="this.addButton[1]"  (dataUpdated)="addDrugPlan()"></app-button-add>
 </div>
  
-<div *ngSwitchCase="'medications'">
+<div *ngSwitchCase="'medication'">
   
   
   
