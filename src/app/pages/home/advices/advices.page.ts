@@ -14,6 +14,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items= [];
+  segment="Advices"
   //itemsBackup= []
   //advices = []
   isLoading = false
@@ -41,7 +42,12 @@ export class AdvicesPage implements OnInit {
   async getAdvicesList(){
     this.items = []
     this.isLoading = true
-    this.dooleService.getAPIlistAdvices().subscribe(
+    let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1
+    }
+    this.dooleService.getAPIlistAdvices(params).subscribe(
       async (res: any) =>{
         console.log('[AdvicePage] getAdvicesList()', await res);
         if(res.advices)

@@ -162,7 +162,12 @@
       "subtitle_advices": "Consejos",
       "points": "Puntos",
       "new": "nuevo",
-      "de": " de "
+      "de": " de ",
+      "achievements":"logros",
+      "text_goals1":"¡Siéntete orgulloso de ti mismo!",
+      "text_goals2":"Has superado con éxito este objetivo 🏆",
+      "go": "Ir",
+      "accordion_goals":"Estas son las tareas que debes realizar:"
     },
     "health_path": {
       "title":"Camino de la salud",
@@ -643,7 +648,8 @@
         "rejectd_option2F": "No estoy de acuerdo con el formulario",
         "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
         "rejectd_option3": "Otros",
-        "medication_status": "pendiente"
+        "medication_status": "pendiente",
+        "name":"Nombre"
        
     },
     "exercises": {

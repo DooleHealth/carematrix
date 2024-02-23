@@ -20,7 +20,7 @@
   <ion-list>
     <ion-card class="cardProfile" *ngFor="let family of this.othersCanAccess">
       <ion-card-content style="padding-left: 0%;">
-    <ion-item lines="none">
+    <ion-item lines="none" (click)="changeAccount(family)">
       <ion-avatar slot="start">
         <img [src]="family.thumbnail">
       </ion-avatar>

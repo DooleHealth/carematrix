@@ -54,8 +54,83 @@ routerLink="diets-detail/recipe"
 </ion-card>
 <ng-template #Other>
   <ion-card 
+  class="ion-no-padding" 
+  (click)="goTo(content)"
+  routerLinkActive="active-item" 
+   [state]="{id: content?.item_id}" 
+   *ngIf="content?.type === 'forms'; else Forms"
+   >
+  
+    <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
+  
+      <ion-grid class="ion-no-padding" style="height: 100% !important"> 
+        <ion-row>
+          <ion-col size="4">
+            <ion-thumbnail class="thumbnail">
+              <img
+                class="paddingRight imagefit"
+                [src]="content?.media?.temporaryUrl"
+                onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+                alt=""
+              />
+            </ion-thumbnail>
+          </ion-col>
+    
+          <ion-col size="8">
+            <ion-row>
+                <ion-col><p>{{ content?.title}}</p></ion-col>
+              <ion-col size="6.5" size-md="6" size-lg="5">          
+                <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
+                     >{{ 'button.take' | translate }}
+                    </ion-button>
+  
+                    <ion-button *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
+                      >{{ 'button.forgotten' | translate }}
+                    </ion-button>
+                    <ion-button *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
+                   >{{ 'button.taked' | translate }}
+                  </ion-button>
+              </ion-col>
+              
+            </ion-row>
+            <ion-row>
+              <ion-row class="txtSubtitle2"  >
+                <ion-text class="txtSubtitle" style="display: inline-flex !important;">
+                  <p> {{ setFormatDate(content?.from_date ) }} </p>&nbsp;
+                  <p *ngIf="content?.to_date"> {{'medication.to' | translate}} {{ setFormatDate(content?.to_date )}}</p>
+                </ion-text>
+                &nbsp;
+                <!--<ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"
+                  (click)="presentAlert()"></ion-icon>-->
+              </ion-row>
+              
+            </ion-row>
+      
+            <ion-row>
+              <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
+                <p class="txtSubtitle3" style="color: var(--malva)">
+                  {{content?.frequency}} 
+                </p>
+      
+              </ion-col>
+              <ion-col size="2.5" size-md="2" size-lg="1">
+                <p class="txtSubtitleDate" style="color: var(--malva)">
+                  {{this.date}}
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+  
+      </ion-grid>
+    <!-- </ion-item> -->
+  </ion-card>
+ 
+</ng-template>
+<ng-template #Forms>
+  <ion-card 
 class="ion-no-padding" 
-*ngIf="content?.item_type === 'App\\FormProgrammation'; else Forms"
+
 routerLinkActive="active-item" 
  [state]="{id: content?.item_id}" 
  >
@@ -77,7 +152,8 @@ routerLinkActive="active-item"
   
         <ion-col size="8">
           <ion-row>
-            <ion-col><p>{{(content?.alias !== null)?
+            <ion-col>
+              <p>{{(content?.alias !== null)?
               content?.alias: content?.name}}</p></ion-col>
             <ion-col size="6.5" size-md="6" size-lg="5">          
               <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
@@ -93,93 +169,11 @@ routerLinkActive="active-item"
             </ion-col>
             
           </ion-row>
-          <ion-row>
-            <ion-row class="txtSubtitle2"  >
-              <ion-text class="txtSubtitle2">
-                {{content?.item.description__corta}}
-            </ion-text>
-              &nbsp;
-            </ion-row>
-            
-          </ion-row>
     
           <ion-row>
             <ion-col size="9.5" size-md="10" size-lg="11">
               <p class="txtSubtitle3" style="color: var(--malva)">
                 {{'medication.dose' | translate}}{{content?.frequency}} 
-              </p>
-    
-            </ion-col>
-            <ion-col size="2.5" size-md="2" size-lg="1">
-              <p class="txtSubtitleDate" style="color: var(--malva)">
-                {{this.date}}
-              </p>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-
-    </ion-grid>
-  <!-- </ion-item> -->
-</ion-card>
-</ng-template>
-<ng-template #Forms>
-  <ion-card 
-class="ion-no-padding" 
-(click)="goTo(content)"
-routerLinkActive="active-item" 
- [state]="{id: content?.item_id}" 
- >
-
-  <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
-
-    <ion-grid class="ion-no-padding" style="height: 100% !important"> 
-      <ion-row>
-        <ion-col size="4">
-          <ion-thumbnail class="thumbnail">
-            <img
-              class="paddingRight imagefit"
-              [src]="content?.media?.temporaryUrl"
-              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
-              alt=""
-            />
-          </ion-thumbnail>
-        </ion-col>
-  
-        <ion-col size="8">
-          <ion-row>
-              <ion-col><p>{{ content?.title}}</p></ion-col>
-            <ion-col size="6.5" size-md="6" size-lg="5">          
-              <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
-                   >{{ 'button.take' | translate }}
-                  </ion-button>
-
-                  <ion-button *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
-                    >{{ 'button.forgotten' | translate }}
-                  </ion-button>
-                  <ion-button *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
-                 >{{ 'button.taked' | translate }}
-                </ion-button>
-            </ion-col>
-            
-          </ion-row>
-          <ion-row>
-            <ion-row class="txtSubtitle2"  >
-              <ion-text class="txtSubtitle" style="display: inline-flex !important;">
-                <p> {{ setFormatDate(content?.from_date ) }} </p>&nbsp;
-                <p *ngIf="content?.to_date"> {{'medication.to' | translate}} {{ setFormatDate(content?.to_date )}}</p>
-              </ion-text>
-              &nbsp;
-              <!--<ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"
-                (click)="presentAlert()"></ion-icon>-->
-            </ion-row>
-            
-          </ion-row>
-    
-          <ion-row>
-            <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
-              <p class="txtSubtitle3" style="color: var(--malva)">
-                {{content?.frequency}} 
               </p>
     
             </ion-col>

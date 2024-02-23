@@ -111,6 +111,37 @@ ion-card-content {
 
 ion-item {
   height: auto !important;
+
+
+  .item-radio-checked{
+    --background: #F9F4FF;
+  }
+
+ 
+}
+
+ion-searchbar {
+  --background: white; 
+  color: var(--default-text);
+  
+}
+
+
+.item-radio-checked{
+  --background: #F9F4FF;
+}
+
+ion-radio.ios.in-item.radio-justify-space-between.radio-alignment-center.radio-label-placement-start.hydrated.radio-checked  {
+  background: #F9F4FF;
+}
+
+
+
+
+
+.dependants-list {
+  border-radius: 10px;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.05);
 }
 
 .vertical-card {
@@ -274,6 +305,22 @@ ion-card {
   margin: 0%;
 }
 
+.thumbnail{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  width: 98px !important;
+  height: 80px !important;
+}
+
+.caregiver-item {
+ --padding-start: 0px
+}
+
+.caregiver-item2 {
+  --padding-start: 0px;
+  --inner-padding-end: 0px
+}
+
 .cardHeader {
   --background: #ffffff !important;
   max-height: 41px;
@@ -418,6 +465,41 @@ ion-progress-bar {
   }
 }
 
+
+.caregiver-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  color: var(--default-text);
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.035px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.birth-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  color: var(--ion-color-medium);
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.035px;
+}
+
 .see-more-appointment {
   color: var(--seeAllColor);
   font-family: 'Poppins-Medium';
@@ -508,49 +590,7 @@ strong {
 .slider-vertical {
   height: 100px !important;
 }
-// .swiper {
-//   width: 100%;
-//   height: 100%;
-// }
-// .swiper-pagination {
-//   height: auto !important;
-// }
 
-// .swiper-slide-container {
-//   text-align: center;
-//   font-size: 18px;
-//   background: #fff;
-//   height: 100%;
-//   max-width: 600px;
-//   margin: auto;
-//   /* Center slide text vertically */
-//   display: -webkit-box;
-//   display: -ms-flexbox;
-//   display: -webkit-flex;
-//   display: flex;
-//   -webkit-box-pack: center;
-//   -ms-flex-pack: center;
-//   -webkit-justify-content: center;
-//   justify-content: center;
-//   -webkit-box-align: center;
-//   -ms-flex-align: center;
-//   -webkit-align-items: center;
-//   align-items: center;
-// }
-
-// .swiper .swiper-slide {
-//   height: auto;
-// }
-
-// .swiper-slide {
-//   display: block;
-
-//   object-fit: cover;
-//   border-radius: 15px;
-//   .cover img {
-//     height: 200px;
-//   }
-// }
 
 @media (min-width: 640px) and (max-width: 1024px) {
   .card {

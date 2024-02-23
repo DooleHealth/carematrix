@@ -140,14 +140,14 @@ export class FormListPage implements OnInit {
           to: this.transformDate(element.to_date),
           form_id: element.form_id,
           accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
-          type: "form",
+          type: "forms",
           description: "", //element.frequencyName,
           id: element.id,
           model_id: element.id,
           model: modelType,
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
-          isAnswers: isAnswers,
+          hasFormAnswered: element.hasFormAnswered,
           frequency: element.frequency,
           state: element?.last_accepted_or_declined?.type,
           form_programmation_id: element.formProgrammationTimes[0].form_programmation_id
@@ -207,13 +207,13 @@ export class FormListPage implements OnInit {
       async (res: any) =>{
         console.log('[Form_listPage] getFormsListByDate()', await res);
         
-        if(res.success){
+        if(res){
           this.listForms = []
          
          // this.listForms = res.forms;
           //this.items = res.dietIntakes
           console.log('[Form_listPage] getFormsListByDate(dietIntakes)', await this.listForms);
-         this.groupDiagnosticsByDate(res.forms)
+         this.groupDiagnosticsByDate(res)
 
 
           console.log("VERIFY DIETS")
@@ -235,6 +235,12 @@ export class FormListPage implements OnInit {
   groupDiagnosticsByDate(forms) {
       
     forms.forEach((form) => {
+      
+      form.type= "form";
+      const temporaryUrl = form.media;
+      if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
+        form.image = temporaryUrl.temporaryUrl
+      }
       let date = this.selectDayPeriod(form.from_date);
       form.period = date;
       this.listForms.push(form);

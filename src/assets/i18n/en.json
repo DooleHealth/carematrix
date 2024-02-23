@@ -112,7 +112,10 @@
     "close_app": "Want to close the app?",
     "get_firts_data": "Enter your first data",
     "advices": "Advices",
-    "see_advices": "See all Advices"
+    "see_advices": "See all Advices",
+    "caregiver_title": "Caregiver's responsible",
+    "caregiver_change": "You are going to change ",
+    "back_caregiver": "Back to my profile"
   },
   "profile": {
     "title_profile": "My Profile",
@@ -168,7 +171,12 @@
     "subtitle_advices": "Advices",
     "points": "Points",
     "new": "new",
-    "de": " of "
+    "de": " of ",
+    "achievements":"achievements",
+    "text_goals1":"Be proud of yourself!",
+    "text_goals2":"You have successfully passed this objective 🏆",
+    "go": "Go",
+    "accordion_goals":"These are the tasks you must perform:"
   },
   "health_path": {
     "title": "Health Path",
@@ -246,7 +254,8 @@
     "button_send": "Send",
     "header_error": "Error",
     "header_info": "Information",
-    "header_confirmation": "Confirmation"
+    "header_confirmation": "Confirmation",
+    "header_atention": "Attention"
   },
   "error_required": "Required",
   "setting": {
@@ -661,7 +670,8 @@
     "rejectd_option2F": "I do not agree with the form",
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
-    "medication_status": "pending"
+    "medication_status": "pending",
+    "name":"Name"
   },
 
   

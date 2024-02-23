@@ -43,7 +43,87 @@
 
   <ng-template #finishedLoading>
 
+    <br>
     <ion-grid mode="md">
+
+      <!-- CAREGIVER -->
+      <ng-container *ngIf="!this.authService.isFamily; else familyUnitActivated">
+        <ion-row>
+          <br>
+          <ion-text class="txtTitle" style="white-space: nowrap">
+            {{ 'home.caregiver_title' | translate}}</ion-text>
+
+            
+        </ion-row>
+
+
+ 
+        <ng-container *ngIf="this.listFamilyUnit?.length !== 1; else onlyOneCaregiver">
+          <ion-row>
+            <ion-col size="12">
+              <ion-searchbar mode="ios" show-cancel-button="always" (ionCancel)="onCancel($event)"
+                (ionFocus)="activateList()" [debounce]="1000" (ionInput)="handleInput($event)"
+                style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
+
+              <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
+                <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)">
+
+                  <div *ngFor="let result of results; let i = index; let isLast=last">
+                    <ion-item slot="end" lines="none" class="caregiver-item2">
+                      <ion-radio mode="ios" value="space-between" justify="space-between" value="{{i}}" checked="true"
+                        style="padding-right: 5%; padding-left: 5%;">
+                        <p class="caregiver-txt">{{ result.name }}
+                          <span class="birth-txt" *ngIf="result.birthdate">{{ result.birthdate }}</span>
+                        </p>
+                      </ion-radio>
+                    </ion-item>
+                  </div>
+
+                </ion-radio-group>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+        </ng-container>
+
+        <ng-template #onlyOneCaregiver>
+          <ion-card>
+            <ion-card-content class="ion-no-padding" style="padding-top: 0px;">
+              <ion-item class="caregiver-item" (click)="this.alertCaregiver(this.listFamilyUnit[0])" lines="none">
+                <ion-thumbnail class="thumbnail" slot="start">
+                  <img alt="Silhouette of mountains" [src]="this.listFamilyUnit[0]?.thumbnail" />
+                </ion-thumbnail>
+                <ion-label>{{this.listFamilyUnit[0]?.name}}</ion-label>
+
+                <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ng-template>
+
+      </ng-container>
+
+      <ng-template #familyUnitActivated>
+
+        <ion-row>
+          <br>
+          <ion-text class="txtTitle" style="white-space: nowrap">
+            {{ 'home.back_caregiver' | translate}}</ion-text>
+        </ion-row>
+
+        <ion-card>
+          <ion-card-content class="ion-no-padding" style="padding-top: 0px;">
+            <ion-item class="caregiver-item" (click)="returnUser()" lines="none">
+              <ion-thumbnail class="thumbnail" slot="start">
+                <img alt="Silhouette of mountains" [src]="this.authService.user.selectedCaregiverResponsible?.image" />
+              </ion-thumbnail>
+              <ion-label>{{this.authService.user.selectedCaregiverResponsible?.name}}</ion-label>
+
+              <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
 
       <br>
 
@@ -121,10 +201,11 @@
                             </ion-progress-bar>
                           </ion-row>
 
-                          
+
                         </ion-col>
 
-                        <ion-row (click)="navigateToChallengeDetailPage(challenge)" routerLinkActive="active-item" style="width: 100%;">
+                        <ion-row (click)="navigateToChallengeDetailPage(challenge)" routerLinkActive="active-item"
+                          style="width: 100%;">
                           <a class="a-type1" style="padding-left: 15%;">{{
                             'health_path.detail' | translate }} <b> {{'health_path.see_more' | translate }}! </b> </a>
 
@@ -165,14 +246,14 @@
         </swiper-container>
       </ion-row>
 
-      <ion-row class="paddingTopNoMarginBottom">
+      <ion-row>
         <br>
         <ion-text class="txtTitle" style="white-space: nowrap">
           {{ 'home.today_title' | translate}}</ion-text>
       </ion-row>
 
       <!-- Forms -->
-      <ion-row class="paddingTopNoMarginBottom">
+      <ion-row>
         <ion-card class="vertical-card" (click)="navigateToFormsPage()">
           <ion-item lines="none" mode="md" class="noMargin">
             <div class="slidersHeader">
@@ -467,45 +548,45 @@
               </div>
 
               <ion-card-content routerLink="/agenda/reminder/detail" routerLinkActive="active-item"
-              [state]="{ event: slide}">
-              <ion-grid>
-                <ion-row class="alingLeft zeroMarginPadding">
-                  <ion-col size="2.5" class="alingLeft zeroMarginPadding" style="display: flex; align-items: center;">
-                    <ion-img src="assets/icons/agenda_new.svg"></ion-img>
-                  </ion-col>
-                  <ion-col size="9.5" class="alingLeft zeroMarginPadding" style="padding-top: 3%;">
-                    <ion-text class="datetxt ion-margin-start">
+                [state]="{ event: slide}">
+                <ion-grid>
+                  <ion-row class="alingLeft zeroMarginPadding">
+                    <ion-col size="2.5" class="alingLeft zeroMarginPadding" style="display: flex; align-items: center;">
+                      <ion-img src="assets/icons/agenda_new.svg"></ion-img>
+                    </ion-col>
+                    <ion-col size="9.5" class="alingLeft zeroMarginPadding" style="padding-top: 3%;">
+                      <ion-text class="datetxt ion-margin-start">
 
-                      {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
-                      }}
-                    </ion-text>
-                    <br>
-                    <ion-text class="date-txt ion-margin-start">
-                      {{slide.title}}
-                    </ion-text>
-                    <br>
-                    <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
-                      <div *ngFor="let doctor of slide.staff;">
-                        <ion-text class="staff-txt ion-margin-start">
-                          {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
-                        </ion-text>
-                        <br>
-                      </div>
-                    </ng-container>
-
-                    <ng-template #noProfesional>
-                      <ion-text class="staff-txt ion-margin-start">
-                        <b>{{ 'appointment.no_field_specially' | translate }}</b>
+                        {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
+                        }}
                       </ion-text>
-                    </ng-template>
-                    
-                    <ion-row>
-                      <a class="see-more-appointment ion-margin-start">{{ 'health_path.see_more' | translate}}!</a>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card-content>
+                      <br>
+                      <ion-text class="date-txt ion-margin-start">
+                        {{slide.title}}
+                      </ion-text>
+                      <br>
+                      <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
+                        <div *ngFor="let doctor of slide.staff;">
+                          <ion-text class="staff-txt ion-margin-start">
+                            {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
+                          </ion-text>
+                          <br>
+                        </div>
+                      </ng-container>
+
+                      <ng-template #noProfesional>
+                        <ion-text class="staff-txt ion-margin-start">
+                          <b>{{ 'appointment.no_field_specially' | translate }}</b>
+                        </ion-text>
+                      </ng-template>
+
+                      <ion-row>
+                        <a class="see-more-appointment ion-margin-start">{{ 'health_path.see_more' | translate}}!</a>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
             </ion-card>
           </swiper-slide>
         </swiper-container>
@@ -538,7 +619,8 @@
               <ion-card-content style="padding-top: 0px;">
                 <ion-toolbar>
                   <ion-buttons slot="end">
-                    <ion-button color="primary" shape="round" fill="solid" routerLink="/advices/advices-detail" [state]="{ id: slide?.id }" routerLinkActive="active-item"
+                    <ion-button color="primary" shape="round" fill="solid" routerLink="/advices/advices-detail"
+                      [state]="{ id: slide?.id }" routerLinkActive="active-item"
                       style="width:120px; text-transform: capitalize; padding-left: 2%; padding-right: 2%;">
                       {{'health_path.see_more' | translate}}
                     </ion-button>

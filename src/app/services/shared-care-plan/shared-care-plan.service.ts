@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiEndpointsService } from '../api-endpoints.service';
 import { HttpService } from '../http.service';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -58,10 +59,14 @@ export class SharedCarePlanService {
     );
   }
 
-  getAPIExercises(): Observable<any> {
+  getAPIExercises(params): Observable<any> {
     let path = 'rehabilify/sharedcareplan/exercises';
     const endpoint = this.api.getEndpoint(path);
-    return this.http.get(endpoint).pipe(
+    let httpParams = new HttpParams()
+    .set('tags', params.tags)
+    .set('interactions', params.interactions)
+    .set('readingTime', params.readingTime);
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIExercises(${path}) res: `, res);
         return res;

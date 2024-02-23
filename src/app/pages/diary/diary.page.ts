@@ -99,10 +99,9 @@ export class DiaryPage implements OnInit {
     }
   }
 
-  getIsDateInPast(date){
-    
-    const dateToCompare = new Date(date);
-    this.isDateInPast = dateToCompare < this.currentDate;
+  getIsDateInPast(date: string | number | Date){
+  
+    this.isDateInPast = new Date(date) < this.currentDate;
     return this.isDateInPast
 
   }
@@ -212,6 +211,7 @@ export class DiaryPage implements OnInit {
   }
 
   treeIterateDiets(obj, stack) {
+    this.listDietsToday=[];
     for (var property in obj) {
       console.log('[DiaryPage] treeIterateDiets()', property);
       if (obj.hasOwnProperty(property)) {
@@ -302,8 +302,8 @@ export class DiaryPage implements OnInit {
     
   }
 
-  getLastName(name, date_intake){
-    this.getIsDateInPast(date_intake);
+  getLastName(name, date){
+    this.getIsDateInPast(date)
     if(name != this.Lasttimestring){
       this.Lasttimestring = name;
       return true
@@ -343,7 +343,12 @@ export class DiaryPage implements OnInit {
         this.items = []
         ///let formattedDate = this.transformDate(this.date)
        //// let date = {date: formattedDate}
-        await this.dooleService.getAPIListRecipe().subscribe(
+       let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1
+      }
+        await this.dooleService.getAPIListRecipe(params).subscribe(
           async (res: any) =>{
             
     
