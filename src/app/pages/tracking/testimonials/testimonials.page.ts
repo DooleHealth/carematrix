@@ -37,8 +37,7 @@ export class TestimonialsPage implements OnInit {
     let  params={
       tags:1,
       interactions:1,
-      readingTime:1,
-      testimonials:1
+      readingTime:1
     }
    this.dooleService.getAPIlistTestimonials(params).subscribe(
       async (res: any) =>{

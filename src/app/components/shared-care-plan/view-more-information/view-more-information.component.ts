@@ -97,7 +97,8 @@ export class ViewMoreInformationComponent  implements OnInit {
   }
 
   getStateObject(listcontets) {
-    if (this.segment === "exercises") {
+    
+    if (this.segment === "Exercises") {
       return { id: listcontets?.id, programable_id: listcontets.programable_id };
     } else {
       return { id: listcontets?.id };
@@ -105,9 +106,7 @@ export class ViewMoreInformationComponent  implements OnInit {
   }
 
   getColorLike(statusable){
-    
-    
-    if(statusable !== "undefined" &&   statusable.length > 0){
+    if(statusable.length > 0){
       let existeLike = statusable.some(objeto => objeto.type === "like");
     if(existeLike){
       return 'primary'
@@ -115,6 +114,9 @@ export class ViewMoreInformationComponent  implements OnInit {
       return '#FFFFFF'
     }
       
+    }
+    else{
+      return '#FFFFFF'
     }
     
   }

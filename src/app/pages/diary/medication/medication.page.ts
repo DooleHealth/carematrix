@@ -260,6 +260,7 @@ export class MedicationPage implements OnInit {
           let list = res?.drugIntakes;
           if (list) {
             this.listDrugIntakes = res.drugIntakes;
+            
             list = this.sortDate(list);
             
             console.log("[DiaryPage] getDrugIntakeList() items", list);

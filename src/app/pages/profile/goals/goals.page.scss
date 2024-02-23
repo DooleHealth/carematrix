@@ -6,3 +6,32 @@
   color: #7F8C8D;
   ;
 }
+ion-segment-button {
+  height: fit-content;
+  font-size: 16px;
+  text-transform: none;
+  --color-checked: var(--ion-color-primary) !important;
+  --background-checked: transparent !important;
+  --indicator-color: transparent !important;
+  text-align: center;
+  font-family: 'Poppins-Medium';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; 
+  color: #7F8C8D;
+}
+
+ion-segment-button.segment-button-checked {
+  background: #ECDDFE;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.05);
+  color: var(--default-text) !important;
+    border-top: 0% !important;
+  border-left: 0% !important;
+  border-right: 0% !important;
+  --indicator-color: transparent !important;
+}
+
+ion-segment-button.segment-button-after-checked {
+  color: #7F8C8D !important;
+}

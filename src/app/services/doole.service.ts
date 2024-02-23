@@ -1201,13 +1201,13 @@ export class DooleService {
   }
 
   getAPIlistTestimonials(params): Observable<any> {
-    let path = `user/advices`;
+    let path = `user/testimonies`;
     const endpoint = this.api.getEndpoint(path);
     let httpParams = new HttpParams()
     .set('tags', params.tags)
     .set('interactions', params.interactions)
-    .set('readingTime', params.readingTime)
-    .set('testimonials', params.testimonials);
+    .set('readingTime', params.readingTime);
+    
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);

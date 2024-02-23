@@ -240,9 +240,21 @@ export class ScpMedForMonComponent implements OnInit {
 
 
   SeeAnswers(event: any, content: any){
-    console.log("llego al tezt")
     event.stopPropagation();
     this.router.navigate(['/tracking/answers'], {state:{id: content.id, title: content.title}});
       }
      
+
+      handleImageError(event: any, contentType: string) {
+        if (contentType === 'forms') {
+          event.target.src = '/assets/images/shared-care-plan/forms.png';
+        } else if (contentType === 'Exercises') {
+          event.target.src = '/assets/images/shared-care-plan/exercises.png';
+        } else if (contentType === 'App\\Monitoring') {
+          event.target.src = '/assets/images/shared-care-plan/healthcharts.png';
+        }
+        else{
+          event.target.src = '/assets/images/shared-care-plan/medication.png';
+        }
+      }
 }

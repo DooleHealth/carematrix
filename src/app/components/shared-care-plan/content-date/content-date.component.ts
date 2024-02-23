@@ -27,12 +27,17 @@ export class ContentDateComponent implements OnInit {
   }
 
   goTo(content){
-    if ( content.type === "form") {
-      if (content.showAlert) this.alertForm();
-      else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
-    }else{
+    
+    if(content != undefined){
+      if ( content.type === "forms") {
+        if (content.showAlert) this.alertForm();
+        else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
+      }
+    
+    else{
       this.redirect.emit({type: content})
     }
+  }
     
   }
 
