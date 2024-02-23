@@ -108,7 +108,10 @@ export class ExercisesPage implements OnInit {
           state: element?.last_accepted_or_declined?.type,
           frequency: element.frequency,
           from_date: element.from_date,
-          to_date: element.to_date
+          to_date: element.to_date,
+          statusable: element.statusable,
+          interactions: element.exercise.interactions,
+          tags_name: element.exercise.tags_name
         }
         this.items.push(data)
       })

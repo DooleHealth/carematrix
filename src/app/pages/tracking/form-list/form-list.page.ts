@@ -236,7 +236,7 @@ export class FormListPage implements OnInit {
       
     forms.forEach((form) => {
       
-      form.type= "form";
+      form.type= "forms";
       const temporaryUrl = form.media;
       if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
         form.image = temporaryUrl.temporaryUrl

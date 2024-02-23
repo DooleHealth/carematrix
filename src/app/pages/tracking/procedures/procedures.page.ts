@@ -32,7 +32,9 @@ export class ProceduresPage implements OnInit {
   }
 
   getIsDateInPast(date){
+    
     this.isDateInPast = new Date(date) < this.currentDate;
+    console.log("isDateInPast", this.isDateInPast)
     return this.isDateInPast
 
   }
