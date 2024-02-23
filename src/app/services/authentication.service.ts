@@ -29,7 +29,7 @@ export class User {
   name: string;
   listFamilyUnit: FamilyUnit[] = [];
 
-  selectedPatientResponsible;
+  selectedCaregiverResponsible;
 
   constructor(idUser: string, secret: string, name: string, first_name: string, image: string) {
     this.idUser = idUser
@@ -202,9 +202,14 @@ export class AuthenticationService {
     this.isFamily = true;
     let s: string = user['name'];
     let fullname = s.split(',');
-    this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
+
+    let previousUser = this.user
+    
+
+    this.user = new User(user.id, '', /* fullname[0].replace(',','') */ user['name'], fullname[1], user.thumbnail);
+    this.user.selectedCaregiverResponsible = previousUser;
     this.user.familyUnit = user.id;
-    this.user.selectedPatientResponsible = user;
+    
     Preferences.set({
       key: String(user.id),
       value: JSON.stringify(this.user)
@@ -226,7 +231,7 @@ export class AuthenticationService {
       console.log(`[AuthenticationService] MEMBER(${id})`, user);
       let s: string = user['name'];
       let fullname = s.split(',');
-      this.user = new User(user['idUser'], '', fullname[0].replace(',',''), fullname[1], user['image']);
+      this.user = new User(user['idUser'], '', /* fullname[0].replace(',','') */ user['name'], fullname[1], user['image']);
       this.user.familyUnit = id;
       this.setUserLocalstorage(this.user)
     })

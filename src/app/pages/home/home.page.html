@@ -56,9 +56,9 @@
             
         </ion-row>
 
-        <app-caregiver></app-caregiver>
 
-        <ng-container *ngIf="this.listFamilyUnit.length > 1; else onlyOneCaregiver">
+ 
+        <ng-container *ngIf="this.listFamilyUnit?.length !== 1; else onlyOneCaregiver">
           <ion-row>
             <ion-col size="12">
               <ion-searchbar mode="ios" show-cancel-button="always" (ionCancel)="onCancel($event)"
@@ -111,12 +111,19 @@
             {{ 'home.back_caregiver' | translate}}</ion-text>
         </ion-row>
 
-        <app-caregiver></app-caregiver>
+        <ion-card>
+          <ion-card-content class="ion-no-padding" style="padding-top: 0px;">
+            <ion-item class="caregiver-item" (click)="returnUser()" lines="none">
+              <ion-thumbnail class="thumbnail" slot="start">
+                <img alt="Silhouette of mountains" [src]="this.authService.user.selectedCaregiverResponsible?.image" />
+              </ion-thumbnail>
+              <ion-label>{{this.authService.user.selectedCaregiverResponsible?.name}}</ion-label>
+
+              <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
       </ng-template>
-
-
-
-
 
       <br>
 

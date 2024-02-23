@@ -11,8 +11,8 @@ export class CaregiverComponent  implements OnInit {
   constructor(public authService: AuthenticationService) { }
 
   ngOnInit() {
-    console.log(this.authService.user.selectedPatientResponsible)
-    this.caregiver = this.authService.getFamilyUnitLocalstorage(this.authService.user.familyUnit)
+    console.log(this.authService.user)
+    //this.caregiver = this.authService.getFamilyUnitLocalstorage(this.authService.user.familyUnit)
   }
 
 

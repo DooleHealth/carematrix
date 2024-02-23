@@ -453,7 +453,7 @@ export class HomePage implements OnInit {
 
     try {
       const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIFamilyUnit2().subscribe(
+        this.dooleService.getAPIFamilyUnit().subscribe(
           (data: any) => {
             console.log('[HomePage] getFamilyUnitData()', data);
             resolve(data);
@@ -465,7 +465,11 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.listFamilyUnit = res.othersCanAccess;
+      this.listFamilyUnit = res;
+
+      //console.log(this.listFamilyUnit)
+
+      
       this.results = [...this.listFamilyUnit];
       this.resultsFake = [...this.fakeData];
 
@@ -476,6 +480,46 @@ export class HomePage implements OnInit {
       console.error('Error fetching user image:', error);
       throw error;
     }
+  }
+
+  async returnUser(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      header: this.translate.instant("home.back_caregiver"),
+      message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'warning',
+          handler: (blah) => {
+            this.onCancel()
+            console.log('[LandingPage] AlertConfirm Cancel');
+          } 
+        }, {
+          text: this.translate.instant("alert.button_change"),
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: (data) => {
+            this.authService.isFamily = false;
+            this.pusherConnection.unsubscribePusher()
+            this.authService.setUserFamilyId(null).then((val) => {
+              this.ngZone.run(()=>{
+                this.isLoading = true;
+                this.ionViewWillEnter()
+              });
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+   
+   
   }
 
   async onCaregiverSelect(event: any) {
@@ -521,12 +565,10 @@ export class HomePage implements OnInit {
 
   changeUser(user?){
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
-    //this.pusherConnection.unsubscribePusher()
     this.authService.setFamilyUnit(user).then((val) => {
       this.ngZone.run(()=>{
-        setTimeout(()=>{
-          this.ionViewWillEnter()
-        }, 500)
+        this.isLoading = true;
+        this.ionViewWillEnter()
       });
     });
       
