@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ContactPageRoutingModule,
     NgxPaginationModule
   ],
+  
   declarations: [ContactPage],
-  providers: [Chooser]
+  providers: [Chooser, CallNumber]
 })
 export class ContactPageModule {}

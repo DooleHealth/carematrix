@@ -34,7 +34,7 @@
           <ion-label>{{ 'contact.tap_my_centers' | translate}}</ion-label>
         </ion-segment-button>
 
-       <!--  <ion-segment-button *ngIf="role?.component?.agenda" value="video">
+        <!--  <ion-segment-button *ngIf="role?.component?.agenda" value="video">
           <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
         </ion-segment-button>
 
@@ -80,12 +80,38 @@
                       <ion-text class="center-name ion-margin-start">
                         {{slide.name | titlecase }}
                       </ion-text>
+
+                      <ng-container *ngIf="slide?.phone">
+                        <br>
+                        <ion-text class="phone-txt ion-margin-start">
+                          {{slide.phone}}
+                        </ion-text>
+                      </ng-container>
+                    
+
                       <br>
-                      <ion-text class="phone-txt ion-margin-start">
-                        {{slide.phone}}
-                      </ion-text>
+                      <a class="a-type1">
+                        <b> {{'health_path.see_more' | translate }}! </b> </a>
                     </ion-col>
                   </ion-row>
+
+                  <ion-row class="alingLeft zeroMarginPadding" *ngIf="slide?.phone">
+                    <ion-col size="12"
+                      style="display: flex; flex-direction: column; justify-content: space-between; padding: unset">
+                      <div style="align-self: flex-end;">
+                        <ion-button shape="round" color="warning" style="--background: var(--form-home-color); font-size: 90%;" (click)="callNumber(slide.phone)">
+                          {{'detail_contact.call' | translate }}
+                          <ion-icon style="padding-left: 2%;" src="../../assets/icons/phone_emergency.svg"></ion-icon>
+                        </ion-button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+
+
+
+
+
+
                 </ion-grid>
               </ion-card-content>
             </ion-card>
@@ -140,7 +166,7 @@
                           <br>
                         </div>
                       </ng-container>
-  
+
                       <ng-template #noProfesional>
                         <ion-text class="staff-txt ion-margin-start">
                           <b>{{ 'appointment.no_field_specially' | translate }}</b>
@@ -481,27 +507,11 @@
   <div *ngIf="this.segment === 'medical-visits'" style="background-color: var(--default-bkg);"
     style="display: flex; justify-content: center;">
     <!-- Floating Button -->
-    <ion-button (click)="requestVisit()" color="primary"
-      shape="round" class="floating-button ion-margin">
+    <ion-button (click)="requestVisit()" color="primary" shape="round" class="floating-button ion-margin">
       {{'contact.new_visit' | translate}}
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/new_visit.svg"></ion-icon>
     </ion-button>
   </div>
-
-
-  <div *ngIf="this.segment === 'my-centers'" style="background-color: var(--default-bkg);"
-    style="display: flex; justify-content: center;">
-    <!-- Floating Button -->
-    <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item'
-      style="--background: var(--form-home-color);" shape="round" class="floating-button ion-margin">
-      {{'contact.emergency' | translate}}
-      <ion-icon style="padding-left: 2%;" src="../../assets/icons/phone_emergency.svg"></ion-icon>
-    </ion-button>
-  </div>
-
-
-
-
   <ion-toolbar>
     <app-tabs></app-tabs>
   </ion-toolbar>

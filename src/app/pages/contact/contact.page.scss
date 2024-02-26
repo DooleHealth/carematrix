@@ -178,4 +178,22 @@ ion-segment {
     color: #7F8C8D;
   }
 
+  .a-type1{
+    color: var(--seeAllColor);
+    font-family: 'Poppins-Regular';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.048px;
+  
+    b {
+      font-size: 14px;
+      font-family: 'Poppins-Medium';
+      font-weight: 400;
+      
+    }
+  }
+  
+
   
