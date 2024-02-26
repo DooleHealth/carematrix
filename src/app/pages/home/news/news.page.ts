@@ -64,17 +64,16 @@ export class NewsPage implements OnInit {
       });
   }
 
-  filterListNews(event){
-    var query = event //.target.value;
-    this.isLoading = true
-    this.dooleService.getAPISearchNews(query).subscribe(res=>{
-      console.log('[NewsPage] filterListNews()', res);
-      this.items = []
-      if(res.success)
-      this.adapterForView(res.news)
-      this.isLoading = false
-    },err => {
-      console.log('[NewsPage] filterListNews() ERROR(' + err.code + '): ' + err.message);
+  filterListNews(event) {
+    
+    const searchTerm = event.srcElement.value.toLowerCase(); 
+    let search = this.items
+    const filteredItems = search.filter(item => {
+      const subject = item.subject.toLowerCase();
+      return subject.includes(searchTerm) || subject === searchTerm;
     });
+      this.items = (filteredItems)
   };
+
+ 
 }

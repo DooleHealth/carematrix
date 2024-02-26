@@ -26,11 +26,11 @@ export class TestimonialsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getNewsList()
+    this.getNewsTestimonial()
   }
 
 
-  async getNewsList(){
+  async getNewsTestimonial(){
     console.log('[NewsPage] getNewsList()');
     this.items = []
     this.isLoading = true
@@ -54,5 +54,14 @@ export class TestimonialsPage implements OnInit {
           throw err;
       });
   }
-
+  filterListTertimonials(event) {
+    
+    const searchTerm = event.srcElement.value.toLowerCase(); 
+    let search = this.items
+    const filteredItems = search.filter(item => {
+      const subject = item.subject.toLowerCase();
+      return subject.includes(searchTerm) || subject === searchTerm;
+    });
+      this.items = (filteredItems)
+  };
 }
