@@ -43,15 +43,12 @@
 
   <ng-template #finishedLoading>
 
-    <br>
-    <ion-grid mode="md">
-
+    
+    <ion-grid mode="md" class="ion-padding-top">
       <!-- CAREGIVER -->
       <ng-container *ngIf="!this.authService.isFamily; else familyUnitActivated">
-        
         <ng-container *ngIf="this.listFamilyUnit?.length > 0; else caregiversAvailable">
           <ion-row>
-            <br>
             <ion-text class="txtTitle" style="white-space: nowrap">
               {{ 'home.caregiver_title' | translate}}</ion-text>            
           </ion-row>
@@ -129,11 +126,10 @@
         </ng-template>
       
 
-      <br>
-
+      
+      <!-- GOALS -->
       <ng-container *ngIf="nChallengesNotCompleted() !== 0">
-
-        <ion-row>
+        <ion-row class="ion-padding-top">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'health_path.goals' | translate}}</ion-text>
           </ion-col>
@@ -250,8 +246,9 @@
         </swiper-container>
       </ion-row>
 
-      <ion-row>
-        <br>
+  
+      <!-- TASKS OF TODAY -->
+      <ion-row class="ion-padding-top">
         <ion-text class="txtTitle" style="white-space: nowrap">
           {{ 'home.today_title' | translate}}</ion-text>
       </ion-row>
@@ -339,7 +336,6 @@
       <!-- Drugs -->
       <ion-row>
         <ion-card class="vertical-card" style="max-height: 135px !important;">
-
           <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToMedicationPage()"
             routerLinkActive="active-item">
             <div class="slidersHeader">
@@ -391,8 +387,6 @@
       <!-- Diets -->
       <ion-row>
         <ion-card class="vertical-card">
-
-
           <ion-item lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToDietsPage()">
             <div class="slidersHeader">
@@ -431,8 +425,6 @@
       <!-- Games -->
       <ion-row>
         <ion-card class="vertical-card">
-
-
           <ion-item lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToGamesPage()">
             <div class="slidersHeader">
@@ -466,7 +458,7 @@
 
 
       <!-- Physical Activity -->
-      <ion-row style="padding-bottom: 6%;">
+      <ion-row>
         <ng-container *ngIf="(!this.activity || this.activity?.length == 0); else elseBlock">
           <ion-card class="vertical-card margin-bottom" (click)="navigateToMonitoringPage()">
 
@@ -528,7 +520,7 @@
 
 
       <!-- Reminders -->
-      <ion-row class="paddingTopNoMarginBottom" *ngIf="this.appointment?.length > 0">
+      <ion-row *ngIf="this.appointment?.length > 0" class="ion-padding-top">
         <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
       </ion-row>
 
@@ -597,44 +589,50 @@
       </ion-row>
 
 
-      <br>
-      <ion-row>
-        <ion-col size="6">
-          <ion-text class="txtTitle">{{ 'home.advices' | translate}}</ion-text>
-        </ion-col>
 
-        <ion-col size="6">
-          <ion-text routerLink="/advices" class="seeAll"
-            style="display:flex; justify-content: end; padding-right: 5%;">{{
-            'home.see_advices' | translate}}</ion-text>
-        </ion-col>
-      </ion-row>
+      
+      <!-- ADVICES -->
+      <ng-container *ngIf="this.advices?.length > 0">
+        <ion-row class="ion-padding-top">
+          <ion-col size="6">
+            <ion-text class="txtTitle">{{ 'home.advices' | translate}}</ion-text>
+          </ion-col>
+  
+          <ion-col size="6">
+            <ion-text routerLink="/advices" class="seeAll"
+              style="display:flex; justify-content: end; padding-right: 5%;">{{
+              'home.see_advices' | translate}}</ion-text>
+          </ion-col>
+        </ion-row>
+  
+  
+        <ion-row>
+          <swiper-container [slidesPerView]="this.advices?.length == 1 ? 1:1.2">
+            <swiper-slide swiperSlide *ngFor="let slide of this.advices">
+              <ion-card>
+                <img class="imagefitAdvices" alt="Silhouette of mountains"
+                  [src]="slide?.image?.thumbnailTemporaryUrl ? slide?.image?.thumbnailTemporaryUrl : 'assets/images/default-advice-img.png'" />
+                <ion-card-header>
+                  <ion-title class="txt-card-advices">{{this.slide.name}}</ion-title>
+                </ion-card-header>
+                <ion-card-content style="padding-top: 0px;">
+                  <ion-toolbar>
+                    <ion-buttons slot="end">
+                      <ion-button color="primary" shape="round" fill="solid" routerLink="/advices/advices-detail"
+                        [state]="{ id: slide?.id }" routerLinkActive="active-item"
+                        style="width:120px; text-transform: capitalize; padding-left: 2%; padding-right: 2%;">
+                        {{'health_path.see_more' | translate}}
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-card-content>
+              </ion-card>
+            </swiper-slide>
+          </swiper-container>
+        </ion-row>
+      </ng-container>
+      
 
-
-      <ion-row>
-        <swiper-container [slidesPerView]="this.advices?.length == 1 ? 1:1.2">
-          <swiper-slide swiperSlide *ngFor="let slide of this.advices">
-            <ion-card>
-              <img class="imagefitAdvices" alt="Silhouette of mountains"
-                [src]="slide?.image?.thumbnailTemporaryUrl ? slide?.image?.thumbnailTemporaryUrl : 'assets/images/default-advice-img.png'" />
-              <ion-card-header>
-                <ion-title class="txt-card-advices">{{this.slide.name}}</ion-title>
-              </ion-card-header>
-              <ion-card-content style="padding-top: 0px;">
-                <ion-toolbar>
-                  <ion-buttons slot="end">
-                    <ion-button color="primary" shape="round" fill="solid" routerLink="/advices/advices-detail"
-                      [state]="{ id: slide?.id }" routerLinkActive="active-item"
-                      style="width:120px; text-transform: capitalize; padding-left: 2%; padding-right: 2%;">
-                      {{'health_path.see_more' | translate}}
-                    </ion-button>
-                  </ion-buttons>
-                </ion-toolbar>
-              </ion-card-content>
-            </ion-card>
-          </swiper-slide>
-        </swiper-container>
-      </ion-row>
 
     </ion-grid>
 

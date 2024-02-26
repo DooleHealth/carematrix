@@ -46,9 +46,6 @@
 
   <app-caregiver></app-caregiver>
 
-  
-
-
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'calendar'">
       <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
