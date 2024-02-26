@@ -69,13 +69,13 @@ export class ApiEndpointsService {
   /* #endregion */
 
   setIndexEndPointLocalstorage(endpoint) {
-    console.log(`[AuthenticationService] setEndPointLocalstorage()`, endpoint);
+    console.log(`[ApiEndpointsService] setEndPointLocalstorage()`, endpoint);
     localStorage.setItem('endpoint', JSON.stringify(endpoint));
   }
 
   getIndexEndPointLocalstorage() {
     let endpoint = localStorage.getItem('endpoint');
-    console.log(`[AuthenticationService] setEndPointLocalstorage()`, endpoint);
+    console.log(`[ApiEndpointsService] setEndPointLocalstorage()`, endpoint);
     if(endpoint) return Number(JSON.parse(endpoint))
     return undefined
   }

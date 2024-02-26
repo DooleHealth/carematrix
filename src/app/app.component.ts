@@ -1,7 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesystem';
-import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
+//import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
+import { ActionPerformed, Token, PushNotifications, PushNotificationSchema } from '../plugins/PushNotifications'
 import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
 
 import { AlertController, MenuController, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
@@ -26,6 +27,9 @@ import { ContentTypePath } from './models/shared-care-plan';
 
 import { register } from 'swiper/element/bundle';
 import { Capacitor } from '@capacitor/core';
+
+import { CallCapacitor } from 'src/plugins/CallCapacitor';
+import { TextZoom} from '@capacitor/text-zoom'; 
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
 
@@ -55,6 +59,7 @@ export class AppComponent implements OnInit {
   lastPause: Date;
   translationsForNotifications: any;
   environment = 0
+  isModalOpen = false;
   // Inject HistoryHelperService in the app.components.ts so its available app-wide
   constructor(
     private router: Router,
@@ -81,7 +86,9 @@ export class AppComponent implements OnInit {
 
   ) {
     this.setLanguage();
-
+    if (Capacitor.isNativePlatform() && this.platform.is('android')) {
+      TextZoom.set({value:1});
+    }
   }
 
   async ngOnInit() {
@@ -105,10 +112,12 @@ export class AppComponent implements OnInit {
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).catch((err) => { console.log('Setting screen orientation failed:', err); });
 
 
-        // VOIP calls for IOS
-        if (this.platform.is('ios')) {
-          this.initVoIpPushNotifications();
-        }
+       // VOIP calls for IOS
+       if (this.platform.is('ios')) {
+        this.initVoIpPushNotifications();
+      } else {
+        this.receiveVoIPEvents();
+      }
 
         // Actions when a VOIP call is received
         this.phonecallHandlers();
@@ -138,6 +147,24 @@ export class AppComponent implements OnInit {
     }).then(() => {
       console.log('** MKDIR OK **');
     });
+  }
+
+  receiveVoIPEvents() {
+    //console.log('[AppComponent] receiveVoIPEvents()')
+    CallCapacitor.addListener('accept-call', data => {
+      this.opentokService.agendaId$ = data.callId;
+      console.log('accept-call', data);
+      // This should be probably called in the VideoActivity, but is beyond this task point
+      CallCapacitor.updateCallState({callId: data.callId, state: "started"});
+      this._zone.run(() => {
+        this.startVideocallIframe(data.callId)         
+      });
+    });
+    CallCapacitor.addListener('end-call', data => {
+      console.log('end-call');
+      // TODO: Send termination to API
+      CallCapacitor.updateCallState({callId: data.callId, state: "ended"});
+    })
   }
 
   isDeviceRooted() {
@@ -455,15 +482,10 @@ export class AppComponent implements OnInit {
       case "MESSAGE":
         let staff;
         // Different payloads for ios and android
-        if (this.platform.is('ios')) {
+        if (this.platform.is('ios')) 
           staff = data?.origin;
-        } else {
-          let origin = data?.origin;
-          if (origin) {
-            origin = origin.replace(/\\/g, '');
-            staff = JSON.parse(origin);
-          }
-        }
+        else 
+          staff = data?.origin? JSON.parse(data?.origin) : null;
         console.log('staff: ', staff);
         this._zone.run(() => {
           this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff, customData: data?.user_id } });
@@ -568,10 +590,9 @@ export class AppComponent implements OnInit {
     this.opentokService.agendaId$ = caller?.callId;
 
     console.log('caller', caller);
-
-     this.startVideocallAndroid(caller.callId)
-
-
+    this._zone.run(() => {
+      this.startVideocallIframe(caller.callId)
+    });
   }
 
   async getTokboxSessionAndroid(agenda, caller?) {
@@ -604,7 +625,7 @@ export class AppComponent implements OnInit {
       (error) => {
         // Called when error
         alert('ERROR(' + error.code + '): ' + error.message)
-        console.log("error: ", error);
+        console.error("error: ", error);
         throw error;
       });
 
@@ -641,7 +662,7 @@ export class AppComponent implements OnInit {
       (error) => {
         // Called when error
         alert('ERROR(' + error.code + '): ' + error.message)
-        console.log("error: ", error);
+        console.error("error: ", error);
         throw error;
       });
 
@@ -728,102 +749,101 @@ export class AppComponent implements OnInit {
   }
 
   async startVideocall(agenda) {
-    if (this.platform.is('ios'))
-      await this.startVideocallIos(agenda);
-    else
-      await this.startVideocallAndroid(agenda).then(() => {
+    console.log('[AppComponent] startVideocall()', agenda)
+      await this.startVideocallIframe(agenda).then(() => {
         cordova.plugins.CordovaCall.endCall();
       });
   }
-  async startVideocallIos(agenda) {
-    console.log("startVideocall")
-    return this.dooleService.getAPIvideocall(agenda).subscribe(
-      async (data) => {
-        await data;
-        if (data.result) {
-          let tokboxSession = data;
-          this.opentokService.token$ = tokboxSession.token;
-          this.opentokService.sessionId$ = tokboxSession.sessionId;
-          this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-          const modal = await this.modalCtrl.create({
-            component: VideoComponent,
-            componentProps: {},
-            cssClass: "modal-custom-class"
-          });
 
-          await modal.present();
-          cordova.plugins.CordovaCall.endCall();
-          return data;
+  // async startVideocallIos(agenda) {
+  //   console.log("startVideocall")
+  //   return this.dooleService.getAPIvideocall(agenda).subscribe(
+  //     async (data) => {
+  //       await data;
+  //       if (data.result) {
+  //         let tokboxSession = data;
+  //         this.opentokService.token$ = tokboxSession.token;
+  //         this.opentokService.sessionId$ = tokboxSession.sessionId;
+  //         this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
+  //         const modal = await this.modalCtrl.create({
+  //           component: VideoComponent,
+  //           componentProps: {},
+  //           cssClass: "modal-custom-class"
+  //         });
 
-        } else {
-          let message = this.translate.instant('agenda.error_alert_message_get_token')
-          throw message;
-        }
+  //         await modal.present();
+  //         cordova.plugins.CordovaCall.endCall();
+  //         return data;
 
-      },
-      (error) => {
-        // Called when error
-        alert('ERROR(' + error.code + '): ' + error.message)
-        console.log("error: ", error);
-        throw error;
-      });
-  }
+  //       } else {
+  //         let message = this.translate.instant('agenda.error_alert_message_get_token')
+  //         throw message;
+  //       }
 
-  async startVideocallAndroid(agenda) {
+  //     },
+  //     (error) => {
+  //       // Called when error
+  //       alert('ERROR(' + error.code + '): ' + error.message)
+  //       console.log("error: ", error);
+  //       throw error;
+  //     });
+  // }
 
-    console.log("startVideocallAndroid")
-    this.dooleService.getAPIvideocall(agenda).subscribe(
-      async (data) => {
-        await data;
-        if (data.result) {
-          let tokboxSession = data;
-          this.opentokService.token$ = tokboxSession.token;
-          this.opentokService.sessionId$ = tokboxSession.sessionId;
-          this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-          const modal = await this.modalCtrl.create({
-            component: VideoComponent,
-            componentProps: {},
-            cssClass: "modal-custom-class"
-          });
+  // async startVideocallAndroid(agenda) {
 
-          await modal.present();
-          return data;
+  //   console.log("startVideocallAndroid")
+  //   this.dooleService.getAPIvideocall(agenda).subscribe(
+  //     async (data) => {
+  //       await data;
+  //       if (data.result) {
+  //         let tokboxSession = data;
+  //         this.opentokService.token$ = tokboxSession.token;
+  //         this.opentokService.sessionId$ = tokboxSession.sessionId;
+  //         this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
+  //         const modal = await this.modalCtrl.create({
+  //           component: VideoComponent,
+  //           componentProps: {},
+  //           cssClass: "modal-custom-class"
+  //         });
 
-        } else {
-          let message = this.translate.instant('agenda.error_alert_message_get_token')
-          throw message;
-        }
+  //         await modal.present();
+  //         return data;
 
-      },
-      (error) => {
-        // Called when error
-        alert('ERROR(' + error.code + '): ' + error.message)
-        console.log("error: ", error);
-        throw error;
-      });
-  }
+  //       } else {
+  //         let message = this.translate.instant('agenda.error_alert_message_get_token')
+  //         throw message;
+  //       }
 
-  async startVideocallIframe(id) {
+  //     },
+  //     (error) => {
+  //       // Called when error
+  //       alert('ERROR(' + error.code + '): ' + error.message)
+  //       console.log("error: ", error);
+  //       throw error;
+  //     });
+  // }
+
+  async startVideocallIframe(id, startVideo?) {
+    //console.log('[AppComponent] startVideocallIframe()', id, startVideo)
+    if(this.isModalOpen)
+    return
+    this.isModalOpen = true
     const modal = await this.modalCtrl.create({
       component:  VideocallPage,
-      componentProps: {id: id },
+      componentProps: {id: id, startVideo: true },
       cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
       .then((result) => {
         console.log('addElement()', result);
-
-        if(result?.data?.error){
-         // let message = this.translate.instant('landing.message_wrong_credentials')
-          //this.dooleService.presentAlert(message)
-        }else if(result?.data?.action == 'add'){
-
-        }
+        this.isModalOpen = false
       });
 
-      await modal.present();
-    }
+      await modal.present()
+      //cordova.plugins.CordovaCall.endCall();
+      return
+  }
 
 
   phonecallHandlers() {
