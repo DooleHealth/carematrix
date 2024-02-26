@@ -1948,6 +1948,13 @@ export class HomePage implements OnInit {
     }
   }
 
+  formatDate2(d) {
+    if (d) {
+      let date = new Date(d)
+      return this.transformDate(date, 'dd/MM/yyyy')
+    }
+  }
+
   transformDate(date, format) {
     return this.datePipe.transform(date, format);
   }

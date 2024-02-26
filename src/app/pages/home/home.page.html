@@ -87,7 +87,13 @@
                   <ion-thumbnail class="thumbnail" slot="start">
                     <img alt="Silhouette of mountains" [src]="this.listFamilyUnit[0]?.thumbnail" />
                   </ion-thumbnail>
-                  <ion-label>{{this.listFamilyUnit[0]?.name}}</ion-label>
+                  <ion-label>{{this.listFamilyUnit[0]?.name}}
+                    <p class="caregiver-txt" *ngIf="this.listFamilyUnit[0]?.birthdate">
+                      <span class="birth-txt">{{ formatDate2(this.listFamilyUnit[0]?.birthdate) }}</span>
+                    </p>
+                  </ion-label>
+                  <br>
+                 
 
                   <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
                 </ion-item>
@@ -200,8 +206,6 @@
                               value="{{ challenge?.current_level?.percentage_completed > 0 ? challenge?.current_level?.percentage_completed / 100 : 0 }}">
                             </ion-progress-bar>
                           </ion-row>
-
-
                         </ion-col>
 
                         <ion-row (click)="navigateToChallengeDetailPage(challenge)" routerLinkActive="active-item"
