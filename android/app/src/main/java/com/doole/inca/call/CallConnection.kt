@@ -31,7 +31,6 @@ class CallConnection(val delegate: CallConnectionService, val callId: String, va
         val appIsForeground = ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
         if(appIsForeground) {
             openIncomingCallActivity(ctx)
-            return
         }
 
         // Create an intent which triggers your fullscreen incoming call user interface.
@@ -98,7 +97,10 @@ class CallConnection(val delegate: CallConnectionService, val callId: String, va
             val intent = Intent(ctx, CallIncomingActivity::class.java)
             intent.flags =
                     Intent.FLAG_ACTIVITY_NO_USER_ACTION or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.action = callId
             intent.setClass(ctx, CallIncomingActivity::class.java)
+            intent.putExtra("callId", callId)
+            intent.putExtra("ring", true)
             ctx.startActivity(intent)
         } catch (e: Throwable) {
             Log.e("CallConnectionService", "Could not open call incoming fullscreen activity", e)

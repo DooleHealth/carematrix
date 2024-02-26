@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.telecom.TelecomManager
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.doole.inca.MainActivity
@@ -17,6 +18,7 @@ import com.doole.inca.R
 
 class CallIncomingActivity : Activity() {
     lateinit var tm: TelecomManager
+    //private var ringtone: Ringtone? = null
     private lateinit var callId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,13 +28,12 @@ class CallIncomingActivity : Activity() {
         val call = CallConnectionService.activeCalls.entries.first().value
         val callerName = call.from
         callId = call.callId
-        //val titleText = findViewById<TextView>(R.id.titleText)
-        //titleText.text = "Llamada entrante de $callerName"
-        // TODO improve this flags and use the keyguard helpers
-        //val window = window
-        //window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
-        //window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-        //window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+        /*if(intent.extras?.getBoolean("ring") == true) {
+            ringtone = RingtoneManager.getRingtone(
+                    this,
+                    RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+            ringtone?.play()
+        }*/
     }
 
     override fun onPause() {
@@ -76,10 +77,15 @@ class CallIncomingActivity : Activity() {
     }
 
     private fun sendAction(a: CallActionReceiver.ACTIONS) {
-        /*val intent = Intent(this, CallActionReceiver::class.java)
-        intent.action = a.name
-        intent.putExtra("callId", callId)
-        applicationContext.sendBroadcast(intent)*/
+        findViewById<ImageButton>(R.id.btnReject)?.let {
+            it.isEnabled = false
+            it.isClickable= false
+        }
+        findViewById<ImageButton>(R.id.btnAccept)?.let {
+            it.isEnabled = false
+            it.isClickable = false
+        }
+        //ringtone?.stop()
         val sendIntent = Intent(this, MainActivity::class.java)
         sendIntent.action = a.name
         sendIntent.putExtra("callId", callId)
