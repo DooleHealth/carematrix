@@ -11,6 +11,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import {  ModalController } from '@ionic/angular';
 import { RequestVisitPage } from '../request-visit/request-visit.page';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export class ShellRecipientModel extends ShellModel {
   id: string;
@@ -81,7 +82,8 @@ export class ContactPage implements OnInit {
     @Inject(LOCALE_ID) private locale: string,
     private dateService: DateService,
     private languageService: LanguageService,
-    private callService: CallNumber) { }
+    private callService: CallNumber,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.setSegment()
@@ -269,5 +271,9 @@ export class ContactPage implements OnInit {
     this.callService.callNumber(""+phone, true)
     .then(res => console.log('Launched dialer!', res))
     .catch(err => console.log('Error launching dialer', err));
+  }
+
+  sanitizeUrl(url:string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

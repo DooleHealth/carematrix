@@ -90,13 +90,24 @@
                     
 
                       <br>
-                      <a class="a-type1">
-                        <b> {{'health_path.see_more' | translate }}! </b> </a>
+                     
                     </ion-col>
                   </ion-row>
 
                   <ion-row class="alingLeft zeroMarginPadding" *ngIf="slide?.phone">
-                    <ion-col size="12"
+                    <ion-col size="2.5" class="alingLeft zeroMarginPadding" style="display: flex; align-items: center;">
+                      
+                    </ion-col>
+
+                    <ion-col size="3.5" style="display: flex; align-items: center;" >
+                      <div *ngIf="slide?.website">
+                        <a class="a-type1" [href]="sanitizeUrl(slide?.website)">
+                          <b> {{'health_path.see_more' | translate }}! </b> </a>
+                      </div>
+                     
+                    </ion-col>
+
+                    <ion-col size="6"
                       style="display: flex; flex-direction: column; justify-content: space-between; padding: unset">
                       <div style="align-self: flex-end;">
                         <ion-button shape="round" color="warning" style="--background: var(--form-home-color); font-size: 90%;" (click)="callNumber(slide.phone)">
