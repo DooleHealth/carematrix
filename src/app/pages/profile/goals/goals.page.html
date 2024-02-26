@@ -24,7 +24,7 @@
 
   </ion-segment>
 
-
+  <app-caregiver></app-caregiver>
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'goals'">
       <ion-list *ngIf="goalsList.length > 0; else noData">
