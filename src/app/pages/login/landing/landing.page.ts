@@ -484,7 +484,7 @@ export class LandingPage implements OnInit {
   }
 
   navigateToLegalPage() {
-    this.router.navigate(['/legal'], { state: {fromLanding: true} });
+    this.router.navigateByUrl('/legal', {state:{showOnly: true}});
   }
 
 }

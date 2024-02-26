@@ -37,7 +37,7 @@
                            <br>
                            <br>
                            <br>
-                           <ion-title [routerLink]="['/landing/legal']" class="text-align-center">
+                           <ion-title (click)="navigateToLegalPage()" class="text-align-center">
                             <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
                         </ion-title>
 
@@ -48,7 +48,7 @@
                   <div class="spacing-container"></div>
                   <div style="display: flex; align-items: center;">
                     <div style="padding: 0 10px; text-align: center;">
-                      <ion-text class="color-text-too">o</ion-text>
+                      <ion-text class="color-text-too">{{'landing.too' | translate}}</ion-text>
                     </div>
                   </div>
                   <div class="spacing-container"></div>
@@ -82,14 +82,19 @@
 
                    <ion-title (click)="navigateToLegalPage()" class="text-align-center">
                     <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
-                </ion-title>
+                    </ion-title>
+
+                    
                </div>
+
+               
   
                 
   
             </ion-col>
         </ion-grid>
-  
+
+       
     </div>
   </ion-content>
 <!--   <ion-footer class="ion-no-border justify-content-center">

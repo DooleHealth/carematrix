@@ -11,44 +11,54 @@
   <div class="spin" *ngIf="this.isLoading;else showChallenges">
     <ion-spinner ></ion-spinner>
 </div>
+
+
 <ng-template #showChallenges>
-  <div *ngFor="let challenge of this.listChallenges">
-    <ion-card *ngIf="challenge?.current_level" class="level-card" routerLink="/home/health-path/detail" routerLinkActive="active-item"
-    [state]="{challenge: challenge}">
-      <ion-item lines="none" class="cardHeader">
-        <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
-        <ion-text  style="margin-left:10px; color:purple" slot="start">{{ this.challenge?.name }}</ion-text>
-      </ion-item>
 
-      <ion-card-content class="ion-no-padding">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="3">
-            </ion-col>
-            <ion-col size="9">
-              <p class="text1line"><b>{{ this.challenge?.current_level?.name}}</b></p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="3">
-              <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
-            </ion-col>
-            <ion-col size="9" >
-              <p [innerHtml]="'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required - this.challenge?.current_level?.current_score}"></p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="3">
-            </ion-col>
-            <ion-col size="9">
-              <ion-progress-bar class="progress-bar" [value]="challenge?.current_level?.percentage_completed>0 ? challenge?.current_level?.percentage_completed/100:0">
-              </ion-progress-bar>
-            </ion-col>
+  <ng-container *ngIf="this.listChallenges.length > 0; else noData">
+    <div *ngFor="let challenge of this.listChallenges">
+      <ion-card *ngIf="challenge?.current_level" class="level-card" routerLink="/home/health-path/detail" routerLinkActive="active-item"
+      [state]="{challenge: challenge}">
+        <ion-item lines="none" class="cardHeader">
+          <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
+          <ion-text  style="margin-left:10px; color:purple" slot="start">{{ this.challenge?.name }}</ion-text>
+        </ion-item>
+  
+        <ion-card-content class="ion-no-padding">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="3">
+              </ion-col>
+              <ion-col size="9">
+                <p class="text1line"><b>{{ this.challenge?.current_level?.name}}</b></p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <ion-img src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
+              </ion-col>
+              <ion-col size="9" >
+                <p [innerHtml]="'health_path.goal' | translate:{total:this.challenge?.current_level?.current_score, coin:this.challenge?.current_level?.coin_name, required:this.challenge?.current_level?.score_required - this.challenge?.current_level?.current_score}"></p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+              </ion-col>
+              <ion-col size="9">
+                <ion-progress-bar class="progress-bar" [value]="challenge?.current_level?.percentage_completed>0 ? challenge?.current_level?.percentage_completed/100:0">
+                </ion-progress-bar>
+              </ion-col>
+  
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ng-container>
 
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  <ng-template #noData>
+    <app-no-data></app-no-data>
+  </ng-template>
+  
 </ng-template>
 </ion-content>

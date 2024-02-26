@@ -9,12 +9,12 @@
 
 <ion-content fullscreen>
   <div class="txtTitleSetting"></div>
-    <ion-text class="txtTitle2">{{ 'setting.title_security' | translate}}</ion-text>
+    <ion-text class="toolbarTitle" style="padding-left: 3%;">{{ 'setting.title_security' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list [lines]="isTwoFactor? 'full': 'none' ">
             <ion-item (click)="changePassword()" >
               <ion-label>{{ 'setting.password.title_change_password' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item [lines]="isFaID? 'full': 'none' " *ngIf="isTwoFactor">
               <ion-toggle slot="end" color="success" [(ngModel)]="authentication" (ionChange)="changeAuthentication()" checked>{{ 'setting.subtitle_authentication' | translate}}</ion-toggle>
@@ -26,7 +26,7 @@
           </ion-list>
     </ion-card>
 
-    <ion-text class="txtTitle2">{{ 'setting.title_languages' | translate}}</ion-text>
+    <ion-text class="toolbarTitle" style="padding-left: 3%;">{{ 'setting.title_languages' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
             <ion-item lines="none">

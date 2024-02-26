@@ -9,6 +9,7 @@ import { AboutUsPageRoutingModule } from './about-us-routing.module';
 import { AboutUsPage } from './about-us.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShareModule } from 'src/app/shared/share/share.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ShareModule } from 'src/app/shared/share/share.module';
     IonicModule,
     TranslateModule,
     ShareModule,
-    AboutUsPageRoutingModule
+    AboutUsPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [AboutUsPage]
 })

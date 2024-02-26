@@ -15,7 +15,7 @@
     <ng-template #showLegal>
       <div [innerHtml]="this.legal?.legal_text? (this.legal?.legal_text | safeHtml):'' "></div>
 
-      <ion-row  *ngIf="!this.fromLandingPage" style="margin-top:0%; margin-left: 2%; margin-right: 2%;">
+      <ion-row  *ngIf="!this.showOnly" style="margin-top:0%; margin-left: 2%; margin-right: 2%;">
         <ion-col size="6">
           <ion-button expand="block" color="primary" (click)="confirmLegalTerms()" shape="round" mode="ios">{{ 'button.reject' | translate | uppercase}}</ion-button>
         </ion-col>

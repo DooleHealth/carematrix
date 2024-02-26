@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class LegalPage implements OnInit {
   //KEY_LOCAL_STORAGE = 'showIntro';
 
-  fromLandingPage = false;
+  showOnly = history?.state?.showOnly ? history?.state?.showOnly: false;
 
   legal:any = {};
   isChecked = false;
@@ -27,22 +27,48 @@ export class LegalPage implements OnInit {
     private dooleService: DooleService,
     private activatedRoute: ActivatedRoute) { 
 
-      // If directly accessing in the constructor, ensure navigation is completed
-      const currentNavigation = this.router.getCurrentNavigation();
-      if (currentNavigation && currentNavigation.extras && currentNavigation.extras.state) {
-        console.log("AAAAA " + currentNavigation.extras.state.fromLanding); // Access your state here
-      }
+      
+    
     }
 
   ngOnInit() {
-    this.getLegalInformation()
+    
   }
 
 
+  ionViewWillEnter() {
+    console.log(history?.state.showOnly);
+    console.log(this.showOnly);
+    if (this.showOnly) this.getLegalTermsAndPrivacyPolicy()
+    else this.getLegalInformation()
+  }
+
+
+  getLegalTermsAndPrivacyPolicy() {
+    console.log("Entro")
+    this.isLoading = true
+    this.dooleService.getAPILegalAndPolicy().subscribe(
+      async (res: any) =>{
+        console.log('[LegalPage] getAPILegalInformation()', await res);
+        if(res?.legal_term?.legal_text){
+          this.legal = res.legal_term
+        }
+        else{
+          this.showAlert(this.translate.instant('legal.error_conditions_label'), 'error')
+        }
+        this.isLoading = false
+       },(err) => { 
+          console.log('getAll ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
+          //this.showAlert(message, 'error')
+          throw err; 
+      });
+  }
+  
+
   getLegalInformation(){
     this.isLoading = true
-
-    if (!this.fromLandingPage) {
       this.dooleService.getAPILegalInformation().subscribe(
         async (res: any) =>{
           console.log('[LegalPage] getAPILegalInformation()', await res);
@@ -65,24 +91,6 @@ export class LegalPage implements OnInit {
             this.showAlert(message, 'error')
             throw err; 
         });
-    }
-    else {
-      this.dooleService.getAPILegalAndPolicy().subscribe(
-        async (res: any) =>{
-          console.log('[LegalPage] getAPILegalInformation()', await res);
-          if(res?.success){
-            this.legal = res.legalTerm
-          }
-          this.isLoading = false
-         },(err) => { 
-            console.log('getAll ERROR(' + err.code + '): ' + err.message); 
-            this.isLoading = false
-            let message = this.translate.instant('legal.error_conditions_label')+' '+ err.message
-            this.showAlert(message, 'error')
-            throw err; 
-        });
-    }
-    
   }
 
   showAlert(message, type?){

@@ -18,3 +18,7 @@ ion-select::part(text) {
 ion-toggle{
   width: 100%;
 }
+
+ion-label {
+  color: var(--default-text) !important;
+}
