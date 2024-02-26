@@ -106,7 +106,12 @@
       "enable_notifications": "Activar Notificaciones",
       "message_enable_notifications": "¿Deseas activar todas las notificaciones?",
       "close_app": "¿Deseas cerrar la aplicación?",
-      "get_firts_data": "Introduce tu primer dato"
+      "get_firts_data": "Introduce tu primer dato",
+      "advices": "Consejos",
+      "see_advices": "Ver todos los consejos",
+      "caregiver_title": "Personas a tu cargo",
+      "caregiver_change": "Vas a cambiar ",
+      "back_caregiver": "Volver a tu perfil"
     },
     "profile":{
       "title_profile": "Mi Perfil",
@@ -173,8 +178,10 @@
       "title":"Camino de la salud",
       "card_title": "Mis retos",
       "goals": "Objetivos",
+      "see_all_goals": "Ver todos mis objetivos",
       "start": "Inicio",
       "detail":"¿Cómo alcanzar mi objetivo?",
+      "see_more": "Ver mas",
       "weight":"Toma tu ",
       "measure":"Introduce la medida: ",
       "form":"Responde al formulario ",
@@ -409,7 +416,10 @@
       "day": "DíA",
       "week": "SEMANA",
       "months": "MES",
-      "year": "AÑO"
+      "year": "AÑO",
+      "calendar": "Calendario",
+      "reminders": "Recordatorios",
+      "create_reminder": "Crear recordatorio"
     },
     "reminder":{
       "header": "Recordatorio",
@@ -450,6 +460,7 @@
       "form": "Formulario",
       "diet": "Dieta",
       "week_day": "Días de la semana",
+      "save": "Guardar recordatorio",
       "day":{
         "day1": "Lunes",
         "day2": "Martes",
@@ -710,9 +721,11 @@
     "contact":{
       "header": "Contacta",
       "tap_video": "Videoconsulta",
-      "tap_appointment": "Cita Presencial",
+      "tap_appointment": "Presencial",
       "tap_chat": "Chat",
       "tap_pusher": "Pusher",
+      "tap_medical_visits": "Visitas médicas",
+      "tap_my_centers": "Mis Centros",
       "text_video": "Habla directamente con tu profesional habitual o un especialista desde donde tú quieras.Te atenderán en el horario seleccionado",
       "regular_professional": "Profesional Habitual",
       "text_regular_professional": "Reserva una cita con tu médico o profesional de siempre para realizar la videoconsulta",
@@ -725,7 +738,11 @@
       "recent_conversations":"Conversaciones recientes",
       "text_recent_conversations":"Accede a tus últimas conversaciones con tus profesionales habituales",
       "new_conversation":"Nueva conversación",
-      "text_new_conversation":"Abre una nueva conversación con tus profesionales habituales"
+      "text_new_conversation":"Abre una nueva conversación con tus profesionales habituales",
+      "new_message": "Añade un nuevo mensaje",
+      "new_visit": "Pide una visita",
+      "center": "Centro",
+      "emergency": "Llamada de emergencia"
     },
     "medical_directory":{
       "header":"Seleccionar",
@@ -756,7 +773,23 @@
       "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
       "button_videocall": "Confirmar cita",
       "button_videocall_charge": "Confirmar cita con pago",
-      "error_upload_files": "Error al adjuntar los archivos"
+      "error_upload_files": "Error al adjuntar los archivos",
+
+      "placeholder": "No especificado",
+    "profesional": "Seleccionar profesional",
+
+    "types": {
+      "online": "Online",
+      "presential": "Presencial"
+    },
+
+    "reasons": {
+        "1": "Enfermedad común",
+        "2": "Prescripción",
+        "3": "Duda",
+        "4": "Otros motivos"
+    }
+
     },
     "chat":{
       "header":"Chat",
@@ -1023,5 +1056,6 @@
     },
     "medical_procedure_list":{
       "text":"Aquí encontrará todos sus procedimientos médicos y pruebas diagnósticas programados en un calendario."
-    }
+    },
+    "content": "Actualmente no hay datos disponibles para mostrar"
 }
