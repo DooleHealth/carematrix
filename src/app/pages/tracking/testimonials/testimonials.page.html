@@ -14,11 +14,12 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
 <!-- SegmentBar -->
-<!--<ion-searchbar
-  [animated]="true"
-  (ionInput)="filterList($event)"
-  placeholder="{{ 'advices.searchbar' | translate}}">
-</ion-searchbar>-->
+<ion-searchbar
+[animated]="true"
+(ionInput)="filterListTertimonials($event)"
+(ionClear)="getNewsTestimonial()"
+placeholder="{{ 'advices.searchbar' | translate}}">
+</ion-searchbar>
 <div class="spin" *ngIf="this.isLoading">
   <ion-spinner ></ion-spinner>
 </div>

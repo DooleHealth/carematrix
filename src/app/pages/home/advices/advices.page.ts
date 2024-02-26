@@ -61,19 +61,17 @@ export class AdvicesPage implements OnInit {
       });
   }
 
-  filterListAdvices(event){
-    var query = event //.target.value;
-    this.isLoading = true
-    this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
-      console.log('[AdvicePage] filterListAdvices()', res);
-      this.items = []
-      if(res.success)
-        this.adapterForView(res.advice)
-      this.isLoading = false
-    },err => {
-      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message);
+ 
+  filterListAdvices(event) {
+    const searchTerm = event.srcElement.value.toLowerCase(); 
+    let search = this.items
+    const filteredItems = search.filter(item => {
+      const subject = item.subject.toLowerCase();
+      return subject.includes(searchTerm) || subject === searchTerm;
     });
+      this.items = (filteredItems)
   };
+
 
 
   // async filterList(evt) {

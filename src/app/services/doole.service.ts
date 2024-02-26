@@ -1272,10 +1272,14 @@ export class DooleService {
     );
   }
 
-  getAPISearchNews(query: any): Observable<any> {
+  getAPISearchNews(query: any,params): Observable<any> {
     let path = 'news';
-    let httpParams = new HttpParams();
+    let httpParams = new HttpParams()
+    .set('tags', params.tags)
+    .set('interactions', params.interactions)
+    .set('readingTime', params.readingTime);
     httpParams = (query) ? httpParams.append('search', query) : httpParams
+   
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {

@@ -141,4 +141,15 @@ export class ExercisesPage implements OnInit {
       return true;
     }
   }
+
+  filterListExercises(event) {
+    
+    const searchTerm = event.srcElement.value.toLowerCase(); 
+    let search = this.items
+    const filteredItems = search.filter(item => {
+      const subject = item.subject.toLowerCase();
+      return subject.includes(searchTerm) || subject === searchTerm;
+    });
+      this.items = (filteredItems)
+  };
 }
