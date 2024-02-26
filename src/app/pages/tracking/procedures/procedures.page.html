@@ -14,6 +14,7 @@
 
 <ion-content [fullscreen]="true">
 
+  <app-caregiver></app-caregiver>
   <div>
     <ion-list *ngIf="listItem.length > 0; else noData">
       <ion-grid *ngFor="let content of listItem" class="ion-no-padding" >  
