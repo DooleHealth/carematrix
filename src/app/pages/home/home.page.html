@@ -48,82 +48,86 @@
 
       <!-- CAREGIVER -->
       <ng-container *ngIf="!this.authService.isFamily; else familyUnitActivated">
-        <ion-row>
-          <br>
-          <ion-text class="txtTitle" style="white-space: nowrap">
-            {{ 'home.caregiver_title' | translate}}</ion-text>
-
-            
-        </ion-row>
-
-
- 
-        <ng-container *ngIf="this.listFamilyUnit?.length !== 1; else onlyOneCaregiver">
+        
+        <ng-container *ngIf="this.listFamilyUnit?.length > 0; else caregiversAvailable">
           <ion-row>
-            <ion-col size="12">
-              <ion-searchbar mode="ios" show-cancel-button="always" (ionCancel)="onCancel($event)"
-                (ionFocus)="activateList()" [debounce]="1000" (ionInput)="handleInput($event)"
-                style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
-
-              <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
-                <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)">
-
-                  <div *ngFor="let result of results; let i = index; let isLast=last">
-                    <ion-item slot="end" lines="none" class="caregiver-item2">
-                      <ion-radio mode="ios" value="space-between" justify="space-between" value="{{i}}" checked="true"
-                        style="padding-right: 5%; padding-left: 5%;">
-                        <p class="caregiver-txt">{{ result.name }}
-                          <span class="birth-txt" *ngIf="result.birthdate">{{ result.birthdate }}</span>
-                        </p>
-                      </ion-radio>
-                    </ion-item>
-                  </div>
-
-                </ion-radio-group>
-              </ion-list>
-            </ion-col>
+            <br>
+            <ion-text class="txtTitle" style="white-space: nowrap">
+              {{ 'home.caregiver_title' | translate}}</ion-text>            
           </ion-row>
+          <ng-container *ngIf="this.listFamilyUnit?.length > 1; else onlyOneCaregiver">
+            <ion-row>
+              <ion-col size="12">
+                <ion-searchbar mode="ios" show-cancel-button="always" (ionCancel)="onCancel($event)"
+                  (ionFocus)="activateList()" [debounce]="1000" (ionInput)="handleInput($event)"
+                  style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
+
+                <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
+                  <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)">
+
+                    <div *ngFor="let result of results; let i = index; let isLast=last">
+                      <ion-item slot="end" lines="none" class="caregiver-item2">
+                        <ion-radio mode="ios" value="space-between" justify="space-between" value="{{i}}" checked="true"
+                          style="padding-right: 5%; padding-left: 5%;">
+                          <p class="caregiver-txt">{{ result.name }}
+                            <span class="birth-txt" *ngIf="result.birthdate">{{ result.birthdate }}</span>
+                          </p>
+                        </ion-radio>
+                      </ion-item>
+                    </div>
+
+                  </ion-radio-group>
+                </ion-list>
+              </ion-col>
+            </ion-row>
+
+          </ng-container>
+
+          <ng-template #onlyOneCaregiver>
+            <ion-card>
+              <ion-card-content class="ion-no-padding" style="padding-top: 0px;">
+                <ion-item class="caregiver-item" (click)="this.alertCaregiver(this.listFamilyUnit[0])" lines="none">
+                  <ion-thumbnail class="thumbnail" slot="start">
+                    <img alt="Silhouette of mountains" [src]="this.listFamilyUnit[0]?.thumbnail" />
+                  </ion-thumbnail>
+                  <ion-label>{{this.listFamilyUnit[0]?.name}}</ion-label>
+
+                  <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ng-template>
 
         </ng-container>
 
-        <ng-template #onlyOneCaregiver>
+        <ng-template #caregiversAvailable>
+  
+        </ng-template>
+
+        </ng-container>
+
+        <ng-template #familyUnitActivated>
+
+          <ion-row>
+            <br>
+            <ion-text class="txtTitle" style="white-space: nowrap">
+              {{ 'home.back_caregiver' | translate}}</ion-text>
+          </ion-row>
+
           <ion-card>
             <ion-card-content class="ion-no-padding" style="padding-top: 0px;">
-              <ion-item class="caregiver-item" (click)="this.alertCaregiver(this.listFamilyUnit[0])" lines="none">
+              <ion-item class="caregiver-item" (click)="returnUser()" lines="none">
                 <ion-thumbnail class="thumbnail" slot="start">
-                  <img alt="Silhouette of mountains" [src]="this.listFamilyUnit[0]?.thumbnail" />
+                  <img alt="Silhouette of mountains" [src]="this.authService.user.selectedCaregiverResponsible?.image" />
                 </ion-thumbnail>
-                <ion-label>{{this.listFamilyUnit[0]?.name}}</ion-label>
+                <ion-label>{{this.authService.user.selectedCaregiverResponsible?.name}}</ion-label>
 
                 <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
               </ion-item>
             </ion-card-content>
           </ion-card>
         </ng-template>
-
-      </ng-container>
-
-      <ng-template #familyUnitActivated>
-
-        <ion-row>
-          <br>
-          <ion-text class="txtTitle" style="white-space: nowrap">
-            {{ 'home.back_caregiver' | translate}}</ion-text>
-        </ion-row>
-
-        <ion-card>
-          <ion-card-content class="ion-no-padding" style="padding-top: 0px;">
-            <ion-item class="caregiver-item" (click)="returnUser()" lines="none">
-              <ion-thumbnail class="thumbnail" slot="start">
-                <img alt="Silhouette of mountains" [src]="this.authService.user.selectedCaregiverResponsible?.image" />
-              </ion-thumbnail>
-              <ion-label>{{this.authService.user.selectedCaregiverResponsible?.name}}</ion-label>
-
-              <ion-icon slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-      </ng-template>
+      
 
       <br>
 

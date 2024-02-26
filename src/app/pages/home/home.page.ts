@@ -467,7 +467,7 @@ export class HomePage implements OnInit {
 
       this.listFamilyUnit = res;
 
-      //console.log(this.listFamilyUnit)
+      console.log(this.listFamilyUnit)
 
       
       this.results = [...this.listFamilyUnit];
