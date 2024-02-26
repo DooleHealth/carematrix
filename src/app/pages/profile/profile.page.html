@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="home"></ion-back-button>
+      <ion-back-button color="primary" text="" defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'profile.title_profile' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'profile.title_profile' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +17,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <h3 style="text-align: center;"> {{this.userDoole?.first_name}}</h3>
+          <h3 style="text-align: center; margin-top: 0px; padding-left: 0px;" class="txtTitle"> {{this.userDoole?.first_name}}</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -26,23 +26,23 @@
           <ion-list >
             <ion-item routerLink="personal" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.data' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item routerLink="cards" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.your_health_cards' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item routerLink="emergency-contacts" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.emergency' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
-            <ion-item routerLink="family" detail="false" routerLinkActive='active-item'>
+           <!--  <ion-item routerLink="family" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.family_unit' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item>          
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
+            </ion-item>           -->
             <ion-item routerLink="challenges" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.your_challenges' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <!--<ion-item lines="none" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.information.payment_method' | translate}}</ion-label>
@@ -56,15 +56,15 @@
           <ion-list>
             <ion-item  (click)="this.openPatientsModal()" detail="false">
               <ion-label>{{ 'profile.professional.patiens' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item >
             <ion-item detail="false">
               <ion-label lines="none">{{ 'profile.professional.request' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item lines="none" detail="false">
               <ion-label>{{'profile.professional.medical_history' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
           </ion-list>
     </ion-card>
@@ -77,11 +77,11 @@
             </ion-item >-->
             <ion-item routerLink="settings" detail="false" routerLinkActive='active-item'>
               <ion-label lines="none">{{ 'profile.configuration.settings' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item routerLink="devices" detail="false" routerLinkActive='active-item'>
               <ion-label lines="none">{{ 'profile.configuration.bluetooth' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
           </ion-list>
     </ion-card>
@@ -90,19 +90,19 @@
           <ion-list>
             <ion-item routerLink="faqs" detail="false" routerLinkActive='active-item'>
               <ion-label>{{'profile.help.frequent_questions' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item (click)="sendReportProblem()" detail="false">
               <ion-label>{{'profile.help.report_problem' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item routerLink="legal" detail="false" routerLinkActive='active-item'>
               <ion-label> {{ 'profile.help.legal_warning' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item routerLink="about-us" detail="false" routerLinkActive='active-item'>
               <ion-label>{{ 'profile.help.us' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
+              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
             <ion-item detail="false" lines="none" >
               <ion-label>{{ 'profile.version' | translate}}: {{this.version}}</ion-label>

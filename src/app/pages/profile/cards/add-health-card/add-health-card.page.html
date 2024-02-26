@@ -60,12 +60,18 @@
         </ion-label>
         <ion-datetime-button slot="end" datetime="issue_date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
           <ion-datetime [locale]="this.locale" presentation="month-year" id="issue_date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="issue_date" required></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
-      <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="issue_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01"></ion-datetime> -->
+
       <ion-item lines="none">
         <ion-label  stacked (click)="openMessageEndDate()">
           <h5 >{{'health_card.expiration_date' | translate}}</h5>
@@ -73,12 +79,16 @@
         </ion-label>
         <ion-datetime-button slot="end" datetime="expiration_date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
           <ion-datetime (ionFocus)="checkDateEvent()"  [locale]="this.locale" presentation="month-year" id="expiration_date" [min]="this.date" [max]="dateMax"  (ionFocus)="checkDateEvent()"  formControlName="expiration_date" required></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
-        <!-- FIXME:<ion-datetime (ionFocus)="checkDateEvent()" cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="expiration_date" [displayFormat]="this.dateService.getShortDateFormat()" placeholder="{{ 'error_required' | translate}}" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
     </ion-list>
   </ion-card>
 </form>

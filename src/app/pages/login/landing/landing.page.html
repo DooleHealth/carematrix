@@ -57,7 +57,7 @@
   
                 <div *ngIf="this.numFailFingerP < NUM_FAIL_LOGIN" style="margin-top: 5%;">
                    <div *ngIf="this.hasBiometricAuth">
-                        <ion-button class="bio-btn" expand="block" [disabled]="this.numFailFingerP >= NUM_FAIL_LOGIN" shape="round" mode="ios"
+                        <ion-button color="secondary" class="bio-btn" expand="block" [disabled]="this.numFailFingerP >= NUM_FAIL_LOGIN" shape="round" mode="ios"
                             (click)="doBiometricLogin()">
                             <ion-icon slot="start" name="finger-print-outline"></ion-icon>
                             {{ 'landing.biometrics' | translate }}

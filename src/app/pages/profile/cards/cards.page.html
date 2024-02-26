@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'health_card.header_card' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'health_card.header_card' | translate}}</ion-title>
     <ion-buttons slot="end" (click)="addCard()" >
     <ion-icon slot="icon-only" name="add" color="primary"></ion-icon>
   </ion-buttons>
@@ -34,19 +34,6 @@
   </ion-card>
   </ion-list>
   <ng-template #noData>
-    <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="card"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col >
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  </div>
+    <app-no-data></app-no-data>
   </ng-template>
 </ion-content>

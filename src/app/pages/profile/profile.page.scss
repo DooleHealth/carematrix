@@ -18,8 +18,11 @@ object-fit: cover;
   display: block;
   margin: auto;
   object-fit: cover;
-  
-  }
+}
+
+ion-label {
+  color: var(--default-text) !important;
+}
 
 
 

@@ -769,6 +769,7 @@
       "header":"Reservar",
       "field_date": "Fecha",
       "reason_appointment": "Motivo de la cita",
+      "type": "Tipo de consulta",
       "attachments": "Documentos Adjuntos",
       "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
       "button_videocall": "Confirmar cita",
