@@ -8,6 +8,7 @@ import { ListNotificationsPageRoutingModule } from './list-notifications-routing
 
 import { ListNotificationsPage } from './list-notifications.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    ListNotificationsPageRoutingModule
+    ListNotificationsPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [ListNotificationsPage]
 })
