@@ -13,10 +13,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./videocall.page.scss'],
 })
 export class VideocallPage implements OnInit {
-  publisher: any;
   private idAgenda: string  = history.state.id;
   @Input()id: any;
-
+  @Input() startVideo: boolean;
   sessionId: string;
   token: string;
   api: string;
@@ -26,15 +25,15 @@ export class VideocallPage implements OnInit {
 
   public connected: boolean;
   public connecting: boolean;
-  width
-  height
 
-  infoStr: string;
-  durationStr: string;
   btnConectarStr: string;
-  user: { user_mutua: string; };
-  previousUrl: string;
   closeButton:string = ' '
+  // durationStr: string;
+  // previousUrl: string;
+  // publisher: any;
+  // infoStr: string;
+  // width
+  // height
   constructor(
     private authService: AuthenticationService,
     private loadingController: LoadingController,
@@ -59,8 +58,10 @@ export class VideocallPage implements OnInit {
   ngOnInit() {
     this.idAgenda = this.idAgenda? this.idAgenda: this.id
     this.translate.get('notifications.close').subscribe(translate => {
-      this.closeButton = translate
+    this.closeButton = translate
     })
+    if(this.startVideo)
+    this.startVideocall()
   }
 
   // goBack() { 

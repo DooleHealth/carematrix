@@ -11,7 +11,11 @@
     "lint": "nx exec -- nx lint",
     "e2e": "nx exec -- nx e2e",
     "resources": "nx exec -- npm run _resources -- ",
-    "_resources": "capacitor-resources -p android,ios && node resources.js"
+    "_resources": "capacitor-resources -p android,ios && node resources.js",
+    "debug": "npx ionic capacitor run $PLATFORM $CAPOPTIONS --external --livereload",
+    "debug:android": "PLATFORM=android npm run debug",
+    "debug:ios": "PLATFORM=ios CAPOPTIONS=--consolelogs npm run debug",
+    "postinstall": "sh scripts/postinstall.sh"
   },
   "private": true,
   "dependencies": {
@@ -69,9 +73,9 @@
     "@capacitor/local-notifications": "^5.0.5",
     "@capacitor/network": "^5.0.0",
     "@capacitor/preferences": "^5.0.5",
-    "@capacitor/push-notifications": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.0",
     "@capacitor/status-bar": "^5.0.5",
+    "@capacitor/text-zoom": "^5.0.7",
     "@capawesome/capacitor-badge": "5.0.0",
     "@ionic/angular": "^7.0.14",
     "@ionic/core": "^7.0.14",
