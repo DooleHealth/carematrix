@@ -74,8 +74,6 @@ export class AgendaPage implements OnInit{
 
       formatMonthViewDayHeader: function (date: Date) {
         let days;
-
-        console.log(this.locale)
         switch (this.locale) {
           case 'es':
             days = ["D", "L", "M", "M", "J", "V", "S"]

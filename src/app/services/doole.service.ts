@@ -2229,4 +2229,16 @@ export class DooleService {
       })
     );
   }
+
+
+  getAPIDayPhrase(): Observable<any> {
+    let path = `user/dayPhrase`;
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIDayPhrase(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 }

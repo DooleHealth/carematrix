@@ -28,6 +28,7 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
 import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapters';
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-iframe/show-iframe.component';
+import { Preferences } from '@capacitor/preferences';
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
@@ -90,6 +91,8 @@ export class HomePage implements OnInit {
   healtDate
   loading: boolean = true;
   isFirstTime = true;
+
+
 
   currentIndexForm = 0
   currentIndexExercise = 0
@@ -206,20 +209,11 @@ export class HomePage implements OnInit {
 
   caregiverSelected = '';
 
-  fakeData:string[] = [
-    'Amsterdam',
-    'Buenos Aires',
-    'Cairo',
-    'Geneva',
-    'Hong Kong',
-    'Istanbul',
-    'London',
-    'Madrid',
-    'New York',
-    'Panama City',
-  ];
+  dayPhrase:string;
+  datePhraseReaded: Date = null;
+  canReadPhrase: boolean = false;
 
-  public resultsFake: any[];
+
   public results :any[];
   activateFocus: boolean = false;
 
@@ -276,20 +270,23 @@ export class HomePage implements OnInit {
   }
 
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.activateFocus = false;
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
 
+
+
+    if (this.getDatedayPhraseReaded()) this.datePhraseReaded = await this.getDatedayPhraseReaded();
+   
+
+    console.log(this.datePhraseReaded)
     
     this.getUserInformation()
     this.getNumNotification();
     
-
-    
-
     this.update()
 
 
@@ -303,23 +300,6 @@ export class HomePage implements OnInit {
       this.pusherNotifications.openScpNotificationDialog();
     }
   }
-
-
-  activateList() {
-    this.ngZone.run(() => {
-      console.log("Acivate/des Focus")
-    this.activateFocus = true;
-    });
-  }
-
-  onCancel($event?:any) {
-    this.activateFocus = false;
-  }
-
-  checkBlur() {
-    this.activateFocus = false;
-  }
-
 
   initPushers() {
     this.pusherAlarms?.init()
@@ -419,6 +399,7 @@ export class HomePage implements OnInit {
 
     try {
       await Promise.all([
+        this.getDayPhrase(),
         this.getFamilyUnitData(),
         this.getUserImage(),
         this.getPersonalInformation(),
@@ -433,9 +414,7 @@ export class HomePage implements OnInit {
         this.getGamesList(),
         this.getElementsList(),
         this.getallAgenda(),
-        this.getProcedures() 
-
-
+        this.getProcedures(),
         // Add other asynchronous calls as needed
       ]);
 
@@ -447,6 +426,86 @@ export class HomePage implements OnInit {
 
       this.isLoading = false;
     }
+  }
+
+
+  async getDayPhrase() {
+    try {
+
+      console.log(this.datePhraseReaded)
+      if (this.datePhraseReaded !== null) {
+        if(this.hasMoreThanOneDayPassed(this.datePhraseReaded, new Date())) {
+          const res: any = await new Promise((resolve, reject) => {
+            this.dooleService.getAPIDayPhrase().subscribe(
+              (data: any) => {
+                console.log('[HomePage] getDayPhrase()', data);
+                resolve(data);
+              },
+              (error) => {
+                console.log('[HomePage] getDayPhrase() ERROR(' + error.code + '): ' + error.message);
+                reject(error);
+              }
+            );
+          });
+    
+          this.dayPhrase = res.dayPrase;
+    
+          this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
+          
+          if (this.dayPhrase != null) {
+            this.openAICoachMessage(this.dayPhrase)
+            this.setDateDayPhraseReaded(new Date());
+          }
+        }
+        else {
+          console.log("cant read")
+          this.canReadPhrase = false;
+        }
+        
+      }
+      else {
+
+        console.log("Entro per aqui")
+        const res: any = await new Promise((resolve, reject) => {
+          this.dooleService.getAPIDayPhrase().subscribe(
+            (data: any) => {
+              console.log('[HomePage] getDayPhrase()', data);
+              resolve(data);
+            },
+            (error) => {
+              console.log('[HomePage] getDayPhrase() ERROR(' + error.code + '): ' + error.message);
+              reject(error);
+            }
+          );
+        });
+  
+        this.dayPhrase = res.dayPrase;
+        
+        //this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
+        if (this.dayPhrase != null) {
+          this.openAICoachMessage(this.dayPhrase)
+          this.setDateDayPhraseReaded(new Date());
+        }
+      }
+      
+
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching user image:', error);
+      throw error;
+    }
+  }
+
+
+  hasMoreThanOneDayPassed(date1: Date, date2: Date): boolean {
+    // Calculate the difference in time between the two dates
+    const differenceInTime = Math.abs(date2.getTime() - date1.getTime());
+  
+    // Calculate the number of days between the two dates
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+  
+    // Check if the difference is greater than 1 day
+    return differenceInDays >= 1;
   }
 
   async getFamilyUnitData(){
@@ -471,7 +530,6 @@ export class HomePage implements OnInit {
 
       
       this.results = [...this.listFamilyUnit];
-      this.resultsFake = [...this.fakeData];
 
       console.log(this.listFamilyUnit)
 
@@ -2162,6 +2220,39 @@ export class HomePage implements OnInit {
   }
 
 
+  public async openAICoachMessage(text:string) {
+
+    let message = `
+    <ion-row>
+      <ion-col class="text-align-center" style="padding: 0px" >
+        <img src="${'../../assets/images/doctor_dayPhrase.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
+        <h1>`+ this.translate.instant('home.tip') + `</h1>
+        <ion-text> <p>`+ text+ `</p> </ion-text>
+      </ion-col>
+    </ion-row>`;
+
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      animated: true,
+      backdropDismiss: false,
+      cssClass: "scp-home-alert",
+      message: new IonicSafeString(message),
+      buttons: [
+        {
+          text: this.translate.instant('shared_care_plan.new_scp_alert_cancel'),
+          role: 'cancel',
+        },
+      ],
+    });
+
+
+    await alert.present();
+
+    await alert.onDidDismiss();
+  }
+  
+
+
   navigateToDietsPage() {
     this.router.navigate([ContentTypePath.Diets], { state: { segment: 'diets'}});
   }
@@ -2209,6 +2300,43 @@ export class HomePage implements OnInit {
   navigateToChallengeDetailPage(challenge:any) {
     this.router.navigate([ContentTypePath.ChallengesDetail], { state: { challenge: challenge}});
 
+  }
+
+
+  async setDateDayPhraseReaded(date: Date): Promise<void> {
+    const dateString = date.toISOString(); // Convert Date object to ISO string format
+    Preferences.set({
+      key: 'dateReaded',
+      value: dateString,
+    });
+  }
+
+  async getDatedayPhraseReaded(): Promise<Date> {
+    const result = await Preferences.get({ key: 'dateReaded' });
+
+    if (result.value) {
+      return new Date(result.value); // Convert the ISO string back to a Date object
+    } else {
+      return null;
+    }
+
+    //return new Date(result.value); 
+  }
+ 
+
+  activateList() {
+    this.ngZone.run(() => {
+      console.log("Acivate/des Focus")
+    this.activateFocus = true;
+    });
+  }
+
+  onCancel($event?:any) {
+    this.activateFocus = false;
+  }
+
+  checkBlur() {
+    this.activateFocus = false;
   }
 
 

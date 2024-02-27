@@ -111,7 +111,8 @@
       "see_advices": "Ver todos los consejos",
       "caregiver_title": "Personas a tu cargo",
       "caregiver_change": "Vas a cambiar ",
-      "back_caregiver": "Volver a tu perfil"
+      "back_caregiver": "Volver a tu perfil",
+      "tip": "Consejo del día!"
     },
     "profile":{
       "title_profile": "Mi Perfil",

@@ -75,7 +75,6 @@ export class ApiEndpointsService {
 
   getIndexEndPointLocalstorage() {
     let endpoint = localStorage.getItem('endpoint');
-    console.log(`[ApiEndpointsService] setEndPointLocalstorage()`, endpoint);
     if(endpoint) return Number(JSON.parse(endpoint))
     return undefined
   }
