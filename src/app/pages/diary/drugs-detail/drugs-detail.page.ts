@@ -38,6 +38,7 @@ export class DrugsDetailPage implements OnInit {
   isInit = true;
   expanded = true;
   isInstant = false;
+  interactions= [];
   maxYear : string;
   date:any;
   time:any;
@@ -97,7 +98,12 @@ export class DrugsDetailPage implements OnInit {
   }*/
 
   drugSelecting(drug){
-    this.drug= drug;
+    debugger
+    drug.forEach(element => {
+      this.drug= element
+    });
+   
+    console.log("drug drug-details", this.drug )
   }
 
   isSubmittedFields(isSubmitted){
@@ -344,7 +350,7 @@ debugger
   }
 
   async getMedicationPlan(){
-    debugger
+    
     const medication_plan_id = "" //this.form?.medication_plan_id? this.drug.medication_plan_id: this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
@@ -480,4 +486,9 @@ debugger
     this.modalCtrl.dismiss({error:null});
   }
 
+
+  dataInteractions(interactions){
+    
+    this.interactions =  interactions;
+  }
 }

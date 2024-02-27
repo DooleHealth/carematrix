@@ -20,7 +20,6 @@ export class DietsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("fghjkl")
 this.getDietList()
   }
  

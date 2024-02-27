@@ -9,8 +9,10 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./add-drug-filter.component.scss'],
 })
 export class AddDrugFilterComponent  implements OnInit {
-  @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dataInteractions: EventEmitter<any> = new EventEmitter<any>();
+  @Output() drugUpdated: EventEmitter<any> = new EventEmitter<any>();
   drugs: any;
+  interactions;
   constructor(
     private dooleService: DooleService,
     private modalCtrl: ModalController,
@@ -39,6 +41,9 @@ export class AddDrugFilterComponent  implements OnInit {
           console.log('[DrugAddPage] getDrugsList()', await res.drugs);
           if(res )
           this.drugs = res.drugs;
+          this.drugs = [];
+        
+      
          },(err) => {
             console.log('[DrugAddPage] getDrugsList() ERROR(' + err.code + '): ' + err.message);
             alert( 'ERROR(' + err.code + '): ' + err.message)
@@ -49,10 +54,27 @@ export class AddDrugFilterComponent  implements OnInit {
   }
 
   addMedicamento(drug){
-    debugger
     console.log('[DrugAddPage] addMedicamento()', drug);
-    this.drugs = [];
-    this.dataUpdated.emit(drug);
+    this.interactions= [];
+     /**ESTA ES LA API PARA SABER SI TIENE INTERACCCIONES O NO EL MEDICAMENTO */
+     this.dooleService.getAPIdrugsListInteraction(drug.id).subscribe(
+      async (res: any) =>{
+        if(res.interactions){
+          let arrayValue = res
+          arrayValue.interactions.forEach(element => {
+             this.interactions.push(element);
+          });
+          
+        }
+        this.drugUpdated.emit(this.drugs);
+        this.dataInteractions.emit(this.interactions);
+        console.log("drug interaction", res)
+        this.drugs=[]
+
+      }
+     )
+     
+   
    // this.modalCtrl.dismiss({error:null, action: 'add', drug: drug});
   }
 

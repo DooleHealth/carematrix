@@ -112,11 +112,9 @@
                   <ion-text class="txtTitleGoalsDarker textAdvicesSlider"> {{doc.diagnostic_test_type?.name}}</ion-text>
                 </ion-row>
                 <ion-row  class="txtTitleGoals textAdvicesSlider">
-                  <ion-col size="11.1"size-md="11.5" size-lg="11.6">
                     <ion-text class="txtTitleTrackingDate">
-                      {{ddMMyFormat(doc.data)}}
+                      {{transformDate(doc.data)}}
                     </ion-text>
-                  </ion-col>
                 </ion-row>
               </ion-grid>
              

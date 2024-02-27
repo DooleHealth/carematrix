@@ -103,7 +103,7 @@
       <div >
         <ng-container>
           <ion-chip *ngFor="let time of this.times;let i = index">
-            <ion-label class="txtTitleGoals">{{ this.dateService.format24h(time)}} </ion-label>
+            <ion-label class="txtTitleGoals">{{ time}} </ion-label>
             <ion-icon name="close-circle" color="primary" (click)="removeTime(time)"></ion-icon>
           </ion-chip>
         </ng-container>

@@ -346,14 +346,21 @@ export class DiaryPage implements OnInit {
        let  params={
         tags:1,
         interactions:1,
-        readingTime:1
+        readingTime:1,
+        from_date:"2024-01-01",
+        to_date:"2025-02-01"
       }
         await this.dooleService.getAPIListRecipe(params).subscribe(
           async (res: any) =>{
             
     
-            if(res.success){
-              this.items = res.recipes
+            if(res.receipts){
+             
+              let recipes = res.receipts
+              recipes.forEach(element => {
+                this.items.push(element)
+              });
+            
               console.log('[DiaryPage] getRecipesList()', await this.items);
              // this.adapterForView(res.diets)
             }
