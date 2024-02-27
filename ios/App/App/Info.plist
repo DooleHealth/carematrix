@@ -31,15 +31,15 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Se utiliza la cámara para poder subir imágenes de pruebas diagnósticas y enviar imágenes a tu médico</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Allow to read user's contacts </string>
+	<string>Allow to read user&apos;s contacts </string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Unlock phone with FaceID</string>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
 	<string>Share your health records activity</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Query user's activity</string>
+	<string>Query user&apos;s activity</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>To query user's health activity</string>
+	<string>To query user&apos;s health activity</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Always allow Geolocation?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

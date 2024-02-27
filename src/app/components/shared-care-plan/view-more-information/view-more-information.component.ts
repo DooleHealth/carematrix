@@ -18,25 +18,29 @@ export class ViewMoreInformationComponent  implements OnInit {
   ngOnInit() {
     console.log("lo que llega", this.content)
     console.log("segment", this.segment)
-    this.toRouterLink()
+    //this.toRouterLink()
 
   }
 
   toRouterLink(){
+    
     switch (this.segment) {
       case "News":
-        this.toLink='new-detail'
-        break;
+        return'new-detail'
+        ;
         case "Advices":
-          this.toLink='advices-detail'
-          break;
+          return'advices-detail'
+          ;
           case "Exercises":
-          this.toLink='exercices-detail'
-          break;
+          return'exercices-detail'
+          ;
           
-      default:
-        break;
     }
+
+if(this.content[0].modal_type)
+if(this.content[0].modal_type === "App\\Receipt"){
+ return 'diets-detail/recipe';
+}
   }
   setContentStatus(id, type){
     let value = 0

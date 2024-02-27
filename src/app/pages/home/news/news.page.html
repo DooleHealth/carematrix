@@ -13,8 +13,7 @@
 </ion-header>
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
-  <ion-searchbar
-  [animated]="true"
+  <ion-searchbar mode="ios" show-cancel-button="always"
   (ionInput)="filterListNews($event)"
   (ionClear)="getNewsList()"
   placeholder="{{ 'advices.searchbar' | translate}}">

@@ -1,0 +1,22 @@
+<ion-card style="background-color: #FFE3DD;">
+  <ion-card-header mode="ios">
+    <ion-label style="display: flex; align-items: center;">
+      <ion-icon src="../../assets/icons/shared-care-plan/Icono.svg" style="font-size: 24px; margin-right: 8px;" slot="start"></ion-icon>
+      <ion-text><strong>{{ 'medications.caution' |translate}} </strong>   {{ 'medications.msm_caution' |translate}}</ion-text>
+    </ion-label>
+   
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item style="background-color: aliceblue; border-radius: 20px;">
+      <ion-label *ngFor="let int of interactions">
+        <ion-icon [name]="int.severity === 'major' ? 'radio-button-on-outline' : 'radio-button-off-outline'" [color]="int.severity === 'major' ? 'danger' : 'warning'"></ion-icon>
+         {{int.affected_ingredient.name}}
+      </ion-label>
+    </ion-item>
+    <ion-text>
+      {{ 'medications.msm_contact_hp' |translate}}
+    </ion-text>
+   
+  </ion-card-content>
+</ion-card>

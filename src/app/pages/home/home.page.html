@@ -462,7 +462,7 @@
 
 
       <!-- Physical Activity -->
-      <ion-row>
+      <ion-row class="ion-padding-bottom">
         <ng-container *ngIf="(!this.activity || this.activity?.length == 0); else elseBlock">
           <ion-card class="vertical-card margin-bottom" (click)="navigateToMonitoringPage()">
 
@@ -524,7 +524,7 @@
 
 
       <!-- Reminders -->
-      <ion-row *ngIf="this.appointment?.length > 0" class="ion-padding-top">
+      <ion-row *ngIf="this.appointment?.length > 0" class="ion-padding-bottom">
         <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
       </ion-row>
 
@@ -597,7 +597,7 @@
       
       <!-- ADVICES -->
       <ng-container *ngIf="this.advices?.length > 0">
-        <ion-row class="ion-padding-top">
+        <ion-row>
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'home.advices' | translate}}</ion-text>
           </ion-col>

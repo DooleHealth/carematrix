@@ -10,7 +10,7 @@
 <ion-content>
 
 
-  <form (ngSubmit)="submit()" [formGroup]="form">
+  <form (ngSubmit)="submit()" [formGroup]="form" style="padding-bottom: 30%;">
     <ion-list>
       <ion-card class="cardProfile" class="cardProfile" (click)="openProfesionalModal()">
         <ion-card-content style="padding-left: 1%;">
@@ -99,15 +99,21 @@
       </ion-list>
     </ion-card>
 
-    <div class="buttonContainer">
+    <!-- <div class="buttonContainer">
       <ion-button type="button" color="primary" shape="round" class="btn" (click)="this.submit()">
         {{'bookings.button_videocall' | translate}}
       </ion-button>
-
-     <!-- <ion-button type="button" color="primary"  shape="round" class="btn" (click)="this.payment()">
-        {{'bookings.button_videocall_charge' | translate}}
-      </ion-button> -->
-    </div>
+    </div> -->
   </form>
 
 </ion-content>
+
+
+<ion-footer>
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <!-- Floating Button -->
+    <ion-button (click)="this.submit()" color="primary" shape="round" class="floating-button ion-margin" style="margin-bottom: 66px;">
+      {{'bookings.button_videocall' | translate}}
+     </ion-button>
+  </div>
+</ion-footer>

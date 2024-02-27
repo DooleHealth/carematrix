@@ -62,6 +62,7 @@ import { HighChartsComponent } from './high-charts/high-charts.component';
 import { CaregiverComponent } from './caregiver/caregiver.component';
 import { GoalsComponent } from './shared-care-plan/goals/goals.component';
 import { ProcedureComponent } from './shared-care-plan/procedure/procedure.component';
+import { InteractionsMedicineComponent } from './interactions-medicine/interactions-medicine.component';
 
 
 @NgModule({
@@ -128,7 +129,8 @@ import { ProcedureComponent } from './shared-care-plan/procedure/procedure.compo
     HighChartsComponent,
     CaregiverComponent,
     GoalsComponent,
-    ProcedureComponent
+    ProcedureComponent,
+    InteractionsMedicineComponent
   ],
   exports: [
     ShellModule,
@@ -181,7 +183,8 @@ import { ProcedureComponent } from './shared-care-plan/procedure/procedure.compo
     HighChartsComponent,
     CaregiverComponent,
     GoalsComponent,
-    ProcedureComponent
+    ProcedureComponent,
+    InteractionsMedicineComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

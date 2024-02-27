@@ -111,7 +111,8 @@
       "see_advices": "Ver todos los consejos",
       "caregiver_title": "Personas a tu cargo",
       "caregiver_change": "Vas a cambiar ",
-      "back_caregiver": "Volver a tu perfil"
+      "back_caregiver": "Volver a tu perfil",
+      "tip": "Consejo del día!"
     },
     "profile":{
       "title_profile": "Mi Perfil",
@@ -864,8 +865,10 @@
       "go_back": "Volver al paso anterior",
       "add_address": "Añadir dirección",
       "edit_address": "Editar dirección",
-      "head_card_text": "Aquí encontrará información sobre los planes de medicación prescritos. Puede ponerse en contacto con su equipo médico si tiene alguna duda al respecto"
-
+      "head_card_text": "Aquí encontrará información sobre los planes de medicación prescritos. Puede ponerse en contacto con su equipo médico si tiene alguna duda al respecto",
+      "msm_caution": "This drug has dangerous interactions with:",
+      "caution": "Caution:",
+      "msm_contact_hp": "*It is recommended to contact health personnel before consumption."
     },
     "recipe": {
       "header": "Recetas",

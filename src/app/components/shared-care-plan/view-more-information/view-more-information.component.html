@@ -9,13 +9,12 @@
     <!--<ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
     <!--<ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
     <!--<ion-icon name="volume-low-outline" slot="end" style="margin-left: 5%;"></ion-icon>(click)= "setContentStatus('favourite')"-->
-    <ion-icon  [color]="getColorLike(listcontets?.statusable)"  name="heart" slot="end" (click)= "setContentStatus(listcontets.id, 'like')" ></ion-icon>
+    <ion-icon  [color]="getColorLike(listcontets?.statusable || listcontets?.statusables)"  name="heart-outline" slot="end" (click)= "setContentStatus(listcontets.id, 'like')" ></ion-icon>
    
   </ion-item>
   <ion-card-header mode="md">
     <ion-card-subtitle class="card_title_comp">
      <ion-text> {{listcontets?.subject || listcontets?.name}} </ion-text>
-
       </ion-card-subtitle>
       <ion-card-subtitle class="card_source" *ngIf="listcontets?.source">{{'shared_care_plan.source' | translate}}{{extractText(listcontets?.source)}}</ion-card-subtitle>
       <ion-card-subtitle class="card_date">{{listcontets?.scheduled_date || listcontets?.created_at | date:'mediumDate'}}</ion-card-subtitle>
@@ -47,7 +46,7 @@
   </ion-card-content>
 
  
-  <ion-button expand="block" color="primary" class="floating-button" [routerLink]="this.toLink"  [state]="getStateObject(listcontets)">
+  <ion-button expand="block" color="primary" class="floating-button" [routerLink]="toRouterLink()"  [state]="getStateObject(listcontets)">
     <ion-label>{{'shared_care_plan.button_info' | translate}}</ion-label>
    
   </ion-button>

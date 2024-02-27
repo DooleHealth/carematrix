@@ -4,7 +4,7 @@ class="ion-no-padding"
 routerLinkActive="active-item" 
 routerLink="diets-detail/recipe"
  [state]="{id: content?.item_id}" 
- *ngIf="content?.item_type === 'App\\Ingredient';else Other"
+ *ngIf="content?.item_type === 'App\\Ingredient' || content?.item_type === 'App\\Receipt';else Other"
  
  >
 

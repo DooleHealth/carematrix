@@ -15,7 +15,7 @@
   <app-caregiver></app-caregiver>
 <!-- SegmentBar -->
 <ion-searchbar
-[animated]="true"
+mode="ios" show-cancel-button="always"
 (ionInput)="filterListTertimonials($event)"
 (ionClear)="getNewsTestimonial()"
 placeholder="{{ 'advices.searchbar' | translate}}">

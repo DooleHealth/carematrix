@@ -115,7 +115,8 @@
     "see_advices": "See all Advices",
     "caregiver_title": "Caregiver's responsible",
     "caregiver_change": "You are going to change ",
-    "back_caregiver": "Back to my profile"
+    "back_caregiver": "Back to my profile",
+    "tip": "Tip of the day!"
   },
   "profile": {
     "title_profile": "My Profile",
@@ -876,7 +877,10 @@
     "go_back": "Back to previous step",
     "add_address": "Add Address",
     "edit_address": "Edit Address",
-    "head_card_text": "Here you will find information about the prescribed medication plans. You can contact your medical team if you have any questions about it"
+    "head_card_text": "Here you will find information about the prescribed medication plans. You can contact your medical team if you have any questions about it",
+    "msm_caution": "This drug has dangerous interactions with:",
+    "caution": "Caution:",
+    "msm_contact_hp": "*It is recommended to contact health personnel before consumption."
   },
   "recipe": {
     "header": "Recipes",
