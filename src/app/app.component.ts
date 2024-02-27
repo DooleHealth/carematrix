@@ -762,7 +762,7 @@ export class AppComponent implements OnInit {
   //       await data;
   //       if (data.result) {
   //         let tokboxSession = data;
-  //         this.opentokService.token$ = tokboxSession.token;
+  //         this..token$ = tokboxSession.token;
   //         this.opentokService.sessionId$ = tokboxSession.sessionId;
   //         this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
   //         const modal = await this.modalCtrl.create({
