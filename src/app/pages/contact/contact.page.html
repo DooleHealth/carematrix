@@ -15,8 +15,6 @@
 
 
 <ion-content>
-
-
   <ion-row style="background-color: var(--secondary-bkg); padding-top: 5%; padding-bottom: 5%;">
     <ion-col size="0.5"></ion-col>
     <ion-col size="11" style="display: flex; justify-content: center;">
@@ -33,19 +31,16 @@
         <ion-segment-button *ngIf="role?.component?.agenda" value="my-centers">
           <ion-label>{{ 'contact.tap_my_centers' | translate}}</ion-label>
         </ion-segment-button>
-
-        <!--  <ion-segment-button *ngIf="role?.component?.agenda" value="video">
-          <ion-label>{{ 'contact.tap_video' | translate}}</ion-label>
-        </ion-segment-button>
-
-        <ion-segment-button *ngIf="role?.component?.agenda" value="appointment">
-          <ion-label>{{ 'contact.tap_appointment' | translate}}</ion-label>
-        </ion-segment-button> -->
-
-
       </ion-segment>
     </ion-col>
     <ion-col size="0.5"></ion-col>
+
+    <ion-row style="width: 100%;">
+      <ion-col size="12">
+        <app-caregiver></app-caregiver>
+      </ion-col>
+    </ion-row>
+   
   </ion-row>
 
 
