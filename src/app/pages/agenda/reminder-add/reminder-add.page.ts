@@ -512,12 +512,17 @@ export class ReminderAddPage implements OnInit {
     //this.form.get('time').setValue('')
     if(time !== '' ){
       let date = new Date(time)
-      let hour = this.datepipe.transform(date, 'HH:mm');
+      let hour = this.transformHour2(date);
+      console.log('[reminder-addPage] hour', hour);
       if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
         this.times.push(hour)
     }
   }
 
+  transformHour2(date) {
+    if( date instanceof Date)
+    return this.datepipe.transform(date, 'HH:mm');
+  }
   closeTimeAlert(event){
     console.log('[DrugsDetailPage] this.time()', event);
     this.popover.dismiss()

@@ -19,6 +19,7 @@ export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
   color?: string;
+  ddMMyFormat?: string;
  
 }
 export interface Filter {
@@ -107,8 +108,13 @@ export class TrackingPage implements OnInit {
     return this.dateService.selectedDateFormat(date);
   }
 
-  ddMMyFormat(date){
-    return this.dateService.ddMMyFormat(date);
+  transformDate(date) {
+    if (date != null) {
+      return this.dateService.ddMMyFormat(date)
+    } else {
+      return ""
+    }
+
   }
 
   setDayMonthYearTimeFormat(date){
@@ -166,15 +172,19 @@ export class TrackingPage implements OnInit {
   groupDiagnosticsByDate(list){
     let diagnosticTests = list.diagnosticTests
     diagnosticTests.forEach( (diagnostic, index) =>{
+      
+      
       let date = diagnostic.date_european
       if(index == 0 || date !== diagnosticTests[index-1].date_european){
         let list = diagnosticTests.filter( event =>
           (event.date_european == date)
         )
         let color = (index == 0)? this.active_color: this.inactive_color
-        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color})
+        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color })
       }
+      
     })
+    console.log("list", this.listDiagnostic)
     this.loadingTests = false
   }
 

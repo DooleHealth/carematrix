@@ -17,16 +17,18 @@
 <ion-content>
   <ion-card  class="cardProfilePaddingBottom" >
     <ion-item>
-      <app-add-drug-filter (dataUpdated)="drugSelecting($event)"></app-add-drug-filter>
+      <app-add-drug-filter (drugUpdated)="drugSelecting($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
     </ion-item> 
+
+    <app-interactions-medicine [interactions]="interactions" *ngIf="interactions.length >0"></app-interactions-medicine>
   </ion-card>
-  <form (ngSubmit)="submit()" [formGroup]="form">
+  <form (ngSubmit)="submit()" [formGroup]="form" *ngIf="drug">
   <ion-card  class="cardProfilePaddingBottom" >
     <ion-card>
       <ion-item lines="none">
         <ion-label class="txtTitleGoals" stacked>{{ 'medication.name' | translate}}
         </ion-label>
-        <ion-text style="margin: 10px;" class="txtTitleGoals" stacked>{{drug?.name}}</ion-text>
+        <ion-text style="margin: 10px;" class="txtTitleGoals" >{{drug.name}}</ion-text>
       </ion-item>
   <ion-item *ngIf="!isInstant">
       <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}

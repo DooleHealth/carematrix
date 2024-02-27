@@ -14,7 +14,7 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   <ion-searchbar
-  [animated]="true"
+  mode="ios" show-cancel-button="always"
   (ionInput)="filterListExercises($event)"
   (ionClear)="getExercisesList()"
   placeholder="{{ 'advices.searchbar' | translate}}">

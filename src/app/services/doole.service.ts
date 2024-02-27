@@ -1122,12 +1122,14 @@ export class DooleService {
   }
 
   getAPIListRecipe(params): Observable<any> {
-    let path = `user/diets`;
+    let path = `user/diets/receipts`;
     const endpoint = this.api.getEndpoint(path);
     let httpParams = new HttpParams()
     .set('tags', params.tags)
     .set('interactions', params.interactions)
-    .set('readingTime', params.readingTime);
+    .set('readingTime', params.readingTime)
+    .set('from_date', params.from_date)
+    .set('to_date', params.to_date);
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);
@@ -1310,6 +1312,20 @@ export class DooleService {
     return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         //console.log(`[DooleService] getAPIdrugsList(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+
+  
+  getAPIdrugsListInteraction(query: any): Observable<any> {
+   // const endpoint = `https://n6ibaazevnsixfcs4prl7z7wra0oonma.lambda-url.eu-central-1.on.aws/`;
+    const endpoint = `https://n6ibaazevnsixfcs4prl7z7wra0oonma.lambda-url.eu-central-1.on.aws/?drug=DB01363`;
+   // let httpParams = new HttpParams().set('drug', query);
+   let httpParams = new HttpParams()
+   .set('drug', query)
+    return this.http.get(endpoint).pipe(
+      map((res: any) => {
         return res;
       })
     );
