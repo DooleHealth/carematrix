@@ -68,11 +68,11 @@
           {{ 'reminder.field_end' | translate}}
           <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error " color="danger">{{ getErrorEndDate() }}</ion-note>
         </ion-label>
-        <ion-datetime-button slot="end" datetime="end_date"></ion-datetime-button>
+        <ion-datetime-button [ngStyle]="{'text-decoration': this.crossEndDate ? 'line-through' : 'none'}" slot="end" datetime="end_date"></ion-datetime-button>
       </ion-item>
       <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime [locale]="this.locale" presentation="date" id="end_date" (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates()" formControlName="end_date" [min]="this.date" [max]="dateMax"></ion-datetime>
+          <ion-datetime [locale]="this.locale" presentation="date" id="end_date" (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates2()" formControlName="end_date" [min]="this.date" [max]="dateMax"></ion-datetime>
           <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
             <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
             <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>

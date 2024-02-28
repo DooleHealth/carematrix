@@ -45,6 +45,7 @@ export class ReminderAddPage implements OnInit {
   locale:string;
 
   crossStartDate:boolean = false;
+  crossEndDate:boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -563,14 +564,30 @@ export class ReminderAddPage implements OnInit {
     console.log('[DrugsDetailPage] checkTreatmentDates()');
       let to_date = this.form.get('end_date').value
       let from_date = this.form.get('start_date').value
+
       if(new Date(from_date) > new Date(to_date) ){
-        let messagge = this.translate.instant('reminder.error_start_date')
-        this.dooleService.presentAlert(messagge)
-        this.crossStartDate = true
+        console.log("Data start mes gran que end")
+        this.date = to_date
+        this.form.get('end_date').setValue(from_date)
+        console.log(this.form.value)
+        this.crossEndDate = false;
       }
       else {
-        this.crossStartDate = false
+        this.crossEndDate = false;
       }
+  }
+
+
+  checkTreatmentDates2() {
+
+    let to_date = this.form.get('end_date').value
+      let from_date = this.form.get('start_date').value
+
+    if (new Date(to_date) < new Date(from_date)){
+      this.crossEndDate = true;
+      let messagge = this.translate.instant('reminder.error_end_date')
+      this.dooleService.presentAlert(messagge)
+    }
   }
 
 
