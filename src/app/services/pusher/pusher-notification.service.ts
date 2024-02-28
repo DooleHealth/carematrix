@@ -61,9 +61,9 @@ export class PusherNotificationService {
       if (data.type === "App\\Notifications\\SharedCarePlanAddContentNotification") {
         this.openScpNotificationDialog()
       }
-      if(data.type === "App\\Notifications\\VisitOnlineNotification") {
+      /* if(data.type === "App\\Notifications\\VisitOnlineNotification") {
         this.openVideocallNotificationDialog(data)
-      }
+      } */
     });
   }
 
@@ -72,20 +72,9 @@ export class PusherNotificationService {
     let message = `
     <ion-row>
       <ion-col size="4" class="text-align-left" style="padding: 0px; display:flex; align-items:center; justify-content:center">
-
-
       <ion-thumbnail style="--size:60px; --border-radius:60px">
-        
-        <img
-         
-          src=`+ dataVideocall?.staff?.temporaryUrl + `
-          
-          alt=""
-        />
-        </ion-thumbnail>
-
-      
-
+        <img src=`+ dataVideocall?.staff?.temporaryUrl + ` alt=""
+        /> </ion-thumbnail>
       </ion-col>
         <ion-col size="8" class="text-align-left" style="padding: 0px; height: 103px; display:flex; align-items:center " >
           <h1>`+ dataVideocall?.message + `</h1>
