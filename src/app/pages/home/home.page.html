@@ -273,11 +273,11 @@
 
           <ion-card-content>
 
-            <ion-text style="display: flex; justify-content: start;;" *ngIf="!this.forms|| this.forms?.length == 0">
+            <ion-text style="display: flex; justify-content: start; width: 100%;" *ngIf="!this.forms|| this.forms?.length == 0">
               {{ 'no_data' | translate}}
             </ion-text>
 
-            <swiper-container #sliderForms direction="vertical" pagination="true"
+            <swiper-container *ngIf="!(!this.forms|| this.forms?.length == 0)" #sliderForms direction="vertical" pagination="true"
               [config]="this.sliderFormsConfigVertical" (slidechange)="slideFormChange()">
 
               <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.forms">
@@ -313,7 +313,7 @@
 
           <ion-card-content>
 
-            <ion-text style="display: flex; justify-content: start;;"
+            <ion-text style="display: flex; justify-content: start; width: 100%;"
               *ngIf="!this.exercises|| this.exercises?.length == 0 ">
               {{ 'no_data' | translate}}
             </ion-text>
@@ -354,12 +354,12 @@
 
           <ion-card-content mode="md">
 
-            <ion-text style="display: flex; justify-content: start; width: inherit"
+            <ion-text style="display: flex; justify-content: start; width: 100%;"
               *ngIf="!this.drugs || this.drugs?.length == 0">
               {{ 'no_data' | translate}}
             </ion-text>
 
-            <swiper-container mode="md" #sliderDrug (slidechange)="slideDrugChange()" direction="vertical"
+            <swiper-container *ngIf="!(!this.drugs || this.drugs?.length == 0)" mode="md" #sliderDrug (slidechange)="slideDrugChange()" direction="vertical"
               pagination="true" class="slider-vertical">
               <swiper-slide mode="md" *ngFor="let slide of this.drugs;">
                 <ion-grid mode="md">
@@ -405,11 +405,11 @@
 
           <ion-card-content>
 
-            <ion-text style="display: flex; justify-content: start;;" *ngIf="!this.diets|| this.diets?.length == 0 ">
+            <ion-text style="display: flex; justify-content: start; width: 100%;" *ngIf="!this.diets|| this.diets?.length == 0 ">
               {{ 'no_data' | translate}}
             </ion-text>
 
-            <swiper-container #sliderDiet *ngIf="this.diets?.length > 0" direction="vertical" pagination="true"
+            <swiper-container *ngIf="!(!this.diets|| this.diets?.length == 0)" #sliderDiet direction="vertical" pagination="true"
               [config]="this.sliderDietsConfigVertical" (slidechange)="slideDietChange()">
 
               <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.diets">
@@ -443,7 +443,7 @@
 
 
           <ion-card-content>
-            <ion-text style="display: flex; justify-content: start;;" *ngIf="this.games?.length === 0">
+            <ion-text style="display: flex; justify-content: start; width: 100%;" *ngIf="this.games?.length === 0">
               {{ 'no_data' | translate}}
             </ion-text>
 
@@ -477,7 +477,7 @@
 
 
             <ion-card-content>
-              <ion-text style="display: flex; justify-content: start;;"
+              <ion-text style="display: flex; justify-content: start; width: 100%;"
                 *ngIf="!this.activity|| this.activity?.length == 0 ">
                 {{ 'no_data' | translate}}
               </ion-text>
@@ -503,7 +503,7 @@
 
                 <ion-card-content>
                   <swiper-container direction="vertical" pagination="true" [config]="this.configVertical">
-                    <ion-text style="display: flex; justify-content: start;;" *ngIf="slide.elements.length === 0"
+                    <ion-text style="display: flex; justify-content: start; width: 100%;" *ngIf="slide.elements.length === 0"
                       class="txt-cards">
                       {{ 'no_data' | translate}}
                     </ion-text>
