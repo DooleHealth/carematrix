@@ -276,9 +276,6 @@ export class HomePage implements OnInit {
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
-
-
-
     if (this.getDatedayPhraseReaded()) this.datePhraseReaded = await this.getDatedayPhraseReaded();
    
 

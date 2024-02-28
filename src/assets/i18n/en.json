@@ -899,7 +899,9 @@
     "drug": "Medicament",
     "videocall": "Video call",
     "open": "Open",
-    "close": "Close"
+    "close": "Close",
+    "join": "Join",
+    "cancel": "Cancel"
   },
   "security": {
     "rooted": "This device has been detected to have been initialized with unusual user rights (root). For reasons of security and data integrity, access has been blocked.",

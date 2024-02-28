@@ -884,7 +884,9 @@
       "drug":"Medicamento",
       "videocall":"Videollamada",
       "open":"Abrir",
-      "close":"Cerrar"
+      "close":"Cerrar",
+      "join": "Unirse",
+      "cancel": "Cancelar"
     },
     "security":{
       "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",

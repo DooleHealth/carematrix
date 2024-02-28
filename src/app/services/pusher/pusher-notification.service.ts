@@ -61,9 +61,66 @@ export class PusherNotificationService {
       if (data.type === "App\\Notifications\\SharedCarePlanAddContentNotification") {
         this.openScpNotificationDialog()
       }
+      if(data.type === "App\\Notifications\\VisitOnlineNotification") {
+        this.openVideocallNotificationDialog(data)
+      }
     });
   }
 
+  public async openVideocallNotificationDialog(dataVideocall:any) {
+    
+    let message = `
+    <ion-row>
+      <ion-col size="4" class="text-align-left" style="padding: 0px; display:flex; align-items:center; justify-content:center">
+
+
+      <ion-thumbnail style="--size:60px; --border-radius:60px">
+        
+        <img
+         
+          src=`+ dataVideocall?.staff?.temporaryUrl + `
+          
+          alt=""
+        />
+        </ion-thumbnail>
+
+      
+
+      </ion-col>
+        <ion-col size="8" class="text-align-left" style="padding: 0px; height: 103px; display:flex; align-items:center " >
+          <h1>`+ dataVideocall?.message + `</h1>
+      </ion-col>
+    </ion-row>`;
+
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      animated: true,
+      backdropDismiss: false,
+      cssClass: "videocall-alert",
+
+      message: new IonicSafeString(message),
+      buttons: [
+        {
+          text: this.translate.instant('notifications.cancel'),
+          role: 'cancel',
+        },
+
+        {
+          
+          text: this.translate.instant('notifications.join'),
+          role: 'accept',
+          handler: () => {
+            this.router.navigate(['/agenda/videocall'], { state: { id: dataVideocall.agenda } });
+          }
+        },
+      ],
+    });
+
+    await alert.present();
+
+    await alert.onDidDismiss();
+  
+}
 
   public async openScpNotificationDialog() {
 

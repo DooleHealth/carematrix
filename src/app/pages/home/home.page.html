@@ -555,19 +555,19 @@
                       <ion-img src="assets/icons/agenda_new.svg"></ion-img>
                     </ion-col>
                     <ion-col size="9.5" class="alingLeft zeroMarginPadding" style="padding-top: 3%;">
-                      <ion-text class="datetxt ion-margin-start">
+                      <ion-text class="datetxt">
 
                         {{ formatSelectedDate(slide.start_date_iso8601) | titlecase
                         }}
                       </ion-text>
                       <br>
-                      <ion-text class="date-txt ion-margin-start">
+                      <ion-text class="date-txt">
                         {{slide.title}}
                       </ion-text>
                       <br>
                       <ng-container *ngIf="slide?.staff.length > 0; else noProfesional">
                         <div *ngFor="let doctor of slide.staff;">
-                          <ion-text class="staff-txt ion-margin-start">
+                          <ion-text class="staff-txt">
                             {{doctor.name}} - <b>{{ 'appointment.field_specially' | translate }}</b>
                           </ion-text>
                           <br>
@@ -575,13 +575,13 @@
                       </ng-container>
 
                       <ng-template #noProfesional>
-                        <ion-text class="staff-txt ion-margin-start">
+                        <ion-text class="staff-txt">
                           <b>{{ 'appointment.no_field_specially' | translate }}</b>
                         </ion-text>
                       </ng-template>
 
                       <ion-row>
-                        <a class="see-more-appointment ion-margin-start">{{ 'health_path.see_more' | translate}}!</a>
+                        <a class="see-more-appointment">{{ 'health_path.see_more' | translate}}!</a>
                       </ion-row>
                     </ion-col>
                   </ion-row>
