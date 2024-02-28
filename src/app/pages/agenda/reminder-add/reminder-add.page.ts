@@ -588,6 +588,9 @@ export class ReminderAddPage implements OnInit {
       let messagge = this.translate.instant('reminder.error_end_date')
       this.dooleService.presentAlert(messagge)
     }
+    else {
+      this.crossEndDate = false;
+    }
   }
 
 
