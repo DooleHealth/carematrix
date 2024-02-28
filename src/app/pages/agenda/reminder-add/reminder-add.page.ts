@@ -71,9 +71,9 @@ export class ReminderAddPage implements OnInit {
       type: [this.type],
       type_id: [this.typeId],
       title: [''],
-      start_date: [this.date, [Validators.required, this.checkDate.bind(this)]],
+      start_date: [this.date, [Validators.required]],
       time: [this.date],
-      end_date: [ this.date, [Validators.required, this.checkDate.bind(this)]],
+      end_date: [ this.date, [Validators.required]],
       description: [],
       frequency: ['daily'],
       origin_id: [],
@@ -85,7 +85,7 @@ export class ReminderAddPage implements OnInit {
       day5: [1],
       day6: [1],
       day7: [1],
-    });
+    }, { validators: this.checkDate.bind(this) });
     this.getReminder()
     if(this.isNewEvent) this.isInit = false
   }
@@ -103,32 +103,18 @@ export class ReminderAddPage implements OnInit {
         let start = new Date(start_date).getTime();
         let end = new Date(end_date).getTime();
         console.log(`[ReminderAddPage] checkDate Start(${start}, End ${end})`);
-        return start <= end ? null : {
-          NotLess: true
-      };
+        if (start <= end) {
+          this.form.get('end_date').setErrors(null);
+          return null;
+        } else {
+          this.form.get('end_date').setErrors({ NotLess: true });
+          return {NotLess: true};
+        }
       }
     }
  }
 
- private checkDate2(group: FormControl) {
-  if(this.form !== null && this.form !== undefined) {
-    const start_date = this.form.get('start_date').value;
-    const end_date = this.form.get('end_date').value;
-
-    console.log("entro");
-
-    if(start_date && end_date){
-      let a = new Date(start_date).getTime();
-      let b = new Date(end_date).getTime();
-
-      console
-      console.log(`[ReminderAddPage] checkDate(${a}, ${b})`);
-      return a >= b ? null : {
-        NotLess: true
-    };
-    }
-  }
-}
+ 
 
   getErrorEndDate() {
     if (this.form.get('end_date').hasError('required')) {

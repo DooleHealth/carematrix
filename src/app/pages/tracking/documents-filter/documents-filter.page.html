@@ -34,12 +34,18 @@
       <ion-item>
         <ion-label  stacked>
             <h5 >{{'documents_filter.from' | translate}}</h5>
+            <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" (ionInput)="isSubmittedDuration = false" class="error " color="danger">{{ getErrorStartDate() }}</ion-note>
         </ion-label>
-        <ion-datetime-button slot="end" datetime="start_date"></ion-datetime-button>
+        <ion-datetime-button [ngStyle]="{'text-decoration': this.crossStartDate ? 'line-through' : 'none'}" slot="end" datetime="start_date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime  (ionChange)="getStartDate($event)" [locale]="this.locale" presentation="date" id="start_date" [max]="this.currentDate" formControlName="start_date"></ion-datetime>
+          <ion-datetime  (ionChange)="this.isSubmittedStartDate = false; checkTreatmentDates()" [locale]="this.locale" presentation="date" id="start_date" [max]="this.currentDate" formControlName="start_date"></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
               <!-- FIXME:: ionic 7 [displayFormat],placeholder removed-->
@@ -49,12 +55,18 @@
       <ion-item lines="none">
         <ion-label  stacked>
           <h5 >{{'documents_filter.until' | translate}}</h5>
+          <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error " color="danger">{{ getErrorEndDate() }}</ion-note>
         </ion-label>
-        <ion-datetime-button slot="end" datetime="end_date"></ion-datetime-button>
+        <ion-datetime-button [ngStyle]="{'text-decoration': this.crossEndDate ? 'line-through' : 'none'}" slot="end" datetime="end_date"></ion-datetime-button>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true">
+      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime (ionChange)="getEndDate($event)" [locale]="this.locale" presentation="date" id="end_date" [max]="currentDate" formControlName="end_date"></ion-datetime>
+          <ion-datetime (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates2()" [locale]="this.locale" presentation="date" id="end_date" [max]="currentDate" formControlName="end_date"></ion-datetime>
+          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+          </ion-buttons>
         </ng-template>
       </ion-modal>
 
