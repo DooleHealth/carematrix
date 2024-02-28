@@ -495,7 +495,10 @@
       "month2": "2 months",
       "month3": "3 months"
     },
-    "error_end_date": "End date must be greater than start date"
+
+    "error_end_date": "End date of reminder must be greater than start date of the reminder",
+    "error_start_date": "Start date of reminder must be lower than end date of reminder"
+
   },
   "appointment": {
     "header_appointment": "Appointment",

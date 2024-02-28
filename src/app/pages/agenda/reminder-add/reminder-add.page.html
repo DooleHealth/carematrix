@@ -45,15 +45,15 @@
       <ion-item>
         <ion-label stacked>
          {{'reminder.field_start' | translate}}
-          <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
+          <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" (ionInput)="isSubmittedDuration = false" class="error " color="danger">{{ getErrorStartDate() }}</ion-note>
         </ion-label>
-        <ion-datetime-button slot="end" datetime="start_date"></ion-datetime-button>
+        <ion-datetime-button [ngStyle]="{'text-decoration': this.crossStartDate ? 'line-through' : 'none'}" slot="end" datetime="start_date"></ion-datetime-button>
       </ion-item>
 
 
       <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime [locale]="this.locale" presentation="date" id="start_date" [min]="this.date" [max]="dateMax"  (ionChange)="this.isSubmittedStartDate = false"  formControlName="start_date"></ion-datetime>
+          <ion-datetime [locale]="this.locale" presentation="date" id="start_date" [min]="this.date" [max]="dateMax"  (ionChange)="this.isSubmittedStartDate = false; checkTreatmentDates()"  formControlName="start_date"></ion-datetime>
           <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
             <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
             <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>

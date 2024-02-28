@@ -6,6 +6,7 @@ import { AlertController, IonPopover, LoadingController, ModalController } from 
 import { TranslateService } from '@ngx-translate/core';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { FirebaseProfileModel } from 'src/app/services/firebase/auth/firebase-profile.model';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -42,6 +43,9 @@ export class ReminderAddPage implements OnInit {
   titlePlaceholder = '';
   date: any;
   locale:string;
+
+  crossStartDate:boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public dateService: DateService,
@@ -66,7 +70,7 @@ export class ReminderAddPage implements OnInit {
       type: [this.type],
       type_id: [this.typeId],
       title: [''],
-      start_date: [this.date, [Validators.required]],
+      start_date: [this.date, [Validators.required, this.checkDate.bind(this)]],
       time: [this.date],
       end_date: [ this.date, [Validators.required, this.checkDate.bind(this)]],
       description: [],
@@ -92,18 +96,38 @@ export class ReminderAddPage implements OnInit {
   private checkDate(group: FormControl) {
     if(this.form !== null && this.form !== undefined) {
       const start_date = this.form.get('start_date').value;
-      const end_date = group.value;
+      const end_date = this.form.get('end_date').value;
 
       if(start_date && end_date){
-        let a = new Date(start_date).getTime();
-        let b = new Date(end_date).getTime();
-        console.log(`[ReminderAddPage] checkDate(${a}, ${b})`);
-        return a <= b ? null : {
+        let start = new Date(start_date).getTime();
+        let end = new Date(end_date).getTime();
+        console.log(`[ReminderAddPage] checkDate Start(${start}, End ${end})`);
+        return start <= end ? null : {
           NotLess: true
       };
       }
     }
  }
+
+ private checkDate2(group: FormControl) {
+  if(this.form !== null && this.form !== undefined) {
+    const start_date = this.form.get('start_date').value;
+    const end_date = this.form.get('end_date').value;
+
+    console.log("entro");
+
+    if(start_date && end_date){
+      let a = new Date(start_date).getTime();
+      let b = new Date(end_date).getTime();
+
+      console
+      console.log(`[ReminderAddPage] checkDate(${a}, ${b})`);
+      return a >= b ? null : {
+        NotLess: true
+    };
+    }
+  }
+}
 
   getErrorEndDate() {
     if (this.form.get('end_date').hasError('required')) {
@@ -111,6 +135,16 @@ export class ReminderAddPage implements OnInit {
     }
     if (this.form.get('end_date').hasError('NotLess')) {
       return this.translate.instant("reminder.error_end_date");
+    }
+    return '';
+  }
+
+  getErrorStartDate() {
+    if (this.form.get('start_date').hasError('required')) {
+      return this.translate.instant("error_required");
+    }
+    if (this.form.get('start_date').hasError('NotLess')) {
+      return this.translate.instant("reminder.error_start_date");
     }
     return '';
   }
@@ -316,6 +350,8 @@ export class ReminderAddPage implements OnInit {
     console.log('[ReminderAddPage] submit()', this.form.value );
     this.isSubmited = true
     this.isSubmittedFields(true);
+
+    console.log(this.form.invalid)
     if(this.form.invalid || this.times.length <= 0){
       this.isSubmited = false
       return false;
@@ -512,17 +548,12 @@ export class ReminderAddPage implements OnInit {
     //this.form.get('time').setValue('')
     if(time !== '' ){
       let date = new Date(time)
-      let hour = this.transformHour2(date);
-      console.log('[reminder-addPage] hour', hour);
+      let hour = this.datepipe.transform(date, 'HH:mm');
       if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
         this.times.push(hour)
     }
   }
 
-  transformHour2(date) {
-    if( date instanceof Date)
-    return this.datepipe.transform(date, 'HH:mm');
-  }
   closeTimeAlert(event){
     console.log('[DrugsDetailPage] this.time()', event);
     this.popover.dismiss()
@@ -533,10 +564,15 @@ export class ReminderAddPage implements OnInit {
       let to_date = this.form.get('end_date').value
       let from_date = this.form.get('start_date').value
       if(new Date(from_date) > new Date(to_date) ){
-        let messagge = this.translate.instant('medication.message_error_treatment_date')
+        let messagge = this.translate.instant('reminder.error_start_date')
         this.dooleService.presentAlert(messagge)
+        this.crossStartDate = true
+      }
+      else {
+        this.crossStartDate = false
       }
   }
+
 
 }
 

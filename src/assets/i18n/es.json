@@ -484,7 +484,8 @@
         "month2": "2 meses",
         "month3": "3 meses"
       },
-      "error_end_date": "La fecha de término debe ser mayor que la fecha de empieza"
+      "error_end_date": "La fecha de finalización del recordatorio debe ser mayor que la fecha de empieza",
+      "error_start_date": "La fecha de comienzo del recordatorio debe ser menor que la fecha de finalización"
     },
     "appointment":{
       "header_appointment": "Detalle cita",
