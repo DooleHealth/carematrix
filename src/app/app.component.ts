@@ -38,13 +38,14 @@ register();
 declare let VoIPPushNotification: any;
 declare let cordova: any;
 declare let IRoot: any;
-declare const NUM_MINUTES_GO_LOGIN = 900;
-declare const NUM_MINUTES_SHOW_BIOMETRIC = 300
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
 })
 export class AppComponent implements OnInit {
+  NUM_MINUTES_GO_LOGIN = 900;
+  NUM_MINUTES_SHOW_BIOMETRIC = 300
   settingsBio = '';
   selectedIndex = 0;
   previousUrl: string = null;
@@ -892,6 +893,7 @@ export class AppComponent implements OnInit {
   }
   lockDevice() {
     // Lock phone after 2 minutes in pause
+    this.getNumNotification()
     this.lastResume = new Date;
     this.setLastResume(this.lastResume)
     this.platform.pause.subscribe((e) => {
@@ -911,11 +913,11 @@ export class AppComponent implements OnInit {
         let secondsPassed2 = ((new Date).getTime() - longResume.getTime()) / 1000;
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
         //900 sec are 10 minutes NUM_MINUTES_GO_LOGIN
-        if(secondsPassed2 >= NUM_MINUTES_GO_LOGIN && !this.isNotification){
+        if(secondsPassed2 >= this.NUM_MINUTES_GO_LOGIN && !this.isNotification){
           this.router.navigateByUrl('/landing');
         }
         // App will lock after 5 minutes NUM_MINUTES_SHOW_BIOMETRIC
-        else if (secondsPassed >= NUM_MINUTES_SHOW_BIOMETRIC && !this.isNotification) {
+        else if (secondsPassed >= this.NUM_MINUTES_SHOW_BIOMETRIC && !this.isNotification) {
           // Must implement lock-screen
          this.showFingerprintAuthDlg()
         }

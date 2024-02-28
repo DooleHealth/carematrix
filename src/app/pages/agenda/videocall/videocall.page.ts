@@ -130,6 +130,8 @@ export class VideocallPage implements OnInit {
         enableViewportScale: 'yes',
         allowInlineMediaPlayback : 'yes',//iOS only
         mediaPlaybackRequiresUserAction: 'yes',
+        closebuttoncolor: "#F2FFFF",​
+        toolbarcolor: '#8E44AD',
         closebuttoncaption: ` ${this.closeButton}`,
       }
       const params = new HttpParams().set('API_KEY', this.api).set('SESSION_ID', this.sessionId).set('VIDEO_TOKEN', this.token);
