@@ -18,6 +18,8 @@ import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pus
 })
 export class GoalsComponent  implements OnInit {
   @Input() content: any
+  @Input() completedGoals: any
+  
   note = ''
   fetching = true;
   id = history.state?.challenge?.id;
@@ -130,11 +132,9 @@ export class GoalsComponent  implements OnInit {
     
     this.goalsList = tempGoals;
     console.log("gsetChallenge() ", this.goalsList)
-    if(this.isChallengeCompleted=== true){
-      this.progressBarValue = 100
-    }else{
+   
       this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
-    }
+
    
     this.fetching = false;
     this.changeDetectorRef.detectChanges();

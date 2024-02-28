@@ -3,7 +3,7 @@
     bottom: 5%; /* Ajusta la distancia desde el borde inferior según sea necesario */
     left: 3%;
     transform: translateY(-120%);
-    border-radius: 70%; /* Bordes redondeados */
+    border-radius: 99px !important; /* Bordes redondeados */
 
 
     width: calc(100% - 10%); /* Ancho casi completo, ajusta el valor según lo necesites */

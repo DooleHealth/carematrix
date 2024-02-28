@@ -23,7 +23,7 @@
       <ion-label>{{'diary.field_today' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button *ngIf="role?.component?.drug" value="forms">
-      <ion-label>{{'tracking.tap_forms' | translate}}</ion-label>
+      <ion-label>{{'tracking.tap_formsPlan' | translate}}</ion-label>
     </ion-segment-button>
 
   </ion-segment>
@@ -31,8 +31,8 @@
 
   <div class="verticalLine2" [ngSwitch]="segment">
  <!-- Forms Today-->
- <div *ngSwitchCase="'today'">
-  <div>
+ <div *ngSwitchCase="'today'" style="margin-top: 3%;">
+  <div >
     <ion-list *ngIf="listForms.length > 0; else noData">
       <ion-grid *ngFor="let content of listForms" class="ion-no-padding" >  
         <ion-row>
@@ -45,7 +45,7 @@
             ></ion-icon>&nbsp;
           </ion-col>
           <ion-col size="11.2">   
-            <ion-text class="center" :style="{ color: isDateInPast ? '#575757' : 'var(--malva)' }">
+            <ion-text class="center"   [style.color]="isDateInPast ? '#BA0186' : '#575757'">
               <h5>&nbsp; 
                 {{ this.selectTime(content?.from_date) }}
               </h5>
@@ -72,7 +72,7 @@
 
 
   <ng-template #noData>
-    <ion-grid>
+    <ion-grid style="margin-top: 3%;">
       <ion-row>
         <ion-col size="12">
           <ion-icon class="iconNoData" name="heart"></ion-icon>
@@ -88,7 +88,7 @@
 
 </div>
  <!-- Forms-->
-<div *ngSwitchCase="'forms'">
+<div *ngSwitchCase="'forms'" style="margin-top: 3%;">
   <ion-list *ngIf="items.length > 0; else noData">
     <app-scp-med-for-mon
     *ngFor="let content of items"
@@ -96,7 +96,7 @@
   ></app-scp-med-for-mon>
   </ion-list>
   <ng-template #noData>
-    <div *ngIf="!this.isLoading">
+    <div *ngIf="!this.isLoading" style="margin-top: 3%;">
       <ion-grid>
         <ion-row>
           <ion-col size="12">

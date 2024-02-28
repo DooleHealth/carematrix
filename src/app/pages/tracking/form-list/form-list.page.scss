@@ -94,6 +94,17 @@
     height: 80%; //del contenedor en el que se encuentre por ejemplo
   }
   
+
+  ion-segment {
+    margin-top: 2%;
+    width: 100%;
+    border-radius: 10px;
+    background: var(--secondary-bkg);
+    ion-label {
+      text-transform: none;
+    }
+  }
+  
   ion-segment-button {
     height: fit-content;
     font-size: 16px;
@@ -123,4 +134,3 @@
   ion-segment-button.segment-button-after-checked {
     color: #7F8C8D !important;
   }
-  

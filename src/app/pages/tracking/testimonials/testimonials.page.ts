@@ -14,6 +14,7 @@ export class TestimonialsPage implements OnInit {
   public items= [];
   // itemsBackup= []
   // news = []
+  saves_items;
   contents = [];
   isLoading = false;
   segmet= "testimonials-detail";
@@ -45,6 +46,7 @@ export class TestimonialsPage implements OnInit {
         if(res.testimonials)
        // this.adapterForView(res.news)
         this.items = res.testimonials
+        this.saves_items = this.items;
         console.log('[TestimonailsPage] getTestimonialsList(content)', this.items);
         this.isLoading = false
        },(err) => {
@@ -56,8 +58,13 @@ export class TestimonialsPage implements OnInit {
   }
   filterListTertimonials(event) {
     
+    let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    let search = this.items
+    if(this.items.length > 0){
+      search = this.items 
+    }else{
+      search= this.saves_items;
+    }
     const filteredItems = search.filter(item => {
       const subject = item.subject.toLowerCase();
       return subject.includes(searchTerm) || subject === searchTerm;

@@ -175,7 +175,9 @@
     "de": " of ",
     "achievements":"Achievements",
     "text_goals1":"Be proud of yourself!",
-    "text_goals2":"You have successfully passed this objective 🏆",
+    "text_goals2":"You have",
+    "text_goals3":"successfully passed",
+    "text_goals4":"this objective 🏆",
     "go": "Go",
     "accordion_goals":"These are the tasks you must perform:"
   },
@@ -543,8 +545,9 @@
     "header": "Follow-up",
     "tap_documents": "Documents",
     "tap_forms": "Forms",
+    "tap_formsPlan": "Planning Forms",
     "tap_graphics": "Graphics",
-    "tap_test": "Medical tests"
+    "tap_test": "Medical Tests"
   },
   "documents": {
     "subtitle_information": "Information",
@@ -606,15 +609,16 @@
     "field_health": "Health",
     "field_recipes": "Recipes",
     "field_today": "Today",
+    "field_goals": "Goals",
     "calories": "calories",
     "description": "Description",
     "dose": "Doses",
-    "morning": "morning",
-    "noon": "midday",
-    "aftenoon": "afternoon",
-    "night": "nighttime",
-    "midnight": "midnight",
-    "dawning": "Dawn",
+    "morning": "Morning",
+    "noon": "Midday",
+    "aftenoon": "Afternoon",
+    "night": "Nighttime",
+    "midnight": "Midnight",
+    "dawning": "Mawn",
     "all_day": "All day"
   },
   "diet": {
@@ -893,7 +897,7 @@
   "notifications": {
     "register_error": "Failed to register device. You will not be able to receive notifications.",
     "voip_register_error": "Failed to register device. You will not be able to receive VoIP notifications.",
-    "scp": "Shared care plan",
+    "scp": "Shared Care Plan",
     "chat": "Message",
     "form": "Form",
     "drug": "Medicament",
@@ -1043,8 +1047,9 @@
     "descriptionMMpHc":"To keep you in shape.",
     "medicalTestSub":"Laboratory result",
 
-    "monitoring": "Monitoring",
-    "medical_procedure": "Medical Procedure",
+    "monitoring": "Health charts",
+    "lastValue": "Last data:",
+    "medical_procedure": "Medical procedures",
     "informed_consent": "Informed Consent",
     "new_scp_notification_title": "New goals have been added to your Shared Care Plan",
     "new_scp_notification_msg": "Please review the changes to approve or reject",
@@ -1060,7 +1065,8 @@
     },
     "addButton":{
       "MedicalTest":"Add a medical test",
-      "Medication":"Add a new drug"
+      "Medication":"Add a new drug",
+      "HealthCharts": "Add value"
     },
     "readingTime": "minutes reading",
     "preparationTime": "minutes of preparation",

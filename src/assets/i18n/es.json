@@ -527,6 +527,7 @@
       "header": "Seguimiento",
       "tap_documents": "Documentos",
       "tap_forms": "Formularios",
+      "tap_formsPlan": "Formularios planificads",
       "tap_graphics": "Gráficos",
       "tap_test":"Pruebas médicas"
     },
@@ -594,13 +595,13 @@
         "calories": "calorias",
         "description": "Descripción",
         "dose": "Dosi",
-        "morning": "mañana",
-        "noon": "mediodía",
-        "aftenoon": "tarde",
-        "night": "noche",
-        "midnight": "media noche",
-        "dawning": "madrugada",
-        "all_day": "todo el día"
+        "morning": "Mañana",
+        "noon": "Mediodía",
+        "aftenoon": "Tarde",
+        "night": "Noche",
+        "midnight": "Media noche",
+        "dawning": "Madrugada",
+        "all_day": "Todo el día"
     },
     "diet":{
         "detail": "Dieta",
@@ -1027,6 +1028,7 @@
       "descriptionMMpHc":"Para mantenerte en forma.",
       "medicalTestSub":"Resultados del laboratorio",
       "monitoring": "Monitorización",
+      "lastValue": "Ùltimo valor:",
       "medical_procedure": "Procedimentos médicos",
       "informed_consent": "Consentimento Informado",
       "new_scp_notification_title": "Se agregaron nuevos objetivos a su Plan de Atención Compartida",
@@ -1043,7 +1045,8 @@
       },
       "addButton":{
         "MedicalTest":"Añadir una prueba médica",
-        "Medication":"Añadir un nuevo medicamento"
+        "Medication":"Añadir un nuevo medicamento",
+        "HealthCharts": "Agregar valor"
       },
       "readingTime": "minutos de lectura",
       "preparationTime": "minutos de preparación",

@@ -78,4 +78,13 @@ export class ProceduresPage implements OnInit {
     return this.currentDate;
 }
 
+transformDate(date) {
+  
+  if (date != null) {
+    return this.dateService.formatDateLongFormat(date)
+  } else {
+    return ""
+  }
+
+}
 }

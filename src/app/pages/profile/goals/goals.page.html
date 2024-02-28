@@ -25,7 +25,8 @@
   </ion-segment>
 
   <app-caregiver></app-caregiver>
-  <div class="verticalLine2" [ngSwitch]="segment">
+ 
+  <div style="margin-top: 3%;" class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'goals'">
       <ion-list *ngIf="goalsList.length > 0; else noData">
         
@@ -41,7 +42,7 @@
         
         <app-goals-components
           *ngFor="let content of goalsList"
-          [content]="content" 
+          [content]="content"  [completedGoals]="true"
         ></app-goals-components>
       </ion-list>
     </div>

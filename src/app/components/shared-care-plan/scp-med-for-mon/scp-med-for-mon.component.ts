@@ -257,4 +257,14 @@ export class ScpMedForMonComponent implements OnInit {
           event.target.src = '/assets/images/shared-care-plan/medication.png';
         }
       }
+
+      transformDate(date) {
+  
+        if (date != null) {
+          return this.dateService.formatDateLongFormat(date)
+        } else {
+          return ""
+        }
+      
+      }
 }

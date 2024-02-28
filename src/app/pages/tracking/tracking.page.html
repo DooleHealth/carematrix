@@ -1,8 +1,18 @@
+
+
 <ion-header>
   <!-- <ion-toolbar> -->
 
   <ion-toolbar mode="ios" [ngSwitch]="segment">
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="primary"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ 'tracking.header' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="/profile" mode="ios">
+        <ion-icon class="icon-menu" style="margin-left: -5px;" src="../../assets/icons/menu.svg"></ion-icon>
+      </ion-tab-button>
+    </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'documents'">
       <ion-icon
         class="primaryIcon"
@@ -11,15 +21,8 @@
         (click)="addFilters()"
       ></ion-icon
       >&nbsp;
-      <!--<ion-icon
-        class="primaryIcon"
-        slot="icon-only"
-        name="add"
-        (click)="addDocument()"
-      ></ion-icon>-->
-      <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="/profile" mode="ios">
-        <ion-icon class="icon-menu" style="margin-left: -5px;" src="../../assets/icons/menu.svg"></ion-icon>
-      </ion-tab-button>
+     
+      
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'graphics'">
       <ion-icon
@@ -49,17 +52,12 @@
     >
       <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
     </ion-segment-button>
-    <!-- <ion-segment-button *ngIf="role?.component?.form" value="forms">
-      <ion-label>{{ 'tracking.tap_forms' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.element" value="graphics">
-      <ion-label>{{ 'tracking.tap_graphics' | translate}}</ion-label>
-    </ion-segment-button> -->
+   
   </ion-segment>
 
-  <div [ngSwitch]="segment">
+  <div  [ngSwitch]="segment">
     <!-- Shared Care Plan -->
-    <div *ngSwitchCase="'sharedcareplan'">
+    <div style="margin-top: 3%;" *ngSwitchCase="'sharedcareplan'">
       <ion-list>
         <scp-content
           *ngFor="let content of this.listContent"

@@ -19,14 +19,9 @@
           <!--<ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"
             (click)="presentAlert()"></ion-icon>-->
         </ion-row>
-        <ion-row class="txtSubtitle" *ngIf="content?.type === 'App\\Monitoring'">
-          <p>
-            {{ "form.goals" | translate }} {{ content?.description }}
-          </p>
-
-        </ion-row>
+        
         <ion-row>
-          <ion-text class="txtSubtitle2 textlines2">{{
+          <ion-text class="txtSubtitle2">{{
             content?.title
             }}</ion-text>
 
@@ -51,6 +46,9 @@
           
         </ion-row>
       </ion-col>
+
+
+      
     </ion-row>
   </ion-grid>
 
