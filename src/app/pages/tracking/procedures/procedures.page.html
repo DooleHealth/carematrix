@@ -16,8 +16,45 @@
 
   <app-caregiver></app-caregiver>
   <div>
-    <ion-list *ngIf="listItem.length > 0; else noData">
-      <ion-grid *ngFor="let content of listItem" class="ion-no-padding" >  
+
+      
+            <ion-list  *ngFor="let list of this.listItem">
+              <ion-card
+                class="cardProfile"
+               
+              >
+              <ion-item class="ion-no-padding item" lines="none" mode="ios">
+                <ion-thumbnail class="thumbnail" slot="start">
+                  <img
+              class="paddingRight imagefit"
+              src='assets/images/shared-care-plan/medical_procedure.png'
+              alt=""
+            />
+                </ion-thumbnail>
+                <ion-grid style="height: 100% !important">
+                  <ion-row>
+                    <ion-text style="color: var(--malva)" >{{list.title}}</ion-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-text >{{list.type}}</ion-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-text class="txtTitleGoalsDarker textAdvicesSlider"> {{list.department}}</ion-text>
+                  </ion-row>
+                  <ion-row  class="txtTitleGoals textAdvicesSlider">
+                      <ion-text class="txtTitleTrackingDate">
+                        {{transformDate(list.date)}}
+                      </ion-text>
+                  </ion-row>
+                </ion-grid>
+               
+              </ion-item>
+  
+                
+              </ion-card>
+            </ion-list>
+          
+     <!--<ion-grid *ngFor="let content of listItem" class="ion-no-padding" >  
         <ion-row>
           <ion-col size="0.8" >    
             <ion-icon class="center" *ngIf="getIsDateInPast(content?.date)"
@@ -48,9 +85,9 @@
           </ion-col>
           
         </ion-row>
-      </ion-grid>
+      </ion-grid>-->
 
-    </ion-list>
+    
   </div>
 
   <ng-template #noData>

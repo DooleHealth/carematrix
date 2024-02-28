@@ -17,6 +17,7 @@ export class AdvicesPage implements OnInit {
   segment="Advices"
   //itemsBackup= []
   //advices = []
+  saves_items;
   isLoading = false
   private lifeStyle:LifeStyle
   constructor(
@@ -53,6 +54,7 @@ export class AdvicesPage implements OnInit {
         if(res.advices)
        // this.adapterForView(res.advices)
       this.items= res.advices
+      this.saves_items = this.items;
         this.isLoading = false
        },(err) => {
           console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message);
@@ -63,8 +65,13 @@ export class AdvicesPage implements OnInit {
 
  
   filterListAdvices(event) {
+    let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    let search = this.items
+    if(this.items.length > 0){
+      search = this.items 
+    }else{
+      search= this.saves_items;
+    }
     const filteredItems = search.filter(item => {
       const subject = item.subject.toLowerCase();
       return subject.includes(searchTerm) || subject === searchTerm;

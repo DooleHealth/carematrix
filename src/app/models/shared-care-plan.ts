@@ -67,7 +67,8 @@ export enum ContentTypeIcons {
 
     //AddBUtton
     buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',
-    buttomTodayDrug = 'assets/images/shared-care-plan/drug.svg'
+    buttomTodayDrug = 'assets/images/shared-care-plan/drug.svg',
+    buttomHealthCharts = 'assets/images/shared-care-plan/medical.svg'
 }
 
 export enum ContentTypeTranslatedName {
@@ -90,6 +91,8 @@ export enum ContentTypeTranslatedName {
     //AddButtons
     addButtonMeditaltest = 'shared_care_plan.addButton.MedicalTest',
     addButtonTodayDrug= 'shared_care_plan.addButton.Medication',
+    addButtonHealthCharts= 'shared_care_plan.addButton.Medication',
+    
 
 }
 
@@ -263,6 +266,8 @@ export interface medication extends SharedCarePlanLifeStyle{
     model?: string,
     form_id?: string,
     showAlert?: boolean,
+    lastdata?: string,
+    date?: string,
 }
 
 export enum ACCESS_TYPE {
@@ -305,6 +310,8 @@ export interface AddButtonComponent {
 export const AddButtonList: AddButtonComponent [] = [
     {icon: ContentTypeIcons.buttonMeditalTest, title: ContentTypeTranslatedName.addButtonMeditaltest,  type: NotificationsType.AddButtonMedicalTest, id:""},
     {icon: ContentTypeIcons.buttomTodayDrug, title: ContentTypeTranslatedName.addButtonTodayDrug,  type: NotificationsType.AddButtonTodayDrug, id:""},
-   // {icon: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
+    {icon: ContentTypeIcons.buttomHealthCharts, title: ContentTypeTranslatedName.addButtonHealthCharts,  type: NotificationsType.AddButtonHealthCharts, id:""},
+  
+    // {icon: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
    
 ]

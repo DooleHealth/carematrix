@@ -15,9 +15,56 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   <div>
-    <ion-list *ngIf="items.length > 0; else noData">
-        <app-scp-med-for-mon *ngFor="let content of items" [content]="content" (redirect)="handleRedirect($event)"></app-scp-med-for-mon>
+
+    <ion-list *ngIf="items.length > 0; else noData" >
+      <ion-card
+        class="cardProfile"
+        routerLink="/activity-goal"
+        [state]="{id: doc.form_id, header: doc.title}"
+        routerLinkActive="active-item"
+        *ngFor="let doc of items" >
+      <ion-item class="ion-no-padding item" lines="none" mode="ios">
+        <ion-thumbnail class="thumbnail" slot="start">
+          <img
+            class="img"
+            src="assets/images/shared-care-plan/healthcharts.png"
+            alt=""
+          />
+        </ion-thumbnail>
+        <ion-grid style="height: 100% !important">
+          <ion-row>
+            <ion-text style="color: var(--malva)" >
+              {{doc.title}}
+            </ion-text>
+            <ion-buttons slot="end">
+              <ion-icon name="chevron-forward-outline" class="icono-personalizado"></ion-icon>
+            </ion-buttons>
+          </ion-row>
+        
+          <ion-row>
+            <ion-text class="txtTitleGoalsDarker textAdvicesSlider">
+             <strong>{{  'shared_care_plan.lastValue'| translate}} {{doc.lastdata}}</strong>
+             </ion-text>
+           
+          </ion-row>
+          <ion-row  class="txtTitleGoals textAdvicesSlider">
+              <ion-text class="txtTitleTrackingDate">
+                {{transformDate(doc.date)}}
+              </ion-text>
+          </ion-row>
+        </ion-grid>
+       
+      </ion-item>
+
+        
+      </ion-card>
     </ion-list>
+
+
+
+     <!--<ion-list *ngIf="items.length > 0; else noData">
+        <app-scp-med-for-mon *ngFor="let content of items" [content]="content" (redirect)="handleRedirect($event)"></app-scp-med-for-mon>
+   </ion-list>-->
   </div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">

@@ -17,6 +17,7 @@ export class ExercisesPage implements OnInit {
   segment="Exercises"
   exercises: Array<any>;
   items: any[] = []
+  saves_items;
   nameContent: string = ContentTypeTranslatedName.Exercises
   iconContent = ContentTypeIcons.Exercises
   isLoading = false
@@ -115,6 +116,7 @@ export class ExercisesPage implements OnInit {
         }
         this.items.push(data)
       })
+      this.saves_items = this.items;
     }
   }
 
@@ -144,8 +146,13 @@ export class ExercisesPage implements OnInit {
 
   filterListExercises(event) {
     
+    let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    let search = this.items
+    if(this.items.length > 0){
+      search = this.items 
+    }else{
+      search= this.saves_items;
+    }
     const filteredItems = search.filter(item => {
       const subject = item.subject.toLowerCase();
       return subject.includes(searchTerm) || subject === searchTerm;

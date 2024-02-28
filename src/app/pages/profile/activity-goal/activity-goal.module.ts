@@ -12,6 +12,7 @@ import { ReminderAddPageModule } from '../../agenda/reminder-add/reminder-add.mo
 import { ReminderAddPage } from '../../agenda/reminder-add/reminder-add.page';
 import { ElementsAddPageModule } from '../../tracking/elements-add/elements-add.module';
 import { ShareModule } from 'src/app/shared/share/share.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { ShareModule } from 'src/app/shared/share/share.module';
     TranslateModule,
     ShareModule,
     ElementsAddPageModule,
+    ComponentsModule,
   ],
   declarations: [ActivityGoalPage],
   providers:[DatePipe, TitleCasePipe]

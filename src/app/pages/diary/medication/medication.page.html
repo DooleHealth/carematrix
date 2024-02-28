@@ -34,7 +34,7 @@
   
 <div class="verticalLine2" [ngSwitch]="segment">
 <div *ngSwitchCase="'today'">
-  <div>
+  <div style="margin-top: 3%;">
     <ion-list *ngIf="listDrugIntakes.length > 0; else noData">
       <ion-grid *ngFor="let content of listDrugIntakes" class="ion-no-padding" >  
         <ion-row *ngIf="getDateInPast(content?.period)">
@@ -88,7 +88,7 @@
   
   
   
-    <div>
+    <div style="margin-top: 3%;">
       <ion-list *ngIf="items.length > 0; else noData">
         
         <app-scp-med-for-mon

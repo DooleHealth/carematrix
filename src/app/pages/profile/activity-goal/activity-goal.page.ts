@@ -14,6 +14,7 @@ highchartsMore(HighCharts);
 import moment from 'moment';
 import { HighchartsService } from 'src/app/services/highcharts.service';
 import { RolesService } from 'src/app/services/roles.service';
+import { AddButtonList } from 'src/app/models/shared-care-plan';
 
 
 export interface graphElement {
@@ -35,6 +36,7 @@ export class ActivityGoalPage implements OnInit {
   series: any[] = []
   last_value: any
   isDiastoleAndSystole: boolean
+  addButton = AddButtonList;
 
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']

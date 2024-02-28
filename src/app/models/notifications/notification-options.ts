@@ -33,6 +33,7 @@ export enum NotificationsType {
     AddButtonMedicalTest= 'add_document',
     TESTIMONIALS= 'testimonials',
     AddButtonTodayDrug = 'drugs-detail',
+    AddButtonHealthCharts = 'activity-goal'
 }
 
 export enum NotificationsTypeBO {

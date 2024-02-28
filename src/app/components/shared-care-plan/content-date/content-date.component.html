@@ -109,7 +109,8 @@ routerLink="diets-detail/recipe"
             <ion-row>
               <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
                 <p class="txtSubtitle3" style="color: var(--malva)">
-                  {{content?.frequency}} 
+                  {{ content?.frequency ? content.frequency.charAt(0).toUpperCase() + content.frequency.slice(1) : '' }}
+
                 </p>
       
               </ion-col>

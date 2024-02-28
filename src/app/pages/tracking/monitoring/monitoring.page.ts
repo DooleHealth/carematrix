@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
+import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
 @Component({
@@ -15,7 +16,7 @@ export class MonitoringPage implements OnInit {
   nameContent: string = ContentTypeTranslatedName.Monitoring
   iconContent = ContentTypeIcons.Monitoring
   constructor(
-    public sharedCarePlan:SharedCarePlanService, private router: Router,
+    public sharedCarePlan:SharedCarePlanService, private router: Router,public dateService: DateService,
   ) { }
 
   ngOnInit() {
@@ -54,6 +55,8 @@ adapterForView(list){
       title: element.name,
       from: "",//element.from_date,
       to:  "",//element.to_date,
+      lastdata: element.value,
+      date: element.date_value,
      // accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
       type: "App\\Monitoring",
       description: goals, //element.frequencyName,
@@ -72,5 +75,13 @@ handleRedirect(event: { type: string, form_id: string, showAlerts:boolean }) {
   this.router.navigate([`/activity-goal`], { state: { id: event.form_id } });
  
 }
+transformDate(date) {
+  
+  if (date != null) {
+    return this.dateService.formatDateLongFormat(date)
+  } else {
+    return ""
+  }
 
+}
 }

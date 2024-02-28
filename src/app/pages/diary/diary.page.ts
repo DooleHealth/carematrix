@@ -267,51 +267,42 @@ export class DiaryPage implements OnInit {
   }
 
  
-  selectMealTime(time){
-    let timeMeals;
-    let hour = new Date(time).getHours()// time.split(':')  //new Date(time).getHours()
-   // let minute = Number(h[1])
-   // let hour = Number(h[0]) + minute/60
-    if(hour >= 6  && hour <= 10){
-      timeMeals= this.translate.instant('diet.breakfast')
+  selectMealTimess(time) {
+    let timeMeals = "";
+    let hour = new Date(time).getHours();
+  
+    if (hour >= 6 && hour <= 10) {
+      timeMeals = this.translate.instant('diet.breakfast');
+    } else if (hour >= 11 && hour < 13) {
+      timeMeals = this.translate.instant('diet.brunch');
+    } else if (hour >= 13 && hour <= 16) {
+      timeMeals = this.translate.instant('diet.lunch');
+    } else if (hour >= 17 && hour <= 19) {
+      timeMeals = this.translate.instant('diet.afternoon_snack');
+    } else if (hour > 19 && hour <= 22) {
+      timeMeals = this.translate.instant('diet.dinner');
     }
-    if(hour >= 11 && hour < 13){
-      timeMeals= this.translate.instant('diet.brunch')
-    }
-    if(hour >= 13 && hour <= 16){
-      timeMeals= this.translate.instant('diet.lunch')
-    }
-    if(hour >=17 && hour <= 19){
-      timeMeals= this.translate.instant('diet.afternoon_snack')
-    }
-    if(hour >19 && hour <= 22){
-      timeMeals= this.translate.instant('diet.dinner')
-    }
-
-    if(this.lastName != timeMeals){
-      this.lastName = timeMeals;
-      
-     
-      return timeMeals   
-    }else{
-      
-     
-      return ""
-    }
-       
-    
+  
+    return timeMeals;
   }
 
-  getLastName(name, date){
-    this.getIsDateInPast(date)
-    if(name != this.Lasttimestring){
-      this.Lasttimestring = name;
-      return true
-    }else{
-      this.Lasttimestring = name;
-      return false
+  updateLastName(time) {
+    const meal = this.selectMealTimess(time);
+    if (this.lastName !== meal) {
+      this.lastName = meal;
     }
+  }
 
+  updateLastTimeString(name) {
+    this.Lasttimestring = name;
+  }
+  
+  getLastName(name) {
+    const isDifferent = name !== this.Lasttimestring;
+    if (isDifferent) {
+      this.updateLastTimeString(name);
+    }
+    return isDifferent;
   }
 
       goDetailRecipe(e){

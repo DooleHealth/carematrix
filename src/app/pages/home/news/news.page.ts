@@ -16,7 +16,8 @@ export class NewsPage implements OnInit {
   // itemsBackup= []
   // news = []
   contents = [];
-  isLoading = false
+  isLoading = false;
+  saves_items;
   private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
@@ -53,7 +54,8 @@ export class NewsPage implements OnInit {
         console.log('[NewsPage] getNewsList()', await res);
         if(res.news)
        // this.adapterForView(res.news)
-        this.items = res.news
+        this.items = res.news;
+        this.saves_items = this.items;
         console.log('[NewsPage] getNewsList(content)', this.items);
         this.isLoading = false
        },(err) => {
@@ -65,13 +67,17 @@ export class NewsPage implements OnInit {
   }
 
   filterListNews(event) {
-    
+    let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    let search = this.items
+    if(this.items.length > 0){
+      search = this.items 
+    }else{
+      search= this.saves_items;
+    }
     const filteredItems = search.filter(item => {
       const subject = item.subject.toLowerCase();
       return subject.includes(searchTerm) || subject === searchTerm;
-    });
+    })
       this.items = (filteredItems)
   };
 
