@@ -29,8 +29,6 @@ export class PermissionService {
   canViewEvents:boolean = true
   canManageEvents:boolean = true
   canManageMessages:boolean = true
-  canSeeMedicalVisits:boolean = true
-  canManageRequesVisit:boolean = true
   canSeeCenters:boolean = true
   
 
@@ -60,8 +58,6 @@ export class PermissionService {
     this.canViewEvents = permissions.includes("canViewEvents") ? true : false;
     this.canManageEvents = this.canViewEvents && permissions.includes("canViewEvents") ? true : false;
     this.canManageMessages = permissions.includes("canManageMessages") ? true : false;
-    this.canSeeMedicalVisits = permissions.includes("canSeeMedicalVisits") ? true : false;
-    this.canManageRequesVisit = this.canSeeMedicalVisits && permissions.includes("canManageRequesVisit") ? true : false;
     this.canSeeCenters = permissions.includes("canSeeCenters") ? true : false; 
   }
 
@@ -89,8 +85,6 @@ export class PermissionService {
     this.canViewEvents = true
     this.canManageEvents = true
     this.canManageMessages = true
-    this.canSeeMedicalVisits = true
-    this.canManageRequesVisit= true
     this.canSeeCenters= true
   }
 }

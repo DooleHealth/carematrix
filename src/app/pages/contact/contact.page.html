@@ -160,7 +160,7 @@
 
       <ng-template #medicalVisits>
 
-        <ng-container *ngIf="this.permissionService.canSeeMedicalVisits && this.appointment?.length > 0 && !checkAppointmentsNoStaff(); else noData ">
+        <ng-container *ngIf="this.permissionService.canViewEvents && this.appointment?.length > 0 && !checkAppointmentsNoStaff(); else noData ">
           <div *ngFor="let slide of this.appointment" class="ion-margin">
             <ion-card class="customCardAppointment" *ngIf="slide.staff.length > 0">
               <ion-card-content routerLink="/agenda/reminder/detail" routerLinkActive="active-item"
@@ -529,7 +529,7 @@
     </ion-button>
   </div>
 
-  <div *ngIf="this.permissionService.canManageRequesVisit && this.segment === 'medical-visits'" style="background-color: var(--default-bkg);"
+  <div *ngIf="this.permissionService.canManageEvents && this.segment === 'medical-visits'" style="background-color: var(--default-bkg);"
     style="display: flex; justify-content: center;">
 
     <ion-button (click)="requestVisit()" color="primary" shape="round" class="floating-button ion-margin">
