@@ -445,10 +445,8 @@ export class HomePage implements OnInit {
             );
           });
     
-          this.dayPhrase = res.dayPrase;
-    
-          this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
-          
+          this.dayPhrase = res.dayPrase.phrase;
+              
           if (this.dayPhrase != null) {
             this.openAICoachMessage(this.dayPhrase)
             this.setDateDayPhraseReaded(new Date());
