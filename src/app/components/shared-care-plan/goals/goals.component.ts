@@ -273,4 +273,8 @@ export class GoalsComponent  implements OnInit {
 
     }
 
+
+    changeTake(){
+     
+          }
 }

@@ -176,8 +176,8 @@
     "achievements":"Achievements",
     "text_goals1":"Be proud of yourself!",
     "text_goals2":"You have",
-    "text_goals3":"successfully passed",
-    "text_goals4":"this objective 🏆",
+    "text_goals3":" successfully passed ",
+    "text_goals4":" this objective 🏆",
     "go": "Go",
     "accordion_goals":"These are the tasks you must perform:"
   },
@@ -679,7 +679,7 @@
     "rejectd_option2F": "I do not agree with the form",
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
-    "medication_status": "pending",
+    "medication_status": "Pending",
     "name":"Name"
   },
 
