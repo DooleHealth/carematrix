@@ -19,18 +19,28 @@
 
 <ion-content>
   <!-- SegmentBar -->
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
-    <ion-segment-button *ngIf="role?.component?.diet" value="today">
-      <ion-label>{{'diary.field_today' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.drug" value="medication">
-      <ion-label>{{'medications.title' | translate}}</ion-label>
-    </ion-segment-button>
+  <ion-row style="background-color: var(--secondary-bkg); padding-top: 3%;">
+    <ion-col size="0.5"></ion-col>
+    <ion-col size="11" style="display: flex; justify-content: center;">
+      <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+        <ion-segment-button *ngIf="role?.component?.diet" value="today">
+          <ion-label>{{'diary.field_today' | translate}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="role?.component?.drug" value="medication">
+          <ion-label>{{'medications.title' | translate}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col size="0.5"></ion-col>
 
-  </ion-segment>
+    <ion-row style="width: 100%;">
+      <ion-col size="12">
+        <app-caregiver></app-caregiver>
+      </ion-col>
+    </ion-row>
+  </ion-row>
 
-  <!-- segment -->
-  <app-caregiver></app-caregiver>
+
   
 <div class="verticalLine2" [ngSwitch]="segment">
 <div *ngSwitchCase="'today'">
@@ -81,14 +91,21 @@
     </ion-grid>
   </ng-template>
 
-  <app-button-add  [content]="this.addButton[1]"  (dataUpdated)="addDrugPlan()"></app-button-add>
+  <div style="background-color: var(--default-bkg);"
+    style="display: flex; justify-content: center;">
+  <!-- Floating Button -->
+  <ion-button (click)="addDrugPlan()" color="primary" shape="round" class="floating-button ion-margin">
+    {{'shared_care_plan.addButton.MedicalTest' | translate}}
+    <ion-icon style="padding-left: 2%;" src="../../assets/images/shared-care-plan/flask.svg"></ion-icon>
+  </ion-button>
+  </div>
 </div>
  
 <div *ngSwitchCase="'medication'">
   
   
   
-    <div style="margin-top: 3%;">
+    <div >
       <ion-list *ngIf="items.length > 0; else noData">
         
         <app-scp-med-for-mon

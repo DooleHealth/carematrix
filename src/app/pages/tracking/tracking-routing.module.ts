@@ -49,6 +49,15 @@ const routes: Routes = [
     loadChildren: () => import('./procedures/procedures.module').then( m => m.ProceduresPageModule)
   },
   {
+
+    path: 'profile/goals',
+    loadChildren: () => import('../profile/goals/goals.module').then( m => m.GoalsPageModule)
+  },
+  {
+    path: 'medication',
+    loadChildren: () => import('../diary/medication/medication.module').then( m => m.MedicationPageModule)
+  },
+  {
     path: 'monitoring',
     loadChildren: () => import('./monitoring/monitoring.module').then( m => m.MonitoringPageModule)
   },
