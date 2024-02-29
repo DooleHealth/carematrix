@@ -131,6 +131,7 @@ export const ListContentType: SCPContentType = [
 ]
 
 export function setStatusContentType(status, content:SharedCarePlan){
+    
     let option = content.type
     switch (option) {
         case NotificationsType.GOALS:

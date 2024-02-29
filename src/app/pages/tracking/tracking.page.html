@@ -77,8 +77,7 @@
         <ion-spinner></ion-spinner>
       </div>
      
-      <div
-        *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0; else noData"
+      <div *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0 && permissionService.canViewMedicalTests; else noData"
       >
         <br />
         <ion-list
@@ -285,7 +284,7 @@
     </div>
   </ng-template>
 
-  <div *ngIf="this.showButton">
+  <div *ngIf="this.showButton && permissionService.canManageMedicalTests">
     <app-button-add  [content]="this.addButton[0]" (dataUpdated)="addDocument()" ></app-button-add>
   </div>
  

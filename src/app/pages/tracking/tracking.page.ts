@@ -14,6 +14,7 @@ import { DateService } from 'src/app/services/date.service';
 import { AddButtonComponent, AddButtonList, ListContentType, SCPContentType, SharedCarePlan, setStatusContentType } from 'src/app/models/shared-care-plan';
 import { Router } from '@angular/router';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 export interface ListDiagnosticTests {
   date?: string;
@@ -35,7 +36,9 @@ export interface Filter {
   styleUrls: ['./tracking.page.scss'],
 })
 export class TrackingPage implements OnInit {
-  listContent: SCPContentType = ListContentType;
+  listData: SCPContentType = ListContentType;
+  
+  listContent=[]
   addButton = AddButtonList;
   showButton: boolean = false;
   listDiagnostic:  ListDiagnosticTests[];
@@ -65,11 +68,12 @@ export class TrackingPage implements OnInit {
     private notification: NotificationService,
     private dateService: DateService,
     public role: RolesService,
+    public permissionService: PermissionService
   ) { }
 
 
   ngOnInit() {
-    console.log("asasd", this.addButton)
+   
   }
 
   ionViewWillEnter(){
@@ -81,18 +85,52 @@ export class TrackingPage implements OnInit {
 
   getStatusContent(){
     this.showButton= false,
+    console.log("asasd", this.listData)
+   this.getPermission()
     this.scpService.getAPI_SCP_StatusContent().subscribe(
       async (res: any) =>{
+        
         console.log('[TrackingPage] getStatusContent()', await res);
-        this.listContent.forEach(content => {
+        this.listData.forEach(content => {
           setStatusContentType(res,content)
         })
-        console.log('[TrackingPage] getStatusContent() this.listContent', this.listContent);
+
+        console.log('[TrackingPage] getStatusContent() this.listContent', this.listData);
        },(err) => {
           console.log('[TrackingPage] getStatusContent() ERROR(' + err.code + '): ' + err.message);
           throw err;
       });
+     
   }
+  getPermission() {
+    const permissionFunctions = {
+      goals: () => this.permissionService.canViewGoals,
+      life_style_habits: () => this.getLifeStyleHabitsViews(),
+      forms: () => this.permissionService.canViewForms,
+      medication_plans: () => this.permissionService.canViewMedicationPlans,
+      medical_procedures: () => this.permissionService.canViewMedicalProcedures,
+      monitoring: () => this.permissionService.canViewMonitoring
+    };
+  
+    this.listContent = this.listData.filter(item => {
+      const permissionFunction = permissionFunctions[item.type];
+      return permissionFunction && permissionFunction();
+    });
+  }
+getLifeStyleHabitsViews(){
+
+  const permissionsArray = [
+    this.permissionService.canViewNews,
+    this.permissionService.canViewAdvices,
+    this.permissionService.canViewExercises,
+    this.permissionService.canViewDiets,
+    this.permissionService.canViewGames,
+    this.permissionService.canViewTestimonials,
+    this.permissionService.canViewGoals
+  ];
+  // Verificar si alguno de los valores en el array es true
+   return permissionsArray.some(permiso => permiso === true);
+}
 
   getDiagnosticTestsList(){
    this.showButton= true,
