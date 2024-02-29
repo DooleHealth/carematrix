@@ -73,7 +73,7 @@ export class AdvicesPage implements OnInit {
       search= this.saves_items;
     }
     const filteredItems = search.filter(item => {
-      const subject = item.subject.toLowerCase();
+      const subject = item.name.toLowerCase();
       return subject.includes(searchTerm) || subject === searchTerm;
     });
       this.items = (filteredItems)
