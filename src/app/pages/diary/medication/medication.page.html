@@ -47,14 +47,14 @@
   <div style="margin-top: 3%;">
     <ion-list *ngIf="listDrugIntakes.length > 0; else noData">
       <ion-grid *ngFor="let content of listDrugIntakes" class="ion-no-padding" >  
-        <ion-row *ngIf="getDateInPast(content?.period)">
+        <ion-row *ngIf="getLastName(content?.period)">
           <ion-col size="0.8">
             <ion-icon class="center"  *ngIf="getIsDateInPast(content?.date_intake)" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
             <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp;
           </ion-col>
           <ion-col size="11.2"  class="text-column">
             <ion-text class="center" [style.color]="isDateInPast ? '#575757' : 'var(--malva)'">
-              <h5>{{ selectMealTime(content?.date_intake) }}</h5>
+              <h5>{{ updateLastName(content?.date_intake) }}</h5>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -94,10 +94,10 @@
   <div style="background-color: var(--default-bkg);"
     style="display: flex; justify-content: center;">
   <!-- Floating Button -->
-  <ion-button (click)="addDrugPlan()" color="primary" shape="round" class="floating-button ion-margin">
-    {{'shared_care_plan.addButton.MedicalTest' | translate}}
-    <ion-icon style="padding-left: 2%;" src="../../assets/images/shared-care-plan/flask.svg"></ion-icon>
-  </ion-button>
+  <div >
+    <app-button-add  [content]="this.addButton[0]" (dataUpdated)="addDrugPlan()" ></app-button-add>
+  </div>
+ 
   </div>
 </div>
  

@@ -201,6 +201,13 @@ export class MedicationPage implements OnInit {
       }
     }
 
+    updateLastName(time) {
+      const meal = this.selectMealTime(time);
+      if (this.lastName !== meal) {
+        this.lastName = meal;
+      }
+    }
+
     selectMealTime(time){
       
       let timeMeals;
@@ -233,17 +240,17 @@ export class MedicationPage implements OnInit {
       
     }
   
-    async getDateInPast(name){
-    
-      if(name != this.Lasttimestring){
-        this.Lasttimestring = name;
-        return true
-      }else{
-        this.Lasttimestring = name;
-        return false
+    getLastName(name) {
+      const isDifferent = name !== this.Lasttimestring;
+      if (isDifferent) {
+        this.updateLastTimeString(name);
       }
+      return isDifferent;
     }
 
+    updateLastTimeString(name) {
+      this.Lasttimestring = name;
+    }
     getIsDateInPast(date){
       this.isDateInPast = new Date(date) < this.currentDate;
       return this.isDateInPast
