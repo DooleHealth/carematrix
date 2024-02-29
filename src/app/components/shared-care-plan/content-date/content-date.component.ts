@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ContentTypePath, SharedCarePlanProcedure } from 'src/app/models/shared-care-plan';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-content-date',
@@ -15,13 +17,16 @@ export class ContentDateComponent implements OnInit {
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() takeMedication: EventEmitter<any> = new EventEmitter<any>();
 
+  canDoForm:boolean = false;
   date: string;
   constructor(public dateService: DateService, private router: Router,
-    public translate: TranslateService, public alertController: AlertController,) {
+    public translate: TranslateService, public alertController: AlertController, public authService: AuthenticationService, public permissionService: PermissionService) {
 
   }
 
   ngOnInit() {
+    this.canDoForm = this.authService?.user?.familyUnit == null && this.permissionService.canViewForms;
+
     console.log("que llego aca", this.content)
     this.setDate()
   }
@@ -29,7 +34,7 @@ export class ContentDateComponent implements OnInit {
   goTo(content){
     
     if(content != undefined){
-      if ( content.type === "forms") {
+      if (this.canDoForm && content.type === "forms") {
         if (content.showAlert) this.alertForm();
         else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
       }

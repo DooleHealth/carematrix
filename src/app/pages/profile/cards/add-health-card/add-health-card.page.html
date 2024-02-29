@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="close" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ isAddCard? ('add_health_card.header_add_card' | translate) : ('edit_health_card.header_edit_card' |
+    <ion-title class="toolbarTitle">{{ isAddCard? ('add_health_card.header_add_card' | translate) : ('edit_health_card.header_edit_card' |
       translate) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="this.isAddCard? addCard(): editCard()">

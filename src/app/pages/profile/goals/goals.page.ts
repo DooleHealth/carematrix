@@ -8,6 +8,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PermissionService } from 'src/app/services/permission.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-goals',
@@ -31,13 +33,16 @@ export class GoalsPage implements OnInit {
   isRequired = false
   isChallengeCompleted = false
   fetching = true;
+
   constructor(
     public router:Router,
     private scpService: SharedCarePlanService,
     private dooleService: DooleService,
     private ngZone: NgZone,
     public translate: TranslateService, 
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    public permissionService: PermissionService,
+    public authService: AuthenticationService
     // private modalCtrl: ModalController,
     // private notification: NotificationService,
     ) { 
@@ -45,12 +50,10 @@ export class GoalsPage implements OnInit {
     }
 
   ngOnInit() {
-
   }
 
   ionViewWillEnter() {
-   // this.getGoalImformation()
-    this.getChallenge();
+    if (this.permissionService.canViewGoals) this.getChallenge();
   }
 
   getGoalImformation(){

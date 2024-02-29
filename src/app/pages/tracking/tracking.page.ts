@@ -100,8 +100,8 @@ export class TrackingPage implements OnInit {
           console.log('[TrackingPage] getStatusContent() ERROR(' + err.code + '): ' + err.message);
           throw err;
       });
-     
   }
+
   getPermission() {
     const permissionFunctions = {
       goals: () => this.permissionService.canViewGoals,
@@ -393,6 +393,12 @@ async addDocument(){
 
         await modal.present();
 
+      }
+
+      checkPermissions() {
+        return this.permissionService.canViewGoals || this.permissionService.canViewNews || this.permissionService.canViewAdvices || 
+               this.permissionService.canViewAdvices || this.permissionService.canViewExercises || this.permissionService.canViewDiets ||
+               this.permissionService.canViewTestimonials || this.permissionService.canViewGames
       }
 
     

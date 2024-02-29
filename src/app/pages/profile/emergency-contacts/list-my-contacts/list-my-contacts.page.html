@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'emergency_contact.contact' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'emergency_contact.contact' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-icon *ngIf="!this.isHybrid" class="primaryIcon" slot="icon-only" name="checkmark-outline" routerLink="../list-relationship" [state]="{newContact:this.emergencyContact}"></ion-icon>
   </ion-buttons>

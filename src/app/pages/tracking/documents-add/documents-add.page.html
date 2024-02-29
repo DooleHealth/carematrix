@@ -3,7 +3,7 @@
        <ion-buttons slot="start">
       <ion-back-button (click)="close()" text="" icon="close"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'documents_add.header' | translate }} </ion-title>
+    <ion-title class="toolbarTitle">{{'documents_add.header' | translate }} </ion-title>
     <ion-buttons slot="end">
     <ion-button (click)="submit()" [disabled]="this.isLoading">
       <ion-icon name="checkmark-outline"></ion-icon>

@@ -51,7 +51,7 @@
       </ion-row>
       </ion-row>
     </ion-grid>
-    <ion-accordion-group *ngIf=" this.goalsList?.length > 0" >
+    <ion-accordion-group *ngIf="canDoGoal && this.goalsList?.length > 0" >
       <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end" >
         <ion-item slot="header" style="color: #A2047F;">
           <ion-label><strong>{{ 'goals.accordion_goals'| translate  }}</strong></ion-label>

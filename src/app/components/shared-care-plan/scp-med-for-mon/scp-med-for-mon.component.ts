@@ -6,6 +6,8 @@ import { ContentTypePath, GoalState, GoalStateType, SharedCarePlanLifeStyle, med
 import { DateService } from 'src/app/services/date.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-scp-med-for-mon',
@@ -19,6 +21,10 @@ export class ScpMedForMonComponent implements OnInit {
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
+
+  canDoForm:boolean = false;
+
+
   routerLink: any[];
   getrouter;
   other = false;
@@ -27,10 +33,12 @@ export class ScpMedForMonComponent implements OnInit {
   public isButtonEnabled = false;
   constructor(
     public translate: TranslateService, public alertController: AlertController, public sharedCarePlan: SharedCarePlanService, public dateService: DateService,
-    private router: Router,
+    private router: Router,public authService: AuthenticationService, public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
+    this.canDoForm = this.authService?.user?.familyUnit == null && this.permissionService.canViewForms;
+
     console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
     if (this.content.type === this.segment) {
       this.state = new GoalState(this.content?.state)
@@ -41,7 +49,7 @@ export class ScpMedForMonComponent implements OnInit {
   }
 
   async goTo(content:any) {
-    if (content.type == "forms") {
+    if (this.canDoForm && content.type == "forms") {
       if (content.showAlert) this.alertForm();
       else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
     }

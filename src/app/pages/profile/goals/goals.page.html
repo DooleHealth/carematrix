@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ this.nameContent | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ this.nameContent | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
         <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
@@ -37,6 +37,7 @@
 
  
   <div style="margin-top: 3%;" class="verticalLine2" [ngSwitch]="segment">
+
     <div *ngSwitchCase="'goals'">
       <ion-list *ngIf="goalsList.length > 0; else noData">
         
@@ -60,35 +61,10 @@
   </div>
 
 
-  <!--<ion-card class="cardProfile" *ngIf="listItem.length > 0; else noData">
-    <ion-item class="verticalAlignItem" lines="none">
-      <ion-icon [src]="iconContent"></ion-icon>&nbsp;&nbsp;
-      <ion-text>{{nameContent | translate}}</ion-text>
-      <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
-    </ion-item>
-
-    <div *ngIf="listItem.length > 0; else noData">
-      <scp-content-circle-progress
-        *ngFor="let content of this.listItem"
-        [content]="content"
-      ></scp-content-circle-progress>
-    </div>
-  </ion-card>-->
 
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="ribbon"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <app-no-data></app-no-data>
     </div>
   </ng-template>
 </ion-content>

@@ -3,8 +3,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
@@ -25,6 +27,7 @@ export class FormListPage implements OnInit {
   currentDate;
   Lasttimestring;
   lastName;
+  canDoForm:boolean = false
   constructor(
     private dooleService: DooleService,
     public loadingCtrl: LoadingController,
@@ -34,6 +37,8 @@ export class FormListPage implements OnInit {
     public translate: TranslateService, public alertController: AlertController,
     private router: Router,
     public role: RolesService,
+    public authService: AuthenticationService,
+    public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -187,10 +192,10 @@ export class FormListPage implements OnInit {
     switch (this.segment) {
       case 'today':
         //await this.getDietList()
-        await this.getFormsListByDate()
+        if (this.permissionService.canViewForms) await this.getFormsListByDate()
         break;
       case 'forms':
-        await this.getFormList()
+        if (this.permissionService.canViewPlanningForms) await this.getFormList()
         break;
       default:
         console.log('Segment not found');
