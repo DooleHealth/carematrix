@@ -12,6 +12,7 @@ import {  ModalController } from '@ionic/angular';
 import { RequestVisitPage } from '../request-visit/request-visit.page';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PermissionService } from 'src/app/services/permission.service';
 
 export class ShellRecipientModel extends ShellModel {
   id: string;
@@ -83,7 +84,8 @@ export class ContactPage implements OnInit {
     private dateService: DateService,
     private languageService: LanguageService,
     private callService: CallNumber,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    public permissionService: PermissionService) { }
 
   ngOnInit() {
     this.setSegment()

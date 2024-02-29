@@ -58,7 +58,7 @@
 
       <ng-template #myCenters>
 
-        <ng-container *ngIf="this.departments?.length > 0; else noData ">
+        <ng-container *ngIf="this.permissionService.canSeeCenters && this.departments?.length > 0; else noData ">
           <div *ngFor="let slide of this.departments" class="ion-margin">
             <ion-card class="customCardAppointment">
               <ion-card-content>
@@ -160,7 +160,7 @@
 
       <ng-template #medicalVisits>
 
-        <ng-container *ngIf="this.appointment?.length > 0 && !checkAppointmentsNoStaff(); else noData ">
+        <ng-container *ngIf="this.permissionService.canSeeMedicalVisits && this.appointment?.length > 0 && !checkAppointmentsNoStaff(); else noData ">
           <div *ngFor="let slide of this.appointment" class="ion-margin">
             <ion-card class="customCardAppointment" *ngIf="slide.staff.length > 0">
               <ion-card-content routerLink="/agenda/reminder/detail" routerLinkActive="active-item"
@@ -229,7 +229,7 @@
       </ng-container>
 
       <ng-template #chat>
-        <ion-list lines="full" *ngIf="this.data && this.data?.length > 0; else noData">
+        <ion-list lines="full" *ngIf="this.permissionService.canManageMessages && this.data && this.data?.length > 0; else noData">
           <div *ngFor="let post of this.data; let i = index">
 
             <span *ngIf="post?.recipients?.length == 1">
@@ -350,6 +350,8 @@
             </span>
           </div>
         </ion-list>
+
+
         <ng-template #noData>
           <div *ngIf=" !this.isLoading">
             <app-no-data></app-no-data>
@@ -518,9 +520,8 @@
 
 <ion-footer>
 
-  <div *ngIf="this.segment === 'chat'" style="background-color: var(--default-bkg);"
+  <div *ngIf="this.permissionService.canManageMessages && this.segment === 'chat'" style="background-color: var(--default-bkg);"
     style="display: flex; justify-content: center;">
-    <!-- Floating Button -->
     <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item' color="primary"
       shape="round" class="floating-button ion-margin">
       {{'contact.new_message' | translate}}
@@ -528,9 +529,9 @@
     </ion-button>
   </div>
 
-  <div *ngIf="this.segment === 'medical-visits'" style="background-color: var(--default-bkg);"
+  <div *ngIf="this.permissionService.canManageRequesVisit && this.segment === 'medical-visits'" style="background-color: var(--default-bkg);"
     style="display: flex; justify-content: center;">
-    <!-- Floating Button -->
+
     <ion-button (click)="requestVisit()" color="primary" shape="round" class="floating-button ion-margin">
       {{'contact.new_visit' | translate}}
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/new_visit.svg"></ion-icon>

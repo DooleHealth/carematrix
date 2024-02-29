@@ -99,13 +99,17 @@ export class AgendaPage implements OnInit{
         return days[num]
       },
     }
-  };
+  }; 
 
   async ionViewDidEnter() {
-    if (this.segment === 'calendar') this.myCal.currentDate = new Date();
+    if (this.permissionService.canViewEvents && this.segment === 'calendar') {
+      this.myCal.currentDate = new Date();
+      this.getallAgenda()
+    } 
     else {
-      this.getallAgenda();
+      this.eventSource = []
     }
+    
   }
 
   markDisabled = (date: Date) => {
@@ -128,6 +132,9 @@ export class AgendaPage implements OnInit{
             this.addScheduleToCalendar(res.agenda)
           }
           this.getReminders()
+        }
+        else {
+          this.listAppointment = []
         }
         
       }, (err) => {
@@ -166,7 +173,7 @@ export class AgendaPage implements OnInit{
   onCurrentDateChanged(event: Date) {
     this.ngZone.run(() => {
       console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
-      this.getallAgenda();
+      if (this.permissionService.canViewEvents) this.getallAgenda();
     });
   }
 
