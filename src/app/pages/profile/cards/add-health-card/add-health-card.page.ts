@@ -199,7 +199,7 @@ export class AddHealthCardPage implements OnInit {
           } else if (res.message) {
             errorMessage = res.message;
           }
-          this.presentAlert(errorMessage);
+          this.presentAlert(this.translate.instant('add_health_card.error_types'));
         } else {
           console.log('[AddHealthCardPage] getHealthCardTypes()', res);
           if (res.success) {

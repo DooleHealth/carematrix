@@ -345,7 +345,8 @@
     "error_alert_message_add_card": "Error: The card could not be added",
     "placeholder_select": "Select one",
     "error_end_date": "The expiration date must be greater than the date of issue",
-    "error_start_date": "The date of issue must be less than the expiry date"
+    "error_start_date": "The date of issue must be less than the expiry date",
+    "error_types": "Currently unable to add a card, please try again later"
   },
   "edit_health_card": {
     "header_edit_card": "Edit Health Card",
