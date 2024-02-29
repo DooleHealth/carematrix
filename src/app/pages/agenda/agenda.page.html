@@ -241,7 +241,7 @@
 
 <ion-footer>
  
-   <div *ngIf="this.segment === 'reminders'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+   <div *ngIf="this.permissionService.canManageEvents && this.segment === 'reminders'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
       <ion-button (click)="addReminder()" color="primary" shape="round" class="floating-button ion-margin" >
         {{'agenda.create_reminder' | translate}}
         <ion-icon style="padding-left: 2%;"  src="../../assets/icons/notifications_reminder.svg"></ion-icon>

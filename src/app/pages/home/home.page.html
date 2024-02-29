@@ -134,7 +134,7 @@
 
       
       <!-- GOALS -->
-      <ng-container *ngIf="nChallengesNotCompleted() !== 0">
+      <ng-container *ngIf="this.permissionService.canViewGoals && nChallengesNotCompleted() !== 0">
         <ion-row class="ion-padding-top">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'health_path.goals' | translate}}</ion-text>
@@ -252,13 +252,13 @@
 
   
       <!-- TASKS OF TODAY -->
-      <ion-row class="ion-padding-top">
+      <ion-row class="ion-padding-top" *ngIf="checkPermissionsTasks()">
         <ion-text class="txtTitle" style="white-space: nowrap">
           {{ 'home.today_title' | translate}}</ion-text>
       </ion-row>
 
       <!-- Forms -->
-      <ion-row>
+      <ion-row *ngIf="this.permissionService.canViewForms">
         <ion-card class="vertical-card" (click)="navigateToFormsPage()">
           <ion-item lines="none" mode="md" class="noMargin">
             <div class="slidersHeader">
@@ -297,7 +297,7 @@
 
 
       <!-- Exercises -->
-      <ion-row>
+      <ion-row *ngIf="this.permissionService.canViewExercises">
         <ion-card class="vertical-card">
           <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToExercises()">
             <div class="slidersHeader">
@@ -338,7 +338,7 @@
 
 
       <!-- Drugs -->
-      <ion-row>
+      <ion-row *ngIf="this.permissionService.canViewMedication">
         <ion-card class="vertical-card" style="max-height: 135px !important;">
           <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToMedicationPage()"
             routerLinkActive="active-item">
@@ -389,7 +389,7 @@
 
 
       <!-- Diets -->
-      <ion-row>
+      <ion-row *ngIf="this.permissionService.canViewDiets">
         <ion-card class="vertical-card">
           <ion-item lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToDietsPage()">
@@ -427,7 +427,7 @@
       </ion-row>
 
       <!-- Games -->
-      <ion-row>
+      <ion-row *ngIf="this.permissionService.canViewGames">
         <ion-card class="vertical-card">
           <ion-item lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToGamesPage()">
@@ -462,7 +462,7 @@
 
 
       <!-- Physical Activity -->
-      <ion-row class="ion-padding-bottom">
+      <ion-row class="ion-padding-bottom" *ngIf="this.permissionService.canViewMonitoring">
         <ng-container *ngIf="(!this.activity || this.activity?.length == 0); else elseBlock">
           <ion-card class="vertical-card margin-bottom" (click)="navigateToMonitoringPage()">
 
@@ -524,12 +524,12 @@
 
 
       <!-- Reminders -->
-      <ion-row *ngIf="this.appointment?.length > 0" class="ion-padding-bottom">
+      <ion-row *ngIf="this.permissionService.canViewEvents && this.appointment?.length > 0" class="ion-padding-bottom">
         <ion-text class="txtTitle">{{ 'home.reminders_title' | translate}}</ion-text>
       </ion-row>
 
       <!-- Agendas -->
-      <ion-row>
+      <ion-row *ngIf="this.permissionService.canViewEvents">
         <swiper-container [slidesPerView]="this.appointment?.length == 1 ? 1:1.1">
           <swiper-slide swiperSlide *ngFor="let slide of this.appointment">
 
@@ -596,7 +596,7 @@
 
       
       <!-- ADVICES -->
-      <ng-container *ngIf="this.advices?.length > 0">
+      <ng-container *ngIf="this.permissionService.canViewAdvices && this.advices?.length > 0">
         <ion-row>
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'home.advices' | translate}}</ion-text>
@@ -610,7 +610,7 @@
         </ion-row>
   
   
-        <ion-row>
+        <ion-row *ngIf="this.permissionService.canViewAdvices">
           <swiper-container [slidesPerView]="this.advices?.length == 1 ? 1:1.2">
             <swiper-slide swiperSlide *ngFor="let slide of this.advices">
               <ion-card>

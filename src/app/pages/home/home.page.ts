@@ -242,7 +242,7 @@ export class HomePage implements OnInit {
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
-    private permissionService: PermissionService
+    public permissionService: PermissionService
 
 
   ) { 
@@ -403,7 +403,7 @@ export class HomePage implements OnInit {
         this.getUserImage(),
         this.getPersonalInformation(),
         this.getChallenges(), 
-        //this.getPrescribedApps(),
+
         this.getFormsList(),
         this.getAdvicesList(), 
         this.getExercisesList(),
@@ -626,7 +626,7 @@ export class HomePage implements OnInit {
         this.isLoading = true;
 
         user.permissionsName = [
-          "canViewGoals",
+         /*  "canViewGoals",
           "canManageGoals",
           "canViewForms",
           "canViewAnswerForms",
@@ -651,7 +651,7 @@ export class HomePage implements OnInit {
           "canManageMessages",
           "canSeeMedicalVisits",
           "canManageRequesVisit",
-          "canSeeCenters",
+          "canSeeCenters", */
         ]
         
         this.permissionService.setPermissions(user.permissionsName);
@@ -2367,6 +2367,11 @@ export class HomePage implements OnInit {
 
   checkBlur() {
     this.activateFocus = false;
+  }
+
+  checkPermissionsTasks() {
+    return this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewMedication || this.permissionService.canViewDiets ||
+           this.permissionService.canViewGames || this.permissionService.canViewMonitoring
   }
 
 

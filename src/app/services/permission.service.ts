@@ -6,32 +6,32 @@ import { Injectable } from '@angular/core';
 export class PermissionService {
 
 
-  canViewGoals:boolean = false
-  canManageGoals:boolean = false
-  canViewForms:boolean = false
-  canViewAnswerForms:boolean = false
-  canViewExercises:boolean = false
-  canViewDiets:boolean = false
-  canViewRecipes:boolean = false
-  canViewGames:boolean = false
-  canViewMonitoring:boolean = false
-  canManageMonitoring:boolean = false
-  canViewAdvices:boolean = false
-  canViewMedicalProcedures:boolean = false
-  canViewNews:boolean = false
-  canViewTestimonials:boolean = false
-  canViewMedicalTests:boolean = false
-  canManageMedicalTests:boolean = false
-  canViewMedication:boolean = false
-  canManageMedication:boolean = false
-  canViewMedicationPlans:boolean = false
-  canViewPlanningForms:boolean = false
-  canViewEvents:boolean = false
-  canManageEvents:boolean = false
-  canManageMessages:boolean = false
-  canSeeMedicalVisits:boolean = false
-  canManageRequesVisit:boolean = false
-  canSeeCenters:boolean = false
+  canViewGoals:boolean = true
+  canManageGoals:boolean = true
+  canViewForms:boolean = true
+  canViewAnswerForms:boolean = true
+  canViewExercises:boolean = true
+  canViewDiets:boolean = true
+  canViewRecipes:boolean = true
+  canViewGames:boolean = true
+  canViewMonitoring:boolean = true
+  canManageMonitoring:boolean = true
+  canViewAdvices:boolean = true
+  canViewMedicalProcedures:boolean = true
+  canViewNews:boolean = true
+  canViewTestimonials:boolean = true
+  canViewMedicalTests:boolean = true
+  canManageMedicalTests:boolean = true
+  canViewMedication:boolean = true
+  canManageMedication:boolean = true
+  canViewMedicationPlans:boolean = true
+  canViewPlanningForms:boolean = true
+  canViewEvents:boolean = true
+  canManageEvents:boolean = true
+  canManageMessages:boolean = true
+  canSeeMedicalVisits:boolean = true
+  canManageRequesVisit:boolean = true
+  canSeeCenters:boolean = true
   
 
   constructor() { }
@@ -66,31 +66,31 @@ export class PermissionService {
   }
 
   resetPermissions(){
-    this.canViewGoals = false
-    this.canManageGoals = false
-    this.canViewForms = false
-    this.canViewAnswerForms = false
-    this.canViewExercises = false
-    this.canViewDiets = false
-    this.canViewRecipes = false
-    this.canViewGames = false
-    this.canViewMonitoring = false
-    this.canManageMonitoring = false
-    this.canViewAdvices = false
-    this.canViewMedicalProcedures = false
-    this.canViewNews = false
-    this.canViewTestimonials = false
-    this.canViewMedicalTests = false
-    this.canManageMedicalTests = false
-    this.canViewMedication = false
-    this.canManageMedication = false
-    this.canViewMedicationPlans = false
-    this.canViewPlanningForms = false
-    this.canViewEvents = false
-    this.canManageEvents = false
-    this.canManageMessages = false
-    this.canSeeMedicalVisits = false
-    this.canManageRequesVisit= false
-    this.canSeeCenters= false
+    this.canViewGoals = true
+    this.canManageGoals = true
+    this.canViewForms = true
+    this.canViewAnswerForms = true
+    this.canViewExercises = true
+    this.canViewDiets = true
+    this.canViewRecipes = true
+    this.canViewGames = true
+    this.canViewMonitoring = true
+    this.canManageMonitoring = true
+    this.canViewAdvices = true
+    this.canViewMedicalProcedures = true
+    this.canViewNews = true
+    this.canViewTestimonials = true
+    this.canViewMedicalTests = true
+    this.canManageMedicalTests = true
+    this.canViewMedication = true
+    this.canManageMedication = true
+    this.canViewMedicationPlans = true
+    this.canViewPlanningForms = true
+    this.canViewEvents = true
+    this.canManageEvents = true
+    this.canManageMessages = true
+    this.canSeeMedicalVisits = true
+    this.canManageRequesVisit= true
+    this.canSeeCenters= true
   }
 }
