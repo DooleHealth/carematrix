@@ -1,53 +1,40 @@
 <ion-header>
-    <ion-toolbar mode="ios">
-      <ion-title>{{'advices.tag_advices'| translate }}</ion-title>
-      <ion-buttons slot="start">
-        <ion-back-button text=""></ion-back-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" routerLink="/profile">
-          <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+  <ion-toolbar mode="ios">
+    <ion-title>{{'advices.tag_advices'| translate }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/profile">
+        <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
-<!-- SegmentBar -->
-<ion-searchbar
-mode="ios" show-cancel-button="always"
-(ionInput)="filterListAdvices($event)"
-(ionClear)="getAdvicesList()"
-placeholder="{{ 'advices.searchbar' | translate}}">
-</ion-searchbar>
+  <!-- SegmentBar -->
+  <ion-searchbar *ngIf="this.permissionService.canViewAdvices" mode="ios" show-cancel-button="always" (ionInput)="filterListAdvices($event)"
+    (ionClear)="getAdvicesList()" placeholder="{{ 'advices.searchbar' | translate}}">
+  </ion-searchbar>
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+    <ion-spinner></ion-spinner>
   </div>
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
-        <!--<app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>-->
-        <app-view-more-information  [content]="items" [segment]="this.segment" ></app-view-more-information>
+      <!--<app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>-->
+      <app-view-more-information [content]="items" [segment]="this.segment"></app-view-more-information>
     </ion-list>
   </div>
 
 
- <!-- NO DATA MESSAGE -->
-<ng-template #noData>
-  <div *ngIf="!this.isLoading">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12">
-          <ion-icon class="iconNoData" name="newspaper"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col >
-          <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-</div>
-</ng-template>
+  <!-- NO DATA MESSAGE -->
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <app-no-data></app-no-data>
+
+    </div>
+  </ng-template>
 </ion-content>
 
 

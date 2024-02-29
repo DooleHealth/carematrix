@@ -55,7 +55,7 @@
   </ion-card>
 
   <div class="main-container">
-    <ion-button expand="block"  (click)="openGames(game)">{{'game.go_game' | translate }}</ion-button>
+    <ion-button expand="block" *ngIf="this.canPlayGames"  (click)="openGames(game)">{{'game.go_game' | translate }}</ion-button>
   </div>
 
 </ion-content>

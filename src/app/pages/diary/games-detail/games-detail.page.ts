@@ -4,6 +4,7 @@ import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-a
 import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-games-detail',
@@ -18,15 +19,20 @@ export class GamesDetailPage implements OnInit {
   id:any
   score = 0
   isLoading = false
+
+  canPlayGames:boolean = false
   constructor(
     private router: Router,
     private iab: InAppBrowser,
     private auth: AuthenticationService,
     private dooleService: DooleService,
+    public permissionService: PermissionService,
+    public authService: AuthenticationService
   ) { }
 
   ngOnInit() {
     this.id = history.state.id;
+    this.canPlayGames = this.authService?.user?.familyUnit == null && this.permissionService.canViewGames;
     if(this.id)
     this.getGameData()
   }

@@ -15,6 +15,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { Router } from '@angular/router';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -76,6 +77,7 @@ export class DiaryPage implements OnInit {
     public role: RolesService,
     private router: Router,
     private ngZone: NgZone,
+    public permissionService: PermissionService
   ) {}
 
   ngOnInit() {
@@ -240,10 +242,10 @@ export class DiaryPage implements OnInit {
     switch (this.segment) {
       case 'diets':
         //await this.getDietList()
-        await this.getDietListByDate()
+        if (this.permissionService.canViewDiets) await this.getDietListByDate()
         break;
       case 'recipes':
-        await this.getRecipesist()
+        if (this.permissionService.canViewRecipes) await this.getRecipesist()
         break;
       default:
         console.log('Segment not found');

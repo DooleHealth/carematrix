@@ -13,7 +13,7 @@
 </ion-header>
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
-  <ion-searchbar
+  <ion-searchbar *ngIf="this.permissionService.canViewExercises"
   mode="ios" show-cancel-button="always"
   (ionInput)="filterListExercises($event)"
   (ionClear)="getExercisesList()"
@@ -31,18 +31,7 @@
   </div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col >
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <app-no-data></app-no-data>
   </div>
   </ng-template>
   </ion-content>
