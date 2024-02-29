@@ -1319,12 +1319,12 @@ export class DooleService {
 
   
   getAPIdrugsListInteraction(query: any): Observable<any> {
-   // const endpoint = `https://n6ibaazevnsixfcs4prl7z7wra0oonma.lambda-url.eu-central-1.on.aws/`;
-    const endpoint = `https://n6ibaazevnsixfcs4prl7z7wra0oonma.lambda-url.eu-central-1.on.aws/?drug=DB01363`;
-   // let httpParams = new HttpParams().set('drug', query);
+    const endpoint = `https://n6ibaazevnsixfcs4prl7z7wra0oonma.lambda-url.eu-central-1.on.aws/`;
+   // const endpoint = `https://n6ibaazevnsixfcs4prl7z7wra0oonma.lambda-url.eu-central-1.on.aws/?drug=DB01363`;
+   //let httpParams = new HttpParams().set('drug', query);
    let httpParams = new HttpParams()
    .set('drug', query)
-    return this.http.get(endpoint).pipe(
+    return this.http.get(endpoint, httpParams).pipe(
       map((res: any) => {
         return res;
       })

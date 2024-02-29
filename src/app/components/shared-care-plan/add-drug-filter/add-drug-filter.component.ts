@@ -59,7 +59,8 @@ export class AddDrugFilterComponent  implements OnInit {
      /**ESTA ES LA API PARA SABER SI TIENE INTERACCCIONES O NO EL MEDICAMENTO */
      this.dooleService.getAPIdrugsListInteraction(drug.id).subscribe(
       async (res: any) =>{
-        if(res.interactions){
+        debugger
+        if(res != null){
           let arrayValue = res
           arrayValue.interactions.forEach(element => {
              this.interactions.push(element);

@@ -135,3 +135,13 @@ ion-segment-button.segment-button-after-checked {
   color: #7F8C8D !important;
 }
 
+.floating-button {
+  position: fixed;
+  bottom: 5%; 
+  left: 3%;
+  transform: translateY(-120%);
+  border-radius: 99px !important; /* Bordes redondeados */
+  width: calc(100% - 10%); 
+  max-width: 400px; 
+ margin: 1%;
+}

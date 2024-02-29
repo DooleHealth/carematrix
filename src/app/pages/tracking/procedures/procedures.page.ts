@@ -53,7 +53,8 @@ export class ProceduresPage implements OnInit {
           'type', //type
           'staff', //staff
           'department',
-          'media' // se espera una imagen
+          'media', // se espera una imagen,
+          'description',
           )  
         this.isLoading = false
         console.log('[ProceduresPage] getProceduresImformation() procedures', await this.listItem);

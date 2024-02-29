@@ -17,9 +17,9 @@ export enum ContentType {
 }
 
 export enum ContentTypePath {
-    Goals = '/profile/goals',
-    LifestyleHabits = '/lifestyle-habits',
-    Medication= '/medication/', 
+    Goals = '/tracking/profile/goals',
+    LifestyleHabits = '/tracking/lifestyle-habits',
+    Medication= '/tracking/medication/', 
     Forms= '/tracking/form-list', 
     Monitoring= '/tracking/monitoring', 
     MedicalProcedure= '/tracking/procedures', 
@@ -27,13 +27,13 @@ export enum ContentTypePath {
     Challenges = '/home/health-path',
     ChallengesDetail = '/home/health-path/detail',
     // LifeStyle
-    News = '/news',
-    Advices = '/advices',
-    Exercises= '/exercices', 
-    Games= '/games', 
+    News = '/tracking/news',
+    Advices = '/tracking/advices',
+    Exercises= '/tracking/exercices', 
+    Games= '/tracking/games', 
    // Diets= '/diets', 
-    Diets= '/journal', 
-    Testimonials= '/testimonials',
+    Diets= '/tracking/journal', 
+    Testimonials= '/tracking/testimonials',
 
     DietsDetail= Diets + '/diets-detail',
     AdvicesDetail= Advices+ '/advices-detail',
@@ -297,6 +297,7 @@ export interface SharedCarePlanProcedure extends SharedCarePlan {
     staff?: string | any;
     department?: string
     img?: string;
+    description?: string;
 }
 
 /**Medical test of Shared care Plan */

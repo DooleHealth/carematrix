@@ -37,24 +37,29 @@
 <ion-content view-cached="”false”">
   <!-- SegmentBar -->
 
-  <ion-segment
-    (ionChange)="segmentChanged($event)"
-    [(ngModel)]="segment"
-    mode="ios"
-    scrollable
-  >
-    <ion-segment-button value="sharedcareplan">
-      <ion-label>{{ 'shared_care_plan.title' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button
-      *ngIf="role?.component?.doc_diagnostic"
-      value="documents"
-    >
-      <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
-    </ion-segment-button>
-   
-  </ion-segment>
+  <ion-row style="background-color: var(--secondary-bkg); padding-top: 3%;">
+    <ion-col size="0.5"></ion-col>
+    <ion-col size="11" style="display: flex; justify-content: center;">
+      <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+        <ion-segment-button value="sharedcareplan">
+          <ion-label>{{ 'shared_care_plan.title' | translate}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button
+          *ngIf="role?.component?.doc_diagnostic"
+          value="documents"
+        >
+          <ion-label>{{ 'tracking.tap_test' | translate}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col size="0.5"></ion-col>
 
+    <ion-row style="width: 100%;">
+      <ion-col size="12">
+        <app-caregiver></app-caregiver>
+      </ion-col>
+    </ion-row>
+  </ion-row>
   <div  [ngSwitch]="segment">
     <!-- Shared Care Plan -->
     <div style="margin-top: 3%;" *ngSwitchCase="'sharedcareplan'">
@@ -115,7 +120,9 @@
                     </ion-text>
                 </ion-row>
               </ion-grid>
-             
+              <ion-buttons slot="end">
+                <ion-icon name="chevron-forward-outline" class="icono-personalizado"></ion-icon>
+              </ion-buttons>
             </ion-item>
 
               

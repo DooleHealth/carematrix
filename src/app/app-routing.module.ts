@@ -37,11 +37,7 @@ const routes: Routes = [
     path: 'intro',
     loadChildren: () => import('./pages/onboarding/intro/intro.module').then( m => m.IntroPageModule)
   },
-  {
-
-    path: 'goals',
-    loadChildren: () => import('./pages/profile/goals/goals.module').then( m => m.GoalsPageModule)
-  },
+ 
   {
     path: 'activity-goal',
     loadChildren: () => import('./pages/profile/activity-goal/activity-goal.module').then( m => m.ActivityGoalPageModule)
@@ -98,7 +94,7 @@ const routes: Routes = [
    loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
   },
   {
-   path: 'journal',
+   path: 'tracking/journal',
    loadChildren: () => import('./pages/diary/diary.module').then( m => m.DiaryPageModule)
   },
   {
@@ -131,11 +127,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/contact/medical-calendar/medical-calendar.module').then( m => m.MedicalCalendarPageModule)
   },
   {
-    path: 'advices',
+    path: 'tracking/advices',
     loadChildren: () => import('./pages/home/advices/advices.module').then( m => m.AdvicesPageModule)
   },
   {
-    path: 'news',
+    path: 'tracking/news',
     loadChildren: () => import('./pages/home/news/news.module').then( m => m.NewsPageModule)
   },
   {
@@ -155,10 +151,7 @@ const routes: Routes = [
     path: 'form',
     loadChildren: () => import('./pages/tracking/form/form.module').then( m => m.FormPageModule)
   },
-  {
-    path: 'medication',
-    loadChildren: () => import('./pages/diary/medication/medication.module').then( m => m.MedicationPageModule)
-  },
+  
   {
     path: 'scan',
     loadChildren: () => import('./pages/bluetooth/scan/scan.module').then( m => m.ScanPageModule)
@@ -172,15 +165,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tracking/lifestyle-habits/lifestyle-habits.module').then( m => m.LifestyleHabitsPageModule)
   },
   {
-    path: 'exercices',
+    path: 'tracking/exercices',
     loadChildren: () => import('./pages/diary/exercises/exercises.module').then( m => m.ExercicesModule)
    },
    {
-    path: 'games',
+    path: 'tracking/games',
     loadChildren: () => import('./pages/diary/games/games.module').then( m => m.GamesPageModule)
    },
    {
-    path: 'diets',
+    path: 'tracking/diets',
     loadChildren: () => import('./pages/diary/diets/diets.module').then( m => m.DietsPageModule)
    },
    {
@@ -192,7 +185,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/diary/drugs-detail/drugs-detail.module').then( m => m.DrugsDetailPageModule)
   },
   {
-    path: 'testimonials',
+    path: 'tracking/testimonials',
     loadChildren: () => import('./pages/tracking/testimonials/testimonials.module').then(m => m.TestimonialsPageModule)
   },   {
     path: 'request-visit',

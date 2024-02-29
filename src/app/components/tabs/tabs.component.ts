@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FamilyUnit } from 'src/app/models/user';
@@ -15,6 +15,7 @@ import { RolesService } from 'src/app/services/roles.service';
   styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent implements OnInit {
+  isInSubMenu: boolean = false;
   listFamilyUnit:FamilyUnit[] = [];
   isLoading = false
   user
@@ -28,7 +29,7 @@ export class TabsComponent implements OnInit {
   constructor(
      private router: Router , 
      public role: RolesService,
-     private authService: AuthenticationService)  {
+     private authService: AuthenticationService, private route: ActivatedRoute)  {
     { this.user = this.authService?.user?.familyUnit}
   }
   ngOnInit() {
@@ -54,6 +55,10 @@ export class TabsComponent implements OnInit {
 
   public navigateTracking(){
     return this.router.navigateByUrl('/tracking');
+  }
+  isActive(): boolean {
+    // this.route.snapshot.url.join('/').includes("news");
+     return true
   }
 
   /* public navigateDiary(){
