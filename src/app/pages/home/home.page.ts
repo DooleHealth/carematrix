@@ -29,6 +29,7 @@ import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapt
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-iframe/show-iframe.component';
 import { Preferences } from '@capacitor/preferences';
+import { PermissionService } from 'src/app/services/permission.service';
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
@@ -241,6 +242,7 @@ export class HomePage implements OnInit {
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
+    private permissionService: PermissionService
 
 
   ) { 
@@ -474,7 +476,7 @@ export class HomePage implements OnInit {
           );
         });
   
-        this.dayPhrase = res.dayPrase;
+        this.dayPhrase = res.dayPrase.phrase;
         
         //this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
         if (this.dayPhrase != null) {
@@ -561,6 +563,7 @@ export class HomePage implements OnInit {
             this.authService.setUserFamilyId(null).then((val) => {
               this.ngZone.run(()=>{
                 this.isLoading = true;
+                this.permissionService.resetPermissions();
                 this.ionViewWillEnter()
               });
             });
@@ -621,6 +624,38 @@ export class HomePage implements OnInit {
     this.authService.setFamilyUnit(user).then((val) => {
       this.ngZone.run(()=>{
         this.isLoading = true;
+
+        user.permissionsName = [
+          "canViewGoals",
+          "canManageGoals",
+          "canViewForms",
+          "canViewAnswerForms",
+          "canViewExercises",
+          "canViewDiets",
+          "canViewRecipes",
+          "canViewGames",
+          "canViewMonitoring",
+          "canManageMonitoring",
+          "canViewAdvices",
+          "canViewMedicalProcedures",
+          "canViewNew",
+          "canViewTestimonials",
+          "canViewMedicalTests",
+          "canManageMedicalTests",
+          "canViewMedication",
+          "canManageMedication",
+          "canViewMedicationPlans",
+          "canViewPlanningForm",
+          "canViewEvents",
+          "canManageEvents",
+          "canManageMessages",
+          "canSeeMedicalVisits",
+          "canManageRequesVisit",
+          "canSeeCenters",
+        ]
+        
+        this.permissionService.setPermissions(user.permissionsName);
+
         this.ionViewWillEnter()
       });
     });
