@@ -278,6 +278,7 @@ export class AuthenticationService {
         map( (res: any) => {
           console.log(`[AuthenticationService] logout(${path}) res: `, JSON.stringify(res) );
           this.isAuthenticated.next(false);
+           Preferences.remove({ key:  this.user.familyUnit }).then((val) => { });
            Preferences.remove({ key: 'user' }).then((val) => { });
            this.tokenService.removeAuthToken()
           return res;

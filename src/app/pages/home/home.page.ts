@@ -549,6 +549,8 @@ export class HomePage implements OnInit {
           handler: (data) => {
             this.authService.isFamily = false;
             this.pusherConnection.unsubscribePusher()
+            console.log(this.authService.user.familyUnit)
+            Preferences.remove({ key:  this.authService.user.familyUnit }).then((val) => { });
             this.authService.setUserFamilyId(null).then((val) => {
               this.ngZone.run(()=>{
                 this.isLoading = true;
@@ -917,9 +919,9 @@ export class HomePage implements OnInit {
   async getChallenges() {
     try {
 
-      let params={onlyAccepted:1}
+     
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIChallenges(params).subscribe(
+        this.dooleService.getAPIChallenges({onlyAccepted:1}).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIChallenges()', await res);
             this.setChallengesSlider(res.challenges)
