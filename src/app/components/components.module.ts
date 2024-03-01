@@ -63,6 +63,8 @@ import { CaregiverComponent } from './caregiver/caregiver.component';
 import { GoalsComponent } from './shared-care-plan/goals/goals.component';
 import { ProcedureComponent } from './shared-care-plan/procedure/procedure.component';
 import { InteractionsMedicineComponent } from './interactions-medicine/interactions-medicine.component';
+import { NotificationOptionsComponent } from './notification/notification-options/notification-options.component';
+import { NotificationBellComponent } from './notification/notification-bell/notification-bell.component';
 
 
 @NgModule({
@@ -130,7 +132,10 @@ import { InteractionsMedicineComponent } from './interactions-medicine/interacti
     CaregiverComponent,
     GoalsComponent,
     ProcedureComponent,
-    InteractionsMedicineComponent
+    InteractionsMedicineComponent,
+    // Notifcations
+    NotificationOptionsComponent,
+    NotificationBellComponent
   ],
   exports: [
     ShellModule,
@@ -184,7 +189,10 @@ import { InteractionsMedicineComponent } from './interactions-medicine/interacti
     CaregiverComponent,
     GoalsComponent,
     ProcedureComponent,
-    InteractionsMedicineComponent
+    InteractionsMedicineComponent,
+    // Notifcations
+    NotificationOptionsComponent,
+    NotificationBellComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

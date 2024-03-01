@@ -85,7 +85,7 @@ export class SettingsPage implements OnInit {
   getNotificationConfiguration(){
     this.dooleService.getAPInotificationConfigurations().subscribe(
       async (res: any) =>{
-       //console.log('[SettingsPage] getNotificationConfiguration()', await res);
+       console.log('[SettingsPage] getNotificationConfiguration()', await res);
        if(res){
         this.getConfigurationParams(res)
        }
