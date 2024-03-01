@@ -548,7 +548,7 @@
     "tap_forms": "Forms",
     "tap_formsPlan": "Planning Forms",
     "tap_graphics": "Graphics",
-    "tap_test": "Medical Tests"
+    "tap_test": "Medical Test"
   },
   "documents": {
     "subtitle_information": "Information",
@@ -709,7 +709,7 @@
     "edit": "Edit",
     "ok": "OK",
     "add": "Add",
-    "delete": "Eliminate",
+    "delete": "Delete",
     "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
