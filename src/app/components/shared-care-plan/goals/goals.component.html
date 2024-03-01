@@ -15,7 +15,7 @@
 
          
         </ion-col>
-        <ion-col size="3" class="ion-no-padding"  *ngIf="this.last_accepted_or_declined">          
+        <ion-col size="3" class="ion-no-padding"  *ngIf="this.last_accepted_or_declined === null">          
           <ion-button  color="warning"  class="ion-float-right custom-button" 
           (click)="AcceptOrDeclined(content.current_level?.level_id)">
           {{ 'medication.medication_status' | translate }}
@@ -58,7 +58,7 @@
       </ion-row>
       </ion-row>
     </ion-grid>
-    <ion-accordion-group *ngIf="canDoGoal && this.goalsList?.length > 0" >
+    <ion-accordion-group *ngIf="this.last_accepted_or_declined != null && this.goalsList?.length > 0" >
       <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end" >
         <ion-item slot="header" style="color: #A2047F;">
           <ion-label><strong>{{ 'goals.accordion_goals'| translate  }}</strong></ion-label>

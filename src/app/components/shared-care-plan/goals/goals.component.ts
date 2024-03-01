@@ -44,6 +44,7 @@ export class GoalsComponent  implements OnInit {
   ionViewWillEnter() {
     
     this.canDoGoal = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
+    console.log("canDoGoal", this.canDoGoal)
 
     this.note = this.translate.instant('health_path.goal_note') 
     //this.setChallenge(this.content);
@@ -62,7 +63,7 @@ export class GoalsComponent  implements OnInit {
     this.current_level = res?.current_level;
     this.challenge = res?.challenge;
     this.isChallengeCompleted = res.challenge_completed
-    this.last_accepted_or_declined = (res.last_accepted_or_declined === null) ? true : res.last_accepted_or_declined;
+    this.last_accepted_or_declined = (res.last_accepted_or_declined === null) ? null : res.last_accepted_or_declined;
     let name = '';
     let message = '';
     let link = '';
