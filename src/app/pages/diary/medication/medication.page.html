@@ -27,7 +27,7 @@
           <ion-label>{{'diary.field_today' | translate}}</ion-label>
         </ion-segment-button>
         <ion-segment-button *ngIf="role?.component?.drug" value="medication">
-          <ion-label>{{'medications.title' | translate}}</ion-label>
+          <ion-label>{{'medications.titlePlans' | translate}}</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-col>
@@ -46,15 +46,16 @@
 <div *ngSwitchCase="'today'">
   <div style="margin-top: 3%;">
     <ion-list *ngIf="CanDoMedication && listDrugIntakes.length > 0; else noData">
-      <ion-grid *ngFor="let content of listDrugIntakes" class="ion-no-padding" >  
-        <ion-row *ngIf="getLastName(content?.period)">
+      <ion-grid *ngFor="let drugs of listDrugIntakes" class="ion-no-padding" >  
+        <div *ngIf="getPeriod(drugs.period)">ghjkl</div>
+        <ion-row >
           <ion-col size="0.8">
-            <ion-icon class="center"  *ngIf="getIsDateInPast(content?.date_intake)" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+            <ion-icon class="center"  *ngIf="getIsDateInPast(drugs?.date_intake)" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
             <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp;
           </ion-col>
           <ion-col size="11.2"  class="text-column">
             <ion-text class="center" [style.color]="isDateInPast ? '#575757' : 'var(--malva)'">
-              <h5>{{ updateLastName(content?.date_intake) }}</h5>
+              <h5>{{drugs?.period }}</h5>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -65,7 +66,7 @@
           
         </ion-col>
           <ion-col size="11.2">    
-            <app-content-date [content]="content" (takeMedication)="changeTake($event)"></app-content-date>
+            <app-content-date [content]="drugs" (takeMedication)="changeTake($event)"></app-content-date>
           </ion-col>
           
         </ion-row>
