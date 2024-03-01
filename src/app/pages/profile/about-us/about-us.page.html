@@ -14,18 +14,6 @@
   <div class="main-container" *ngIf="this.information; else noData" [innerHtml]="this.information? (this.information | safeHtml):'' "></div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
-      <!-- <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="home"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col >
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
       <app-no-data></app-no-data>
   </div>
   </ng-template>
