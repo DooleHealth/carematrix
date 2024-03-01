@@ -15,6 +15,8 @@ import moment from 'moment';
 import { HighchartsService } from 'src/app/services/highcharts.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { AddButtonList } from 'src/app/models/shared-care-plan';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 
 export interface graphElement {
@@ -37,6 +39,7 @@ export class ActivityGoalPage implements OnInit {
   last_value: any
   isDiastoleAndSystole: boolean
   addButton = AddButtonList;
+  canManagerHealhChart:boolean = false;
 
   es = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
   ca = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte']
@@ -89,19 +92,18 @@ export class ActivityGoalPage implements OnInit {
     private titlecasePipe: TitleCasePipe,
     private highchartsService: HighchartsService,
     public role: RolesService,
+    public authService: AuthenticationService, 
+    public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
-    console.log("mostrar")
+    this.canManagerHealhChart = this.authService?.user?.familyUnit == null && this.permissionService.canManageMonitoring;
     this.id = history.state.id;
     this.header = history.state.header;
 
     console.log(this.id)
 
-    console.log(this.header)
-    //this.viewTitle = this.formatSelectedDate(this.minDate, 'EEEE d MMMM')
-
-   
+    console.log(this.header)   
   }
 
   ionViewDidEnter() {
@@ -190,7 +192,7 @@ export class ActivityGoalPage implements OnInit {
         this.minY = this.highchartsService.setMinY( this.series[0].data, this.series[1].data);
         this.maxY = this.highchartsService.setMaxY( this.series[0].data, this.series[1].data);
         this.setRangesElement(json?.blood_pressure_systolic, json?.blood_pressure_diastolic, this.minY, this.maxY)
-        debugger
+        
         this.generateMuiltiChart()
       }
       else{

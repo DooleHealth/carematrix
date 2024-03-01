@@ -2167,6 +2167,17 @@ export class DooleService {
       })
     );
   }
+  getAPIChallenges2(): Observable<any> {
+    let path = 'user/challenges'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, ).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
 
   getAPIAppLatestVersion(version, platform): Observable<any> {
     let path = 'app/versions/must-update?version='+version+'&platform='+platform;

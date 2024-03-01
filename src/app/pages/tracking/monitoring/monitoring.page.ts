@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 
 @Component({
@@ -10,16 +12,18 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
   styleUrls: ['./monitoring.page.scss'],
 })
 export class MonitoringPage implements OnInit {
+  canDoHealhCharts:boolean = false;
   listItem: any[] = []
   items = [];
   isLoading = false;
   nameContent: string = ContentTypeTranslatedName.Monitoring
   iconContent = ContentTypeIcons.Monitoring
   constructor(
-    public sharedCarePlan:SharedCarePlanService, private router: Router,public dateService: DateService,
+    public sharedCarePlan:SharedCarePlanService, private router: Router,public dateService: DateService,public authService: AuthenticationService, public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
+    this.canDoHealhCharts = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
     this.getFormList();
   }
 

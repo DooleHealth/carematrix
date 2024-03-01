@@ -179,7 +179,18 @@
     "text_goals3":" successfully passed ",
     "text_goals4":" this objective 🏆",
     "go": "Go",
-    "accordion_goals":"These are the tasks you must perform:"
+    "accordion_goals":"These are the tasks you must perform:",
+    "accepted_rejected": "Do you want to approve or reject this challenges?",
+    "accepted_rejectedExercises": "Do you want to approve or reject this challenges?",
+    "button_rejected": "Reject",
+    "button_accepted": "Approve",
+    "rejectd_option1": "I have doubts, I need more information",
+    "rejectd_option2": "I don't agree with the goals",
+    "rejectd_option2F": "I do not agree with the form",
+    "rejectd_option2E": "I do not agree with the recommended exercise",
+    "rejectd_option3": "Other",
+    "placeholder": "Write a message.",
+    "rejectd_send": "Message sent to your medical team"
   },
   "health_path": {
     "title": "Health Path",
