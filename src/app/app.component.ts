@@ -29,7 +29,7 @@ import { register } from 'swiper/element/bundle';
 import { Capacitor } from '@capacitor/core';
 
 import { CallCapacitor } from 'src/plugins/CallCapacitor';
-import { TextZoom} from '@capacitor/text-zoom'; 
+import { TextZoom } from '@capacitor/text-zoom';
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
 
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
   ) {
     this.setLanguage();
     if (Capacitor.isNativePlatform() && this.platform.is('android')) {
-      TextZoom.set({value:1});
+      TextZoom.set({ value: 1 });
     }
   }
 
@@ -113,12 +113,12 @@ export class AppComponent implements OnInit {
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).catch((err) => { console.log('Setting screen orientation failed:', err); });
 
 
-       // VOIP calls for IOS
-       if (this.platform.is('ios')) {
-        this.initVoIpPushNotifications();
-      } else {
-        this.receiveVoIPEvents();
-      }
+        // VOIP calls for IOS
+        if (this.platform.is('ios')) {
+          this.initVoIpPushNotifications();
+        } else {
+          this.receiveVoIPEvents();
+        }
 
         // Actions when a VOIP call is received
         this.phonecallHandlers();
@@ -156,15 +156,15 @@ export class AppComponent implements OnInit {
       this.opentokService.agendaId$ = data.callId;
       console.log('accept-call', data);
       // This should be probably called in the VideoActivity, but is beyond this task point
-      CallCapacitor.updateCallState({callId: data.callId, state: "started"});
+      CallCapacitor.updateCallState({ callId: data.callId, state: "started" });
       this._zone.run(() => {
-        this.startVideocallIframe(data.callId)         
+        this.startVideocallIframe(data.callId)
       });
     });
     CallCapacitor.addListener('end-call', data => {
       console.log('end-call');
       // TODO: Send termination to API
-      CallCapacitor.updateCallState({callId: data.callId, state: "ended"});
+      CallCapacitor.updateCallState({ callId: data.callId, state: "ended" });
     })
   }
 
@@ -175,7 +175,7 @@ export class AppComponent implements OnInit {
           console.log("This is routed device");
           //alert(this.translate.instant('security.rooted'));
           this._zone.run(() => {
-            setTimeout(()=> this.appBlockedByRootedUser(), 500);          
+            setTimeout(() => this.appBlockedByRootedUser(), 500);
           });
         } else {
           console.log("This is not routed device");
@@ -302,11 +302,11 @@ export class AppComponent implements OnInit {
       (notification: PushNotificationSchema) => {
         console.log('push token - Push notification received: ', 'Push received: ' + JSON.stringify(notification));
 
-        
+
         this.getNumNotification();
 
-       this.badge.get().then(res => (
-        notification.badge = res
+        this.badge.get().then(res => (
+          notification.badge = res
 
         ));
 
@@ -351,11 +351,11 @@ export class AppComponent implements OnInit {
         this.isNotification = true;
         // Only VIDEOCALL does not verify lock-screen
         if (action == "VIDEOCALL") {
-            this._zone.run(() => {
-             // this.redirecToVideocall(notification)
-              this.startVideocallIframe(data?.id)
-            });
-            return
+          this._zone.run(() => {
+            // this.redirecToVideocall(notification)
+            this.startVideocallIframe(data?.id)
+          });
+          return
         }
 
         let secondsLastPause = (this.lastPause) ? this.lastPause.getTime() : 0
@@ -470,23 +470,31 @@ export class AppComponent implements OnInit {
 
   redirecPushNotification(data, notification?) {
 
+    console.log("DATA " + data)
+    console.log("Notification " + notification)
 
     switch (data.action) {
 
       case "SHARECAREPLAN":
         this._zone.run(() => {
-          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true} });
+          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true } });
         });
 
-       break;
+        break;
+
+      case "LEVELASSIGNED":
+        this._zone.run(() => {
+          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true } });
+        });
+        break;
 
       case "MESSAGE":
         let staff;
         // Different payloads for ios and android
-        if (this.platform.is('ios')) 
+        if (this.platform.is('ios'))
           staff = data?.origin;
-        else 
-          staff = data?.origin? JSON.parse(data?.origin) : null;
+        else
+          staff = data?.origin ? JSON.parse(data?.origin) : null;
         console.log('staff: ', staff);
         this._zone.run(() => {
           this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff, customData: data?.user_id } });
@@ -514,7 +522,7 @@ export class AppComponent implements OnInit {
         break;
       case "NEWS":
         this._zone.run(() => {
-          this.router.navigate([ContentTypePath.NewsDetail],{state:{data:data, id:data.id}});
+          this.router.navigate([ContentTypePath.NewsDetail], { state: { data: data, id: data.id } });
         });
         break;
       case "DIET":
@@ -751,9 +759,9 @@ export class AppComponent implements OnInit {
 
   async startVideocall(agenda) {
     console.log('[AppComponent] startVideocall()', agenda)
-      await this.startVideocallIframe(agenda).then(() => {
-        cordova.plugins.CordovaCall.endCall();
-      });
+    await this.startVideocallIframe(agenda).then(() => {
+      cordova.plugins.CordovaCall.endCall();
+    });
   }
 
   // async startVideocallIos(agenda) {
@@ -826,12 +834,12 @@ export class AppComponent implements OnInit {
 
   async startVideocallIframe(id, startVideo?) {
     //console.log('[AppComponent] startVideocallIframe()', id, startVideo)
-    if(this.isModalOpen)
-    return
+    if (this.isModalOpen)
+      return
     this.isModalOpen = true
     const modal = await this.modalCtrl.create({
-      component:  VideocallPage,
-      componentProps: {id: id, startVideo: true },
+      component: VideocallPage,
+      componentProps: { id: id, startVideo: true },
       cssClass: "modal-custom-class"
     });
 
@@ -841,9 +849,9 @@ export class AppComponent implements OnInit {
         this.isModalOpen = false
       });
 
-      await modal.present()
-      //cordova.plugins.CordovaCall.endCall();
-      return
+    await modal.present()
+    //cordova.plugins.CordovaCall.endCall();
+    return
   }
 
 
@@ -903,7 +911,7 @@ export class AppComponent implements OnInit {
       this.setLastResume(this.lastResume)
       this.getNumNotification()
 
-      
+
     });
 
     this.platform.resume.subscribe(async (e) => {
@@ -913,13 +921,13 @@ export class AppComponent implements OnInit {
         let secondsPassed2 = ((new Date).getTime() - longResume.getTime()) / 1000;
         let secondsPassed = ((new Date).getTime() - this.lastResume.getTime()) / 1000;
         //900 sec are 10 minutes NUM_MINUTES_GO_LOGIN
-        if(secondsPassed2 >= this.NUM_MINUTES_GO_LOGIN && !this.isNotification){
+        if (secondsPassed2 >= this.NUM_MINUTES_GO_LOGIN && !this.isNotification) {
           this.router.navigateByUrl('/landing');
         }
         // App will lock after 5 minutes NUM_MINUTES_SHOW_BIOMETRIC
         else if (secondsPassed >= this.NUM_MINUTES_SHOW_BIOMETRIC && !this.isNotification) {
           // Must implement lock-screen
-         this.showFingerprintAuthDlg()
+          this.showFingerprintAuthDlg()
         }
       }
       this.isNotification = false
@@ -927,13 +935,13 @@ export class AppComponent implements OnInit {
 
   }
 
-  getLastResume(): Date{
+  getLastResume(): Date {
     const date = localStorage.getItem('lastResume');
     return new Date(JSON.parse(date))
   }
 
-  setLastResume(lastResume: Date){
-    localStorage.setItem('lastResume',JSON.stringify(lastResume.getTime()))
+  setLastResume(lastResume: Date) {
+    localStorage.setItem('lastResume', JSON.stringify(lastResume.getTime()))
   }
   async showMessage(text) {
     let toast = await this.toastCtrl.create({
@@ -961,7 +969,7 @@ export class AppComponent implements OnInit {
       lang = 'en' //es
 
     lang = 'en'
-    
+
     this.translate.setDefaultLang(lang);
     console.log("APP LANG: ", lang);
     //this.translate.getBrowserLang()
@@ -1108,7 +1116,7 @@ export class AppComponent implements OnInit {
       } else if (this.router.url.includes('landing')) {
         //Exit from app
         navigator['app'].exitApp();
-      }else {
+      } else {
         //this.router.lastSuccessfulNavigation()
         this.navCtrl.pop()
       }

@@ -58,7 +58,7 @@ export class PusherNotificationService {
   public init2() {
     this.channel?.bind(NAME_BIND, (data) => {
       console.log('[PusherNotificationService] getPusher()',  data);
-      if (data.type === "App\\Notifications\\SharedCarePlanAddContentNotification") {
+      if (data.type === "App\\Notifications\\SharedCarePlanAddContentNotification" || data.type === "App\\Notifications\\Level\\NewLevelAssignedNotification") {
         this.openScpNotificationDialog()
       }
       /* if(data.type === "App\\Notifications\\VisitOnlineNotification") {
