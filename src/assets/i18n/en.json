@@ -321,9 +321,9 @@
     "subtitle_category": "Category",
     "subtitle_description": "Description",
     "subtitle_screenshot": "Screenshots",
-    "description_screenshot": "You can attach screenshots to help us solve your problem",
+    "description_screenshot": "You can attach screenshots that help us solve your problem",
     "button_add_file": "Add files",
-    "placeholder": "You can attach screenshots to help us solve your problem",
+    "placeholder": "You can attach screenshots that help us solve your problem",
     "placeholderDescription": "Let us know about your problem"
   },
   "health_card": {
@@ -808,7 +808,7 @@
 
     "reasons": {
         "1": "Common disease",
-        "2": "prescription",
+        "2": "Prescription",
         "3": "Doubt",
         "4": "Other reasons"
     }
