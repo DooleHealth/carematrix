@@ -15,6 +15,7 @@ import { PatientsPage } from './patients/patients.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { Capacitor } from '@capacitor/core';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,7 @@ export class ProfilePage implements OnInit {
   version:string = "";
   tokboxSession: any;
   modeNumDev: number = 0
+  canDoProfile:boolean = false;
   constructor(
     public authService: AuthenticationService,
     public appVersion: AppVersion,
@@ -43,9 +45,12 @@ export class ProfilePage implements OnInit {
     private toastController: ToastController,
     private alertController: AlertController,
     private pusherConnection: PusherConnectionService,
+    public permissionService: PermissionService,
     public role: RolesService) { }
 
   ngOnInit() {
+    
+    this.canDoProfile = this.authService?.user?.familyUnit == null;
     this.getUserProfile();
   }
 

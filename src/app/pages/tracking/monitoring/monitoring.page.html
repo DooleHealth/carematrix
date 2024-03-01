@@ -16,7 +16,7 @@
   <app-caregiver></app-caregiver>
   <div>
 
-    <ion-list *ngIf="items.length > 0; else noData" >
+    <ion-list *ngIf="canDoHealhCharts && items.length > 0; else noData" >
       <ion-card
         class="cardProfile"
         routerLink="/activity-goal"

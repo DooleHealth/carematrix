@@ -68,19 +68,11 @@
             </ion-item>
           </ion-list>
     </ion-card>
-    <ion-text class="txtTitle">{{ 'profile.configuration.title_setting' | translate}}</ion-text>
-    <ion-card class="cardProfile">
+    <ion-text class="txtTitle" *ngIf="canDoProfile">{{ 'profile.configuration.title_setting' | translate}}</ion-text>
+    <ion-card class="cardProfile" *ngIf="canDoProfile">
           <ion-list>
-            <!--<ion-item detail="false">
-              <ion-label>{{ 'profile.configuration.linked_accounts' | translate}}</ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
-            </ion-item >-->
             <ion-item routerLink="settings" detail="false" routerLinkActive='active-item'>
               <ion-label lines="none">{{ 'profile.configuration.settings' | translate}}</ion-label>
-              <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
-            </ion-item>
-            <ion-item routerLink="devices" detail="false" routerLinkActive='active-item'>
-              <ion-label lines="none">{{ 'profile.configuration.bluetooth' | translate}}</ion-label>
               <ion-icon src="assets/icons/challenge_card_btn.svg" slot="end" size="small"></ion-icon>
             </ion-item>
           </ion-list>

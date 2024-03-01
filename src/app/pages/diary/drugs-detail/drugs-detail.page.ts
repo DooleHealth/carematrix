@@ -98,7 +98,7 @@ export class DrugsDetailPage implements OnInit {
   }*/
 
   drugSelecting(drug){
-    debugger
+    
     drug.forEach(element => {
       this.drug= element
     });
@@ -120,7 +120,7 @@ export class DrugsDetailPage implements OnInit {
 
   submit(){
     //console.log('[DrugsDetailPage] submit()',this.form.value);
-debugger
+
     if(this.isInstant){
       this.isSubmittedDosis = true;
       let error = this.form.get('dose').errors

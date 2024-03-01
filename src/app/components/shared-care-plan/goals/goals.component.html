@@ -15,9 +15,10 @@
 
          
         </ion-col>
-        <ion-col size="3" class="ion-no-padding" >          
+        <ion-col size="3" class="ion-no-padding"  *ngIf="this.last_accepted_or_declined">          
           <ion-button  color="warning"  class="ion-float-right custom-button" 
-          (click)="changeTake()">{{ 'medication.medication_status' | translate }}
+          (click)="AcceptOrDeclined(content.current_level?.level_id)">
+          {{ 'medication.medication_status' | translate }}
         </ion-button>
         </ion-col>
       </ion-row>

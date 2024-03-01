@@ -39,7 +39,7 @@
             {{ content?.frequency }}
           </p></ion-col>
           <ion-col>
-                <ion-text *ngIf="content?.hasFormAnswered === true" style="color: #1100D4;"  class="ion-float-right custom-button" 
+                <ion-text *ngIf="content?.hasFormAnswered === true && this.permissionService.canViewAnswerForms" style="color: #1100D4;"  class="ion-float-right custom-button" 
                     (click)="SeeAnswers($event, content)">{{ 'form.button.see_answer' | translate }}
                   </ion-text>
           </ion-col>
