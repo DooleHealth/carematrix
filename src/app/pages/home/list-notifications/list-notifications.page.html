@@ -4,7 +4,7 @@
       <ion-back-button  text=""></ion-back-button>
     </ion-buttons>
     <ion-title class="toolbarTitle" slot="start">{{ 'list_notifications.header' | translate}}</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="!this.inFamilyUnitMode">
       <ion-checkbox [checked]="this.allNotification" class="tool" style="height: 23px; width: 22px;" mode="md" color="primary"
       (ionChange)="addAllNotificationList($event)"
       ></ion-checkbox>&nbsp;&nbsp;
@@ -41,7 +41,7 @@
         <ion-grid>
           <ion-row style="padding-top: 10px;">
             <ion-col size="1.2">
-              <ion-checkbox [checked]="noti.checked" (ionChange)="addToList($event, noti)" style="height: 20px; width: 20px;" mode="md"></ion-checkbox>
+              <ion-checkbox *ngIf="!this.inFamilyUnitMode" [checked]="noti.checked" (ionChange)="addToList($event, noti)" style="height: 20px; width: 20px;" mode="md"></ion-checkbox>
             </ion-col>
             <ion-col size="9.5" (click)="goPage(noti)">
                <ion-row style="padding: 0px;">

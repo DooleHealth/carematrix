@@ -332,9 +332,9 @@
     "subtitle_category": "Category",
     "subtitle_description": "Description",
     "subtitle_screenshot": "Screenshots",
-    "description_screenshot": "You can attach screenshots to help us solve your problem",
+    "description_screenshot": "You can attach screenshots that help us solve your problem",
     "button_add_file": "Add files",
-    "placeholder": "You can attach screenshots to help us solve your problem",
+    "placeholder": "You can attach screenshots that help us solve your problem",
     "placeholderDescription": "Let us know about your problem"
   },
   "health_card": {
@@ -796,7 +796,7 @@
     "reason_appointment": "Reason for the appointment",
     "attachments": "Attachments",
     "text_attachments": "You can attach files or images that help us make a better diagnosis",
-    "button_videocall": "Confirm appointment"
+    "button_videocall": "Confirm"
   },
   "bookings": {
     "header": "Booking",
@@ -805,7 +805,7 @@
     "type": "Type of appointment",
     "attachments": "Attachments",
     "text_attachments": "You can attach files or images that help us make a better diagnosis",
-    "button_videocall": "Confirm appointment",
+    "button_videocall": "Confirm",
     "button_videocall_charge": "Confirm appointment with payment",
     "error_upload_files": "Error attaching files",
 
@@ -819,7 +819,7 @@
 
     "reasons": {
         "1": "Common disease",
-        "2": "prescription",
+        "2": "Prescription",
         "3": "Doubt",
         "4": "Other reasons"
     }

@@ -4,6 +4,7 @@ import { AlertController, IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -25,6 +26,9 @@ export class ListNotificationsPage implements OnInit {
   nextPage = 0
   currentPage = 0
   footerHidden: boolean;
+
+  inFamilyUnitMode: boolean = false;
+
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
@@ -33,13 +37,15 @@ export class ListNotificationsPage implements OnInit {
     public dateService: DateService,
     private analyticsService: AnalyticsService,
     private _zone: NgZone,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
-
   }
 
   ionViewDidEnter(){
+    if (this.authService?.user?.familyUnit != null) this.inFamilyUnitMode = true;
+
     this.lastPage = 0
     this.nextPage = 0
     this.currentPage = 0
@@ -268,97 +274,101 @@ export class ListNotificationsPage implements OnInit {
   }
 
   goPage(notification){
-    console.log('[ListNotificationsPage] goPage(): ', notification)
-    let data = notification.notification_origin;
-    if(data == null) data = {id: notification.notification_origin_id}
-    switch (notification.notification_origin_type) {
-      case "App\\FormAnswer":
-        this.setRead(notification.id)
-        this.router.navigate([`/tracking/form`, {id: data.form_id}],{state:{data:null, formAnswer:data.id}}); //No se accede xq son formularios v1
-        break;
-      case "App\\LevelAccomplishment":
-        this.setRead(notification.id)
-        const dataA = {id: data.id, name: ''}
-        this.router.navigate([`home/health-path/detail`] , { state: { challenge: dataA } });
-        //this.router.navigate([`/home`]);
-        break;
-      case "App\\DrugIntake":
-        this.setRead(notification.id)
-        this._zone.run(() => {
-          this.router.navigate([`/medication-details`], { state: { data: data, segment: 'medication' } });
-        });
-        break;
-      case "App\\Agenda":
-        this.setRead(notification.id)
-        this.router.navigate([`/agenda/detail`],{state:{data:null, id: data.id}});
-        break;
-      case "App\\Message":
-        this.setRead(notification.id)
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:null, chat:data.message_header_id, staff:null}}); //Falta información de staff, no cargan los mensajes
-        break;
-      case "App\\Advice":
-        this.setRead(notification.id)
-        this.router.navigate([`/advices/advices-detail`],{state:{data:null, id: data.id}}); //Bien
-        break;
-      case "App\\News":
-        this.setRead(notification.id)
-        this.router.navigate([`/new-detail`],{state:{data:null, id: data.id}}); //Bien
-        break;
-      case "App\\Reminder":
+
+    if (!this.inFamilyUnitMode) {
+      console.log('[ListNotificationsPage] goPage(): ', notification)
+      let data = notification.notification_origin;
+      if(data == null) data = {id: notification.notification_origin_id}
+      switch (notification.notification_origin_type) {
+        case "App\\FormAnswer":
+          this.setRead(notification.id)
+          this.router.navigate([`/tracking/form`, {id: data.form_id}],{state:{data:null, formAnswer:data.id}}); //No se accede xq son formularios v1
+          break;
+        case "App\\LevelAccomplishment":
+          this.setRead(notification.id)
+          const dataA = {id: data.id, name: ''}
+          this.router.navigate([`home/health-path/detail`] , { state: { challenge: dataA } });
+          //this.router.navigate([`/home`]);
+          break;
+        case "App\\DrugIntake":
+          this.setRead(notification.id)
+          this._zone.run(() => {
+            this.router.navigate([`/medication-details`], { state: { data: data, segment: 'medication' } });
+          });
+          break;
+        case "App\\Agenda":
+          this.setRead(notification.id)
+          this.router.navigate([`/agenda/detail`],{state:{data:null, id: data.id}});
+          break;
+        case "App\\Message":
+          this.setRead(notification.id)
+          this.router.navigate([`/contact/chat/conversation`],{state:{data:null, chat:data.message_header_id, staff:null}}); //Falta información de staff, no cargan los mensajes
+          break;
+        case "App\\Advice":
+          this.setRead(notification.id)
+          this.router.navigate([`/advices/advices-detail`],{state:{data:null, id: data.id}}); //Bien
+          break;
+        case "App\\News":
+          this.setRead(notification.id)
+          this.router.navigate([`/new-detail`],{state:{data:null, id: data.id}}); //Bien
+          break;
+        case "App\\Reminder":
+          this.setRead(notification.id)
+          this.router.navigate([`/agenda/reminder`],{state:{data:null, id: data.id}}); //Bien
+          break;
+        case "App\\ReminderExecution":
         this.setRead(notification.id)
         this.router.navigate([`/agenda/reminder`],{state:{data:null, id: data.id}}); //Bien
         break;
-      case "App\\ReminderExecution":
-      this.setRead(notification.id)
-      this.router.navigate([`/agenda/reminder`],{state:{data:null, id: data.id}}); //Bien
-      break;
-      case "App\\Exercise":
-        this.setRead(notification.id)
-        //this.router.navigate([`/tracking/exercise`],{state:{data:null, id: data.id, programable_id: notification.notification_origin_id}}); //Bien
-        this.router.navigate([`/exercices/exercices-detail`],{state:{data:null, id: data.id}});
-        break;
-      case "App\\Diet":
-        this.setRead(notification.id)
-        this.router.navigate([`/journal/diets-detail`],{state:{data:null, id:data.id}});
-        break;
-      case "App\\GamePlay":
-        this.setRead(notification.id)
-        if(data?.game?.form_id)
-          this.router.navigate([`/tracking/form`, {id: data?.game?.form_id}],{state:{data:null, game_play_id: data?.id}});
-        else
-          this.router.navigate([`/journal/games-detail`],{state:{data:null, id:data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url}});
-        break;
-      case "App\\Game":
-        this.setRead(notification.id)
-        if(data?.game?.form_id)
-          this.router.navigate([`/tracking/form`, {id: data?.game?.form_id}],{state:{data:null, game_play_id: data?.id}});
-        else
-          this.router.navigate([`/journal/games-detail`],{state:{data:null, id:data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url}});
-        break;
-      case "App\\MedicalProcedure":
-        this.setRead(notification.id)
-        let params = {
-          byEpisode: notification?.byEpisode? 1:0,
-          medical_procedure_id: notification?.notification_origin_id? notification?.notification_origin_id: null,
-          episode_id: notification?.episode_id? notification?.episode_id: null
-        }
-        this.router.navigate([`/more/procedure-detail`],{state:{data:null, procedure:params}});
-        break;
-      case "App\\DiagnosticTest":
-        this.setRead(notification.id)
-        this.router.navigate([`/document-detail`],{state:{data:null, procedure:params}});
-      case "App\\ShareCarePlan": 
-        this.setRead(notification.id)
-        this.router.navigate([`/tracking`],{state:{data:null, segment: 'sharedcareplan'  }});
-        break;
-      case "App\\ProgramablePlay":
-        this.setRead(notification.id)
-        this.router.navigate([`/home`],{state:{data:null, id:data.id}});
-        break;
-      default:
-        this.router.navigate([`/home`],{state:{data:null, id:data.id}});
-        break;
+        case "App\\Exercise":
+          this.setRead(notification.id)
+          //this.router.navigate([`/tracking/exercise`],{state:{data:null, id: data.id, programable_id: notification.notification_origin_id}}); //Bien
+          this.router.navigate([`/exercices/exercices-detail`],{state:{data:null, id: data.id}});
+          break;
+        case "App\\Diet":
+          this.setRead(notification.id)
+          this.router.navigate([`/journal/diets-detail`],{state:{data:null, id:data.id}});
+          break;
+        case "App\\GamePlay":
+          this.setRead(notification.id)
+          if(data?.game?.form_id)
+            this.router.navigate([`/tracking/form`, {id: data?.game?.form_id}],{state:{data:null, game_play_id: data?.id}});
+          else
+            this.router.navigate([`/journal/games-detail`],{state:{data:null, id:data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url}});
+          break;
+        case "App\\Game":
+          this.setRead(notification.id)
+          if(data?.game?.form_id)
+            this.router.navigate([`/tracking/form`, {id: data?.game?.form_id}],{state:{data:null, game_play_id: data?.id}});
+          else
+            this.router.navigate([`/journal/games-detail`],{state:{data:null, id:data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url}});
+          break;
+        case "App\\MedicalProcedure":
+          this.setRead(notification.id)
+          let params = {
+            byEpisode: notification?.byEpisode? 1:0,
+            medical_procedure_id: notification?.notification_origin_id? notification?.notification_origin_id: null,
+            episode_id: notification?.episode_id? notification?.episode_id: null
+          }
+          this.router.navigate([`/more/procedure-detail`],{state:{data:null, procedure:params}});
+          break;
+        case "App\\DiagnosticTest":
+          this.setRead(notification.id)
+          this.router.navigate([`/document-detail`],{state:{data:null, procedure:params}});
+        case "App\\ShareCarePlan": 
+          this.setRead(notification.id)
+          this.router.navigate([`/tracking`],{state:{data:null, segment: 'sharedcareplan'  }});
+          break;
+        case "App\\ProgramablePlay":
+          this.setRead(notification.id)
+          this.router.navigate([`/home`],{state:{data:null, id:data.id}});
+          break;
+        default:
+          this.router.navigate([`/home`],{state:{data:null, id:data.id}});
+          break;
+      }
     }
+    
   }
 
   setRead(id){
