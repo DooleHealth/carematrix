@@ -183,7 +183,8 @@
       "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
       "rejectd_option3": "Otras",
       "placeholder": "Escribe un mensaje.",
-      "rejectd_send": "Mensaje enviado a su equipo médico"
+      "rejectd_send": "Mensaje enviado a su equipo médico",
+      "keppUp": "¡Seguid así!"
     },
     "health_path": {
       "title":"Camino de la salud",
@@ -854,6 +855,7 @@
     "medications":{
       "list":"Listado de pedidos",
       "title":"Medicación",
+      "titlePlans": "Plans de Medicación",
       "direction":"Nuevo pedido",
       "directions_title":"1.-Selecciona una dirección de envío",
       "directions_title_2":"2.-Selecciona un tipo de envío",
@@ -986,6 +988,7 @@
       "go_to_app": "Volver a la página de inicio",
       "score": "Puntos conseguidos por completar el formulario: ",
       "score1": "Puntos conseguidos: ",
+      "to": "a",
 
       "goal":{
         "title": "Atención",

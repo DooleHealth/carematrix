@@ -1,7 +1,7 @@
 <ion-card class="level-card" *ngIf="!completedGoals; else Completed">
   <ion-item lines="none" class="cardHeader">
     <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
-    <ion-text  style="margin-left:10px; color:purple" slot="start"><strong>{{ this.challenge?.name }}</strong></ion-text>
+    <ion-text  style="margin-left:10px; color:purple" slot="start"><strong>{{ this.current_level?.name }}</strong></ion-text>
 
   </ion-item>
 
@@ -11,7 +11,7 @@
         <ion-col size="3" class="ion-no-padding">
         </ion-col>
         <ion-col size="6" class="ion-no-padding">
-          <p style="font-size: medium;"><b>{{ content.current_level?.name}}</b></p>
+          <p style="font-size: medium;"><b> {{ 'goals.keppUp' | translate }}</b></p>
 
          
         </ion-col>
@@ -30,15 +30,15 @@
           <ion-row style="display: inline-flex !important; margin-bottom: 4%;"
             class="challenge-description">
             {{'health_path.goal_txt1' | translate}}&nbsp;<strong>{{
-              current_level.current_score
+              aderence.totalScoreByUser
               }}
-              {{'game.points' | translate}}</strong>
-            <div *ngIf="current_level?.percentage_completed < 100">
+              {{'game.points' | translate}}</strong> &nbsp;
+            <div *ngIf="aderence?.percentage < 100">
               {{'health_path.goal_txt2'
               |
-              translate}} {{ current_level.score_required -
-              current_level.current_score }} {{'health_path.goal_txt3' | translate}}</div>
-            <div *ngIf="current_level?.percentage_completed < 100">{{'health_path.goal_txt4'
+              translate}} {{ aderence.totalScoreRequiredByChallenge -
+              aderence.totalScoreByUser }} {{'health_path.goal_txt3' | translate}}</div>
+            <div *ngIf="aderence?.percentage < 100">{{'health_path.goal_txt4'
               |
               translate}} 🎉</div>
             <br>
@@ -46,8 +46,8 @@
 
           <ion-row style="margin-bottom: 5%;">
             <ion-progress-bar class="progress-bar"
-              value="{{ current_level.percentage_completed > 0 ? current_level?.percentage_completed / 100 : 0 }}">
-              <ion-label>{{ current_level.percentage_completed }}%</ion-label>
+              value="{{ aderence.totalScoreByUser > 0 ? aderence?.totalScoreByUser / 100 : 0 }}">
+              <ion-label>{{ aderence.totalScoreByUser }}%</ion-label>
             </ion-progress-bar>
           </ion-row>
         </ion-col>
@@ -98,7 +98,7 @@
 <ion-card class="level-card" >
   <ion-item lines="none" class="cardHeader">
     <ion-icon  name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
-    <ion-text  style="margin-left:10px; color:purple" slot="start"><strong>{{ this.challenge?.name }}</strong></ion-text>
+    <ion-text  style="margin-left:10px; color:purple" slot="start"><strong>{{ this.current_level?.name }}</strong></ion-text>
 
   </ion-item>
 
@@ -108,7 +108,7 @@
         <ion-col size="3" class="ion-no-padding">
         </ion-col>
         <ion-col size="9" class="ion-no-padding">
-          <p style="font-size: medium;"><b>{{ content.current_level?.name}}</b></p>
+         
         </ion-col>
        
 

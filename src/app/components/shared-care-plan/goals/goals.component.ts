@@ -29,7 +29,7 @@ export class GoalsComponent  implements OnInit {
   fetching = true;
   id = history.state?.challenge?.id;
   title = history.state?.challenge?.name;
-  challenge: any;
+  aderence: any;
   current_level: any;
   progressBarValue = 0;
   goalsList = [];
@@ -53,15 +53,15 @@ export class GoalsComponent  implements OnInit {
   ngOnInit(){
     this.goals = [];
     this.current_level = [];
-    this.challenge = [];
+    this.aderence = [];
     this.setChallenge(this.content);
     console.log("goals..", this.content)
   }
   setChallenge(res) {
-    
-    this.goals = res?.current_level?.goals;
-    this.current_level = res?.current_level;
-    this.challenge = res?.challenge;
+    debugger
+    this.goals = res?.goals;
+    this.current_level = res;
+    this.aderence = res?.aderence;
     this.isChallengeCompleted = res.challenge_completed
     this.last_accepted_or_declined = (res.last_accepted_or_declined === null) ? null : res.last_accepted_or_declined;
     let name = '';

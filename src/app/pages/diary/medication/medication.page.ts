@@ -212,6 +212,7 @@ export class MedicationPage implements OnInit {
       if (this.lastName !== meal) {
         this.lastName = meal;
       }
+      return meal
     }
 
     selectMealTime(time){
@@ -246,16 +247,23 @@ export class MedicationPage implements OnInit {
       
     }
   
-    getLastName(name) {
-      const isDifferent = name !== this.Lasttimestring;
-      if (isDifferent) {
-        this.updateLastTimeString(name);
-      }
-      return isDifferent;
-    }
+   
+getPeriod(name) {
+  if (!this.Lasttimestring) {
+      this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
+      return true; // Siempre muestra el primer elemento
+  }
+  const isDifferent = name !== this.Lasttimestring;
+  if (isDifferent) {
+      this.updateLastTimeString(name);
+  }
+  console.log("saber que devuelve el getLastName", isDifferent)
+  return isDifferent;
+}
 
     updateLastTimeString(name) {
       this.Lasttimestring = name;
+     
     }
     getIsDateInPast(date){
       this.isDateInPast = new Date(date) < this.currentDate;
@@ -274,10 +282,10 @@ export class MedicationPage implements OnInit {
           let list = res?.drugIntakes;
           if (list) {
             this.listDrugIntakes = res.drugIntakes;
-            
+            console.log("[DiaryPage] getDrugIntakeList() listDrugIntakes", this.listDrugIntakes);
             list = this.sortDate(list);
             
-            console.log("[DiaryPage] getDrugIntakeList() items", list);
+          
             this.groupDiagnosticsByDate(list);
           }
         },
@@ -315,6 +323,7 @@ export class MedicationPage implements OnInit {
         this.items.push(drug);
       });
       console.log("[DiaryPage] groupDiagnosticsByDate()", this.items);
+     
     }
     
     selectDayPeriod(time) {

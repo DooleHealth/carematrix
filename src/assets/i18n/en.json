@@ -190,7 +190,8 @@
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
     "placeholder": "Write a message.",
-    "rejectd_send": "Message sent to your medical team"
+    "rejectd_send": "Message sent to your medical team",
+    "keppUp": "Keep it up!"
   },
   "health_path": {
     "title": "Health Path",
@@ -724,6 +725,7 @@
     "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
+    "takeds": "Taked",
     "taked": "Outlet",
     "forgotten": "Forgotten",
     "continue": "Continue",
@@ -872,6 +874,7 @@
   "medications": {
     "list": "List of orders",
     "title": "Medication",
+    "titlePlans": "Medication Plans",
     "direction": "Reorder",
     "directions_title": "1.-Select a shipping address",
     "directions_title_2": "2.-Select a type of shipment",
@@ -1005,6 +1008,7 @@
     "go_to_app": "Return to homepage",
     "score": "Points earned for completing the form:",
     "score1": "Points earned:",
+    "to": "to",
 
     "goal": {
       "title": "Attention",
