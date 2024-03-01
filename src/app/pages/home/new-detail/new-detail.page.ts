@@ -5,6 +5,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-new-detail',
@@ -35,6 +36,7 @@ export class NewDetailPage implements OnInit {
     public alertCtrl: AlertController,
     public navCtrl: NavController,
     private dooleService: DooleService,
+    private navigation: NavigationService,
     public sanitizer: DomSanitizer, private router: Router) {
   }
 
@@ -168,6 +170,10 @@ export class NewDetailPage implements OnInit {
     /* else
       this.router.navigate([`/advices`]); */
   }
+
+  // async close() {
+  //   this.navigation.close(this.modalCtrl)
+  // }
 
 
 }
