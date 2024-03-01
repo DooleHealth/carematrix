@@ -785,7 +785,7 @@
     "reason_appointment": "Reason for the appointment",
     "attachments": "Attachments",
     "text_attachments": "You can attach files or images that help us make a better diagnosis",
-    "button_videocall": "Confirm appointment"
+    "button_videocall": "Confirm"
   },
   "bookings": {
     "header": "Booking",
@@ -794,7 +794,7 @@
     "type": "Type of appointment",
     "attachments": "Attachments",
     "text_attachments": "You can attach files or images that help us make a better diagnosis",
-    "button_videocall": "Confirm appointment",
+    "button_videocall": "Confirm",
     "button_videocall_charge": "Confirm appointment with payment",
     "error_upload_files": "Error attaching files",
 
