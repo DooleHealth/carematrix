@@ -1825,18 +1825,21 @@ export class HomePage implements OnInit {
   }
 
   changeTake(id, taked) {
-    taked = (taked == "0") ? "1" : "0";
-    var dict = [];
-    dict.push({
-      key: "date",
-      value: ""
-    });
-    this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
-      this.getDrugIntake()
-    }, (err) => {
-      alert('ERROR(' + err.code + '): ' + err.message)
-      throw err;
-    });
+    if(this.permissionService.canManageMedication) {
+      taked = (taked == "0") ? "1" : "0";
+      var dict = [];
+      dict.push({
+        key: "date",
+        value: ""
+      });
+      this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
+        this.getDrugIntake()
+      }, (err) => {
+        alert('ERROR(' + err.code + '): ' + err.message)
+        throw err;
+      });
+    }
+    
   }
 
   filterDrugsByStatus() {
