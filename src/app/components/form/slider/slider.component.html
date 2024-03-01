@@ -17,8 +17,8 @@
         </ion-item>
         <ion-item mode="ios" lines="none">
           <ion-range (ionChange)="setValue($event)" (touchend)="sendValue($event)" [value]="this.value" [min]="min" [max]="max" [step]="step" snaps="true" [pin]="true">
-            <ion-label slot="start">{{min}}</ion-label>
-            <ion-label slot="end">{{max}}</ion-label>
+            <ion-text slot="start">{{min}}</ion-text>
+            <ion-text slot="end">{{max}}</ion-text>
           </ion-range>
         </ion-item>
   </ion-grid>
