@@ -80,7 +80,7 @@ export class GoalsPage implements OnInit {
   async getChallenge() {
     let goalsAll =[];
     this.goalsList = [];
-    await this.dooleService.getAPIChallenges().subscribe(
+    await this.dooleService.getAPIChallenges2().subscribe(
       async (res: any) => {
         await res;
         
@@ -104,7 +104,7 @@ export class GoalsPage implements OnInit {
   async getChallengeCompleted() {
     let goalsAll =[];
     this.goalsList = [];
-    await this.dooleService.getAPIChallenges().subscribe(
+    await this.dooleService.getAPIChallenges2().subscribe(
       async (res: any) => {
         await res;
         
@@ -231,7 +231,7 @@ export class GoalsPage implements OnInit {
       }
       tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed, required: goal?.required, type: type })
     });
-    debugger
+    
     this.goalsList = tempGoals;
     console.log("gsetChallenge() ", this.goalsList)
     //this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;

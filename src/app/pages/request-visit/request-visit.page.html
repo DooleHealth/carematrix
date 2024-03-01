@@ -13,7 +13,7 @@
   <form (ngSubmit)="submit()" [formGroup]="form" style="padding-bottom: 30%;">
     <ion-list>
       <ion-card class="cardProfile" class="cardProfile" (click)="openProfesionalModal()">
-        <ion-card-content style="padding-left: 1%;">
+        <ion-card-content style="padding-left: 1%; padding-right: 0px;">
           <ng-container *ngIf="this.staff; else selectProfesional">
             <ion-item lines="none">
               <img [src]="this.staff?.image" class="img-wrapper-doctors" />
@@ -29,7 +29,7 @@
 
           <ng-template #selectProfesional>
             <ion-item lines="none">
-              <ion-label>{{'bookings.profesional' | translate}}</ion-label>
+              <ion-label class="custom-label">{{'bookings.profesional' | translate}}</ion-label>
 
               <ion-note *ngIf="this.isSubmittedProfessional && this.form.get('staff_id').invalid" class="error ion-padding"
             color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
@@ -44,10 +44,10 @@
 
     </ion-list>
 
-    <ion-card class="cardProfile">
+    <ion-card class="cardProfile" style="margin-top: 0px">
       <ion-list>
         <ion-item lines="none" (click)="this.openCalendarModal()">
-          <ion-label>{{'bookings.field_date' | translate}}</ion-label>
+          <ion-label class="custom-label">{{'bookings.field_date' | translate}}</ion-label>
           <ion-input class="textMedium" formControlName="date" required placeholder="{{'bookings.placeholder' | translate}}"></ion-input>
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding"
             color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
@@ -59,7 +59,7 @@
     <ion-card>
       <ion-list>
         <ion-item lines="full">
-          <ion-label>{{'bookings.type' | translate}}</ion-label>
+          <ion-label class="custom-label">{{'bookings.type' | translate}}</ion-label>
  
           <ion-item lines="none" slot="end">
             <ion-select required value="{{this.selectedType}}" (ionChange)="onTypeSelect($event)" placeholder="{{'bookings.placeholder' | translate}}" formControlName="online" toggleIcon="assets/icons/challenge_card_btn.svg">
@@ -77,7 +77,7 @@
       </ion-item>
         <ion-radio-group formControlName="user_comments" (ionChange)="onReasonSelect($event)">
           <ion-item lines="none">
-            <ion-label>{{'bookings.reason_appointment' | translate}}</ion-label>
+            <ion-label class="custom-label">{{'bookings.reason_appointment' | translate}}</ion-label>
           </ion-item>        
           <div *ngFor="let reason of reasons; let i = index; let isLast=last">
             <ion-item [lines]="isLast ? 'full' : 'none'">
@@ -88,7 +88,10 @@
         </ion-radio-group>
 
         <ion-item lines="none"> 
-          {{'bookings.attachments' | translate}}
+
+          <ion-label class="custom-label">{{'bookings.attachments' | translate}}</ion-label>
+
+          
 
           <ion-label slot="end" class="label-files">{{this.numFile}}/6</ion-label>
         </ion-item>

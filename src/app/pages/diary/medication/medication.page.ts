@@ -15,6 +15,8 @@ import { RolesService } from 'src/app/services/roles.service';
 import { AddButtonList } from 'src/app/models/shared-care-plan';
 import { DrugAddPage } from '../drug-add/drug-add.page';
 import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
+import { PermissionService } from 'src/app/services/permission.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-medication',
@@ -36,6 +38,7 @@ export class MedicationPage implements OnInit {
   listDrugIntakes = [];
   listDrug = [];
   addButton = AddButtonList;
+  CanDoMedication: boolean
   public lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
@@ -51,13 +54,16 @@ export class MedicationPage implements OnInit {
     private datePipe: DatePipe,
     public sharedCarePlan:SharedCarePlanService, 
     public dateService: DateService,
+    public permissionService: PermissionService,
+    public authService: AuthenticationService,
 
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
   }
 
   ngOnInit() {
-    this.getCurrentDate();
+    this.CanDoMedication = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
+  //  this.getCurrentDate();
     this.setSegment();
     this.items = []
     this.listDrugIntakes = []

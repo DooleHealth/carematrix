@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -26,6 +27,9 @@ export class ListNotificationsPage implements OnInit {
   nextPage = 0
   currentPage = 0
   footerHidden: boolean;
+
+  inFamilyUnitMode: boolean = false;
+
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
@@ -34,13 +38,15 @@ export class ListNotificationsPage implements OnInit {
     public dateService: DateService,
     private analyticsService: AnalyticsService,
     private _zone: NgZone,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
-
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(){
+    if (this.authService?.user?.familyUnit != null) this.inFamilyUnitMode = true;
+
     this.lastPage = 0
     this.nextPage = 0
     this.currentPage = 0
@@ -360,6 +366,7 @@ export class ListNotificationsPage implements OnInit {
         this.router.navigate([`/home`], { state: { data: null, id: data.id } });
         break;
     }
+    
   }
 
   setRead(id) {

@@ -91,7 +91,7 @@ export enum ContentTypeTranslatedName {
     //AddButtons
     addButtonMeditaltest = 'shared_care_plan.addButton.MedicalTest',
     addButtonTodayDrug= 'shared_care_plan.addButton.Medication',
-    addButtonHealthCharts= 'shared_care_plan.addButton.Medication',
+    addButtonHealthCharts= 'shared_care_plan.addButton.HealthCharts',
     
 
 }

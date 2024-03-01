@@ -69,41 +69,45 @@
                     </ion-col>
                     <ion-col size="9.5" style="padding-top: 3%;">
 
-                      <ion-text class="title-center ion-margin-start">
-                        {{slide.name | titlecase }}
-                      </ion-text>
+                      <ion-row>
+                        <ion-text class="title-center ion-margin-start">
+                          {{slide.name | titlecase }}
+                        </ion-text>
+                      </ion-row>
+                     
 
-                      <br>
-
-                      <ion-text *ngIf="slide?.description" [innerHtml]="slide?.description">
-                        {{slide?.description | titlecase }}
-                      </ion-text>
-                      
-
-                      
-
-                      <ng-container *ngIf="slide.specialties.length > 0">
-                        <ng-container *ngFor="let item of slide.specialties">
-                          
-                          <ion-text class="center-name ion-margin-start">
-                            {{item.name | titlecase }}
+                      <ng-container *ngIf="slide?.description">
+                        <ion-row>
+                          <ion-text [innerHtml]="slide?.description">
+                            {{slide?.description | titlecase }}
                           </ion-text>
-                        </ng-container>
+                        </ion-row>
+                      </ng-container>
+                     
                       
+                      <ng-container *ngIf="slide.specialties.length > 0">
+                          <ng-container *ngFor="let item of slide.specialties">
+                            <ion-row>
+                              <ion-text class="center-name ion-margin-start">
+                                {{item.name | titlecase }}
+                              </ion-text>
+                            </ion-row>
+                        </ng-container>
                       </ng-container>
                       
 
 
                       <ng-container *ngIf="slide?.phone">
-                        <br>
-                        <ion-text class="phone-txt ion-margin-start">
-                          {{slide.phone}}
-                        </ion-text>
+                        <ion-row>
+                          <ion-text class="phone-txt ion-margin-start">
+                            {{slide.phone}}
+                          </ion-text>
+                        </ion-row>
+                       
                       </ng-container>
                     
 
-                      <br>
-                     
+  
                     </ion-col>
                   </ion-row>
 

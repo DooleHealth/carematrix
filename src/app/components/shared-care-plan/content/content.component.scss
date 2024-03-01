@@ -30,3 +30,20 @@
     border-radius: 50%; 
     color: white;
   }
+
+  .subtitle-card {
+    font-family: 'Poppins-Regular';
+    color: #848A94;
+    font-size: 12px;
+  }
+
+  .txt-title-card {
+    color: var(--default-text);
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+    margin-top: 17px !important;
+  }
+
+  ion-list {
+    --background: none !important
+  }

@@ -10,9 +10,9 @@
     </ion-thumbnail>
     <ion-grid style="height: 100% !important">
       <ion-row>
-        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title | translate}}</ion-text>
+        <ion-text class="txt-title-card textAdvicesSlider">{{content?.title | translate}}</ion-text>
       </ion-row>
-      <ion-row>
+      <ion-row class="subtitle-card">
         <ion-text class="txtTitleGoals textAdvicesSlider" style="margin-top: -5%;">
           <p [innerHtml]="content?.description | translate"></p>
         </ion-text>
@@ -24,7 +24,7 @@
         <ion-icon *ngIf="this.isPending" class="status-icon" [src]="this.state?.icon" (click)="presentAlert($event)"></ion-icon>
       </ion-row>-->
     </ion-grid>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" style="margin-bottom: 20%;">
       <ion-icon name="chevron-forward-outline" class="icono-personalizado"></ion-icon>
     </ion-buttons>
   </ion-item>

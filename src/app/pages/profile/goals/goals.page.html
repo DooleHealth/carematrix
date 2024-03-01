@@ -44,6 +44,7 @@
         <app-goals-components
           *ngFor="let content of goalsList"
           [content]="content" 
+          (reloadChallenges)="getChallenge()"
         ></app-goals-components>
       </ion-list>
     </div>

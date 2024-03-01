@@ -45,7 +45,7 @@
 <div class="verticalLine2" [ngSwitch]="segment">
 <div *ngSwitchCase="'today'">
   <div style="margin-top: 3%;">
-    <ion-list *ngIf="listDrugIntakes.length > 0; else noData">
+    <ion-list *ngIf="CanDoMedication && listDrugIntakes.length > 0; else noData">
       <ion-grid *ngFor="let content of listDrugIntakes" class="ion-no-padding" >  
         <ion-row *ngIf="getLastName(content?.period)">
           <ion-col size="0.8">
@@ -84,7 +84,7 @@
     style="display: flex; justify-content: center;">
   <!-- Floating Button -->
   <div >
-    <app-button-add  [content]="this.addButton[0]" (dataUpdated)="addDrugPlan()" ></app-button-add>
+    <app-button-add  [content]="this.addButton[1]" (dataUpdated)="addDrugPlan()" ></app-button-add>
   </div>
  
   </div>
@@ -95,7 +95,7 @@
   
   
     <div >
-      <ion-list *ngIf="items.length > 0; else noData">
+      <ion-list *ngIf="CanDoMedication && items.length > 0; else noData">
         
         <app-scp-med-for-mon
           *ngFor="let content of items"

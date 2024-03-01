@@ -2157,10 +2157,21 @@ export class DooleService {
     let path = 'user/challenges'
     let httpParams = new HttpParams();
 
-    httpParams = httpParams.append('onlyAccepted', params.onlyAccepted);
+    if (params?.onlyAccepted) httpParams = httpParams.append('onlyAccepted', params.onlyAccepted);
     
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, httpParams).pipe(
+      map((res: any) => {
+        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        return res;
+      })
+    );
+  }
+  getAPIChallenges2(): Observable<any> {
+    let path = 'user/challenges'
+
+    const endpoint = this.api.getEndpoint(path);
+    return this.http.get(endpoint, ).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
         return res;

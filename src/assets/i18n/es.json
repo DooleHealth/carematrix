@@ -173,7 +173,17 @@
       "text_goals1":"¡Siéntete orgulloso de ti mismo!",
       "text_goals2":"Has superado con éxito este objetivo 🏆",
       "go": "Ir",
-      "accordion_goals":"Estas son las tareas que debes realizar:"
+      "accordion_goals":"Estas son las tareas que debes realizar:",
+      "accepted_rejected": "¿Desea aprobar o rechazar estas retos?",
+      "button_rejected": "Rechazar",
+      "button_accepted": "Aprobar",
+      "rejectd_option1": "Tengo dudas, necesito más información",
+      "rejectd_option2": "No estoy de acuerdo con los objetivos",
+      "rejectd_option2F": "No estoy de acuerdo con los formularios",
+      "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
+      "rejectd_option3": "Otras",
+      "placeholder": "Escribe un mensaje.",
+      "rejectd_send": "Mensaje enviado a su equipo médico"
     },
     "health_path": {
       "title":"Camino de la salud",
@@ -767,7 +777,7 @@
       "reason_appointment": "Motivo de la cita",
       "attachments": "Documentos Adjuntos",
       "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-      "button_videocall": "Confirmar cita"
+      "button_videocall": "Confirmar"
     },
     "bookings":{
       "header":"Reservar",
@@ -776,7 +786,7 @@
       "type": "Tipo de consulta",
       "attachments": "Documentos Adjuntos",
       "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-      "button_videocall": "Confirmar cita",
+      "button_videocall": "Confirmar",
       "button_videocall_charge": "Confirmar cita con pago",
       "error_upload_files": "Error al adjuntar los archivos",
 

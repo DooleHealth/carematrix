@@ -5,15 +5,15 @@
     </ion-buttons>
     <ion-title class="toolbarTitle">{{'documents_add.header' | translate }} </ion-title>
     <ion-buttons slot="end">
-    <ion-button (click)="submit()" [disabled]="this.isLoading">
+    <!-- <ion-button (click)="submit()" [disabled]="this.isLoading">
       <ion-icon name="checkmark-outline"></ion-icon>
-    </ion-button>
+    </ion-button> -->
   </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="submit()" [formGroup]="form">
+  <form (ngSubmit)="submit()" [formGroup]="form" style="padding-bottom: 30%;">
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item (click)="openModal()">
@@ -91,8 +91,38 @@
 </ion-card>
 </form>
 
-  <section>
+  <!-- <section>
+    
     <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
+    
     <ion-button *ngIf="this.isEdit" expand="block"  (click)="presentAlertConfirm()" >{{'button.delete' | translate }}</ion-button>
-  </section>
+  </section> -->
 </ion-content>
+
+
+<ion-footer>
+ 
+
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <ion-button  *ngIf="this.isEdit" (click)="presentAlertConfirm()" color="danger" shape="round" class="floating-button ion-margin" style="margin-bottom: 18%;" >
+      {{'button.delete' | translate }}
+    </ion-button>
+  </div>
+
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <ion-button [disabled]="this.isLoading" *ngIf="this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
+      {{'documents_add.button_add_result' | translate }}
+    </ion-button>
+  </div>
+
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
+      {{'documents_add.button_add_result' | translate }}
+    </ion-button>
+  </div>
+
+ 
+
+
+
+</ion-footer>

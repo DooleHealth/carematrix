@@ -616,8 +616,8 @@ export class HomePage implements OnInit {
       this.ngZone.run(()=>{
         this.isLoading = true;
 
-        user.permissionsName = [
-         /*  "canViewGoals",
+         /*user.permissionsName = [
+          "canViewGoals",
           "canManageGoals",
           "canViewForms",
           "canViewAnswerForms",
@@ -642,8 +642,8 @@ export class HomePage implements OnInit {
           "canManageMessages",
           "canSeeMedicalVisits",
           "canManageRequesVisit",
-          "canSeeCenters", */
-        ]
+          "canSeeCenters", 
+        ]*/
         
         this.permissionService.setPermissions(user.permissionsName);
         this.pusherConnection.unsubscribePusher()

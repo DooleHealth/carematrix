@@ -49,12 +49,13 @@
     overflow:visible !important;
     }
   
-    .cardProfile{
+    /* .cardProfile{
       height: 100px !important;
-  }
+  } */
   
   .item{
       height: 100% !important;
+      padding: 3%;
   }
   
   .thumbnail{
@@ -62,6 +63,13 @@
       margin-bottom: 0px !important;
       width: 98px !important;
       height: 87px !important;
+  }
+
+  .documents-thumbnail {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    width: 52px !important;
+    height: 78px !important;
   }
 
   ion-segment {
@@ -108,4 +116,8 @@
     padding: 5px; 
     border-radius: 50%; 
     color: white;
+  }
+
+  ion-list {
+    background: none !important
   }
