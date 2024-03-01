@@ -3,6 +3,7 @@ import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { PermissionService } from 'src/app/services/permission.service';
 export interface ItemAdvice {
   expanded?: boolean;
   item?: any;
@@ -22,13 +23,14 @@ export class AdvicesPage implements OnInit {
   private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
-    public role: RolesService
+    public role: RolesService,
+    public permissionService: PermissionService
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "advices-detail")
    }
 
   ngOnInit() {
-    this.getAdvicesList()
+    if (this.permissionService.canViewAdvices) this.getAdvicesList()
   }
 
   adapterForView(list){

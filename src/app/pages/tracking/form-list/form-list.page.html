@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'tracking.tap_forms' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'tracking.tap_forms' | translate}}</ion-title>
 
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
@@ -45,7 +45,7 @@
  <!-- Forms Today-->
  <div *ngSwitchCase="'today'" style="margin-top: 3%;">
   <div >
-    <ion-list *ngIf="listForms.length > 0; else noData">
+    <ion-list  *ngIf="this.permissionService.canViewForms && listForms.length > 0; else noData">
       <ion-grid *ngFor="let content of listForms" class="ion-no-padding" >  
         <ion-row>
           <ion-col size="0.8" >    
@@ -84,24 +84,14 @@
 
 
   <ng-template #noData>
-    <ion-grid style="margin-top: 3%;">
-      <ion-row>
-        <ion-col size="12">
-          <ion-icon class="iconNoData" name="heart"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <app-no-data></app-no-data>
   </ng-template>
 
 </div>
+
  <!-- Forms-->
 <div *ngSwitchCase="'forms'" style="margin-top: 3%;">
-  <ion-list *ngIf="items.length > 0; else noData">
+  <ion-list *ngIf="this.permissionService.canViewPlanningForms && items.length > 0; else noData">
     <app-scp-med-for-mon
     *ngFor="let content of items"
     [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"
@@ -109,18 +99,7 @@
   </ion-list>
   <ng-template #noData>
     <div *ngIf="!this.isLoading" style="margin-top: 3%;">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <app-no-data></app-no-data>
     </div>
   </ng-template>
 </div>

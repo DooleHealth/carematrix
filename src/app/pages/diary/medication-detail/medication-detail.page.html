@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'medications.title' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'medications.title' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-icon
         class="primaryIcon"
@@ -176,18 +176,7 @@
 
   </ng-template>
   <ng-template #third>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12">
-          <ion-icon class="iconNoData" name="heart"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <app-no-data></app-no-data>
   </ng-template>
 </ion-content>
 

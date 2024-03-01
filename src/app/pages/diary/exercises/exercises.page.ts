@@ -7,6 +7,7 @@ import { NotificationsType } from 'src/app/models/notifications/notification-opt
 import { Router } from '@angular/router';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-exercises',
@@ -28,12 +29,13 @@ export class ExercisesPage implements OnInit {
     private router: Router,
     private scp: SharedCarePlanService,
     private dateService: DateService,
+    public permissionService: PermissionService
   ) { 
     this.lifeStyle = new LifeStyle( NotificationsType.EXERCISES, "exercices-detail")
   }
 
   ngOnInit() {
-    this.getExercisesList()
+    if (this.permissionService.canViewExercises) this.getExercisesList()
   }
 
   loaderAgain(event: { type: string }) {  

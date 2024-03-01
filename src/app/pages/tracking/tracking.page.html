@@ -4,16 +4,13 @@
   <!-- <ion-toolbar> -->
 
   <ion-toolbar mode="ios" [ngSwitch]="segment">
-    <ion-buttons slot="start">
-      <ion-back-button text="" color="primary"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ 'tracking.header' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'tracking.header' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="/profile" mode="ios">
         <ion-icon class="icon-menu" style="margin-left: -5px;" src="../../assets/icons/menu.svg"></ion-icon>
       </ion-tab-button>
     </ion-buttons>
-    <ion-buttons slot="end" *ngSwitchCase="'documents'">
+    <ion-buttons slot="end" *ngSwitchCase="this.permissionService.canViewMedicalTests && 'documents'">
       <ion-icon
         class="primaryIcon"
         slot="icon-only"
@@ -62,13 +59,21 @@
   </ion-row>
   <div  [ngSwitch]="segment">
     <!-- Shared Care Plan -->
-    <div style="margin-top: 3%;" *ngSwitchCase="'sharedcareplan'">
-      <ion-list>
-        <scp-content
-          *ngFor="let content of this.listContent"
-          [content]="content" 
-        ></scp-content>
-      </ion-list>
+    <div style="margin-top: 3%;" *ngSwitchCase="'sharedcareplan'" >
+
+      <ng-container *ngIf="checkPermissions(); else noData">
+        <ion-list>
+          <scp-content
+            *ngFor="let content of this.listContent"
+            [content]="content" 
+          ></scp-content>
+        </ion-list>
+      </ng-container>
+
+      <ng-template #noData>
+        <app-no-data></app-no-data>
+      </ng-template>
+     
     </div>
 
     <!-- Documents -->
@@ -77,8 +82,7 @@
         <ion-spinner></ion-spinner>
       </div>
      
-      <div
-        *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0; else noData"
+      <div *ngIf="!this.loadingTests && this.listDiagnostic && this.listDiagnostic.length > 0 && permissionService.canViewMedicalTests; else noData"
       >
         <br />
         <ion-list
@@ -270,22 +274,11 @@
     <div
       *ngIf="!this.loadingForms && !this.loadingTests && !this.loadingGraphics"
     >
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="accessibility"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+    <app-no-data></app-no-data>
     </div>
   </ng-template>
 
-  <div *ngIf="this.showButton">
+  <div *ngIf="this.showButton && permissionService.canManageMedicalTests">
     <app-button-add  [content]="this.addButton[0]" (dataUpdated)="addDocument()" ></app-button-add>
   </div>
  

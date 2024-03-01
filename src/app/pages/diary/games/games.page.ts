@@ -3,6 +3,7 @@ import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-games',
@@ -18,13 +19,14 @@ export class GamesPage implements OnInit {
   isLoading = false
   constructor(
     private dooleService: DooleService,
-    public role: RolesService
+    public role: RolesService,
+    public permissionService: PermissionService
   ) { 
     this.lifeStyle = new LifeStyle(NotificationsType.GAMES, "games-detail")
   }
 
   ngOnInit() {
-    this.getGamesList()
+    if(this.permissionService.canViewGames) this.getGamesList()
   }
  
 

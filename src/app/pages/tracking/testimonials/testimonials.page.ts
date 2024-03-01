@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FakeBackendInterceptor } from 'src/app/interceptors/fake-backend.interceptor';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
@@ -21,13 +22,14 @@ export class TestimonialsPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     public role: RolesService,
-    public fakeBackend: FakeBackendInterceptor
+    public fakeBackend: FakeBackendInterceptor,
+    public permissionService: PermissionService
   ) { 
      
   }
 
   ngOnInit() {
-    this.getNewsTestimonial()
+    if (this.permissionService.canViewTestimonials) this.getNewsTestimonial()
   }
 
 

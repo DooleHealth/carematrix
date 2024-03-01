@@ -4,7 +4,7 @@
       <ion-back-button (click)="close()" text=""></ion-back-button>
     </ion-buttons>
     <!-- <ion-title>{{ isEditDrug? ('medication.edit_medication' | translate): ('medication.add_medication' | translate) }}</ion-title> -->
-    <ion-title>{{ ('medication.medication_plan' | translate) }}</ion-title>
+    <ion-title class="toolbarTitle">{{ ('medication.medication_plan' | translate) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="submit()">
        <ion-label>{{ 'medication.save_medication' | translate}}</ion-label>

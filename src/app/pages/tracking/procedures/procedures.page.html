@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ this.nameContent | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ this.nameContent | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
         <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
@@ -15,9 +15,9 @@
 <ion-content [fullscreen]="true">
 
   <app-caregiver></app-caregiver>
-  <div>
+  <div *ngIf="listItem.length > 0 && permissionService.canViewMedicalProcedures; else noData">
 
-      
+    
             <ion-list  *ngFor="let list of this.listItem">
               <ion-card
                 class="cardProfile"
@@ -53,6 +53,7 @@
                 
               </ion-card>
             </ion-list>
+
           
      <!--<ion-grid *ngFor="let content of listItem" class="ion-no-padding" >  
         <ion-row>
@@ -91,21 +92,7 @@
   </div>
 
   <ng-template #noData>
-    <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="ribbon"></ion-icon>
-            <!-- <ion-icon class="iconNoData" [src]="iconContent"></ion-icon> -->
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+    <app-no-data></app-no-data>
   </ng-template>
 
 </ion-content>

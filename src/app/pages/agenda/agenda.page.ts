@@ -12,6 +12,7 @@ import { DateService } from 'src/app/services/date.service';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { ReminderAddPage } from './reminder-add/reminder-add.page';
 import { IEvent } from 'ionic2-calendar/calendar.interface';
+import { PermissionService } from 'src/app/services/permission.service';
 
 export interface DayEvent {
   date?: string;
@@ -41,7 +42,8 @@ export class AgendaPage implements OnInit{
     private modalCtrl: ModalController,
     public authService: AuthenticationService,
     public dateService: DateService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public permissionService: PermissionService
   ) {
     // this.analyticsService.setScreenName('agenda','AgendaPage')
   }
@@ -97,13 +99,17 @@ export class AgendaPage implements OnInit{
         return days[num]
       },
     }
-  };
+  }; 
 
   async ionViewDidEnter() {
-    if (this.segment === 'calendar') this.myCal.currentDate = new Date();
+    if (this.permissionService.canViewEvents && this.segment === 'calendar') {
+      this.myCal.currentDate = new Date();
+      this.getallAgenda()
+    } 
     else {
-      this.getallAgenda();
+      this.eventSource = []
     }
+    
   }
 
   markDisabled = (date: Date) => {
@@ -120,10 +126,17 @@ export class AgendaPage implements OnInit{
     return this.dooleService.getAPIallAgenda().subscribe(
       async (res: any) => {
         console.log('[AgendaPage] getallAgenda()', await res);
-        if (res.agenda) {
-          this.addScheduleToCalendar(res.agenda)
+
+        if (this.permissionService.canViewEvents) {
+          if (res.agenda) {
+            this.addScheduleToCalendar(res.agenda)
+          }
+          this.getReminders()
         }
-        this.getReminders()
+        else {
+          this.listAppointment = []
+        }
+        
       }, (err) => {
         console.log('[AgendaPage] getallAgenda() ERROR(' + err.code + '): ' + err.message);
         alert('ERROR(' + err.code + '): ' + err.message)
@@ -160,7 +173,7 @@ export class AgendaPage implements OnInit{
   onCurrentDateChanged(event: Date) {
     this.ngZone.run(() => {
       console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
-      this.getallAgenda();
+      if (this.permissionService.canViewEvents) this.getallAgenda();
     });
   }
 

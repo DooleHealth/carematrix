@@ -8,7 +8,9 @@ import { AdvicesDetailPage } from 'src/app/pages/home/advices-detail/advices-det
 import { NewDetailPage } from 'src/app/pages/home/new-detail/new-detail.page';
 import { ElementsAddPage } from 'src/app/pages/tracking/elements-add/elements-add.page';
 import { FormPage } from 'src/app/pages/tracking/form/form.page';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 
 @Component({
@@ -19,7 +21,8 @@ import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pus
 export class GoalsComponent  implements OnInit {
   @Input() content: any
   @Input() completedGoals: any
-  
+  canDoGoal:boolean = false;
+
   note = ''
   fetching = true;
   id = history.state?.challenge?.id;
@@ -32,10 +35,12 @@ export class GoalsComponent  implements OnInit {
   isRequired = false
   isChallengeCompleted = false
   constructor(public translate: TranslateService,   private changeDetectorRef: ChangeDetectorRef,private modalCtrl: ModalController, private alertController: AlertController, 
-    private pusher: PusherChallengeNotificationsService, private router: Router, private iab: InAppBrowser, private ngZone: NgZone) { }
+    private pusher: PusherChallengeNotificationsService, private router: Router, private iab: InAppBrowser, private ngZone: NgZone, public authService: AuthenticationService, public permissionService: PermissionService) { }
 
   ionViewWillEnter() {
     
+    this.canDoGoal = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
+
     this.note = this.translate.instant('health_path.goal_note') 
     //this.setChallenge(this.content);
   }

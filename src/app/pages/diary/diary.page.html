@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'diet.detail' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'diet.detail' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
         <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
@@ -82,151 +82,20 @@
 
 
       <ng-template #noData>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <app-no-data></app-no-data>
       </ng-template>
 
     </div>
     <!-- Recipes-->
     <div *ngSwitchCase="'recipes'">
+      <ng-container *ngIf="items.length > 0; else noData">
+        <app-view-more-information  [content]="items" ></app-view-more-information>
+      </ng-container>
       
-      <app-view-more-information  [content]="items" ></app-view-more-information>
-    
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <ng-template #noData>
+        <app-no-data></app-no-data>
       </ng-template>
     </div>
-    <!-- Games -->
-    <!--<div *ngSwitchCase="'games'">
-      <div class="spin" *ngIf="this.isLoadingGames; else second">
-        <ion-spinner></ion-spinner>
-      </div>
-      <ng-template #second>
-        <ng-container *ngIf="this.listGames.length > 0;else third">
-          <ion-list>
-            <ion-card class="cardProfile" *ngFor="let item of this.listGamePlays">
-              <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)"
-                [src]="item?.item?.file?.temporaryUrl" />
-              <ion-item lines="none" (click)="openGames(item.item)">
-                <div>
-                  <ion-img src="assets/icons/game-controller.svg" style="width: 130%">
-                  </ion-img>
-                </div>
-                <ion-label style="color: #9b59b6">
-                  &nbsp;&nbsp; {{item.item.title}}</ion-label>
-
-<!--                 <div>
-                  <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-                </div> 
-                <ion-label style="color: #9b59b6">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  {{formatHourGamePlay(item?.item?.scheduled_date)}}
-                </ion-label>
-              </ion-item>
-              <ion-card-content *ngIf="item.item?.description" [innerHtml]="item.item?.description? (item.item?.description  | safeHtml):'' ">
-              </ion-card-content>
-              <ion-button size="small" color="transparent" class="buttonLink" (click)="openGames(item.item)">{{'button.detail' | translate}}
-              </ion-button>
-              &nbsp;
-            </ion-card>
-          </ion-list>
-        </ng-container>
-      </ng-template>
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ng-template>
-    </div>-->
-    <!-- Health -->
-    <!--<div *ngSwitchCase="'health'">
-      <ng-container *ngIf="this.isLoadingElements; else second">
-        <ion-spinner ></ion-spinner>
-      </ng-container>
-      <ng-template #second>
-        <ng-container *ngIf="this.groupedElements.length > 0;else third">
-          <br />
-          <ion-list *ngFor="let group of this.groupedElements">
-            <ion-label *ngIf="!this.isLoadingElements && group?.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
-            <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
-              <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}"
-                routerLinkActive="active-item">
-                <div class="verticalLine" [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-icon style="align-items: left; margin-right: 5px; zoom: 2"
-                        [ngStyle]="{'color': (element?.color)? element?.color: '#bcbcbc' }"
-                        name="{{element?.icon? element?.icon: 'fitness-outline'}}"></ion-icon>
-                    </ion-col>
-                    <ion-col size="8">
-                      <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
-                    </ion-col>
-                    <ion-col size="2">
-                      <ion-label style="text-align: right">
-                        <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-col size="12">
-                    <ion-card-title *ngIf="element?.value" style="padding-left: 2px;" class="txtTitleGoals"
-                    >{{element.value}} {{element.units}}
-                  </ion-card-title>
-                  <ion-card-title *ngIf="!element?.value" style="padding-left: 2px;" class="txtTitleGoals"
-                    >{{ 'home.get_firts_data' | translate | uppercase}}
-                  </ion-card-title>
-                  </ion-col>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-          </ion-list>
-        </ng-container>
-      </ng-template>
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ng-template>
-    </div>-->
   </div>
 </ion-content>
 <ion-footer>

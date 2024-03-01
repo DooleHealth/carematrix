@@ -9,6 +9,7 @@ import { MedicalDirectoryPageRoutingModule } from './medical-directory-routing.m
 import { MedicalDirectoryPage } from './medical-directory.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShellModule } from 'src/app/utils/shell/shell.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ShellModule } from 'src/app/utils/shell/shell.module';
     IonicModule,
     MedicalDirectoryPageRoutingModule, 
     TranslateModule,
-    ShellModule
+    ShellModule,
+    ComponentsModule
   ],
   declarations: [MedicalDirectoryPage]
 })

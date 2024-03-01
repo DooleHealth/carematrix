@@ -29,6 +29,7 @@ import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapt
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-iframe/show-iframe.component';
 import { Preferences } from '@capacitor/preferences';
+import { PermissionService } from 'src/app/services/permission.service';
 
 const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
@@ -241,6 +242,7 @@ export class HomePage implements OnInit {
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
+    public permissionService: PermissionService
 
 
   ) { 
@@ -248,25 +250,14 @@ export class HomePage implements OnInit {
 
   }
 
-  handleInput(event) {
-
-    
-    const query = event.target.value.toLowerCase();
-    this.results = this.listFamilyUnit.filter(item => 
-      item.name.toLowerCase().includes(query)
-    );  }
+ 
 
 
   async ngOnInit() {
-    console.log("ENTER")
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.checkHealthAccess();
     this.checkStorageNotification();
     this.initPushers()
-
-
-    //this.getUserInformation()
-    //this.getNumNotification();
   }
 
 
@@ -401,7 +392,7 @@ export class HomePage implements OnInit {
         this.getUserImage(),
         this.getPersonalInformation(),
         this.getChallenges(), 
-        //this.getPrescribedApps(),
+
         this.getFormsList(),
         this.getAdvicesList(), 
         this.getExercisesList(),
@@ -474,7 +465,7 @@ export class HomePage implements OnInit {
           );
         });
   
-        this.dayPhrase = res.dayPrase;
+        this.dayPhrase = res.dayPrase.phrase;
         
         //this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
         if (this.dayPhrase != null) {
@@ -558,9 +549,12 @@ export class HomePage implements OnInit {
           handler: (data) => {
             this.authService.isFamily = false;
             this.pusherConnection.unsubscribePusher()
+            console.log(this.authService.user.familyUnit)
+            Preferences.remove({ key:  this.authService.user.familyUnit }).then((val) => { });
             this.authService.setUserFamilyId(null).then((val) => {
               this.ngZone.run(()=>{
                 this.isLoading = true;
+                this.permissionService.resetPermissions();
                 this.ionViewWillEnter()
               });
             });
@@ -621,6 +615,38 @@ export class HomePage implements OnInit {
     this.authService.setFamilyUnit(user).then((val) => {
       this.ngZone.run(()=>{
         this.isLoading = true;
+
+        user.permissionsName = [
+         /*  "canViewGoals",
+          "canManageGoals",
+          "canViewForms",
+          "canViewAnswerForms",
+          "canViewExercises",
+          "canViewDiets",
+          "canViewRecipes",
+          "canViewGames",
+          "canViewMonitoring",
+          "canManageMonitoring",
+          "canViewAdvices",
+          "canViewMedicalProcedures",
+          "canViewNew",
+          "canViewTestimonials",
+          "canViewMedicalTests",
+          "canManageMedicalTests",
+          "canViewMedication",
+          "canManageMedication",
+          "canViewMedicationPlans",
+          "canViewPlanningForm",
+          "canViewEvents",
+          "canManageEvents",
+          "canManageMessages",
+          "canSeeMedicalVisits",
+          "canManageRequesVisit",
+          "canSeeCenters", */
+        ]
+        
+        this.permissionService.setPermissions(user.permissionsName);
+        this.pusherConnection.unsubscribePusher()
         this.ionViewWillEnter()
       });
     });
@@ -893,8 +919,9 @@ export class HomePage implements OnInit {
   async getChallenges() {
     try {
 
+     
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIChallenges().subscribe(
+        this.dooleService.getAPIChallenges({onlyAccepted:1}).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIChallenges()', await res);
             this.setChallengesSlider(res.challenges)
@@ -1499,7 +1526,6 @@ export class HomePage implements OnInit {
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus();
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching drug intake:', error);
       throw error;
     }
@@ -1528,7 +1554,6 @@ export class HomePage implements OnInit {
         this.setSliderOption('procedures');
       }
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching procedures:', error);
       throw error;
     }
@@ -1607,17 +1632,6 @@ export class HomePage implements OnInit {
       throw error;
     });
 
-    //console.log('dataType: temperature');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'temperature',
-    // }).then(data => {
-    //   //this.postHealth('temperature', data);
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error;
-    // });
 
     console.log('dataType: oxygen_saturation');
     this.health.query({
@@ -1651,18 +1665,15 @@ export class HomePage implements OnInit {
       },
 
       (error) => {
-        // Called when error
         console.log('error: ', error);
         throw error;
       },
       () => {
-        // Called when operation is complete (both success and error)
-        // loading.dismiss();
+
       });
   }
 
   agendaTitle(slide) {
-    //console.log('[HomePage] agendaTitle()', slide);
     if (slide?.agenda_type?.type == 'turnos' || slide?.agenda_type?.type == 'turno') {
       return this.translate.instant('agenda.type_turn')
     } else {
@@ -1693,25 +1704,20 @@ export class HomePage implements OnInit {
   }
 
   actionSeeAllAdvices() {
-    //console.log('[HomePage] actionCloseAdvice()');
   }
 
   actionRegisterAdvice(slide) {
-    //console.log('[HomePage] actionRegisterAdvice()', slide.name);
   }
 
   actionCloseAppointment(slide) {
-    //console.log('[HomePage] actionCloseAppointment()', slide.title);
     slide.hide = true
     this.appointment = this.appointment.filter(slide => slide.hide == false)
   }
 
   actionDetailAppointment(slide) {
-    //console.log('[HomePage] actionDetailAppointment()', slide.name);
   }
 
   actionButtonDrugs(slide) {
-    //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
   slideGoalDrag(event) {
@@ -1819,20 +1825,21 @@ export class HomePage implements OnInit {
   }
 
   changeTake(id, taked) {
-    taked = (taked == "0") ? "1" : "0";
-    var dict = [];
-    dict.push({
-      key: "date",
-      value: ""
-    });
-    this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
-      //console.log('[HomePage] changeTake()',  json);
-      this.getDrugIntake()
-    }, (err) => {
-      //console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message);
-      alert('ERROR(' + err.code + '): ' + err.message)
-      throw err;
-    });
+    if(this.permissionService.canManageMedication) {
+      taked = (taked == "0") ? "1" : "0";
+      var dict = [];
+      dict.push({
+        key: "date",
+        value: ""
+      });
+      this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
+        this.getDrugIntake()
+      }, (err) => {
+        alert('ERROR(' + err.code + '): ' + err.message)
+        throw err;
+      });
+    }
+    
   }
 
   filterDrugsByStatus() {
@@ -1870,7 +1877,6 @@ export class HomePage implements OnInit {
         ((this.hourToMinutes(element?.hour_intake) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.drugs.indexOf(drug);
-      //console.log('[HomePage] searchIndexDrug()', drug, index);
       this.currentIndexDrug = (index > -1) ? index : 0
     }
   }
@@ -1922,10 +1928,7 @@ export class HomePage implements OnInit {
   }
 
   doRefresh(event) {
-    //console.log('Begin async operation');
-
     setTimeout(() => {
-      //console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
@@ -1960,7 +1963,6 @@ export class HomePage implements OnInit {
         browser = this.iab.create(item.url, '_blank', iosoption);
         browser.on('exit').subscribe(event => {
           this.ngZone.run(() => {
-            //console.log("anim complete");
             this.header = false
           });
         });
@@ -1977,7 +1979,6 @@ export class HomePage implements OnInit {
   }
 
   sortDate(games) {
-    //console.log('Async operation has ended' ,games);
     return games.sort(function (a, b) {
       if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1]) > this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
         return 1;
@@ -2030,7 +2031,6 @@ export class HomePage implements OnInit {
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      //mode: 'ios',
       subHeader: this.translate.instant('home.enable_notifications'),
       message: this.translate.instant('home.message_enable_notifications'),
       buttons: [
@@ -2082,8 +2082,6 @@ export class HomePage implements OnInit {
         console.log('addElement()', result);
 
         if (result?.data?.error) {
-          // let message = this.translate.instant('landing.message_wrong_credentials')
-          //this.dooleService.presentAlert(message)
         } else if (result?.data?.action == 'add') {
           this.notification.displayToastSuccessful()
           this.getUserInformation()
@@ -2093,11 +2091,9 @@ export class HomePage implements OnInit {
     await modal.present();
   }
 
-
   async activatePendingMedicationPlans() {
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      //mode: 'ios',
       header: this.translate.instant('alert.header_atention'),
       message: this.translate.instant('home.pending_medication_planes'),
       buttons: [
@@ -2146,7 +2142,6 @@ export class HomePage implements OnInit {
         this.setSliderOption('agenda');
       }
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching agenda:', error);
       throw error;
     }
@@ -2168,7 +2163,6 @@ export class HomePage implements OnInit {
   returnValueProgressBarr(v) {
     let value = parseFloat(v)
     if (0.999 === value) value = 0.99
-    //console.log('[HomePage] returnValueProgressBarr()',  value);
     return value
   }
 
@@ -2334,5 +2328,15 @@ export class HomePage implements OnInit {
     this.activateFocus = false;
   }
 
+  checkPermissionsTasks() {
+    return this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewMedication || this.permissionService.canViewDiets ||
+           this.permissionService.canViewGames || this.permissionService.canViewMonitoring
+  }
+
+  handleInput(event) {
+    const query = event.target.value.toLowerCase();
+    this.results = this.listFamilyUnit.filter(item => 
+      item.name.toLowerCase().includes(query)
+    );  }
 
 }

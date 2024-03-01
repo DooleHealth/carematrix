@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { MedicalPlanProceduresAdapter, SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class ProceduresPage implements OnInit {
   isDateInPast = false;
   constructor(
     private scpService: SharedCarePlanService,
-    private dateService: DateService
+    private dateService: DateService,
+    public permissionService: PermissionService
   ) { }
 
   ngOnInit() {

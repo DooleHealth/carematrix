@@ -4,6 +4,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
 import { FakeBackendInterceptor } from 'src/app/interceptors/fake-backend.interceptor';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-news',
@@ -22,13 +23,14 @@ export class NewsPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     public role: RolesService,
-    public fakeBackend: FakeBackendInterceptor
+    public fakeBackend: FakeBackendInterceptor,
+    public permissionService: PermissionService
   ) { 
     this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "new-detail")
   }
 
   ngOnInit() {
-    this.getNewsList()
+    if (this.permissionService.canViewNews) this.getNewsList()
   }
 
   adapterForView(list){
