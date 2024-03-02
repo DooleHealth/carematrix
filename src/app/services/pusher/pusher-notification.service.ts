@@ -2,11 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonicSafeString, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-
-import { Constants } from 'src/app/config/constants';
 import { DietsDetailPage } from 'src/app/pages/diary/diets-detail/diets-detail.page';
-import { RecipePage } from 'src/app/pages/diary/diets-detail/recipe/recipe.page';
-
 import { AdvicesDetailPage } from 'src/app/pages/home/advices-detail/advices-detail.page';
 import { NewDetailPage } from 'src/app/pages/home/new-detail/new-detail.page';
 import { AuthenticationService } from '../authentication.service';

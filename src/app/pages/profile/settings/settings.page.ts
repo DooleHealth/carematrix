@@ -38,13 +38,13 @@ export class SettingsPage implements OnInit {
   isSelectEndPoint = false;
   api: any;
   /**
-   * To load all notifications
+   * optionList: To load all notifications
    */
   /**/
   optionList:notificationOpt[] = []
   private notification_options: NotificationOptions
   /**
-   * This variable is to have the app and email options separate
+   * optAppAndEmail: This variable is to have the app and email options separate
    */
   /**/
   optAppAndEmail = true;  

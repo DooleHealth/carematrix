@@ -36,13 +36,13 @@ export enum SettingOpt{
     GOALS_APP = "goalsNotificationApp",
     GOALS_MAIL = "goalsNotificationMail",
     GOALS_OLD = "goalsNotificaton",
-    //NEWS
-    NEWS_APP = "newsNotificationApp",
-    NEWS_MAIL = "newsNotificationMail",
     //MESSAGE
     MESSAGE_APP = "messagesNotificationApp",
     MESSAGE_MAIL = "messagesNotificationMail",
     MESSAGE_OLD ="messagesNotificaton",
+    //NEWS
+    NEWS_APP = "newsNotificationApp",
+    NEWS_MAIL = "newsNotificationMail",
     //OFFERS_APP
     OFFERS_APP = "offersNotificationApp",
     OFFERS_MAIL = "offersNotificationMail",

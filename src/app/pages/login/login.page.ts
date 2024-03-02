@@ -11,6 +11,7 @@ import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { Capacitor } from '@capacitor/core';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ export class LoginPage implements OnInit {
     private device: Device,
     private network: Network,
     public role: RolesService,
+    private navigation: NavigationService,
     private pusherConnection: PusherConnectionService,
     ) { }
 
@@ -103,13 +105,8 @@ export class LoginPage implements OnInit {
   }
 
   setLocalLanguages(language){
-
-    if(language == 'es-es')
-    this.language = 'es'
-    else
-    this.language = language
-
-    console.log("language", language)
+    this.language = (language === 'es-es')? 'es':language
+    //console.log("language", language)
     this.languageService.setLenguageLocalstorage(this.language)
   }
 
@@ -190,56 +187,7 @@ export class LoginPage implements OnInit {
 
 
   redirecPushNotification(data){
-    switch (data.action) {
-      case "SHARECAREPLAN":
-        this.ngZone.run(() => {
-          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true} });
-        });
-
-       break;
-      case "MESSAGE":
-        let staff;
-        // Different payloads for ios and android
-        if(this.platform.is('ios')){
-          staff = data?.origin;
-        }else{
-          let origin = data?.origin;
-          if(origin){
-            origin = origin.replace(/\\/g, '');
-            staff = JSON.parse(origin);
-          }
-        }
-        console.log('staff: ', staff);
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:data, chat:data.id, staff:staff,  customData: data?.user_id}});
-        break;
-      case "FORM":
-        this.router.navigate([`/tracking/form`, {id: data.id}],{state:{data:data}});
-        break;
-      case "DRUGINTAKE":
-        this.router.navigate([`/journal`],{state:{data:data, segment: 'medication'}});
-        break;
-      case "ADVICE":
-        this.router.navigate([`/advices-detail`],{state:{data:data, id:data.id}});
-        break;
-      case "NEWS":
-        this.router.navigate([`/new-detail`],{state:{data:data, id:data.id}});
-        break;
-      case "DIET":
-        this.router.navigate([`/journal/diets-detail`],{state:{data:data, id:data.id}});
-        break;
-      case "AGENDA":
-        this.router.navigate([`/agenda/detail`],{state:{data:data, id:data.id}});
-        break;
-      case "REMINDER":
-        this.router.navigate([`/agenda/reminder`],{state:{data:data, id:data.id}});
-        break;
-      case "GAME":
-        this.router.navigate([`/journal/games-detail`],{state:{data:data, id:data.id}});
-        break;
-      default:
-        console.error('Action on localNotificationActionPerformed not found')
-        break;
-    }
+    this.navigation.redirecPushNotification(data)
   }
 
 

@@ -32,6 +32,7 @@ import { CallCapacitor } from 'src/plugins/CallCapacitor';
 import { TextZoom } from '@capacitor/text-zoom';
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
+import { NavigationService } from './services/navigation.service';
 
 register();
 
@@ -83,8 +84,8 @@ export class AppComponent implements OnInit {
     private _zone: NgZone,
     private endPoind: ApiEndpointsService,
     private navCtrl: NavController,
-    private screenOrientation: ScreenOrientation
-
+    private screenOrientation: ScreenOrientation,
+    private navigation: NavigationService,
   ) {
     this.setLanguage();
     if (Capacitor.isNativePlatform() && this.platform.is('android')) {
@@ -473,91 +474,24 @@ export class AppComponent implements OnInit {
     console.log("DATA " + data)
     console.log("Notification " + notification)
 
-    switch (data.action) {
-
-      case "SHARECAREPLAN":
-        this._zone.run(() => {
-          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true } });
-        });
-
-        break;
-
-      case "LEVELASSIGNED":
-        this._zone.run(() => {
-          this.router.navigate([`/home`], { state: { data: data, openNotificationAlertDialog: true } });
-        });
-        break;
-
-      case "MESSAGE":
-        let staff;
-        // Different payloads for ios and android
-        if (this.platform.is('ios'))
-          staff = data?.origin;
-        else
-          staff = data?.origin ? JSON.parse(data?.origin) : null;
-        console.log('staff: ', staff);
-        this._zone.run(() => {
-          this.router.navigate([`/contact/chat/conversation`], { state: { data: data, chat: data.id, staff: staff, customData: data?.user_id } });
-        });
-        break;
-      case "FORM":
-        this._zone.run(() => {
-          this.router.navigate([ContentTypePath.Forms, { id: data.id }], { state: { data: data } });
-        });
-        break;
-      case "DRUGINTAKE":
-        this._zone.run(() => {
-          this.router.navigate([ContentTypePath.Medication], { state: { data: data, segment: 'medication' } });
-        });
-        break;
-      case "VIDEOCALL":
+    if(data.action === "VIDEOCALL")
         this._zone.run(() => {
           this.redirecToVideocall(notification)
         });
-        break;
-      case "ADVICE":
-        this._zone.run(() => {
-          this.router.navigate([ContentTypePath.AdvicesDetail], { state: { data: data, id: data.id } });
-        });
-        break;
-      case "NEWS":
-        this._zone.run(() => {
-          this.router.navigate([ContentTypePath.NewsDetail], { state: { data: data, id: data.id } });
-        });
-        break;
-      case "DIET":
-        this._zone.run(() => {
-          this.router.navigate([ContentTypePath.DietsDetail], { state: { data: data, id: data.id } });
-        });
-        break;
-      case "AGENDA":
-        this._zone.run(() => {
-          this.router.navigate([`/agenda/detail`], { state: { data: data, id: data.id } });
-        });
-        break;
-      case "REMINDER":
-        this._zone.run(() => {
-          this.router.navigate([`/agenda/reminder`], { state: { data: data, id: data.id } });
-        });
-        break;
-      case "GAME":
-        this._zone.run(() => {
-          if (data.type == 'form') {
-            this.router.navigate([ContentTypePath.FormDetail, { id: data.form_id }], { state: { data: data, game_play_id: data?.game_play_id } });
-          } else
-            this.router.navigate([ContentTypePath.GamesDetail], { state: { data: data, id: data.id, server_url: data?.server_url } });
-        });
-        break;
-      case "EXERCISE":
-        this._zone.run(() => {
-          this.router.navigate([ContentTypePath.ExercisesDetail], { state: { data: data, id: data.id, programable_id: data.programable_play_id } });
-        });
-        break;
-      default:
-        console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
-        this.redirecToVideocall(notification)
-        break;
-    }
+    else
+      this.navigation.redirecPushNotification(data)
+    
+    // switch (data.action) {
+    //   case "VIDEOCALL":
+    //     this._zone.run(() => {
+    //       this.redirecToVideocall(notification)
+    //     });
+    //     break;
+    //   default:
+    //     console.error('Action on localNotificationActionPerformed not found, redirecting to videocall: ')
+    //     this.redirecToVideocall(notification)
+    //     break;
+    // }
   }
 
   getNumNotification() {

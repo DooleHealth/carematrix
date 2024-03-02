@@ -18,9 +18,9 @@ export class NotificationOptions {
     public readonly forms: any = {type: 'forms',mail: 'formNotificationMail', app: 'formNotificationApp', old: 'formNotificaton'};
     public readonly games: any = {type: 'games',mail: 'gamePlayNotificationMail', app: 'gamePlayNotificationApp', old: null};
     public readonly goals: any = {type: 'goals',mail: 'goalsNotificationMail', app: 'goalsNotificationApp', old: 'goalsNotificaton'};  
-    public readonly news: any = {type: 'news',mail: 'newsNotificationMail', app: 'newsNotificationApp', old: null};
     public readonly medication: any = {type: 'medication',mail: ['drugIntakeNotificationMail', 'medicationPlanExpiredNotificationEmail'], app: ['drugIntakeNotificationApp', 'medicationPlanExpiredNotificationApp'], old: null};
     public readonly messages: any = {type: 'messages',mail: 'messagesNotificationMail', app: 'messagesNotificationApp', old: 'messagesNotificaton'};
+    public readonly news: any = {type: 'news',mail: 'newsNotificationMail', app: 'newsNotificationApp', old: null};
     public readonly offers: any = {type: 'offers',mail: 'offersNotificationMail', app: 'offersNotificationApp', old: 'offersNotificaton'};
     public readonly procedures: any = {type: 'procedures',mail: 'medicalProcedureReminderNotificationMail', app: 'medicalProcedureReminderNotificationApp', old: null};
     public readonly promoteContent: any = {type: 'promoteContent',mail: 'promoteContentNotificationMail', app: 'promoteContentNotificationApp', old: 'promoteContentNotification'};
