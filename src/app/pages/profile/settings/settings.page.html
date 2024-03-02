@@ -47,7 +47,7 @@
               [lines]="(this.optionList.length-1) == i ? 'none': '' "
               (setNotification)="sendConfigution($event)"
               (onExpand)="changeStateOptionsNoti(notification)"
-              [appAndMail]="true"
+              [appAndMail]="optAppAndEmail"
             ></notification-options>
           </ion-list>
     </ion-card>

@@ -23,39 +23,31 @@ import { NotificationOptions, notificationOpt } from 'src/app/components/notific
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-  settingsBio = '';
+  private settingsBio = '';
   authentication = false
   faceId = false
-  communications = false
-  appointment = false
-  diets = false
-  medication = false
-  goals = false
-  advices = false
-  offers = false
-  form = false
-  messages = false
   language
   listLanguage = []
   isFaID = true
   isTwoFactor = true
   biometric: any
-  reminder = false
-  news = false
-  release = false
   listEndPoint = []
   biometric_list = []
   modeDevelop = false;
   environment = 0
   isSelectEndPoint = false;
-  games = false
   api: any;
-
-
-  //load all notifications
+  /**
+   * To load all notifications
+   */
+  /**/
   optionList:notificationOpt[] = []
   private notification_options: NotificationOptions
-    
+  /**
+   * This variable is to have the app and email options separate
+   */
+  /**/
+  optAppAndEmail = true;  
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService,
@@ -100,7 +92,6 @@ export class SettingsPage implements OnInit {
        if(res){
         this.getConfigurationParams(res)
        }
-
        },(err) => {
           console.log('[SettingsPage] getNotificationConfiguration() ERROR(' + err.code + '): ' + err.message);
           throw err;
