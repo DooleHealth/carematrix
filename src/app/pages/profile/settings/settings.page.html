@@ -42,58 +42,13 @@
     <ion-text class="txtTitle">{{ 'setting.title_notification' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list>
-            <ion-item>
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="communications" (ionChange)="changeCommunications()" checked>{{'setting.subtitle_communications' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.agenda">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="appointment" (ionChange)="changeAppointment()" checked>{{'setting.subtitle_appointment' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.agenda && role?.component?.reminder">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="reminder" (ionChange)="changeReminders()" checked>{{'setting.subtitle_reminders' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.diet">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="diets" (ionChange)="changeDiets()" checked>{{'setting.subtitle_diets' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.drug">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="medication" (ionChange)="changeMedication()" checked>{{'setting.subtitle_medication' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.goal">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="goals" (ionChange)="changeGoals()" checked>{{'setting.subtitle_goals' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.advices">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="advices" (ionChange)="changeAdvices()" checked>{{'setting.subtitle_advices' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.news">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="news" (ionChange)="changeNews()" checked>{{'setting.subtitle_news' | translate}}</ion-toggle>
-            </ion-item>
-            <!--<ion-item>
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="offers" (ionChange)="changeOffers()" checked>{{'setting.subtitle_offers' | translate}}</ion-toggle>
-            </ion-item>-->
-             <ion-item *ngIf="role?.component?.form">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="form" (ionChange)="changeForm()" checked>{{'setting.subtitle_form' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="role?.component?.chat">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="messages" (ionChange)="changeMessages()" checked>{{'setting.subtitle_messages' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item>
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="games" (ionChange)="changeGames()" checked>{{'setting.subtitle_games' | translate}}</ion-toggle>
-            </ion-item>
-            <ion-item lines="none">
-
-              <ion-toggle slot="end" color="success" [(ngModel)]="release" (ionChange)="changeRelease()" checked>{{'setting.subtitle_release' | translate}}</ion-toggle>
-            </ion-item>
+            <notification-options *ngFor="let notification of this.optionList; let i = index"
+              [notification]="notification"
+              [lines]="(this.optionList.length-1) == i ? 'none': '' "
+              (setNotification)="sendConfigution($event)"
+              (onExpand)="changeStateOptionsNoti(notification)"
+              [appAndMail]="true"
+            ></notification-options>
           </ion-list>
     </ion-card>
 

@@ -268,6 +268,7 @@
     "subtitle_messages": "Mensagens",
     "subtitle_games": "Jogos",
     "subtitle_release": "Atualizações",
+    "subtitle_procedure": "Procedimientos médicos",
     "lenguage_ca": "Catalão",
     "lenguage_es": "Espanhol",
     "password": {
@@ -294,7 +295,9 @@
     },
     "sign_off": "Encerrar sessão",
     "message_sign_off": "Quer encerrar sessão em todos os dispositivos?",
-    "error_message_sign_off": "Ocorreu um erro ao encerrar sessão"
+    "error_message_sign_off": "Ocorreu um erro ao encerrar sessão",
+    "notifications": "Notificações",
+    "email": "Email"
   },
   "report_problem": {
     "title_report_problem": "Comunicar problema",

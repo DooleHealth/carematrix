@@ -288,6 +288,7 @@
       "subtitle_messages": "Mensajes",
       "subtitle_games": "Juegos",
       "subtitle_release": "Novedades",
+      "subtitle_procedure": "Procedimientos médicos",
       "lenguage_ca": "Catalán",
       "lenguage_es": "Castellano",
       "testimonials": "Testimonios",
@@ -316,8 +317,9 @@
       },
       "sign_off": "Cerrar sesión",
       "message_sign_off": "¿Deseas cerrar sesión en todos los dispositivos?",
-      "error_message_sign_off": "Ha ocurrido un error al cerrar sesión"
-
+      "error_message_sign_off": "Ha ocurrido un error al cerrar sesión",
+      "notifications": "Notificaciones",
+      "email": "Email"
     },
     "report_problem":{
       "title_report_problem": "Reportar Problema",

@@ -10,22 +10,22 @@ export interface notificationOpt {
 
 }
 export class NotificationOptions {
-    public readonly communications: any = {type: 'communications',mail: 'communicationsNotificationMail', app: 'communicationsNotificationApp', old: 'communicationsNotificaton'};
-    public readonly appointments: any = {type: 'appointments',mail: 'agendaNotificationMail', app: 'agendaNotificationApp', old: null};
-    public readonly reminder: any = {type: 'reminder',mail: 'reminderNotificationMail', app: 'reminderNotificationApp', old: null};
-    public readonly diets: any = {type: 'diets',mail: 'dietsNotificationMail', app: 'dietsNotificationApp', old: 'dietsNotificaton'};
-    public readonly medication: any = {type: 'medication',mail: ['drugIntakeNotificationMail', 'medicationPlanExpiredNotificationEmail'], app: ['drugIntakeNotificationApp', 'medicationPlanExpiredNotificationApp'], old: null};
-    public readonly goals: any = {type: 'goals',mail: 'goalsNotificationMail', app: 'goalsNotificationApp', old: 'goalsNotificaton'};    
     public readonly advices: any = {type: 'advices',mail: 'advicesNotificationMail', app: 'advicesNotificationApp', old: 'advicesNotificaton'};
-    public readonly news: any = {type: 'news',mail: 'newsNotificationMail', app: 'newsNotificationApp', old: null};
-    public readonly procedures: any = {type: 'procedures',mail: 'medicalProcedureReminderNotificationMail', app: 'medicalProcedureReminderNotificationApp', old: null};
-    public readonly forms: any = {type: 'forms',mail: 'formNotificationMail', app: 'formNotificationApp', old: 'formNotificaton'};
-    public readonly messages: any = {type: 'messages',mail: 'messagesNotificationMail', app: 'messagesNotificationApp', old: 'messagesNotificaton'};
-    public readonly games: any = {type: 'games',mail: 'gamePlayNotificationMail', app: 'gamePlayNotificationApp', old: null};
-    public readonly promoteContent: any = {type: 'promoteContent',mail: 'promoteContentNotificationMail', app: 'promoteContentNotificationApp', old: 'promoteContentNotification'};
+    public readonly appointments: any = {type: 'appointments',mail: 'agendaNotificationMail', app: 'agendaNotificationApp', old: null};
+    public readonly communications: any = {type: 'communications',mail: 'communicationsNotificationMail', app: 'communicationsNotificationApp', old: 'communicationsNotificaton'};
+    public readonly diets: any = {type: 'diets',mail: 'dietsNotificationMail', app: 'dietsNotificationApp', old: 'dietsNotificaton'};
     public readonly exercises: any = {type: 'exercises',mail: 'exercisePlayNotificationMail', app: 'exercisePlayNotificationApp', old: null};
+    public readonly forms: any = {type: 'forms',mail: 'formNotificationMail', app: 'formNotificationApp', old: 'formNotificaton'};
+    public readonly games: any = {type: 'games',mail: 'gamePlayNotificationMail', app: 'gamePlayNotificationApp', old: null};
+    public readonly goals: any = {type: 'goals',mail: 'goalsNotificationMail', app: 'goalsNotificationApp', old: 'goalsNotificaton'};  
+    public readonly news: any = {type: 'news',mail: 'newsNotificationMail', app: 'newsNotificationApp', old: null};
+    public readonly medication: any = {type: 'medication',mail: ['drugIntakeNotificationMail', 'medicationPlanExpiredNotificationEmail'], app: ['drugIntakeNotificationApp', 'medicationPlanExpiredNotificationApp'], old: null};
+    public readonly messages: any = {type: 'messages',mail: 'messagesNotificationMail', app: 'messagesNotificationApp', old: 'messagesNotificaton'};
     public readonly offers: any = {type: 'offers',mail: 'offersNotificationMail', app: 'offersNotificationApp', old: 'offersNotificaton'};
-
+    public readonly procedures: any = {type: 'procedures',mail: 'medicalProcedureReminderNotificationMail', app: 'medicalProcedureReminderNotificationApp', old: null};
+    public readonly promoteContent: any = {type: 'promoteContent',mail: 'promoteContentNotificationMail', app: 'promoteContentNotificationApp', old: 'promoteContentNotification'};
+    public readonly reminder: any = {type: 'reminder',mail: 'reminderNotificationMail', app: 'reminderNotificationApp', old: null};
+    
     private list_options: notificationOpt[] = [];
     //Aqui se añaden todas las notificaciones que queremos que aparezca en setting.page
     private options = [this.communications, this.appointments, this.reminder, this.diets, this.medication, this.goals,
@@ -62,8 +62,8 @@ export class NotificationOptions {
                 return 'setting.subtitle_medication';
             case 'appointments':
                 return 'setting.subtitle_appointment';
-            /* case 'goals':
-                return 'setting.subtitle_goals'; */
+            case 'goals':
+                return 'setting.subtitle_goals';
             case 'advices':
                 return 'setting.subtitle_advices';     
             case 'news':
@@ -78,11 +78,10 @@ export class NotificationOptions {
                 return 'setting.subtitle_messages';
             case 'games':
                 return 'setting.subtitle_games';
-            /** Only for HPC */
-            // case 'promoteContent':  
-            //     return 'setting.subtitle_promoteContent';
-            // case 'exercises':
-            //     return 'setting.subtitle_exercises';
+            case 'promoteContent':  
+                return 'setting.subtitle_promoteContent';
+            case 'exercises':
+                return 'setting.subtitle_exercises';
             default:
                 return '';
         }

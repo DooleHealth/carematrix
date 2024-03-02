@@ -256,6 +256,7 @@
         "subtitle_games": "Jocs",
         "subtitle_messages": "Missatges",
         "subtitle_release": "Novetats",
+        "subtitle_procedure": "Procediments mèdics",
         "lenguage_ca": "Català",
         "lenguage_es": "Castellà",
         "error_changed_language": "Error a l'actualitzar l'idioma!",
@@ -284,7 +285,9 @@
         },
         "sign_off": "Tancar sessió",
         "message_sign_off": "Vols tancar sessió a tots els dispositius?",
-        "error_message_sign_off": "Ha passat un error en tancar sessió"
+        "error_message_sign_off": "Ha passat un error en tancar sessió",
+        "notifications": "Notificacions",
+        "email": "Email"
 
       },
       "report_problem":{

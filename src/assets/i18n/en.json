@@ -294,6 +294,7 @@
     "subtitle_messages": "Messages",
     "subtitle_games": "Games",
     "subtitle_release": "Updates",
+    "subtitle_procedure": "Medical procedures",
     "lenguage_ca": "Catalan",
     "lenguage_es": "Spanish",
     "testimonials": "Testimonials",
@@ -321,7 +322,9 @@
     },
     "sign_off": "Log out",
     "message_sign_off": "Want to sign out on all devices?",
-    "error_message_sign_off": "An error occurred while logging out"
+    "error_message_sign_off": "An error occurred while logging out",
+    "notifications": "Notifications",
+    "email": "Email"
   },
   "report_problem": {
     "title_report_problem": "Report Problem",
