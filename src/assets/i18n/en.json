@@ -190,7 +190,8 @@
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
     "placeholder": "Write a message.",
-    "rejectd_send": "Message sent to your medical team"
+    "rejectd_send": "Message sent to your medical team",
+    "keppUp": "Keep it up!"
   },
   "health_path": {
     "title": "Health Path",
@@ -335,9 +336,9 @@
     "subtitle_category": "Category",
     "subtitle_description": "Description",
     "subtitle_screenshot": "Screenshots",
-    "description_screenshot": "You can attach screenshots that help us solve your problem",
+    "description_screenshot": "You can attach screenshots to help us solve your problem",
     "button_add_file": "Add files",
-    "placeholder": "You can attach screenshots that help us solve your problem",
+    "placeholder": "You can attach screenshots to help us solve your problem",
     "placeholderDescription": "Let us know about your problem"
   },
   "health_card": {
@@ -590,8 +591,8 @@
     "error_alert_message": "An error occurred while adding a new medical document",
     "select": "Select",
     "camera": "Camera",
-    "file": "Records",
-    "pictures": "Pictures",
+    "file": "Documents",
+    "pictures": "Photos and videos",
     "delete_media_file": "Are you sure you want to delete this file?",
     "delete_document": "Are you sure you want to delete this diagnostic test?",
     "input_file_name": "Enter a name for the file",
@@ -727,6 +728,7 @@
     "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
+    "takeds": "Taked",
     "taked": "Outlet",
     "forgotten": "Forgotten",
     "continue": "Continue",
@@ -798,7 +800,7 @@
     "field_specially": "Speciality",
     "reason_appointment": "Reason for the appointment",
     "attachments": "Attachments",
-    "text_attachments": "You can attach files or images that help us make a better diagnosis",
+    "text_attachments": "You can attach files or images to help us make a better diagnosis",
     "button_videocall": "Confirm"
   },
   "bookings": {
@@ -807,7 +809,7 @@
     "reason_appointment": "Reason for the appointment",
     "type": "Type of appointment",
     "attachments": "Attachments",
-    "text_attachments": "You can attach files or images that help us make a better diagnosis",
+    "text_attachments": "You can attach files or images to help us make a better diagnosis",
     "button_videocall": "Confirm",
     "button_videocall_charge": "Confirm appointment with payment",
     "error_upload_files": "Error attaching files",
@@ -875,6 +877,7 @@
   "medications": {
     "list": "List of orders",
     "title": "Medication",
+    "titlePlans": "Medication Plans",
     "direction": "Reorder",
     "directions_title": "1.-Select a shipping address",
     "directions_title_2": "2.-Select a type of shipment",
@@ -1008,6 +1011,7 @@
     "go_to_app": "Return to homepage",
     "score": "Points earned for completing the form:",
     "score1": "Points earned:",
+    "to": "to",
 
     "goal": {
       "title": "Attention",

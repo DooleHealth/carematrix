@@ -4,7 +4,7 @@
     left: 3%;
     transform: translateY(-120%);
     border-radius: 99px !important; /* Bordes redondeados */
-
+    z-index: 99;
 
     width: calc(100% - 10%); /* Ancho casi completo, ajusta el valor según lo necesites */
     max-width: 400px; /* Establece un ancho máximo si es necesario */

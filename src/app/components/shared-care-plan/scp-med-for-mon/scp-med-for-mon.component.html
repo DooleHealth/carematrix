@@ -13,7 +13,7 @@
         <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
           <ion-text class="txtSubtitle" style="display: inline-flex !important;">
             <p>{{ content?.from }} </p>&nbsp;
-            <p *ngIf="content?.to"> --- {{ content?.to }}</p>
+            <p *ngIf="content?.to"> {{ 'form.to' | translate }} {{ content?.to }}</p>
           </ion-text>
           &nbsp;
           <!--<ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"

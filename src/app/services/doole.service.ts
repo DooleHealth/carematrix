@@ -2168,7 +2168,7 @@ export class DooleService {
     );
   }
   getAPIChallenges2(): Observable<any> {
-    let path = 'user/challenges'
+    let path = 'user/challenges/goals'
 
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, ).pipe(

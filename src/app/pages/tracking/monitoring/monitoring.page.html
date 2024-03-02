@@ -19,7 +19,7 @@
     <ion-list *ngIf="canDoHealhCharts && items.length > 0; else noData" >
       <ion-card
         class="cardProfile"
-        routerLink="/activity-goal"
+        routerLink="/tracking/activity-goal"
         [state]="{id: doc.form_id, header: doc.title}"
         routerLinkActive="active-item"
         *ngFor="let doc of items" >
@@ -53,7 +53,9 @@
               </ion-text>
           </ion-row>
         </ion-grid>
-       
+        <ion-buttons slot="end" style="margin-bottom: 20%;">
+          <ion-icon name="chevron-forward-outline" class="icono-personalizado"></ion-icon>
+        </ion-buttons>
       </ion-item>
 
         
