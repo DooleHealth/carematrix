@@ -2,7 +2,7 @@
   <ion-toolbar mode="ios">
       <ion-title class="toolbarTitle">{{nameContent| translate}}</ion-title>
       <ion-buttons slot="start">
-        <ion-back-button text=""></ion-back-button>
+        <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button fill="clear" routerLink="/profile">
@@ -14,7 +14,7 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   <ion-searchbar *ngIf="this.permissionService.canViewExercises"
-  mode="ios" show-cancel-button="always"
+  mode="ios"
   (ionInput)="filterListExercises($event)"
   (ionClear)="getExercisesList()"
   placeholder="{{ 'advices.searchbar' | translate}}">

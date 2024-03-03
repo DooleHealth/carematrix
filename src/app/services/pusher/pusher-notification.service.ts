@@ -7,16 +7,22 @@ import { AdvicesDetailPage } from 'src/app/pages/home/advices-detail/advices-det
 import { NewDetailPage } from 'src/app/pages/home/new-detail/new-detail.page';
 import { AuthenticationService } from '../authentication.service';
 import { PusherChallengeNotificationsService } from './pusher-challenge-notifications.service';
+import { ContentTypePath } from 'src/app/models/shared-care-plan';
 
 
 declare const Pusher: any;
-const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
+//const NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
 
 @Injectable({
   providedIn: 'root'
 })
 export class PusherNotificationService {
-  readonly NAME_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
+  readonly NOTIFICATION_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
+  readonly ASSIGNED_LEVEL_BIND = "App\\Notifications\\Level\\NewLevelAssignedNotification"
+  readonly SHARED_CARE_PLAN_BIND = "App\\Notifications\\SharedCarePlanAddContentNotification"
+  readonly VISIT_ONLINE_BIND ="App\\Notifications\\VisitOnlineNotification"
+  readonly CHANEL = 'private-App.User.';
+  //readonly CHANEL = 'private-NewLevelAssignedNotification.';
   idUser:string;
   nameChanel:string;
   channel;
@@ -36,7 +42,7 @@ export class PusherNotificationService {
 
   public subscribeChannel(pusherService, idUser:string){
     this.idUser = idUser
-    this.nameChanel = 'private-App.User.' + this.idUser
+    this.nameChanel = this.CHANEL + this.idUser
     console.log('[PusherNotificationService] this.nameChanel ()', this.nameChanel);
     this.pusher = pusherService
     this.channel = this.pusher.subscribe(this.nameChanel)
@@ -51,20 +57,28 @@ export class PusherNotificationService {
     return this.channel;
    }
 
-  public init2() {
-    this.channel?.bind(NAME_BIND, (data) => {
-      console.log('[PusherNotificationService] getPusher()',  data);
-      if (data.type === "App\\Notifications\\SharedCarePlanAddContentNotification" || data.type === "App\\Notifications\\Level\\NewLevelAssignedNotification") {
-        this.openScpNotificationDialog()
-      }
-      /* if(data.type === "App\\Notifications\\VisitOnlineNotification") {
-        this.openVideocallNotificationDialog(data)
-      } */
+  public initSharedCarePlan() {
+    this.channel?.bind(this.SHARED_CARE_PLAN_BIND, (data) => {
+      console.log('[PusherNotificationService] initSharedCarePlan() data',  data);
+      this.openScpNotificationDialog()
+    });
+  }
+
+  public initAssignedLevel() {
+    this.channel?.bind(this.ASSIGNED_LEVEL_BIND, (data) => {
+      console.log('[PusherNotificationService] initAssignedLevel() data',  data);
+      this.openScpNotificationDialog()
+    });
+  }
+
+  public initVisitOnline() {
+    this.channel?.bind(this.VISIT_ONLINE_BIND, (data) => {
+      console.log('[PusherNotificationService] initVisitOnline() data',  data);
+      this.openVideocallNotificationDialog(data)
     });
   }
 
   public async openVideocallNotificationDialog(dataVideocall:any) {
-    
     let message = `
     <ion-row>
       <ion-col size="4" class="text-align-left" style="padding: 0px; display:flex; align-items:center; justify-content:center">
@@ -113,7 +127,7 @@ export class PusherNotificationService {
       let message = `
       <ion-row>
         <ion-col class="text-align-center" style="padding: 0px" >
-          <img src="${'../../assets/images/shared-care-plan/scp-alert-new.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
+          <img src="${'../../assets/images/shared-care-plan/goal-notification.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
           <h1>`+ this.translate.instant('shared_care_plan.new_scp_notification_title') + `</h1>
           <ion-text> <p>`+ this.translate.instant('shared_care_plan.new_scp_notification_msg') + ` </p> </ion-text>
         </ion-col>
@@ -136,7 +150,7 @@ export class PusherNotificationService {
             text: this.translate.instant('shared_care_plan.new_scp_alert_review'),
             role: 'accept',
             handler: () => {
-              this.router.navigateByUrl('/tracking');
+              this.router.navigate([ContentTypePath.Goals]);
             }
           },
         ],

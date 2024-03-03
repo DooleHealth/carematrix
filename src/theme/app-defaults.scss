@@ -139,7 +139,8 @@ ion-header {
 }
 
 ion-searchbar {
-  --ion-background-color: white !important;
+  --background: white !important; 
+  color: var(--default-text);
 }
 
 ion-card {

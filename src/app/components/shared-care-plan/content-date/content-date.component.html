@@ -7,8 +7,6 @@ routerLink="diets-detail/recipe"
  *ngIf="content?.item_type === 'App\\Ingredient' || content?.item_type === 'App\\Receipt';else Other"
  
  >
-
-  <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
 <!--DIETS-->
     <ion-grid class="ion-no-padding" style="height: 100% !important"> 
       <ion-row>
@@ -129,15 +127,11 @@ routerLink="diets-detail/recipe"
  
 </ng-template>
 <ng-template #Forms>
+  
   <ion-card 
 class="ion-no-padding" 
-
-routerLinkActive="active-item" 
- [state]="{id: content?.item_id}" 
+(click)="goTo(content)"
  >
-
-  <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
-
     <ion-grid class="ion-no-padding" style="height: 100% !important"> 
       <ion-row>
         <ion-col size="4">
@@ -157,7 +151,7 @@ routerLinkActive="active-item"
               <p>{{(content?.alias !== null)?
               content?.alias: content?.name}}</p></ion-col>
             <ion-col size="6.5" size-md="6" size-lg="5">          
-              <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
+                  <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
                     (click)="changeTake(content?.id, content?.state)">{{ 'button.take' | translate }}
                   </ion-button>
 

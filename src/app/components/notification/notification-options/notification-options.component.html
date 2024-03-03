@@ -13,7 +13,7 @@
   <ion-item  *ngIf="notification.item_expanded;" [lines]="lines">
     <ion-grid class="ion-grid-more-table">
       <ion-row>
-        <ion-toggle labelPlacement="fixed" color="success" [checked]="notification.on_app"
+        <ion-toggle color="success" [checked]="notification.on_app"
           (ionChange)="changeNotificationApp(notification, $event)">
           <ion-text>{{'setting.notifications' | translate}}</ion-text>
         </ion-toggle>

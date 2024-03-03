@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
@@ -48,6 +49,7 @@ export class FormListPage implements OnInit {
 
 
   ionViewWillEnter() {
+    this.canDoForm = this.authService?.user?.familyUnit == null && this.permissionService.canViewForms;
     //this.getFormList();
     this.getCurrentDate();
     this.setSegment();
@@ -162,6 +164,7 @@ export class FormListPage implements OnInit {
     }
     console.log(this.items);
   }
+
   handleRedirect(event: { type: string, form_id: string, showAlerts: boolean }) {
     console.log("entro a la redireccion")
     if (event.showAlerts === true) {
@@ -339,6 +342,13 @@ selectTime(time){
  
      
   
+}
+
+goTo(content){
+  if (this.canDoForm && content.type === "forms") {
+    if (content.showAlert) this.alertForm();
+    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
+  }
 }
 
 

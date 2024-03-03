@@ -286,22 +286,22 @@ export class ListNotificationsPage implements OnInit {
       case "App\\LevelAccomplishment":
         this.setRead(notification.id)
         const dataA = { id: data.id, name: '' }
-        this.router.navigate([`home/health-path/detail`], { state: { challenge: dataA } });
-        //this.router.navigate([`/home`]);
+        //this.router.navigate([`home/health-path/detail`], { state: { challenge: dataA } });
+        this.router.navigate([ContentTypePath.Goals], { state: { data: data } });
         break;
       case "App\\DrugIntake":
         this.setRead(notification.id)
         this._zone.run(() => {
-          this.router.navigate([`/medication-details`], { state: { data: data, segment: 'medication' } });
+          this.router.navigate([ContentTypePath.MedicationDetail], { state: { data: data, segment: 'medication' } });
         });
         break;
       case "App\\Agenda":
         this.setRead(notification.id)
-        this.router.navigate([`/agenda/detail`], { state: { data: null, id: data.id } });
+        this.router.navigate([ContentTypePath.AgendaDetail], { state: { data: null, id: data.id } });
         break;
       case "App\\Message":
         this.setRead(notification.id)
-        this.router.navigate([`/contact/chat/conversation`], { state: { data: null, chat: data.message_header_id, staff: null } }); //Falta información de staff, no cargan los mensajes
+        this.router.navigate([ContentTypePath.Message], { state: { data: null, chat: data.message_header_id, staff: null } }); //Falta información de staff, no cargan los mensajes
         break;
       case "App\\Advice":
         this.setRead(notification.id)
@@ -313,11 +313,11 @@ export class ListNotificationsPage implements OnInit {
         break;
       case "App\\Reminder":
         this.setRead(notification.id)
-        this.router.navigate([`/agenda/reminder`], { state: { data: null, id: data.id } }); //Bien
+        this.router.navigate([ContentTypePath.ReminderDetail], { state: { data: null, id: data.id } }); //Bien
         break;
       case "App\\ReminderExecution":
         this.setRead(notification.id)
-        this.router.navigate([`/agenda/reminder`], { state: { data: null, id: data.id } }); //Bien
+        this.router.navigate([ContentTypePath.ReminderDetail], { state: { data: null, id: data.id } }); //Bien
         break;
       case "App\\Exercise":
         this.setRead(notification.id)
@@ -349,21 +349,22 @@ export class ListNotificationsPage implements OnInit {
           medical_procedure_id: notification?.notification_origin_id ? notification?.notification_origin_id : null,
           episode_id: notification?.episode_id ? notification?.episode_id : null
         }
-        this.router.navigate([`/more/procedure-detail`], { state: { data: null, procedure: params } });
+        this.router.navigate([ContentTypePath.MedicalProcedure], { state: { data: null, procedure: params } });
         break;
       case "App\\DiagnosticTest":
         this.setRead(notification.id)
-        this.router.navigate([`/document-detail`], { state: { data: null, procedure: params } });
+        this.router.navigate([ContentTypePath.MedicalTest], { state: { data: null, procedure: params } });
       case "App\\ShareCarePlan":
         this.setRead(notification.id)
-        this.router.navigate([`/tracking`], { state: { data: null, segment: 'sharedcareplan' } });
+        this.router.navigate([ContentTypePath.Tracking], { state: { data: null, segment: 'sharedcareplan' } });
         break;
       case "App\\ProgramablePlay":
         this.setRead(notification.id)
-        this.router.navigate([`/home`], { state: { data: null, id: data.id } });
+        this.router.navigate([ContentTypePath.Home], { state: { data: null, id: data.id } });
         break;
       default:
-        this.router.navigate([`/home`], { state: { data: null, id: data.id } });
+        this.setRead(notification.id)
+        //this.router.navigate([`/home`], { state: { data: null, id: data.id } });
         break;
     }
     

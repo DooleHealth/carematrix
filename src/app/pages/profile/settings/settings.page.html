@@ -41,7 +41,7 @@
 
     <ion-text class="txtTitle">{{ 'setting.title_notification' | translate}}</ion-text>
     <ion-card class="cardProfile">
-          <ion-list>
+          <ion-list lines="full">
             <notification-options *ngFor="let notification of this.optionList; let i = index"
               [notification]="notification"
               [lines]="(this.optionList.length-1) == i ? 'none': '' "

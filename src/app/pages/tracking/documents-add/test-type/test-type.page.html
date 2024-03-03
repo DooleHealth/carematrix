@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start" (click)="closeModal()">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title class="toolbarTitle">{{ 'documents_add.header_test_type' | translate}}</ion-title>
   </ion-toolbar>
@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true" >
   <ion-searchbar
-  [animated]="true"
+  mode="ios" 
   (ionInput)="filterList($event)" >
 </ion-searchbar>
 

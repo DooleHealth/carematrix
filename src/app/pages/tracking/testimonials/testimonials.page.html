@@ -2,7 +2,7 @@
   <ion-toolbar mode="ios">
     <ion-title class="toolbarTitle">{{'setting.testimonials' | translate}}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
+      <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
@@ -14,8 +14,10 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   <!-- SegmentBar -->
-  <ion-searchbar *ngIf="this.permissionService.canViewTestimonials" mode="ios" show-cancel-button="always"
-    (ionInput)="filterListTertimonials($event)" (ionClear)="getNewsTestimonial()"
+  <ion-searchbar *ngIf="this.permissionService.canViewTestimonials" 
+    mode="ios"
+    (ionInput)="filterListTertimonials($event)" 
+    (ionClear)="getNewsTestimonial()"
     placeholder="{{ 'advices.searchbar' | translate}}">
   </ion-searchbar>
   <div class="spin" *ngIf="this.isLoading">

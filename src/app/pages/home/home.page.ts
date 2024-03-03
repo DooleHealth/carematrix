@@ -31,7 +31,6 @@ import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-if
 import { Preferences } from '@capacitor/preferences';
 import { PermissionService } from 'src/app/services/permission.service';
 
-const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
   title?: string;
@@ -293,20 +292,21 @@ export class HomePage implements OnInit {
     this.pusherAlarms?.init()
     const channel = this.pusherNotifications.init();
 
-    this.pusherNotifications.init2();
-
     if (channel)
-      channel.bind(NAME_BIND, ({ data }) => {
+      channel.bind(this.pusherNotifications.NOTIFICATION_BIND, ({ data }) => {
         console.log('[HomePage] initPushers()', data);
         this.getNumNotification();
-      });
+    });
+
+      //this.pusherNotifications.initSharedCarePlan();
+      this.pusherNotifications.initAssignedLevel()
   }
 
   activatePusherNotification() {
     const channel = this.pusherNotifications?.init();
     console.log('[HomePage] activatePusherNotification() channel ', channel);
     if (channel)
-      channel?.bind(NAME_BIND, ({ data }) => {
+      channel?.bind(this.pusherNotifications.NOTIFICATION_BIND, ({ data }) => {
         console.log('[HomePage] activatePusherNotification()', data);
         this.getNumNotification();
       });
@@ -2334,9 +2334,12 @@ export class HomePage implements OnInit {
   }
 
   handleInput(event) {
+    this.activateFocus = true;
     const query = event.target.value.toLowerCase();
     this.results = this.listFamilyUnit.filter(item => 
       item.name.toLowerCase().includes(query)
-    );  }
+    );  
+  }
+
 
 }

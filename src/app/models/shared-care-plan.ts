@@ -46,6 +46,8 @@ export enum ContentTypePath {
     LifestyleHabits = '/tracking/lifestyle-habits',
     //MEDICAL PROCEDURES
     MedicalProcedure= '/tracking/procedures', 
+    //MEDICAL TEST
+    MedicalTest= '/document-detail', 
     //MEDICATION
     Medication= '/tracking/medication/', 
     MedicationDetail = '/drugs-detail', // Medication Plan
@@ -60,6 +62,8 @@ export enum ContentTypePath {
     ReminderDetail = '/agenda/reminder',
     //TESTIMONIALS
     Testimonials= '/tracking/testimonials',
+    //TRACKING OR FOLLOW UP
+    Tracking= '/tracking',
     //INFORMED COSENT
     InformedConsent = '/tracking/informed-consent', 
 
@@ -80,8 +84,7 @@ export enum ContentTypeIcons {
     Exercises= 'assets/images/shared-care-plan/exercises.png',
     Diets= 'assets/images/shared-care-plan/diets.png',  
     Testimonials= 'assets/images/shared-care-plan/testimonials.png', 
-    Games= 'assets/images/shared-care-plan/games.png', 
-   
+    Games= 'assets/images/shared-care-plan/games.png',  
 
     //AddBUtton
     buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',
