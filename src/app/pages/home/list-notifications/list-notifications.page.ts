@@ -281,7 +281,7 @@ export class ListNotificationsPage implements OnInit {
     switch (notification.notification_origin_type) {
       case "App\\FormAnswer":
         this.setRead(notification.id)
-        this.router.navigate([ContentTypePath.Forms, { id: data.form_id }], { state: { data: null, formAnswer: data.id } }); //No se accede xq son formularios v1
+        this.router.navigate([ContentTypePath.FormDetail, { id: data.form_id }], { state: { data: null, formAnswer: data.id } }); //No se accede xq son formularios v1
         break;
       case "App\\LevelAccomplishment":
         this.setRead(notification.id)
