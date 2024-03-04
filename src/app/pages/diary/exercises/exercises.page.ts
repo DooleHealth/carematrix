@@ -15,7 +15,7 @@ import { PermissionService } from 'src/app/services/permission.service';
   styleUrls: ['./exercises.page.scss'],
 })
 export class ExercisesPage implements OnInit {
-  segment="Exercises"
+  segment="Exercise"
   exercises: Array<any>;
   items: any[] = []
   saves_items;
@@ -40,6 +40,10 @@ export class ExercisesPage implements OnInit {
 
   loaderAgain(event: { type: string }) {  
     this.getExercisesList()
+  }
+
+  refreshPage(data: any) {
+    if (this.permissionService.canViewExercises) this.getExercisesList()
   }
 
   async getExercisesList(){

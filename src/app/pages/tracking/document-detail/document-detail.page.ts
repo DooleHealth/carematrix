@@ -8,6 +8,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { DocumentsAddPage } from '../documents-add/documents-add.page';
+import { PermissionService } from 'src/app/services/permission.service';
 export interface ItemDiagnostic {
   expanded?: boolean;
   elements?: any[];
@@ -34,7 +35,8 @@ export class DocumentDetailPage implements OnInit {
     private modalCtrl: ModalController,
     private notification: NotificationService,
     private languageService: LanguageService,
-    private dateService : DateService
+    private dateService : DateService,
+    public permissionService: PermissionService
   ) {
   }
 

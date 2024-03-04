@@ -15,7 +15,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items= [];
-  segment="Advices"
+  segment="Advice"
   //itemsBackup= []
   //advices = []
   saves_items;
@@ -33,12 +33,20 @@ export class AdvicesPage implements OnInit {
     if (this.permissionService.canViewAdvices) this.getAdvicesList()
   }
 
+  ionViewWillEnter() {
+    this.refreshPage(null);
+  }
+
   adapterForView(list){
     this.items = this.lifeStyle.adapterForView(
       list, // JSON
       'image',  //img
       'name'  //title
     )  
+  }
+
+  refreshPage(data: any) {
+    if (this.permissionService.canViewAdvices) this.getAdvicesList()
   }
 
 // ADVICES

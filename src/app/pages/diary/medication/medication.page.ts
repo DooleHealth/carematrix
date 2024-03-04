@@ -127,7 +127,7 @@ export class MedicationPage implements OnInit {
    
     transformDate(date) {
           if(date != null){
-            return this.datePipe.transform(date, 'dd-MM-yyyy');
+            return this.datePipe.transform(date, 'yyyy-MM-dd');
       }else{
         return ""
       }

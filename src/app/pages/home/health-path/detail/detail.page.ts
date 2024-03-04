@@ -12,6 +12,8 @@ import { AdvicesDetailPage } from '../../advices-detail/advices-detail.page';
 import { AdvicesPage } from '../../advices/advices.page';
 import { NewDetailPage } from '../../new-detail/new-detail.page';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { PermissionService } from 'src/app/services/permission.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-detail',
@@ -30,9 +32,14 @@ export class DetailPage {
   goals = [];
   isRequired = false
   isChallengeCompleted = false
-  constructor(public translate: TranslateService, private dooleService: DooleService, private modalCtrl: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone) { }
+
+  canDoGoal: boolean = false;
+
+  constructor(public translate: TranslateService, private dooleService: DooleService, private modalCtrl: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone, public permissionService: PermissionService, public authService: AuthenticationService) { }
 
   ionViewWillEnter() {
+    this.canDoGoal = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
+
     this.note = this.translate.instant('health_path.goal_note')
     this.getChallenge();
   }
@@ -158,46 +165,48 @@ export class DetailPage {
     console.log('goal', goal)
     let message = ''
     let link = '';
-    switch (goal?.goalable_type) {
-      case "App\\Form":
-        this.openModal(FormPage,{ id: goal.id, isModal: true });
-        //this.router.navigate(['/tracking/form', { id: goal.id }]);
-        break;
-      case "App\\Drug":
-        this.router.navigate(['/journal'], { state: { segment: 'medication' } });
-        break;
-      case "App\\News":
-        //this.router.navigate(['/new-detail'], { state: { id: goal.id } });
-        this.openModal(NewDetailPage,{ id: goal.id });
-        break;
-      case "App\\Advice":
-        //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
-        this.openModal(AdvicesDetailPage,{ id: goal.id });
-        break;
-      case "App\\Diet":
-        //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
-        this.openModal(DietsDetailPage,{ id: goal.id });
-        break;
-      case "App\\Element":
-        this.openModal(ElementsAddPage, { id: goal.id, nameElement: goal.name, units: '' });
-        //this.presentAlert(goal);
-        break;
-      case "App\\Game":
-        console.log('openGoal goal: ', goal);
-        if(goal?.type == 'form')
-        this.openModal(FormPage,{ id: goal?.id, isModal: true});
-        else{
-          //this.router.navigate(['/tracking/games-detail'], { state: { id: goal.id } });
-          this.openGames(goal?.link)
-        }
-        break;
-      default:
-        message = ''
-        link = '';
-        console.error("goal.goalable_type not found: ", goal)
-        break;
-    }
 
+    if (this.canDoGoal) {
+      switch (goal?.goalable_type) {
+        case "App\\Form":
+          this.openModal(FormPage,{ id: goal.id, isModal: true });
+          //this.router.navigate(['/tracking/form', { id: goal.id }]);
+          break;
+        case "App\\Drug":
+          this.router.navigate(['/journal'], { state: { segment: 'medication' } });
+          break;
+        case "App\\News":
+          //this.router.navigate(['/new-detail'], { state: { id: goal.id } });
+          this.openModal(NewDetailPage,{ id: goal.id });
+          break;
+        case "App\\Advice":
+          //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
+          this.openModal(AdvicesDetailPage,{ id: goal.id });
+          break;
+        case "App\\Diet":
+          //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
+          this.openModal(DietsDetailPage,{ id: goal.id });
+          break;
+        case "App\\Element":
+          this.openModal(ElementsAddPage, { id: goal.id, nameElement: goal.name, units: '' });
+          //this.presentAlert(goal);
+          break;
+        case "App\\Game":
+          console.log('openGoal goal: ', goal);
+          if(goal?.type == 'form')
+          this.openModal(FormPage,{ id: goal?.id, isModal: true});
+          else{
+            //this.router.navigate(['/tracking/games-detail'], { state: { id: goal.id } });
+            this.openGames(goal?.link)
+          }
+          break;
+        default:
+          message = ''
+          link = '';
+          console.error("goal.goalable_type not found: ", goal)
+          break;
+      }
+    }
   }
 
   async openModal(component, componentProps) {

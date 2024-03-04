@@ -614,7 +614,7 @@
         "aftenoon": "Tarde",
         "night": "Noche",
         "midnight": "Media noche",
-        "dawning": "Madrugada",
+        "dawning": "Amanecer",
         "all_day": "Todo el día"
     },
     "diet":{
@@ -1035,7 +1035,9 @@
     "lifestyle":{
       "header":"Hábitos de estilo de vida",
       "head_card_title":"Hábitos de estilo de vida" , 
-      "head_card_text": "Los hábitos de vida pueden influir considerablemente en la salud física, mental y emocional de una persona."
+      "head_card_text": "Los hábitos de vida pueden influir considerablemente en la salud física, mental y emocional de una persona.",
+      "last_score": "Última puntuación:",
+      "score_points:": " puntos"
     },
     "shared_care_plan":{
       "title": "Plan de cuidados compartido",

@@ -250,7 +250,7 @@ export class ScpMedForMonComponent implements OnInit {
 
   SeeAnswers(event: any, content: any){
     event.stopPropagation();
-    this.router.navigate(['/tracking/answers'], {state:{id: content.id, title: content.title}});
+    this.router.navigate(['/tracking/answers'], {state:{id: content.form_id, title: content.title}});
       }
      
 

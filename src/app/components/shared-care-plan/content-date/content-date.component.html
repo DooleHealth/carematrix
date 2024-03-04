@@ -55,7 +55,7 @@ routerLink="diets-detail/recipe"
   class="ion-no-padding" 
   (click)="goTo(content)"
   routerLinkActive="active-item" 
-   [state]="{id: content?.item_id}" 
+   [state]="{id: content?.form_id, form_programmation_id: content?.id}" 
    *ngIf="content?.type === 'forms'; else Forms"
    >
   
@@ -75,26 +75,26 @@ routerLink="diets-detail/recipe"
           </ion-col>
     
           <ion-col size="8">
-            <ion-row>
+            <ion-row style="margin-bottom: -8%;">
                 <ion-col><p>{{ content?.title}}</p></ion-col>
               <ion-col size="6.5" size-md="6" size-lg="5">          
-                <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
-                     >{{ 'button.take' | translate }}
+                <ion-button  *ngIf="content?.status == 2" mode="ios"  class="ion-float-right custom-button"  color="medium" 
+                     >{{ 'button.pending' | translate }}
                     </ion-button>
   
-                    <ion-button *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
-                      >{{ 'button.forgotten' | translate }}
+                    <ion-button  *ngIf="content?.status == 1" mode="ios"  class="ion-float-right custom-button"  color="success"
+                      >{{ 'button.completed' | translate }}
                     </ion-button>
-                    <ion-button *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
-                   >{{ 'button.taked' | translate }}
+                    <ion-button *ngIf="content?.status == 0" mode="ios"  class="ion-float-right custom-button"  color="danger"
+                   >{{ 'button.forgotten' | translate }}
                   </ion-button>
               </ion-col>
               
             </ion-row>
-            <ion-row>
+            <ion-row style="margin-bottom: -4%;">
               <ion-row class="txtSubtitle2"  >
                 <ion-text class="txtSubtitle" style="display: inline-flex !important;">
-                  <p> {{ setFormatDate(content?.from_date ) }} </p>&nbsp;
+                  <p>  {{'medication.from' | translate}}   {{ setFormatDate(content?.from_date ) }} </p>&nbsp;
                   <p *ngIf="content?.to_date"> {{'medication.to' | translate}} {{ setFormatDate(content?.to_date )}}</p>
                 </ion-text>
                 &nbsp;
@@ -107,7 +107,7 @@ routerLink="diets-detail/recipe"
             <ion-row>
               <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
                 <p class="txtSubtitle3" style="color: var(--malva)">
-                  {{ content?.frequency ? content.frequency.charAt(0).toUpperCase() + content.frequency.slice(1) : '' }}
+                  {{ content.frequency }}
 
                 </p>
       
