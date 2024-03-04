@@ -83,7 +83,6 @@ export class GoalsPage implements OnInit {
     await this.dooleService.getAPIChallenges2().subscribe(
       async (res: any) => {
         await res;
-        
         let goal= res.challenges
          goal.forEach(g => {
           if(g.aderence.isCompleted != true){

@@ -33,6 +33,10 @@ export class NewsPage implements OnInit {
     if (this.permissionService.canViewNews) this.getNewsList()
   }
 
+  ionViewWillEnter() {
+    this.refreshPage(null);
+  }
+
   adapterForView(list){
     this.items = this.lifeStyle.adapterForView(
       list, // JSON
@@ -40,6 +44,12 @@ export class NewsPage implements OnInit {
       'subject'  //title
     )  
   }
+
+  refreshPage(data: any) {
+    if (this.permissionService.canViewNews) this.getNewsList()
+  }
+
+  
 
   async getNewsList(){
     console.log('[NewsPage] getNewsList()');

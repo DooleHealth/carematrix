@@ -9,8 +9,12 @@
     <!--<ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
     <!--<ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
     <!--<ion-icon name="volume-low-outline" slot="end" style="margin-left: 5%;"></ion-icon>(click)= "setContentStatus('favourite')"-->
-    <ion-icon [color]="getColorLike(listcontets?.statusable || listcontets?.statusables)" name="thumbs-up" slot="end" (click)= "setContentStatus(listcontets.id, 'like')"></ion-icon>
-    <ion-icon  [color]="getColorLike(listcontets?.interactions)"  name="heart-outline" slot="end" (click)= "setContentStatus(listcontets.id, 'like')" ></ion-icon>
+
+<!--     <ion-icon [color]="getColorLike(listcontets?.statusable || listcontets?.statusables)" name="thumbs-up" slot="end" (click)= "setContentStatus(listcontets.id, 'like')"></ion-icon>
+ -->    
+<!--  getColorLike(listcontets?.statusable)
+ --> 
+ <ion-icon *ngIf="this.authService?.user?.familyUnit == null"  color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end" (click)= "setContentStatus(listcontets?.statusable, listcontets.id, 'like')" ></ion-icon>
    
   </ion-item>
   <ion-card-header mode="md">

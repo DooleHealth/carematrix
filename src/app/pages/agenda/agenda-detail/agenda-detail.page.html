@@ -6,7 +6,7 @@
     <ion-title class="toolbarTitle" style="font-size: medium; padding-left: 0%;" *ngIf="this.event?.origin == 1 && !this.event?.staff">{{ 'appointment.header_event' | translate}}</ion-title>
     <ion-title class="toolbarTitle" *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
     <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
-      <ion-button *ngIf="this.permissionService.canManageEvents && this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" ><ion-icon name="alarm-outline"></ion-icon></ion-button>
+      <ion-button *ngIf="this.permissionService.canManageEvents && this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" [disabled]="this.permissionService.canManageEvents"><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
       <ion-button color="primary"  (click)="addCalendar(this.event)"><ion-icon name="calendar-outline"></ion-icon></ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
 
   <div class="whiteBackground" *ngIf="!this.isLoading">
     <ion-fab  *ngIf="this.event?.online === 1" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button [disabled]="!this.enableVideocallButton" (click)="this.startDooleVideocall()" >
+      <ion-fab-button [disabled]="!this.enableVideocallButton && !this.permissionService.canAccessVideocall" (click)="this.startDooleVideocall()" >
         <ion-icon name="videocam-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>

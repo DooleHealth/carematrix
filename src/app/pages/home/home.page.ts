@@ -2334,7 +2334,7 @@ export class HomePage implements OnInit {
   }
 
   handleInput(event) {
-    this.activateFocus = true;
+    //this.activateFocus = true;
     const query = event.target.value.toLowerCase();
     this.results = this.listFamilyUnit.filter(item => 
       item.name.toLowerCase().includes(query)

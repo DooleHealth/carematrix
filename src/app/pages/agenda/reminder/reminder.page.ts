@@ -9,6 +9,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-reminder',
@@ -38,6 +39,7 @@ export class ReminderPage implements OnInit {
     private modalCtrl: ModalController,
     public nav: NavController,
     public notification: NotificationService,
+    public permissionsService: PermissionService
   ) { }
 
   ngOnInit() {

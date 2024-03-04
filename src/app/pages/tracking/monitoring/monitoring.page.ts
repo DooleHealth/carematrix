@@ -12,7 +12,6 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
   styleUrls: ['./monitoring.page.scss'],
 })
 export class MonitoringPage implements OnInit {
-  canDoHealhCharts:boolean = false;
   listItem: any[] = []
   items = [];
   isLoading = false;
@@ -23,8 +22,7 @@ export class MonitoringPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.canDoHealhCharts = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
-    this.getFormList();
+    if (this.permissionService.canViewMonitoring) this.getFormList();
   }
 
 
