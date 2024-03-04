@@ -27,18 +27,19 @@ export class Constants {
 
     public addEndPoint(){
       this.LIST_ENPOINT = []
-      this.LIST_ENPOINT.push({ //Por defecto index 0
-        id:0,
-        name: 'Desarrollo',
-        api: 'https://bo-dev.incahealthcare.com/api',
-        endpoint: 'https://bo-dev.incahealthcare.com'
-      })
       this.LIST_ENPOINT.push({
-        id:1,
+        id:0,
         name: 'Producción',
         api: 'https://bo.incahealthcare.com/api',
         endpoint: 'https://carematrix.doole.io'
       })
+      this.LIST_ENPOINT.push({ //Por defecto index 0
+        id:1,
+        name: 'Desarrollo',
+        api: 'https://bo-dev.incahealthcare.com/api',
+        endpoint: 'https://bo-dev.incahealthcare.com'
+      })
+
 
 
     }
