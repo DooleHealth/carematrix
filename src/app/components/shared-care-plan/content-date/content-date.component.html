@@ -151,14 +151,14 @@ class="ion-no-padding"
               <p>{{(content?.alias !== null)?
               content?.alias: content?.name}}</p></ion-col>
             <ion-col size="6.5" size-md="6" size-lg="5">          
-                  <ion-button *ngIf="content?.forgotten == 2"  mode="ios"  color="primary"  class="ion-float-right custom-button" 
+                  <ion-button mode="ios" *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
                     (click)="changeTake(content?.id, content?.state)">{{ 'button.take' | translate }}
                   </ion-button>
 
-                  <ion-button *ngIf="content?.forgotten == 1" mode="ios"  class="ion-float-right custom-button"  color="danger"
+                  <ion-button mode="ios" *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
                     (click)="changeTake(content?.id, content?.state)">{{ 'button.forgotten' | translate }}
                   </ion-button>
-                  <ion-button *ngIf="content.forgotten == 0" mode="ios"  class="ion-float-right custom-button"  color="success"
+                  <ion-button mode="ios" *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
                   (click)="changeTake(content.id, content.state)">{{ 'button.takeds' | translate }}
                 </ion-button>
             </ion-col>

@@ -17,7 +17,6 @@ import { PermissionService } from 'src/app/services/permission.service';
 export class ScpMedForMonComponent implements OnInit {
 
   @Input() segment: string;
-
   @Input() content: medication
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataUpdated: EventEmitter<any> = new EventEmitter<any>();
@@ -61,6 +60,8 @@ export class ScpMedForMonComponent implements OnInit {
     if (content.type == "App\\Monitoring") {
       this.router.navigate([`/activity-goal`], { state: { id: content.form_id, header: content.title }});
     }
+
+    this.redirect.emit({type: content})
   } 
 
 

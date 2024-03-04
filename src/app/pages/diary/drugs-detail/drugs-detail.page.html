@@ -15,38 +15,39 @@
 
 
 <ion-content>
-  <ion-card  class="cardProfilePaddingBottom" >
-    <ion-item>
-
+  <ion-card *ngIf="!isEditDrug"  class="cardProfilePaddingBottom" >
+    <ion-item lines="none">
       <app-add-drug-filter style="width: 100%;" (drugUpdated)="drugSelecting($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
-
     </ion-item> 
 
     <app-interactions-medicine [interactions]="interactions" *ngIf="interactions.length >0"></app-interactions-medicine>
   </ion-card>
+  
   <form (ngSubmit)="submit()" [formGroup]="form" *ngIf="drug">
-  <ion-card  class="cardProfilePaddingBottom" >
-    <ion-card>
-      <ion-item lines="none">
-        <ion-label class="txtTitleGoals" stacked>{{ 'medication.name' | translate}}
-        </ion-label>
-        <ion-text style="margin: 10px;" class="txtTitleGoals" >{{drug.name}}</ion-text>
-      </ion-item>
-  <ion-item *ngIf="!isInstant">
-      <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}
-      </ion-label>
-      <ion-input [readonly]="!modifyMedicationPlans" formControlName="alias" type="text" placeholder="{{ 'medication.placeholder_alias' | translate}}" ></ion-input>
-    </ion-item >
 
-      <!-- field_dose -->
-      <ion-item>
-        <ion-label  stacked>
-          <h5 >{{ 'medication.field_dose' | translate}}</h5>
-          <ion-note *ngIf="this.isSubmittedDosis && this.form.get('dose').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
-        </ion-label>
-        <ion-input [readonly]="!modifyMedicationPlans" (ionChange)="this.isSubmittedDosis = false" formControlName="dose"  type="number" placeholder="{{ 'medication.placeholder_dose' | translate}}" ></ion-input>
-      </ion-item >
-    </ion-card>
+  <ion-card>
+    <ion-item lines="none">
+      <ion-label class="txtTitleGoals" stacked>{{ 'medication.name' | translate}}
+      </ion-label>
+      <ion-text style="margin: 10px;" class="txtTitleGoals" >{{drug.name}}</ion-text>
+    </ion-item>
+  <ion-item *ngIf="!isInstant">
+    <ion-label class="txtTitleGoals" stacked>{{ 'medication.field_alias' | translate}}
+    </ion-label>
+    <ion-input [readonly]="!modifyMedicationPlans" formControlName="alias" type="text" placeholder="{{ 'medication.placeholder_alias' | translate}}" ></ion-input>
+  </ion-item >
+
+    <!-- field_dose -->
+    <ion-item>
+      <ion-label  stacked>
+        <h5 >{{ 'medication.field_dose' | translate}}</h5>
+        <ion-note *ngIf="this.isSubmittedDosis && this.form.get('dose').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
+      </ion-label>
+      <ion-input [readonly]="!modifyMedicationPlans" (ionChange)="this.isSubmittedDosis = false" formControlName="dose"  type="number" placeholder="{{ 'medication.placeholder_dose' | translate}}" ></ion-input>
+    </ion-item >
+  </ion-card>
+  
+  <ion-card  class="cardProfilePaddingBottom" >
   
 
     <!-- Single Shot-->
