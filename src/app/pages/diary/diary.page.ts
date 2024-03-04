@@ -101,6 +101,10 @@ export class DiaryPage implements OnInit {
     }
   }
 
+  refreshPage(data: any) {
+    if (this.permissionService.canViewRecipes) this.getRecipesist()
+  }
+
   getIsDateInPast(date: string | number | Date){
   
     this.isDateInPast = new Date(date) < this.currentDate;
@@ -185,6 +189,8 @@ export class DiaryPage implements OnInit {
     console.log('[DiaryPage] getDietListByDate()');
     let date  = this.transformDate2(this.date)
     const params = {date: date, grouped_by_times: true}
+    this.isLoading = true;
+
     this.dooleService.getAPIdietsByDate(params).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDietListByDate()', await res);
@@ -200,11 +206,14 @@ export class DiaryPage implements OnInit {
           console.log("VERIFY DIETS")
           console.log(this.diets)
           console.log(this.diets?.length)
+          this.isLoading = false;
+
         }
 
        },(err) => {
           console.log('[DiaryPage] getDietListByDate() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
+          this.isLoading = false;
 
           throw err;
       }, ()=>{
@@ -244,7 +253,7 @@ export class DiaryPage implements OnInit {
         //await this.getDietList()
         if (this.permissionService.canViewDiets) await this.getDietListByDate()
         break;
-      case 'recipes':
+      case 'Receipt':
         if (this.permissionService.canViewRecipes) await this.getRecipesist()
         break;
       default:
@@ -325,6 +334,8 @@ export class DiaryPage implements OnInit {
         this.items = []
         ///let formattedDate = this.transformDate(this.date)
        //// let date = {date: formattedDate}
+       this.isLoading = true;
+
        let  params={
         tags:1,
         interactions:1,
@@ -345,13 +356,14 @@ export class DiaryPage implements OnInit {
             
               console.log('[DiaryPage] getRecipesList()', await this.items);
              // this.adapterForView(res.diets)
+             this.isLoading = false
             }
     
     
            },(err) => {
               console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message);
               alert( 'ERROR(' + err.code + '): ' + err.message)
-    
+              this.isLoading = false
               throw err;
           }, ()=>{
             

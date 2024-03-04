@@ -42,13 +42,18 @@
 
 
   <div class="verticalLine2" [ngSwitch]="segment">
- <!-- Forms Today-->
- <div *ngSwitchCase="'today'" style="margin-top: 3%;">
-  <div >
-    <ion-list  *ngIf="this.permissionService.canViewForms && listForms.length > 0; else noData">
-      <ion-grid *ngFor="let content of listForms" class="ion-no-padding" >  
-        <ion-row>
-          <!--<ion-col size="0.8" >    
+    <!-- Forms Today-->
+    <div *ngSwitchCase="'today'" style="margin-top: 3%;">
+
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner></ion-spinner>
+      </ng-container>
+
+      <ng-template #finishedLoading>
+        <ion-list *ngIf="this.permissionService.canViewForms && listForms.length > 0; else noData">
+          <ion-grid *ngFor="let content of listForms" class="ion-no-padding">
+            <ion-row>
+              <!--<ion-col size="0.8" >    
             <ion-icon class="center" *ngIf="getIsDateInPast(content?.from_date)"
             src='/assets/icons/shared-care-plan/ellipse.svg'
             ></ion-icon>&nbsp; 
@@ -56,54 +61,62 @@
             src='/assets/icons/shared-care-plan/ellipse5.svg'
             ></ion-icon>&nbsp;
           </ion-col>-->
-          <ion-col size="11.2" *ngIf="getPeriodTime(content?.period)" >   
-            <ion-text class="center"   style="color: #BA0186;" >
-              <h5>&nbsp; 
-                {{ this.selectTime(content?.time) }}
-              </h5>
-            </ion-text>         
-          </ion-col>
+              <ion-col size="11.2" *ngIf="getPeriodTime(content?.period)">
+                <ion-text class="center" style="color: #BA0186;">
+                  <h5>&nbsp;
+                    {{ this.selectTime(content?.time) }}
+                  </h5>
+                </ion-text>
+              </ion-col>
 
-        </ion-row>
-        <ion-row>
-          <!--<ion-col size="0.8" style="align-items: center;">  
+            </ion-row>
+            <ion-row>
+              <!--<ion-col size="0.8" style="align-items: center;">  
           <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/lineStroke.svg'></ion-icon>
           <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
           
         </ion-col>-->
-          <ion-col size="11.2">    
-            <app-content-date [content]="content" (redirect)="goTo(content)"></app-content-date>
-          </ion-col>
-          
-        </ion-row>
-      </ion-grid>
+              <ion-col size="11.2">
+                <app-content-date [content]="content" (redirect)="goTo(content)"></app-content-date>
+              </ion-col>
 
-    </ion-list>
-  </div>
+            </ion-row>
+          </ion-grid>
 
+        </ion-list>
 
 
-  <ng-template #noData>
-    <app-no-data></app-no-data>
-  </ng-template>
 
-</div>
+        <ng-template #noData>
+          <app-no-data></app-no-data>
+        </ng-template>
 
- <!-- Forms-->
-<div *ngSwitchCase="'forms'" style="margin-top: 3%;">
-  <ion-list *ngIf="this.permissionService.canViewPlanningForms && items.length > 0; else noData">
-    <app-scp-med-for-mon
-    *ngFor="let content of items"
-    [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"
-  ></app-scp-med-for-mon>
-  </ion-list>
-  <ng-template #noData>
-    <div *ngIf="!this.isLoading" style="margin-top: 3%;">
-      <app-no-data></app-no-data>
+      </ng-template>
+
     </div>
-  </ng-template>
-</div>
 
+
+
+      <!-- Forms-->
+      <div *ngSwitchCase="'forms'" style="margin-top: 3%;">
+
+        <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+          <ion-spinner></ion-spinner>
+        </ng-container>
+
+        <ng-template #finishedLoading>
+          <ion-list *ngIf="this.permissionService.canViewForms && items.length > 0; else noData">
+            <app-scp-med-for-mon *ngFor="let content of items" [content]="content" [segment]="this.segment"
+              (dataUpdated)="loaderAgain($event)"></app-scp-med-for-mon>
+          </ion-list>
+          <ng-template #noData>
+            <div *ngIf="!this.isLoading" style="margin-top: 3%;">
+              <app-no-data></app-no-data>
+            </div>
+          </ng-template>
+        </ng-template>
+
+      </div>
   </div>
 
 </ion-content>

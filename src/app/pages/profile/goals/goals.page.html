@@ -39,35 +39,56 @@
   <div style="margin-top: 3%;" class="verticalLine2" [ngSwitch]="segment">
 
     <div *ngSwitchCase="'goals'">
-      <ion-list *ngIf="goalsList.length > 0; else noData">
-        
-        <app-goals-components
-          *ngFor="let content of goalsList"
-          [content]="content" 
-          (reloadChallenges)="getChallenge()"
-        ></app-goals-components>
-      </ion-list>
+
+      <div class="spin"  *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner ></ion-spinner>
+      </div>
+
+      <ng-template #finishedLoading>
+        <ion-list *ngIf="goalsList.length > 0; else noData">
+          <app-goals-components
+            *ngFor="let content of goalsList"
+            [content]="content" 
+            (reloadChallenges)="getChallenge()"
+          ></app-goals-components>
+        </ion-list>
+
+        <ng-template #noData>
+          <div *ngIf="!this.isLoading">
+            <app-no-data></app-no-data>
+          </div>
+        </ng-template>
+
+      </ng-template>
+
+      
+
     </div>
 
     <div *ngSwitchCase="'achievements'">
-      <ion-list *ngIf="goalsList.length > 0; else noData">
-        
-        <app-goals-components
-          *ngFor="let content of goalsList"
-          [content]="content"  [completedGoals]="true"
-        ></app-goals-components>
-      </ion-list>
+
+      <div class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner ></ion-spinner>
+      </div>
+
+      <ng-template #finishedLoading>
+        <ion-list *ngIf="goalsList.length > 0; else noData">
+          <app-goals-components
+            *ngFor="let content of goalsList"
+            [content]="content"  [completedGoals]="true"
+          ></app-goals-components>
+        </ion-list>
+
+        <ng-template #noData>
+          <div *ngIf="!this.isLoading">
+            <app-no-data></app-no-data>
+          </div>
+        </ng-template>
+
+      </ng-template>
     </div>
 
   </div>
-
-
-
-  <ng-template #noData>
-    <div *ngIf="!this.isLoading">
-      <app-no-data></app-no-data>
-    </div>
-  </ng-template>
 </ion-content>
 
 <ion-footer>
@@ -75,3 +96,4 @@
     <app-tabs></app-tabs>
   </ion-toolbar>
 </ion-footer>
+

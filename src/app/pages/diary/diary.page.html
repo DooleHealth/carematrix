@@ -22,7 +22,7 @@
         <ion-segment-button *ngIf="role?.component?.diet" value="diets">
           <ion-label>{{'diary.field_today' | translate}}</ion-label>
         </ion-segment-button>
-        <ion-segment-button *ngIf="role?.component?.drug" value="recipes">
+        <ion-segment-button *ngIf="role?.component?.drug" value="Receipt">
           <ion-label>{{'diary.field_recipes' | translate}}</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -42,7 +42,11 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <!-- Diets Today-->
     <div *ngSwitchCase="'diets'">
-      <div>
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner ></ion-spinner>
+      </ng-container>
+
+      <ng-template #finishedLoading>
         <ion-list *ngIf="listDietsToday.length > 0; else noData">
           <ion-grid *ngFor="let content of listDietsToday" class="ion-no-padding" >  
             <ion-row  >
@@ -66,24 +70,32 @@
           </ion-grid>
     
         </ion-list>
-      </div>
-
-
-
+      </ng-template>
+      
+        
       <ng-template #noData>
         <app-no-data></app-no-data>
       </ng-template>
 
     </div>
     <!-- Recipes-->
-    <div *ngSwitchCase="'recipes'">
-      <ng-container *ngIf="items.length > 0; else noData">
-        <app-view-more-information  [content]="items" ></app-view-more-information>
+    <div *ngSwitchCase="'Receipt'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner ></ion-spinner>
       </ng-container>
-      
-      <ng-template #noData>
-        <app-no-data></app-no-data>
+
+
+      <ng-template #finishedLoading>
+        <ng-container *ngIf="!this.isLoading && items.length > 0; else noData">
+          <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items" [segment]="this.segment"></app-view-more-information>
+        </ng-container>
+        
+        <ng-template #noData>
+          <app-no-data></app-no-data>
+        </ng-template>
       </ng-template>
+
+      
     </div>
   </div>
 </ion-content>

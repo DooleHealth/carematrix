@@ -80,6 +80,7 @@ export class GoalsPage implements OnInit {
   async getChallenge() {
     let goalsAll =[];
     this.goalsList = [];
+    this.isLoading = true;
     await this.dooleService.getAPIChallenges2().subscribe(
       async (res: any) => {
         await res;
@@ -90,11 +91,10 @@ export class GoalsPage implements OnInit {
             this.goalsList.push(g)
           }
          });
-        
-      
-
+         this.isLoading = false;
       }, (err) => {
         console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
+        this.isLoading = false;
         throw err;
       });
   }
@@ -102,19 +102,17 @@ export class GoalsPage implements OnInit {
   async getChallengeCompleted() {
     let goalsAll =[];
     this.goalsList = [];
+    this.isLoading = false;
     await this.dooleService.getAPIChallenges2().subscribe(
       async (res: any) => {
         await res;
-        
         let goal= res.challenges
          goal.forEach(g => {
           if(g.aderence.isCompleted === true){
             this.goalsList.push(g)
           }
          });
-        
-      
-
+         this.isLoading = false;
       }, (err) => {
         console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
         throw err;
