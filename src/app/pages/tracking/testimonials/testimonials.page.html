@@ -26,7 +26,7 @@
   <div>
     <ion-list *ngIf="items.length > 0; else noData">
 
-      <app-view-more-information [content]="items"></app-view-more-information>
+      <app-view-more-information [content]="items" segment="testimonials"></app-view-more-information>
     </ion-list>
   </div>
   <ng-template #noData>

@@ -107,7 +107,7 @@ export class TrackingPage implements OnInit {
       goals: () => this.permissionService.canViewGoals,
       life_style_habits: () => this.getLifeStyleHabitsViews(),
       forms: () => this.permissionService.canViewForms,
-      medication_plans: () => this.permissionService.canViewMedicationPlans,
+      medication_plans: () => this.permissionService.canViewMedication || this.permissionService.canViewMedicationPlans,
       medical_procedures: () => this.permissionService.canViewMedicalProcedures,
       monitoring: () => this.permissionService.canViewMonitoring
     };
