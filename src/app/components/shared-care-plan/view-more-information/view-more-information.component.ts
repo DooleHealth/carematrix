@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 
 @Component({
@@ -9,11 +10,17 @@ import { DooleService } from 'src/app/services/doole.service';
 export class ViewMoreInformationComponent implements OnInit {
   @Input() content: any;
   @Input() segment: string;
+  @Output() notifyParent: EventEmitter<any> = new EventEmitter();
+
+
   like = false;
   hide = false;
   favourite = false;
   toLink;
-  constructor(private dooleService: DooleService,) { }
+
+
+
+  constructor(private dooleService: DooleService, public authService: AuthenticationService) { }
 
   ngOnInit() {
     console.log("lo que llega", this.content)
@@ -28,10 +35,10 @@ export class ViewMoreInformationComponent implements OnInit {
       case "News":
         return 'new-detail'
           ;
-      case "Advices":
+      case "Advice":
         return 'advices-detail'
           ;
-      case "Exercises":
+      case "Exercise":
         return 'exercices-detail'
           ;
 
@@ -42,32 +49,40 @@ export class ViewMoreInformationComponent implements OnInit {
         return 'diets-detail/recipe';
       }
   }
-  setContentStatus(id, type) {
-    let iconToShow;
+  setContentStatus(statusable, id, type) {
+
     let value = 0
-    
     this.like = !this.like
 
-    iconToShow = this.like ? 'heart' : 'heart-outline'
     value = this.like ? 1 : 0
-    
+
+    if (statusable.length > 0) {
+      let existeLike = statusable.some(objeto => objeto.type === "like");
+      if (existeLike) {
+        value = 0
+      } else {
+        value = 1
+      }
+
+    }
+    else {
+      value = 1
+    }
+
     let params = {
       model: this.segment,
       id: id,
       type: type,
       status: value
     }
-    
+
     this.dooleService.postAPIContentStatus(params).subscribe(
       async (res: any) => {
         if (res.success) {
-         
+          this.refreshPage()
         }
       }
     )
-
-
-
 
   }
 
@@ -101,7 +116,7 @@ export class ViewMoreInformationComponent implements OnInit {
 
   getStateObject(listcontets) {
 
-    if (this.segment === "Exercises") {
+    if (this.segment === "Exercise") {
       return { id: listcontets?.id, programable_id: listcontets.programable_id };
     } else {
       return { id: listcontets?.id };
@@ -122,5 +137,10 @@ export class ViewMoreInformationComponent implements OnInit {
     else {
       return 'heart-outline'
     }
+  }
+
+  refreshPage() {
+    // This function could be called on some event like a button click
+    this.notifyParent.emit();
   }
 }
