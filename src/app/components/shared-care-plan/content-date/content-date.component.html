@@ -78,15 +78,15 @@ routerLink="diets-detail/recipe"
             <ion-row style="margin-bottom: -8%;">
                 <ion-col><p>{{ content?.title}}</p></ion-col>
               <ion-col size="6.5" size-md="6" size-lg="5">          
-                <ion-button *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
-                     >{{ 'button.take' | translate }}
+                <ion-button  *ngIf="content?.status == 2" mode="ios"  class="ion-float-right custom-button"  color="medium" 
+                     >{{ 'button.pending' | translate }}
                     </ion-button>
   
-                    <ion-button *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
-                      >{{ 'button.forgotten' | translate }}
+                    <ion-button  *ngIf="content?.status == 1" mode="ios"  class="ion-float-right custom-button"  color="success"
+                      >{{ 'button.completed' | translate }}
                     </ion-button>
-                    <ion-button *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
-                   >{{ 'button.taked' | translate }}
+                    <ion-button *ngIf="content?.status == 0" mode="ios"  class="ion-float-right custom-button"  color="danger"
+                   >{{ 'button.forgotten' | translate }}
                   </ion-button>
               </ion-col>
               

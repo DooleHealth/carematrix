@@ -253,6 +253,7 @@ export class FormListPage implements OnInit {
           
           let newForm = { ...form };
           let date = this.selectDayPeriod(element.time);
+          newForm.status = element.status;
           newForm.period = date;
           newForm.time = element.time;
           this.listForms.push(newForm);
@@ -262,6 +263,7 @@ export class FormListPage implements OnInit {
       }else{
         form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
         form.time = form.formProgrammationTimes[0].time
+        form.status = form.formProgrammationTimes[0].status
 
       this.listForms.push(form);
       }

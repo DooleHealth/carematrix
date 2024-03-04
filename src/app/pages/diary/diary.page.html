@@ -48,7 +48,7 @@
             <ion-row  >
               <ion-col size="0.8" >    
               </ion-col>
-              <ion-col size="11.2" *ngIf="getPeriodDiets(content?.item_time_string)">   
+              <ion-col size="11.2" *ngIf="getPeriodEat(content?.item_time_string)" >   
                 <ion-text class="center" style="color: #BA0186;">
                   <h5>&nbsp; 
                     {{ this.selectMealTimes(content?.date_intake) }}

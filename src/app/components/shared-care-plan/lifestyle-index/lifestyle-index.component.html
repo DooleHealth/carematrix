@@ -17,6 +17,12 @@
     <ion-grid style="height: 100% !important">
       <ion-row>
         <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title | translate}}</ion-text>
+        <ion-col size="9.5" size-md="10" size-lg="11"  *ngIf="content?.routerlink =='games-detail'">
+          <p class="txtSubtitle3" style="color: var(--malva)" >
+         {{'lifestyle.last_score' | translate}} {{ content.score }} {{'lifestyle.scorepoints' | translate}}
+          </p>
+
+        </ion-col>
       </ion-row>
       <!--<ion-row class="verticalAlignItem">
         <ion-text class="status" [ngStyle]="{ color: this.state?.color }">

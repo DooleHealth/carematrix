@@ -731,7 +731,9 @@
     "takeds": "Taked",
     "taked": "Outlet",
     "forgotten": "Forgotten",
+    "completed": "Answered",
     "continue": "Continue",
+    "pending": "Pending",
     "send": "Send",
     "perfil": "Profile",
     "open": "Open",
@@ -1057,7 +1059,9 @@
   "lifestyle": {
     "header": "Lifestyle Habits",
     "head_card_title": "Lifestyle Habits",
-    "head_card_text": "Lifestyle habits can have a significant impact on an individual's physical, mental, and emotional health"
+    "head_card_text": "Lifestyle habits can have a significant impact on an individual's physical, mental, and emotional health",
+    "last_score": "Last score:",
+    "scorepoints": " points"
   },
   "shared_care_plan": {
     "title": "Shared care plan",
