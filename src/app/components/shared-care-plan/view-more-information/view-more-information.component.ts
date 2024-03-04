@@ -6,14 +6,14 @@ import { DooleService } from 'src/app/services/doole.service';
   templateUrl: './view-more-information.component.html',
   styleUrls: ['./view-more-information.component.scss'],
 })
-export class ViewMoreInformationComponent  implements OnInit {
+export class ViewMoreInformationComponent implements OnInit {
   @Input() content: any;
   @Input() segment: string;
   like = false;
   hide = false;
   favourite = false;
   toLink;
-  constructor( private dooleService: DooleService,) { }
+  constructor(private dooleService: DooleService,) { }
 
   ngOnInit() {
     console.log("lo que llega", this.content)
@@ -22,60 +22,59 @@ export class ViewMoreInformationComponent  implements OnInit {
 
   }
 
-  toRouterLink(){
-    
+  toRouterLink() {
+
     switch (this.segment) {
       case "News":
-        return'new-detail'
-        ;
-        case "Advices":
-          return'advices-detail'
+        return 'new-detail'
           ;
-          case "Exercises":
-          return'exercices-detail'
+      case "Advices":
+        return 'advices-detail'
           ;
-          
+      case "Exercises":
+        return 'exercices-detail'
+          ;
+
     }
 
-if(this.content[0].modal_type)
-if(this.content[0].modal_type === "App\\Receipt"){
- return 'diets-detail/recipe';
-}
+    if (this.content[0].modal_type)
+      if (this.content[0].modal_type === "App\\Receipt") {
+        return 'diets-detail/recipe';
+      }
   }
-  setContentStatus(id, type){
+  setContentStatus(id, type) {
+    let iconToShow;
     let value = 0
-    if(type == 'like'){
-      this.like = !this.like
-      value =  this.like? 1:0
-    }
-    else if(type == 'hide'){
-      this.hide = !this.hide
-      value =  this.hide? 1:0
-    }
-    else{
-      this.favourite = !this.favourite
-      value = this.favourite? 1:0
-    }
+    
+    this.like = !this.like
+
+    iconToShow = this.like ? 'heart' : 'heart-outline'
+    value = this.like ? 1 : 0
+    
     let params = {
       model: this.segment,
       id: id,
       type: type,
       status: value
     }
-    if(id)
+    
     this.dooleService.postAPIContentStatus(params).subscribe(
-      async (res: any) =>{
-          if(res.success){
-          //  this.getDetailNew('onlyStatus');
-          }
+      async (res: any) => {
+        if (res.success) {
+         
+        }
       }
     )
+
+
+
+
   }
 
   truncateDescription(description: string, maxLength: number): string {
-     // Utiliza una expresión regular para eliminar las etiquetas HTML
-     const regex = /(<([^>]+)>)/ig;
-     const result = description.replace(regex, "");
+    // Utiliza una expresión regular para eliminar las etiquetas HTML
+    const regex = /(<([^>]+)>)/ig;
+    const result = description.replace(regex, "");
     if (result.length > maxLength) {
       return result.substring(0, maxLength) + '...';
     } else {
@@ -88,11 +87,11 @@ if(this.content[0].modal_type === "App\\Receipt"){
     if (!htmlContent) {
       return '';
     }
-  
+
     // Utiliza una expresión regular para eliminar las etiquetas HTML
     const regex = /(<([^>]+)>)/ig;
     const result = htmlContent.replace(regex, "");
-  
+
     return result;
   }
 
@@ -101,7 +100,7 @@ if(this.content[0].modal_type === "App\\Receipt"){
   }
 
   getStateObject(listcontets) {
-    
+
     if (this.segment === "Exercises") {
       return { id: listcontets?.id, programable_id: listcontets.programable_id };
     } else {
@@ -109,20 +108,19 @@ if(this.content[0].modal_type === "App\\Receipt"){
     }
   }
 
-  getColorLike(statusable){
-    debugger
-    if(statusable.length > 0){
+  getColorLike(statusable) {
+    console.log(statusable)
+    if (statusable.length > 0) {
       let existeLike = statusable.some(objeto => objeto.type === "like");
-    if(existeLike){
-      return 'primary'
-    }else{
-      return '#FFFFFF'
+      if (existeLike) {
+        return 'heart'
+      } else {
+        return 'heart-outline'
+      }
+
     }
-      
+    else {
+      return 'heart-outline'
     }
-    else{
-      return '#FFFFFF'
-    }
-    
   }
 }

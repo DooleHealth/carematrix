@@ -243,7 +243,7 @@
     </div>
   </ng-template>
 
-  <app-button-add *ngIf="canManagerHealhChart" [content]="this.addButton[2]"  (dataUpdated)="this.addElement()"></app-button-add>
+  <app-button-add *ngIf="this.permissionService.canManageMonitoring" [content]="this.addButton[2]"  (dataUpdated)="this.addElement()"></app-button-add>
 </ion-content>
 
 <ion-footer>

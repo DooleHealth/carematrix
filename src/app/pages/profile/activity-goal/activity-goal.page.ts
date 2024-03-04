@@ -97,7 +97,6 @@ export class ActivityGoalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.canManagerHealhChart = this.authService?.user?.familyUnit == null && this.permissionService.canManageMonitoring;
     this.id = history.state.id;
     this.header = history.state.header;
 

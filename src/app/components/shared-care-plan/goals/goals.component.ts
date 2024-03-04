@@ -58,7 +58,7 @@ export class GoalsComponent  implements OnInit {
     console.log("goals..", this.content)
   }
   setChallenge(res) {
-    debugger
+
     this.goals = res?.goals;
     this.current_level = res;
     this.aderence = res?.aderence;
@@ -157,46 +157,48 @@ export class GoalsComponent  implements OnInit {
     console.log('goal', goal)
     let message = ''
     let link = '';
-    switch (goal?.goalable_type) {
-      case "App\\Form":
-        this.openModal(FormPage,{ id: goal.id, isModal: true });
-        //this.router.navigate(['/tracking/form', { id: goal.id }]);
-        break;
-      case "App\\Drug":
-        this.router.navigate(['/journal'], { state: { segment: 'medication' } });
-        break;
-      case "App\\News":
-        //this.router.navigate(['/new-detail'], { state: { id: goal.id } });
-        this.openModal(NewDetailPage,{ id: goal.id });
-        break;
-      case "App\\Advice":
-        //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
-        this.openModal(AdvicesDetailPage,{ id: goal.id });
-        break;
-      case "App\\Diet":
-        //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
-        this.openModal(DietsDetailPage,{ id: goal.id });
-        break;
-      case "App\\Element":
-        this.openModal(ElementsAddPage, { id: goal.id, nameElement: goal.name, units: '' });
-        //this.presentAlert(goal);
-        break;
-      case "App\\Game":
-        console.log('openGoal goal: ', goal);
-        if(goal?.type == 'form')
-        this.openModal(FormPage,{ id: goal?.id, isModal: true});
-        else{
-          //this.router.navigate(['/tracking/games-detail'], { state: { id: goal.id } });
-          this.openGames(goal?.link)
-        }
-        break;
-      default:
-        message = ''
-        link = '';
-        console.error("goal.goalable_type not found: ", goal)
-        break;
-    }
 
+    if (this.canDoGoal) {
+      switch (goal?.goalable_type) {
+        case "App\\Form":
+          this.openModal(FormPage,{ id: goal.id, isModal: true });
+          //this.router.navigate(['/tracking/form', { id: goal.id }]);
+          break;
+        case "App\\Drug":
+          this.router.navigate(['/journal'], { state: { segment: 'medication' } });
+          break;
+        case "App\\News":
+          //this.router.navigate(['/new-detail'], { state: { id: goal.id } });
+          this.openModal(NewDetailPage,{ id: goal.id });
+          break;
+        case "App\\Advice":
+          //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
+          this.openModal(AdvicesDetailPage,{ id: goal.id });
+          break;
+        case "App\\Diet":
+          //this.router.navigate(['/advices-detail'], { state: { id: goal.id } });
+          this.openModal(DietsDetailPage,{ id: goal.id });
+          break;
+        case "App\\Element":
+          this.openModal(ElementsAddPage, { id: goal.id, nameElement: goal.name, units: '' });
+          //this.presentAlert(goal);
+          break;
+        case "App\\Game":
+          console.log('openGoal goal: ', goal);
+          if(goal?.type == 'form')
+          this.openModal(FormPage,{ id: goal?.id, isModal: true});
+          else{
+            //this.router.navigate(['/tracking/games-detail'], { state: { id: goal.id } });
+            this.openGames(goal?.link)
+          }
+          break;
+        default:
+          message = ''
+          link = '';
+          console.error("goal.goalable_type not found: ", goal)
+          break;
+      }
+    }
   }
 
   async openModal(component, componentProps) {
@@ -291,7 +293,6 @@ export class GoalsComponent  implements OnInit {
             let model_id = id;
         
             this.translate.get('info.button').subscribe(
-        
               async button => {
                 // value is our translated string
                 const alert = await this.alertController.create({
@@ -302,26 +303,26 @@ export class GoalsComponent  implements OnInit {
                       text: this.translate.instant('goals.button_rejected'),
                       cssClass: "boton-reject",
                       handler: () => {
-                        // Lógica para rechazar                         
-        
-                        this.dismissAndRejectAlert(model, model_id);
+                        // Lógica para rechazar
+                        if (this.permissionService.canManageGoals) this.dismissAndRejectAlert(model, model_id);
                       }
                     },
                     {
                       text: this.translate.instant('goals.button_accepted'),
                       cssClass: "boton-accepted",
                       handler: () => {
-                        let type = "accepted"
-                        this.sharedCarePlan.post_API_ACP_declined_acepted(model, model_id, type).subscribe(
-                          async (data: any) => {
-                            if (data) {
-                              this.reloadChallenges.emit();
+                        if (this.permissionService.canManageGoals) {
+                          let type = "accepted"
+                          this.sharedCarePlan.post_API_ACP_declined_acepted(model, model_id, type).subscribe(
+                            async (data: any) => {
+                              if (data) {
+                                this.reloadChallenges.emit();
+                              }
+          
                             }
-        
-                          }
-        
-                        )
-        
+          
+                          )
+                        }
                       }
                     }
                   ]

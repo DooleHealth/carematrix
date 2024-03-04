@@ -28,6 +28,7 @@ export class PermissionService {
   canViewPlanningForms:boolean = true
   canViewEvents:boolean = true
   canManageEvents:boolean = true
+  canAccessVideocall:boolean = true
   canManageMessages:boolean = true
   canSeeCenters:boolean = true
   
@@ -52,11 +53,12 @@ export class PermissionService {
     this.canViewMedicalTests = permissions.includes("canViewMedicalTests") ? true : false;
     this.canManageMedicalTests = this.canViewMedicalTests && permissions.includes("canManageMedicalTests") ? true : false;
     this.canViewMedication = permissions.includes("canViewMedication") ? true : false;
-    this.canManageMedication = this.canViewMedication && permissions.includes("canViewMedication") ? true : false;
+    this.canManageMedication = this.canViewMedication && permissions.includes("canManageMedication") ? true : false;
     this.canViewMedicationPlans = permissions.includes("canViewMedicationPlans") ? true : false;
     this.canViewPlanningForms = permissions.includes("canViewPlanningForms") ? true : false;
     this.canViewEvents = permissions.includes("canViewEvents") ? true : false;
-    this.canManageEvents = this.canViewEvents && permissions.includes("canViewEvents") ? true : false;
+    this.canManageEvents = this.canViewEvents && permissions.includes("canManageEvents") ? true : false;
+    this.canAccessVideocall = this.canViewEvents && permissions.includes("canAccessVideocall") ? true : false;
     this.canManageMessages = permissions.includes("canManageMessages") ? true : false;
     this.canSeeCenters = permissions.includes("canSeeCenters") ? true : false; 
   }
