@@ -1203,7 +1203,7 @@ export class DooleService {
   }
 
   getAPIlistTestimonials(params): Observable<any> {
-    let path = `user/testimonies`;
+    let path = `user/testimonials`;
     const endpoint = this.api.getEndpoint(path);
     let httpParams = new HttpParams()
     .set('tags', params.tags)
