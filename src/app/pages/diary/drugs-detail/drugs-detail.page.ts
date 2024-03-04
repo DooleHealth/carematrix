@@ -42,6 +42,10 @@ export class DrugsDetailPage implements OnInit {
   date:any;
   time:any;
   locale:string;
+  units
+  unit_id
+  drug_id
+  medication_plan_id
   modifyMedicationPlans:boolean = true;
   constructor(
     private dooleService: DooleService,
@@ -85,7 +89,11 @@ export class DrugsDetailPage implements OnInit {
       this.getMedicationPlan()
       this.isEditDrug = true
     }
-    if(!this.isEditDrug) this.isInit = false
+    if(!this.isEditDrug){
+      this.isInit = false
+      this.drug_id = this.drug.id
+      this.getDrudUnit()
+    }
   }
 
   showDetailsDrug(){
@@ -216,7 +224,7 @@ export class DrugsDetailPage implements OnInit {
     const form = this.setFields()
     console.log('[DrugsDetailPage] updateDrug()', form);
 
-    this.dooleService.putAPImedicationPlan(form.medication_plan_id , form).subscribe(async json=>{
+    this.dooleService.putAPImedicationPlan(this.medication_plan_id , form).subscribe(async json=>{
       console.log('[DrugsDetailPage] updateDrug()', await json);
       if(json.success){
         this.modalCtrl.dismiss({error:null, action: 'update'});
@@ -326,7 +334,8 @@ export class DrugsDetailPage implements OnInit {
 
   async deleteDrug(){
     this.isLoading = true
-    this.dooleService.deleteAPImedicationPlan(this.form).subscribe(
+    console.log('[DrugsDetailPage] deleteDrug()', await this.drug_id);
+    this.dooleService.deleteAPImedicationPlan(this.medication_plan_id).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] deleteDrug()', await res);
         if(res.success){
@@ -356,10 +365,13 @@ export class DrugsDetailPage implements OnInit {
       async (res: any) =>{
         console.log('[DrugsDetailPage] getMedicationPlan()', await res);
         if(res.success){
-          let medicationPlan = res.medicationPlan
 
+          
+          let medicationPlan = res.medicationPlan
           if(this.drug?.id)
           this.drug = medicationPlan.drug
+
+          this.medication_plan_id = medicationPlan?.id
 
           this.modifyMedicationPlans =  this.getStateModifyMedication(medicationPlan?.origin)
 
@@ -381,11 +393,28 @@ export class DrugsDetailPage implements OnInit {
           this.setDaysMedicationPlan(medicationPlan)
           this.gettingDay()
 
+          let isDose = false
           let plan = medicationPlan.medication_plan_times
-          plan.forEach(element => {
+          plan.forEach(element => {            
             let hour = element.time.split(':')
             this.times.push(`${hour[0]}:${hour[1]}`)
+
+            if(element?.dose) isDose = true;
           });
+
+          if(!this.form.get('dose').value && isDose == false){
+            if(medicationPlan?.dose_by_default)
+            this.form.get('dose').setValue(medicationPlan?.dose_by_default)
+          }else{
+            this.form.get('dose').setValue(plan[0].dose)
+          }
+
+          // this.getDrudUnit()
+          // this.unit_id = medicationPlan?.medication_plan_times[0]?.unit_id
+          // if(!this.unit_id && medicationPlan?.unit_id_by_default)
+          // this.unit_id = medicationPlan?.unit_id_by_default
+
+
           this.isInit = false
 
         }
@@ -393,6 +422,26 @@ export class DrugsDetailPage implements OnInit {
           console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           throw err;
+      });
+  }
+
+  getDrudUnit(){
+    this.isLoading = true
+    this.dooleService.getAPIDrugUnits(this.drug_id).subscribe(
+      async (res: any) =>{
+        console.log('[DrugsDetailPage] getDrudUnit()', await res);
+        if(res.success){
+          this.units = res.units
+          if(this.unit_id)
+          this.form.get('unit_id').setValue(this.unit_id)
+          else if(!this.isEditDrug && this.units.length > 0)
+          this.form.get('unit_id').setValue(this.units[0]?.id? this.units[0]?.id:'')
+        }
+        this.isLoading = false
+       },(err) => { 
+          console.log('[DrugsDetailPage] getDrudUnit() ERROR(' + err.code + '): ' + err.message); 
+          this.isLoading = false
+          throw err; 
       });
   }
 
