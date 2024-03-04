@@ -491,4 +491,6 @@ export class DrugsDetailPage implements OnInit {
     
     this.interactions =  interactions;
   }
+
+
 }

@@ -157,10 +157,10 @@ export class DateService {
 
   public ddMMyFormat(date){
     let lang =  this.translate.currentLang;
-    let format = 'dd MMM y';
+    let format = 'dd MMM, y';
 
     if(lang === 'en' )
-      format = 'MMM dd y';
+      format = 'MMM dd, y';
 
       let day = this.transformDate(date, format);
       return day[0].toUpperCase() + day.slice(1);
