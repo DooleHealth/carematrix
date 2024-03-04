@@ -60,13 +60,19 @@ export class AddDrugFilterComponent  implements OnInit {
      this.dooleService.getAPIdrugsListInteraction(drug.ext_id).subscribe(
       async (res: any) =>{
         
-        if(res != null){
-          let arrayValue = res
-          arrayValue.interactions.forEach(element => {
-             this.interactions.push(element);
+        if (res != null && typeof res === 'object') {
+          Object.keys(res).forEach(key => {
+              // Verificar si el valor de la clave es un array
+            //  if (Array.isArray(res[key])) {
+                  let interactionsArray = res[key].interactions;
+                  console.log("interactionsArray", interactionsArray)
+                  // Iterar sobre el array y agregar las interacciones
+                  interactionsArray.forEach(interaction => {
+                          this.interactions.push(interaction);
+                  });
+             // }
           });
-          
-        }
+      }
         this.drugUpdated.emit(this.drugs);
         this.dataInteractions.emit(this.interactions);
         console.log("drug interaction", res)

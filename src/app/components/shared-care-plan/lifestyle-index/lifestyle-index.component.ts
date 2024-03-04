@@ -27,8 +27,7 @@ export class LifestyleIndexComponent  implements OnInit {
     console.log(this.content)    
   }
 
-  goTo(type: any){   
-   
+  goTo(type: any){ 
       this.redirect.emit({type: type})
    
 }

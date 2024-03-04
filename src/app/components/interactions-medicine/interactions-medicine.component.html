@@ -11,7 +11,7 @@
     <ion-item style="background-color: aliceblue; border-radius: 20px;">
       <ion-label *ngFor="let int of interactions">
         <ion-icon [name]="int.severity === 'major' ? 'radio-button-on-outline' : 'radio-button-off-outline'" [color]="int.severity === 'major' ? 'danger' : 'warning'"></ion-icon>
-         {{int.affected_ingredient.name}}
+         {{int.ingredient.name}}
       </ion-label>
     </ion-item>
     <ion-text>
