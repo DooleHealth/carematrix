@@ -288,6 +288,7 @@ export class GoalsComponent  implements OnInit {
 
 
           async AcceptOrDeclined(id) {
+            
             this.other = true;
             let model = "Level";
             let model_id = id;

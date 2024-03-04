@@ -110,13 +110,11 @@ export class GoalsPage implements OnInit {
         
         let goal= res.challenges
          goal.forEach(g => {
-          if(g.completed === true){
-            goalsAll.push(g)
+          if(g.aderence.isCompleted === true){
+            this.goalsList.push(g)
           }
          });
-         if(goalsAll.length > 0){
-          this.getAllDataByChallenge(goalsAll)
-         }
+        
       
 
       }, (err) => {
@@ -124,31 +122,7 @@ export class GoalsPage implements OnInit {
         throw err;
       });
   }
-  async getAllDataByChallenge(goalsData){
-    let AllChallenges=[];
-    goalsData.forEach(async element => {
-     
-     await this.dooleService.getAPIChallenge(element.id).subscribe(
-      
-        async (resp: any) => {
-          await resp;
-          console.log('[DetailPage] getAPIChallenge()', resp);
-        
-         // AllChallenges.push(resp)
-         // this.setChallenge(resp);
-          this.goalsList.push(resp)
-  
-        }, (err) => {
-          console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
-          throw err;
-        });
-    });
-    /*if(AllChallenges.length > 0){
-      console.log("All Challenges", AllChallenges)
-      this.setChallenge(AllChallenges);
-    }*/
-   
-  }
+ 
 
   setChallenge(res) {
     this.goals = res?.current_level?.goals;

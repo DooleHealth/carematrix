@@ -2250,7 +2250,7 @@ export class DooleService {
   }
 
   getAPIAnswers(id): Observable<any> {
-    let path = `sharedcareplan/form/${id}/answers/detail?html=true`;
+    let path = `user/form/${id}/answers/detail?html=true`;
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint).pipe(
       map((res: any) => {

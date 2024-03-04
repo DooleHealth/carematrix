@@ -123,6 +123,7 @@ export class ViewMoreInformationComponent implements OnInit {
     }
   }
 
+
   getColorLike(statusable) {
     console.log(statusable)
     if (statusable.length > 0) {

@@ -269,7 +269,7 @@ export class DiaryPage implements OnInit {
   }
 
  
-  selectMealTimess(time) {
+  selectMealTimes(time) {
     let timeMeals = "";
     let hour = new Date(time).getHours();
   
@@ -288,24 +288,24 @@ export class DiaryPage implements OnInit {
     return timeMeals;
   }
 
-  updateLastName(time) {
-    const meal = this.selectMealTimess(time);
-    if (this.lastName !== meal) {
-      this.lastName = meal;
-    }
-  }
 
-  updateLastTimeString(name) {
-    this.Lasttimestring = name;
-  }
-  
-  getLastName(name) {
+  getPeriodDiets(name) {
+    if (!this.Lasttimestring) {
+        this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
+        return true; // Siempre muestra el primer elemento
+    }
     const isDifferent = name !== this.Lasttimestring;
     if (isDifferent) {
-      this.updateLastTimeString(name);
+        this.updateLastTimeString(name);
     }
+    console.log("saber que devuelve el getLastName", isDifferent)
     return isDifferent;
   }
+  
+      updateLastTimeString(name) {
+        this.Lasttimestring = name;
+       
+      }
 
       goDetailRecipe(e){
         let id = e.item.id
