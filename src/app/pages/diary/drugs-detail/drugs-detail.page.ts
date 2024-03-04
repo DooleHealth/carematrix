@@ -19,9 +19,8 @@ enum StatusMedicationCreated {
 export class DrugsDetailPage implements OnInit {
   days = [{day1:1, disabled:false}, {day2:1, disabled:false}, {day3:1, disabled:false}, {day4:1, disabled:false}, {day5:1, disabled:false}, {day6:1, disabled:false}, {day7:1,disabled:false}]
   @ViewChild('datetimePopover') popover: IonPopover;
-  //@Input()drug : any
- // @Input()id: any;
- drug;
+  @Input()drug : any
+  @Input()id: any;
   drugID = history.state?.id; // 26;//   //23 //
   form: FormGroup;
   times = []
@@ -59,8 +58,8 @@ export class DrugsDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    //this.id = this.drugID? this.drugID:this.id
-   // console.log('[DrugsDetailPage] ngOnInit() id: ',this.id);
+    this.id = this.drugID? this.drugID:this.id
+   console.log('[DrugsDetailPage] ngOnInit() id: ',this.id);
     this.form = this.fb.group({
       from_date: [this.date, [Validators.required]],
       to_date: [this.date, [Validators.required]],
@@ -78,24 +77,24 @@ export class DrugsDetailPage implements OnInit {
       day6: [1],
       day7: [1],
     });
-   // if(this.drug)
-  //  this.form.get('drug').setValue(this.drug.id)
-  /*  if(this.id){
+   if(this.drug)
+   this.form.get('drug').setValue(this.drug.id)
+    if(this.id){
       console.log('[DrugsDetailPage] ngOnInit()',this.drug);
       this.showDetailsDrug()
       this.getMedicationPlan()
       this.isEditDrug = true
-    }*/
+    }
     if(!this.isEditDrug) this.isInit = false
   }
 
-  /*showDetailsDrug(){
+  showDetailsDrug(){
     this.form.get('from_date').setValue(this.drug?.from_date)
     this.form.get('to_date').setValue(this.drug?.to_date)
     this.form.get('dose').setValue(this.drug?.dose)
     if(this.drug?.alias) this.form.get('alias').setValue(this.drug?.alias)
 
-  }*/
+  }
 
   drugSelecting(drug){
     
@@ -351,13 +350,16 @@ export class DrugsDetailPage implements OnInit {
 
   async getMedicationPlan(){
     
-    const medication_plan_id = "" //this.form?.medication_plan_id? this.drug.medication_plan_id: this.id
+    const medication_plan_id = this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
       async (res: any) =>{
         console.log('[DrugsDetailPage] getMedicationPlan()', await res);
         if(res.success){
           let medicationPlan = res.medicationPlan
+
+          if(this.drug?.id)
+          this.drug = medicationPlan.drug
 
           this.modifyMedicationPlans =  this.getStateModifyMedication(medicationPlan?.origin)
 

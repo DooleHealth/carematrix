@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
-import { ListDrugByDate } from '../diary.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { AddButtonList, ContentTypePath } from 'src/app/models/shared-care-plan';
 import { DrugAddPage } from '../drug-add/drug-add.page';
@@ -43,7 +42,6 @@ export class MedicationPage implements OnInit {
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
-    private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
     public alertController: AlertController,
@@ -63,14 +61,11 @@ export class MedicationPage implements OnInit {
 
   ngOnInit() {
     this.CanDoMedication = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
-  //  this.getCurrentDate();
-    this.setSegment();
     this.items = []
     this.listDrugIntakes = []
   }
 
   ionViewWillEnter(){
-   // this.loadData()
    this.getCurrentDate();
    this.segmentChanged()
   }
@@ -109,21 +104,6 @@ export class MedicationPage implements OnInit {
       });
 
   }
-
-  setSegment(){
-    if(!this.role?.component?.diet){
-      this.segment = 'today'
-      if(!this.role?.component?.medication){
-          this.segment = 'medication'
-      }
-    }
-  }
-  
-  goTo(drug){  
-    console.log('[MedicationPage] goTo()', drug);
-    this.router.navigate([ContentTypePath.MedicationDetail],  { state: { data: drug, id: drug.id } });
-    //this.router.navigate(['/medication-details']);
-}
 
     async presentAlert() {
 
@@ -180,8 +160,6 @@ export class MedicationPage implements OnInit {
           model_id:element.model_id,
           model:element.model,
           state: element?.last_accepted_or_declined?.type
-
-          //routerlink: "new-detail"
         }
         console.log("sss", data)
         this.items.push(data)
@@ -190,13 +168,10 @@ export class MedicationPage implements OnInit {
 
 
     async segmentChanged($event?){
-      
-      console.log('[DiaryPage] segmentChanged()', this.segment);
-      console.log('[DiaryPage] event()', $event);
+      console.log('[MedicationPage] segmentChanged()', this.segment, $event);
       this.items = []
       switch (this.segment) {
         case 'today':
-          //await this.getDietList()
           await this.getDrugIntakeList()
           break;
         case 'medication':
@@ -258,7 +233,7 @@ getPeriod(name) {
   if (isDifferent) {
       this.updateLastTimeString(name);
   }
-  console.log("saber que devuelve el getLastName", isDifferent)
+  //console.log("saber que devuelve el getLastName", isDifferent)
   return isDifferent;
 }
 
@@ -272,27 +247,22 @@ getPeriod(name) {
     }
 
     async getDrugIntakeList() {
-      console.log("[DiaryPage] getDrugIntakeList()");
-      this.items = [];
       let formattedDate = this.transformDate(this.date);
       let date = { date: formattedDate };
       this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
         async (res: any) => {
-          console.log("[DiaryPage] getDrugIntakeList()", await res);
-          this.listDrug = [];
+          console.log("[MedicationPage] getDrugIntakeList()", await res);
+          this.listDrugIntakes = [];
           let list = res?.drugIntakes;
           if (list) {
-            this.listDrugIntakes = res.drugIntakes;
-            console.log("[DiaryPage] getDrugIntakeList() listDrugIntakes", this.listDrugIntakes);
+            console.log("[MedicationPage] getDrugIntakeList() listDrugIntakes", this.listDrugIntakes);
             list = this.sortDate(list);
-            
-          
             this.groupDiagnosticsByDate(list);
           }
         },
         (err) => {
           console.log(
-            "[DiaryPage] getDrugIntakeList() ERROR(" +
+            "[MedicationPage] getDrugIntakeList() ERROR(" +
               err.code +
               "): " +
               err.message
@@ -314,22 +284,37 @@ getPeriod(name) {
       });
     }
 
-
-    groupDiagnosticsByDate(drugs) {
-      
-      drugs.forEach((drug) => {
-        let date = this.selectDayPeriod(drug.hour_intake);
-        drug.period = date;
+    groupDiagnosticsByDate(drugs){
+      drugs.forEach( (drug, index) =>{
         drug.item_type = "medication"
-        this.items.push(drug);
-      });
-      console.log("[DiaryPage] groupDiagnosticsByDate()", this.items);
-     
+        let date = this.selectDayPeriod(drug.hour_intake)
+        if(index == 0 || date !== this.selectDayPeriod(drugs[index-1].hour_intake)){
+          let list = drugs.filter( event =>
+            (this.selectDayPeriod(event.hour_intake) === date)
+          )
+          this.listDrugIntakes.push({date: date, itemDrugs: list})
+        }
+      })
+      console.log('[MedicationPage] groupDiagnosticsByDate()', this.listDrugIntakes);
     }
+
+
+    // groupDrugByDate(drugs) {
+      
+    //   drugs.forEach((drug) => {
+    //     let date = this.selectDayPeriod(drug.hour_intake);
+    //     drug.period = date;
+    //     drug.item_type = "medication"
+    //     this.items.push(drug);
+    //   });
+
+    //   console.log("[MedicationPage] groupDiagnosticsByDate()", this.items);
+     
+    // }
     
     selectDayPeriod(time) {
       let h = time.split(":"); //new Date(time).getHours()
-      let hour = Number(h[0]);
+      let hour = Number(h[0]) + Number(h[1]/60);
       if (hour >= 6 && hour < 12) {
         return this.translate.instant("diary.morning");
       }
@@ -362,10 +347,10 @@ getPeriod(name) {
               value: ""
           });
           this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
-            console.log('[DiaryPage] changeTake()',  json);
+            console.log('[MedicationPage] changeTake()',  json);
             this.getDrugIntakeList()
           },(err) => {
-            console.log('[DiaryPage] changeTake() ERROR(' + err.code + '): ' + err.message);
+            console.log('[MedicationPage] changeTake() ERROR(' + err.code + '): ' + err.message);
             alert( 'ERROR(' + err.code + '): ' + err.message)
             throw err;
         });
@@ -380,10 +365,11 @@ getPeriod(name) {
 
 
 
-  async addDrugPlan(){
+  async addDrugPlan(drug, id){
+    console.log('[MedicationPage] addDrugPlan()',  drug);
     const modal = await this.modalCtrl.create({
       component:  DrugsDetailPage,
-     // componentProps: { drug: drug, id: id},
+      componentProps: { drug: drug, id: id},
       cssClass: "modal-custom-class"
     });
 
