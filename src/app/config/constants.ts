@@ -8,9 +8,9 @@ export class Constants {
     public  LIST_ENPOINT: Array<any> = []
     public  INDEX:number = 0
 
-    public  API_ENDPOINT: string = 'https://salud.rehabilify.com/api';
-    public  API_DOOLE_ENDPOINT: string = 'https://salud.rehabilify.com/api';
-    public  DOOLE_ENDPOINT: string = 'https://salud.rehabilify.com';
+    public  API_ENDPOINT: string = 'https://carematrix.doole.io/api';
+    public  API_DOOLE_ENDPOINT: string = 'https://carematrix.doole.io/api';
+    public  DOOLE_ENDPOINT: string = 'https://carematrix.doole.io';
     public readonly appleAppId = '1672263053'
     public readonly androidBundleId = 'com.doole.inca'
 
@@ -27,18 +27,19 @@ export class Constants {
 
     public addEndPoint(){
       this.LIST_ENPOINT = []
-      this.LIST_ENPOINT.push({ //Por defecto index 0
+      this.LIST_ENPOINT.push({
         id:0,
+        name: 'Producción',
+        api: 'https://carematrix.doole.io/api',
+        endpoint: 'https://carematrix.doole.io'
+      })
+      this.LIST_ENPOINT.push({ //Por defecto index 0
+        id:1,
         name: 'Desarrollo',
         api: 'https://carematrix-dev.doole.io/api',
         endpoint: 'https://carematrix-dev.doole.io'
       })
 
-      this.LIST_ENPOINT.push({
-        id:1,
-        name: 'Producción',
-        api: 'https://carematrix.doole.io/api',
-        endpoint: 'https://carematrix.doole.io'
-      })
+
     }
 }
