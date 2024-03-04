@@ -18,9 +18,8 @@
   <ion-card  class="cardProfilePaddingBottom" >
     <ion-item>
 
-    
+      <app-add-drug-filter style="width: 100%;" (drugUpdated)="drugSelecting($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
 
-      <app-add-drug-filter (drugUpdated)="drugSelecting($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
     </ion-item> 
 
     <app-interactions-medicine [interactions]="interactions" *ngIf="interactions.length >0"></app-interactions-medicine>

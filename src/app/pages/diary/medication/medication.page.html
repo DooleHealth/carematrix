@@ -66,7 +66,7 @@
           
         </ion-col>-->
           <ion-col size="11.2">    
-            <app-content-date [content]="drugs" (takeMedication)="changeTake($event)"></app-content-date>
+            <app-content-date [content]="drugs" (redirect)="goTo(drugs)" (takeMedication)="changeTake($event)"></app-content-date>
           </ion-col>
           
         </ion-row>

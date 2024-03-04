@@ -55,9 +55,15 @@
           <ng-container *ngIf="this.listFamilyUnit?.length > 1; else onlyOneCaregiver">
             <ion-row>
               <ion-col size="12">
-                <ion-searchbar mode="ios" show-cancel-button="always" (ionCancel)="onCancel($event)"
-                  (ionFocus)="activateList()" [debounce]="1000" (ionInput)="handleInput($event)"
-                  style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
+                <ion-searchbar mode="ios" 
+                  (ionClear)="onCancel($event)"
+                  (ionCancel)="onCancel($event)"
+                  (ionBlur)="onCancel($event)"
+                  (ionFocus)="activateList()" 
+                  [debounce]="1000" 
+                  (ionInput)="handleInput($event)"
+                  style="padding-left: 0px; padding-right: 0px;">
+                </ion-searchbar>
 
                 <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
                   <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)">
@@ -603,7 +609,7 @@
           </ion-col>
   
           <ion-col size="6">
-            <ion-text routerLink="/advices" class="seeAll"
+            <ion-text routerLink="/tracking/advices" class="seeAll"
               style="display:flex; justify-content: end; padding-right: 5%;">{{
               'home.see_advices' | translate}}</ion-text>
           </ion-col>
@@ -622,7 +628,7 @@
                 <ion-card-content style="padding-top: 0px;">
                   <ion-toolbar>
                     <ion-buttons slot="end">
-                      <ion-button color="primary" shape="round" fill="solid" routerLink="/advices/advices-detail"
+                      <ion-button color="primary" shape="round" fill="solid" routerLink="/tracking/advices/advices-detail"
                         [state]="{ id: slide?.id }" routerLinkActive="active-item"
                         style="width:120px; text-transform: capitalize; padding-left: 2%; padding-right: 2%;">
                         {{'health_path.see_more' | translate}}

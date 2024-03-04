@@ -17,34 +17,56 @@ export enum ContentType {
 }
 
 export enum ContentTypePath {
-    Goals = '/tracking/profile/goals',
-    LifestyleHabits = '/tracking/lifestyle-habits',
-    Medication= '/tracking/medication/', 
-    Forms= '/tracking/form-list', 
-    Monitoring= '/tracking/monitoring', 
-    MedicalProcedure= '/tracking/procedures', 
-    InformedConsent = '/tracking/informed-consent',
+    //ADVICES
+    Advices = '/tracking/advices',
+    AdvicesDetail= Advices + '/advices-detail',
+    //AGENDA
+    Agenda = '/agenda',
+    AgendaDetail = '/agenda/detail',
+    //CHALLENGES
     Challenges = '/home/health-path',
     ChallengesDetail = '/home/health-path/detail',
-    // LifeStyle
-    News = '/tracking/news',
-    Advices = '/tracking/advices',
-    Exercises= '/tracking/exercices', 
-    Games= '/tracking/games', 
-   // Diets= '/diets', 
+    //DIETS 
     Diets= '/tracking/journal', 
-    Testimonials= '/tracking/testimonials',
-
     DietsDetail= Diets + '/diets-detail',
-    AdvicesDetail= Advices+ '/advices-detail',
-    NewsDetail = News + '/new-detail',
-    FormDetail = '/tracking/form',
-    GamesDetail = Games + '/games-detail',
+    //EXERCISE
+    Exercises= '/tracking/exercices', 
     ExercisesDetail = Exercises + '/exercices-detail',
+    //FORM
+    Forms= '/tracking/form-list', 
+    FormDetail = '/tracking/form',
+    //GAME   
+    Games= '/tracking/games', 
+    GamesDetail = Games + '/games-detail',
+    //GOALS    
+    Goals = '/tracking/profile/goals',
+    //HOME
+    Home = '/home',
+    //LIFESTYLEHABITS
+    LifestyleHabits = '/tracking/lifestyle-habits',
+    //MEDICAL PROCEDURES
+    MedicalProcedure= '/tracking/procedures', 
+    //MEDICAL TEST
+    MedicalTest= '/document-detail', 
+    //MEDICATION
+    Medication= '/tracking/medication/', 
+    MedicationDetail = '/drugs-detail', // Medication Plan
+    //MESSAGE
+    Message = '/contact/chat/conversation',
+    //MONITORING
+    Monitoring= '/tracking/monitoring', 
+    //NEWS
+    News = '/tracking/news',
+    NewsDetail = News + '/new-detail',
+    //REMINDERS
+    ReminderDetail = '/agenda/reminder',
+    //TESTIMONIALS
+    Testimonials= '/tracking/testimonials',
+    //TRACKING OR FOLLOW UP
+    Tracking= '/tracking',
+    //INFORMED COSENT
+    InformedConsent = '/tracking/informed-consent', 
 
-
-    // Medication Plan
-    MedicationID = '/drugs-detail'
 }
 
 export enum ContentTypeIcons {
@@ -62,8 +84,7 @@ export enum ContentTypeIcons {
     Exercises= 'assets/images/shared-care-plan/exercises.png',
     Diets= 'assets/images/shared-care-plan/diets.png',  
     Testimonials= 'assets/images/shared-care-plan/testimonials.png', 
-    Games= 'assets/images/shared-care-plan/games.png', 
-   
+    Games= 'assets/images/shared-care-plan/games.png',  
 
     //AddBUtton
     buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',

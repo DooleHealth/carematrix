@@ -12,10 +12,10 @@
       <ion-row>
         <ion-text class="txt-title-card textAdvicesSlider">{{content?.title | translate}}</ion-text>
       </ion-row>
-      <ion-row  class="subtitle-card">
-        <ion-col size="11.1"size-md="11.5" size-lg="11.6" style="margin-top: -5%; padding-left: 0px;">
+      <ion-row class="subtitle-card">
+        <ion-text class="txtTitleGoals textAdvicesSlider" style="margin-top: -5%;">
           <p [innerHtml]="content?.description | translate"></p>
-        </ion-col>
+        </ion-text>
       </ion-row>
       <!--<ion-row class="verticalAlignItem">
         <ion-text class="status" [ngStyle]="{ color: this.state?.color }">

@@ -12,7 +12,7 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
 import { DateService } from 'src/app/services/date.service';
 import { ListDrugByDate } from '../diary.page';
 import { RolesService } from 'src/app/services/roles.service';
-import { AddButtonList } from 'src/app/models/shared-care-plan';
+import { AddButtonList, ContentTypePath } from 'src/app/models/shared-care-plan';
 import { DrugAddPage } from '../drug-add/drug-add.page';
 import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
 import { PermissionService } from 'src/app/services/permission.service';
@@ -119,8 +119,9 @@ export class MedicationPage implements OnInit {
     }
   }
   
-  goTo(){  
-    this.router.navigate(['/medication-details']);
+  goTo(drug){  
+    console.log('[MedicationPage] goTo()', drug);
+    this.router.navigate([ContentTypePath.MedicationDetail],  { state: { data: drug, id: drug.id } });
     //this.router.navigate(['/medication-details']);
 }
 

@@ -2,7 +2,7 @@
     <ion-toolbar mode="ios">
       <ion-title class="toolbarTitle">{{'advices.tag_news' | translate}}</ion-title>
       <ion-buttons slot="start">
-        <ion-back-button text=""></ion-back-button>
+        <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button fill="clear" routerLink="/profile">
@@ -13,7 +13,7 @@
 </ion-header>
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
-  <ion-searchbar *ngIf="this.permissionService.canViewNews" mode="ios" show-cancel-button="always"
+  <ion-searchbar *ngIf="this.permissionService.canViewNews" mode="ios" 
   (ionInput)="filterListNews($event)"
   (ionClear)="getNewsList()"
   placeholder="{{ 'advices.searchbar' | translate}}">

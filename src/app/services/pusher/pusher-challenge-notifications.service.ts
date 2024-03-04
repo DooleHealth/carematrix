@@ -1,10 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from '../authentication.service';
-import { NotificationService } from '../notification.service';
 declare const Pusher: any;
 const NAME_BIND = 'App\\Events\\LevelAccomplishmentCompleted'
 export interface challengeNotification {

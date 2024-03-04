@@ -137,7 +137,7 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
                 else
                     console.error(`${ContentType.MEDICATIONS_PLAN} -> drug: Not field ${title}`)
 
-                this.routerlink = ContentTypePath.MedicationID
+                this.routerlink = ContentTypePath.MedicationDetail
                 break;
             case ContentType.ADVICE:
                 const titleAdvice = goal['advice']
