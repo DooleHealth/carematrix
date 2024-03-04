@@ -90,9 +90,7 @@ export class GoalsPage implements OnInit {
             this.goalsList.push(g)
           }
          });
-         /*if(goalsAll.length > 0){
-          this.getAllDataByChallenge(goalsAll)
-         }*/
+        
       
 
       }, (err) => {
