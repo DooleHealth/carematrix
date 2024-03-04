@@ -37,6 +37,7 @@ export interface ListItemByDate {
 })
 
 export class DiaryPage implements OnInit {
+  segment="diets"
   firstTime: boolean;
   public items: ItemDiary[] = [];
   listDrug:  ListDrugByDate[] = [];
@@ -49,7 +50,7 @@ export class DiaryPage implements OnInit {
   groupedElements: Array<any>;
   newGroupedElements: Array<any>;
   date = Date.now()
-  segment = history.state?.segment ? history.state.segment : 'diets';
+  //segment = history.state?.segment ? history.state.segment : 'diets';
   isLoading:boolean;
   isLoadingDiets:boolean = true;
   isLoadingDrugs:boolean = true;
@@ -82,7 +83,6 @@ export class DiaryPage implements OnInit {
 
   ngOnInit() {
     this.getCurrentDate();
-    this.setSegment()
     this.items = []
     this.listDietsToday = [];
     console.log('[DiaryPage] ngOnInit()');
@@ -253,23 +253,11 @@ export class DiaryPage implements OnInit {
     }
   }
 
-  setSegment(){
-    if(!this.role?.component?.diet){
-      this.segment = 'medication'
-      if(!this.role?.component?.drug){
-          this.segment = 'games'
-          if(!this.role?.component?.game){
-            this.segment = 'health'
-            if(!this.role?.component?.element){
-              this.segment = ''
-            }
-          }
-      }
-    }
-  }
+
 
  
   selectMealTimes(time) {
+    
     let timeMeals = "";
     let hour = new Date(time).getHours();
   
@@ -289,7 +277,8 @@ export class DiaryPage implements OnInit {
   }
 
 
-  getPeriodDiets(name) {
+  getPeriodEat(name) {
+    
     if (!this.Lasttimestring) {
         this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
         return true; // Siempre muestra el primer elemento
