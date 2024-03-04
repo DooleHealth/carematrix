@@ -18,6 +18,7 @@ export class ContentDateComponent implements OnInit {
   @Output() takeMedication: EventEmitter<any> = new EventEmitter<any>();
 
   date: string;
+  dates= [];
   constructor(public dateService: DateService, private router: Router,
     public translate: TranslateService, public alertController: AlertController, public authService: AuthenticationService, public permissionService: PermissionService) {
 
@@ -35,14 +36,20 @@ export class ContentDateComponent implements OnInit {
     
 
   setDate(){
-
     if(this.content?.date_intake != null){
       this.date = this.dateService.getFormatTime(this.content?.date_intake)
-    }else{
-      this.date = this.dateService.getFormatTime(this.content?.from_date)
+    }else{  
+        let [hour, minute, second] = this.content.time.split(':').map(Number);   
+        let fecha: Date = new Date();
+                fecha.setHours(hour);
+                fecha.setMinutes(minute);
+                fecha.setSeconds(second);
+                this.date=this.dateService.getFormatTime(fecha) 
     }
    
   }
+
+
 
   setFormatDate(date){
    return this.dateService.getDateMonDay(date)

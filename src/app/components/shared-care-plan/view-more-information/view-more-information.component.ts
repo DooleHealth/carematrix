@@ -110,7 +110,7 @@ if(this.content[0].modal_type === "App\\Receipt"){
   }
 
   getColorLike(statusable){
-    debugger
+    
     if(statusable.length > 0){
       let existeLike = statusable.some(objeto => objeto.type === "like");
     if(existeLike){

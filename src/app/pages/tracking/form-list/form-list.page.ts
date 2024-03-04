@@ -122,6 +122,7 @@ export class FormListPage implements OnInit {
 
       console.log(list);
       list.forEach(element => {
+        
         let image = "";
         let isAnswers= false;
         const temporaryUrl = element.media;
@@ -217,10 +218,6 @@ export class FormListPage implements OnInit {
         
         if(res){
           this.listForms = []
-         
-         // this.listForms = res.forms;
-          //this.items = res.dietIntakes
-          console.log('[Form_listPage] getFormsListByDate(dietIntakes)', await this.listForms);
          this.groupDiagnosticsByDate(res)
 
 
@@ -237,7 +234,7 @@ export class FormListPage implements OnInit {
   }
   
   transformDate2(date) {
-    return this.datePipe.transform(date, 'dd-MM-yyyy');
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
   groupDiagnosticsByDate(forms) {
@@ -249,18 +246,51 @@ export class FormListPage implements OnInit {
       if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
         form.image = temporaryUrl.temporaryUrl
       }
-      let date = this.selectDayPeriod(form.from_date);
-      form.period = date;
+      
+
+      if(form.formProgrammationTimes.length > 1){
+        form.formProgrammationTimes.forEach(element => {
+          
+          let newForm = { ...form };
+          let date = this.selectDayPeriod(element.time);
+          newForm.period = date;
+          newForm.time = element.time;
+          this.listForms.push(newForm);
+          
+        });
+       
+      }else{
+        form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
+        form.time = form.formProgrammationTimes[0].time
+
       this.listForms.push(form);
+      }
+      
+
+
+    });
+    this.listForms.sort((a, b) => {
+      // Convertir los valores de tiempo a objetos Date para comparar
+      const timeA = new Date('1970-01-01 ' + a.time);
+      const timeB = new Date('1970-01-01 ' + b.time);
+
+      // Comparar los tiempos y devolver el resultado de la comparación
+      if (timeA < timeB) {
+        return -1;
+      }
+      if (timeA > timeB) {
+        return 1;
+      }
+      return 0;
     });
     console.log("[Form_listPage] groupDiagnosticsByDate()", this.listForms);
   }
-  
+ 
   selectDayPeriod(time) {
     
-    let hour= new Date(time).getHours();
-    //let h = time.split(":"); //new Date(time).getHours()
-   // let hour = Number(h[0]);
+    //let hour= new Date(time).getHours();
+    let h = time.split(":"); //new Date(time).getHours()
+    let hour = Number(h[0]);
     if (hour >= 6 && hour < 12) {
       return this.translate.instant("diary.morning");
     }
@@ -315,9 +345,9 @@ export class FormListPage implements OnInit {
 selectTime(time){
       
   let timeMeals;
-  let hour = new Date(time).getHours()// time.split(':')  //new Date(time).getHours()
+  let times = time.split(':')  //new Date(time).getHours()
  // let minute = Number(h[1])
- // let hour = Number(h[0]) + minute/60
+  let hour = Number(times[0])
   if(hour >= 6  && hour <= 12){
     timeMeals= this.translate.instant("diary.morning");
   }
@@ -347,9 +377,27 @@ selectTime(time){
 goTo(content){
   if (this.canDoForm && content.type === "forms") {
     if (content.showAlert) this.alertForm();
-    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.form_programmation_id } });
+    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id } });
   }
 }
 
 
+
+getPeriodTime(name) {
+  if (!this.Lasttimestring) {
+      this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
+      return true; // Siempre muestra el primer elemento
+  }
+  const isDifferent = name !== this.Lasttimestring;
+  if (isDifferent) {
+      this.updateLastTimeString(name);
+  }
+  console.log("saber que devuelve el getLastName", isDifferent)
+  return isDifferent;
+}
+
+    updateLastTimeString(name) {
+      this.Lasttimestring = name;
+     
+    }
 }

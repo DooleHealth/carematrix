@@ -58,7 +58,7 @@ export class GoalsComponent  implements OnInit {
     console.log("goals..", this.content)
   }
   setChallenge(res) {
-    debugger
+    
     this.goals = res?.goals;
     this.current_level = res;
     this.aderence = res?.aderence;
@@ -286,6 +286,7 @@ export class GoalsComponent  implements OnInit {
 
 
           async AcceptOrDeclined(id) {
+            
             this.other = true;
             let model = "Level";
             let model_id = id;

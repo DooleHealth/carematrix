@@ -290,6 +290,7 @@ export interface medication extends SharedCarePlanLifeStyle{
     showAlert?: boolean,
     lastdata?: string,
     date?: string,
+    canViewFormAnswered?: string,
 }
 
 export enum ACCESS_TYPE {
