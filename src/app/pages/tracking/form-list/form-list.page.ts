@@ -45,6 +45,7 @@ export class FormListPage implements OnInit {
   ngOnInit() {
     //this.getFormList();
     //this.locale = this.dateService.getLocale();
+    this.segment = 'today'
   }
 
 
@@ -74,9 +75,11 @@ export class FormListPage implements OnInit {
         this.forms = []
         this.forms = res
         this.adapterForView(this.forms)
+        this.isLoading = false;
       }, async (err) => {
         alert(`Error: ${err.code}, Message: ${err.message}`)
         console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
+        this.isLoading = false;
         throw err;
       }, ()=>{
         this.isLoading = false
@@ -135,9 +138,13 @@ export class FormListPage implements OnInit {
         //Se adapta la respuesta de la API a lo que espera el componente  
 
         console.log(element.last_accepted_or_declined);
-        if(element.formAnswers.length > 0){
-          isAnswers= true;
+
+        if (element?.formAnswers) {
+          if(element.formAnswers.length > 0){
+            isAnswers= true;
+          }
         }
+        
 
         let modelType = element.content_type.replace(/App\\/, '')
         console.log(modelType)
@@ -156,6 +163,7 @@ export class FormListPage implements OnInit {
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
           hasFormAnswered: element.hasFormAnswered,
+          canViewFormAnswered: element.canViewFormAnswered,
           frequency: element.frequency,
           state: element?.last_accepted_or_declined?.type,
           form_programmation_id: element.formProgrammationTimes[0].form_programmation_id
@@ -199,7 +207,7 @@ export class FormListPage implements OnInit {
         if (this.permissionService.canViewForms) await this.getFormsListByDate()
         break;
       case 'forms':
-        if (this.permissionService.canViewPlanningForms) await this.getFormList()
+        if (this.permissionService.canViewForms) await this.getFormList()
         break;
       default:
         console.log('Segment not found');
@@ -209,6 +217,8 @@ export class FormListPage implements OnInit {
   
   async getFormsListByDate(){
 
+
+    this.isLoading = true;
     console.log('[Form_listPage] getFormsListByDate()');
     let date  = this.transformDate2(this.date)
     const params = {date: date, grouped_by_times: true}
@@ -218,16 +228,14 @@ export class FormListPage implements OnInit {
         
         if(res){
           this.listForms = []
-         this.groupDiagnosticsByDate(res)
-
-
-          console.log("VERIFY DIETS")
+          this.groupDiagnosticsByDate(res)
+          this.isLoading = false;
         }
 
        },(err) => {
           console.log('[Form_listPage] getFormsListByDate() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
-
+          this.isLoading = false;
           throw err;
       }, ()=>{
       });
