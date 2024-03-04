@@ -42,6 +42,8 @@ export class ViewMoreInformationComponent implements OnInit {
         return 'exercices-detail'
           ;
 
+      
+
     }
 
     if (this.content[0].modal_type)
@@ -56,7 +58,7 @@ export class ViewMoreInformationComponent implements OnInit {
 
     value = this.like ? 1 : 0
 
-    if (statusable.length > 0) {
+    if (statusable?.length > 0) {
       let existeLike = statusable.some(objeto => objeto.type === "like");
       if (existeLike) {
         value = 0
@@ -126,7 +128,7 @@ export class ViewMoreInformationComponent implements OnInit {
 
   getColorLike(statusable) {
     console.log(statusable)
-    if (statusable.length > 0) {
+    if (statusable?.length > 0) {
       let existeLike = statusable.some(objeto => objeto.type === "like");
       if (existeLike) {
         return 'heart'

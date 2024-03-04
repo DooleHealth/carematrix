@@ -14,7 +14,7 @@
  -->    
 <!--  getColorLike(listcontets?.statusable)
  --> 
- <ion-icon *ngIf="this.authService?.user?.familyUnit == null"  color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end" (click)= "setContentStatus(listcontets?.statusable, listcontets.id, 'like')" ></ion-icon>
+ <ion-icon *ngIf="this.authService?.user?.familyUnit == null && this.segment !== 'testimonials'" color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end" (click)= "setContentStatus(listcontets?.statusable, listcontets.id, 'like')" ></ion-icon>
    
   </ion-item>
   <ion-card-header mode="md">
@@ -47,9 +47,9 @@
     <ion-text>{{ truncateDescription(listcontets?.content || listcontets?.description, 100) }}</ion-text>
 
 
-    <div style="padding-bottom: 5%"> <ion-text class="likes" *ngIf="listcontets?.interections">{{listcontets?.interactions.like}} {{'shared_care_plan.like' | translate}}</ion-text> <ion-text *ngIf="listcontets?.interactions.like > 100">🔥</ion-text></div>
+    <div style="padding-bottom: 5%"> <ion-text class="likes" *ngIf="listcontets?.interections">{{listcontets?.interactions.like}} {{'shared_care_plan.like' | translate}}</ion-text> <ion-text *ngIf="listcontets?.interactions?.like && listcontets?.interactions.like > 100">🔥</ion-text></div>
   
-    <ion-button shape="round" color="primary" class="floating-button" [routerLink]="toRouterLink()"  [state]="getStateObject(listcontets)" style="width: 100%;; height: 50px;">
+    <ion-button *ngIf="this.segment !== 'testimonials'" shape="round" color="primary" class="floating-button" [routerLink]="toRouterLink()"  [state]="getStateObject(listcontets)" style="width: 100%;; height: 50px;">
       <ion-label>{{'shared_care_plan.button_info' | translate}}</ion-label>
      
     </ion-button>

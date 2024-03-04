@@ -60,7 +60,6 @@ export class MedicationPage implements OnInit {
   }
 
   ngOnInit() {
-    this.CanDoMedication = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
     this.items = []
     this.listDrugIntakes = []
   }
@@ -172,10 +171,10 @@ export class MedicationPage implements OnInit {
       this.items = []
       switch (this.segment) {
         case 'today':
-          await this.getDrugIntakeList()
+          if (this.permissionService.canViewMedication) await this.getDrugIntakeList()
           break;
         case 'medication':
-          await this.loadData()
+          if (this.permissionService.canViewMedicationPlans) await this.loadData()
           break;
         default:
           console.log('Segment not found');
@@ -366,28 +365,29 @@ getPeriod(name) {
 
 
   async addDrugPlan(drug, id){
-    console.log('[MedicationPage] addDrugPlan()',  drug);
-    const modal = await this.modalCtrl.create({
-      component:  DrugsDetailPage,
-      componentProps: { drug: drug, id: id},
-      cssClass: "modal-custom-class"
-    });
 
-    modal.onDidDismiss()
-      .then((result) => {
-        console.log('addDrugPlan()', result);
-
-        if(result?.data?.error){
-         // let message = this.translate.instant('landing.message_wrong_credentials')
-          //this.dooleService.presentAlert(message)
-        }else if(result?.data?.action !== undefined){
-          this.notification.displayToastSuccessful()
-          this.segmentChanged()
-        }
+    if (this.permissionService.canManageMedication) {
+      console.log('[MedicationPage] addDrugPlan()',  drug);
+      const modal = await this.modalCtrl.create({
+        component:  DrugsDetailPage,
+        componentProps: { drug: drug, id: id},
+        cssClass: "modal-custom-class"
       });
-
-      await modal.present();
-    }
-
   
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('addDrugPlan()', result);
+  
+          if(result?.data?.error){
+           // let message = this.translate.instant('landing.message_wrong_credentials')
+            //this.dooleService.presentAlert(message)
+          }else if(result?.data?.action !== undefined){
+            this.notification.displayToastSuccessful()
+            this.segmentChanged()
+          }
+        });
+  
+        await modal.present();
+      }
+    }
   }

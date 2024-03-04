@@ -1,7 +1,3 @@
-
-
-
-
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
@@ -14,7 +10,7 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  
+
 </ion-header>
 
 <ion-content>
@@ -41,83 +37,76 @@
   </ion-row>
 
 
-  
-<div class="verticalLine2" [ngSwitch]="segment">
-<div *ngSwitchCase="'today'">
-  <div style="margin-top: 3%;">
-    <ion-list *ngIf="CanDoMedication && listDrugIntakes.length > 0; else noData">
-      <ion-grid *ngFor="let item of listDrugIntakes" >  
-        <!-- <div *ngIf="getPeriod(drugs.period)"></div> -->
-        <ion-row >
-          <ion-col size="0.8">
-            <ion-icon class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
-            <!-- <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp; -->
-          </ion-col>
-          <ion-col size="11.2"  class="text-column">
-            <ion-text class="center"  style="color: #BA0186">
-              <h5>{{item?.date }}</h5>
-            </ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngFor="let drug of item.itemDrugs">
-          <ion-col size="0.8"  style="align-items: center;">  
-            <ion-icon style="font-size: large; width: 100%; height: 100%;" src='/assets/icons/shared-care-plan/lineStroke.svg'></ion-icon>
-            <!-- <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/linea.svg'></ion-icon> -->
-          </ion-col>
-          <ion-col size="11.2" >    
-            <app-content-date [content]="drug" (redirect)="addDrugPlan(drug, drug.medication_plan_id)" (takeMedication)="changeTake($event)"></app-content-date>
-          </ion-col>
-          
-        </ion-row>
-      </ion-grid>
 
-    </ion-list>
-  </div>
+  <div class="verticalLine2" [ngSwitch]="segment">
+    <div *ngSwitchCase="'today'">
+      <div style="margin-top: 3%;">
+        <ion-list *ngIf="listDrugIntakes.length > 0; else noData" style="padding-bottom: 20%;">
+          <ion-grid *ngFor="let item of listDrugIntakes">
+            <!-- <div *ngIf="getPeriod(drugs.period)"></div> -->
+            <ion-row>
+              <ion-col size="0.8">
+                <ion-icon class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+                <!-- <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp; -->
+              </ion-col>
+              <ion-col size="11.2" class="text-column">
+                <ion-text class="center" style="color: #BA0186">
+                  <h5>{{item?.date }}</h5>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let drug of item.itemDrugs">
+              <ion-col size="0.8" style="align-items: center;">
+                <ion-icon style="font-size: large; width: 100%; height: 100%;"
+                  src='/assets/icons/shared-care-plan/lineStroke.svg'></ion-icon>
+                <!-- <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/linea.svg'></ion-icon> -->
+              </ion-col>
+              <ion-col size="11.2">
+                <app-content-date [content]="drug" (redirect)="addDrugPlan(drug, drug.medication_plan_id)"
+                  (takeMedication)="changeTake($event)"></app-content-date>
+              </ion-col>
 
+            </ion-row>
+          </ion-grid>
 
-
-  <ng-template #noData>
-    <app-no-data></app-no-data>
-  </ng-template>
-
-  <div style="background-color: var(--default-bkg);"
-    style="display: flex; justify-content: center;">
-  <!-- Floating Button -->
-  <div >
-    <app-button-add  [content]="this.addButton[1]" (dataUpdated)="addDrugPlan(null, null)" ></app-button-add>
-  </div>
- 
-  </div>
-</div>
- 
-<div *ngSwitchCase="'medication'">
-  
-  
-  
-    <div >
-      <ion-list *ngIf="CanDoMedication && items.length > 0; else noData">
-        
-        <app-scp-med-for-mon
-          *ngFor="let content of items"
-          (redirect)="addDrugPlan(content, content.id)"
-          [content]="content" 
-          [segment]="this.segment" 
-          (dataUpdated)="loaderAgain($event)"
-        ></app-scp-med-for-mon>
-      </ion-list>
-    </div>
-    <ng-template #noData>
-      <div *ngIf="!this.isLoading">
-        <app-no-data></app-no-data>
+        </ion-list>
       </div>
-    </ng-template>
-  
-</div>
 
 
-</div>
 
+      <ng-template #noData>
+        <app-no-data></app-no-data>
+      </ng-template>
+
+      <div *ngIf="this.permissionService.canManageMedication" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+        <!-- Floating Button -->
+        <div>
+          <app-button-add [content]="this.addButton[1]" (dataUpdated)="addDrugPlan(null, null)"></app-button-add>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'medication'">
+
+      <div>
+        <ion-list *ngIf="items.length > 0; else noData">
+          <app-scp-med-for-mon *ngFor="let content of items" (redirect)="addDrugPlan(content, content.id)"
+            [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"></app-scp-med-for-mon>
+        </ion-list>
+      </div>
+
+      <ng-template #noData>
+        <div *ngIf="!this.isLoading">
+          <app-no-data></app-no-data>
+        </div>
+      </ng-template>
+    </div>
+
+
+  </div>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

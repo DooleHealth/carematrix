@@ -152,14 +152,14 @@ class="ion-no-padding"
               content?.alias: content?.name}}</p></ion-col>
             <ion-col size="6.5" size-md="6" size-lg="5">          
                   <ion-button mode="ios" *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
-                    (click)="changeTake(content?.id, content?.state)">{{ 'button.take' | translate }}
+                    (click)="changeTake(content?.id, content?.state)" [disabled]="!this.permissionService.canManageMedication">{{ 'button.take' | translate }}
                   </ion-button>
 
                   <ion-button mode="ios" *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
-                    (click)="changeTake(content?.id, content?.state)">{{ 'button.forgotten' | translate }}
+                    (click)="changeTake(content?.id, content?.state)" [disabled]="!this.permissionService.canManageMedication">{{ 'button.forgotten' | translate }}
                   </ion-button>
                   <ion-button mode="ios" *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
-                  (click)="changeTake(content.id, content.state)">{{ 'button.takeds' | translate }}
+                  (click)="changeTake(content.id, content.state)" [disabled]="!this.permissionService.canManageMedication">{{ 'button.takeds' | translate }}
                 </ion-button>
             </ion-col>
             
