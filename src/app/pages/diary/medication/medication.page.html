@@ -49,22 +49,22 @@
       <ion-grid *ngFor="let drugs of listDrugIntakes" class="ion-no-padding" >  
         <div *ngIf="getPeriod(drugs.period)"></div>
         <ion-row >
-          <ion-col size="0.8">
+          <!--<ion-col size="0.8">
             <ion-icon class="center"  *ngIf="getIsDateInPast(drugs?.date_intake)" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
             <ion-icon  class="center" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/ellipse5.svg'></ion-icon>&nbsp;
-          </ion-col>
+          </ion-col>-->
           <ion-col size="11.2"  class="text-column">
-            <ion-text class="center" [style.color]="isDateInPast ? '#575757' : 'var(--malva)'">
+            <ion-text class="center"  style="color: #BA0186">
               <h5>{{drugs?.period }}</h5>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="0.8" style="align-items: center;">  
+          <!--<ion-col size="0.8" style="align-items: center;">  
           <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="!isDateInPast" src='/assets/icons/shared-care-plan/lineStroke.svg'></ion-icon>
           <ion-icon style="font-size: large; width: 100%; height: 100%;" *ngIf="isDateInPast" src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
           
-        </ion-col>
+        </ion-col>-->
           <ion-col size="11.2">    
             <app-content-date [content]="drugs" (redirect)="goTo(drugs)" (takeMedication)="changeTake($event)"></app-content-date>
           </ion-col>
