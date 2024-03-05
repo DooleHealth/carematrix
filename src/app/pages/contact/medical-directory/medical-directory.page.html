@@ -32,8 +32,8 @@
             <h2 class="user-name">
               <app-text-shell class="user-name" [data]="s.name" animation="bouncing"></app-text-shell>
             </h2>
-            <h3 class="user-lastname">
-              <app-text-shell class="user-name" [data]="s.name" animation="bouncing"></app-text-shell>
+            <h3 class="user-lastname" *ngIf="s.specialties?.length > 0">
+              <app-text-shell class="user-name" [data]="s.specialties[0].name" animation="bouncing"></app-text-shell>
             </h3>
           </ion-label>
         </ion-item>

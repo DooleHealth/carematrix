@@ -91,7 +91,7 @@ export class DrugsDetailPage implements OnInit {
     }
     if(!this.isEditDrug){
       this.isInit = false
-      this.drug_id = this.drug.id
+      this.drug_id = this.drug?.id
       this.getDrudUnit()
     }
   }
