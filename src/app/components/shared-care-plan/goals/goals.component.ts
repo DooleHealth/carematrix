@@ -90,6 +90,10 @@ export class GoalsComponent  implements OnInit {
           break;
 
         case "App\\Drug":
+
+          if (goal?.drug?.name) name = goal?.drug?.name
+          if (goal?.goalable?.name) name = goal?.goalable.name;
+
           id = goal?.drug?.id;
           name =  goal?.drug?.name;
           message = this.translate.instant("health_path.drug");
@@ -102,18 +106,26 @@ export class GoalsComponent  implements OnInit {
           link = '/form';
           break;
         case "App\\Advice":
-          id = goal?.advice?.id;
-          name =  goal?.advice?.name;
+
+          if (goal?.advice?.name) name = goal?.advice?.name
+          if (goal?.goalable?.name) name = goal?.goalable.name;
+          id = goal?.goalable?.id;
           message = this.translate.instant("health_path.advice") //+ '"' + goal?.advice?.name + '"';
           link = '/form';
           break;
         case "App\\Diet":
+          if (goal?.diet?.name) name = goal?.diet?.name
+          if (goal?.goalable?.name) name = goal?.goalable.name;
+
           id = goal?.diet?.id;
-          name =  goal?.diet?.name;
           message = this.translate.instant("health_path.diet") //+ '"' + goal?.diet?.name + '"';
           link = '/form';
           break;
         case "App\\Element":
+
+          if (goal?.element?.name) name = goal?.element?.name
+          if (goal?.goalable?.name) name = goal?.goalable.name;
+
           id = goal?.element?.id;
           name =  goal?.element?.name;
           message = this.translate.instant("health_path.measure") //+ '"' + goal?.element?.name + '"';
@@ -158,6 +170,8 @@ export class GoalsComponent  implements OnInit {
     console.log('goal', goal)
     let message = ''
     let link = '';
+
+    console.log(goal);
 
     if (this.canDoGoal) {
       switch (goal?.goalable_type) {

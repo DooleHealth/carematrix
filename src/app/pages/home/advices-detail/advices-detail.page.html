@@ -12,58 +12,74 @@
 <ion-content>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+    <ion-spinner></ion-spinner>
   </div>
-  
+
 
   <ion-card class="cardProfile">
-<!--     <ion-card-header>    </ion-card-header> -->
-    <img *ngIf="advice.image" class="imagefit" [src]="advice.image.temporaryUrl">
+    <img *ngIf="advice.image" class="imagefit" [src]="advice?.image?.temporaryUrl ? advice.image.temporaryUrl : '/assets/images/shared-care-plan/image-not-found.png'"
+      onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
 
-    <ion-item  *ngIf="advice.image" lines="none">
-      <!--<ion-icon *ngIf="!hide" color="secundary" name="eye" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
-      <!--<ion-icon *ngIf="hide" color="primary" name="eye-off" slot="end" (click)= "setContentStatus('hide')"></ion-icon>-->
-      <ion-icon [color]="(this.favourite)? 'primary':'secundary' "name="star" slot="end" (click)= "setContentStatus('favourite')"></ion-icon>
-      <ion-icon [color]="(this.like)? 'primary':'secundary' " name="thumbs-up" slot="end" (click)= "setContentStatus('like')"></ion-icon>
-     
-    </ion-item>
-    <ion-row style="margin-top:5%; margin-bottom: 5%;">
-      <ion-text  class="txtTitleBlackDark">{{advice?.name}}</ion-text>
-    </ion-row>
-    <!-- <ion-item lines="none">
-      <ion-text style="color:#141414; font-weight: bold;"> {{advice?.name}}</ion-text>
-    </ion-item> -->
-    <ion-item lines="none" *ngIf="advice.description" padding>
-      <span [innerHTML]="advice.description"></span>
-    </ion-item>
-  </ion-card>
+    <ion-card-header mode="md" style="padding-top: 7%; padding-left: 7%; padding-right: 7%;">
+      <ion-card-subtitle>
+        <ion-text *ngIf="advice?.name" class="txt-source" class="title-card">
+          {{advice?.name}} </ion-text>
+      </ion-card-subtitle>
 
-  <div *ngIf="link" #frame
-    style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
-    <iframe [src]="link" class="iframe" scrolling="yes"></iframe>
-  </div>
-  <div class="main-container" *ngIf="linkpdf2 || video">
-    <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
-  </div>
-  <ion-card class="cardProfilePadding" *ngIf="video" (click)="openVideo()">
-    <ion-row>
-      <ion-col size="4" class="imgCardMedia">
-      </ion-col>
-      <ion-col size="8">
-        <ion-card-title class="txtTitleGoals3">{{videoTitle}}</ion-card-title>
-        <p class="txtTitleGoals3"> {{videoDescription}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card class="cardProfilePadding" *ngIf="linkpdf2" (click)="openFile()">
-    <ion-row>
-      <ion-col size="4" class="imgCardPdf">
-      </ion-col>
-      <ion-col size="8">
-        <ion-card-title class="txtTitleGoals3">{{linkPdfTitle}}</ion-card-title>
-        <p class="txtTitleGoals3"> {{linkPdfDescription}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+      <ion-card-subtitle *ngIf="advice?.source" class="txt-source"><i><u>{{'shared_care_plan.source' |
+            translate}}</u> {{extractText(advice?.source)}}</i></ion-card-subtitle>
 
+      <ion-card-subtitle *ngIf="advice?.scheduled_date" class="txt-source">{{
+        formatSelectedDate(advice?.scheduled_date)}}</ion-card-subtitle>
+
+      <ion-card-subtitle *ngIf="advice?.reading_time" class="txt-timeReading">
+        {{ advice?.reading_time }}
+      </ion-card-subtitle>
+
+
+      <ion-card-subtitle>
+        <ion-text class="txt-description" style="text-align: justify; display: flex;"
+          [innerHtml]="advice?.description"></ion-text>
+      </ion-card-subtitle>
+
+      <ion-card-subtitle>
+        <ion-text class="txt-likes" *ngIf="advice?.interactions">
+          {{advice?.interactions?.like}} {{'shared_care_plan.like' |translate}}
+        </ion-text>
+        <ion-text class="txt-likes" *ngIf="advice?.interactions?.like || advice?.interactions?.like > 100">🔥</ion-text>
+      </ion-card-subtitle>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      <div *ngIf="link" #frame
+        style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
+        <iframe [src]="link" class="iframe" scrolling="yes"></iframe>
+      </div>
+      <div class="main-container" *ngIf="linkpdf2 || video">
+        <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
+      </div>
+      <ion-card class="cardProfilePadding" *ngIf="video" (click)="openVideo()">
+        <ion-row>
+          <ion-col size="4" class="imgCardMedia">
+          </ion-col>
+          <ion-col size="8">
+            <ion-card-title class="txtTitleGoals3">{{videoTitle}}</ion-card-title>
+            <p class="txtTitleGoals3"> {{videoDescription}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+      <ion-card class="cardProfilePadding" *ngIf="linkpdf2" (click)="openFile()">
+        <ion-row>
+          <ion-col size="4" class="imgCardPdf">
+          </ion-col>
+          <ion-col size="8">
+            <ion-card-title class="txtTitleGoals3">{{linkPdfTitle}}</ion-card-title>
+            <p class="txtTitleGoals3"> {{linkPdfDescription}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-card-content>
+
+  </ion-card>
 </ion-content>

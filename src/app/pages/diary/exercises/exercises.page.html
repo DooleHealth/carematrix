@@ -17,7 +17,8 @@
   mode="ios"
   (ionInput)="filterListExercises($event)"
   (ionClear)="getExercisesList()"
-  placeholder="{{ 'advices.searchbar' | translate}}">
+  placeholder="{{ 'advices.searchbar' | translate}}"
+  style="padding-bottom: 0px;">
 </ion-searchbar>
 
 <div class="spin" *ngIf="this.isLoading">
@@ -25,7 +26,7 @@
   </div>
   
   <div>
-    <ion-list *ngIf="items.length > 0; else noData">
+    <ion-list *ngIf="items.length > 0; else noData" style="padding-top: 0px;">
       <!--<app-scp-med-for-mon
       *ngFor="let content of items"
       [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"

@@ -425,3 +425,11 @@ ion-datetime {
   width: 100%;
   background-color: white;
 }
+
+ion-accordion-group{
+  ion-accordion {
+      .ion-accordion-toggle-icon {
+        color: var(--ion-color-primary);
+      }
+  }
+}

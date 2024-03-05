@@ -1,36 +1,54 @@
-.likes{
-    font-style: italic !important;
-    font-size: 11px !important;
-}
- .time_reading{
-   
-    font-size: 11px;
-    color: #4D7A05;
-    margin-top: 5%;
- }
-
-.card_date{
-    font-style: italic;
-    font-size: 11px;
-    margin-top: 1px;
-}    
-.card_source{
-font-style: italic;
-font-size: 11px;
-margin-top: 1px;
-}
-.study{
-    background-color: #F6F6F6;
-    border-radius: 20%;
-    margin-right: 5px;
-    
-}
-
-
 .floating-button {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 ion-list {
-    background: none !important
-  }
+  background: none !important
+}
+
+ion-card {
+  box-shadow: none !important;
+}
+
+.title-card {
+  font-family: 'Poppins-SemiBold';
+  font-size: 16px;
+  letter-spacing: 0.25%;
+  text-align: left;
+  line-height: auto;
+  color: #3F3F3F;
+}
+
+.txt-source {
+  font-family: 'Poppins-Italic';
+  font-size: 12px;
+  letter-spacing: 0.4%;
+  text-align: left;
+  line-height: auto;
+  color: #3F3F3F;
+  margin-top: 0px;
+}
+
+.txt-timeReading {
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  letter-spacing: 0%;
+  text-align: left;
+  line-height: auto;
+  color: #4D7A05;
+}
+
+.txt-likes {
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #64748B;
+}
+
+.txt-description {
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  letter-spacing: 0.25%;
+  color: var(--default-text);
+}

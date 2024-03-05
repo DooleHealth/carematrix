@@ -90,3 +90,59 @@
       background-repeat: no-repeat;
       background-position: 50% 50%;
     }
+
+
+    .floating-button {
+      text-transform: capitalize;
+    }
+    
+    ion-list {
+      background: none !important
+    }
+    
+    ion-card {
+      box-shadow: none !important;
+    }
+    
+    .title-card {
+      font-family: 'Poppins-SemiBold';
+      font-size: 16px;
+      letter-spacing: 0.25%;
+      text-align: left;
+      line-height: auto;
+      color: #3F3F3F;
+    }
+    
+    .txt-source {
+      font-family: 'Poppins-Italic';
+      font-size: 12px;
+      letter-spacing: 0.4%;
+      text-align: left;
+      line-height: auto;
+      color: #3F3F3F;
+      margin-top: 0px;
+    }
+    
+    .txt-timeReading {
+      font-family: 'Poppins-Regular';
+      font-size: 14px;
+      letter-spacing: 0%;
+      text-align: left;
+      line-height: auto;
+      color: #4D7A05;
+    }
+    
+    .txt-likes {
+      font-family: 'Poppins-Regular';
+      font-size: 14px;
+      letter-spacing: 0%;
+      text-align: left;
+      color: #64748B;
+    }
+    
+    .txt-description {
+      font-family: 'Poppins-Regular';
+      font-size: 14px;
+      letter-spacing: 0.25%;
+      color: var(--default-text);
+    }

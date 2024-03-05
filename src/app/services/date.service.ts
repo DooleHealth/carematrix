@@ -77,6 +77,14 @@ export class DateService {
     return format;
   }
 
+  public getFormatSelectedDate2() {
+    let lang =  this.translate.currentLang;
+    let format = 'd, MMM YYYY'
+    /* if(lang === 'en' )
+      format = 'MMMM d, EEEE'; */
+    return format;
+  }
+
   public getLocale(){
     let lang =  this.translate.currentLang;
 

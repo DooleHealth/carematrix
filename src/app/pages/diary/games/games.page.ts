@@ -39,6 +39,10 @@ export class GamesPage implements OnInit {
       async (res: any) =>{      
         if(res.games)
       {
+
+        
+
+
         res.games.forEach(element => {
           game.push(element);
         });

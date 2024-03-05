@@ -1,42 +1,98 @@
-<ion-card 
-class="ion-no-padding" 
-(click)="goTo(content.type)"  
-routerLinkActive="active-item" 
-routerLink="diets-detail/recipe"
- [state]="{id: content?.item_id}" 
- *ngIf="content?.item_type === 'App\\Ingredient' || content?.item_type === 'App\\Receipt';else Other"
- 
- >
-<!--DIETS-->
-    <ion-grid class="ion-no-padding" style="height: 100% !important"> 
+<ion-card class="ion-no-padding" (click)="goTo(content.type)" routerLinkActive="active-item"
+  routerLink="diets-detail/recipe" [state]="{id: content?.item_id}"
+  *ngIf="content?.item_type === 'App\\Ingredient' || content?.item_type === 'App\\Receipt';else Other">
+  <!--DIETS-->
+  <ion-grid class="ion-no-padding" style="height: 100% !important">
+    <ion-row>
+      <ion-col size="4">
+        <ion-thumbnail class="thumbnail">
+          <img class="paddingRight imagefit" [src]="content?.media?.temporaryUrl"
+            onError="this.onerror=null; this.src='/assets/images/shared-care-plan/diets.png' " alt="" />
+        </ion-thumbnail>
+      </ion-col>
+
+      <ion-col size="8">
+        <ion-row>
+
+          <p class="txt-diet-title">
+            {{content?.item.name}}
+          </p>
+        </ion-row>
+        <ion-row>
+          <ion-text class="txtSubtitle2">
+            {{content?.item.description_corta}}
+          </ion-text>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="9.5" size-md="10" size-lg="11">
+          </ion-col>
+          <ion-col size="2.5" size-md="2" size-lg="1">
+            <p class="txtSubtitleDate" style="color: var(--malva)">
+              {{this.date}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+  <!-- </ion-item> -->
+</ion-card>
+<ng-template #Other>
+  <ion-card class="ion-no-padding" (click)="goTo(content)" routerLinkActive="active-item"
+    [state]="{id: content?.form_id, form_programmation_id: content?.id}" *ngIf="content?.type === 'forms'; else Forms">
+
+    <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
+
+    <ion-grid class="ion-no-padding" style="height: 100% !important">
       <ion-row>
         <ion-col size="4">
           <ion-thumbnail class="thumbnail">
-            <img
-              class="paddingRight imagefit"
-              [src]="content?.media?.temporaryUrl"
-              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/diets.png' "
-              alt=""
-            />
+            <img class="paddingRight imagefit" [src]="content?.media?.temporaryUrl"
+              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/forms.png' " alt="" />
           </ion-thumbnail>
         </ion-col>
-  
+
         <ion-col size="8">
-          <ion-row>
-            <p>{{content?.item.name}}</p>
+          <ion-row style="margin-bottom: -8%;">
+            <ion-col>
+              <p>{{ content?.title}}</p>
+            </ion-col>
+            <ion-col size="6.5" size-md="6" size-lg="5">
+              <ion-button *ngIf="content?.status == 2" mode="ios" class="ion-float-right custom-button"
+                color="medium">{{ 'button.pending' | translate }}
+              </ion-button>
+
+              <ion-button *ngIf="content?.status == 1" mode="ios" class="ion-float-right custom-button"
+                color="success">{{ 'button.completed' | translate }}
+              </ion-button>
+              <ion-button *ngIf="content?.status == 0" mode="ios" class="ion-float-right custom-button"
+                color="danger">{{ 'button.forgotten' | translate }}
+              </ion-button>
+            </ion-col>
+
           </ion-row>
-          <ion-row>
-            <ion-text class="txtSubtitle2">
-                {{content?.item.description_corta}}
-            </ion-text>
+          <ion-row style="margin-bottom: -4%;">
+            <ion-row class="txtSubtitle2">
+              <ion-text class="txtSubtitle" style="display: inline-flex !important;">
+                <p> {{'medication.from' | translate}} {{ setFormatDate(content?.from_date ) }} </p>&nbsp;
+                <p *ngIf="content?.to_date"> {{'medication.to' | translate}} {{ setFormatDate(content?.to_date )}}</p>
+              </ion-text>
+              &nbsp;
+              <!--<ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"
+                  (click)="presentAlert()"></ion-icon>-->
+            </ion-row>
+
           </ion-row>
-    
+
           <ion-row>
-            <ion-col size="9.5" size-md="10" size-lg="11">
+            <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
               <p class="txtSubtitle3" style="color: var(--malva)">
-                {{content?.item.calories}} {{'diary.calories' | translate}}
+                {{ content.frequency }}
+
               </p>
-    
+
             </ion-col>
             <ion-col size="2.5" size-md="2" size-lg="1">
               <p class="txtSubtitleDate" style="color: var(--malva)">
@@ -48,129 +104,52 @@ routerLink="diets-detail/recipe"
       </ion-row>
 
     </ion-grid>
-  <!-- </ion-item> -->
-</ion-card>
-<ng-template #Other>
-  <ion-card 
-  class="ion-no-padding" 
-  (click)="goTo(content)"
-  routerLinkActive="active-item" 
-   [state]="{id: content?.form_id, form_programmation_id: content?.id}" 
-   *ngIf="content?.type === 'forms'; else Forms"
-   >
-  
-    <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
-  
-      <ion-grid class="ion-no-padding" style="height: 100% !important"> 
-        <ion-row>
-          <ion-col size="4">
-            <ion-thumbnail class="thumbnail">
-              <img
-                class="paddingRight imagefit"
-                [src]="content?.media?.temporaryUrl"
-                onError="this.onerror=null; this.src='/assets/images/shared-care-plan/forms.png' "
-                alt=""
-              />
-            </ion-thumbnail>
-          </ion-col>
-    
-          <ion-col size="8">
-            <ion-row style="margin-bottom: -8%;">
-                <ion-col><p>{{ content?.title}}</p></ion-col>
-              <ion-col size="6.5" size-md="6" size-lg="5">          
-                <ion-button  *ngIf="content?.status == 2" mode="ios"  class="ion-float-right custom-button"  color="medium" 
-                     >{{ 'button.pending' | translate }}
-                    </ion-button>
-  
-                    <ion-button  *ngIf="content?.status == 1" mode="ios"  class="ion-float-right custom-button"  color="success"
-                      >{{ 'button.completed' | translate }}
-                    </ion-button>
-                    <ion-button *ngIf="content?.status == 0" mode="ios"  class="ion-float-right custom-button"  color="danger"
-                   >{{ 'button.forgotten' | translate }}
-                  </ion-button>
-              </ion-col>
-              
-            </ion-row>
-            <ion-row style="margin-bottom: -4%;">
-              <ion-row class="txtSubtitle2"  >
-                <ion-text class="txtSubtitle" style="display: inline-flex !important;">
-                  <p>  {{'medication.from' | translate}}   {{ setFormatDate(content?.from_date ) }} </p>&nbsp;
-                  <p *ngIf="content?.to_date"> {{'medication.to' | translate}} {{ setFormatDate(content?.to_date )}}</p>
-                </ion-text>
-                &nbsp;
-                <!--<ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"
-                  (click)="presentAlert()"></ion-icon>-->
-              </ion-row>
-              
-            </ion-row>
-      
-            <ion-row>
-              <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
-                <p class="txtSubtitle3" style="color: var(--malva)">
-                  {{ content.frequency }}
-
-                </p>
-      
-              </ion-col>
-              <ion-col size="2.5" size-md="2" size-lg="1">
-                <p class="txtSubtitleDate" style="color: var(--malva)">
-                  {{this.date}}
-                </p>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-  
-      </ion-grid>
     <!-- </ion-item> -->
   </ion-card>
- 
+
 </ng-template>
 <ng-template #Forms>
-  
-  <ion-card 
-class="ion-no-padding" 
-(click)="goTo(content)"
- >
-    <ion-grid class="ion-no-padding" style="height: 100% !important"> 
+
+  <ion-card class="ion-no-padding" (click)="goTo(content)">
+    <ion-grid class="ion-no-padding" style="height: 100% !important">
       <ion-row>
         <ion-col size="4">
           <ion-thumbnail class="thumbnail">
-            <img
-              class="paddingRight imagefit"
-              [src]="content?.media?.temporaryUrl"
-              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/medication.png' "
-              alt=""
-            />
+            <img class="paddingRight imagefit" [src]="content?.media?.temporaryUrl"
+              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/medication.png' " alt="" />
           </ion-thumbnail>
         </ion-col>
-  
+
         <ion-col size="8">
           <ion-row>
             <ion-col>
               <p>{{(content?.alias !== null)?
-              content?.alias: content?.name}}</p></ion-col>
-            <ion-col size="6.5" size-md="6" size-lg="5">          
-                  <ion-button mode="ios" *ngIf="content?.forgotten == 2" color="primary"  class="ion-float-right custom-button" 
-                    (click)="changeTake(content?.id, content?.state)" [disabled]="!this.permissionService.canManageMedication">{{ 'button.take' | translate }}
-                  </ion-button>
-
-                  <ion-button mode="ios" *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"  color="danger"
-                    (click)="changeTake(content?.id, content?.state)" [disabled]="!this.permissionService.canManageMedication">{{ 'button.forgotten' | translate }}
-                  </ion-button>
-                  <ion-button mode="ios" *ngIf="content.forgotten == 0" class="ion-float-right custom-button"  color="success"
-                  (click)="changeTake(content.id, content.state)" [disabled]="!this.permissionService.canManageMedication">{{ 'button.takeds' | translate }}
-                </ion-button>
+                content?.alias: content?.name}}</p>
             </ion-col>
-            
+            <ion-col size="6.5" size-md="6" size-lg="5">
+              <ion-button mode="ios" *ngIf="content?.forgotten == 2" color="primary"
+                class="ion-float-right custom-button" (click)="changeTake(content?.id, content?.state)"
+                [disabled]="!this.permissionService.canManageMedication">{{ 'button.take' | translate }}
+              </ion-button>
+
+              <ion-button mode="ios" *ngIf="content?.forgotten == 1" class="ion-float-right custom-button"
+                color="danger" (click)="changeTake(content?.id, content?.state)"
+                [disabled]="!this.permissionService.canManageMedication">{{ 'button.forgotten' | translate }}
+              </ion-button>
+              <ion-button mode="ios" *ngIf="content.forgotten == 0" class="ion-float-right custom-button"
+                color="success" (click)="changeTake(content.id, content.state)"
+                [disabled]="!this.permissionService.canManageMedication">{{ 'button.takeds' | translate }}
+              </ion-button>
+            </ion-col>
+
           </ion-row>
-    
+
           <ion-row>
             <ion-col size="9.5" size-md="10" size-lg="11">
               <p class="txtSubtitle3" style="color: var(--malva)">
-                {{'medication.dose' | translate}}{{content?.frequency}} 
+                {{'medication.dose' | translate}}{{content?.frequency}}
               </p>
-    
+
             </ion-col>
             <ion-col size="2.5" size-md="2" size-lg="1">
               <p class="txtSubtitleDate" style="color: var(--malva)">
@@ -182,6 +161,6 @@ class="ion-no-padding"
       </ion-row>
 
     </ion-grid>
-  <!-- </ion-item> -->
-</ion-card>
+    <!-- </ion-item> -->
+  </ion-card>
 </ng-template>

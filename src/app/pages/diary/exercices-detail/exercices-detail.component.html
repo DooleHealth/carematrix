@@ -13,25 +13,25 @@
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
 
-  <ion-row style="margin-top: 5%; margin-bottom: 5%">
-    <ion-text class="txtTitleBlueDark">{{ exercise?.name }}</ion-text>
-  </ion-row>
-
   <ion-card class="cardProfile" *ngIf="exercise">
     <img class="imagefit" *ngIf="exercise?.cover" [src]="exercise?.cover" />
-    <ion-item lines="none" *ngIf="exercise?.description" padding>
-      <p [innerHTML]="exercise.description | safeHtml"></p>
-    </ion-item>
+
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-text *ngIf="exercise?.name" class="title-card">
+          {{exercise?.name}} </ion-text>
+      </ion-card-subtitle>
+  
+  
+     
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item lines="none" *ngIf="exercise?.description" padding>
+        <p [innerHTML]="exercise.description | safeHtml"></p>
+      </ion-item>
+    </ion-card-content>
+
   </ion-card>
 
-  <!--<ion-card class="cardProfile" *ngIf="exercise?.source" class="contentSource">
-    <ion-row *ngIf="exercise?.source" style="margin: 5% 5% 0 5%">
-      <ion-text class="contentSourceTitle"
-        ><b>{{ "advices.source" | translate }}: </b>&nbsp;</ion-text
-      >
-    </ion-row>
-    <ion-row *ngIf="exercise?.source" style="margin: 0 5%">
-      <div [innerHtml]="exercise?.source | safeHtml"></div>
-    </ion-row>
-  </ion-card>-->
 </ion-content>

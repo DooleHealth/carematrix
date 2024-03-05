@@ -1,6 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
+import { DateService } from 'src/app/services/date.service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-view-more-information',
@@ -20,7 +24,7 @@ export class ViewMoreInformationComponent implements OnInit {
 
 
 
-  constructor(private dooleService: DooleService, public authService: AuthenticationService) { }
+  constructor(private dooleService: DooleService, public authService: AuthenticationService, private languageService: LanguageService, public dateService: DateService) { }
 
   ngOnInit() {
     console.log("lo que llega", this.content)
@@ -96,6 +100,8 @@ export class ViewMoreInformationComponent implements OnInit {
     // Utiliza una expresión regular para eliminar las etiquetas HTML
     const regex = /(<([^>]+)>)/ig;
     const result = description.replace(regex, "");
+
+
     if (result.length > maxLength) {
       return result.substring(0, maxLength) + '...';
     } else {
@@ -117,7 +123,10 @@ export class ViewMoreInformationComponent implements OnInit {
   }
 
   getImageSource(listcontets): string {
-    return listcontets.cover || listcontets.image || '/assets/images/shared-care-plan/image-not-found.png';
+
+    if (listcontets?.cover) return listcontets.cover
+    else if (listcontets?.image?.temporaryUrl) return listcontets.image.temporaryUrl;
+    else return '/assets/images/shared-care-plan/image-not-found.png';
   }
 
   getStateObject(listcontets) {
@@ -149,5 +158,11 @@ export class ViewMoreInformationComponent implements OnInit {
   refreshPage() {
     // This function could be called on some event like a button click
     this.notifyParent.emit();
+  }
+
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getFormatSelectedDate2());
   }
 }
