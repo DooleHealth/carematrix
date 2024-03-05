@@ -34,6 +34,7 @@ export class TestimonialsPage implements OnInit {
 
 
   async getNewsTestimonial(){
+    
     console.log('[NewsPage] getNewsList()');
     this.items = []
     this.isLoading = true
@@ -59,7 +60,6 @@ export class TestimonialsPage implements OnInit {
       });
   }
   filterListTertimonials(event) {
-    
     let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
     if(this.items.length > 0){
@@ -68,7 +68,7 @@ export class TestimonialsPage implements OnInit {
       search= this.saves_items;
     }
     const filteredItems = search.filter(item => {
-      const subject = item.subject.toLowerCase();
+      const subject = item.name.toLowerCase();
       return subject.includes(searchTerm) || subject === searchTerm;
     });
       this.items = (filteredItems)

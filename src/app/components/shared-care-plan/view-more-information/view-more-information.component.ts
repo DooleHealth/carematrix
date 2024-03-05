@@ -41,6 +41,10 @@ export class ViewMoreInformationComponent implements OnInit {
       case "Exercise":
         return 'exercices-detail'
           ;
+          case "testimonials":
+        return 'testimonials-detail'
+          ;
+          
 
       
 
