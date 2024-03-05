@@ -1,6 +1,5 @@
 <ion-card class="level-card" *ngIf="!completedGoals; else Completed">
-
-  <ion-card-header>
+  <ion-card-header style="padding-bottom: 0px;">
     <ion-row>
       <ion-col size="8">
         <ion-item lines="none" class="cardHeader">
@@ -22,7 +21,7 @@
 
 
   <ion-card-content class="ion-no-padding">
-    
+
     <ion-grid>
       <ion-row class="ion-no-padding">
         <ion-col size="3" class="ion-no-padding" style="display: flex; align-items: center; justify-content: center;">
@@ -33,10 +32,10 @@
           <ion-text class="txt-keep-up" style="font-size: medium; margin-bottom: 2%"><b> {{ 'goals.keppUp' | translate
               }}</b> <br></ion-text>
           <ion-text style="font-size: medium; margin-top: 2%;margin-bottom: 2% ">
-            {{'health_path.goal_txt1' | translate}}&nbsp;<strong>{{
+            {{'health_path.goal_txt1' | translate}}<strong>{{
               aderence.totalScoreByUser
               }}
-              {{'game.points' | translate}}</strong> &nbsp;
+              {{'game.points' | translate}}</strong>
 
             <span *ngIf="aderence?.percentage < 100">
               {{'health_path.goal_txt2'
@@ -63,121 +62,130 @@
       </ion-row>
 
       <ion-row>
-
-        
         <ion-col size="12">
           <ion-accordion-group *ngIf="current_level?.last_accepted_or_declined != null && this.goalsList?.length > 0">
-        <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
-         
-          <ion-item slot="header">
-            <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_goals'| translate }}</ion-label>
-          </ion-item>
-  
-          <div slot="content" >
-            <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
-             
-              <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
-                <ion-col size="7" slot="start" class="ion-no-padding"> 
-                  <ion-label class="name-goal" style="color: black;">{{g?.message}} <span *ngIf="g?.name">"{{ g?.name }}"</span></ion-label>
-                </ion-col>
-                <ion-col size="5" slot="end" class="ion-no-padding" style="display: flex; align-items: end; justify-content: end;">
-                  <ion-label class="name-goal text1line" *ngIf="g?.completed"
-                  style="color: #7F8C8D;"></ion-label>
+            <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
 
-               
-
-                <ion-text class="txt-disabled" *ngIf="g?.completed;else showArrow" slot="end" class="goal-done" style="color: #4D7A05;">
-                  <strong>{{ 'health_path.done'| translate }}</strong>
-                </ion-text>
-
-                <ng-template #showArrow>
-                  <ion-text style="color: #A2047F;" class="txt-active"> <strong>{{'goals.go' | translate}} ></strong></ion-text>
-                </ng-template>
-                </ion-col>
+              <ion-item slot="header">
+                <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_goals'| translate }}</ion-label>
               </ion-item>
 
-             <!--  <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
-                <ion-label class="name-goal text1line" *ngIf="g?.completed;else showNoCompleted"
-                  style="color: #7F8C8D;">{{ g?.name }}</ion-label>
-                <ng-template #showNoCompleted>
-                  <ion-label class="name-goal text1line">{{ g?.name }}</ion-label>
-                </ng-template>
-                <ion-text *ngIf="g?.completed;else showArrow" slot="end" class="goal-done"
-                  style="color: #4D7A05;"><strong>{{ 'health_path.done'| translate }}</strong></ion-text>
+              <div slot="content">
+                <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
 
-                <ng-template #showArrow>
-                  <ion-text style="color: #A2047F;"> <strong>{{'goals.go' | translate}}</strong></ion-text>
-                  <ion-icon name="chevron-forward-outline" slot="end" size="small" style="color: purple;"> </ion-icon>
-                </ng-template>
-              </ion-item> -->
+                  <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
+                    <ion-col size="7" slot="start" class="ion-no-padding">
+                      <ion-label class="txt-active">{{g?.message}} <span *ngIf="g?.name">"{{
+                          g?.name }}"</span></ion-label>
+                    </ion-col>
+                    <ion-col size="5" slot="end" class="ion-no-padding"
+                      style="display: flex; align-items: end; justify-content: end;">
 
-            </ion-list>
-          </div>
-  
-        </ion-accordion>
-      </ion-accordion-group>
+                      <ion-label class="txt-disabled" *ngIf="g?.completed" style="color: #7F8C8D;"></ion-label>
+
+                      <ion-text *ngIf="g?.completed;else showArrow" slot="end" class="txt-active"
+                        style="color: #4D7A05;">
+                        <strong>{{ 'health_path.done'| translate }}</strong>
+                      </ion-text>
+
+                      <ng-template #showArrow>
+                        <ion-text class="txt-active" style="color: #A2047F;"> <strong>{{'goals.go' | translate}}
+                            ></strong></ion-text>
+                      </ng-template>
+                    </ion-col>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
         </ion-col>
-      
-    </ion-row>
+      </ion-row>
     </ion-grid>
-
-
-    
-
-
   </ion-card-content>
-
 </ion-card>
 
 
 <ng-template #Completed>
 
   <ion-card class="level-card">
-    <ion-item lines="none" class="cardHeader">
-      <ion-icon name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
-      <ion-text style="margin-left:10px; color:purple" slot="start"><strong>{{ this.current_level?.name
-          }}</strong></ion-text>
-
-    </ion-item>
-
+    <ion-card-header style="padding-bottom: 0px;">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none" class="cardHeader">
+            <ion-icon name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
+            <ion-text class="txt-title-goal" style="margin-left:10px; width: 100%;
+            margin-right: 0px; padding-bottom: 0px;" slot="start"><strong>{{ this.current_level?.name
+                }}</strong></ion-text>
+          </ion-item>
+        </ion-col>
+        
+      </ion-row>
+  
+    </ion-card-header>
+  
+  
     <ion-card-content class="ion-no-padding">
+  
       <ion-grid>
         <ion-row class="ion-no-padding">
-          <ion-col size="3" class="ion-no-padding">
+          <ion-col size="3" class="ion-no-padding" style="display: flex; align-items: center; justify-content: center;">
+            <ion-img style="width: unset !important; width: unset !important;"
+              src="assets/icons/shared-care-plan/goal_completed.svg"></ion-img>
           </ion-col>
-          <ion-col size="9" class="ion-no-padding">
-
-          </ion-col>
-
-
-        </ion-row>
-        <ion-row>
-          <ion-col size="3">
-            <ion-img style="margin-top: -50%;" src="assets/icons/shared-care-plan/goal_completed.svg"></ion-img>
-          </ion-col>
-          <ion-col size="9">
-            <ion-row style="display: inline-flex !important; margin-bottom: 4%;" class="challenge-description">
-              <strong>{{'goals.text_goals1' | translate}}</strong>
-              <div>
-                {{'goals.text_goals2'|translate}} <strong>{{'goals.text_goals3'|translate}}</strong>
-                {{'goals.text_goals4'|translate}}</div>
-
-              <br>
-            </ion-row>
-
-            <ion-row style="margin-bottom: 5%;">
-              <ion-progress-bar class="progress-bar" value="100">
-                <ion-label>100%</ion-label>
+          <ion-col size="9" class="ion-no-padding" style="display: grid;">
+            <ion-text class="txt-keep-up" style="font-size: medium; margin-bottom: 2%"><b> {{'goals.text_goals1' | translate}}</b> <br></ion-text>
+            <ion-text style="font-size: medium; margin-top: 2%;margin-bottom: 2% ">
+              {{'goals.text_goals2' | translate}}<strong>{{'goals.text_goals3' | translate}}</strong>{{'goals.text_goals4' | translate}}
+            </ion-text>
+  
+            <ion-row style="margin-top: 2%; padding-right: 5%;">
+              <ion-progress-bar class="progress-bar"
+                value="{{ aderence.totalScoreByUser > 0 ? aderence?.totalScoreByUser / 100 : 0 }}">
+                <ion-label>{{ aderence.totalScoreByUser }}%</ion-label>
               </ion-progress-bar>
             </ion-row>
+  
           </ion-col>
-
-
         </ion-row>
+  
+        <ion-row>
+          <ion-col size="12">
+            <ion-accordion-group *ngIf="current_level?.last_accepted_or_declined != null && this.goalsList?.length > 0">
+              <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
+  
+                <ion-item slot="header">
+                  <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_goals'| translate }}</ion-label>
+                </ion-item>
+  
+                <div slot="content">
+                  <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
+  
+                    <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
+                      <ion-col size="7" slot="start" class="ion-no-padding">
+                        <ion-label class="name-goal" style="color: black;">{{g?.message}} <span *ngIf="g?.name">"{{
+                            g?.name }}"</span></ion-label>
+                      </ion-col>
+                      <ion-col size="5" slot="end" class="ion-no-padding"
+                        style="display: flex; align-items: end; justify-content: end;">
+                        <ion-label class="name-goal text1line" *ngIf="g?.completed" style="color: #7F8C8D;"></ion-label>
+
+                        <ion-text class="txt-disabled" *ngIf="g?.completed;" slot="end" class="goal-done"
+                          style="color: #4D7A05;">
+                          <strong>{{ 'health_path.done'| translate }}</strong>
+                        </ion-text>
+                      </ion-col>
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-col>
+        </ion-row>
+
+        
       </ion-grid>
-
-
     </ion-card-content>
-
   </ion-card>
+
+  
 </ng-template>
