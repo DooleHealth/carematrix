@@ -36,7 +36,7 @@ export class ScpMedForMonComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.canDoForm = this.authService?.user?.familyUnit == null && this.permissionService.canViewForms;
+    this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
 
     console.log('[ScpMedForMonComponent] ngOnInit()', this.content);
     if (this.content.type === this.segment) {

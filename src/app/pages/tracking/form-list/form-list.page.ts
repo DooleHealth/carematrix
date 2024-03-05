@@ -50,7 +50,7 @@ export class FormListPage implements OnInit {
 
 
   ionViewWillEnter() {
-    this.canDoForm = this.authService?.user?.familyUnit == null && this.permissionService.canViewForms;
+    this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
     //this.getFormList();
     this.getCurrentDate();
     this.setSegment();

@@ -50,7 +50,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     
-    this.canDoProfile = this.authService?.user?.familyUnit == null;
+    this.canDoProfile = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null);
     this.getUserProfile();
   }
 

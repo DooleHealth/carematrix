@@ -38,7 +38,7 @@ export class DetailPage {
   constructor(public translate: TranslateService, private dooleService: DooleService, private modalCtrl: ModalController, private alertController: AlertController, private pusher: PusherChallengeNotificationsService, private router: Router,private changeDetectorRef: ChangeDetectorRef, private iab: InAppBrowser, private ngZone: NgZone, public permissionService: PermissionService, public authService: AuthenticationService) { }
 
   ionViewWillEnter() {
-    this.canDoGoal = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
+    this.canDoGoal = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewGoals;
 
     this.note = this.translate.instant('health_path.goal_note')
     this.getChallenge();

@@ -14,7 +14,7 @@
  -->    
 <!--  getColorLike(listcontets?.statusable)
  --> 
- <ion-icon *ngIf="this.authService?.user?.familyUnit == null && this.segment !== 'testimonials'" color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end" (click)= "setContentStatus(listcontets?.statusable, listcontets.id, 'like')" ></ion-icon>
+ <ion-icon *ngIf="(this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.segment !== 'testimonials'" color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end" (click)= "setContentStatus(listcontets?.statusable, listcontets.id, 'like')" ></ion-icon>
    
   </ion-item>
   <ion-card-header mode="md">

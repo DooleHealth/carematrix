@@ -32,7 +32,7 @@ export class GamesDetailPage implements OnInit {
 
   ngOnInit() {
     this.id = history.state.id;
-    this.canPlayGames = this.authService?.user?.familyUnit == null && this.permissionService.canViewGames;
+    this.canPlayGames = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewGames;
     if(this.id)
     this.getGameData()
   }
