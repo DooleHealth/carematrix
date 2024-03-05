@@ -42,9 +42,8 @@ export class GoalsComponent  implements OnInit {
     private ngZone: NgZone, public authService: AuthenticationService, public permissionService: PermissionService) { }
 
   ionViewWillEnter() {
-    
-    this.canDoGoal = this.authService?.user?.familyUnit == null && this.permissionService.canViewGoals;
-    console.log("canDoGoal", this.canDoGoal)
+    this.canDoGoal = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewGoals;
+   
 
     this.note = this.translate.instant('health_path.goal_note') 
     //this.setChallenge(this.content);
@@ -56,6 +55,8 @@ export class GoalsComponent  implements OnInit {
     this.aderence = [];
     this.setChallenge(this.content);
     console.log("goals..", this.content)
+    this.canDoGoal = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewGoals;
+   
   }
   setChallenge(res) {
 
