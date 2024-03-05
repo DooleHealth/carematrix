@@ -14,25 +14,26 @@
         alt=""
       />
     </ion-thumbnail>
-    <ion-grid style="height: 100% !important">
+    <ion-grid style="height: 100% !important;">
       <ion-row>
-        <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{content?.title | translate}}</ion-text>
+        <ion-text class="txt-title-card">{{content?.title | translate}}</ion-text>
         <ion-col size="9.5" size-md="10" size-lg="11"  *ngIf="content?.routerlink =='games-detail'">
-          <p class="txtSubtitle3" style="color: var(--malva)" >
+          <p class="txt-subtitle-card">
          {{'lifestyle.last_score' | translate}} {{ content.score }} {{'lifestyle.scorepoints' | translate}}
           </p>
 
         </ion-col>
       </ion-row>
-      <!--<ion-row class="verticalAlignItem">
-        <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
-          {{ this.state?.name | translate }}&nbsp;
+
+      <ion-row style="padding-right: 5%;">
+        <ion-text class="txt-subtitle-card textAdvicesSlider" style="margin-top: -5%;">
+          <p>{{content?.subtitle | translate}}</p>
         </ion-text>
-        <ion-icon *ngIf="this.isPending" class="status-icon" [src]="this.state?.icon" (click)="presentAlert($event)"></ion-icon>
-      </ion-row>-->
+      </ion-row>
+      
     </ion-grid>
     <ion-buttons slot="end">
-      <ion-icon name="chevron-forward-outline" class="icono-personalizado"></ion-icon>
+      <ion-icon size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
     </ion-buttons>
   </ion-item>
 </ion-card>

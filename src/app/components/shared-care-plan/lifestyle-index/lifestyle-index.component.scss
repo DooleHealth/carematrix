@@ -1,32 +1,40 @@
-.cardProfile{
-    height: 84px !important;
+.cardProfile {
+  margin-bottom: 5%;
+  box-shadow: none !important;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 
-.item{
-    height: 100% !important;
+.item {
+  height: 100% !important;
 }
 
-.thumbnail{
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
-    width: 98px !important;
-    height: 87px !important;
+.thumbnail {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  width: 98px !important;
+  height: 87px !important;
 }
 
-.txtTitleGoalsDarker{
-    color: #002055;
-    margin-top: 17px !important;
+.txtSubtitle {
+  font-size: 12px !important;
+  color: #575757 !important;
+  font-weight: 400;
 }
 
-.txtSubtitle{
-    font-size: 12px !important;
-    color: #575757 !important;
-    font-weight: 400;
+.txt-subtitle-card {
+  font-family: 'Poppins-Regular';
+  color: #848A94;
+  font-size: 12px;
 }
 
-.icono-personalizado {
-    background-color: purple; /* Cambia "red" por el color que desees */
-    padding: 5px; /* Ajusta el relleno según sea necesario */
-    border-radius: 50%; /* Esto es opcional, pero puede ayudar a redondear los bordes del fondo */
-    color: white;
-  }
+.txt-title-card {
+  color: var(--default-text);
+  font-family: 'Poppins-Medium';
+  font-size: 14px;
+  margin-top: 8% !important;
+}
+
+ion-card {
+  box-shadow: none !important;
+}

@@ -123,6 +123,16 @@ declare const enum ContentTypeDescription {
     descriptionMMpHc= 'shared_care_plan.descriptionMMpHc',
 }
 
+declare const enum LifestyleHabitsTypeDescription {
+    descriptionNews = 'shared_care_plan.descriptionNews',
+    descriptionAdvices= 'shared_care_plan.descriptionAdvices',
+    descriptionExercises= 'shared_care_plan.descriptionExercises',
+    descriptionDiets= 'shared_care_plan.descriptionDiets',
+    descriptionTestimonials= 'shared_care_plan.descriptionTestimonials',
+    descriptionGames= 'shared_care_plan.descriptionGames',
+
+}
+
 export interface ContentComponent {
     img?: string;
     icon?: string;
@@ -254,12 +264,12 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
  */
 
 export const ListSCPLifeStyle: SharedCarePlanLifeStyle [] = [
-    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:"", traduction: ""},
-    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:"", traduction: ""},
-    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:"", traduction: ""},
-    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:"", traduction: ""},
-    {img: ContentTypeIcons.Testimonials, title: ContentTypeTranslatedName.Testimonials,  type:NotificationsType.TESTIMONIALS, id:"", traduction: ""},
-    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: ""},
+    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionNews },
+    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionAdvices},
+    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionExercises},
+    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionDiets},
+    {img: ContentTypeIcons.Testimonials, title: ContentTypeTranslatedName.Testimonials,  type:NotificationsType.TESTIMONIALS, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionTestimonials},
+    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionGames},
    
 ]
 
@@ -278,6 +288,7 @@ export interface SharedCarePlanLifeStyle {
     isAnswers?: string;
     hasFormAnswered?: string;
     score?: string;
+    subtitle?:string;
 
 }
 

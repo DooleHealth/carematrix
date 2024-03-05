@@ -1096,7 +1096,16 @@
     "exercicesTime": "minutes of exercice",
     "button_info": "More Information",
     "like": "Members Likes",
-    "source": "Source: "
+    "source": "Source: ",
+
+    "descriptionNews": "News that might interest you",
+    "descriptionAdvices": "Advices Recommendations",
+    "descriptionExercises": "To keep you in shape",
+    "descriptionDiets": "Improve your diet",
+    "descriptionTestimonials": "Experiences similar to yours",
+    "descriptionGames": "Some entertainment is available for you!"
+
+
   },
   "exercices": {
     "header": "Exercises"
