@@ -392,7 +392,7 @@ export class LandingPage implements OnInit {
             text: this.translate.instant("button.cancel"),
             handler: (data) => {
               //Exit from app
-              navigator['app'].exitApp();
+              //navigator['app'].exitApp();
             }
           },
          {
