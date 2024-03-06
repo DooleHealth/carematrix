@@ -14,6 +14,7 @@ import { PermissionService } from 'src/app/services/permission.service';
 export class NewsPage implements OnInit {
   segment="News"
   public items= [];
+  public itemsCopy = [];
   // itemsBackup= []
   // news = []
   contents = [];
@@ -67,6 +68,7 @@ export class NewsPage implements OnInit {
         if(res.news)
        // this.adapterForView(res.news)
         this.items = res.news;
+        this.itemsCopy = res.news;
         this.saves_items = this.items;
         console.log('[NewsPage] getNewsList(content)', this.items);
         this.isLoading = false
@@ -81,16 +83,24 @@ export class NewsPage implements OnInit {
   filterListNews(event) {
     let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    if(this.items.length > 0){
-      search = this.items 
-    }else{
-      search= this.saves_items;
+
+
+    if (event.srcElement.value.length === 0) {
+      this.items = this.itemsCopy
     }
-    const filteredItems = search.filter(item => {
-      const subject = item.subject.toLowerCase();
-      return subject.includes(searchTerm) || subject === searchTerm;
-    })
-      this.items = (filteredItems)
+    else {
+      if(this.items.length > 0){
+        search = this.items 
+      }else{
+        search= this.saves_items;
+      }
+      const filteredItems = search.filter(item => {
+        const subject = item.subject.toLowerCase();
+        return subject.includes(searchTerm) || subject === searchTerm;
+      })
+        this.items = (filteredItems)
+    }
+    
   };
 
  

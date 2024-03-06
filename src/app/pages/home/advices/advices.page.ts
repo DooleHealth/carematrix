@@ -15,6 +15,7 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items= [];
+  public itemsCopy = [];
   segment="Advice"
   //itemsBackup= []
   //advices = []
@@ -64,6 +65,7 @@ export class AdvicesPage implements OnInit {
         if(res.advices)
        // this.adapterForView(res.advices)
       this.items= res.advices
+      this.itemsCopy= res.advices
       this.saves_items = this.items;
         this.isLoading = false
        },(err) => {
@@ -77,16 +79,23 @@ export class AdvicesPage implements OnInit {
   filterListAdvices(event) {
     let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    if(this.items.length > 0){
-      search = this.items 
-    }else{
-      search= this.saves_items;
+
+    if (event.srcElement.value.length === 0) {
+      this.items = this.itemsCopy
     }
-    const filteredItems = search.filter(item => {
-      const subject = item.name.toLowerCase();
-      return subject.includes(searchTerm) || subject === searchTerm;
-    });
-      this.items = (filteredItems)
+    else {
+      if(this.items.length > 0){
+        search = this.items 
+      }else{
+        search= this.saves_items;
+      }
+      const filteredItems = search.filter(item => {
+        const subject = item.name.toLowerCase();
+        return subject.includes(searchTerm) || subject === searchTerm;
+      });
+        this.items = (filteredItems)
+    }
+   
   };
 
 

@@ -13,6 +13,7 @@ import { RolesService } from 'src/app/services/roles.service';
 export class TestimonialsPage implements OnInit {
 
   public items= [];
+  public itemsCopy= [];
   // itemsBackup= []
   // news = []
   saves_items;
@@ -49,6 +50,7 @@ export class TestimonialsPage implements OnInit {
         if(res.testimonials)
        // this.adapterForView(res.news)
         this.items = res.testimonials
+        this.itemsCopy = this.items;
         this.saves_items = this.items;
         console.log('[TestimonailsPage] getTestimonialsList(content)', this.items);
         this.isLoading = false
@@ -62,15 +64,21 @@ export class TestimonialsPage implements OnInit {
   filterListTertimonials(event) {
     let search;
     const searchTerm = event.srcElement.value.toLowerCase(); 
-    if(this.items.length > 0){
-      search = this.items 
-    }else{
-      search= this.saves_items;
+
+    if (event.srcElement.value.length === 0) {
+      this.items = this.itemsCopy
     }
-    const filteredItems = search.filter(item => {
-      const subject = item.name.toLowerCase();
-      return subject.includes(searchTerm) || subject === searchTerm;
-    });
-      this.items = (filteredItems)
+    else {
+      if(this.items.length > 0){
+        search = this.items 
+      }else{
+        search= this.saves_items;
+      }
+      const filteredItems = search.filter(item => {
+        const subject = item.name.toLowerCase();
+        return subject.includes(searchTerm) || subject === searchTerm;
+      });
+        this.items = (filteredItems)
+    }
   };
 }

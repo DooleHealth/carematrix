@@ -37,6 +37,7 @@ export class DiaryPage implements OnInit {
   segment="diets"
   firstTime: boolean;
   public items: ItemDiary[] = [];
+  public itemsCopy: ItemDiary[] = [];
   listDrug:  ListDrugByDate[] = [];
   listDiets:  ListItemByDate[] = [];
   listGames= [];
@@ -60,6 +61,7 @@ export class DiaryPage implements OnInit {
   isSame: boolean = false;
   listDietsToday = [];
   Lasttimestring;
+  saves_items;
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
@@ -346,9 +348,12 @@ export class DiaryPage implements OnInit {
     
             if(res.receipts){
              
+              
               let recipes = res.receipts
+              this.saves_items = recipes;
               recipes.forEach(element => {
                 this.items.push(element)
+                this.itemsCopy.push(element)
               });
             
               console.log('[DiaryPage] getRecipesList()', await this.items);
@@ -366,6 +371,31 @@ export class DiaryPage implements OnInit {
             
           });
       }
+
+
+      filterListRecipes(event) {
+        console.log("Entro" + event.srcElement.value.length)
+        let search;
+        const searchTerm = event.srcElement.value.toLowerCase(); 
+
+        if (event.srcElement.value.length === 0) {
+          this.items = this.itemsCopy
+        }
+        else {
+          if(this.items.length > 0){
+            search = this.items 
+          } 
+          else{
+            search= this.saves_items;
+          }
+          const filteredItems = search.filter(item => {
+            const subject = item.name.toLowerCase();
+            return subject.includes(searchTerm) || subject === searchTerm;
+          })
+            this.items = (filteredItems)
+        }
+        
+      };
     
     
      
