@@ -4,10 +4,11 @@ ion-card {
 }
 
 .custom-button {
-    font-size: 12px; /* Ajusta el tamaño del texto */
-    padding: 8px 16px; /* Ajusta el padding del botón para reducir el tamaño del fondo */
+    font-size: 12px; 
+    padding: 8px 16px; 
     color: white;
     font-family: 'Poppins-regular' !important;
+    border-radius: 15px;
 }
 
 .button-text {
@@ -21,3 +22,29 @@ ion-card {
     color: #22577A;
 }
 
+.txt-title {
+    font-family: 'Poppins-SemiBold';
+    font-size: 14px;
+    color: #22577A;
+}
+
+.txt-schedule {
+    font-family: 'Poppins-Regular';
+    font-size: 10px;
+    line-height: 10px;
+    color: var(--malva);
+}
+
+.txt-hour {
+    font-family: 'Poppins-bold';
+    font-size: 11px;
+    line-height: 1wpx;
+    color: var(--malva);
+}
+
+.txt-date {
+    font-family: 'Poppins-Regular';
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--default-text);
+}

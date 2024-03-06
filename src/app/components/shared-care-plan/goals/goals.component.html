@@ -4,9 +4,7 @@
       <ion-col size="8">
         <ion-item lines="none" class="cardHeader">
           <ion-icon name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
-          <ion-text class="txt-title-goal" style="margin-left:10px;" slot="start"><strong>{{ this.current_level?.name
-              }}</strong></ion-text>
-
+          <ion-text class="txt-title-goal" style="width: 100%; margin-left: 10px; margin-right: 0px;" slot="start"><strong>{{ this.current_level?.name}}</strong></ion-text>
         </ion-item>
       </ion-col>
       <ion-col size="4">
@@ -118,14 +116,14 @@
                 }}</strong></ion-text>
           </ion-item>
         </ion-col>
-        
+
       </ion-row>
-  
+
     </ion-card-header>
-  
-  
+
+
     <ion-card-content class="ion-no-padding">
-  
+
       <ion-grid>
         <ion-row class="ion-no-padding">
           <ion-col size="3" class="ion-no-padding" style="display: flex; align-items: center; justify-content: center;">
@@ -133,33 +131,35 @@
               src="assets/icons/shared-care-plan/goal_completed.svg"></ion-img>
           </ion-col>
           <ion-col size="9" class="ion-no-padding" style="display: grid;">
-            <ion-text class="txt-keep-up" style="font-size: medium; margin-bottom: 2%"><b> {{'goals.text_goals1' | translate}}</b> <br></ion-text>
+            <ion-text class="txt-keep-up" style="font-size: medium; margin-bottom: 2%"><b> {{'goals.text_goals1' |
+                translate}}</b> <br></ion-text>
             <ion-text style="font-size: medium; margin-top: 2%;margin-bottom: 2% ">
-              {{'goals.text_goals2' | translate}}<strong>{{'goals.text_goals3' | translate}}</strong>{{'goals.text_goals4' | translate}}
+              {{'goals.text_goals2' | translate}}<strong>{{'goals.text_goals3' |
+                translate}}</strong>{{'goals.text_goals4' | translate}}
             </ion-text>
-  
+
             <ion-row style="margin-top: 2%; padding-right: 5%;">
               <ion-progress-bar class="progress-bar"
                 value="{{ aderence.totalScoreByUser > 0 ? aderence?.totalScoreByUser / 100 : 0 }}">
                 <ion-label>{{ aderence.totalScoreByUser }}%</ion-label>
               </ion-progress-bar>
             </ion-row>
-  
+
           </ion-col>
         </ion-row>
-  
+
         <ion-row>
           <ion-col size="12">
             <ion-accordion-group *ngIf="current_level?.last_accepted_or_declined != null && this.goalsList?.length > 0">
               <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
-  
+
                 <ion-item slot="header">
                   <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_goals'| translate }}</ion-label>
                 </ion-item>
-  
+
                 <div slot="content">
                   <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
-  
+
                     <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
                       <ion-col size="7" slot="start" class="ion-no-padding">
                         <ion-label class="name-goal" style="color: black;">{{g?.message}} <span *ngIf="g?.name">"{{
@@ -182,10 +182,10 @@
           </ion-col>
         </ion-row>
 
-        
+
       </ion-grid>
     </ion-card-content>
   </ion-card>
 
-  
+
 </ng-template>

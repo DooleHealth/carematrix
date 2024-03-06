@@ -276,4 +276,8 @@ export class ScpMedForMonComponent implements OnInit {
         }
       
       }
+
+      setFormatDate(date){
+        return this.dateService.getDateMonDay(date)
+       }
 }
