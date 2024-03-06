@@ -1,5 +1,5 @@
 <ion-card class="level-card" *ngIf="!completedGoals; else Completed">
-  <ion-card-header style="padding-bottom: 0px;">
+  <ion-card-header style="padding-bottom: 0px; padding-top: 2%;">
     <ion-row>
       <ion-col size="8">
         <ion-item lines="none" class="cardHeader">
@@ -30,22 +30,14 @@
           <ion-text class="txt-keep-up" style="font-size: medium; margin-bottom: 2%"><b> {{ 'goals.keppUp' | translate
               }}</b> <br></ion-text>
           <ion-text style="font-size: medium; margin-top: 2%;margin-bottom: 2% ">
-            {{'health_path.goal_txt1' | translate}}<strong>{{
-              aderence.totalScoreByUser
-              }}
-              {{'game.points' | translate}}</strong>
+            {{'health_path.goal_txt1' | translate}}<strong> {{aderence.totalScoreByUser}} {{'game.points' | translate}}</strong>
 
             <span *ngIf="aderence?.percentage < 100">
-              {{'health_path.goal_txt2'
-              |
-              translate}} {{ aderence.totalScoreRequiredByChallenge -
-              aderence.totalScoreByUser }} {{'health_path.goal_txt3' | translate}}
+              {{'health_path.goal_txt2' | translate}} {{ aderence.totalScoreRequiredByChallenge - aderence.totalScoreByUser }} {{'health_path.goal_txt3' | translate}}
             </span>
 
             <span *ngIf="aderence?.percentage < 100">
-              {{'health_path.goal_txt4'
-              |
-              translate}} 🎉
+              {{'health_path.goal_txt4' | translate}} 🎉
             </span>
           </ion-text>
 

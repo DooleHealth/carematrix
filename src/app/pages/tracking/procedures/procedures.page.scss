@@ -58,3 +58,37 @@ hr {
       width: 98px !important;
       height: 87px !important;
   }
+
+  ion-list {
+    background: none !important
+  }
+
+  ion-card {
+    box-shadow: none !important;
+  }
+
+
+  .txt-procedures {
+    font-family: 'Poppins-medium';
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--malva);
+  }
+
+  .txt-body {
+    font-family: 'Poppins-Regular';
+    color: var(--default-text);
+    font-size: 14px;
+  }
+
+  .txt-name-diagnostic {
+    font-family: 'Poppins-SemiBold';
+    font-size: 12px;
+    color: #3F3F3F;
+  }
+
+  .txt-date {
+    font-family: 'Poppins-SemiBold';
+    font-size: 12px;
+    color: #7F8C8D;
+  }
