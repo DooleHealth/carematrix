@@ -40,10 +40,8 @@
           </ion-row>
 
           <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
-            <p style="color: var(--malva)">
-              {{ "medication.dose" | translate }}
-              {{ content?.description }}
-            </p>
+            <ion-text class="txt-schedule"> {{ "medication.dose" | translate }}
+              {{ content?.description }}</ion-text>
           </ion-row>
           <ion-row *ngIf="content.type === 'forms'" class="txtSubtitle3">
             <ion-col>
