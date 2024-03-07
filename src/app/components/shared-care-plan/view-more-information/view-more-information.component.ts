@@ -124,7 +124,12 @@ export class ViewMoreInformationComponent implements OnInit {
 
   getImageSource(listcontets): string {
 
-    if (listcontets?.cover) return listcontets.cover
+    console.log(listcontets)
+    if (listcontets?.image) return listcontets?.image
+    else if (listcontets?.cover) {
+      if (listcontets.cover?.temporaryUrl) return listcontets.cover.temporaryUrl;
+      else return listcontets.cover
+    }
     else if (listcontets?.image?.temporaryUrl) return listcontets.image.temporaryUrl;
     else return '/assets/images/shared-care-plan/image-not-found.png';
   }

@@ -30,9 +30,39 @@ export class ContentDateComponent implements OnInit {
   }
 
   goTo(content){
-      console.log("[ContentDateComponent] goTo()", this.content)
+
+    if(content?.type === 'forms') {
+      if (content?.status != 1) {
+        this.redirect.emit({type: content})
+      }
+      else {
+        this.alertForm();
+      }
+    } 
+    else {
       this.redirect.emit({type: content})
+    }
   }
+
+  async alertForm() {
+
+    this.translate.get('info.button').subscribe(
+      async button => {
+        // value is our translated string
+        const alert = await this.alertController.create({
+          cssClass: "alertClass",
+          header: this.translate.instant('form.alert_form_answered'),
+          // subHeader: 'Subtitle',
+          message: this.translate.instant('form.alert_forms'),
+          buttons: [button]
+        });
+
+        await alert.present();
+      });
+
+
+  }
+
     
 
   setDate(){

@@ -38,6 +38,7 @@ export class DiaryPage implements OnInit {
   firstTime: boolean;
   public items: ItemDiary[] = [];
   public itemsCopy: ItemDiary[] = [];
+
   listDrug:  ListDrugByDate[] = [];
   listDiets:  ListItemByDate[] = [];
   listGames= [];
@@ -82,7 +83,9 @@ export class DiaryPage implements OnInit {
 
   ngOnInit() {
     this.getCurrentDate();
-    this.items = []
+    this.items = [];
+    this.itemsCopy = [];
+
     this.listDietsToday = [];
     console.log('[DiaryPage] ngOnInit()');
     // let state = history.state?.segment;
@@ -346,11 +349,12 @@ export class DiaryPage implements OnInit {
           async (res: any) =>{
             
     
-            if(res.receipts){
+            if(res?.receipts){
              
               
               let recipes = res.receipts
               this.saves_items = recipes;
+
               recipes.forEach(element => {
                 this.items.push(element)
                 this.itemsCopy.push(element)

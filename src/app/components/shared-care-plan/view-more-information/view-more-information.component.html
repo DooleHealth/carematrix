@@ -1,6 +1,8 @@
 <ion-card *ngFor="let listcontets of content">
+
   <img *ngIf="listcontets.cover || listcontets.image" class="imagefit" [src]="getImageSource(listcontets)"
     onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
+    
   <ion-item lines="none">
     <div *ngFor="let list of listcontets?.tags_name">
       <ion-text class="study">{{ list.name}}</ion-text>
@@ -38,14 +40,14 @@
     </ion-card-subtitle>
 
     <ion-card-subtitle>    
-      <ion-text class="txt-description" style="text-align: justify; display: flex;" [innerHtml]="truncateDescription(listcontets?.content || listcontets?.description, 100)"></ion-text>
+      <ion-text class="txt-description" style="text-align: justify;" [innerHtml]="truncateDescription(listcontets?.content || listcontets?.description, 100)"></ion-text>
     </ion-card-subtitle>
 
     <ion-card-subtitle>    
       <ion-text class="txt-likes" *ngIf="listcontets?.interactions">
         {{listcontets?.interactions.like}} {{'shared_care_plan.like' |translate}}
       </ion-text> 
-      <ion-text class="txt-likes" *ngIf="listcontets?.interactions?.like || listcontets?.interactions.like > 100">🔥</ion-text>
+      <ion-text class="txt-likes" *ngIf="listcontets?.interactions?.like && listcontets?.interactions.like > 100">🔥</ion-text>
     </ion-card-subtitle>
   </ion-card-header>
 

@@ -46,7 +46,7 @@
         <ion-text class="txt-likes" *ngIf="advice?.interactions">
           {{advice?.interactions?.like}} {{'shared_care_plan.like' |translate}}
         </ion-text>
-        <ion-text class="txt-likes" *ngIf="advice?.interactions?.like || advice?.interactions?.like > 100">🔥</ion-text>
+        <ion-text class="txt-likes" *ngIf="advice?.interactions?.like && advice?.interactions?.like > 100">🔥</ion-text>
       </ion-card-subtitle>
 
     </ion-card-header>
