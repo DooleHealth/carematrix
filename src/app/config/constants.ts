@@ -30,15 +30,15 @@ export class Constants {
       this.LIST_ENPOINT.push({
         id:0,
         name: 'Producción',
-        api: 'https://bo-dev.incahealthcare.com/api',
-        endpoint: 'https://bo-dev.incahealthcare.com'
+        api: 'https://bo.incahealthcare.com/api',
+        endpoint: 'https://bo.incahealthcare.com'
       })
 
       this.LIST_ENPOINT.push({
         id:1,
-        name: 'Producción',
-        api: 'https://bo.incahealthcare.com/api',
-        endpoint: 'https://bo.incahealthcare.com'
+        name: 'Desarrollo',
+        api: 'https://bo-dev.incahealthcare.com/api',
+        endpoint: 'https://bo-dev.incahealthcare.com'
       })
 
 
