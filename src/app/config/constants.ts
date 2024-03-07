@@ -30,14 +30,14 @@ export class Constants {
       this.LIST_ENPOINT.push({
         id:0,
         name: 'Producción',
-        api: 'https://bo.incahealthcare.com/api',
-        endpoint: 'https://carematrix.doole.io'
+        api: 'https://bo-dev.incahealthcare.com/api',
+        endpoint: 'https://bo-dev.incahealthcare.com'
       })
       this.LIST_ENPOINT.push({ //Por defecto index 0
         id:1,
         name: 'Desarrollo',
-        api: 'https://bo-dev.incahealthcare.com/api',
-        endpoint: 'https://bo-dev.incahealthcare.com'
+        api: 'https://bo.incahealthcare.com/api',
+        endpoint: 'https://bo.incahealthcare.com'
       })
 
 

@@ -1,17 +1,20 @@
 <ion-card class="level-card" *ngIf="!completedGoals; else Completed">
   <ion-card-header style="padding-bottom: 0px; padding-top: 2%;">
     <ion-row>
-      <ion-col size="8">
+      <ion-col size="current_level?.last_accepted_or_declined != null ? 12 : 8 ">
         <ion-item lines="none" class="cardHeader">
           <ion-icon name="heart" slot="start" class="ion-no-margin" style="color:purple"></ion-icon>
-          <ion-text class="txt-title-goal" style="width: 100%; margin-left: 10px; margin-right: 0px;" slot="start"><strong>{{ this.current_level?.name}}</strong></ion-text>
+          <ion-text class="txt-title-goal" style="width: 100%; margin-left: 10px; margin-right: 0px;"
+            slot="start"><strong>{{ this.current_level?.name}}</strong></ion-text>
         </ion-item>
       </ion-col>
-      <ion-col size="4">
-        <ion-button shape="round" color="warning" mode="ios" class="ion-float-right custom-button"
-          (click)="AcceptOrDeclined(current_level?.id)">
-          {{ 'medication.medication_status' | translate }}
-        </ion-button>
+      <ion-col size="4" *ngIf="current_level?.last_accepted_or_declined == null">
+        <ng-container>
+          <ion-button *ngIf="current_level?.last_accepted_or_declined == null" shape="round" color="warning" mode="ios"
+            class="ion-float-right custom-button" (click)="AcceptOrDeclined(current_level?.id)">
+            {{ 'medication.medication_status' | translate }}
+          </ion-button>
+        </ng-container>
       </ion-col>
     </ion-row>
 
@@ -30,10 +33,12 @@
           <ion-text class="txt-keep-up" style="font-size: medium; margin-bottom: 2%"><b> {{ 'goals.keppUp' | translate
               }}</b> <br></ion-text>
           <ion-text style="font-size: medium; margin-top: 2%;margin-bottom: 2% ">
-            {{'health_path.goal_txt1' | translate}}<strong> {{aderence.totalScoreByUser}} {{'game.points' | translate}}</strong>
+            {{'health_path.goal_txt1' | translate}}<strong> {{aderence.totalScoreByUser}} {{'game.points' |
+              translate}}</strong>
 
             <span *ngIf="aderence?.percentage < 100">
-              {{'health_path.goal_txt2' | translate}} {{ aderence.totalScoreRequiredByChallenge - aderence.totalScoreByUser }} {{'health_path.goal_txt3' | translate}}
+              {{'health_path.goal_txt2' | translate}} {{ aderence.totalScoreRequiredByChallenge -
+              aderence.totalScoreByUser }} {{'health_path.goal_txt3' | translate}}
             </span>
 
             <span *ngIf="aderence?.percentage < 100">
@@ -41,9 +46,10 @@
             </span>
           </ion-text>
 
-          <ion-row style="margin-top: 2%; padding-right: 5%;">
-            <ion-progress-bar class="progress-bar"
-              value="{{ aderence.totalScoreByUser > 0 ? aderence?.totalScoreByUser / 100 : 0 }}">
+<!--           value="{{ aderence.totalScoreByUser > 0 ? aderence?.totalScoreByUser / 100 : 0 }}"
+ -->          <ion-row style="margin-top: 2%; padding-right: 5%;">
+            <ion-progress-bar class="progress-bar" value="{{ aderence.percentage === 0 ? 0 :  aderence.percentage / 100 }}"
+              >
               <ion-label>{{ aderence.totalScoreByUser }}%</ion-label>
             </ion-progress-bar>
           </ion-row>
@@ -53,7 +59,7 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-accordion-group *ngIf="current_level?.last_accepted_or_declined != null && this.goalsList?.length > 0">
+          <ion-accordion-group *ngIf="current_level?.last_accepted_or_declined != null && current_level?.last_accepted_or_declined?.type === 'accepted' && this.goalsList?.length > 0">
             <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
 
               <ion-item slot="header">
@@ -61,20 +67,22 @@
               </ion-item>
 
               <div slot="content">
-                <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
+                <ion-list *ngFor="let g of this.goalsList; let last = last" style="background-color: white;" class="ion-no-padding">
 
-                  <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
+                  <ion-item lines="{{last ? 'none' : 'full'}}" detail="false" (click)="g?.completed ? false : openGoal(g)">
                     <ion-col size="7" slot="start" class="ion-no-padding">
-                      <ion-label class="txt-active">{{g?.message}} <span *ngIf="g?.name">"{{
+
+                      <ion-label *ngIf="g?.completed" class="txt-disabled" style="padding-top: 5%; padding-bottom: 5%;">{{g?.message}} <span *ngIf="g?.name">"{{
                           g?.name }}"</span></ion-label>
+
+                      <ion-label *ngIf="!g?.completed" class="txt-active" style="padding-top: 5%; padding-bottom: 5%;">{{g?.message}} <span *ngIf="g?.name">"{{
+                        g?.name }}"</span></ion-label>
+
                     </ion-col>
                     <ion-col size="5" slot="end" class="ion-no-padding"
                       style="display: flex; align-items: end; justify-content: end;">
 
-                      <ion-label class="txt-disabled" *ngIf="g?.completed" style="color: #7F8C8D;"></ion-label>
-
-                      <ion-text *ngIf="g?.completed;else showArrow" slot="end" class="txt-active"
-                        style="color: #4D7A05;">
+                      <ion-text *ngIf="g?.completed; else showArrow" class="txt-active" style="color: #4D7A05;">
                         <strong>{{ 'health_path.done'| translate }}</strong>
                       </ion-text>
 
@@ -82,6 +90,7 @@
                         <ion-text class="txt-active" style="color: #A2047F;"> <strong>{{'goals.go' | translate}}
                             ></strong></ion-text>
                       </ng-template>
+
                     </ion-col>
                   </ion-item>
                 </ion-list>
@@ -132,11 +141,10 @@
 
             <ion-row style="margin-top: 2%; padding-right: 5%;">
               <ion-progress-bar class="progress-bar"
-                value="{{ aderence.totalScoreByUser > 0 ? aderence?.totalScoreByUser / 100 : 0 }}">
+                value="{{ aderence.percentage === 0 ? 0 :  aderence.percentage / 100 }}">
                 <ion-label>{{ aderence.totalScoreByUser }}%</ion-label>
               </ion-progress-bar>
             </ion-row>
-
           </ion-col>
         </ion-row>
 
@@ -146,13 +154,13 @@
               <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
 
                 <ion-item slot="header">
-                  <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_goals'| translate }}</ion-label>
+                  <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_completed'| translate }}</ion-label>
                 </ion-item>
 
                 <div slot="content">
-                  <ion-list *ngFor="let g of this.goalsList" style="background-color: white;" class="ion-no-padding">
+                  <ion-list *ngFor="let g of this.goalsList; let last = last" style="background-color: white;" class="ion-no-padding">
 
-                    <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
+                    <ion-item  lines="{{last ? 'none' : 'full'}}" [disabled]="true" lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
                       <ion-col size="7" slot="start" class="ion-no-padding">
                         <ion-label class="name-goal" style="color: black;">{{g?.message}} <span *ngIf="g?.name">"{{
                             g?.name }}"</span></ion-label>

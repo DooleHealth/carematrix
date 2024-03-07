@@ -180,6 +180,7 @@
     "text_goals4":" this objective 🏆",
     "go": "Go",
     "accordion_goals":"These are the tasks you must perform:",
+    "accordion_completed":"These are the tasks you have done:",
     "accepted_rejected": "Do you want to approve or reject this challenges?",
     "accepted_rejectedExercises": "Do you want to approve or reject this challenges?",
     "button_rejected": "Reject",

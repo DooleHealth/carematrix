@@ -23,6 +23,9 @@ export class GoalsComponent  implements OnInit {
   @Input() content: any
   @Input() completedGoals: any
   @Output() reloadChallenges: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() notifyGoalPage: EventEmitter<any> = new EventEmitter();
+
   canDoGoal:boolean = false;
   other = false;
   note = ''
@@ -65,15 +68,20 @@ export class GoalsComponent  implements OnInit {
     this.aderence = res?.aderence;
     this.isChallengeCompleted = res.challenge_completed
     this.last_accepted_or_declined = (res.last_accepted_or_declined === null) ? null : res.last_accepted_or_declined;
+    let status = (res.last_accepted_or_declined === null) ? 'pending' :  res.last_accepted_or_declined.type;
+    console.log(status);
+    let model_id = res.model_id;
     let name = '';
     let message = '';
     let link = '';
     let id = '';
     let tempGoals = [];
     let type = ''
+    
     this.goals?.forEach(goal => {
-      if(goal?.required)
-      this.isRequired = true
+
+      if(goal?.required) this.isRequired = true
+
       switch (goal?.goalable_type) {
         case "App\\Form":
 
@@ -151,13 +159,15 @@ export class GoalsComponent  implements OnInit {
           console.error("goal.goalable_type not found: ", goal)
           break;
       }
-      tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed, required: goal?.required, type: type })
+      if (status !== "declined")  {
+        tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.aderence?.isCompleted, required: goal?.required, type: type, status: status, model_id: model_id})
+      }
     });
     
     this.goalsList = tempGoals;
     console.log("gsetChallenge() ", this.goalsList)
    
-      this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
+    this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
 
    
     this.fetching = false;
@@ -233,7 +243,7 @@ export class GoalsComponent  implements OnInit {
           this.pusher.presentChallengeNotification(this.pusher?.pendingNotification?.data);
         }
         this.ngZone.run(() => {
-        //this.getChallenge();
+          this.refreshPage()
       });
 
 
@@ -459,5 +469,10 @@ export class GoalsComponent  implements OnInit {
               });
         
         
+          }
+
+          refreshPage() {
+            console.log("Entro");
+            this.reloadChallenges.emit();
           }
 }

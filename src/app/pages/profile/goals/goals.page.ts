@@ -53,7 +53,8 @@ export class GoalsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (this.permissionService.canViewGoals) this.getChallenge();
+    this.refreshPage(null);
+    
   }
 
   getGoalImformation(){
@@ -230,6 +231,12 @@ export class GoalsPage implements OnInit {
         console.log('Segment not found');
         break;
     }
+  }
+
+
+  refreshPage(data: any) {
+    console.log("Entro desde goal page")
+    if (this.permissionService.canViewGoals) this.getChallenge();
   }
 
 }
