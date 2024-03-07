@@ -374,6 +374,7 @@ export class DrugsDetailPage implements OnInit {
           this.medication_plan_id = medicationPlan?.id
 
           this.modifyMedicationPlans =  this.getStateModifyMedication(medicationPlan?.origin)
+          //this.isEditDrug = !this.modifyMedicationPlans
 
           let from_date = medicationPlan.from_date
           this.form.get('from_date').setValue(this.formatDate(from_date))

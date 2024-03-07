@@ -39,6 +39,7 @@ export class MedicationPage implements OnInit {
   addButton = AddButtonList;
   CanDoMedication: boolean
   public lifeStyle:LifeStyle
+  isOpenMedication: boolean;
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
@@ -367,7 +368,7 @@ getPeriodTime(name) {
 
 
   async addDrugPlan(drug, id){
-
+    if(this.isOpenMedication)return
     if (this.permissionService.canManageMedication) {
       console.log('[MedicationPage] addDrugPlan()',  drug);
       const modal = await this.modalCtrl.create({
@@ -379,7 +380,7 @@ getPeriodTime(name) {
       modal.onDidDismiss()
         .then((result) => {
           console.log('addDrugPlan()', result);
-  
+          this.isOpenMedication = false
           if(result?.data?.error){
            // let message = this.translate.instant('landing.message_wrong_credentials')
             //this.dooleService.presentAlert(message)
