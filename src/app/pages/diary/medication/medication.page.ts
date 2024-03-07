@@ -158,7 +158,9 @@ export class MedicationPage implements OnInit {
           id:element.id,
           model_id:element.model_id,
           model:element.model,
-          state: element?.last_accepted_or_declined?.type
+          state: element?.last_accepted_or_declined?.type,
+          medication_plan_times: element?.medication_plan_times
+
         }
         console.log("sss", data)
         this.items.push(data)
@@ -223,7 +225,7 @@ export class MedicationPage implements OnInit {
     }
   
    
-getPeriod(name) {
+getPeriodTime(name) {
   if (!this.Lasttimestring) {
       this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
       return true; // Siempre muestra el primer elemento

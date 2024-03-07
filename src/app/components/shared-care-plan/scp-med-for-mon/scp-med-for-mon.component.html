@@ -41,7 +41,7 @@
 
           <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
             <ion-text class="txt-schedule"> {{ "medication.dose" | translate }}
-              {{ content?.description }}</ion-text>
+              {{ getDose(content) }} {{ content?.description }} </ion-text>
           </ion-row>
           <ion-row *ngIf="content.type === 'forms'" class="txtSubtitle3">
             <ion-col>

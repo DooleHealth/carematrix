@@ -927,6 +927,7 @@
       "header": "Notificaciones",
       "form": "Hora de completar un formulario",
       "level": "Logros del nivel completado",
+      "new_level": "Un nuevo reto ha sido asignado",
       "drugintake": "Hora de tomar la medicación",
       "visitonline": "Hora de tu cita online",
       "message": "Has recibido un nuevo mensaje",

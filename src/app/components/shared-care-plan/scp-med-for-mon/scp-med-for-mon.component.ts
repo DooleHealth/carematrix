@@ -280,4 +280,11 @@ export class ScpMedForMonComponent implements OnInit {
       setFormatDate(date){
         return this.dateService.getDateMonDay(date)
        }
+
+       getDose(content){
+        console.log('[ScpMedForMonComponent] getDose()', content);
+        return (content.medication_plan_times?.length > 0)?
+          content.medication_plan_times[0]?.dose: ''
+        
+       }
 }

@@ -1,4 +1,4 @@
-export enum SettingOpt{
+export enum SettingOptNotification{
     //ADVICES
     ADVICES_APP = "advicesNotificationApp",
     ADVICES_MAIL = "advicesNotificationMail",
@@ -57,4 +57,41 @@ export enum SettingOpt{
     REMINDER_MAIL ="reminderNotificationMail",
     //TWO-FACTOR
     TWO_FACTOR ="two_factor_authentication"
+}
+
+export enum BellOptNotification{
+    //ADVICES
+    ADVICES_CREATED = "App\\Notifications\\AdviceCreated",
+    //AGENDA
+    AGENDA_CREATED ="App\\Notifications\\AgendaCreated",
+    AGENDA_MOVED = "App\\Notifications\\AgendaMoved",
+    AGENDA_REMEMBER = "App\\Notifications\\AgendaRememberNotification",
+    //DIETS
+    DIETS_CREATED = "App\\Notifications\\DietCreated",
+    //DRUG-MEDICATION
+    DRUG_INTAKE = "App\\Notifications\\DrugIntakeTime",
+    //EXERCISE
+    EXERCISE_CREATED = "App\\Notifications\\ExerciseCreated",
+    EXERCISE_SCHEDULE = "App\\Notifications\\ExercisePlaySchedule",
+    //FORM
+    FORM_SCHEDULE = "App\\Notifications\\FormAnswerSchedule",
+    //GAME
+    GAME_CREATED = "App\\Notifications\\GameCreated",
+    GAME_SCHEDULE = "App\\Notifications\\GamePlaySchedule",
+    //GOALS
+    GOALS_COMPLETED = "App\\Notifications\\goalCompleted",
+    //LEVEL
+    LEVEL_ASSIGNED = "App\\Notifications\\Level\\NewLevelAssignedNotification",
+    //MESSAGE
+    MESSAGE = "App\\Notifications\\MessageNotification",
+    //NEWS
+    NEWS = "App\\Notifications\\NewsNotification",
+    //REMINDER
+    REMINDER = "App\\Notifications\\ReminderTime",
+    //SHARED_CARE_PLAN
+    SHARED_CARE_PLAN_ADD = "App\\Notifications\\SharedCarePlanAddContentNotification",
+
+
+
+
 }
