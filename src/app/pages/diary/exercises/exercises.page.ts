@@ -36,11 +36,15 @@ export class ExercisesPage implements OnInit {
   }
 
   ngOnInit() {
-    if (this.permissionService.canViewExercises) this.getExercisesList()
+    //if (this.permissionService.canViewExercises) this.getExercisesList()
   }
 
   loaderAgain(event: { type: string }) {  
     this.getExercisesList()
+  }
+
+  ionViewWillEnter() {
+    this.refreshPage(null);
   }
 
   refreshPage(data: any) {

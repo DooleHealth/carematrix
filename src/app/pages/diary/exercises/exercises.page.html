@@ -1,49 +1,41 @@
 <ion-header>
   <ion-toolbar mode="ios">
-      <ion-title class="toolbarTitle">{{nameContent| translate}}</ion-title>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" routerLink="/profile">
-          <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+    <ion-title class="toolbarTitle">{{nameContent| translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/profile">
+        <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
-  <ion-searchbar *ngIf="this.permissionService.canViewExercises"
-  mode="ios"
-  (ionInput)="filterListExercises($event)"
-  (ionClear)="getExercisesList()"
-  placeholder="{{ 'advices.searchbar' | translate}}"
-  style="padding-bottom: 0px;">
-</ion-searchbar>
+  <ion-searchbar *ngIf="this.permissionService.canViewExercises" mode="ios" (ionInput)="filterListExercises($event)"
+    (ionClear)="getExercisesList()" placeholder="{{ 'advices.searchbar' | translate}}" style="padding-bottom: 0px;">
+  </ion-searchbar>
 
-<div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner></ion-spinner>
   </div>
-  
+
   <div>
     <ion-list *ngIf="items.length > 0; else noData" style="padding-top: 0px;">
-      <!--<app-scp-med-for-mon
-      *ngFor="let content of items"
-      [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"
-    ></app-scp-med-for-mon>-->  
-    
-    <app-view-more-information  (notifyParent)="refreshPage($event)" [content]="items" [segment]="this.segment"></app-view-more-information>
+      <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items"
+        [segment]="this.segment"></app-view-more-information>
     </ion-list>
   </div>
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
       <app-no-data></app-no-data>
-  </div>
+    </div>
   </ng-template>
-  </ion-content>
+</ion-content>
 
-  <ion-footer>
-    <ion-toolbar>
-      <app-tabs></app-tabs>
-    </ion-toolbar>
-  </ion-footer>
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>
