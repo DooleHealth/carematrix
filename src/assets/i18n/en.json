@@ -951,6 +951,7 @@
     "header": "Notifications",
     "form": "Time to fill out a form",
     "level": "Completed level achievements",
+    "new_level": "A new challenge has been assigned",
     "drugintake": "Time to take medication",
     "visitonline": "Time of your online appointment",
     "message": "You have received a new message",

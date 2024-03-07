@@ -28,7 +28,7 @@ export class NotificationOptions {
     
     private list_options: notificationOpt[] = [];
     //Aqui se añaden todas las notificaciones que queremos que aparezca en setting.page
-    private options = [this.communications, this.appointments, this.reminder, this.diets, this.medication, this.goals,
+    private options = [this.appointments, this.reminder, this.diets, this.medication, this.goals,
                         this.advices, this.news, this.procedures, this.forms, this.messages, this.games];
     constructor() {
         this.setAllNotifications()

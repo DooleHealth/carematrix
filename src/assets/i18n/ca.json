@@ -817,6 +817,7 @@
         "header": "Notificacions",
         "form": "Hora de completar un formulari",
         "level": "Assoliments del nivell completat",
+        "new_level": "Un nou repte ha estat assignat",
         "drugintake": "Hora de prendre la medicació",
         "visitonline": "Hora de la teva cita en línia",
         "message": "Has rebut un nou missatge",

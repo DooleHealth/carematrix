@@ -10,7 +10,7 @@ export class Constants {
 
     public  API_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
     public  API_DOOLE_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
-    public  DOOLE_ENDPOINT: string = 'https://carematrix.doole.io';
+    public  DOOLE_ENDPOINT: string = 'https://bo.incahealthcare.com';
     public readonly appleAppId = '1672263053'
     public readonly androidBundleId = 'com.doole.inca'
 
@@ -33,9 +33,10 @@ export class Constants {
         api: 'https://bo-dev.incahealthcare.com/api',
         endpoint: 'https://bo-dev.incahealthcare.com'
       })
-      this.LIST_ENPOINT.push({ //Por defecto index 0
+
+      this.LIST_ENPOINT.push({
         id:1,
-        name: 'Desarrollo',
+        name: 'Producción',
         api: 'https://bo.incahealthcare.com/api',
         endpoint: 'https://bo.incahealthcare.com'
       })
