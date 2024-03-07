@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-notification-bell',
@@ -6,9 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notification-bell.component.scss'],
 })
 export class NotificationBellComponent  implements OnInit {
-
+  @Input() notification: any//notificationOpt;
+  @Output() addToDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onGo: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() {}
+
+  addToList($event, notification){
+    this.addToDelete.emit({event: $event, notification: notification})
+  }
+
+  goPage(notification){
+    this.onGo.emit(notification)
+  }
 
 }

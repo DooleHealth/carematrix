@@ -252,8 +252,13 @@ export class ListNotificationsPage implements OnInit {
         notification['message'] = this.translate.instant('shared_care_plan.new_scp_notification_title')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
         notification['title'] = notification?.notification_origin?.title
-        //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
-        //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
+        notification['color'] = '#BA0186'
+        notification['checked'] = false
+        break;
+      case "App\\Level":
+        notification['message'] = this.translate.instant('list_notifications.new_level')
+        notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
+        notification['title'] = notification?.notification_origin?.title
         notification['color'] = '#BA0186'
         notification['checked'] = false
         break;
@@ -261,8 +266,6 @@ export class ListNotificationsPage implements OnInit {
       //   notification['message'] = this.translate.instant('list_notifications.diagnostic')
       //   notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
       //   notification['title'] = notification?.notification_origin?.title
-      //   //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
-      //   //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
       //   notification['color'] = '#1A8E92'
       //   break;
       default:
@@ -361,6 +364,10 @@ export class ListNotificationsPage implements OnInit {
       case "App\\ProgramablePlay":
         this.setRead(notification.id)
         this.router.navigate([ContentTypePath.Home], { state: { data: null, id: data.id } });
+        break;
+      case "App\\Level":
+        this.setRead(notification.id)
+        this.router.navigate([ContentTypePath.Goals], { state: { data: null, segment: 'goals' } });
         break;
       default:
         this.setRead(notification.id)

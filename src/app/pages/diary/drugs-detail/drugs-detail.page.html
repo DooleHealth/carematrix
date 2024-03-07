@@ -6,7 +6,7 @@
     <!-- <ion-title>{{ isEditDrug? ('medication.edit_medication' | translate): ('medication.add_medication' | translate) }}</ion-title> -->
     <ion-title class="toolbarTitle">{{ ('medication.medication_plan' | translate) }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="submit()">
+      <ion-button *ngIf="!isEditDrug" fill="clear" (click)="submit()">
        <ion-label>{{ 'medication.save_medication' | translate}}</ion-label>
       </ion-button>
     </ion-buttons>
@@ -52,7 +52,7 @@
 
     <!-- Single Shot-->
   
-    <ion-item>
+    <ion-item *ngIf="!isEditDrug">
       <ion-label class="txtTitleGoals" stacked>{{ 'medication.snapshot_medication' | translate}}
       </ion-label>
       <ion-toggle (click)="snapshot()"></ion-toggle><br /><br />

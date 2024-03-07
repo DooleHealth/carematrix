@@ -324,8 +324,6 @@ export class HomePage implements OnInit {
     });
   }
 
-
-
   update() {
     this.appRef.tick();
     console.log('[HomePage] update() cambio ');
