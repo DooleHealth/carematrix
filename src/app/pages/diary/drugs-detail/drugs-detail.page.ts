@@ -46,6 +46,7 @@ export class DrugsDetailPage implements OnInit {
   unit_id
   drug_id
   medication_plan_id
+  datadrug_ExtId
   modifyMedicationPlans:boolean = true;
   constructor(
     private dooleService: DooleService,
@@ -541,6 +542,10 @@ export class DrugsDetailPage implements OnInit {
   dataInteractions(interactions){
     
     this.interactions =  interactions;
+  }
+
+  datadrug(datadrug_ExtId){
+    this.datadrug_ExtId = datadrug_ExtId
   }
 
 

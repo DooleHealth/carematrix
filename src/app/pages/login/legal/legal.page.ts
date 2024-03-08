@@ -45,7 +45,6 @@ export class LegalPage implements OnInit {
 
 
   getLegalTermsAndPrivacyPolicy() {
-    console.log("Entro")
     this.isLoading = true
     this.dooleService.getAPILegalAndPolicy().subscribe(
       async (res: any) =>{

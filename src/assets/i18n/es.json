@@ -609,6 +609,7 @@
         "calories": "calorias",
         "description": "Descripción",
         "dose": "Dosi",
+        "frequency": "Frecuencia",
         "morning": "Mañana",
         "noon": "Mediodía",
         "aftenoon": "Tarde",
