@@ -47,11 +47,13 @@
     <ion-grid mode="md" class="ion-padding-top">
       <!-- CAREGIVER -->
       <ng-container *ngIf="!this.authService.isFamily; else familyUnitActivated">
+
         <ng-container *ngIf="this.listFamilyUnit?.length > 0; else caregiversAvailable">
           <ion-row>
             <ion-text class="txtTitle" style="white-space: nowrap">
               {{ 'home.caregiver_title' | translate}}</ion-text>            
           </ion-row>
+
           <ng-container *ngIf="this.listFamilyUnit?.length > 1; else onlyOneCaregiver">
             <ion-row>
               <ion-col size="12">
@@ -72,13 +74,13 @@
                         </ion-radio>
                       </ion-item>
                     </div>
-
                   </ion-radio-group>
                 </ion-list>
               </ion-col>
             </ion-row>
-
           </ng-container>
+
+          
 
           <ng-template #onlyOneCaregiver>
             <ion-card>

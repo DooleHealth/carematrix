@@ -91,6 +91,7 @@ export class ProfilePage implements OnInit {
     async signOut(confirm) {
       if (Capacitor.isNativePlatform()) {
 
+        this.authService.isFamily = false;
         this.authService.logout(confirm).subscribe(
           async (res: any)=>{
           await res
@@ -106,6 +107,7 @@ export class ProfilePage implements OnInit {
           }
         });
       }else{
+        this.authService.isFamily = false;
         await this.authService.logout1().then(res=>{
           this.pusherConnection.unsubscribePusher()
           this.router.navigateByUrl('/landing');

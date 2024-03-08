@@ -43,6 +43,8 @@ export class PermissionService {
     this.canViewDiets = permissions.includes("canViewDiets") ? true : false;
     this.canViewRecipes = permissions.includes("canViewRecipes") ? true : false;
     this.canViewGames = permissions.includes("canViewGames") ? true : false;
+    console.log(permissions.includes("canViewGames"));
+    
     this.canViewMonitoring = permissions.includes("canViewMonitoring") ? true : false;
     this.canManageMonitoring = this.canViewMonitoring && permissions.includes("canManageMonitoring") ? true : false;
     this.canViewAdvices = permissions.includes("canViewAdvices") ? true : false;
