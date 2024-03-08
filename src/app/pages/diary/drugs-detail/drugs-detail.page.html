@@ -17,10 +17,10 @@
 <ion-content>
   <ion-card *ngIf="!isEditDrug"  class="cardProfilePaddingBottom" >
     <ion-item lines="none">
-      <app-add-drug-filter style="width: 100%;" (drugUpdated)="drugSelecting($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
+      <app-add-drug-filter style="width: 100%;" (drugUpdated)="drugSelecting($event)"   (datadrug_ExtId)="datadrug($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
     </ion-item> 
 
-    <app-interactions-medicine [interactions]="interactions" *ngIf="interactions.length >0"></app-interactions-medicine>
+    <app-interactions-medicine [interactions]="interactions" [drug]="datadrug_ExtId" *ngIf="interactions.length >0"></app-interactions-medicine>
   </ion-card>
   
   <form (ngSubmit)="submit()" [formGroup]="form" *ngIf="drug">

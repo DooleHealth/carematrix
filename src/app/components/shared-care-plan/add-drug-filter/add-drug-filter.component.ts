@@ -11,6 +11,8 @@ import { DooleService } from 'src/app/services/doole.service';
 export class AddDrugFilterComponent  implements OnInit {
   @Output() dataInteractions: EventEmitter<any> = new EventEmitter<any>();
   @Output() drugUpdated: EventEmitter<any> = new EventEmitter<any>();
+  @Output() datadrug_ExtId: EventEmitter<any> = new EventEmitter<any>();
+  
   drugs: any;
   interactions;
   constructor(
@@ -75,6 +77,7 @@ export class AddDrugFilterComponent  implements OnInit {
       }
         this.drugUpdated.emit(this.drugs);
         this.dataInteractions.emit(this.interactions);
+        this.datadrug_ExtId.emit(drug.ext_id);
         console.log("drug interaction", res)
         this.drugs=[]
 
