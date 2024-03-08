@@ -80,7 +80,7 @@
             </ion-row>
           </ng-container>
 
-          
+
 
           <ng-template #onlyOneCaregiver>
             <ion-card>
@@ -371,13 +371,13 @@
                     </ion-text>
                   </ion-row>
                   <ion-row mode="md">
-                    <ion-button mode="md" class="take-btn" *ngIf="slide.forgotten == 2" size="small" shape="round"
+                    <ion-button mode="md" class="take-btn" *ngIf="slide.forgotten == 2" size="small" shape="round" [disabled]="!this.permissionService.canManageMedication"
                       (click)="changeTake(slide.id, slide.state)">{{ 'button.take' | translate }}</ion-button>
-                    <ion-button mode="md" *ngIf="slide.forgotten == 1" size="small" shape="round" color="danger"
+                    <ion-button mode="md" *ngIf="slide.forgotten == 1" size="small" shape="round" color="danger" [disabled]="!this.permissionService.canManageMedication"
                       (click)="changeTake(slide.id, slide.state)">{{ 'button.forgotten' | translate }}<ion-icon
                         style="margin-left: 5px" name="close-outline" color="light"></ion-icon>
                     </ion-button>
-                    <ion-button mode="md" *ngIf="slide.forgotten == 0" size="small" shape="round" color="success"
+                    <ion-button mode="md" *ngIf="slide.forgotten == 0" size="small" shape="round" color="success" [disabled]="!this.permissionService.canManageMedication"
                       (click)="changeTake(slide.id, slide.state)">{{ 'button.taked' | translate }}<ion-icon
                         style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
                     </ion-button>&nbsp;
@@ -430,16 +430,17 @@
 
       <!-- Games -->
       <ion-row *ngIf="this.permissionService.canViewGames">
+
         <ion-card class="vertical-card">
-          <ion-item lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
+          <ion-item mode="md" lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToGamesPage()">
             <div class="slidersHeader">
-              <ion-img class="ion-no-margin" slot="start" src="assets/icons/game-controller-1.svg"></ion-img>
-              <ion-text class="card-title" slot="start" style="color: var(--games-home-color)">{{ 'home.plays_subtitle'
+              <ion-img mode="md" class="ion-no-margin" slot="start" src="assets/icons/game-controller-1.svg"></ion-img>
+              <ion-text mode="md" class="card-title" slot="start" style="color: var(--games-home-color)">{{ 'home.plays_subtitle'
                 |
                 translate}}</ion-text>
             </div>
-            <ion-text slot="end" *ngIf="infoGames" class="hour-txt">{{ infoGames?.hour}}</ion-text>
+            <ion-text mode="md" slot="end" *ngIf="infoGames" class="hour-txt">{{ infoGames?.hour}}</ion-text>
             <ion-icon class="icon-arrow" slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
           </ion-item>
 
@@ -449,14 +450,19 @@
               {{ 'no_data' | translate}}
             </ion-text>
 
-            <swiper-container #sliderGames *ngIf="this.games?.length > 0" (slideChange)="slideGamesChange()"
-              direction="vertical" pagination="true" [config]="this.sliderGamesConfigVertical" class="slider-vertical">
-              <swiper-slide *ngFor="let slide of this.games">
-                <div (click)="actionButtonGames(slide.game)" class="txtTitleGoalsLittle3">
-                  <ion-text class="txt-cards" style="text-align: left">{{slide.name}}</ion-text>
-                </div>
-              </swiper-slide>
-            </swiper-container>
+            <swiper-container *ngIf="!(!this.games || this.games?.length == 0)" mode="md" #sliderGame (slidechange)="slideGameChange()" direction="vertical"
+            pagination="true" class="slider-vertical">
+            <swiper-slide mode="md" *ngFor="let slide of this.games;">
+              <ion-grid mode="md">
+                <ion-row mode="md">
+                  <ion-text style="text-align: left" class="txt-cards">
+                    <ion-text (click)="actionButtonGames(slide.game)" class="txt-cards" style="text-align: left">{{slide?.game.title}}</ion-text>
+                  </ion-text>
+                </ion-row>
+                
+              </ion-grid>
+            </swiper-slide>
+          </swiper-container>
           </ion-card-content>
         </ion-card>
       </ion-row>

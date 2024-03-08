@@ -185,7 +185,7 @@ export class HomePage implements OnInit {
   @ViewChild('sliderPhysical') sliderPhysical: ElementRef | undefined;
   @ViewChild('sliderDrug') sliderDrug: ElementRef | undefined;
   @ViewChild('sliderDiet') sliderDiet: ElementRef | undefined;
-  @ViewChild('sliderGames') sliderGames: ElementRef | undefined;
+  @ViewChild('sliderGame') sliderGames: ElementRef | undefined;
   @ViewChild('sliderForms') sliderForms: ElementRef | undefined;
   @ViewChild('sliderExercises') sliderExercises: ElementRef | undefined;
 
@@ -870,7 +870,7 @@ export class HomePage implements OnInit {
           async (res: any) => {
 
             console.log('[TrackingPage] getGamesList()', await res);
-            this.setGamesSlider(res.games)
+            resolve(res)
 
           },
           (error) => {
@@ -880,8 +880,11 @@ export class HomePage implements OnInit {
           }
         );
       });
+      this.games = data.gamePlays;
+      console.log(this.games)
+      this.setGamesSlider(this.games)
 
-      this.setPhysicalSlider(data);
+      //this.setG(data);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching elements list:', error);
@@ -1158,12 +1161,23 @@ export class HomePage implements OnInit {
 
   setGamesSlider(games) {
     console.log('[DiaryPage] setDietSlider()', games);
-    this.games = games?.length > 0 ? games : [];
+   
 
-    if (this.games.length > 0) {
+    if (this.games !== undefined && this.games.length > 0) {
+
+      this.infoGames = {
+        title: this.games[this.currentIndexGame]?.name,
+        hour: this.games[this.currentIndexGame]?.scheduled_date !== null ? this.transformDate(new Date(this.games[this.currentIndexGame]?.scheduled_date), 'HH:mm') : ''
+      }
+
+      
       this.setSliderOption('games')
-      this.updateGamesSlider(games)
+      //this.updateGamesSlider(games)
+
+      this.sliderGames.nativeElement.swiper.activeIndex = this.currentIndexGame;
     }
+
+  
   }
 
   setExercisesSlider(exercises) {
@@ -1784,6 +1798,7 @@ export class HomePage implements OnInit {
   }
 
   slideDrugChange() {
+    console.log("entro")
     if (this.drugs !== undefined && this.drugs?.length > 0) {
       const index = this.sliderDrug?.nativeElement?.swiper?.activeIndex
       let slider = this.drugs[index]
@@ -1801,13 +1816,23 @@ export class HomePage implements OnInit {
 
   }
 
-  slideGamesChange() {
+  slideGameChange() {
+    console.log("Entro")
+
+    console.log(this.games)
+    console.log(this.games?.length > 0)
     if (this.games !== undefined && this.games?.length > 0) {
       const index = this.sliderGames?.nativeElement?.swiper.activeIndex
       let slider = this.games[index]
       this.infoGames = {
         title: slider?.items,
+        hour: slider?.scheduled_date ? this.transformDate(new Date(slider?.scheduled_date), 'HH:mm') : ''
       }
+
+      console.log(this.infoGames)
+    }
+    else {
+      this.infoGames = null
     }
   }
 

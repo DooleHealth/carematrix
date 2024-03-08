@@ -116,6 +116,7 @@ export class TrackingPage implements OnInit {
       const permissionFunction = permissionFunctions[item.type];
       return permissionFunction && permissionFunction();
     });
+
   }
 getLifeStyleHabitsViews(){
 
@@ -124,9 +125,11 @@ getLifeStyleHabitsViews(){
     this.permissionService.canViewAdvices,
     this.permissionService.canViewExercises,
     this.permissionService.canViewDiets,
+    this.permissionService.canViewRecipes,
     this.permissionService.canViewGames,
     this.permissionService.canViewTestimonials,
-    this.permissionService.canViewGoals
+    this.permissionService.canViewGoals,
+    this.permissionService.canViewMedication
   ];
   // Verificar si alguno de los valores en el array es true
    return permissionsArray.some(permiso => permiso === true);
@@ -397,8 +400,8 @@ async addDocument(){
 
       checkPermissions() {
         return this.permissionService.canViewGoals || this.permissionService.canViewNews || this.permissionService.canViewAdvices || 
-               this.permissionService.canViewAdvices || this.permissionService.canViewExercises || this.permissionService.canViewDiets ||
-               this.permissionService.canViewTestimonials || this.permissionService.canViewGames
+               this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewDiets ||
+               this.permissionService.canViewTestimonials || this.permissionService.canViewGames || this.permissionService.canViewMedication
       }
 
     

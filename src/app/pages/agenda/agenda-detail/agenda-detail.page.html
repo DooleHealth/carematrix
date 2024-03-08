@@ -5,6 +5,7 @@
     </ion-buttons>
     <ion-title class="toolbarTitle" style="font-size: medium; padding-left: 0%;" *ngIf="this.event?.origin == 1 && !this.event?.staff">{{ 'appointment.header_event' | translate}}</ion-title>
     <ion-title class="toolbarTitle" *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
+    
     <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
       <ion-button *ngIf="this.permissionService.canManageEvents && this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" [disabled]="this.permissionService.canManageEvents"><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
@@ -19,8 +20,8 @@
 
 
   <div class="whiteBackground" *ngIf="!this.isLoading">
-    <ion-fab  *ngIf="this.event?.online === 1" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button [disabled]="!this.enableVideocallButton && !this.permissionService.canAccessVideocall" (click)="this.startDooleVideocall()" >
+    <ion-fab  *ngIf="this.event?.online === 1 && this.enableVideocallButton" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button  [disabled]="!this.permissionService.canAccessVideocall" (click)="this.startDooleVideocall()" >
         <ion-icon name="videocam-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -116,19 +117,20 @@
     <ion-spinner   ></ion-spinner>
     </div>
   <ng-template #buttons>
-    <div class="buttonContainer"  *ngIf="this.permissionService.canManageEvents && this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
-      <ion-button *ngIf="event?.origin === 1 && !this.isEditable" expand="block" color="primary" (click)="this.editAgenda(event)">
+    <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
+      
+      <ion-button [disabled]="this.permissionService.canManageEvents" *ngIf="event?.origin === 1 && !this.isEditable" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_appointment' | translate}}</ion-button>
 
-      <ion-button *ngIf="this.permissionService.canManageEvents && event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+      <ion-button [disabled]="this.permissionService.canManageEvents" *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
         {{ 'appointment.button_delete' | translate}}</ion-button>
     </div>
 
-    <div class="buttonContainer"  *ngIf="this.permissionService.canManageEvents && event?.origin === 1 && !this.event?.staff">
-      <ion-button *ngIf="event?.origin === 1" expand="block" color="primary" (click)="this.editAgenda(event)">
+    <div class="buttonContainer"  *ngIf="event?.origin === 1 && !this.event?.staff">
+      <ion-button *ngIf="event?.origin === 1" [disabled]="this.permissionService.canManageEvents" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_event' | translate}}</ion-button>
 
-      <ion-button *ngIf="this.permissionService.canManageEvents && event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+      <ion-button *ngIf="event?.origin === 1" [disabled]="this.permissionService.canManageEvents" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
         {{ 'appointment.delete_event' | translate}}</ion-button>
     </div>
   </ng-template>

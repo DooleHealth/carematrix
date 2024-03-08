@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title class="toolbarTitle">{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
       translate)}}</ion-title> <!-- event.type -->
-    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" (click)="editReminder()" [disabled]="this.permissionsService.canManageEvents">
+    <ion-button [disabled]="!this.permissionsService.canManageEvents" *ngIf="reminder.origin == 1" fill="clear" slot="end" (click)="editReminder()">
       <ion-icon name="create-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>

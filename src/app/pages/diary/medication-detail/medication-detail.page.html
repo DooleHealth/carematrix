@@ -147,18 +147,18 @@
               </p>
             </ion-item>
             <div class="main-container3">
-              <ion-button *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" size="small" color="transparent" class="buttonLink"
+              <ion-button *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" size="small" color="transparent" class="buttonLink" [disabled]="!this.permissionService.canManageMedication"
                 (click)="this.addDrugPlan(item.item, item.item.id)">{{ 'detail_contact.button_edit' | translate }}
               </ion-button>&nbsp;
-              <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary"
+              <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary" [disabled]="!this.permissionService.canManageMedication"
                 (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
 
-              <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" color="danger"
+              <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" color="danger" [disabled]="!this.permissionService.canManageMedication"
                 (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon
                   style="margin-left: 5px" name="alert-outline" color="light"></ion-icon>
               </ion-button>
 
-              <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" color="success"
+              <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" color="success" [disabled]="!this.permissionService.canManageMedication"
                 (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
                   style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
               </ion-button>&nbsp;&nbsp;&nbsp;

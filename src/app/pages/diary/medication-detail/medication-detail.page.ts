@@ -14,6 +14,7 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 import { StorageService } from "src/app/services/storage.service";
 import { RolesService } from "src/app/services/roles.service";
 import { Router } from "@angular/router";
+import { PermissionService } from "src/app/services/permission.service";
 
 export interface ListDrugByDate {
   date?: string;
@@ -59,6 +60,7 @@ export class MedicationDetailPage implements OnInit {
     public role: RolesService,
     private router: Router,
     public alertController: AlertController,
+    public permissionService: PermissionService
   ) {}
 
   ngOnInit() {

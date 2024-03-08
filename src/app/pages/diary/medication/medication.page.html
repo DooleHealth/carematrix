@@ -90,16 +90,14 @@
     <div *ngSwitchCase="'medication'">
 
       <div>
-        <ion-list *ngIf="items.length > 0; else noData">
+        <ion-list *ngIf="this.permissionService.canViewMedicationPlans && items.length > 0; else noData">
           <app-scp-med-for-mon *ngFor="let content of items" (redirect)="addDrugPlan(content, content.id)"
             [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"></app-scp-med-for-mon>
         </ion-list>
       </div>
 
       <ng-template #noData>
-        <div *ngIf="!this.isLoading">
           <app-no-data></app-no-data>
-        </div>
       </ng-template>
     </div>
 

@@ -42,9 +42,7 @@ export class PermissionService {
     this.canViewExercises = permissions.includes("canViewExercises") ? true : false;
     this.canViewDiets = permissions.includes("canViewDiets") ? true : false;
     this.canViewRecipes = permissions.includes("canViewRecipes") ? true : false;
-    this.canViewGames = permissions.includes("canViewGames") ? true : false;
-    console.log(permissions.includes("canViewGames"));
-    
+    this.canViewGames = permissions.includes("canViewGames") ? true : false;    
     this.canViewMonitoring = permissions.includes("canViewMonitoring") ? true : false;
     this.canManageMonitoring = this.canViewMonitoring && permissions.includes("canManageMonitoring") ? true : false;
     this.canViewAdvices = permissions.includes("canViewAdvices") ? true : false;
@@ -58,7 +56,7 @@ export class PermissionService {
     this.canViewMedicationPlans = permissions.includes("canViewMedicationPlans") ? true : false;
     this.canViewEvents = permissions.includes("canViewEvents") ? true : false;
     this.canManageEvents = this.canViewEvents && permissions.includes("canManageEvents") ? true : false;
-    this.canAccessVideocall = this.canViewEvents && permissions.includes("canAccessVideocall") ? true : false;
+    this.canAccessVideocall = this.canViewEvents && permissions.includes("canAccessVideocall") ? true : false;    
     this.canManageMessages = permissions.includes("canManageMessages") ? true : false;
     this.canSeeCenters = permissions.includes("canSeeCenters") ? true : false; 
   }
@@ -87,5 +85,6 @@ export class PermissionService {
     this.canManageEvents = true
     this.canManageMessages = true
     this.canSeeCenters= true
+    this.canAccessVideocall = true;
   }
 }

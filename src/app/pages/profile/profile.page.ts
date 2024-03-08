@@ -90,7 +90,7 @@ export class ProfilePage implements OnInit {
 
     async signOut(confirm) {
       if (Capacitor.isNativePlatform()) {
-
+        this.permissionService.resetPermissions()
         this.authService.isFamily = false;
         this.authService.logout(confirm).subscribe(
           async (res: any)=>{
@@ -107,6 +107,7 @@ export class ProfilePage implements OnInit {
           }
         });
       }else{
+        this.permissionService.resetPermissions()
         this.authService.isFamily = false;
         await this.authService.logout1().then(res=>{
           this.pusherConnection.unsubscribePusher()

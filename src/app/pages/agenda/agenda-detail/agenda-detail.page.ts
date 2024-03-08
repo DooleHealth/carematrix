@@ -98,6 +98,8 @@ export class AgendaDetailPage implements OnInit {
 
           this.enableVideocallButton = this.checkVideocallOnTime(startDate, currentDate);
 
+          console.log(this.enableVideocallButton)
+
           let staff = this.event?.staff
           if(staff?.length >0){
             let edit  = staff?.find(item => (item?.id) )
