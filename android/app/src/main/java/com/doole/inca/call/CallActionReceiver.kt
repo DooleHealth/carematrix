@@ -21,7 +21,7 @@ class CallActionReceiver: BroadcastReceiver() {
             sendIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(context, sendIntent, null)
             PendingIntent.getActivity(context, 0, sendIntent, PendingIntent.FLAG_MUTABLE).send()
-        } else {
+        } else if(ACTIONS.DISCONNECTED.name != received.action) {
             // Open incoming activity
             val intent = Intent(context, CallIncomingActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -30,8 +30,8 @@ class CallActionReceiver: BroadcastReceiver() {
         }
     }
 
-        enum class ACTIONS {
-            DECLINE, ACCEPT,
-        }
+    enum class ACTIONS {
+        DECLINE, ACCEPT, DISCONNECTED,
+    }
 
 }

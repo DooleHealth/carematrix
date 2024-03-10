@@ -1,5 +1,7 @@
 package com.doole.inca.call
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
@@ -13,6 +15,8 @@ import android.telecom.StatusHints
 import android.telecom.TelecomManager
 import android.telecom.VideoProfile
 import android.util.Log
+import androidx.core.content.ContextCompat
+import com.doole.inca.MainActivity
 
 
 class CallConnectionService: ConnectionService() {
@@ -60,6 +64,11 @@ class CallConnectionService: ConnectionService() {
     }
 
     fun connectionEnded(c: CallConnection) {
+        val sendIntent = Intent(this, MainActivity::class.java)
+        sendIntent.action = CallActionReceiver.ACTIONS.DISCONNECTED.name
+        sendIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        ContextCompat.startActivity(this, sendIntent, null)
+        PendingIntent.getActivity(this, 0, sendIntent, PendingIntent.FLAG_MUTABLE).send()
         activeCalls.remove(c.callId)
     }
 

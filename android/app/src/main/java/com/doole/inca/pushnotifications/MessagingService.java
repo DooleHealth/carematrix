@@ -24,11 +24,17 @@ public class MessagingService extends FirebaseMessagingService {
             CallCapacitor cc = new CallCapacitor(getApplicationContext());
             String caller = Objects.requireNonNullElse(data.get("caller"), "--");
             String callId = data.get("callId");
+            String isCancelValue = data.get("isCancelPush");
+            Boolean isCancel = !isCancelValue.isEmpty() && isCancelValue.toLowerCase().equals("true");
             if(Strings.emptyToNull(callId).isEmpty()) {
                 Log.e("MessagingService", "Received call without callId: " + callId);
                 return;
             }
-            cc.receiveCall(caller, callId);
+            if(isCancel) {
+                cc.cancelCall(caller, callId);
+            } else {
+                cc.receiveCall(caller, callId);
+            }
         } else {
             PushNotificationsPlugin.sendRemoteMessage(remoteMessage);
         }

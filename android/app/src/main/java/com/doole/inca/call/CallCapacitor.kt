@@ -12,6 +12,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.telecom.Connection
+import android.telecom.DisconnectCause
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
@@ -60,6 +61,12 @@ class CallCapacitor(private val context: Context) {
                 true
             }
             tm.addNewIncomingCall(handle, callInfo)
+        }
+    }
+
+    fun cancelCall(from: String, callId: String) {
+        CallConnectionService.activeCalls[callId]?.let {
+            it.setDisconnected(DisconnectCause(DisconnectCause.CANCELED))
         }
     }
 

@@ -3,15 +3,18 @@ package com.doole.inca.call
 import android.app.Activity
 import android.app.KeyguardManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.telecom.TelecomManager
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.doole.inca.MainActivity
 import com.doole.inca.R
 
@@ -20,6 +23,8 @@ class CallIncomingActivity : Activity() {
     lateinit var tm: TelecomManager
     //private var ringtone: Ringtone? = null
     private lateinit var callId: String
+
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +39,39 @@ class CallIncomingActivity : Activity() {
                     RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
             ringtone?.play()
         }*/
+        registerListener()
+    }
+
+    private fun registerListener() {
+        this.broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                finish()
+            }
+        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                this.broadcastReceiver!!,
+                IntentFilter(CallActionReceiver.ACTIONS.DISCONNECTED.name))
+    }
+
+    private fun unregisterListener() {
+        this.broadcastReceiver?.let {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(it)
+            this.broadcastReceiver = null
+        }
     }
 
     override fun onPause() {
+        unregisterListener()
         super.onPause()
     }
 
+    override fun onResume() {
+        registerListener()
+        super.onResume()
+    }
+
     override fun onDestroy() {
+        unregisterListener()
         super.onDestroy()
     }
 
