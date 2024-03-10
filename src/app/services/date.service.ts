@@ -375,6 +375,10 @@ export class DateService {
       return this.transformDate(date,  format)
     }
   }
+
+  transformDateyyyyMMdd(date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
   
 
 

@@ -30,6 +30,7 @@ import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-iframe/show-iframe.component';
 import { Preferences } from '@capacitor/preferences';
 import { PermissionService } from 'src/app/services/permission.service';
+import { Form } from 'src/app/models/form';
 
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
@@ -217,7 +218,7 @@ export class HomePage implements OnInit {
   public results :any[];
   activateFocus: boolean = false;
 
-
+  canDoForm:boolean = false
   constructor(
     public router: Router,
     public platform: Platform,
@@ -234,7 +235,6 @@ export class HomePage implements OnInit {
     private languageService: LanguageService,
     private nav: NavController,
     private modalCtrl: ModalController,
-    //private scpAlert: ScpAlertService,
     private notification: NotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherNotifications: PusherNotificationService,
@@ -261,7 +261,7 @@ export class HomePage implements OnInit {
 
 
   async ionViewWillEnter() {
-
+    this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
     this.activateFocus = false;
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
@@ -652,46 +652,6 @@ export class HomePage implements OnInit {
    
   }
 
-  /* async getPrescribedApps(){
-    try {
-      this.prescribedApps = []
-      const platform = this.platform.is('ios')? 'ios':'android'
-      const url = `url_${platform}`
-      const res: any = await new Promise((resolve, reject) => {
-        this.scpService.getAPI_SCP_prescribedApp().subscribe(
-          (data: any) => {
-            console.log('[HomePage] getPrescribedApp()', data);
-            resolve(data);
-          },
-          (error) => {
-            console.log('[HomePage] getPrescribedApp() ERROR(' + error.code + '): ' + error.message);
-            reject(error);
-          }
-        );
-      });
-
-
-      
-      console.log(res.apps)
-      this.prescribedApps = this.scpProcedures.adapterForView(
-        res.apps,  
-        'name',  
-        'cover',  
-        'description', 
-        'instructions',
-        'url_android',
-        'url_ios',
-        'configurations_array'
-        ) 
-        
-    } catch (error) {
-      console.error('Error fetching user image:', error);
-      throw error;
-    }
-  } */
-
-
-
   async getUserImage() {
     try {
       const res: any = await new Promise((resolve, reject) => {
@@ -841,7 +801,8 @@ export class HomePage implements OnInit {
     try {
       const params = { filter: '1' };
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIelementsListByDate(params).subscribe(
+        this.scpService.get_APi_ACP_monitoring().subscribe(
+        //this.dooleService.getAPIelementsListByDate(params).subscribe(
           (response: any) => {
             console.log('[TrackingPage] getElementsList()', response);
             resolve(response);
@@ -892,16 +853,25 @@ export class HomePage implements OnInit {
     }
   }
 
+  navigateToFormPage(content){
+    console.log('[FormListPage] navigateToFormPage() ', content)
+
+    if (this.canDoForm) {
+       this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });
+    }
+  }
+
   
 
   async getFormsList() {
     try {
-
+      const params = {date: this.date, grouped_by_times: false}
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIformPending({ date: this.date }).subscribe(
+        this.dooleService.getAPIFormsByDate(params).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIformPending()', await res);
-            this.setFormsSlider(res.forms)
+            const forms = Form.getFormProgrammationByTimes(res)
+            this.setFormsSlider(forms)
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
@@ -943,50 +913,17 @@ export class HomePage implements OnInit {
 
   async getExercisesList() {
     try {
-        const exercisesPromise = new Promise((resolve, reject) => {
-            this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
+        const exercisesPromise = await new Promise((resolve, reject) => {
+          this.scpService.getAPIExercises().subscribe(
+          //  this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
                 res => resolve(res),
                 error => reject(error)
             );
         });
-
-        const prescribedAppsApiPromise = new Promise((resolve, reject) => {
-            this.dooleService.getAPI_prescribedApps_ByDate(this.date, this.date).subscribe(
-                res => resolve(res),
-                error => reject(error)
-            );
-        });
-
-        
-        let [exercisesResponse, prescribedAppsResponse] = await Promise.all([exercisesPromise, prescribedAppsApiPromise]) as [any, any[]];;
-        
-
-        prescribedAppsResponse.forEach(item => {
-          let newExercisePlay = {
-              "id": item.id, 
-              "user_id": this.authService.id_user, 
-              "start_date": item.next_session.date, 
-              "end_date": item.next_session.date, 
-
-              "day": null, 
-              "exercise": {
-                  "id": item.next_session.id,
-                  "name": item.name,
-                  "description": item.description,
-                  "scheduled_date": null,
-                  "url": false, 
-                  "cover": item.image,
-                  "internal_name": false 
-              },
-              configurations : {
-                "access_type": "iframe",
-                "iframe_url": item.next_session.iframe_url
-              }
-          };
-          exercisesResponse.exercisePlays.push(newExercisePlay);
-      });
-
-      this.setExercisesSlider(exercisesResponse?.exercisePlays);
+       
+      //  let [exercisesResponse] = await Promise.all([exercisesPromise]) as [any];;
+      console.log('[TrackingPage] getExercisesList()', exercisesPromise );
+      this.setExercisesSlider(exercisesPromise);
 
     } catch (error) {
         // Handle errors if needed
@@ -1188,7 +1125,7 @@ export class HomePage implements OnInit {
       this.searchIndexExercise();
       this.infoExercises = {
         title: this.exercises[this.currentIndexExercise]?.exercise?.name,
-        hour: this.exercises[this.currentIndexExercise]?.scheduled_date !== null ? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
+        hour:  this.exercises[this.currentIndexExercise]?.scheduled_date? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
       }
 
       this.setSliderOption('exercises')
@@ -1216,23 +1153,47 @@ export class HomePage implements OnInit {
 
       this.searchIndexForm();
       this.infoForms = {
-        title: this.forms[this.currentIndexForm]?.form?.title,
-        hour: this.forms[this.currentIndexForm]?.scheduled_date !== null ? this.transformDate(new Date(this.forms[this.currentIndexForm]?.scheduled_date), 'HH:mm') : ''
+        title: this.forms[this.currentIndexForm]?.title,
+        hour: this.forms[this.currentIndexForm]?.time
       }
       this.setSliderOption('forms')
       this.updateFormsSlider(forms)
     }
   }
 
+  groupelement(elements){
+    let group = []
+    elements.forEach( (element, index) => {
+        const groupName = element?.group?.name
+        if(index == 0 || groupName !== elements[index-1].group?.name){
+          let list = elements.filter(e => (e?.group?.name === groupName) )
+          const item = {group: groupName, elements: list}
+          group.push(item)
+        }
+
+    })
+    return group
+  }
+
   setPhysicalSlider(constants) {
     this.activity = []
-    let elements = constants
-    if (elements?.eg) {
-      this.treeIterate(elements?.eg, '');
+    if(constants?.length > 0)
+    this.activity = this.groupelement(constants) 
+
       this.slideActivityChange()
-    }
+
     this.setSliderOption('physical')
   }
+
+  // setPhysicalSlider(constants) {
+  //   this.activity = []
+  //   let elements = constants
+  //   if (elements?.eg) {
+  //     this.treeIterate(elements?.eg, '');
+  //     this.slideActivityChange()
+  //   }
+  //   this.setSliderOption('physical')
+  // }
 
   treeIterateDiets(obj) {
     this.diets = []
@@ -1906,8 +1867,12 @@ export class HomePage implements OnInit {
 
   searchIndexExercise() {
     if (this.exercises !== undefined && this.exercises?.length > 0) {
+      if(!this.exercises[0]?.scheduled_date){
+        this.currentIndexExercise = 0
+        return
+      }
       let exercise = this.exercises?.find(element =>
-        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element?.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.exercises.indexOf(exercise);
       this.currentIndexExercise = (index > -1) ? index : 0
@@ -1918,7 +1883,7 @@ export class HomePage implements OnInit {
   searchIndexForm() {
     if (this.forms !== undefined && this.forms?.length > 0) {
       let form = this.forms?.find(element =>
-        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element.time) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.forms.indexOf(form);
       this.currentIndexForm = (index > -1) ? index : 0
@@ -2291,7 +2256,9 @@ export class HomePage implements OnInit {
   }
 
   navigateToExercisesPage(slide: any) {
-    if (!slide?.configurations) this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+    console.log('navigateToExercisesPage()', slide);
+    if (!slide?.configurations) 
+      this.router.navigate([ContentTypePath.ExercisesDetail], { state: { id: slide?.exercise?.id}});
     else {
       this.openShowIframe(slide)
     }

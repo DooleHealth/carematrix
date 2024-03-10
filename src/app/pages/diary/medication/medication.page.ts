@@ -8,7 +8,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
 import { Router } from '@angular/router';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { AddButtonList, ContentTypePath } from 'src/app/models/shared-care-plan';
@@ -16,6 +15,7 @@ import { DrugAddPage } from '../drug-add/drug-add.page';
 import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
 import { PermissionService } from 'src/app/services/permission.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-medication',

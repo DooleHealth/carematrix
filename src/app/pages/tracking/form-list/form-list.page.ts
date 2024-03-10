@@ -3,13 +3,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Form } from 'src/app/models/form';
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { PermissionService } from 'src/app/services/permission.service';
 import { RolesService } from 'src/app/services/roles.service';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-form-list',
@@ -43,42 +44,30 @@ export class FormListPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.getFormList();
-    //this.locale = this.dateService.getLocale();
     this.segment = 'today'
   }
 
 
   ionViewWillEnter() {
     this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
-    //this.getFormList();
     this.getCurrentDate();
-    this.setSegment();
     this.getFormsListByDate();
-    this.locale = this.dateService.getLocale();
   }
 
-  setSegment(){
-    if(!this.role?.component?.diet){
-      this.segment = 'today'
-      if(!this.role?.component?.drug){
-          this.segment = 'forms'
-      }
-    }
-  }
+
   async getFormList() {
     this.items = [] 
     this.isLoading = true; 
     this.sharedCarePlan.get_APi_ACP_forms().subscribe(
       async (res: any) => {
-        console.log("formularios", res)
+        console.log("[FormListPage] getFormList(): ", res)
         this.forms = []
         this.forms = res
         this.adapterForView(this.forms)
         this.isLoading = false;
       }, async (err) => {
-        alert(`Error: ${err.code}, Message: ${err.message}`)
-        console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
+        //alert(`Error: ${err.code}, Message: ${err.message}`)
+        console.error('[FormListPage] getFormList() ERROR(' + err.code + '): ' + err.message);
         this.isLoading = false;
         throw err;
       }, ()=>{
@@ -121,9 +110,6 @@ export class FormListPage implements OnInit {
 
   adapterForView(list) {
     if (Array.isArray(list)) {
-
-
-      console.log(list);
       list.forEach(element => {
         
         let image = "";
@@ -137,8 +123,6 @@ export class FormListPage implements OnInit {
 
         //Se adapta la respuesta de la API a lo que espera el componente  
 
-        console.log(element.last_accepted_or_declined);
-
         if (element?.formAnswers) {
           if(element.formAnswers.length > 0){
             isAnswers= true;
@@ -147,7 +131,6 @@ export class FormListPage implements OnInit {
         
 
         let modelType = element.content_type.replace(/App\\/, '')
-        console.log(modelType)
         let data = {
           img: image,
           title: element.title,
@@ -171,11 +154,9 @@ export class FormListPage implements OnInit {
         this.items.push(data)
       })
     }
-    console.log(this.items);
   }
 
   handleRedirect(event: { type: string, form_id: string, showAlerts: boolean }) {
-    console.log("entro a la redireccion")
     if (event.showAlerts === true) {
       this.alertForm();
     } else {
@@ -184,7 +165,6 @@ export class FormListPage implements OnInit {
   }
 
   accepterOrDecline(datos){
-    console.log(datos)
     if(datos === null || datos === undefined){
       return false;
     }else{
@@ -198,8 +178,6 @@ export class FormListPage implements OnInit {
   }
   
   async segmentChanged($event?){
-    console.log('[DiaryPage] segmentChanged()', this.segment);
-    console.log('[DiaryPage] event()', $event);
     this.items = []
     switch (this.segment) {
       case 'today':
@@ -210,21 +188,18 @@ export class FormListPage implements OnInit {
         if (this.permissionService.canViewForms) await this.getFormList()
         break;
       default:
-        console.log('Segment not found');
+        console.log('[FormListPage] segmentChanged() Segment not found');
         break;
     }
   }
   
   async getFormsListByDate(){
-
-
     this.isLoading = true;
-    console.log('[Form_listPage] getFormsListByDate()');
-    let date  = this.transformDate2(this.date)
+    let date  =  this.dateService.transformDateyyyyMMdd(this.date)
     const params = {date: date, grouped_by_times: true}
     this.dooleService.getAPIFormsByDate(params).subscribe(
       async (res: any) =>{
-        console.log('[Form_listPage] getFormsListByDate()', await res);
+        console.log('[FormListPage] getFormsListByDate()', await res);
         
         if(res){
           this.listForms = []
@@ -233,16 +208,12 @@ export class FormListPage implements OnInit {
         }
 
        },(err) => {
-          console.log('[Form_listPage] getFormsListByDate() ERROR(' + err.code + '): ' + err.message);
+          console.error('[FormListPage] getFormsListByDate() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
           this.isLoading = false;
           throw err;
       }, ()=>{
       });
-  }
-  
-  transformDate2(date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
   groupDiagnosticsByDate(forms) {
@@ -264,6 +235,7 @@ export class FormListPage implements OnInit {
           newForm.status = element.status;
           newForm.period = date;
           newForm.time = element.time;
+          newForm.programmation_id = element.id
           this.listForms.push(newForm);
           
         });
@@ -272,34 +244,20 @@ export class FormListPage implements OnInit {
         form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
         form.time = form.formProgrammationTimes[0].time
         form.status = form.formProgrammationTimes[0].status
-
+        form.programmation_id = form.formProgrammationTimes[0].id
       this.listForms.push(form);
       }
       
 
 
     });
-    this.listForms.sort((a, b) => {
-      // Convertir los valores de tiempo a objetos Date para comparar
-      const timeA = new Date('1970-01-01 ' + a.time);
-      const timeB = new Date('1970-01-01 ' + b.time);
 
-      // Comparar los tiempos y devolver el resultado de la comparación
-      if (timeA < timeB) {
-        return -1;
-      }
-      if (timeA > timeB) {
-        return 1;
-      }
-      return 0;
-    });
-    console.log("[Form_listPage] groupDiagnosticsByDate()", this.listForms);
+    this.listForms = Form.sortFormsByTimes(this.listForms)
+
   }
  
   selectDayPeriod(time) {
-    
-    //let hour= new Date(time).getHours();
-    let h = time.split(":"); //new Date(time).getHours()
+    let h = time.split(":");
     let hour = Number(h[0]);
     if (hour >= 6 && hour < 12) {
       return this.translate.instant("diary.morning");
@@ -385,10 +343,10 @@ selectTime(time){
 }
 
 goTo(content){
-  debugger
+  console.log('[FormListPage] goTo() ', content)
   if (this.canDoForm && content.type === "forms") {
     if (content.showAlert) this.alertForm();
-    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id } });
+    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });
   }
 }
 
@@ -403,7 +361,7 @@ getPeriodTime(name) {
   if (isDifferent) {
       this.updateLastTimeString(name);
   }
-  console.log("saber que devuelve el getLastName", isDifferent)
+
   return isDifferent;
 }
 

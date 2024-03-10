@@ -5,7 +5,6 @@
   "homepage": "https://www.doolehealth.com/",
   "scripts": {
     "ng": "nx exec -- ng",
-    "start": "nx exec -- nx serve",
     "build": "nx exec -- nx build",
     "test": "nx exec -- nx test",
     "lint": "nx exec -- nx lint",

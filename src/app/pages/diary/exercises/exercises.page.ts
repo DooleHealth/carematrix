@@ -98,8 +98,6 @@ export class ExercisesPage implements OnInit {
           image = temporaryUrl.temporaryUrl
         }
 
-        // let show=this.IsAllowed(element.from_date);
-
         //Se adapta la respuesta de la API a lo que espera el componente  
         let modelType = element.content_type.replace(/App\\/, '')
 
@@ -112,6 +110,7 @@ export class ExercisesPage implements OnInit {
           type: "Exercises",
           description: "",
           id: element.id,
+          exercise_id: element.exercise.id,
           programable_id: element.programable_id,
           model_id: element.id,
           model: modelType,

@@ -4,10 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
 import { ContentTypePath, GoalState, GoalStateType, SharedCarePlanLifeStyle, medication } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PermissionService } from 'src/app/services/permission.service';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-scp-med-for-mon',

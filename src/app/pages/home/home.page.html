@@ -261,8 +261,8 @@
 
       <!-- Forms -->
       <ion-row *ngIf="this.permissionService.canViewForms">
-        <ion-card class="vertical-card" (click)="navigateToFormsPage()">
-          <ion-item lines="none" mode="md" class="noMargin">
+        <ion-card class="vertical-card">
+          <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToFormsPage()">
             <div class="slidersHeader">
               <ion-img class="ion-no-margin" slot="start" src="assets/icons/checklist-pen.svg"></ion-img>
               <ion-text class="card-title" slot="start" style="color: var(--form-home-color)">{{ 'setting.subtitle_form'
@@ -272,7 +272,7 @@
             <ion-text slot="end" *ngIf="infoForms" class="hour-txt">{{infoForms?.hour}}</ion-text>
             <ion-icon class="icon-arrow" slot="end" size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
           </ion-item>
-
+ 
           <ion-card-content>
 
             <ion-text style="display: flex; justify-content: start; width: 100%;" *ngIf="!this.forms|| this.forms?.length == 0">
@@ -285,8 +285,8 @@
               <swiper-slide style="width: 100% !important;" *ngFor="let slide of this.forms">
                 <ion-grid class="zeroMarginPadding" style="width: 100%;">
                   <ion-row>
-                    <ion-text style="text-align: left;margin-left: 0px;" class="txt-cards">-
-                      {{slide?.form?.title}}</ion-text>
+                    <ion-text (click)="navigateToFormPage(slide)" style="text-align: left;margin-left: 0px;" class="txt-cards">-
+                      {{slide?.title}}</ion-text>
                   </ion-row>
                 </ion-grid>
               </swiper-slide>
