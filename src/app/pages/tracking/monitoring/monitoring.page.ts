@@ -4,7 +4,7 @@ import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shar
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { PermissionService } from 'src/app/services/permission.service';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -18,7 +18,7 @@ export class MonitoringPage implements OnInit {
   nameContent: string = ContentTypeTranslatedName.Monitoring
   iconContent = ContentTypeIcons.Monitoring
   constructor(
-    public sharedCarePlan:SharedCarePlanService, private router: Router,public dateService: DateService,public authService: AuthenticationService, public permissionService: PermissionService
+     private scpService: SharedCarePlanService, private router: Router,public dateService: DateService,public authService: AuthenticationService, public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class MonitoringPage implements OnInit {
 
 
   async getFormList(){
-    this.sharedCarePlan.get_APi_ACP_monitoring().subscribe(
+    this.scpService.get_APi_ACP_monitoring().subscribe(
       async (res: any) =>{
         console.log("monitoring", res)  
         this.adapterForView(res)  

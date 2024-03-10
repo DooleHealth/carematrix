@@ -3,7 +3,7 @@ import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { GoalState, GoalStateType, SharedCarePlanLifeStyle } from 'src/app/models/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-lifestyle-index',

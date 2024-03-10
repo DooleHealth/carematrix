@@ -27,7 +27,7 @@ export class ViewMoreInformationComponent implements OnInit {
   constructor(private dooleService: DooleService, public authService: AuthenticationService, private languageService: LanguageService, public dateService: DateService) { }
 
   ngOnInit() {
-    console.log("lo que llega", this.content)
+    console.log("[ViewMoreInformationComponent] ngOnInit(): ", this.content)
     console.log("segment", this.segment)
     //this.toRouterLink()
 
@@ -137,7 +137,7 @@ export class ViewMoreInformationComponent implements OnInit {
   getStateObject(listcontets) {
 
     if (this.segment === "Exercise") {
-      return { id: listcontets?.id, programable_id: listcontets.programable_id };
+      return { id: listcontets?.exercise_id, programable_id: listcontets.programable_id };
     } else {
       return { id: listcontets?.id };
     }

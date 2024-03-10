@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { PermissionService } from 'src/app/services/permission.service';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-goals-components',
