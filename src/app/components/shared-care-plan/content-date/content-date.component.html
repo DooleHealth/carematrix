@@ -43,7 +43,7 @@
 
 <ng-template #Other>
   <ion-card class="ion-no-padding" (click)="goTo(content)" routerLinkActive="active-item"
-    style="margin-bottom: 2%; margin-top: 2%;" [state]="{id: content?.form_id, form_programmation_id: content?.id}"
+    style="margin-bottom: 2%; margin-top: 2%;" [state]="{id: content?.form_id, form_programmation_id: content?.id, form_answer_id: content?.form_answer_id}"
     *ngIf="content?.type === 'forms'; else Drugs">
 
 

@@ -17,6 +17,7 @@ import { AlarmFormPage } from './alarm-form/alarm-form.page';
 export class FormPage implements OnInit {
   private data: any = history.state?.data;
   private form_programmation_id = history?.state.form_programmation_id;
+  private form_answer_id = history?.state.form_answer_id;
   private formAnswer: any = history.state?.formAnswer;
   private gamePlayId: any = history.state?.game_play_id;
   private source: string
@@ -127,8 +128,8 @@ export class FormPage implements OnInit {
     this.isLoading = true;
 
 
-    
     if (this.form_programmation_id) event["form_programmation_id"]=this.form_programmation_id
+    if (this.form_answer_id) event['form_answer_id'] = this.form_answer_id
 
     this.dooleService.postAPIFormFill(event).subscribe( (res) =>{
       console.log(res)

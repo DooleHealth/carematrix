@@ -235,7 +235,8 @@ export class FormListPage implements OnInit {
           newForm.status = element.status;
           newForm.period = date;
           newForm.time = element.time;
-          newForm.programmation_id = element.id
+          newForm.form_answer_id = element.form_answer_id;
+          newForm.programmation_id = element.id;
           this.listForms.push(newForm);
           
         });
@@ -243,6 +244,7 @@ export class FormListPage implements OnInit {
       }else{
         form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
         form.time = form.formProgrammationTimes[0].time
+        form.form_answer_id = form.formProgrammationTimes[0].form_answer_id
         form.status = form.formProgrammationTimes[0].status
         form.programmation_id = form.formProgrammationTimes[0].id
       this.listForms.push(form);
@@ -344,10 +346,9 @@ selectTime(time){
 
 goTo(content){
   console.log('[FormListPage] goTo() ', content)
-  return
   if (this.canDoForm && content.type === "forms") {
     if (content.showAlert) this.alertForm();
-    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });
+    else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.form_answer_id } });
   }
 }
 
