@@ -21,10 +21,13 @@ export class FormPage implements OnInit {
   private formAnswer: any = history.state?.formAnswer;
   private gamePlayId: any = history.state?.game_play_id;
   private source: string
+
+
   @Input()id: any;
   @Input()isModal: boolean;
   @Input()goalsByAlarms: any;
   @Input()challengeId: any;
+
   userLang = 'es-es';
   isLoading = false
   date = new Date(Date.now()).toISOString()
@@ -121,8 +124,8 @@ export class FormPage implements OnInit {
     event['form_id'] = this.id
     event['user_id'] = this.auth.user.idUser
     event['user_auth'] = this.auth.id_user
-    if(this.challengeId)
-    event['challenge_id'] = this.challengeId
+
+    if(this.challengeId) event['challenge_id'] = this.challengeId
 
     console.log('[FormPage] send()', event)
     this.isLoading = true;

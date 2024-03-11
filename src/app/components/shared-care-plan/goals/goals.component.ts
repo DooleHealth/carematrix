@@ -42,7 +42,7 @@ export class GoalsComponent  implements OnInit {
   last_accepted_or_declined;
   constructor(public translate: TranslateService,   private changeDetectorRef: ChangeDetectorRef,private modalCtrl: ModalController, private alertController: AlertController, 
     private pusher: PusherChallengeNotificationsService, private router: Router, private iab: InAppBrowser,  public sharedCarePlan: SharedCarePlanService,
-    private ngZone: NgZone, public authService: AuthenticationService, public permissionService: PermissionService) { }
+    private ngZone: NgZone, public authService: AuthenticationService, public permissionService: PermissionService, public dooleService: DooleService) { }
 
   ionViewWillEnter() {
     this.canDoGoal = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewGoals;
@@ -75,11 +75,14 @@ export class GoalsComponent  implements OnInit {
     let message = '';
     let link = '';
     let id = '';
+    let form_id = '';
     let tempGoals = [];
-    let type = ''
+    let type = '';
+    let challenge_id = ''
     
     this.goals?.forEach(goal => {
 
+      console.log(goal)
       if(goal?.required) this.isRequired = true
 
       switch (goal?.goalable_type) {
@@ -125,30 +128,31 @@ export class GoalsComponent  implements OnInit {
           if (goal?.diet?.name) name = goal?.diet?.name
           if (goal?.goalable?.name) name = goal?.goalable.name;
 
-          id = goal?.diet?.id;
+          id = goal?.goalable_id;
           message = this.translate.instant("health_path.diet") //+ '"' + goal?.diet?.name + '"';
           link = '/form';
           break;
         case "App\\Element":
-
-          if (goal?.element?.name) name = goal?.element?.name
-          if (goal?.goalable?.name) name = goal?.goalable.name;
-
-          id = goal?.element?.id;
-          name =  goal?.element?.name;
+          id = goal?.goalable?.id;
+          form_id = goal?.goalable?.form_id;
+          name =  goal?.goalable?.name;
           message = this.translate.instant("health_path.measure") //+ '"' + goal?.element?.name + '"';
           link = '/form';
           break;
         case "App\\Game":
-          if (goal?.game?.form) {
-            id = goal?.game?.form_id;
+
+          if (goal?.isForm) {
+
+            id = goal?.goalable.form_id;
+            challenge_id = this.content.id;
+            
             name =  goal?.game?.form?.title;
             type = 'form';
           }else{
-            id = goal?.game?.id;
-            name =  goal?.game?.title;
+            id = goal?.goalable_id;
+            name =  goal?.goalable?.title;
             type = 'game';
-            link = goal?.game?.url_access;
+            link = goal?.goalable?.url; 
           }
           message = this.translate.instant("health_path.game") //+ '"' + goal?.element?.name + '"';
           break;
@@ -160,7 +164,7 @@ export class GoalsComponent  implements OnInit {
           break;
       }
       if (status !== "declined")  {
-        tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.aderence?.isCompleted, required: goal?.required, type: type, status: status, model_id: model_id})
+        tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.aderence?.isCompleted, required: goal?.required, type: type, status: status, model_id: model_id, form_id: form_id, challenge_id: challenge_id})
       }
     });
     
@@ -186,7 +190,7 @@ export class GoalsComponent  implements OnInit {
     if (this.canDoGoal) {
       switch (goal?.goalable_type) {
         case "App\\Form":
-          this.openModal(FormPage,{ id: goal.id, isModal: true });
+          this.openModal(FormPage,{ id: goal.id, form_id:  goal.form_id ,isModal: true });
           //this.router.navigate(['/tracking/form', { id: goal.id }]);
           break;
         case "App\\Drug":
@@ -211,10 +215,11 @@ export class GoalsComponent  implements OnInit {
         case "App\\Game":
           console.log('openGoal goal: ', goal);
           if(goal?.type == 'form')
-          this.openModal(FormPage,{ id: goal?.id, isModal: true});
+          this.openModal(FormPage,{ id: goal?.id, challengeId: goal.challenge_id,  isModal: true});
           else{
             //this.router.navigate(['/tracking/games-detail'], { state: { id: goal.id } });
-            this.openGames(goal?.link)
+            this.getGameDetail(goal.id);
+            
           }
           break;
         default:
@@ -224,6 +229,19 @@ export class GoalsComponent  implements OnInit {
           break;
       }
     }
+  }
+
+
+  getGameDetail(id) {
+    this.dooleService.getAPIgameId(id).subscribe(
+      async (res: any) => {
+        if (res.success) {
+          this.openGames(res.game.url)
+        }
+        
+      }, (err) => {
+        throw err;
+      })
   }
 
   async openModal(component, componentProps) {
