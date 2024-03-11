@@ -1718,11 +1718,10 @@ export class HomePage implements OnInit {
       const index = this.sliderForms?.nativeElement?.swiper.activeIndex
       let slider = this.forms[index]
       console.log(this.forms)
+
       this.infoForms = {
-        title: slider?.form?.title,
-        hour: slider?.scheduled_date
-          ? this.transformDate(new Date(slider?.scheduled_date), 'HH:mm')
-          : ''
+        title: this.forms[index]?.title,
+        hour: this.forms[index]?.time
       }
 
       console.log(this.infoForms)
