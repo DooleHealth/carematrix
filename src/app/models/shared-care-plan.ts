@@ -24,7 +24,7 @@ export enum ContentTypePath {
     Agenda = '/agenda',
     AgendaDetail = '/agenda/detail',
     //CHALLENGES
-    Challenges = '/home/health-path',
+    Challenges = '/tracking/profile/goals',
     ChallengesDetail = '/home/health-path/detail',
     //DIETS 
     Diets= '/tracking/journal', 
