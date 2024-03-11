@@ -96,20 +96,19 @@ export class Form {
 
     static getFormProgrammationByTimes(forms:Form[]){
         let list:Form[] = []
+        console.log('[Form] getFormProgrammationByTimes()', forms);
         forms.forEach( (form:Form)=> {
             list = list.concat(this.getFromTimes(form))
         })
-        console.log('[Form] getFormProgrammationByTimes()', list);
-        list =  Form.sortFormsByTimes(list)
-        console.log('[Form] getFormProgrammationByTimes() 1', list);
-        return list
+        return  Form.sortFormsByTimes(list)
+         
     }
 
     static getFromTimes(form:Form):Form[]{
         let list:Form[] = []
         form.formProgrammationTimes.forEach( f =>{
-            const auxForm = form;
-            auxForm.time = Form.getTime(f.time)
+            const auxForm = Object.assign({}, form);
+            auxForm.time =  Form.getTime(f.time)
             auxForm.isPending = f.status == 2 ? true:false
             list.push(auxForm)
         })

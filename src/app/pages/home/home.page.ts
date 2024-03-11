@@ -1190,11 +1190,8 @@ export class HomePage implements OnInit {
       this.activity = this.groupelement(
         this.sortElements(constants)
       ) 
-    }
-
-
       this.slideActivityChange()
-
+    }
     this.setSliderOption('physical')
   }
 
