@@ -41,7 +41,7 @@
         <ion-label>{{ 'reminder.field_type' | translate }}</ion-label>
         <ion-text class="textMedium">{{this.type}}</ion-text>
       </ion-item>
-      <ion-item (click)="actionIntrucction()">
+      <ion-item (click)="actionIntrucction()" [disabled]="checkPermissions(reminder)" >
         <ion-label>{{ (this.isElement)?('reminder.field_reminder' | translate) :('reminder.field_appointment' | translate) }}</ion-label>
         <ion-text class="textMedium">{{this.getReminderTitle() }}</ion-text>
         <ion-icon  name="chevron-forward-outline" slot="end" size="small"></ion-icon>
