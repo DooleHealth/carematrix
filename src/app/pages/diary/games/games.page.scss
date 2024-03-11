@@ -1,0 +1,53 @@
+ion-list {
+    background: none !important
+}
+
+ion-card {
+    box-shadow: none !important;
+}
+
+.cardProfile {
+    margin-bottom: 5%;
+    box-shadow: none !important;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  
+  .item {
+    height: 100% !important;
+  }
+  
+  .thumbnail {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    width: 98px !important;
+    height: 87px !important;
+  }
+  
+  .txtSubtitle {
+    font-size: 12px !important;
+    color: #575757 !important;
+    font-weight: 400;
+  }
+  
+  .txt-subtitle-card {
+    font-family: 'Poppins-Regular';
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--malva);
+  }
+  
+  .txt-title-card {
+    font-family: 'Poppins-SemiBold';
+    font-size: 14px;
+    color: #22577A;
+  }
+  
+  ion-card {
+    box-shadow: none !important;
+  }
+
+
+  .play-btn {
+    font-family: 'Poppins-Regular';
+  }
