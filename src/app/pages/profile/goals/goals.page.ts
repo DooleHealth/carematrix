@@ -88,8 +88,11 @@ export class GoalsPage implements OnInit {
         let goal= res.challenges
          goal.forEach(g => {
           if(g.aderence.isCompleted != true){
-           // goalsAll.push(g)
-            this.goalsList.push(g)
+
+            //pending
+            if (g?.last_accepted_or_declined === null) this.goalsList.push(g)
+            //not declined
+            else if (g?.last_accepted_or_declined?.type !== 'declined')  this.goalsList.push(g)
           }
          });
          this.isLoading = false;
