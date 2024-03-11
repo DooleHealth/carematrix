@@ -1,8 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-testimonials-details',
@@ -14,7 +17,7 @@ export class TestimonialsDetailsPage implements OnInit {
   @Input()id: any;
   data:any;
   isLoading = false
-  new : any = {};
+  testimony : any = {};
   videoThumbnail: any = null;
   link : any = null;
   linkpdf : any = null;
@@ -34,7 +37,9 @@ export class TestimonialsDetailsPage implements OnInit {
     public alertCtrl: AlertController,
     public navCtrl: NavController,
     private dooleService: DooleService,
-    public sanitizer: DomSanitizer, private router: Router) {
+    public sanitizer: DomSanitizer,
+    private languageService: LanguageService, public dateService: DateService,
+     private router: Router) {
   }
 
   ngOnInit() {
@@ -45,7 +50,7 @@ export class TestimonialsDetailsPage implements OnInit {
       this.id = history.state.id;
 
     if(this.id)
-      this.getDetailNew();
+      this.getDetailTestimony();
   }
 
   getImageSource(listcontets): string {
@@ -54,16 +59,22 @@ export class TestimonialsDetailsPage implements OnInit {
     else return '/assets/images/shared-care-plan/image-not-found.png';
   }
 
-  async getDetailNew(onlyStatus?){
-    console.log('[DiaryPage] getDetailNew()');
+  async getDetailTestimony(onlyStatus?){
+    console.log('[DiaryPage] getDetailTestimony()');
     this.isLoading = true
     /**getAPIdetailTESTIMONIALS
      * CAMBIAR CUANDO ESTE HECHO EL DETALLE DE LOS TESTIMONIOS
      * DE MOMENTO ESTA CON EL DE NEWS
      */
-    this.dooleService.getAPIdetailNew( this.id).subscribe(
+
+    let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1
+    }
+    this.dooleService.getAPIdetailTestimonial(this.id,params).subscribe(
       async (json: any) =>{
-        console.log('[DiaryPage] getDetailNew()', await json);
+        console.log('[DiaryPage] getDetailTestimony()', await json);
 
         //Refresh only status content
         if(onlyStatus){
@@ -72,18 +83,18 @@ export class TestimonialsDetailsPage implements OnInit {
           this.hide = this.getStatusable(json.news?.statusable, 'hide')
           return
         }
-        this.new=json.news;
-        if(this.new.content){
-          this.new.content=this.new.content.replace('"//www.','"https://www.');
-          this.new.content=this.sanitizer.bypassSecurityTrustHtml(this.new.content);
+        this.testimony=json.testimony;
+        if(this.testimony.description){
+          this.testimony.description=this.testimony.description.replace('"//www.','"https://www.');
+          this.testimony.description=this.sanitizer.bypassSecurityTrustHtml(this.testimony.description);
         }
 
-        if((this.new.url!='') && (this.new.url!=null)){
-          this.link=this.sanitizer.bypassSecurityTrustResourceUrl(this.new.url);
+        if((this.testimony.url!='') && (this.testimony.url!=null)){
+          this.link=this.sanitizer.bypassSecurityTrustResourceUrl(this.testimony.url);
         }
 
-        this.new.files.forEach(element => {
-          if(element.mime_type=="application/pdf"){
+        this.testimony?.files?.forEach(element => {
+          if(element?.mime_type=="application/pdf"){
             element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
             this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
             this.linkpdf2=this.sanitizer.bypassSecurityTrustResourceUrl(element.temporaryUrl);
@@ -92,7 +103,7 @@ export class TestimonialsDetailsPage implements OnInit {
             this.linkPdfTitle=(element.name);
           }
         });
-        this.new.files.forEach(element => {
+        this.testimony?.files?.forEach(element => {
           if(element.mime_type=="video/mp4"){
             this.video=(element.temporaryUrl);
             this.videoThumbnail=(element.thumbnailTemporaryUrl);
@@ -101,9 +112,9 @@ export class TestimonialsDetailsPage implements OnInit {
           }
         });
 
-        this.like = this.getStatusable(this.new?.statusable, 'like')
-        this.favourite = this.getStatusable(this.new?.statusable, 'favourite')
-        this.hide = this.getStatusable(this.new?.statusable, 'hide')
+        this.like = this.getStatusable(this.testimony?.statusable, 'like')
+        this.favourite = this.getStatusable(this.testimony?.statusable, 'favourite')
+        this.hide = this.getStatusable(this.testimony?.statusable, 'hide')
 
         this.isLoading = false
        },(err) => {
@@ -116,7 +127,7 @@ export class TestimonialsDetailsPage implements OnInit {
 
 
   openFile(){
-    console.log("files", this.new.files);
+    console.log("files", this.testimony.files);
     console.log("miniatura", this.thumbnail);
     console.log("news", this.linkpdf2.changingThisBreaksApplicationSecurity);
     window.open(this.linkpdf2.changingThisBreaksApplicationSecurity, "");
@@ -124,7 +135,7 @@ export class TestimonialsDetailsPage implements OnInit {
   }
 
   openVideo(){
-    console.log("files", this.new.files);
+    console.log("files", this.testimony.files);
     console.log("video", this.video);
     console.log("miniaturaVideo", this.videoThumbnail);
     window.open(this.video, "");
@@ -154,7 +165,7 @@ export class TestimonialsDetailsPage implements OnInit {
     }
     let params = {
       model: 'News',
-      id: this.new?.id,
+      id: this.testimony?.id,
       type: type,
       status: value
     }
@@ -162,7 +173,7 @@ export class TestimonialsDetailsPage implements OnInit {
     this.dooleService.postAPIContentStatus(params).subscribe(
       async (res: any) =>{
           if(res.success){
-            this.getDetailNew('onlyStatus');
+            this.getDetailTestimony('onlyStatus');
           }
       }
     )
@@ -176,6 +187,25 @@ export class TestimonialsDetailsPage implements OnInit {
       this.router.navigate([`/home`]);
     /* else
       this.router.navigate([`/advices`]); */
+  }
+
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getFormatSelectedDate2());
+  }
+
+  extractText(htmlContent: string): string {
+    // Si el contenido es nulo o indefinido, retorna una cadena vacía
+    if (!htmlContent) {
+      return '';
+    }
+
+    // Utiliza una expresión regular para eliminar las etiquetas HTML
+    const regex = /(<([^>]+)>)/ig;
+    const result = htmlContent.replace(regex, "");
+
+    return result;
   }
 
 

@@ -1221,11 +1221,16 @@ export class DooleService {
     );
   }
 
-  getAPIlistTestimonialID(id): Observable<any> {
-    let path = `user/testimonial/${id}`;
+  getAPIdetailTestimonial(id, params): Observable<any> {
+    let path = `user/testimony/${id}`;
     const endpoint = this.api.getEndpoint(path);
+    let httpParams = new HttpParams()
+    .set('tags', params.tags)
+    .set('interactions', params.interactions)
+    .set('readingTime', params.readingTime);
     
-    return this.http.get(endpoint).pipe(
+    
+    return this.http.get(endpoint,httpParams).pipe(
       map((res: any) => {
         console.log(`[DooleService] getAPIdetailRecipe(${path}) res: `, res);
         return res;

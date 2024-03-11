@@ -16,18 +16,35 @@
  
 
   <ion-card class="cardProfile">
-    <img *ngIf="new.cover" class="imagefit" [src]="getImageSource(new)"
+    <img  class="imagefit" [src]="getImageSource(this.testimony)"
       onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
 
     <ion-card-header mode="md" style="padding-top: 7%; padding-left: 7%; padding-right: 7%;">
       <ion-card-subtitle>
-        <ion-text *ngIf="new?.subject || new?.name" class="txt-source" class="title-card">
-          {{new?.subject || new?.name}} </ion-text>
+        <ion-text *ngIf="this.testimony?.subject || this.testimony?.name" class="txt-source" class="title-card">
+          {{this.testimony?.subject || this.testimony?.name}} </ion-text>
+      </ion-card-subtitle>
+
+      <ion-card-subtitle *ngIf="testimony?.source" class="txt-source"><i><u>{{'shared_care_plan.source' |
+        translate}}</u> {{extractText(testimony?.source)}}</i></ion-card-subtitle>
+
+      <ion-card-subtitle *ngIf="testimony?.scheduled_date" class="txt-source">{{
+        formatSelectedDate(testimony?.scheduled_date)}}</ion-card-subtitle>
+
+      <ion-card-subtitle *ngIf="testimony?.reading_time" class="txt-timeReading">
+        {{ testimony?.reading_time }}
+      </ion-card-subtitle>
+
+      <ion-card-subtitle>
+        <ion-text class="txt-likes" *ngIf="testimony?.interactions">
+          {{testimony?.interactions?.like}} {{'shared_care_plan.like' |translate}}
+        </ion-text>
+        <ion-text class="txt-likes" *ngIf="testimony?.interactions?.like && testimony?.interactions?.like > 100">🔥</ion-text>
       </ion-card-subtitle>
 
       <ion-card-subtitle>
         <ion-text class="txt-description" style="text-align: justify;"
-          [innerHtml]="new?.content"></ion-text>
+          [innerHtml]="this.testimony?.description"></ion-text>
       </ion-card-subtitle>
     </ion-card-header>
   </ion-card>

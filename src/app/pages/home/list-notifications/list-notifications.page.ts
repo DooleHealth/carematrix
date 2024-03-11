@@ -262,12 +262,12 @@ export class ListNotificationsPage implements OnInit {
         notification['color'] = '#BA0186'
         notification['checked'] = false
         break;
-      // case "App\\Goalable":
-      //   notification['message'] = this.translate.instant('list_notifications.diagnostic')
-      //   notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
-      //   notification['title'] = notification?.notification_origin?.title
-      //   notification['color'] = '#1A8E92'
-      //   break;
+      case "App\\Goalable":
+        notification['message'] = this.translate.instant('list_notifications.new_level')
+        notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
+        notification['title'] = notification?.notification_origin?.title
+        notification['color'] = '#1A8E92'
+        break;
       default:
         notification['message'] = this.translate.instant('list_notifications.default')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
@@ -366,6 +366,10 @@ export class ListNotificationsPage implements OnInit {
         this.router.navigate([ContentTypePath.Home], { state: { data: null, id: data.id } });
         break;
       case "App\\Level":
+        this.setRead(notification.id)
+        this.router.navigate([ContentTypePath.Goals], { state: { data: null, segment: 'goals' } });
+        break;
+      case "App\\Goalable":
         this.setRead(notification.id)
         this.router.navigate([ContentTypePath.Goals], { state: { data: null, segment: 'goals' } });
         break;

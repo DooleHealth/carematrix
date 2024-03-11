@@ -344,6 +344,7 @@ selectTime(time){
 
 goTo(content){
   console.log('[FormListPage] goTo() ', content)
+  return
   if (this.canDoForm && content.type === "forms") {
     if (content.showAlert) this.alertForm();
     else this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });

@@ -155,11 +155,11 @@ export class LandingPage implements OnInit {
             }
           }
           else if(message?.message == 'ERR_INTERNET_DISCONNECTED')
-          this.dooleService.presentAlert(this.translate.instant('landing.message_error_internet_disconnected'))
+          this.dooleService.presentAlert(this.translate.instant('landing.message_error_internet_disconnected'), this.translate.instant("button.accept"))
           else if(message == 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error' || message?.message == 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error')
-          this.dooleService.presentAlert(this.translate.instant('landing.message_failure_response'))
+          this.dooleService.presentAlert(this.translate.instant('landing.message_failure_response'), this.translate.instant("button.accept"))
           else
-          this.dooleService.presentAlert(message?.message? message?.message: message)
+          this.dooleService.presentAlert(message?.message? message?.message: message, this.translate.instant("button.accept"))
 
         }else{
           this.loginForm.get('username').setValue('')
