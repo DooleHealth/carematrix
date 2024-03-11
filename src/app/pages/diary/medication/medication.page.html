@@ -41,7 +41,7 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'today'">
       <div style="margin-top: 3%;">
-        <ion-list *ngIf="this.permissionService.canViewMedication &&  listDrugIntakes.length > 0; else noData" style="padding-bottom: 20%;">
+        <ion-list *ngIf="this.permissionService.canViewMedication &&  listDrugIntakes.length > 0; else noData" style="padding-bottom: 25%;">
           <ion-grid *ngFor="let item of listDrugIntakes">
 
             <ion-row>
