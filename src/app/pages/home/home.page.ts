@@ -298,7 +298,6 @@ export class HomePage implements OnInit {
         this.getNumNotification();
     });
 
-      //this.pusherNotifications.initSharedCarePlan();
       this.pusherNotifications.initAssignedLevel()
   }
 
@@ -1175,10 +1174,24 @@ export class HomePage implements OnInit {
     return group
   }
 
+  sortElements(elements){
+    elements.sort( function (a, b) {
+      if (a?.group?.name > b?.group?.name)
+        return 1;
+        if (a?.group?.name < b?.group?.name)
+        return -1;
+      return 0;
+    })
+  }
+
   setPhysicalSlider(constants) {
     this.activity = []
-    if(constants?.length > 0)
-    this.activity = this.groupelement(constants) 
+    if(constants?.length > 0){
+      // let constant = this.sortElements(constants)
+      // console.log('[HomePage] setPhysicalSlider()', constant);
+      this.activity = this.groupelement(constants) 
+    }
+
 
       this.slideActivityChange()
 

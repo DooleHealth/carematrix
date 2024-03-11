@@ -119,12 +119,12 @@ export class ViewMoreInformationComponent implements OnInit {
   }
 
   getImageSource(listcontets): string {
-
-    console.log(listcontets)
     let a = '';
 
     if (listcontets?.image) {
       if (listcontets?.image?.temporaryUrl) a = listcontets.image.temporaryUrl
+      else if(typeof listcontets?.image === 'string')
+            a = listcontets?.image;
       else a = '/assets/images/shared-care-plan/image-not-found.png';
     }
     else if (listcontets?.cover) {
@@ -134,7 +134,6 @@ export class ViewMoreInformationComponent implements OnInit {
     else if (listcontets?.image?.temporaryUrl) a = listcontets.image.temporaryUrl;
     else a = '/assets/images/shared-care-plan/image-not-found.png';
 
-    console.log(a)
     return a;
   }
 
@@ -149,7 +148,7 @@ export class ViewMoreInformationComponent implements OnInit {
 
 
   getColorLike(statusable) {
-    console.log(statusable)
+    //console.log(statusable)
     if (statusable?.length > 0) {
       let existeLike = statusable.some(objeto => objeto.type === "like");
       if (existeLike) {

@@ -62,6 +62,7 @@ export interface Media {
 export class Form {
     time:       string;
     isPending:  boolean;
+    
     static list_form_programming: Form[] = []
     static formProgrammation(obj: Object){
         return new Form(

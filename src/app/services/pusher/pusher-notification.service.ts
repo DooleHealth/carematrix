@@ -18,9 +18,9 @@ declare const Pusher: any;
 })
 export class PusherNotificationService {
   readonly NOTIFICATION_BIND =  'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated'
-  readonly ASSIGNED_LEVEL_BIND = "App\\Notifications\\Level\\NewLevelAssignedNotification"
-  readonly SHARED_CARE_PLAN_BIND = "App\\Notifications\\SharedCarePlanAddContentNotification"
-  readonly VISIT_ONLINE_BIND ="App\\Notifications\\VisitOnlineNotification"
+  readonly ASSIGNED_LEVEL_TYPE = "App\\Notifications\\Level\\NewLevelAssignedNotification"
+  readonly SHARED_CARE_PLAN_TYPE = "App\\Notifications\\SharedCarePlanAddContentNotification"
+  readonly VISIT_ONLINE_TYPE ="App\\Notifications\\VisitOnlineNotification"
   readonly CHANEL = 'private-App.User.';
   //readonly CHANEL = 'private-NewLevelAssignedNotification.';
   idUser:string;
@@ -57,26 +57,22 @@ export class PusherNotificationService {
     return this.channel;
    }
 
-  public initSharedCarePlan() {
-    this.channel?.bind(this.SHARED_CARE_PLAN_BIND, (data) => {
-      console.log('[PusherNotificationService] initSharedCarePlan() data',  data);
-      this.openScpNotificationDialog()
+   public initAssignedLevel() {
+    this.channel?.bind(this.NOTIFICATION_BIND, (data) => {
+      console.log('[PusherNotificationService] getPusher()',  data);
+      if (data.type === this.ASSIGNED_LEVEL_TYPE) {
+        this.openScpNotificationDialog()
+      }
+      if(data.type === this.VISIT_ONLINE_TYPE) {
+        //this.openVideocallNotificationDialog(data)
+      }
+
+      if(data.type === this.SHARED_CARE_PLAN_TYPE) {
+        //this.openVideocallNotificationDialog(data)
+      }
     });
   }
 
-  public initAssignedLevel() {
-    this.channel?.bind(this.ASSIGNED_LEVEL_BIND, (data) => {
-      console.log('[PusherNotificationService] initAssignedLevel() data',  data);
-      this.openScpNotificationDialog()
-    });
-  }
-
-  public initVisitOnline() {
-    this.channel?.bind(this.VISIT_ONLINE_BIND, (data) => {
-      console.log('[PusherNotificationService] initVisitOnline() data',  data);
-      this.openVideocallNotificationDialog(data)
-    });
-  }
 
   public async openVideocallNotificationDialog(dataVideocall:any) {
     let message = `
