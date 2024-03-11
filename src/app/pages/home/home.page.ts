@@ -1175,11 +1175,10 @@ export class HomePage implements OnInit {
   }
 
   sortElements(elements){
-    elements.sort( function (a, b) {
-      console.log('[HomePage] setPhysicalSlider()', a, b);
+    return elements.sort( function (a, b) {
       if (a?.group?.name > b?.group?.name)
         return 1;
-        if (a?.group?.name < b?.group?.name)
+      if (a?.group?.name < b?.group?.name)
         return -1;
       return 0;
     })
@@ -1188,9 +1187,9 @@ export class HomePage implements OnInit {
   setPhysicalSlider(constants) {
     this.activity = []
     if(constants?.length > 0){
-      let constant = this.sortElements(constants)
-      console.log('[HomePage] setPhysicalSlider()', constant);
-      this.activity = this.groupelement(constants) 
+      this.activity = this.groupelement(
+        this.sortElements(constants)
+      ) 
     }
 
 
