@@ -45,13 +45,9 @@ export class ViewMoreInformationComponent implements OnInit {
       case "Exercise":
         return 'exercices-detail'
           ;
-          case "testimonials":
+      case "Testimony":
         return 'testimonials-detail'
           ;
-          
-
-      
-
     }
 
     if (this.content[0].modal_type)
@@ -125,13 +121,21 @@ export class ViewMoreInformationComponent implements OnInit {
   getImageSource(listcontets): string {
 
     console.log(listcontets)
-    if (listcontets?.image) return listcontets?.image
-    else if (listcontets?.cover) {
-      if (listcontets.cover?.temporaryUrl) return listcontets.cover.temporaryUrl;
-      else return listcontets.cover
+    let a = '';
+
+    if (listcontets?.image) {
+      if (listcontets?.image?.temporaryUrl) a = listcontets.image.temporaryUrl
+      else a = '/assets/images/shared-care-plan/image-not-found.png';
     }
-    else if (listcontets?.image?.temporaryUrl) return listcontets.image.temporaryUrl;
-    else return '/assets/images/shared-care-plan/image-not-found.png';
+    else if (listcontets?.cover) {
+      if (listcontets.cover?.temporaryUrl) a = listcontets.cover.temporaryUrl;
+      else a = listcontets.cover
+    }
+    else if (listcontets?.image?.temporaryUrl) a = listcontets.image.temporaryUrl;
+    else a = '/assets/images/shared-care-plan/image-not-found.png';
+
+    console.log(a)
+    return a;
   }
 
   getStateObject(listcontets) {
@@ -165,7 +169,7 @@ export class ViewMoreInformationComponent implements OnInit {
     this.notifyParent.emit();
   }
 
-  formatSelectedDate(date){
+  formatSelectedDate(date) {
     let language = this.languageService.getCurrent()
     const datePipe: DatePipe = new DatePipe(language);
     return datePipe.transform(date, this.dateService.getFormatSelectedDate2());

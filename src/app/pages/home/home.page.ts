@@ -271,7 +271,7 @@ export class HomePage implements OnInit {
 
     console.log(this.datePhraseReaded)
     
-    this.getUserInformation()
+    this.getUserInformation()   
     this.getNumNotification();
     
     this.update()

@@ -1,6 +1,6 @@
 <ion-card *ngFor="let listcontets of content">
 
-  <img *ngIf="listcontets.cover || listcontets.image" class="imagefit" [src]="getImageSource(listcontets)"
+  <img class="imagefit" [src]="getImageSource(listcontets)"
     onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
     
   <ion-item lines="none">
@@ -9,7 +9,7 @@
     </div>
 
     <ion-icon
-      *ngIf="(this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.segment !== 'testimonials'"
+      *ngIf="(this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null)"
       color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end"
       (click)="setContentStatus(listcontets?.statusable, listcontets.id, 'like')"></ion-icon>
 

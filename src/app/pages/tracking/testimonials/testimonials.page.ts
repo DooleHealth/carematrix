@@ -33,6 +33,10 @@ export class TestimonialsPage implements OnInit {
     if (this.permissionService.canViewTestimonials) this.getNewsTestimonial()
   }
 
+  refreshPage(data: any) {
+    if (this.permissionService.canViewTestimonials) this.getNewsTestimonial()
+  }
+
 
   async getNewsTestimonial(){
     
