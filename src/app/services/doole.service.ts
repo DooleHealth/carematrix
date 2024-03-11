@@ -14,6 +14,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 import { ShellChatModel, ShellMessageModel, ShellRecipientModel } from '../pages/contact/chat/chat.page';
 import { AuthenticationService } from './authentication.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,9 @@ export class DooleService {
     public events: Events,
     private platform: Platform,
     public router: Router,
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    public translate: TranslateService) { }
+
   public selectedDate: Date;
 
   uploadFile(image: string, id?: string) {
@@ -302,7 +305,7 @@ export class DooleService {
   }
 
   async presentAlert(message, button?: string) {
-    let buttonName = (button !== undefined) ? button : 'Aceptar'
+    let buttonName = (button !== undefined) ? button : this.translate.instant('landing.accept-btn');
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
       //mode: 'ios',
