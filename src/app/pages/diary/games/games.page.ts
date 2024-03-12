@@ -157,10 +157,10 @@ export class GamesPage implements OnInit {
 
       if (item.url?.startsWith("http")) {
         item.url = item.url + "?user=" + this.auth.user.idUser + "&game=" + item.id;
-        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+        browser = this.iab.create(item.url, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes,footer=yes,zoom=no");
       }
       else
-        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+        browser = this.iab.create(item.url, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes,footer=yes,zoom=no");
     }
 
     if (item.type == "form") {

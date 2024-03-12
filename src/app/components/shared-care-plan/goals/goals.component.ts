@@ -313,22 +313,21 @@ export class GoalsComponent  implements OnInit {
       this.pusher.isModalShowing = true;
 
       if(url_access?.startsWith("http"))
-        browser = this.iab.create(url_access, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+        browser = this.iab.create(url_access, '_blank', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes,footer=yes,zoom=no");
       else
-        browser = this.iab.create(url_access, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes");
+        browser = this.iab.create(url_access, '_system', "hidden=no,location=no,clearsessioncache=yes,clearcache=yes,footer=yes,zoom=no");
 
       browser.on('exit')?.subscribe(event => {
         this.ngZone.run(() => {
           console.log("openGames event: ", JSON.stringify(event) );
           //alert(JSON.stringify(event))
-          this.pusher.isModalShowing = false;
-          this.getChallengeNotification()
+          //this.pusher.isModalShowing = false;
+          //this.getChallengeNotification()
+          this.refreshPage();
         });
       });
 
-
     }
-
 
           async AcceptOrDeclined(id) {
             
