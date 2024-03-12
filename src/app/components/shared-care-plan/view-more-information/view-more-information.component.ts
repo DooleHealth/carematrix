@@ -75,6 +75,7 @@ export class ViewMoreInformationComponent implements OnInit {
       value = 1
     }
 
+    console.log()
     let params = {
       model: this.segment,
       id: id,

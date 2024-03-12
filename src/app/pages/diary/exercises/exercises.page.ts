@@ -67,6 +67,7 @@ export class ExercisesPage implements OnInit {
           console.log("aaa", res)
           this.exercises = []
           this.exercises = res
+        
           this.adapterForView(this.exercises)
          }
          this.isLoading = false 
@@ -109,7 +110,7 @@ export class ExercisesPage implements OnInit {
           form_id: element.form_id,
           type: "Exercises",
           description: "",
-          id: element.id,
+          id: element.exercise.id,
           exercise_id: element.exercise.id,
           programable_id: element.programable_id,
           model_id: element.id,
@@ -126,6 +127,7 @@ export class ExercisesPage implements OnInit {
         }
         this.items.push(data)
       })
+      console.log(this.items)
       this.saves_items = this.items;
       this.itemsCopy = this.items;
     }
