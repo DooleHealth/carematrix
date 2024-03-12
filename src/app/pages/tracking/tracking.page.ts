@@ -401,6 +401,7 @@ async addDocument(){
         return this.permissionService.canViewGoals || this.permissionService.canViewNews || this.permissionService.canViewAdvices || 
                this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewDiets ||
                this.permissionService.canViewTestimonials || this.permissionService.canViewGames || this.permissionService.canViewMedication || this.permissionService.canViewMedicationPlans
+               || this.permissionService.canViewMonitoring
       }
 
     
