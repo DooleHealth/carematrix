@@ -61,7 +61,12 @@ export class PusherNotificationService {
     this.channel?.bind(this.NOTIFICATION_BIND, (data) => {
       console.log('[PusherNotificationService] getPusher()',  data);
       if (data.type === this.ASSIGNED_LEVEL_TYPE) {
-        this.openScpNotificationDialog()
+        if (!this.isScpAlertOpened) {
+          this.openScpNotificationDialog()
+        }
+        else {
+          this.isScpAlertOpened = false
+        }
       }
       if(data.type === this.VISIT_ONLINE_TYPE) {
         //this.openVideocallNotificationDialog(data)
@@ -119,7 +124,9 @@ export class PusherNotificationService {
 
   public async openScpNotificationDialog() {
 
+    
     if (!this.isScpAlertOpened) {
+      this.isScpAlertOpened = true;
       let message = `
       <ion-row>
         <ion-col class="text-align-center" style="padding: 0px" >
@@ -146,17 +153,18 @@ export class PusherNotificationService {
             text: this.translate.instant('shared_care_plan.new_scp_alert_review'),
             role: 'accept',
             handler: () => {
+              this.isScpAlertOpened = false;
               this.router.navigate([ContentTypePath.Goals]);
             }
           },
         ],
       });
 
-      this.isScpAlertOpened = true;
+      
       await alert.present();
 
       await alert.onDidDismiss();
-      this.isScpAlertOpened = false;
+      
     }
   }
   
