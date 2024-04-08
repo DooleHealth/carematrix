@@ -66,7 +66,7 @@
           </ion-item>
           <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
             <ng-template>
-              <ion-datetime mode="ios" [locale]="this.locale" presentation="date-time" id="date" [max]="maxDate"   formControlName="date"></ion-datetime>
+              <ion-datetime firstDayOfWeek="1"  mode="ios" [locale]="this.locale" presentation="date-time" id="date" [max]="maxDate"   formControlName="date"></ion-datetime>
               <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
                 <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
                 <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>

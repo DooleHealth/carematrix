@@ -278,7 +278,10 @@ export class DateService {
     return format;
 
   }
-
+  public yyyyMMddTHHmmssSSSZFormat(date?){
+    const fechaFormateada =this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS\'Z\'');
+    return fechaFormateada;
+  }
 
   public getLongDateFormat(){
     let lang =  this.translate.currentLang;
