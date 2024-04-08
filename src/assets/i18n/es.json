@@ -77,11 +77,10 @@
       "slider2_text": "Mantenga su agenda de citas actualizada con nuestro sistema de recordatorios.",
       "title3": "Shared Care Plan",
       "slider3_text": "Explore su plan de atención compartida, diseñado por su equipo de atención médica para promover la colaboración y mejorar la salud a través de estrategias personalizadas y accesibles.",
-      "title4": "Mis tareas diárias",
+      "title4": "Mis tareas diarias",
       "slider4_text": "Todas tus tareas en un solo lugar para que puedas mantener tu salud bajo control.",
       "continue": "Continuar!"
     },
-
     "home": {
       "hello": "Hola",
       "goals_title": "Tu Objetivo",
@@ -94,6 +93,8 @@
       "lunch_subtitle": "Almuerzo",
       "medication_subtitle": "Medicación",
       "plays_subtitle": "Juegos",
+      "exercises_subtitle": "Ejercicios",
+      "forms_subtitle": "Formularios",
       "physical_activity_subtitle": "Actividad física",
       "see_all_button": "Ver todas",
       "detail_button": "Detalles",
@@ -173,9 +174,13 @@
       "achievements":"logros",
       "text_goals1":"¡Siéntete orgulloso de ti mismo!",
       "text_goals2":"Has superado con éxito este objetivo 🏆",
+      "text_goals3":" Superado exitosamente ",
+      "text_goals4":" este objetivo 🏆",
       "go": "Ir",
       "accordion_goals":"Estas son las tareas que debes realizar:",
+      "accordion_completed":"Estos son tus logros:",
       "accepted_rejected": "¿Desea aprobar o rechazar estas retos?",
+      "accepted_rejectedExercises": "¿Quieres aprobar o rechazar estos desafíos?",
       "button_rejected": "Rechazar",
       "button_accepted": "Aprobar",
       "rejectd_option1": "Tengo dudas, necesito más información",
@@ -204,12 +209,12 @@
       "news":"Lee la notícia ",
       "diet":"Lee la dieta ",
       "blocked_level": "Este nivel todavía está bloqueado",
+      "goal":"<p>Tienes <strong>{{ total }} Puntos</strong>.</p>",
+      "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
       "goal_txt1": "Tienes",
       "goal_txt2": "consigue",
       "goal_txt3":"más",
       "goal_txt4":" y pasa al siguiente nivel.",
-      "goal":"<p>Tienes <strong>{{ total }} Puntos</strong>.</p>",
-      "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
       "level_congratulations":"Felicitaciones!",
       "level_accomplished":"Has avanzado de nivel",
       "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
@@ -247,7 +252,6 @@
       "diagnostics":"Diagnóstico",
       "allergies": "Alergias",
       "phone":"Teléfono",
-
       "male":"Masculino",
       "feminine": "Femenino",
       "non-binary":"No binario",
@@ -264,10 +268,10 @@
       "button_send": "Enviar",
       "header_error": "Error",
       "header_info": "Información",
-      "header_confirmation": "Confirmación"
+      "header_confirmation": "Confirmación",
+      "header_atention": "Atención"
     },
     "error_required": "Requerido",
-
     "setting":{
       "title_setting": "Ajustes",
       "button_profile": "Perfil",
@@ -304,7 +308,6 @@
         "success_changed_password": "Contraseña se ha actualizado con éxito!",
         "no_success_changed_password": "No se ha podido actualizar la contraseña!",
         "error_changed_password": "Error al actualizar la contraseña!",
-
         "validators_required": "Campo requerido",
         "validators_minlength": "El tamaño mínimo es 6 carateres",
         "validators_check_password": "La contraseña no coincide con la anterior",
@@ -336,11 +339,9 @@
       "button_add_file": "Añadir archivos",
       "placeholder":"Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
       "placeholderDescription":"Cuéntanos aquí cual ha sido tu problema"
-
     },
     "health_card":{
       "header_card": "Tus Tarjetas Sanitarias",
-
       "modality": "Modalidad",
       "name": "Nombre",
       "affiliation_number":"Número de afilación",
@@ -412,7 +413,6 @@
       "alert_message_delete_contact":"El contacto ha sido eliminado",
       "alert_message_update_contact":"El contacto ha sido actualizado",
       "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?",
-
       "error_alert_message_new_contact":"Error: el contacto no ha podido ser añadido",
       "error_alert_message_delete_contact":"Error: el contacto no ha podido ser eliminado",
       "error_alert_message_update_contact":"Error: el contacto no ha podido ser actualizado"
@@ -499,8 +499,10 @@
         "month2": "2 meses",
         "month3": "3 meses"
       },
+
       "error_end_date": "La fecha de finalización del recordatorio debe ser mayor que la fecha de empieza",
       "error_start_date": "La fecha de comienzo del recordatorio debe ser menor que la fecha de finalización"
+
     },
     "appointment":{
       "header_appointment": "Detalle cita",
@@ -512,6 +514,7 @@
       "field_doctor": "Médico",
       "field_center": "Centro",
       "field_specially": "Profesional",
+      "no_field_specially": "Ningún profesional asignado",
       "field_appointment_type": "Tipo de cita",
       "field_instructions": "Instrucciones",
       "field_information": "Información",
@@ -530,7 +533,9 @@
       "add_appointment": "Añadir cita",
       "edit_event": "Editar evento",
       "add_event": "Añadir evento",
-      "delete_event": "Eliminar evento"
+      "delete_event": "Eliminar evento",
+      "video": "Consulta de vídeo",
+      "presential": "Consulta cara a cara" 
     },
     "doctor":{
       "header_doctor": "Detall Médico",
@@ -595,8 +600,7 @@
         "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
         "value_invalid":"El valor no es válido. Ingresa un valor de",
         "confirmation": "Está información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
-
-    },
+      },
     "no_data": "En este momento no hay datos para mostrar",
     "no_data_notifications": "En este momento no tienes notificaciones pendientes",
     "diary":{
@@ -607,6 +611,7 @@
         "field_health": "Salud",
         "field_recipes": "Recetas",
         "field_today": "Hoy",
+        "field_goals": "Metas",
         "calories": "calorias",
         "description": "Descripción",
         "dose": "Dosi",
@@ -645,11 +650,9 @@
         "message_error_treatment_date":"La fecha de inicio del tratamiento debe ser menor a la fecha final",
         "confirmation_delete_medication":"¿Estás seguro de eliminar el plan de medicación?",
         "message_deleted_medication":"Se ha eliminado el medicamento con éxito",
-
         "error_message_add_medication":"Ha ocurrido un error al añadir el medicamento",
         "error_message_edit_medication":"Ha ocurrido un error al editar el medicamento",
         "error_message_deleted_medication":"Ha ocurrido un error al eliminar el medicamento",
-
         "field_from_date": "Fecha de inicio del tratamiento",
         "field_to_date": "Fecha fin del tratamiento",
         "field_dose": "Ingesta",
@@ -660,11 +663,11 @@
         "placeholder_dose":"Nº de dosis",
         "placeholder_alias":"Nombre alternativo",
         "placeholder_search":"Busca por nombre o código",
-
         "snapshot_medication":"Toma instantanea",
         "medication_plan":"Plan de Medicación",
-        "from": "From",
-        "to": "To",
+        "button_details": "Ver detalles",
+        "from": "Desde",
+        "to": "Hasta",
         "dose":"Dosis : ",
         "accepted_rejected": "¿Desea aprobar o rechazar este plan de medicación?",
         "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
@@ -680,9 +683,10 @@
         "rejectd_option3": "Otros",
         "medication_status": "Pendiente",
         "name":"Nombre"
-       
-    },
-    "exercises": {
+      },
+      
+      
+      "exercises": {
       "accepted_rejected": "¿Desea aprobar o rechazar este ejercicio?",
       "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
       "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
@@ -710,9 +714,12 @@
       "see_detail": "Ver detalle",
       "go_detail": "Ir a detalle",
       "take": "Tomar",
+      "takeds": "Tomada",
       "taked": "Tomada",
       "forgotten": "Olvidada",
+      "completed": "Contestada",
       "continue": "Continuar",
+      "pending": "Pendiente",
       "send": "Enviar",
       "perfil":"Perfil",
       "open": "Abrir",
@@ -795,7 +802,7 @@
       "button_videocall_charge": "Confirmar cita con pago",
       "error_upload_files": "Error al adjuntar los archivos",
 
-      "placeholder": "No especificado",
+    "placeholder": "No especificado",
     "profesional": "Seleccionar profesional",
 
     "types": {
@@ -809,8 +816,7 @@
         "3": "Duda",
         "4": "Otros motivos"
     }
-
-    },
+  },
     "chat":{
       "header":"Chat",
       "writting":"Escribiendo...",
@@ -885,9 +891,9 @@
       "add_address": "Añadir dirección",
       "edit_address": "Editar dirección",
       "head_card_text": "Aquí encontrará información sobre los planes de medicación prescritos. Puede ponerse en contacto con su equipo médico si tiene alguna duda al respecto",
-      "msm_caution": "This drug has dangerous interactions with:",
-      "caution": "Caution:",
-      "msm_contact_hp": "*It is recommended to contact health personnel before consumption."
+      "msm_caution": "Este medicamento tiene interacciones peligrosas con:",
+      "caution": "Precaución:",
+      "msm_contact_hp": "*Se recomienda contactar con personal sanitario antes de su consumo."
     },
     "recipe": {
       "header": "Recetas",
@@ -897,6 +903,7 @@
     "notifications":{
       "register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones.",
       "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP.",
+      "scp": "Plan de atención compartida",
       "chat":"Mensaje",
       "form":"Formulario",
       "drug":"Medicamento",
@@ -1004,7 +1011,7 @@
       "head_card_text": "Le enviaremos periódicamente formularios y escalas para mantenernos informados sobre su estado de salud, y se le avisará cuando llegue el momento de cumplimentarlos.",
       "alert_forms": "Sólo puede rellenar este formulario cuando esté programado; le enviaremos una notificación el día especificado.",
       "alert_title": "Acción no autorizada",
-
+      "alert_form_answered": "El formulario ha sido respondido.",
       "accepted_rejected": "¿Quieres aprobar o rechazar este formulario?",
       "button_accepted": "Aprobar",
       "button_rejected": "Rechazar",
