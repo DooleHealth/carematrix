@@ -82,26 +82,14 @@ export class DocumentsAddPage implements OnInit {
       
        var current = new Date(this.diagnosticTest.data)
        let data_prestacio = this.dateService.yyyyMMddHHmm(current);
-      this.form.get('date').setValue(this.formatDate(this.diagnosticTest.data_formatted) )
+      this.form.get('date').setValue(this.dateService.yyyyMMddTHHmmssSSSZFormat(this.diagnosticTest.data_formatted) )
       
       this.form.get('description').setValue(this.diagnosticTest.description)
       this.media = this.test.diagnosticTest.media
     }
   }
 
-  formatDate(d){
-    if(d === undefined || d === null)
-    return
-    var auxdate = d.split(' ')
-    //let date = new Date(auxdate[0]);
-    d = d.replace(' ', 'T')
-    let date0 = new Date(d).toUTCString();
-    let date = new Date(date0);
-    let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    return date.toISOString();
-  }
+  
 
   formatSelectedDate(date){
 
