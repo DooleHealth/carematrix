@@ -49,7 +49,7 @@ import { HttpRequestInterceptor } from "./interceptors/loading.interceptor";
 import { Badge } from "@awesome-cordova-plugins/badge/ngx";
 import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.module";
 import { BackgroundMode } from "@awesome-cordova-plugins/background-mode/ngx";
-import { BLE } from "@awesome-cordova-plugins/ble/ngx";
+//import { BLE } from "@awesome-cordova-plugins/ble/ngx";
 import { Market } from "@awesome-cordova-plugins/market/ngx";
 import { Device } from "@awesome-cordova-plugins/device/ngx";
 import { NgCircleProgressModule } from 'ng-circle-progress';
@@ -118,7 +118,7 @@ export function createTranslateLoader(http: HttpClient) {
     LanguageService,
     FileTransfer,
     File,
-    BLE,
+    //BLE,
     Badge,
     DocumentViewer,
     PhotoViewer,
