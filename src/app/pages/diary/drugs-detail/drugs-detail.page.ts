@@ -34,6 +34,7 @@ export class DrugsDetailPage implements OnInit {
   isSubmittedTimes = false;
   frequency = 'daily';
   frequencySeleted = 'daily';
+  toDateBool = true;
   isInit = true;
   expanded = true;
   isInstant = false;
@@ -182,6 +183,7 @@ export class DrugsDetailPage implements OnInit {
       this.form.get('from_date').setValue(this.transformDate(from_date))
 
       let to_date = this.form.get('to_date').value
+
       this.form.get('to_date').setValue(this.transformDate(to_date))
 
       let f = this.form.get('frequency').value
@@ -381,6 +383,7 @@ export class DrugsDetailPage implements OnInit {
 
           let to_date = medicationPlan.to_date
           this.form.get('to_date').setValue(this.formatDate(to_date))
+          if(!this.form.get('to_date').value) this.toDateBool = false;
 
           if (medicationPlan?.alias)
             this.form.get('alias').setValue(medicationPlan.alias)
