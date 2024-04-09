@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BLE } from '@awesome-cordova-plugins/ble/ngx';
+//import { BLE } from '@awesome-cordova-plugins/ble/ngx';
 import { LoadingController } from '@ionic/angular';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -13,13 +13,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class DevicesPage implements OnInit {
   devices:any;// = [{'name':'dedede','id':'dededed','advertising':'dedede','rssi':'dededed'},{'name':'dededed','id':'dedededdd','advertising':'dedede','rssi':'dededed'}];
   loaderCtrl:HTMLIonLoadingElement;
-  constructor(private ble: BLE, private ngZone: NgZone,  private translate: TranslateService, private router: Router, public loadingController: LoadingController) { }
-
+  //constructor(private ble: BLE, private ngZone: NgZone,  private translate: TranslateService, private router: Router, public loadingController: LoadingController) { }
+  constructor(private ngZone: NgZone,  private translate: TranslateService, private router: Router, public loadingController: LoadingController) { }
   ngOnInit() {
   }
 
   scan(){
-    this.devices = [];
+ /*    this.devices = [];
     this.ble.isEnabled().then(
       success => {
         this.presentLoading('buscando')
@@ -37,7 +37,7 @@ export class DevicesPage implements OnInit {
         alert('Bluetooth no disponible, actívalo e intenta de nuevo');
         
   
-      });
+      }); */
     
   }
 
@@ -57,7 +57,7 @@ export class DevicesPage implements OnInit {
   }
 
   connect(device){
-    this.ble.isEnabled().then(
+   /*  this.ble.isEnabled().then(
       success => {
         this.presentLoading('conectando');
         this.ble.connect(device?.id).subscribe((data)=>{
@@ -76,7 +76,7 @@ export class DevicesPage implements OnInit {
         
       }
       
-    );
+    ); */
   }
 
   async presentLoading(action) {
