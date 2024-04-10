@@ -16,7 +16,7 @@
       "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
       "message_error_serve":"Error del servidor",
       "message_failure_response":"Ha ocurrido un error inesperado intenta otra vez",
-      "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo.",
+      "message_error_internet_disconnected":"No hay conexión a Internet. Conéctate a Internet e inténtalo de nuevo.",
       "login_again":"Por favor inicie sesión nuevamente",
       "about_app":"Consejos de uso de la aplicación",
       "legal": "Política de privacidad y términos legales",
@@ -29,10 +29,10 @@
       "ko_button": "No acepto",
       "acept_conditions_label": "He leído y acepto las condiciones",
       "no_acept_conditions": "Rechazar condiciones legales",
-      "no_get_conditions_label": "No existe terminos legales asignados para este usuario",
-      "error_conditions_label": "Error al obtener los terminos legales",
+      "no_get_conditions_label": "No existen términos legales asignados para este usuario",
+      "error_conditions_label": "Error al obtener los términos legales",
       "error_post_conditions_label": "No se pudo actualizar las condiciones legales",
-      "messaje_reject_terms": "Esta app para su adecuado uso requiere que las condiciones legales se han aceptadas, en tal caso no podrás seguir navegando. ¿Deseas rechazar las condiciones legales?"
+      "messaje_reject_terms": "Esta app requiere la aceptación de las condiciones legales para su adecuado uso. Si las rechazas no podrás seguir navegando. ¿Deseas rechazar las condiciones legales?"
     },
     "sms":{
       "header": "Verificación de Identidad",
@@ -40,24 +40,24 @@
       "text1": "Recibirás un correo con un código de verificación. ¡Porque tu privacidad es lo más importante!",
       "text2": "Tu correo únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
       "alert_message": "¿Es el correo correcto?",
-      "ok_button": "Si",
+      "ok_button": "Sí",
       "ko_button": "Editar",
       "next_button":"Continuar",
       "error_required": "Error: Campo requerido",
-      "error_min_lenght": "Error: Debe ser 9 digitos",
+      "error_min_lenght": "Error: Deben ser 9 dígitos",
       "error_invalid_email": "Ingresa un correo válido"
     },
     "verification":{
       "header": "Verificación de Identidad",
       "title":"Confirma tu código de verificación",
-      "text1": "Te hemos enviado un correo con un código para verificar tu cuenta de usuario y poder continuar. Si no ha recibido ningún correo pulse ",
+      "text1": "Te hemos enviado un correo con un código para verificar tu cuenta de usuario y poder continuar. Si no has recibido ningún correo pulsa ",
       "text2": "aquí",
       "alert_message": "El código no es válido",
       "send_email_alert_message": "El código de verificación se ha enviado de nuevo",
       "error_send_email_alert_message": "Ha ocurrido un error al enviar el código de verificación",
       "next_button":"Continuar",
       "error_required": "Error: Campo requerido",
-      "error_min_lenght": "Error: Debe ser 6 dígitos",
+      "error_min_lenght": "Error: Deben ser 6 dígitos",
       "error_no_numeric": "Error: Ingresar sólo números"
     },
     "tab":{
@@ -65,7 +65,7 @@
       "agenda": "Agenda",
       "contact": "Contacto",
       "tracking": "Seguimiento",
-      "journal": "Mi diario"
+      "journal": "Mi Diario"
     },
 
 
@@ -74,12 +74,12 @@
       "title1": "Contacto",
       "slider1_text": "Ponte en contacto con el personal sanitario a través de mensajería y videollamadas.",
       "title2": "Agenda",
-      "slider2_text": "Mantenga su agenda de citas actualizada con nuestro sistema de recordatorios.",
+      "slider2_text": "Mantén tu agenda de citas actualizada con nuestro sistema de recordatorios.",
       "title3": "Shared Care Plan",
-      "slider3_text": "Explore su plan de atención compartida, diseñado por su equipo de atención médica para promover la colaboración y mejorar la salud a través de estrategias personalizadas y accesibles.",
+      "slider3_text": "Explora tu plan de atención compartida, diseñado por tu equipo de atención médica para promover la colaboración y mejorar la salud a través de estrategias personalizadas y accesibles.",
       "title4": "Mis tareas diarias",
       "slider4_text": "Todas tus tareas en un solo lugar para que puedas mantener tu salud bajo control.",
-      "continue": "Continuar!"
+      "continue": "¡Continuar!"
     },
     "home": {
       "hello": "Hola",
@@ -105,7 +105,7 @@
       "elements":"Visualizar todos mis datos",
       "element":"Elementos",
       "monitoring":"Monitoreo",
-      "enable_notifications": "Activar Notificaciones",
+      "enable_notifications": "Activar notificaciones",
       "message_enable_notifications": "¿Deseas activar todas las notificaciones?",
       "close_app": "¿Deseas cerrar la aplicación?",
       "get_firts_data": "Introduce tu primer dato",
@@ -114,7 +114,7 @@
       "caregiver_title": "Personas a tu cargo",
       "caregiver_change": "Vas a cambiar ",
       "back_caregiver": "Volver a tu perfil",
-      "tip": "Consejo del día!"
+      "tip": "¡Consejo del día!"
     },
     "profile":{
       "title_profile": "Mi Perfil",
@@ -179,7 +179,7 @@
       "go": "Ir",
       "accordion_goals":"Estas son las tareas que debes realizar:",
       "accordion_completed":"Estos son tus logros:",
-      "accepted_rejected": "¿Desea aprobar o rechazar estas retos?",
+      "accepted_rejected": "¿Quieres aprobar o rechazar estas retos?",
       "accepted_rejectedExercises": "¿Quieres aprobar o rechazar estos desafíos?",
       "button_rejected": "Rechazar",
       "button_accepted": "Aprobar",
@@ -190,7 +190,7 @@
       "rejectd_option3": "Otras",
       "placeholder": "Escribe un mensaje.",
       "rejectd_send": "Mensaje enviado a su equipo médico",
-      "keppUp": "¡Seguid así!"
+      "keppUp": "¡Sigue así!"
     },
     "health_path": {
       "title":"Camino de la salud",
@@ -199,14 +199,14 @@
       "see_all_goals": "Ver todos mis objetivos",
       "start": "Inicio",
       "detail":"¿Cómo alcanzar mis objetivos?",
-      "see_more": "Ver mas",
+      "see_more": "Ver más",
       "weight":"Toma tu ",
       "measure":"Introduce la medida: ",
       "form":"Responde al formulario ",
       "advice":"Lee el consejo ",
       "game":"Juega a ",
       "drug": "Tomar el medicamento ",
-      "news":"Lee la notícia ",
+      "news":"Lee la noticia ",
       "diet":"Lee la dieta ",
       "blocked_level": "Este nivel todavía está bloqueado",
       "goal":"<p>Tienes <strong>{{ total }} Puntos</strong>.</p>",
@@ -215,10 +215,10 @@
       "goal_txt2": "consigue",
       "goal_txt3":"más",
       "goal_txt4":" y pasa al siguiente nivel.",
-      "level_congratulations":"Felicitaciones!",
+      "level_congratulations":"¡Felicitaciones!",
       "level_accomplished":"Has avanzado de nivel",
-      "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
-      "done":"Hecho!"
+      "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensable</strong> para pasar al siguiente nivel.</p>",
+      "done":"¡Hecho!"
     },
     "activity_goal":{
       "definition": "Definición",
@@ -226,7 +226,7 @@
       "out_range_value": "Valores fuera de rango:",
       "danger_value": "Valores anómalos:",
       "no_data_date":"Aún no se han registrado datos",
-      "no_data_help":"Para cargar un dato, usá el botón +.",
+      "no_data_help":"Para cargar un dato, usa el botón +.",
       "no_data":"No hay datos a mostrar",
       "daily": "diario",
       "weekly": "semanal",
@@ -305,9 +305,9 @@
         "new-password": "Nueva contraseña",
         "confirmedPassword": "Repetir contraseña",
         "password_confirmation": "¿Quieres cambiar de contraseña?",
-        "success_changed_password": "Contraseña se ha actualizado con éxito!",
-        "no_success_changed_password": "No se ha podido actualizar la contraseña!",
-        "error_changed_password": "Error al actualizar la contraseña!",
+        "success_changed_password": "¡La contraseña se ha actualizado con éxito!",
+        "no_success_changed_password": "¡No se ha podido actualizar la contraseña!",
+        "error_changed_password": "¡Error al actualizar la contraseña!",
         "validators_required": "Campo requerido",
         "validators_minlength": "El tamaño mínimo es 6 carateres",
         "validators_check_password": "La contraseña no coincide con la anterior",
@@ -328,9 +328,9 @@
     },
     "report_problem":{
       "title_report_problem": "Reportar Problema",
-      "alert_confirm_exit": "La información introducida se perderá ¿Quieres salir de todas formas?",
+      "alert_confirm_exit": "La información introducida se perderá. ¿Quieres salir de todas formas?",
       "alert_successful_response": "Problema reportado con éxito",
-      "alert_no_successful_response": "Ha ocurrido un error al reportat el problema",
+      "alert_no_successful_response": "Ha ocurrido un error al reportar el problema",
       "button_send": "Enviar",
       "subtitle_category": "Categoría",
       "subtitle_description": "Descripción",
@@ -346,7 +346,7 @@
       "name": "Nombre",
       "affiliation_number":"Número de afilación",
       "expiration_date":"Caducidad",
-      "expedition_date": "Fecha de Expedición",
+      "expedition_date": "Fecha de expedición",
       "Optional": "Opcional",
       "error_required": "Requerido",
       "button_return": "Inicio"
@@ -360,7 +360,7 @@
       "placeholder_select":"Selecciona uno",
       "error_end_date": "La fecha de caducidad debe ser mayor que la fecha de expedición",
       "error_start_date": "La fecha de expedición debe ser menor que la fecha de caducidad",
-      "error_types": "En estos momentos no se puede añadir una tarjeta, vuelve a intentarlo mas tarde"
+      "error_types": "En estos momentos no se puede añadir una tarjeta, vuelve a intentarlo más tarde"
     },
     "edit_health_card":{
       "header_edit_card": "Editar Tarjeta Sanitaria",
@@ -429,7 +429,7 @@
       "error_alert_message_get_token":"Error al obtener el token de videollamada",
       "error_alert_message_get_agenda":"Error al obtener la agenda",
       "to": "a las",
-      "day": "DíA",
+      "day": "DÍA",
       "week": "SEMANA",
       "months": "MES",
       "year": "AÑO",
@@ -458,7 +458,7 @@
       "field_finish_repetition": "Terminar repetición",
       "field_notice": "Avisar",
       "field_time": "Hora",
-      "field_show_as": "Mostrar como",
+      "field_show_as": "Mostrar cómo",
       "field_comments_doctor": "Comentarios para el médico",
       "placeholder_comments":"Ingresar más información aquí...",
       "button_delete": "Eliminar Recordatorio",
@@ -480,7 +480,7 @@
       "day":{
         "day1": "Lunes",
         "day2": "Martes",
-        "day3": "Miercoles",
+        "day3": "Miércoles",
         "day4": "Jueves",
         "day5": "Viernes",
         "day6": "Sábado",
@@ -500,7 +500,7 @@
         "month3": "3 meses"
       },
 
-      "error_end_date": "La fecha de finalización del recordatorio debe ser mayor que la fecha de empieza",
+      "error_end_date": "La fecha de finalización del recordatorio debe ser mayor que la fecha de comienzo",
       "error_start_date": "La fecha de comienzo del recordatorio debe ser menor que la fecha de finalización"
 
     },
@@ -538,7 +538,7 @@
       "presential": "Consulta cara a cara" 
     },
     "doctor":{
-      "header_doctor": "Detall Médico",
+      "header_doctor": "Detalle Médico",
       "field_city": "Ciudad",
       "field_centers": "Centros de atención",
       "button_chat":"Abrir Chat"
@@ -547,7 +547,7 @@
       "header": "Seguimiento",
       "tap_documents": "Documentos",
       "tap_forms": "Formularios",
-      "tap_formsPlan": "Formularios planificads",
+      "tap_formsPlan": "Formularios planificados",
       "tap_graphics": "Gráficos",
       "tap_test":"Pruebas médicas"
     },
@@ -573,7 +573,7 @@
       "attachments": "Documentos Adjuntos",
       "button_add_files": "Añadir Archivos",
       "button_add_result": "Añadir Resultado",
-      "alert_message": "La documentación médica ha sido añadido correctamente",
+      "alert_message": "La documentación médica ha sido añadida correctamente",
       "error_alert_message": "Ha ocurrido un error al añadir un nuevo documento médico",
       "select": "Seleccionar",
       "camera": "Cámara",
@@ -596,10 +596,10 @@
         "field_measure": "Valor",
         "field_units": "Unidades",
         "field_date": "Fecha",
-        "alert_message_add_element": "Los datos ha sido añadido correctamente",
+        "alert_message_add_element": "Los datos han sido añadido correctamente",
         "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
         "value_invalid":"El valor no es válido. Ingresa un valor de",
-        "confirmation": "Está información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
+        "confirmation": "Esta información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
       },
     "no_data": "En este momento no hay datos para mostrar",
     "no_data_notifications": "En este momento no tienes notificaciones pendientes",
@@ -663,19 +663,19 @@
         "placeholder_dose":"Nº de dosis",
         "placeholder_alias":"Nombre alternativo",
         "placeholder_search":"Busca por nombre o código",
-        "snapshot_medication":"Toma instantanea",
+        "snapshot_medication":"Toma instantánea",
         "medication_plan":"Plan de Medicación",
         "button_details": "Ver detalles",
         "from": "Desde",
         "to": "Hasta",
         "dose":"Dosis : ",
-        "accepted_rejected": "¿Desea aprobar o rechazar este plan de medicación?",
-        "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
-        "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
+        "accepted_rejected": "¿Quieres aprobar o rechazar este plan de medicación?",
+        "accepted_rejectedExercises": "¿Quieres aprobar o rechazar este ejercicio?",
+        "rejected": "Nos gustaría que nos explicaras brevemente los motivos de su negativa.",
         "button_accepted": "Aprobar",
         "button_rejected": "Rechazar",
         "placeholder": "Escribe un mensaje.",
-        "rejectd_send": " Mensaje enviado a su equipo médico",
+        "rejectd_send": " Mensaje enviado a tu equipo médico",
         "rejectd_option1": "Tengo dudas, necesito más información",
         "rejectd_option2": "No estoy de acuerdo con la medicación prescrita",
         "rejectd_option2F": "No estoy de acuerdo con el formulario",
@@ -687,19 +687,19 @@
       
       
       "exercises": {
-      "accepted_rejected": "¿Desea aprobar o rechazar este ejercicio?",
-      "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
-      "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
+      "accepted_rejected": "¿Quieres aprobar o rechazar este ejercicio?",
+      "accepted_rejectedExercises": "¿Quieres aprobar o rechazar este ejercicio?",
+      "rejected": "Nos gustaría que nos explicaras brevemente los motivos de tu negativa.",
       "button_accepted": "Aprobar",
       "button_rejected": "Rechazar",
       "placeholder": "Escribe un mensaje.",
-      "rejectd_send": " Mensaje enviado a su equipo médico",
+      "rejectd_send": " Mensaje enviado a tu equipo médico",
       "rejectd_option1": "Tengo dudas, necesito más información",
       "rejectd_option2": "No estoy de acuerdo con la medicación prescrita",
       "rejectd_option2F": "No estoy de acuerdo con el formulario",
       "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
       "rejectd_option3": "Otros",
-      "medication_status": "pendiente"
+      "medication_status": "Pendiente"
     },
     "button":{
       "see_details": "Ver detalles",
@@ -726,7 +726,7 @@
       "exit": "Salir",
       "reject": "Rechazar",
       "confirm": "Confirmar",
-      "yes": "Si",
+      "yes": "Sí",
       "no": "No"
     },
     "conversation":{
@@ -788,7 +788,7 @@
       "field_specially": "Especialidad",
       "reason_appointment": "Motivo de la cita",
       "attachments": "Documentos Adjuntos",
-      "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
+      "text_attachments": "PPuedes adjuntar archivos o imágenes que nos ayuden a realizar un mejor diagnóstico",
       "button_videocall": "Confirmar"
     },
     "bookings":{
@@ -797,7 +797,7 @@
       "reason_appointment": "Motivo de la cita",
       "type": "Tipo de consulta",
       "attachments": "Documentos Adjuntos",
-      "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
+      "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a realizar un mejor diagnóstico",
       "button_videocall": "Confirmar",
       "button_videocall_charge": "Confirmar cita con pago",
       "error_upload_files": "Error al adjuntar los archivos",
@@ -865,7 +865,7 @@
     "medications":{
       "list":"Listado de pedidos",
       "title":"Medicación",
-      "titlePlans": "Plans de Medicación",
+      "titlePlans": "Planes de Medicación",
       "direction":"Nuevo pedido",
       "directions_title":"1.-Selecciona una dirección de envío",
       "directions_title_2":"2.-Selecciona un tipo de envío",
@@ -890,7 +890,7 @@
       "go_back": "Volver al paso anterior",
       "add_address": "Añadir dirección",
       "edit_address": "Editar dirección",
-      "head_card_text": "Aquí encontrará información sobre los planes de medicación prescritos. Puede ponerse en contacto con su equipo médico si tiene alguna duda al respecto",
+      "head_card_text": "Aquí encontrarás información sobre los planes de medicación prescritos. Puedes ponerte en contacto con tu equipo médico si tienes alguna duda al respecto",
       "msm_caution": "Este medicamento tiene interacciones peligrosas con:",
       "caution": "Precaución:",
       "msm_contact_hp": "*Se recomienda contactar con personal sanitario antes de su consumo."
@@ -920,7 +920,7 @@
     },
     "commons":{
       "error-network": "Se ha perdido la conexión con Internet",
-      "error-timeout": "Se ha superado el tiempo de espera, por favor intentelo de nuevo"
+      "error-timeout": "Se ha superado el tiempo de espera, por favor inténtalo de nuevo"
     },
     "patient":{
       "title": "Pacientes"
@@ -945,15 +945,15 @@
       "reminder": "Ver recordatorio",
       "exercise": "Ver ejercicio",
       "new_exercise": "Se ha creado un nuevo ejercicio",
-      "procedure": "Hoy tenés un procedimiento",
+      "procedure": "Hoy tienes un procedimiento",
       "diet": "Hora de comenzar la comida",
       "games": "Hora de jugar",
       "apren": "Hora de aprender",
-      "news": "Hoy tenés novedades",
-      "diagnostic": "Hoy tenés un nuevo estudio médico",
+      "news": "Hoy tienes novedades",
+      "diagnostic": "Hoy tienes un nuevo estudio médico",
       "default": "Nueva notificación",
-      "alert_delete_message": "Estás por eliminar notificaciones sin leerlas previamente.",
-      "alert_delete_error_message": "Debés seleccionar al menos una notificación para eliminar.",
+      "alert_delete_message": "Estás a punto de eliminar notificaciones sin leerlas previamente.",
+      "alert_delete_error_message": "Debes seleccionar al menos una notificación para eliminar.",
       "subtitle0": "Tienes",
       "subtitle1": "notificaciones nuevas",
       "subtitle2": "notificación nueva"
@@ -986,13 +986,13 @@
         "name": "Nombre"
       },
       "error_required": "Valor requerido",
-      "error_no_valid": "Valor no válido, ingrese un valor",
-      "error_min_character": "Valor no válido, ingrese mínimo",
+      "error_no_valid": "Valor no válido, ingresa un valor",
+      "error_min_character": "Valor no válido, ingresa mínimo",
       "character": "caracteres",
       "time": "Tiempo",
       "send_success": "Formulario enviado correctamente",
       "send_error": "Ha ocurrido un error al enviar el formulario",
-      "text1": "Por favor, para conocer cómo se siente hoy necesitamos que responda el",
+      "text1": "Por favor, para conocer cómo te sientes hoy necesitamos que responda el",
       "text2": "CUESTIONARIO DE SÍNTOMAS.",
       "text3": "No hay información asociada a este formulario",
       "text4": "ATENCIÓN",
@@ -1008,22 +1008,22 @@
       },
       "scheduled": "Programada : ",
       "goals": "Objetivos:",
-      "head_card_text": "Le enviaremos periódicamente formularios y escalas para mantenernos informados sobre su estado de salud, y se le avisará cuando llegue el momento de cumplimentarlos.",
-      "alert_forms": "Sólo puede rellenar este formulario cuando esté programado; le enviaremos una notificación el día especificado.",
+      "head_card_text": "Te enviaremos periódicamente formularios y escalas para mantenernos informados sobre tu estado de salud, y se te avisará cuando llegue el momento de cumplimentarlos.",
+      "alert_forms": "Sólo puedes rellenar este formulario cuando esté programado; te enviaremos una notificación el día especificado.",
       "alert_title": "Acción no autorizada",
       "alert_form_answered": "El formulario ha sido respondido.",
       "accepted_rejected": "¿Quieres aprobar o rechazar este formulario?",
       "button_accepted": "Aprobar",
       "button_rejected": "Rechazar",
-      "rejected": "Nos gustaría que nos diera una breve explicación de los motivos de su negativa.",
-      "rejectd_send": "Mensaje enviado a su equipo médico",
+      "rejected": "Nos gustaría que nos dieras una breve explicación de los motivos de su negativa.",
+      "rejectd_send": "Mensaje enviado a tu equipo médico",
       "rejectd_option1": "Tengo dudas, necesito más información.",
       "rejectd_option2": "No estoy de acuerdo con el formulario prescrito",
       "rejectd_option2F": "No estoy de acuerdo con el formulario.",
       "rejectd_option2E": "No estoy de acuerdo con el formulario recomendado.",
       "rejectd_option3": "Otros",
       "placeholder": "Escribe un mensaje.",
-      "form_status": "pendiente"
+      "form_status": "Pendiente"
     },
     
     "answer_form":{
@@ -1059,8 +1059,8 @@
       "lastValue": "Ùltimo valor:",
       "medical_procedure": "Procedimentos médicos",
       "informed_consent": "Consentimento Informado",
-      "new_scp_notification_title": "Se agregaron nuevos objetivos a su Plan de Atención Compartida",
-      "new_scp_notification_msg": "Por favor revise los cambios para aprobarlos o rechazarlos.",
+      "new_scp_notification_title": "Se agregaron nuevos objetivos a tu Plan de Atención Compartida",
+      "new_scp_notification_msg": "Por favor revisa los cambios para aprobarlos o rechazarlos.",
       "new_scp_alert_cancel": "Cerrar",
       "new_scp_alert_review": "Revisar",
       "goal_state":{
@@ -1069,7 +1069,7 @@
         "pending": "Pendiente"
       },
       "monitoringList": {
-        "text" : "El seguimiento es crucial para evaluar su estado de salud, detectar cambios tempranos y ajustar el tratamiento."
+        "text" : "El seguimiento es crucial para evaluar tu estado de salud, detectar cambios tempranos y ajustar el tratamiento."
       },
       "addButton":{
         "MedicalTest":"Añadir una prueba médica",
@@ -1080,7 +1080,7 @@
       "preparationTime": "minutos de preparación",
       "exercicesTime": "minutos de ejercicio",
       "button_info": "Más Información",
-      "like": "afiliados likes",
+      "like": "Afiliados Likes",
       "source": "Fuente: ",
 
       "descriptionNews": "Noticias que te pueden interesar",
@@ -1088,7 +1088,7 @@
       "descriptionExercises": "Para mantenerte en forma.",
       "descriptionDiets": "Mejora tu dieta",
       "descriptionTestimonials": "Experiencias similares a la tuya",
-      "descriptionGames": "Algo de entretenimiento está disponible para ti!"
+      "descriptionGames": "¡Algo de entretenimiento está disponible para ti!"
     },
     "exercices":{
       "header": "Ejercicios"
@@ -1097,10 +1097,10 @@
       "take_time": "Horas de toma"
     },
     "confirmation-answers":{
-      "title": "Por favor, verifique as suas respostas antes de confirmar o envio."
+      "title": "Por favor, verifica tus respuestas antes de confirmar tu envío."
     },
     "medical_procedure_list":{
-      "text":"Aquí encontrará todos sus procedimientos médicos y pruebas diagnósticas programados en un calendario."
+      "text":"Aquí encontrarás todos tus procedimientos médicos y pruebas diagnósticas programados en un calendario."
     },
     "content": "Actualmente no hay datos disponibles para mostrar"
 }

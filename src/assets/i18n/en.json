@@ -43,7 +43,7 @@
     "ok_button": "Yes",
     "ko_button": "Edit",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 9 digits",
     "error_invalid_email": "Please enter a valid email address"
   },
@@ -346,7 +346,7 @@
     "name": "Name",
     "affiliation_number": "Sharpening number",
     "expiration_date": "Caducity",
-    "expedition_date": "Date of Issue",
+    "expedition_date": "Date of issue",
     "Optional": "Optional",
     "error_required": "Required",
     "button_return": "Home"
