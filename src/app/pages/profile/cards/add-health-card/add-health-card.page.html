@@ -29,7 +29,7 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item lines="none">
-        <ion-select stacked style="font-size: 14px;" label="{{'health_card.modality' | translate}}" interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}" [compareWith]="compareFn"  formControlName="health_card_type_id" required>
+        <ion-select stacked style="font-size: 14px;" [compareWith]="compareFn" label="{{'health_card.modality' | translate}}" interface="action-sheet" placeholder="{{'add_health_card.placeholder_select' | translate}}"  formControlName="health_card_type_id" required>
           <ion-select-option *ngFor="let card of healthCardTypes" [value]="card?.id">{{card?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
