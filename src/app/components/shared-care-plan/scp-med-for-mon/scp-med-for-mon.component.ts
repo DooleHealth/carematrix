@@ -23,7 +23,7 @@ export class ScpMedForMonComponent implements OnInit {
 
   canDoForm:boolean = false;
 
-
+ imgurl="https://doole-carematrix-inca-dev.s3.eu-central-1.amazonaws.com/private_content/mtOyTA83GhraNUn0QzsO0eIAOVT50lRXTf5vMrJp.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHB3JTKOASVBSXXA%2F20240411%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20240411T085258Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=0545f1fe53cded8d39184e0b35a18ad40e2200df73174a1b498221f6aee41d0e";
   routerLink: any[];
   getrouter;
   other = false;

@@ -28,7 +28,6 @@ export class ViewMoreInformationComponent implements OnInit {
 
   ngOnInit() {
     console.log("[ViewMoreInformationComponent] ngOnInit(): ", this.content)
-    console.log("segment", this.segment)
     //this.toRouterLink()
 
   }

@@ -217,7 +217,7 @@ export class FormListPage implements OnInit {
   }
 
   groupDiagnosticsByDate(forms) {
-      
+   let listFormss = [];
     forms.forEach((form) => {
       
       form.type= "forms";
@@ -230,34 +230,64 @@ export class FormListPage implements OnInit {
       if(form.formProgrammationTimes.length > 1){
         form.formProgrammationTimes.forEach(element => {
           
+         
+          const [hours, minutes, seconds] = element.time.split(':').map(Number);
+          const todayWithTime = new Date();
+          todayWithTime.setHours(hours, minutes, seconds);
+          let times= this.datePipe.transform(todayWithTime, 'yyyy-MM-dd hh:mm:ss');
+
           let newForm = { ...form };
           let date = this.selectDayPeriod(element.time);
           newForm.status = element.status;
           newForm.period = date;
           newForm.time = element.time;
+          newForm.date_intake = times;
           newForm.form_answer_id = element.form_answer_id;
           newForm.programmation_id = element.id;
-          this.listForms.push(newForm);
+          listFormss.push(newForm);
           
         });
        
       }else{
+        const timeString = "17:40:00";
+        const [hours, minutes, seconds] = form.formProgrammationTimes[0].time.split(':').map(Number);
+        const todayWithTime = new Date();
+        todayWithTime.setHours(hours, minutes, seconds);
+        let times= this.datePipe.transform(todayWithTime, 'yyyy-MM-dd hh:mm:ss');
+
         form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
         form.time = form.formProgrammationTimes[0].time
+        form.date_intake = times;
         form.form_answer_id = form.formProgrammationTimes[0].form_answer_id
         form.status = form.formProgrammationTimes[0].status
         form.programmation_id = form.formProgrammationTimes[0].id
-      this.listForms.push(form);
+      listFormss.push(form);
       }
-      
-
+     
 
     });
-
+    
+    this.listForms = listFormss.reduce((acc, curr) => {
+      const existingItem = acc.find(item => item.date === curr.period);
+      if (existingItem) {
+        existingItem.items.push({ ...curr });
+      } else {
+        acc.push({
+          date: curr.period,
+          items: [{ ...curr }],
+          time: curr.date_intake,
+        });
+      }
+      return acc;
+    }, []);
+    console.log("form-list",this.listForms
+      )
     this.listForms = Form.sortFormsByTimes(this.listForms)
 
   }
- 
+
+  
+
   selectDayPeriod(time) {
     let h = time.split(":");
     let hour = Number(h[0]);
