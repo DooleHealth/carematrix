@@ -218,7 +218,7 @@
     "level_congratulations": "Congratulations!",
     "level_accomplished": "You have reached the next level",
     "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Meeting the <strong>objectives marked with an asterisk</strong> is <strong>essential</strong> to move to the next level.</p>",
-    "done": "done!"
+    "done": "Done!"
   },
   "activity_goal": {
     "definition": "Definition",
