@@ -2209,8 +2209,8 @@ export class HomePage implements OnInit {
   public async openAICoachMessage(text:string) {
 
     let message = `
-    <ion-row>
-      <ion-col class="text-align-center" style="padding: 0px" >
+    <ion-row class="ion-padding ion-margin">
+      <ion-col class="text-align-center ion-padding" style="padding: 0px" >
         <img src="${'../../assets/images/doctor_dayPhrase.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
         <h1>`+ this.translate.instant('home.tip') + `</h1>
         <ion-text> <p>`+ text+ `</p> </ion-text>
