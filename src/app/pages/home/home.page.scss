@@ -286,6 +286,7 @@ ion-card {
   background-color: white;
   box-shadow: none !important;
   height: auto;
+  max-height: 250px;
 }
 .strechCardContent {
   min-width: 300px !important;
@@ -293,7 +294,7 @@ ion-card {
 }
 
 .imagefitAdvices {
-  width: 100%;
+  width: auto;
   height: 200px;
   background-size: cover;
   background-repeat: no-repeat;
