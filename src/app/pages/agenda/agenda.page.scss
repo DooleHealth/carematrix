@@ -214,6 +214,7 @@ ion-list {
   border-radius: 15px;
   box-shadow: none !important;
   padding: 0px;
+  max-height: 110px;
 }
 
 .floating-button {
@@ -268,3 +269,6 @@ ion-segment-button.segment-button-checked {
 ion-segment-button.segment-button-after-checked {
   color: #7F8C8D !important;
 }
+
+
+
