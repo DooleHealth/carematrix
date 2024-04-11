@@ -52,29 +52,28 @@
       <ng-template #finishedLoading>
         <ion-list *ngIf="this.permissionService.canViewForms && listForms.length > 0; else noData">
           <ion-grid *ngFor="let content of listForms" class="ion-no-padding">
-            <ion-row *ngIf="getPeriodTime(content?.period)">
+            <ion-row>
               <ion-col size="0.8">
-                <ion-icon class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+                <ion-icon ChangeIconColor [timeOfDay]="content?.time"  class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
               </ion-col>
               <ion-col size="11.2" class="text-column" style="display: flex; align-items: center;">
 
-                <ion-text class="txt-momentDay">
-                  {{ this.selectTime(content?.time) }}
-                </ion-text>
+                <ion-text class="txt-momentDay" ChangeColor [timeOfDay]="content?.time">{{content?.date }}</ion-text>
 
               </ion-col>
 
             </ion-row>
-            <ion-row>
+            <ion-row *ngFor="let forms of content.items">
               <ion-col size="0.8" style="align-items: center;">
-                <ion-icon style="font-size: large; width: 100%; height: 100%;"
+                <ion-icon ChangeLineColor [timeOfDay]="forms?.date_intake" style="font-size: large; width: 100%; height: 100%;"
                   src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
               </ion-col>
               <ion-col size="11.2">
-                <app-content-date [content]="content" (redirect)="goTo(content)"></app-content-date>
+                <app-content-date [content]="forms" (redirect)="goTo(content)"></app-content-date>
               </ion-col>
 
             </ion-row>
+          
           </ion-grid>
 
         </ion-list>

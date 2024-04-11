@@ -9,6 +9,7 @@ import { FormListPageRoutingModule } from './form-list-routing.module';
 import { FormListPage } from './form-list.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { DirectiveModule } from 'src/app/directive/directive.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     TranslateModule,
-    FormListPageRoutingModule
+    FormListPageRoutingModule,
+    DirectiveModule
   ],
   declarations: [FormListPage]
 })

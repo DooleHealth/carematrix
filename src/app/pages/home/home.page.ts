@@ -2341,4 +2341,11 @@ export class HomePage implements OnInit {
   }
 
 
+
+  truncateText(text: string, maxLength: number): string {
+    if (!text) return ''; // Si no hay texto, devolver una cadena vacía
+    if (text.length <= maxLength) return text; // Si el texto es igual o más corto que maxLength, no lo truncamos
+    return text.substring(0, maxLength) + '...'; // Truncar el texto y agregar "..."
+  }
+
 }
