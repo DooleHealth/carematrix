@@ -3,15 +3,13 @@
 
   <ion-toolbar mode="ios" [ngSwitch]="segment">
     <ion-title class="toolbarTitle">{{ 'tracking.header' | translate}}</ion-title>
+    <ion-buttons slot="end" *ngSwitchCase="this.permissionService.canViewMedicalTests && 'documents'">
+      <ion-icon class="primaryIcon" slot="icon-only" name="options-outline" (click)="addFilters()"></ion-icon>&nbsp;
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="/profile" mode="ios">
         <ion-icon class="icon-menu" style="margin-left: -5px;" src="../../assets/icons/menu.svg"></ion-icon>
       </ion-tab-button>
-    </ion-buttons>
-    <ion-buttons slot="end" *ngSwitchCase="this.permissionService.canViewMedicalTests && 'documents'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="options-outline" (click)="addFilters()"></ion-icon>&nbsp;
-
-
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'graphics'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
