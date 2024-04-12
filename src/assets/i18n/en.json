@@ -32,7 +32,7 @@
     "no_get_conditions_label": "There are no legal terms assigned to this user",
     "error_conditions_label": "Error in obtaining legal terms",
     "error_post_conditions_label": "Could not update legal conditions",
-    "messaje_reject_terms": "This app for proper use requires that the legal conditions have been accepted, in which case you will not be able to continue browsing. Do you want to refuse the legal conditions?"
+    "messaje_reject_terms": "This app requires acceptance of the legal conditions for proper use. If you decline, you will not be able to continue browsing. Do you want to refuse the legal conditions?"
   },
   "sms": {
     "header": "Identity Verification",
@@ -56,7 +56,7 @@
     "send_email_alert_message": "The verification code has been sent again",
     "error_send_email_alert_message": "An error occurred while sending the verification code",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 6 digits",
     "error_no_numeric": "Error: Entering numbers only"
   },
