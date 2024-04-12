@@ -52,6 +52,11 @@
   
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'calendar'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner></ion-spinner>
+      </ng-container>
+
+      <ng-template #finishedLoading>
       <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
         (onTitleChanged)="onViewTitleChanged($event)" (onEventSelected)="onEventSelected($event)"
         (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6" endHour="20" step="30"
@@ -154,12 +159,17 @@
         </ion-list>
       </ng-template>
 
+      </ng-template>
     </div>
 
 
 
     <div *ngSwitchCase="'reminders'" style="margin-bottom: 20%;">
       
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner></ion-spinner>
+      </ng-container>
+      <ng-template #finishedLoading>
         <ng-container *ngIf="this.dayEvents && this.dayEvents.length > 0; else noData" >
 
           <div *ngFor="let events of this.dayEvents">
@@ -233,6 +243,7 @@
         <ng-template #noData>
           <app-no-data></app-no-data>
         </ng-template>
+      </ng-template>
     </div>
   </div>
   
@@ -242,7 +253,7 @@
  
    <div *ngIf="this.permissionService.canManageEvents && this.segment === 'reminders'" style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
       <ion-button (click)="addReminder()" color="primary" shape="round" class="floating-button ion-margin" >
-        {{'agenda.create_reminder' | translate}}
+        <ion-text class="floatButton"> {{'agenda.create_reminder' | translate}}</ion-text>
         <ion-icon style="padding-left: 2%;"  src="../../assets/icons/notifications_reminder.svg"></ion-icon>
       </ion-button>
     </div>

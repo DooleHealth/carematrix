@@ -33,6 +33,10 @@
   </ion-card>-->
   <app-caregiver></app-caregiver>
   <div>
+    <div class="spin" *ngIf="this.isLoading">
+      <ion-spinner ></ion-spinner>
+    </div>
+
     <ion-list>
       <app-lifestyle-index
         *ngFor="let content of this.listContent"

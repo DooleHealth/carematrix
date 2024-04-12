@@ -22,14 +22,14 @@
     <ion-card class="cardProfile">
       <ion-list>
         <ion-item>
-          <ion-label  stacked>
+          <ion-label  stacked class="typography">
             {{'reminder.field_title' | translate}}
             <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
           <ion-input formControlName="title" class="textMedium" required  [placeholder]="this.titlePlaceholder"></ion-input>
         </ion-item>
         <ion-item lines="none">
-          <ion-label  stacked>
+          <ion-label  stacked class="typography">
             {{'reminder.field_notes' | translate}}
           </ion-label>
         </ion-item>
@@ -43,7 +43,7 @@
     <ion-list>
       
       <ion-item>
-        <ion-label stacked>
+        <ion-label stacked class="typography">
          {{'reminder.field_start' | translate}}
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" (ionInput)="isSubmittedDuration = false" class="error " color="danger">{{ getErrorStartDate() }}</ion-note>
         </ion-label>
@@ -64,7 +64,7 @@
       
 
       <ion-item>
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{ 'reminder.field_end' | translate}}
           <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error " color="danger">{{ getErrorEndDate() }}</ion-note>
         </ion-label>
@@ -82,7 +82,7 @@
       </ion-modal>
 
       <ion-item>
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{ 'reminder.field_time' | translate}}
           <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label>
@@ -112,7 +112,7 @@
 
       <ion-item lines="none">
 
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{'reminder.field_repeat' | translate}}
           <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label>
@@ -129,14 +129,14 @@
     <div>
       <ion-item (click)="expandItem()"  *ngIf="this.expanded" lines="none">
 
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{'reminder.week_day' | translate}}        
         </ion-label>
         <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item (click)="expandItem()"  *ngIf="!this.expanded"  lines="none">
 
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{'reminder.week_day' | translate}}        
         </ion-label>
 

@@ -33,6 +33,7 @@ export class AgendaPage implements OnInit{
   inReminders = false;
   month = 0;
   year;
+  isLoading = false;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -62,7 +63,7 @@ export class AgendaPage implements OnInit{
     threshold: 50
   };
 
-  isLoading: boolean;
+  
   selectedDate: Date;
   date = new Date();
 
@@ -104,6 +105,7 @@ export class AgendaPage implements OnInit{
   async ionViewDidEnter() {
     if (this.permissionService.canViewEvents && this.segment === 'calendar') {
       this.myCal.currentDate = new Date();
+      this.isLoading = true;
       this.getallAgenda()
     } 
     else {
@@ -122,9 +124,10 @@ export class AgendaPage implements OnInit{
 
 
   getallAgenda() {
-    this.isLoading = true;
+    //this.isLoading = true;
     return this.dooleService.getAPIallAgenda().subscribe(
       async (res: any) => {
+       
         console.log('[AgendaPage] getallAgenda()', await res);
 
         if (this.permissionService.canViewEvents) {
@@ -145,6 +148,7 @@ export class AgendaPage implements OnInit{
   }
 
   getReminders() {
+   // this.isLoading = true;
     return this.dooleService.getAPIreminders().subscribe(
       async (res: any) => {
         console.log('[AgendaPage] getReminders()', await res);

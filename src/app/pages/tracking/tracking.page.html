@@ -45,6 +45,16 @@
     <!-- Shared Care Plan -->
     <div style="margin-top: 3%;" *ngSwitchCase="'sharedcareplan'">
 
+      <ng-container *ngIf="this.isLoading; else sharedcareplan">
+        <div class="spin">
+          <ion-spinner></ion-spinner>
+        </div>
+
+      </ng-container>
+
+      <ng-template #sharedcareplan>
+
+    
       <ng-container *ngIf="checkPermissions(); else noData">
         <ion-list>
           <scp-content *ngFor="let content of this.listContent" [content]="content"></scp-content>
@@ -54,6 +64,7 @@
       <ng-template #noData>
         <app-no-data></app-no-data>
       </ng-template>
+    </ng-template>
 
     </div>
 

@@ -143,7 +143,7 @@ export class LoginPage implements OnInit {
       if(showIntro){
         this.redirectLoggedUserToHomePage();
       }else{
-        this.router.navigate(['/intro']).then(()=>{
+        this.router.navigate(['/gif']).then(()=>{
           this.modalCtrl.dismiss({error:null});
         });
 

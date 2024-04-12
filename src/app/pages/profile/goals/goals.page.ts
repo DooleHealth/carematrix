@@ -106,7 +106,7 @@ export class GoalsPage implements OnInit {
   async getChallengeCompleted() {
     let goalsAll =[];
     this.goalsList = [];
-    this.isLoading = false;
+    this.isLoading = true;
     await this.dooleService.getAPIChallenges2().subscribe(
       async (res: any) => {
         await res;
