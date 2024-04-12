@@ -528,7 +528,7 @@
     style="display: flex; justify-content: center;">
     <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item' color="primary"
       shape="round" class="floating-button ion-margin">
-      {{'contact.new_message' | translate}}
+      <ion-text class="floatButton">{{'contact.new_message' | translate}}</ion-text>
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/message.svg"></ion-icon>
     </ion-button>
   </div>
@@ -537,7 +537,7 @@
     style="display: flex; justify-content: center;">
 
     <ion-button (click)="requestVisit()" color="primary" shape="round" class="floating-button ion-margin">
-      {{'contact.new_visit' | translate}}
+      <ion-text class="floatButton">{{'contact.new_visit' | translate}}</ion-text> 
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/new_visit.svg"></ion-icon>
     </ion-button>
   </div>

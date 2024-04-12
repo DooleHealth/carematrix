@@ -117,27 +117,7 @@ export class ContactPage implements OnInit {
     this.isLoading = true;
     switch (this.segment) {
       case 'chat':
-
-        const dataSource = this.dooleService.getAPIUserMessages();
-        const shellModel: Array<ShellChatModel> = [
-          new ShellChatModel(),
-          new ShellChatModel()
-        ];
-        this.dataStore = new DataStore(shellModel);
-        this.dataStore.load(dataSource);
-        this.dataStore.state.subscribe(res => {
-          console.log('[ChatPage] getAPIUserMessages()', res);
-          this.chat = res;
-          this.data = res;
-          console.log(this.data);
-          console.log(this.myDate);
-          this.isLoading = false;
-        },
-          (err) => {
-            this.isLoading = false;
-            console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message);
-            throw err;
-          });
+       this.getAllChat()
         break;
 
       case 'medical-visits':
@@ -200,6 +180,29 @@ export class ContactPage implements OnInit {
     return false
   }
 
+async getAllChat(){
+  this.isLoading = true;
+  const dataSource = this.dooleService.getAPIUserMessages();
+  const shellModel: Array<ShellChatModel> = [
+    new ShellChatModel(),
+    new ShellChatModel()
+  ];
+  this.dataStore = new DataStore(shellModel);
+  this.dataStore.load(dataSource);
+  this.dataStore.state.subscribe(res => {
+    console.log('[ChatPage] getAPIUserMessages()', res);
+    this.chat = res;
+    this.data = res;
+    console.log(this.data);
+    console.log(this.myDate);
+    this.isLoading = false;
+  },
+    (err) => {
+      this.isLoading = false;
+      console.log('[ChatPage] getAPIUserMessages() ERROR(' + err.code + '): ' + err.message);
+      throw err;
+    });
+}
 
   async getallAgenda() {
 

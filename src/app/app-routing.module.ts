@@ -190,6 +190,10 @@ const routes: Routes = [
   },   {
     path: 'request-visit',
     loadChildren: () => import('./pages/request-visit/request-visit.module').then( m => m.RequestVisitPageModule)
+  },
+  {
+    path: 'gif',
+    loadChildren: () => import('./pages/onboarding/gif/gif.module').then( m => m.GifPageModule)
   }
   
     

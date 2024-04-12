@@ -137,14 +137,15 @@
       
       <!-- GOALS -->
       <ng-container *ngIf="this.permissionService.canViewGoals && nChallengesNotCompleted() !== 0">
-        <ion-row class="ion-padding-top">
+        <ion-row class="ion-padding-top" style="align-items: center;">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'health_path.goals' | translate}}</ion-text>
           </ion-col>
-
+        
           <ion-col size="6">
-            <ion-text class="seeAll" style="display:flex; justify-content: end; padding-right: 5%;" routerLink="/profile/goals">{{
-              'health_path.see_all_goals' | translate}}</ion-text>
+            <ion-text class="seeAll" style="display:flex; justify-content: end; align-items: center;">
+              <span style="padding-right: 5%;" routerLink="/profile/goals">{{ 'health_path.see_all_goals' | translate}}</span>
+            </ion-text>
           </ion-col>
         </ion-row>
 
@@ -606,7 +607,7 @@
       
       <!-- ADVICES -->
       <ng-container *ngIf="this.permissionService.canViewAdvices && this.advices?.length > 0">
-        <ion-row>
+        <ion-row style="align-items: center;">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'home.advices' | translate}}</ion-text>
           </ion-col>

@@ -84,8 +84,9 @@ export class TrackingPage implements OnInit {
   }
 
   getStatusContent(){
+
     this.showButton= false,
-    console.log("asasd", this.listData)
+    this.isLoading = true;
    this.getPermission()
     this.scpService.getAPI_SCP_StatusContent().subscribe(
       async (res: any) =>{
@@ -94,9 +95,11 @@ export class TrackingPage implements OnInit {
         this.listData.forEach(content => {
           setStatusContentType(res,content)
         })
+        this.isLoading = false;
 
         console.log('[TrackingPage] getStatusContent() this.listContent', this.listData);
        },(err) => {
+        this.isLoading = false;
           console.log('[TrackingPage] getStatusContent() ERROR(' + err.code + '): ' + err.message);
           throw err;
       });

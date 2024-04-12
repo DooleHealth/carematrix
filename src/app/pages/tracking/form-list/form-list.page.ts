@@ -258,6 +258,7 @@ export class FormListPage implements OnInit {
 
    
     
+    listFormss.sort((a, b) => a.date_intake.localeCompare(b.date_intake));
     this.listForms = listFormss.reduce((acc, curr) => {
       const existingItem = acc.find(item => item.date === curr.period);
       if (existingItem) {
@@ -271,7 +272,7 @@ export class FormListPage implements OnInit {
       }
       return acc;
     }, []);
-    this.listForms.sort((a, b) => a.time.localeCompare(b.time));
+   // this.listForms.sort((a, b) => a.time.localeCompare(b.time));
     this.listForms = Form.sortFormsByTimes(this.listForms)
 
   }
