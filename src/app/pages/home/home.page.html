@@ -160,7 +160,7 @@
 
                     <div class="slidersHeader">
                       <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:var(--purple)"></ion-icon>
-                      <ion-text class="challenge-txt" slot="start"> {{ (challenge?.name ? challenge.name : ('home.health_path' | translate)).length > 30 ? ((challenge?.name ? challenge.name : ('home.health_path' | translate)) | slice:0:30) + '...' : (challenge?.name ? challenge.name : ('home.health_path' | translate)) }}</ion-text>
+                      <ion-text class="challenge-txt" slot="start"> {{ (challenge?.name ? challenge.name : ('home.health_path' | translate)).length > 60 ? ((challenge?.name ? challenge.name : ('home.health_path' | translate)) | slice:0:60) + '...' : (challenge?.name ? challenge.name : ('home.health_path' | translate)) }}</ion-text>
                     </div>
                     <ion-icon class="icon-arrow" slot="end" size="small"
                       src="assets/icons/challenge_card_btn.svg"></ion-icon>
