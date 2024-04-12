@@ -159,11 +159,11 @@
                 <ion-card class="customCardHealthPath">
                   <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToChallengesPage(challenge)"
                     routerLinkActive="active-item">
-
+                    <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:var(--purple)"></ion-icon>
                     <div class="slidersHeader">
-                      <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:var(--purple)"></ion-icon>
+                    
 
-                      <ion-text class="challenge-txt" slot="start">{{ truncateText(challenge?.name, 25) }}</ion-text>
+                      <ion-text class="challenge-txt" slot="start">{{ truncateText(challenge?.name, 60) }}</ion-text>
 
           
                     </div>
