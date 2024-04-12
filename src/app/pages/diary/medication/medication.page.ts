@@ -93,6 +93,7 @@ export class MedicationPage implements OnInit {
             'name',   //title
             'id')     //id*/
          }
+         this.isLoading = false
         
        },(err) => {
           console.log('[MedicationPage] loadData() ERROR(' + err.code + '): ' + err.message);
@@ -252,6 +253,7 @@ getPeriodTime(name) {
     }
 
     async getDrugIntakeList() {
+      this.isLoading = true;
       let formattedDate = this.transformDate(this.date);
       let date = { date: formattedDate };
       this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
@@ -259,6 +261,7 @@ getPeriodTime(name) {
           console.log("[MedicationPage] getDrugIntakeList()", await res);
           this.listDrugIntakes = [];
           let list = res?.drugIntakes;
+          this.isLoading = false;
           if (list) {
             console.log("[MedicationPage] getDrugIntakeList() listDrugIntakes", this.listDrugIntakes);
             list = this.sortDate(list);
@@ -275,7 +278,7 @@ getPeriodTime(name) {
           throw err;
         },
         () => {
-         // this.isLoadingDrugs = false;
+          this.isLoading = false;
         }
       );
     }

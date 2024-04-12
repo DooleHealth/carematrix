@@ -40,6 +40,12 @@
 
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'today'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner></ion-spinner>
+      </ng-container>
+
+      <ng-template #finishedLoading>
+
       <div style="margin-top: 3%;">
         <ion-list *ngIf="this.permissionService.canViewMedication &&  listDrugIntakes.length > 0; else noData" style="padding-bottom: 25%;">
           <ion-grid *ngFor="let item of listDrugIntakes">
@@ -85,10 +91,16 @@
         </div>
 
       </div>
+
+      </ng-template>
     </div>
 
     <div *ngSwitchCase="'medication'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+        <ion-spinner></ion-spinner>
+      </ng-container>
 
+      <ng-template #finishedLoading>
       <div>
         <ion-list *ngIf="this.permissionService.canViewMedicationPlans && items.length > 0; else noData">
           <app-scp-med-for-mon *ngFor="let content of items" (redirect)="addDrugPlan(content, content.id)"
@@ -98,6 +110,7 @@
 
       <ng-template #noData>
           <app-no-data></app-no-data>
+      </ng-template>
       </ng-template>
     </div>
 
