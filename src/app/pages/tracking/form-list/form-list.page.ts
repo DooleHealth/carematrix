@@ -229,19 +229,13 @@ export class FormListPage implements OnInit {
 
       if(form.formProgrammationTimes.length > 1){
         form.formProgrammationTimes.forEach(element => {
-          
-         
-          const [hours, minutes, seconds] = element.time.split(':').map(Number);
-          const todayWithTime = new Date();
-          todayWithTime.setHours(hours, minutes, seconds);
-          let times= this.datePipe.transform(todayWithTime, 'yyyy-MM-dd hh:mm:ss');
 
           let newForm = { ...form };
           let date = this.selectDayPeriod(element.time);
           newForm.status = element.status;
           newForm.period = date;
           newForm.time = element.time;
-          newForm.date_intake = times;
+          newForm.date_intake = this.times(element.time);
           newForm.form_answer_id = element.form_answer_id;
           newForm.programmation_id = element.id;
           listFormss.push(newForm);
@@ -249,15 +243,10 @@ export class FormListPage implements OnInit {
         });
        
       }else{
-        const timeString = "17:40:00";
-        const [hours, minutes, seconds] = form.formProgrammationTimes[0].time.split(':').map(Number);
-        const todayWithTime = new Date();
-        todayWithTime.setHours(hours, minutes, seconds);
-        let times= this.datePipe.transform(todayWithTime, 'yyyy-MM-dd hh:mm:ss');
 
         form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
         form.time = form.formProgrammationTimes[0].time
-        form.date_intake = times;
+        form.date_intake = this.times(form.formProgrammationTimes[0].time);
         form.form_answer_id = form.formProgrammationTimes[0].form_answer_id
         form.status = form.formProgrammationTimes[0].status
         form.programmation_id = form.formProgrammationTimes[0].id
@@ -266,6 +255,8 @@ export class FormListPage implements OnInit {
      
 
     });
+
+   
     
     this.listForms = listFormss.reduce((acc, curr) => {
       const existingItem = acc.find(item => item.date === curr.period);
@@ -280,12 +271,17 @@ export class FormListPage implements OnInit {
       }
       return acc;
     }, []);
-    console.log("form-list",this.listForms
-      )
+    this.listForms.sort((a, b) => a.time.localeCompare(b.time));
     this.listForms = Form.sortFormsByTimes(this.listForms)
 
   }
 
+  times(time){
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    const todayWithTime = new Date();
+    todayWithTime.setHours(hours, minutes, seconds);
+    return this.datePipe.transform(todayWithTime, 'yyyy-MM-dd HH:mm:ss');
+  }
   
 
   selectDayPeriod(time) {
@@ -402,3 +398,7 @@ getPeriodTime(name) {
      
     }
 }
+
+[
+  
+]
