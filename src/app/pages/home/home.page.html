@@ -31,7 +31,7 @@
 </ion-header>
 
 
-<ion-content mode="md">
+<ion-content mode="md" [class.app-selected-background]="changeColorCargiver">
 
 
   <ng-container *ngIf="this.isLoading && this.isLoadingNumNotifications; else finishedLoading">
@@ -62,7 +62,7 @@
                   style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
 
                 <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
-                  <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)">
+                  <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)" ChangeColorCargiver>
 
                     <div *ngFor="let result of results; let i = index; let isLast=last">
                       <ion-item slot="end" lines="none" class="caregiver-item2">
