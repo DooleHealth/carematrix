@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ChangeColorDirective } from './changeNameColor/change-color.directive';
 import { ChangeLineColorDirective } from './changeLineColor/change-line-color.directive';
 import { ChangeIconColorDirective } from './changeIconColor/change-icon-color.directive';
-import { ChangeColorCargiverDirective } from './changeColorCargiver/change-color-cargiver.directive';
 
 
 
 @NgModule({
-  declarations: [ChangeColorDirective, ChangeLineColorDirective, ChangeIconColorDirective, ChangeColorCargiverDirective],
+  declarations: [ChangeColorDirective, ChangeLineColorDirective, ChangeIconColorDirective],
   imports: [
     CommonModule
   ],
-  exports: [ChangeColorDirective, ChangeLineColorDirective, ChangeIconColorDirective,ChangeColorCargiverDirective]
+  exports: [ChangeColorDirective, ChangeLineColorDirective, ChangeIconColorDirective]
 })
 export class DirectiveModule { }

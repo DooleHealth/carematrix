@@ -91,6 +91,10 @@ ion-content {
  --background: var(--default-bkg) !important;
 }
 
+.app-selected-background {
+  --default-bkg: #ECDDFE
+}
+
 
 ion-header {
   ion-toolbar {

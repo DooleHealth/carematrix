@@ -209,6 +209,7 @@ export class HomePage implements OnInit {
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
 
   caregiverSelected = '';
+  changeColorCargiver = "";
 
   dayPhrase:string;
   datePhraseReaded: Date = null;
@@ -241,7 +242,7 @@ export class HomePage implements OnInit {
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
-    public permissionService: PermissionService
+    public permissionService: PermissionService,
 
 
   ) { 
@@ -261,6 +262,9 @@ export class HomePage implements OnInit {
 
 
   async ionViewWillEnter() {
+    
+  
+
     this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
     this.activateFocus = false;
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
@@ -411,6 +415,7 @@ export class HomePage implements OnInit {
 
       this.isLoading = false;
     }
+   
   }
 
 
@@ -551,6 +556,7 @@ export class HomePage implements OnInit {
             this.authService.setUserFamilyId(null).then((val) => {
               this.ngZone.run(()=>{
                 this.isLoading = true;
+                this.changeColorCargiver="";
                 this.permissionService.resetPermissions();
                 this.ionViewWillEnter()
               });
@@ -599,6 +605,7 @@ export class HomePage implements OnInit {
           cssClass: 'secondary',
           handler: (data) => {
             this.changeUser(caregiverSelected)
+            this.changeColorCargiver = this.caregiverSelected;
           }
         }
       ]
@@ -645,6 +652,8 @@ export class HomePage implements OnInit {
         this.permissionService.setPermissions(user.permissionsName);
         this.pusherConnection.unsubscribePusher()
         this.ionViewWillEnter()
+       
+       
       });
     });
       
