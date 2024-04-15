@@ -16,7 +16,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content view-cached="”false”">
+<ion-content view-cached="”false”" [class.app-selected-background]="this.permissionService.colorCargiver">
   <!-- SegmentBar -->
 
   <ion-row style="background-color: var(--secondary-bkg); padding-top: 3%;">
@@ -47,7 +47,7 @@
 
       <ng-container *ngIf="this.isLoading; else sharedcareplan">
         <div class="spin">
-          <ion-spinner></ion-spinner>
+          <ion-spinner name="bubbles"></ion-spinner>
         </div>
 
       </ng-container>
@@ -71,7 +71,7 @@
     <!-- Documents -->
     <div *ngSwitchCase="'documents'">
       <div class="spin" *ngIf="this.loadingTests">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </div>
 
       <div
@@ -147,7 +147,7 @@
     <!-- Forms -->
     <div *ngSwitchCase="'forms'">
       <div class="spin" *ngIf="this.loadingForms">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <div *ngIf="!this.loadingForms && this.forms && this.forms.length > 0; else noData">
         <ion-list *ngFor="let event of this.forms">
@@ -186,7 +186,7 @@
     <!-- Graphics -->
     <div *ngSwitchCase="'graphics'">
       <div class="spin" *ngIf="this.loadingGraphics">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </div>
       <div *ngIf="!this.loadingGraphics && this.groupedElements && this.groupedElements.length > 0; else noData">
         <br />

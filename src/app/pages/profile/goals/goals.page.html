@@ -41,7 +41,7 @@
     <div *ngSwitchCase="'goals'">
 
       <div class="spin"  *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner ></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </div>
 
       <ng-template #finishedLoading>
@@ -68,7 +68,7 @@
     <div *ngSwitchCase="'achievements'">
 
       <div class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner ></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </div>
 
       <ng-template #finishedLoading>

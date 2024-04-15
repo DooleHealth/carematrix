@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+    <ion-spinner name="bubbles" ></ion-spinner>
   </div>
   <div class="main-container" *ngIf="this.information; else noData" [innerHtml]="this.information? (this.information | safeHtml):'' "></div>
   <ng-template #noData>

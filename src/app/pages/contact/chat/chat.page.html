@@ -16,7 +16,7 @@
 
 <ion-content fullscreen class="whiteBackground">
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+    <ion-spinner name="bubbles"></ion-spinner>
   </div>
   <ion-list *ngIf="this.data && this.data?.length > 0; else noData">
     <div *ngFor="let post of this.data; let i = index" >

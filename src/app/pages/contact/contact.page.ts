@@ -195,7 +195,9 @@ async getAllChat(){
     this.data = res;
     console.log(this.data);
     console.log(this.myDate);
-    this.isLoading = false;
+    setTimeout(() => {
+      this.isLoading = false;
+  }, 900);
   },
     (err) => {
       this.isLoading = false;

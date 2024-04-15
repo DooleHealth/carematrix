@@ -106,6 +106,7 @@ export class TrackingPage implements OnInit {
   }
 
   getPermission() {
+    
     const permissionFunctions = {
       goals: () => this.permissionService.canViewGoals,
       life_style_habits: () => this.getLifeStyleHabitsViews(),
@@ -119,6 +120,7 @@ export class TrackingPage implements OnInit {
       const permissionFunction = permissionFunctions[item.type];
       return permissionFunction && permissionFunction();
     });
+
 
   }
 getLifeStyleHabitsViews(){

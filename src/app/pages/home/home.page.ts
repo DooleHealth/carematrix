@@ -559,6 +559,12 @@ export class HomePage implements OnInit {
                 this.changeColorCargiver="";
                 this.permissionService.resetPermissions();
                 this.ionViewWillEnter()
+                
+                const root = document.documentElement;
+                //const ionContent = document.querySelector('ion-content');
+                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+                //root.style.setProperty('--default-bkg', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+                root.style.setProperty('--default-bkg', '#EFEFEF' ? 'rgba(239,239,239)' : '#EFEFEF');
               });
             });
           }
@@ -606,6 +612,11 @@ export class HomePage implements OnInit {
           handler: (data) => {
             this.changeUser(caregiverSelected)
             this.changeColorCargiver = this.caregiverSelected;
+              const root = document.documentElement;
+                //const ionContent = document.querySelector('ion-content');
+                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+                root.style.setProperty('--default-bkg', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+            
           }
         }
       ]
@@ -620,7 +631,7 @@ export class HomePage implements OnInit {
       this.ngZone.run(()=>{
         this.isLoading = true;
 
-         /*user.permissionsName = [
+       /*  user.permissionsName = [
           "canViewGoals",
           "canManageGoals",
           "canViewForms",
@@ -647,6 +658,7 @@ export class HomePage implements OnInit {
           "canSeeMedicalVisits",
           "canManageRequesVisit",
           "canSeeCenters", 
+          "colorCargiver"
         ]*/
         
         this.permissionService.setPermissions(user.permissionsName);

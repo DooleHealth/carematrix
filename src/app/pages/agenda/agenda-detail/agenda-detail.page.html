@@ -114,7 +114,7 @@
   </div>
 
   <div *ngIf="this.isSaving else buttons" class="spinnerCenter">
-    <ion-spinner   ></ion-spinner>
+    <ion-spinner  name="bubbles" ></ion-spinner>
     </div>
   <ng-template #buttons>
     <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">

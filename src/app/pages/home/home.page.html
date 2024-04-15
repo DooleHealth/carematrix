@@ -31,7 +31,7 @@
 </ion-header>
 
 
-<ion-content mode="md" [class.app-selected-background]="changeColorCargiver">
+<ion-content mode="md" >
 
 
   <ng-container *ngIf="this.isLoading && this.isLoadingNumNotifications; else finishedLoading">
@@ -137,14 +137,15 @@
       
       <!-- GOALS -->
       <ng-container *ngIf="this.permissionService.canViewGoals && nChallengesNotCompleted() !== 0">
-        <ion-row class="ion-padding-top" style="align-items: center;">
+
+        <ion-row style="align-items: center;">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'health_path.goals' | translate}}</ion-text>
           </ion-col>
         
           <ion-col size="6">
-            <ion-text class="seeAll"  style="display:flex; justify-content: end; padding-right: 5%;">
-              <span style="padding-right: 5%;" routerLink="/profile/goals">{{ 'health_path.see_all_goals' | translate}}</span>
+            <ion-text class="seeAll"  style="display:flex; justify-content: end; padding-right: 5%;"
+               routerLink="/profile/goals">{{ 'health_path.see_all_goals' | translate}}
             </ion-text>
           </ion-col>
 

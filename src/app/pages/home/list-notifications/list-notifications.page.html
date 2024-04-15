@@ -27,7 +27,7 @@
   </ion-fab>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+    <ion-spinner name="bubbles"></ion-spinner>
   </div>
 
   <div *ngIf="!this.isLoading && this.notifications?.length > 0;else noDataD">

@@ -46,7 +46,7 @@
     <div *ngSwitchCase="'today'" style="margin-top: 3%;">
 
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>
@@ -94,7 +94,7 @@
     <div *ngSwitchCase="'forms'" style="margin-top: 3%;">
 
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>

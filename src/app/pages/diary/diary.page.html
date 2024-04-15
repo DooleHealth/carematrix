@@ -44,7 +44,7 @@
     <!-- Diets Today-->
     <div *ngSwitchCase="'diets'">
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>
@@ -89,7 +89,7 @@
     <!-- Recipes-->
     <div *ngSwitchCase="'Receipt'">
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
       </ng-container>
 
 
