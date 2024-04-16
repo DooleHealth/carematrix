@@ -433,8 +433,3 @@ ion-accordion-group{
       }
   }
 }
-
-.ios ion-footer {
-  padding-bottom: env(safe-area-inset-bottom); /* Asegura que el footer respeta el área segura */
-
-}
