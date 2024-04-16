@@ -2363,10 +2363,35 @@ export class HomePage implements OnInit {
 
 
 
-  truncateText(text: string, maxLength: number): string {
-    if (!text) return ''; // Si no hay texto, devolver una cadena vacía
-    if (text.length <= maxLength) return text; // Si el texto es igual o más corto que maxLength, no lo truncamos
-    return text.substring(0, maxLength) + '...'; // Truncar el texto y agregar "..."
-  }
+   truncateText(text, maxLines, maxLength) {
+    if (!text) return ''; 
+    
+  
+    text = text.replace(/(\r\n|\n|\r)/gm, " ");
+    
+   
+    if (text.length > maxLength) {
+        text = text.substring(0, maxLength) + '...';
+    }
+    
+   
+    let lines = text.split(' ').reduce((acc, word) => {
+        const currentLine = acc.pop();
+        if ((currentLine + ' ' + word).length > maxLength) {
+            acc.push(currentLine);
+            acc.push(word);
+        } else {
+            acc.push(currentLine + ' ' + word);
+        }
+        return acc;
+    }, ['']);
+    
+    if (lines.length > maxLines) {
+
+        return lines.slice(0, maxLines).join(' ').trim() + '...';
+    }
+    
+    return text.trim(); 
+}
 
 }
