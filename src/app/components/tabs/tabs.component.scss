@@ -32,7 +32,6 @@ ion-tabs {
     width: 100%;
     height:100%;
     margin: 0 auto;
-    overflow: visible; 
   }
 
   .ios ion-tab-bar {
@@ -41,7 +40,6 @@ ion-tabs {
     height:100%;
     margin: 0 auto;
     padding: 0%;
-    overflow: visible; 
   }
 
   ion-badge{
@@ -49,39 +47,6 @@ ion-tabs {
   }
 
  
-  ion-tab-bar {
-    position: relative;
-    overflow: visible; 
-    z-index: 5; 
-  }
-  
-  ion-tab-button.tab-selected {
-    position: relative;
-    z-index: 10; 
-    transform: translateY(-8px); 
-    transition: transform 0.3s ease; 
-  }
-  
-  ion-tab-button.tab-selected .icon-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
- 
- 
-  
-  ion-tab-button.tab-selected ion-icon {
-    font-size: 30px; 
-    z-index: 2; 
-  }
-  
-  ion-tab-button.tab-selected ion-label {
-    z-index: 2; 
-    transition: opacity 0.3s ease; 
-    opacity: 0; 
-  }
   
   
   ion-icon {
@@ -94,33 +59,48 @@ ion-tabs {
   }
 
   .marginL{
-    margin-left: 110px;
+    margin-right: 53%;
   }
 
   .marginR{
-    margin-left: 210px;
+    margin-left: 53%;
   }
 
   .marginB{
     margin-bottom: 10px;
   }
 
-  ion-fab-button {
-    width: 80px;
-    height: 80px;
-    color: white;
- }
+
 
  ion-fab-button {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 80px;
+  height: 80px;
   --background: white; /* Fondo blanco */
   --color: var(--ion-color-primary); /* Icono y texto en color primario */
 }
 
-ion-fab-button ion-icon {
+ion-icon {
   font-size: 24px; /* Ajusta el tamaño del icono según necesites */
   margin-bottom: 4px; /* Espacio entre el icono y el texto */
+}
+ion-fab-button ion-grid {
+  --ion-grid-padding: 0; /* Elimina el padding dentro del grid */
+  --ion-grid-column-padding: 0; /* Elimina el padding dentro de las columnas */
+}
+
+ion-fab-button ion-row {
+  --ion-grid-row-padding: 0; /* Elimina el padding dentro de las filas */
+}
+
+ion-fab-button ion-col {
+  padding: 0; /* Elimina cualquier padding adicional dentro de las columnas */
+}
+ion-fab {
+  position: fixed;
+  bottom: 2%; /* Ajusta este valor según necesites */
+  /* Define horizontal positions if needed */
 }
