@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -26,19 +26,30 @@ export class TabsComponent implements OnInit {
   tracking= 'Seguimiento'
   journal= 'Mi diario'
   pusherNotification = false;
+  activeTab = 'home';
   constructor(
      private router: Router , 
      public role: RolesService,
-     private authService: AuthenticationService, private route: ActivatedRoute)  {
+     private authService: AuthenticationService, private route: ActivatedRoute,private changeDetector: ChangeDetectorRef)  {
     { this.user = this.authService?.user?.familyUnit}
   }
   ngOnInit() {
     this.translateTab();
-    // this.getFamilyUnitData(); 
+ 
   }
 
   translateTab(){
     
+  }
+
+  selectTab(tab: string) {
+    this.activeTab = tab;
+  }
+  setActiveTab(tabName: string): void {
+    this.activeTab = tabName;
+    this.router.navigateByUrl(`/${tabName}`).then(() => {
+      this.changeDetector.detectChanges();
+    });
   }
 
   public navigateAgenda() {

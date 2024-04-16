@@ -48,12 +48,7 @@ ion-tabs {
     font-weight: bolder;
   }
 
-  ion-grid{
-    z-index: 5;
-  }
-  ion-row{
-    z-index: 5;
-  }
+ 
   ion-tab-bar {
     position: relative;
     overflow: visible; 
@@ -75,19 +70,7 @@ ion-tabs {
   }
   
  
-  ion-tab-button.tab-selected .icon-container::after {
-    content: '';
-    position: absolute;
-    width: 80px; 
-    height: 80px; 
-    bottom: 50%; 
-    left: 50%;
-    transform: translate(-50%, 50%);
-    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%);
-    border-radius: 50%;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.02), 0 20px 20px rgba(0, 0, 0, 0.02);
-    z-index: -1; 
-  }
+ 
   
   ion-tab-button.tab-selected ion-icon {
     font-size: 30px; 
@@ -109,3 +92,35 @@ ion-tabs {
   ion-label {
     z-index: 2; 
   }
+
+  .marginL{
+    margin-left: 110px;
+  }
+
+  .marginR{
+    margin-left: 210px;
+  }
+
+  .marginB{
+    margin-bottom: 10px;
+  }
+
+  ion-fab-button {
+    width: 80px;
+    height: 80px;
+    color: white;
+ }
+
+ ion-fab-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  --background: white; /* Fondo blanco */
+  --color: var(--ion-color-primary); /* Icono y texto en color primario */
+}
+
+ion-fab-button ion-icon {
+  font-size: 24px; /* Ajusta el tamaño del icono según necesites */
+  margin-bottom: 4px; /* Espacio entre el icono y el texto */
+}
