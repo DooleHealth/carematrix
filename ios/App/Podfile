@@ -14,6 +14,7 @@ def capacitor_pods
   pod 'CapacitorCommunityContacts', :path => '../../node_modules/@capacitor-community/contacts'
   pod 'CapacitorCommunityFirebaseAnalytics', :path => '../../node_modules/@capacitor-community/firebase-analytics'
   pod 'CapacitorCommunityNativeMarket', :path => '../../node_modules/@capacitor-community/native-market'
+  pod 'CapacitorCommunitySpeechRecognition', :path => '../../node_modules/@capacitor-community/speech-recognition'
   pod 'CapacitorCommunitySqlite', :path => '../../node_modules/@capacitor-community/sqlite'
   pod 'CapacitorFirebaseAppCheck', :path => '../../node_modules/@capacitor-firebase/app-check'
   pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'

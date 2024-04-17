@@ -14,16 +14,15 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   <!-- SegmentBar -->
-  <ion-searchbar *ngIf="this.permissionService.canViewTestimonials" 
-    mode="ios"
-    (ionInput)="filterListTertimonials($event)" 
-    (ionClear)="getNewsTestimonial()"
-    placeholder="{{ 'advices.searchbar' | translate}}">
-  </ion-searchbar>
+  
+    <!-- Componente de grabación de voz -->
+ 
+    <app-speech-record (record)="filterListTertimonials($event)" (loadList)="getNewsTestimonial()" *ngIf="permissionService.canViewTestimonials"></app-speech-record>
+  
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
-  <div>
+  <div  style="padding-top: 10%;">
     <ion-list *ngIf="items.length > 0; else noData">
 
       <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items" segment="Testimony"></app-view-more-information>

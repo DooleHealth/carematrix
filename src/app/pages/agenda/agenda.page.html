@@ -53,7 +53,7 @@
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'calendar'">
    <ng-container  *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner></ion-spinner>
+    <ion-spinner ></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>
@@ -166,8 +166,8 @@
 
     <div *ngSwitchCase="'reminders'" style="margin-bottom: 20%;">
       
-      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner name="bubbles"></ion-spinner>
+      <ng-container class="spin" *ngIf="this.isLoadingReminders; else finishedLoading">
+       <ion-spinner ></ion-spinner>
       </ng-container>
       <ng-template #finishedLoading>
         <ng-container *ngIf="this.dayEvents && this.dayEvents.length > 0; else noData" >

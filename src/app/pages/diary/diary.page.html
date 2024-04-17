@@ -44,7 +44,7 @@
     <!-- Diets Today-->
     <div *ngSwitchCase="'diets'">
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner name="bubbles"></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>
@@ -89,7 +89,7 @@
     <!-- Recipes-->
     <div *ngSwitchCase="'Receipt'">
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner name="bubbles"></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </ng-container>
 
 
@@ -98,9 +98,14 @@
 
       <ng-template #finishedLoading>
 
-        <ion-searchbar *ngIf="this.permissionService.canViewRecipes" mode="ios" (ionInput)="filterListRecipes($event)"
+        <!--<ion-searchbar *ngIf="this.permissionService.canViewRecipes" mode="ios" (ionInput)="filterListRecipes($event)"
         (ionClear)="this.getRecipesist()" placeholder="{{ 'advices.searchbar' | translate}}" style="padding-bottom: 0px;">
-      </ion-searchbar>
+      </ion-searchbar>-->
+
+          <!-- Componente de grabación de voz -->
+ 
+    <app-speech-record  class="custom-speech-record"  (record)="filterListRecipes($event)" (loadList)="getRecipesist()" *ngIf="permissionService.canViewRecipes"></app-speech-record>
+  
         <ng-container *ngIf="!this.isLoading && items.length > 0; else noData">
 
       

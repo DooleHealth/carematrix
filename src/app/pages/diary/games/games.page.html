@@ -20,11 +20,11 @@
 <ion-content>
   <app-caregiver></app-caregiver>
 
-  <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner name="bubbles"></ion-spinner>
-  </div>
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+      </ng-container>
 
-  <div *ngIf="!this.isLoading">
+   <ng-template #finishedLoading>
     <ion-list *ngIf="items.length > 0; else noData">
       <div *ngFor="let content of items">
         <ion-card class="cardProfile ion-no-padding" *ngIf="this.canPlayGames">
@@ -61,12 +61,13 @@
 
       </div>
     </ion-list>
-  </div>
+  
 
   <ng-template #noData>
     <div>
       <app-no-data></app-no-data>
     </div>
+  </ng-template>
   </ng-template>
 
 </ion-content>

@@ -31,6 +31,7 @@ import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-if
 import { Preferences } from '@capacitor/preferences';
 import { PermissionService } from 'src/app/services/permission.service';
 import { Form } from 'src/app/models/form';
+import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
@@ -204,6 +205,7 @@ export class HomePage implements OnInit {
   prescribedApps: SharedCarePlanPrescribedApps[] = [];
   scpProcedures:PrescribedAppsAdapter;
   safeUrl;
+ 
 
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
@@ -243,10 +245,13 @@ export class HomePage implements OnInit {
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
     public permissionService: PermissionService,
+   // public speechRecognition: SpeechRecognition;
+ 
 
 
   ) { 
-    this.scpProcedures = new PrescribedAppsAdapter(this.platform)
+    this.scpProcedures = new PrescribedAppsAdapter(this.platform);
+    SpeechRecognition.requestPermissions();
 
   }
 
@@ -292,6 +297,9 @@ export class HomePage implements OnInit {
     }
   }
 
+
+
+
   initPushers() {
     this.pusherAlarms?.init()
     const channel = this.pusherNotifications.init();
@@ -304,6 +312,8 @@ export class HomePage implements OnInit {
 
       this.pusherNotifications.initAssignedLevel()
   }
+
+
 
   activatePusherNotification() {
     const channel = this.pusherNotifications?.init();
@@ -564,7 +574,7 @@ export class HomePage implements OnInit {
                 //const ionContent = document.querySelector('ion-content');
                 //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
                 //root.style.setProperty('--default-bkg', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
-                root.style.setProperty('--default-bkg', '#EFEFEF' ? 'rgba(239,239,239)' : '#EFEFEF');
+                root.style.setProperty('--carguiverBackground', '#EFEFEF' ? 'rgba(239,239,239)' : '#EFEFEF');
               });
             });
           }
@@ -615,7 +625,7 @@ export class HomePage implements OnInit {
               const root = document.documentElement;
                 //const ionContent = document.querySelector('ion-content');
                 //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
-                root.style.setProperty('--default-bkg', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+                root.style.setProperty('--carguiverBackground', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
             
           }
         }

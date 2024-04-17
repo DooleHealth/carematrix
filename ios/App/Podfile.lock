@@ -14,6 +14,8 @@ PODS:
     - FirebaseAnalytics
   - CapacitorCommunityNativeMarket (5.0.0):
     - Capacitor
+  - CapacitorCommunitySpeechRecognition (5.1.0):
+    - Capacitor
   - CapacitorCommunitySqlite (5.0.3):
     - Capacitor
     - SQLCipher
@@ -162,6 +164,7 @@ DEPENDENCIES:
   - "CapacitorCommunityContacts (from `../../node_modules/@capacitor-community/contacts`)"
   - "CapacitorCommunityFirebaseAnalytics (from `../../node_modules/@capacitor-community/firebase-analytics`)"
   - "CapacitorCommunityNativeMarket (from `../../node_modules/@capacitor-community/native-market`)"
+  - "CapacitorCommunitySpeechRecognition (from `../../node_modules/@capacitor-community/speech-recognition`)"
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
@@ -215,6 +218,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/firebase-analytics"
   CapacitorCommunityNativeMarket:
     :path: "../../node_modules/@capacitor-community/native-market"
+  CapacitorCommunitySpeechRecognition:
+    :path: "../../node_modules/@capacitor-community/speech-recognition"
   CapacitorCommunitySqlite:
     :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
@@ -258,6 +263,7 @@ SPEC CHECKSUMS:
   CapacitorCommunityContacts: 45de2477f7dc6265d267677939a2c75465d2ed87
   CapacitorCommunityFirebaseAnalytics: a29279a99fad771ba307d9a07571372ea2f36b1f
   CapacitorCommunityNativeMarket: 70b329cac2db3aee51430c83cdbe63cfc7c250bd
+  CapacitorCommunitySpeechRecognition: 4b07fb675f4e5ce3376748557875d182973a788a
   CapacitorCommunitySqlite: b90d3ca2785560e666cfacd3438dc42bed74f9dc
   CapacitorCordova: 931b48fcdbc9bc985fc2f16cec9f77c794a27729
   CapacitorDevice: 4c78eeaa553c7a46bc07372c6eb03a5665459885
@@ -291,6 +297,6 @@ SPEC CHECKSUMS:
   SQLCipher: 905b145f65f349f26da9e60a19901ad24adcd381
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: 2bc8b6a52dff80da9c3e1131907e28eb17b64660
+PODFILE CHECKSUM: 89f98ad1ca97c250e1540d8549d800c34995ea5a
 
 COCOAPODS: 1.13.0

@@ -56,6 +56,7 @@
     "@capacitor-community/contacts": "^5.0.3",
     "@capacitor-community/firebase-analytics": "5.0.1",
     "@capacitor-community/native-market": "^5.0.0",
+    "@capacitor-community/speech-recognition": "^5.1.0",
     "@capacitor-community/sqlite": "5.0.3",
     "@capacitor-firebase/app-check": "^5.0.0",
     "@capacitor/android": "^5.0.0",

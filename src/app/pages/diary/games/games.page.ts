@@ -73,7 +73,7 @@ export class GamesPage implements OnInit {
             });
 
             console.log(this.items)
-            this.isLoading = false;
+           
           }
           else {
             this.isLoading = false;
@@ -94,6 +94,7 @@ export class GamesPage implements OnInit {
           //games.push(res.game)
           console.log(res.game);
           this.adapterForView(element, res.game)
+          this.isLoading = false;
         }
         console.log('[GamesDetailPage] getGameData()', this.items);
       }, (err) => {
