@@ -65,6 +65,7 @@ import { ProcedureComponent } from './shared-care-plan/procedure/procedure.compo
 import { InteractionsMedicineComponent } from './interactions-medicine/interactions-medicine.component';
 import { NotificationOptionsComponent } from './notification/notification-options/notification-options.component';
 import { NotificationBellComponent } from './notification/notification-bell/notification-bell.component';
+import { SpeechRecordComponent } from './speechRecord/speech-record/speech-record.component';
 
 
 @NgModule({
@@ -135,7 +136,8 @@ import { NotificationBellComponent } from './notification/notification-bell/noti
     InteractionsMedicineComponent,
     // Notifcations
     NotificationOptionsComponent,
-    NotificationBellComponent
+    NotificationBellComponent,
+    SpeechRecordComponent
   ],
   exports: [
     ShellModule,
@@ -192,7 +194,8 @@ import { NotificationBellComponent } from './notification/notification-bell/noti
     InteractionsMedicineComponent,
     // Notifcations
     NotificationOptionsComponent,
-    NotificationBellComponent
+    NotificationBellComponent,
+    SpeechRecordComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

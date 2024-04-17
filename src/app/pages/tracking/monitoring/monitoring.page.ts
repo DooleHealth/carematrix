@@ -27,11 +27,14 @@ export class MonitoringPage implements OnInit {
 
 
   async getFormList(){
+    this.isLoading= true;
     this.scpService.get_APi_ACP_monitoring().subscribe(
       async (res: any) =>{
         console.log("monitoring", res)  
         this.adapterForView(res)  
+        this.isLoading= false;
        },async (err) => {
+        this.isLoading= false;
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
           throw err;

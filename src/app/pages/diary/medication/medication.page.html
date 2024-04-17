@@ -41,7 +41,7 @@
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'today'">
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner name="bubbles"></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>
@@ -97,7 +97,7 @@
 
     <div *ngSwitchCase="'medication'">
       <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
-        <ion-spinner name="bubbles"></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </ng-container>
 
       <ng-template #finishedLoading>
