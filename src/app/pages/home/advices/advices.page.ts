@@ -3,6 +3,7 @@ import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
+import { PermissionService } from 'src/app/services/permission.service';
 export interface ItemAdvice {
   expanded?: boolean;
   item?: any;
@@ -14,19 +15,28 @@ export interface ItemAdvice {
 })
 export class AdvicesPage implements OnInit {
   public items= [];
+  public itemsCopy = [];
+  segment="Advice"
+  recoding= false;
   //itemsBackup= []
   //advices = []
+  saves_items;
   isLoading = false
   private lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
-    public role: RolesService
+    public role: RolesService,
+    public permissionService: PermissionService
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.ADVICES, "advices-detail")
    }
 
   ngOnInit() {
-    this.getAdvicesList()
+    if (this.permissionService.canViewAdvices) this.getAdvicesList()
+  }
+
+  ionViewWillEnter() {
+    this.refreshPage(null);
   }
 
   adapterForView(list){
@@ -37,15 +47,27 @@ export class AdvicesPage implements OnInit {
     )  
   }
 
+  refreshPage(data: any) {
+    if (this.permissionService.canViewAdvices) this.getAdvicesList()
+  }
+
 // ADVICES
   async getAdvicesList(){
     this.items = []
     this.isLoading = true
-    this.dooleService.getAPIlistAdvices().subscribe(
+    let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1
+    }
+    this.dooleService.getAPIlistAdvices(params).subscribe(
       async (res: any) =>{
         console.log('[AdvicePage] getAdvicesList()', await res);
         if(res.advices)
-        this.adapterForView(res.advices)
+       // this.adapterForView(res.advices)
+      this.items= res.advices
+      this.itemsCopy= res.advices
+      this.saves_items = this.items;
         this.isLoading = false
        },(err) => {
           console.log('[AdvicePage] getAdvicesList() ERROR(' + err.code + '): ' + err.message);
@@ -54,19 +76,37 @@ export class AdvicesPage implements OnInit {
       });
   }
 
-  filterListAdvices(event){
-    var query = event //.target.value;
-    this.isLoading = true
-    this.dooleService.getAPISearchAdvices(query).subscribe(res=>{
-      console.log('[AdvicePage] filterListAdvices()', res);
-      this.items = []
-      if(res.success)
-        this.adapterForView(res.advice)
-      this.isLoading = false
-    },err => {
-      console.log('[AdvicePage] filterListAdvices() ERROR(' + err.code + '): ' + err.message);
+ 
+  filterListAdvices(event) {
+    let search;
+    let searchTerm;  
+
+  searchTerm = event.toLowerCase();
+  
+
+  if (searchTerm === '') {
+    this.items = this.itemsCopy
+  }
+  else {
+    if(this.items.length > 0){
+      search = this.items 
+    }else{
+      search= this.saves_items;
+    }
+    console.log("items", this.items)
+    console.log("searchTerm", searchTerm)
+    const filteredItems = search.filter(item => {
+      const subject = item.name.toLowerCase();
+      return subject.includes(searchTerm) || subject === searchTerm;
     });
+      this.items = (filteredItems)
+  }
+
+
+   
+   
   };
+
 
 
   // async filterList(evt) {

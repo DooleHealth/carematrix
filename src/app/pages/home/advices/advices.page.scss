@@ -35,3 +35,15 @@
       object-position: center center;
     }
   }
+
+  ion-list {
+    background: none !important
+  }
+
+ 
+  app-speech-record {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }

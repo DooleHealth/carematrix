@@ -15,7 +15,9 @@ ion-footer{
    ion-item {
    --padding-start: 0px;
    --ion-background-color: #fafafa !important;
-   color: #3498DB;
+   color: var(--ion-color-primary);
+
+   
 
    }
     
@@ -29,6 +31,7 @@ ion-badge{
    margin-left: auto;
    margin-right: auto;
    display: block;
+   background-color: #BDC3C7;
 }
 
 ion-fab{
@@ -46,4 +49,13 @@ ion-fab{
 
 .slideNone{
    display: none;
+}
+
+.itemChat {
+
+   --background: none;
+}
+
+ion-item {
+   --inner-padding-end: 0px
 }

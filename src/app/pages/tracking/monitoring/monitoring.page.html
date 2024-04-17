@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'shared_care_plan.monitoring' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'shared_care_plan.monitoring' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
         <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
@@ -13,45 +13,77 @@
 </ion-header>
 
 <ion-content view-cached=”false”>
-
-  <ion-card class="cardProfile">
-    <ion-item lines="none">
-      <ion-grid> 
-        <ion-row>
-          <ion-icon style="height: 20px; width: 20px;"  src="assets/icons/shared-care-plan/scp-monitoring.svg">
-          </ion-icon>&nbsp;
-          <ion-text class="txtTitleGoalsDarker textAdvicesSlider">{{ 'shared_care_plan.monitoring' | translate}}</ion-text>
-        </ion-row>
-        <ion-row >
-          <p class="txtSubtitle">{{ 'shared_care_plan.monitoringList.text' | translate}}</p>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
+  <app-caregiver></app-caregiver>
   
-  </ion-card>
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+      </ng-container>
 
-  <div>
-    <ion-list *ngIf="items.length > 0; else noData">
-        <app-scp-med-for-mon *ngFor="let content of items" [content]="content" (redirect)="handleRedirect($event)"></app-scp-med-for-mon>
-    </ion-list>
-  </div>
-  <ng-template #noData>
-    <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col >
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  </div>
+   <ng-template #finishedLoading>
+
+    <ng-container *ngIf="items.length > 0; else noData">
+      <ion-list style="padding-top: 5%;">
+
+        <ion-card *ngFor="let doc of items"class="cardProfile" style="margin-top: 0px;" routerLink="/tracking/activity-goal" [state]="{id: doc.form_id, header: doc.title}"
+        routerLinkActive="active-item">
+  
+  
+          <ion-card-content style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;">
+            <ion-grid style="width: 100%; height: 100% !important">
+  
+              <ion-row>
+  
+                <ion-col size="3" style="display: flex; align-items: center; justify-content: center;">
+                  <ion-icon style="width: 100%; height: 100%" src="assets/icons/health.svg"></ion-icon>
+                </ion-col>
+  
+                <ion-col size="9">
+  
+                  <ion-row style="padding-bottom: 1%;">
+                    <ion-col size="8">
+                      <ion-text class="txt-procedures">{{doc.title}}</ion-text>
+                    </ion-col>
+  
+                    <ion-col size="4" style="display: flex; align-items: center; justify-content: end">
+                      <ion-icon src="assets/icons/challenge_card_btn.svg" color="primary"></ion-icon>
+                    </ion-col>
+                  </ion-row>
+  
+                  <ion-row>
+                    <ion-col size="12" style="padding-bottom: 0px; padding-top: 0px;">
+                      <ion-text class="txt-name-diagnostic">{{ 'shared_care_plan.lastValue'| translate}} {{doc.lastdata}}</ion-text>
+                    </ion-col>
+                  </ion-row>
+  
+                  <ion-row>
+                    <ion-col size="12" style="padding-bottom: 0px; padding-top: 0px;">
+                      <ion-text class="txt-date">{{transformDate(doc.date)}}</ion-text>
+                    </ion-col>
+                  </ion-row>
+  
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ng-container>
+
+    <ng-template #noData>
+      <div *ngIf="!this.isLoading">
+        <app-no-data></app-no-data>
+      </div>
+    </ng-template>
   </ng-template>
-  </ion-content>
+
+    
+
+    
+
+  
+  
+
+</ion-content>
 <ion-footer>
   <ion-toolbar>
     <app-tabs></app-tabs>

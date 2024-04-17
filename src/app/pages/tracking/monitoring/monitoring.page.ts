@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -15,20 +18,23 @@ export class MonitoringPage implements OnInit {
   nameContent: string = ContentTypeTranslatedName.Monitoring
   iconContent = ContentTypeIcons.Monitoring
   constructor(
-    public sharedCarePlan:SharedCarePlanService, private router: Router,
+     private scpService: SharedCarePlanService, private router: Router,public dateService: DateService,public authService: AuthenticationService, public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
-    this.getFormList();
+    if (this.permissionService.canViewMonitoring) this.getFormList();
   }
 
 
   async getFormList(){
-    this.sharedCarePlan.get_APi_ACP_monitoring().subscribe(
+    this.isLoading= true;
+    this.scpService.get_APi_ACP_monitoring().subscribe(
       async (res: any) =>{
         console.log("monitoring", res)  
         this.adapterForView(res)  
+        this.isLoading= false;
        },async (err) => {
+        this.isLoading= false;
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
           throw err;
@@ -54,6 +60,8 @@ adapterForView(list){
       title: element.name,
       from: "",//element.from_date,
       to:  "",//element.to_date,
+      lastdata: element.value,
+      date: element.date_value,
      // accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
       type: "App\\Monitoring",
       description: goals, //element.frequencyName,
@@ -72,5 +80,13 @@ handleRedirect(event: { type: string, form_id: string, showAlerts:boolean }) {
   this.router.navigate([`/activity-goal`], { state: { id: event.form_id } });
  
 }
+transformDate(date) {
+  
+  if (date != null) {
+    return this.dateService.formatDateLongFormat(date)
+  } else {
+    return ""
+  }
 
+}
 }

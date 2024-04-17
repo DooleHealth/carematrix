@@ -17,6 +17,9 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     DrugAddPageRoutingModule
   ],
-  declarations: [DrugAddPage]
+  declarations: [DrugAddPage],
+  exports: [
+    DrugAddPage
+  ]
 })
 export class DrugAddPageModule {}

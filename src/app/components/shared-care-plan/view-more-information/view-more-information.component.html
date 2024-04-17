@@ -1,0 +1,60 @@
+<ion-card *ngFor="let listcontets of content">
+
+  <img class="imagefit" [src]="getImageSource(listcontets)"
+    onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
+    
+  <ion-item lines="none">
+    <div *ngFor="let list of listcontets?.tags_name">
+      <ion-text class="study">{{ list.name}}</ion-text>
+    </div>
+
+    <ion-icon
+      *ngIf="(this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null)"
+      color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end"
+      (click)="setContentStatus(listcontets?.statusable, listcontets.id, 'like')"></ion-icon>
+
+  </ion-item>
+  <ion-card-header mode="md" style="padding-top: 0px; padding-left: 7%; padding-right: 7%;">
+    <ion-card-subtitle>
+      <ion-text *ngIf="listcontets?.subject || listcontets?.name" class="txt-source" class="title-card">
+        {{listcontets?.subject || listcontets?.name}} </ion-text>
+    </ion-card-subtitle>
+    <ion-card-subtitle *ngIf="listcontets?.source" class="txt-source"><i><u>{{'shared_care_plan.source' |
+          translate}}</u> {{extractText(listcontets?.source)}}</i></ion-card-subtitle>
+    <ion-card-subtitle *ngIf="listcontets?.scheduled_date"
+      class="txt-source">{{ formatSelectedDate(listcontets?.scheduled_date)}}</ion-card-subtitle>
+    <ion-card-subtitle *ngIf="listcontets?.reading_time" class="txt-timeReading" [ngSwitch]="this.segment">
+      {{ listcontets?.reading_time }}
+
+      <ng-container *ngSwitchCase="'exercises'">
+        {{ 'shared_care_plan.exercicesTime' | translate }}
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'diets'">
+        {{ 'shared_care_plan.dietsime' | translate }}
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        {{ 'shared_care_plan.readingTime' | translate }}
+      </ng-container>
+    </ion-card-subtitle>
+
+    <ion-card-subtitle>    
+      <ion-text class="txt-description" style="text-align: justify;" [innerHtml]="truncateDescription(listcontets?.content || listcontets?.description, 100)"></ion-text>
+    </ion-card-subtitle>
+
+    <ion-card-subtitle>    
+      <ion-text class="txt-likes" *ngIf="listcontets?.interactions">
+        {{listcontets?.interactions.like}} {{'shared_care_plan.like' |translate}}
+      </ion-text> 
+      <ion-text class="txt-likes" *ngIf="listcontets?.interactions?.like && listcontets?.interactions.like > 100">🔥</ion-text>
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content style="margin-bottom: 2%;">
+    <ion-button shape="round" color="primary" class="floating-button" [routerLink]="toRouterLink()"
+      [state]="getStateObject(listcontets)" style="width: 100%;; height: 50px;">
+      <ion-label>{{'shared_care_plan.button_info' | translate}}</ion-label>
+    </ion-button>
+  </ion-card-content>
+</ion-card>

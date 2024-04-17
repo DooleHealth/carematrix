@@ -28,8 +28,11 @@ import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-
 import { PrescribedAppsAdapter } from 'src/app/models/shared-care-plan/scp-adapters';
 import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-iframe/show-iframe.component';
+import { Preferences } from '@capacitor/preferences';
+import { PermissionService } from 'src/app/services/permission.service';
+import { Form } from 'src/app/models/form';
+import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 
-const NAME_BIND = 'Illuminate\\Notifications\\Events\\BroadcastNotificationCreated';
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
   title?: string;
@@ -90,6 +93,8 @@ export class HomePage implements OnInit {
   healtDate
   loading: boolean = true;
   isFirstTime = true;
+
+
 
   currentIndexForm = 0
   currentIndexExercise = 0
@@ -182,7 +187,7 @@ export class HomePage implements OnInit {
   @ViewChild('sliderPhysical') sliderPhysical: ElementRef | undefined;
   @ViewChild('sliderDrug') sliderDrug: ElementRef | undefined;
   @ViewChild('sliderDiet') sliderDiet: ElementRef | undefined;
-  @ViewChild('sliderGames') sliderGames: ElementRef | undefined;
+  @ViewChild('sliderGame') sliderGames: ElementRef | undefined;
   @ViewChild('sliderForms') sliderForms: ElementRef | undefined;
   @ViewChild('sliderExercises') sliderExercises: ElementRef | undefined;
 
@@ -200,10 +205,23 @@ export class HomePage implements OnInit {
   prescribedApps: SharedCarePlanPrescribedApps[] = [];
   scpProcedures:PrescribedAppsAdapter;
   safeUrl;
+ 
 
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
 
+  caregiverSelected = '';
+  changeColorCargiver = "";
+
+  dayPhrase:string;
+  datePhraseReaded: Date = null;
+  canReadPhrase: boolean = false;
+
+
+  public results :any[];
+  activateFocus: boolean = false;
+
+  canDoForm:boolean = false
   constructor(
     public router: Router,
     public platform: Platform,
@@ -220,22 +238,27 @@ export class HomePage implements OnInit {
     private languageService: LanguageService,
     private nav: NavController,
     private modalCtrl: ModalController,
-    //private scpAlert: ScpAlertService,
     private notification: NotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherNotifications: PusherNotificationService,
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
+    public permissionService: PermissionService,
+   // public speechRecognition: SpeechRecognition;
+ 
 
 
   ) { 
-    this.scpProcedures = new PrescribedAppsAdapter(this.platform)
+    this.scpProcedures = new PrescribedAppsAdapter(this.platform);
+    SpeechRecognition.requestPermissions();
 
   }
 
+ 
+
+
   async ngOnInit() {
-    console.log("ENTER")
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
     this.checkHealthAccess();
     this.checkStorageNotification();
@@ -243,14 +266,23 @@ export class HomePage implements OnInit {
   }
 
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    
+  
 
+    this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
+    this.activateFocus = false;
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
-    this.getUserInformation()
-    this.getNumNotification();
+    if (this.getDatedayPhraseReaded()) this.datePhraseReaded = await this.getDatedayPhraseReaded();
+   
 
+    console.log(this.datePhraseReaded)
+    
+    this.getUserInformation()   
+    this.getNumNotification();
+    
     this.update()
 
 
@@ -266,24 +298,28 @@ export class HomePage implements OnInit {
   }
 
 
+
+
   initPushers() {
     this.pusherAlarms?.init()
     const channel = this.pusherNotifications.init();
 
-    this.pusherNotifications.init2();
-
     if (channel)
-      channel.bind(NAME_BIND, ({ data }) => {
+      channel.bind(this.pusherNotifications.NOTIFICATION_BIND, ({ data }) => {
         console.log('[HomePage] initPushers()', data);
         this.getNumNotification();
-      });
+    });
+
+      this.pusherNotifications.initAssignedLevel()
   }
+
+
 
   activatePusherNotification() {
     const channel = this.pusherNotifications?.init();
     console.log('[HomePage] activatePusherNotification() channel ', channel);
     if (channel)
-      channel?.bind(NAME_BIND, ({ data }) => {
+      channel?.bind(this.pusherNotifications.NOTIFICATION_BIND, ({ data }) => {
         console.log('[HomePage] activatePusherNotification()', data);
         this.getNumNotification();
       });
@@ -300,8 +336,6 @@ export class HomePage implements OnInit {
       this.isLoadingNumNotifications = false;
     });
   }
-
-
 
   update() {
     this.appRef.tick();
@@ -364,81 +398,95 @@ export class HomePage implements OnInit {
 
     try {
       await Promise.all([
-
-
+        this.getDayPhrase(),
+        this.getFamilyUnitData(),
         this.getUserImage(),
         this.getPersonalInformation(),
-        this.getChallenges(),
-
-        this.getPrescribedApps(),
+        this.getChallenges(), 
 
         this.getFormsList(),
-        //this.getExercisesListOld(),
+        this.getAdvicesList(), 
         this.getExercisesList(),
-
-
         (this.drugs = [], this.getDrugIntake()),
-
-
         this.getDietList(),
-
         this.getGoalImformation(),
-
         this.getGamesList(),
         this.getElementsList(),
         this.getallAgenda(),
-        this.getProcedures()
-
-
+        this.getProcedures(),
         // Add other asynchronous calls as needed
       ]);
 
-      // Analytics
-      // this.setAnalyticsUserProperty();
     } catch (error) {
       console.error('Error fetching user information:', error);
-      // Handle errors if needed
     } finally {
 
       console.log('Entro sense esperar');
 
       this.isLoading = false;
     }
+   
   }
 
-  async getPrescribedApps(){
+
+  async getDayPhrase() {
     try {
-      this.prescribedApps = []
-      const platform = this.platform.is('ios')? 'ios':'android'
-      const url = `url_${platform}`
-      const res: any = await new Promise((resolve, reject) => {
-        this.scpService.getAPI_SCP_prescribedApp().subscribe(
-          (data: any) => {
-            console.log('[HomePage] getPrescribedApp()', data);
-            resolve(data);
-          },
-          (error) => {
-            console.log('[HomePage] getPrescribedApp() ERROR(' + error.code + '): ' + error.message);
-            reject(error);
+
+      console.log(this.datePhraseReaded)
+      if (this.datePhraseReaded !== null) {
+        if(this.hasMoreThanOneDayPassed(this.datePhraseReaded, new Date())) {
+          const res: any = await new Promise((resolve, reject) => {
+            this.dooleService.getAPIDayPhrase().subscribe(
+              (data: any) => {
+                console.log('[HomePage] getDayPhrase()', data);
+                resolve(data);
+              },
+              (error) => {
+                console.log('[HomePage] getDayPhrase() ERROR(' + error.code + '): ' + error.message);
+                reject(error);
+              }
+            );
+          });
+    
+          this.dayPhrase = res.dayPrase.phrase;
+              
+          if (this.dayPhrase != null) {
+            this.openAICoachMessage(this.dayPhrase)
+            this.setDateDayPhraseReaded(new Date());
           }
-        );
-      });
-
-
-      
-      console.log(res.apps)
-      this.prescribedApps = this.scpProcedures.adapterForView(
-        res.apps, // JSON 
-        'name',  //title
-        'cover',  //date
-        'description', //type
-        'instructions',
-        'url_android',
-        'url_ios',
-        'configurations_array'
-        ) 
+        }
+        else {
+          console.log("cant read")
+          this.canReadPhrase = false;
+        }
         
-       // console.error(' this.prescribedApps:',  this.prescribedApps);
+      }
+      else {
+
+        console.log("Entro per aqui")
+        const res: any = await new Promise((resolve, reject) => {
+          this.dooleService.getAPIDayPhrase().subscribe(
+            (data: any) => {
+              console.log('[HomePage] getDayPhrase()', data);
+              resolve(data);
+            },
+            (error) => {
+              console.log('[HomePage] getDayPhrase() ERROR(' + error.code + '): ' + error.message);
+              reject(error);
+            }
+          );
+        });
+  
+        this.dayPhrase = res.dayPrase.phrase;
+        
+        //this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
+        if (this.dayPhrase != null) {
+          this.openAICoachMessage(this.dayPhrase)
+          this.setDateDayPhraseReaded(new Date());
+        }
+      }
+      
+
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching user image:', error);
@@ -447,6 +495,192 @@ export class HomePage implements OnInit {
   }
 
 
+  hasMoreThanOneDayPassed(date1: Date, date2: Date): boolean {
+    // Calculate the difference in time between the two dates
+    const differenceInTime = Math.abs(date2.getTime() - date1.getTime());
+  
+    // Calculate the number of days between the two dates
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+  
+    // Check if the difference is greater than 1 day
+    return differenceInDays >= 1;
+  }
+
+  async getFamilyUnitData(){
+
+    try {
+      const res: any = await new Promise((resolve, reject) => {
+        this.dooleService.getAPIFamilyUnit().subscribe(
+          (data: any) => {
+            console.log('[HomePage] getFamilyUnitData()', data);
+            resolve(data);
+          },
+          (error) => {
+            console.log('[HomePage] getFamilyUnitData() ERROR(' + error.code + '): ' + error.message);
+            reject(error);
+          }
+        );
+      });
+
+      this.listFamilyUnit = res;
+
+      console.log(this.listFamilyUnit)
+
+      
+      this.results = [...this.listFamilyUnit];
+
+      console.log(this.listFamilyUnit)
+
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching user image:', error);
+      throw error;
+    }
+  }
+
+  async returnUser(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      header: this.translate.instant("home.back_caregiver"),
+      message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'warning',
+          handler: (blah) => {
+            this.onCancel()
+            console.log('[LandingPage] AlertConfirm Cancel');
+          } 
+        }, {
+          text: this.translate.instant("alert.button_change"),
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: (data) => {
+            this.authService.isFamily = false;
+            this.pusherConnection.unsubscribePusher()
+            console.log(this.authService.user.familyUnit)
+            Preferences.remove({ key:  this.authService.user.familyUnit }).then((val) => { });
+            this.authService.setUserFamilyId(null).then((val) => {
+              this.ngZone.run(()=>{
+                this.isLoading = true;
+                this.changeColorCargiver="";
+                this.permissionService.resetPermissions();
+                this.ionViewWillEnter()
+                
+                const root = document.documentElement;
+                //const ionContent = document.querySelector('ion-content');
+                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+                //root.style.setProperty('--default-bkg', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+                root.style.setProperty('--carguiverBackground', '#EFEFEF' ? 'rgba(239,239,239)' : '#EFEFEF');
+              });
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+   
+   
+  }
+
+  async onCaregiverSelect(event: any) {
+    console.log(event.detail.value)
+
+
+    this.caregiverSelected = '';
+    this.caregiverSelected = this.results[event.detail.value];
+
+
+    this.alertCaregiver(this.caregiverSelected);
+
+  }
+
+  async alertCaregiver(caregiverSelected) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-alert-class',
+      //mode: 'ios',
+      header: caregiverSelected?.name,
+      message: this.translate.instant("setting.family_unit.msg_alert_change_perfil"),
+      buttons: [
+        {
+          text: this.translate.instant("alert.button_cancel"),
+          role: 'cancel',
+          cssClass: 'warning',
+          handler: (blah) => {
+            this.onCancel()
+            console.log('[LandingPage] AlertConfirm Cancel');
+          } 
+        }, {
+          text: this.translate.instant("alert.button_change"),
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: (data) => {
+            this.changeUser(caregiverSelected)
+            this.changeColorCargiver = this.caregiverSelected;
+              const root = document.documentElement;
+                //const ionContent = document.querySelector('ion-content');
+                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+                root.style.setProperty('--carguiverBackground', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+            
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  changeUser(user?){
+    console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
+    this.authService.setFamilyUnit(user).then((val) => {
+      this.ngZone.run(()=>{
+        this.isLoading = true;
+
+       /*  user.permissionsName = [
+          "canViewGoals",
+          "canManageGoals",
+          "canViewForms",
+          "canViewAnswerForms",
+          "canViewExercises",
+          "canViewDiets",
+          "canViewRecipes",
+          "canViewGames",
+          "canViewMonitoring",
+          "canManageMonitoring",
+          "canViewAdvices",
+          "canViewMedicalProcedures",
+          "canViewNew",
+          "canViewTestimonials",
+          "canViewMedicalTests",
+          "canManageMedicalTests",
+          "canViewMedication",
+          "canManageMedication",
+          "canViewMedicationPlans",
+          "canViewPlanningForm",
+          "canViewEvents",
+          "canManageEvents",
+          "canManageMessages",
+          "canSeeMedicalVisits",
+          "canManageRequesVisit",
+          "canSeeCenters", 
+          "colorCargiver"
+        ]*/
+        
+        this.permissionService.setPermissions(user.permissionsName);
+        this.pusherConnection.unsubscribePusher()
+        this.ionViewWillEnter()
+       
+       
+      });
+    });
+      
+   
+  }
 
   async getUserImage() {
     try {
@@ -489,7 +723,10 @@ export class HomePage implements OnInit {
 
       this.userDoole = res.user;
       this.first_name = this.userDoole?.first_name?.split(' ')[0];
-      this.greeting = this.translate.instant('home.hello') + ', ' + this.first_name;
+
+      this.greeting = this.translate.instant('home.hello') + ', ' + "<b>"+this.first_name+"</b>";
+
+
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching personal information:', error);
@@ -500,8 +737,13 @@ export class HomePage implements OnInit {
 
   async getAdvicesList() {
     try {
+      let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1
+      }
       const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIlistAdvices().subscribe(
+        this.dooleService.getAPIlistAdvices(params).subscribe(
           (data: any) => {
             console.log('[HomePage] getAdvicesList()', data);
             resolve(data);
@@ -513,7 +755,14 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.getNewsList(res.advices);
+
+      if (res?.goals?.length > 0) {
+        this.setGoalsSlider(res.goals);
+      }
+
+      if (res.advices.length > 0) this.setAdvicesSlider(res.advices/* , res.news */);
+
+      //this.getNewsList(res.advices);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching advices list:', error);
@@ -524,8 +773,13 @@ export class HomePage implements OnInit {
 
   async getNewsList(advices) {
     try {
+      let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1
+      }
       const res: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIlistNews().subscribe(
+        this.dooleService.getAPIlistNews(params).subscribe(
           (data: any) => {
             console.log('[HomePage] getNewsList()', data);
             resolve(data);
@@ -537,7 +791,7 @@ export class HomePage implements OnInit {
         );
       });
 
-      this.setAdvicesSlider(advices, res.news);
+      //this.setAdvicesSlider(advices, res.news);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching news list:', error);
@@ -577,7 +831,8 @@ export class HomePage implements OnInit {
     try {
       const params = { filter: '1' };
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIelementsListByDate(params).subscribe(
+        this.scpService.get_APi_ACP_monitoring().subscribe(
+        //this.dooleService.getAPIelementsListByDate(params).subscribe(
           (response: any) => {
             console.log('[TrackingPage] getElementsList()', response);
             resolve(response);
@@ -606,7 +861,7 @@ export class HomePage implements OnInit {
           async (res: any) => {
 
             console.log('[TrackingPage] getGamesList()', await res);
-            this.setGamesSlider(res.games)
+            resolve(res)
 
           },
           (error) => {
@@ -616,8 +871,11 @@ export class HomePage implements OnInit {
           }
         );
       });
+      this.games = data.gamePlays;
+      console.log(this.games)
+      this.setGamesSlider(this.games)
 
-      this.setPhysicalSlider(data);
+      //this.setG(data);
     } catch (error) {
       // Handle errors if needed
       console.error('Error fetching elements list:', error);
@@ -625,14 +883,25 @@ export class HomePage implements OnInit {
     }
   }
 
+  navigateToFormPage(content){
+    console.log('[FormListPage] navigateToFormPage() ', content)
+
+    if (this.canDoForm) {
+       this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });
+    }
+  }
+
+  
+
   async getFormsList() {
     try {
-
+      const params = {date: this.date, grouped_by_times: false}
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIformPending({ date: this.date }).subscribe(
+        this.dooleService.getAPIFormsByDate(params).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIformPending()', await res);
-            this.setFormsSlider(res.forms)
+            const forms = Form.getFormProgrammationByTimes(res)
+            this.setFormsSlider(forms)
           },
           (error) => {
             alert(`Error: ${error.code}, Message: ${error.message}`);
@@ -651,8 +920,9 @@ export class HomePage implements OnInit {
   async getChallenges() {
     try {
 
+     
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIChallenges().subscribe(
+        this.dooleService.getAPIChallenges({onlyAccepted:1}).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIChallenges()', await res);
             this.setChallengesSlider(res.challenges)
@@ -673,49 +943,17 @@ export class HomePage implements OnInit {
 
   async getExercisesList() {
     try {
-        const exercisesPromise = new Promise((resolve, reject) => {
-            this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
+        const exercisesPromise = await new Promise((resolve, reject) => {
+          this.scpService.getAPIExercises().subscribe(
+          //  this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
                 res => resolve(res),
                 error => reject(error)
             );
         });
-
-        const prescribedAppsApiPromise = new Promise((resolve, reject) => {
-            this.dooleService.getAPI_prescribedApps_ByDate(this.date, this.date).subscribe(
-                res => resolve(res),
-                error => reject(error)
-            );
-        });
-
-        
-        let [exercisesResponse, prescribedAppsResponse] = await Promise.all([exercisesPromise, prescribedAppsApiPromise]) as [any, any[]];;
-
-        prescribedAppsResponse.forEach(item => {
-          let newExercisePlay = {
-              "id": item.id, 
-              "user_id": this.authService.id_user, 
-              "start_date": item.next_session.date, 
-              "end_date": item.next_session.date, 
-
-              "day": null, 
-              "exercise": {
-                  "id": item.next_session.id,
-                  "name": item.name,
-                  "description": item.description,
-                  "scheduled_date": null,
-                  "url": false, 
-                  "cover": item.image,
-                  "internal_name": false 
-              },
-              configurations : {
-                "access_type": "iframe",
-                "iframe_url": item.next_session.iframe_url
-              }
-          };
-      
-          exercisesResponse.exercisePlays.push(newExercisePlay);
-          this.setExercisesSlider(exercisesResponse?.exercisePlays);
-      });
+       
+      //  let [exercisesResponse] = await Promise.all([exercisesPromise]) as [any];;
+      console.log('[TrackingPage] getExercisesList()', exercisesPromise );
+      this.setExercisesSlider(exercisesPromise);
 
     } catch (error) {
         // Handle errors if needed
@@ -835,16 +1073,18 @@ export class HomePage implements OnInit {
     }) */
   }
 
-  setAdvicesSlider(advices, news) {
+  setAdvicesSlider(advices/* , news */) {
     this.advices = advices?.length > 0 ? advices : [];
-    if (news?.length > 0)
+    /* if (news?.length > 0)
       news.forEach(element => {
         element['new'] = true
         this.advices.push(element)
-      });
+      }); */
     this.advices = this.advices.filter(advice => (!this.getStatusable(advice?.statusable, 'hide')))
     this.setSliderOption('advices')
     this.updateAdvicesSlider(advices)
+
+    console.log(this.advices)
   }
 
   updateDietSlider(diets) {
@@ -888,12 +1128,23 @@ export class HomePage implements OnInit {
 
   setGamesSlider(games) {
     console.log('[DiaryPage] setDietSlider()', games);
-    this.games = games?.length > 0 ? games : [];
+   
 
-    if (this.games.length > 0) {
+    if (this.games !== undefined && this.games.length > 0) {
+
+      this.infoGames = {
+        title: this.games[this.currentIndexGame]?.name,
+        hour: this.games[this.currentIndexGame]?.scheduled_date !== null ? this.transformDate(new Date(this.games[this.currentIndexGame]?.scheduled_date), 'HH:mm') : ''
+      }
+
+      
       this.setSliderOption('games')
-      this.updateGamesSlider(games)
+      //this.updateGamesSlider(games)
+
+      this.sliderGames.nativeElement.swiper.activeIndex = this.currentIndexGame;
     }
+
+  
   }
 
   setExercisesSlider(exercises) {
@@ -904,7 +1155,7 @@ export class HomePage implements OnInit {
       this.searchIndexExercise();
       this.infoExercises = {
         title: this.exercises[this.currentIndexExercise]?.exercise?.name,
-        hour: this.exercises[this.currentIndexExercise]?.scheduled_date !== null ? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
+        hour:  this.exercises[this.currentIndexExercise]?.scheduled_date? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
       }
 
       this.setSliderOption('exercises')
@@ -932,23 +1183,58 @@ export class HomePage implements OnInit {
 
       this.searchIndexForm();
       this.infoForms = {
-        title: this.forms[this.currentIndexForm]?.form?.title,
-        hour: this.forms[this.currentIndexForm]?.scheduled_date !== null ? this.transformDate(new Date(this.forms[this.currentIndexForm]?.scheduled_date), 'HH:mm') : ''
+        title: this.forms[this.currentIndexForm]?.title,
+        hour: this.forms[this.currentIndexForm]?.time
       }
       this.setSliderOption('forms')
       this.updateFormsSlider(forms)
     }
   }
 
+  groupelement(elements){
+    let group = []
+    elements.forEach( (element, index) => {
+        const groupName = element?.group?.name
+        if(index == 0 || groupName !== elements[index-1].group?.name){
+          let list = elements.filter(e => (e?.group?.name === groupName) )
+          const item = {group: groupName, elements: list}
+          group.push(item)
+        }
+
+    })
+    return group
+  }
+
+  sortElements(elements){
+    return elements.sort( function (a, b) {
+      if (a?.group?.name > b?.group?.name)
+        return 1;
+      if (a?.group?.name < b?.group?.name)
+        return -1;
+      return 0;
+    })
+  }
+
   setPhysicalSlider(constants) {
     this.activity = []
-    let elements = constants
-    if (elements?.eg) {
-      this.treeIterate(elements?.eg, '');
+    if(constants?.length > 0){
+      this.activity = this.groupelement(
+        this.sortElements(constants)
+      ) 
       this.slideActivityChange()
     }
     this.setSliderOption('physical')
   }
+
+  // setPhysicalSlider(constants) {
+  //   this.activity = []
+  //   let elements = constants
+  //   if (elements?.eg) {
+  //     this.treeIterate(elements?.eg, '');
+  //     this.slideActivityChange()
+  //   }
+  //   this.setSliderOption('physical')
+  // }
 
   treeIterateDiets(obj) {
     this.diets = []
@@ -1254,7 +1540,6 @@ export class HomePage implements OnInit {
       this.drugs = res.drugIntakes;
       this.filterDrugsByStatus();
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching drug intake:', error);
       throw error;
     }
@@ -1283,7 +1568,6 @@ export class HomePage implements OnInit {
         this.setSliderOption('procedures');
       }
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching procedures:', error);
       throw error;
     }
@@ -1362,17 +1646,6 @@ export class HomePage implements OnInit {
       throw error;
     });
 
-    //console.log('dataType: temperature');
-    // this.health.query({
-    //   startDate,
-    //   endDate,
-    //   dataType: 'temperature',
-    // }).then(data => {
-    //   //this.postHealth('temperature', data);
-    // }).catch(error => {
-    //   console.error(error);
-    //   throw error;
-    // });
 
     console.log('dataType: oxygen_saturation');
     this.health.query({
@@ -1406,18 +1679,15 @@ export class HomePage implements OnInit {
       },
 
       (error) => {
-        // Called when error
         console.log('error: ', error);
         throw error;
       },
       () => {
-        // Called when operation is complete (both success and error)
-        // loading.dismiss();
+
       });
   }
 
   agendaTitle(slide) {
-    //console.log('[HomePage] agendaTitle()', slide);
     if (slide?.agenda_type?.type == 'turnos' || slide?.agenda_type?.type == 'turno') {
       return this.translate.instant('agenda.type_turn')
     } else {
@@ -1448,25 +1718,20 @@ export class HomePage implements OnInit {
   }
 
   actionSeeAllAdvices() {
-    //console.log('[HomePage] actionCloseAdvice()');
   }
 
   actionRegisterAdvice(slide) {
-    //console.log('[HomePage] actionRegisterAdvice()', slide.name);
   }
 
   actionCloseAppointment(slide) {
-    //console.log('[HomePage] actionCloseAppointment()', slide.title);
     slide.hide = true
     this.appointment = this.appointment.filter(slide => slide.hide == false)
   }
 
   actionDetailAppointment(slide) {
-    //console.log('[HomePage] actionDetailAppointment()', slide.name);
   }
 
   actionButtonDrugs(slide) {
-    //console.log('[HomePage] actionButtonDrugs()', slide.name);
   }
 
   slideGoalDrag(event) {
@@ -1494,11 +1759,10 @@ export class HomePage implements OnInit {
       const index = this.sliderForms?.nativeElement?.swiper.activeIndex
       let slider = this.forms[index]
       console.log(this.forms)
+
       this.infoForms = {
-        title: slider?.form?.title,
-        hour: slider?.scheduled_date
-          ? this.transformDate(new Date(slider?.scheduled_date), 'HH:mm')
-          : ''
+        title: this.forms[index]?.title,
+        hour: this.forms[index]?.time
       }
 
       console.log(this.infoForms)
@@ -1535,6 +1799,7 @@ export class HomePage implements OnInit {
   }
 
   slideDrugChange() {
+    console.log("entro")
     if (this.drugs !== undefined && this.drugs?.length > 0) {
       const index = this.sliderDrug?.nativeElement?.swiper?.activeIndex
       let slider = this.drugs[index]
@@ -1552,13 +1817,23 @@ export class HomePage implements OnInit {
 
   }
 
-  slideGamesChange() {
+  slideGameChange() {
+    console.log("Entro")
+
+    console.log(this.games)
+    console.log(this.games?.length > 0)
     if (this.games !== undefined && this.games?.length > 0) {
       const index = this.sliderGames?.nativeElement?.swiper.activeIndex
       let slider = this.games[index]
       this.infoGames = {
         title: slider?.items,
+        hour: slider?.scheduled_date ? this.transformDate(new Date(slider?.scheduled_date), 'HH:mm') : ''
       }
+
+      console.log(this.infoGames)
+    }
+    else {
+      this.infoGames = null
     }
   }
 
@@ -1574,20 +1849,21 @@ export class HomePage implements OnInit {
   }
 
   changeTake(id, taked) {
-    taked = (taked == "0") ? "1" : "0";
-    var dict = [];
-    dict.push({
-      key: "date",
-      value: ""
-    });
-    this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
-      //console.log('[HomePage] changeTake()',  json);
-      this.getDrugIntake()
-    }, (err) => {
-      //console.log('[HomePage] changeTake() ERROR(' + err.code + '): ' + err.message);
-      alert('ERROR(' + err.code + '): ' + err.message)
-      throw err;
-    });
+    if(this.permissionService.canManageMedication) {
+      taked = (taked == "0") ? "1" : "0";
+      var dict = [];
+      dict.push({
+        key: "date",
+        value: ""
+      });
+      this.dooleService.postAPIchangeStatedrugIntake(id, taked).subscribe(json => {
+        this.getDrugIntake()
+      }, (err) => {
+        alert('ERROR(' + err.code + '): ' + err.message)
+        throw err;
+      });
+    }
+    
   }
 
   filterDrugsByStatus() {
@@ -1625,15 +1901,18 @@ export class HomePage implements OnInit {
         ((this.hourToMinutes(element?.hour_intake) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.drugs.indexOf(drug);
-      //console.log('[HomePage] searchIndexDrug()', drug, index);
       this.currentIndexDrug = (index > -1) ? index : 0
     }
   }
 
   searchIndexExercise() {
     if (this.exercises !== undefined && this.exercises?.length > 0) {
+      if(!this.exercises[0]?.scheduled_date){
+        this.currentIndexExercise = 0
+        return
+      }
       let exercise = this.exercises?.find(element =>
-        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element?.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.exercises.indexOf(exercise);
       this.currentIndexExercise = (index > -1) ? index : 0
@@ -1644,7 +1923,7 @@ export class HomePage implements OnInit {
   searchIndexForm() {
     if (this.forms !== undefined && this.forms?.length > 0) {
       let form = this.forms?.find(element =>
-        ((this.hourToMinutes(element.scheduled_date?.split(' ')[1]) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
+        ((this.hourToMinutes(element.time) + this.WAIT_TIME) >= (new Date().getHours() * 60 + new Date().getMinutes()))
       )
       let index = this.forms.indexOf(form);
       this.currentIndexForm = (index > -1) ? index : 0
@@ -1677,10 +1956,7 @@ export class HomePage implements OnInit {
   }
 
   doRefresh(event) {
-    //console.log('Begin async operation');
-
     setTimeout(() => {
-      //console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
@@ -1715,7 +1991,6 @@ export class HomePage implements OnInit {
         browser = this.iab.create(item.url, '_blank', iosoption);
         browser.on('exit').subscribe(event => {
           this.ngZone.run(() => {
-            //console.log("anim complete");
             this.header = false
           });
         });
@@ -1732,7 +2007,6 @@ export class HomePage implements OnInit {
   }
 
   sortDate(games) {
-    //console.log('Async operation has ended' ,games);
     return games.sort(function (a, b) {
       if (this.hourToMinutes(a?.scheduled_date?.split(' ')[1]) > this.hourToMinutes(b?.scheduled_date?.split(' ')[1]))
         return 1;
@@ -1746,13 +2020,20 @@ export class HomePage implements OnInit {
   formatSelectedDate(date) {
     let language = this.languageService.getCurrent();
     const datePipe: DatePipe = new DatePipe(language);
-    return datePipe.transform(date, 'EEEE, d MMMM HH:mm');
+    return datePipe.transform(date, 'EEEE, d MMMM, HH:mm');
   }
 
   formatDate(d) {
     if (d) {
       let date = new Date(d)
       return this.transformDate(date, 'dd/MM/yyyy HH:mm')
+    }
+  }
+
+  formatDate2(d) {
+    if (d) {
+      let date = new Date(d)
+      return this.transformDate(date, 'dd/MM/yyyy')
     }
   }
 
@@ -1778,7 +2059,6 @@ export class HomePage implements OnInit {
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      //mode: 'ios',
       subHeader: this.translate.instant('home.enable_notifications'),
       message: this.translate.instant('home.message_enable_notifications'),
       buttons: [
@@ -1830,8 +2110,6 @@ export class HomePage implements OnInit {
         console.log('addElement()', result);
 
         if (result?.data?.error) {
-          // let message = this.translate.instant('landing.message_wrong_credentials')
-          //this.dooleService.presentAlert(message)
         } else if (result?.data?.action == 'add') {
           this.notification.displayToastSuccessful()
           this.getUserInformation()
@@ -1841,11 +2119,9 @@ export class HomePage implements OnInit {
     await modal.present();
   }
 
-
   async activatePendingMedicationPlans() {
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
-      //mode: 'ios',
       header: this.translate.instant('alert.header_atention'),
       message: this.translate.instant('home.pending_medication_planes'),
       buttons: [
@@ -1894,7 +2170,6 @@ export class HomePage implements OnInit {
         this.setSliderOption('agenda');
       }
     } catch (error) {
-      // Handle errors if needed
       console.error('Error fetching agenda:', error);
       throw error;
     }
@@ -1916,7 +2191,6 @@ export class HomePage implements OnInit {
   returnValueProgressBarr(v) {
     let value = parseFloat(v)
     if (0.999 === value) value = 0.99
-    //console.log('[HomePage] returnValueProgressBarr()',  value);
     return value
   }
 
@@ -1956,6 +2230,46 @@ export class HomePage implements OnInit {
   }
 
 
+   nChallengesNotCompleted() {
+    
+  
+    return this.challenges.filter(challenge => !challenge.completed).length;
+  }
+
+
+  public async openAICoachMessage(text:string) {
+
+    let message = `
+    <ion-row class="ion-padding ion-margin">
+      <ion-col class="text-align-center ion-padding" style="padding: 0px" >
+        <img src="${'../../assets/images/doctor_dayPhrase.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
+        <h1>`+ this.translate.instant('home.tip') + `</h1>
+        <ion-text> <p>`+ text+ `</p> </ion-text>
+      </ion-col>
+    </ion-row>`;
+
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      animated: true,
+      backdropDismiss: false,
+      cssClass: "scp-home-alert",
+      message: new IonicSafeString(message),
+      buttons: [
+        {
+          text: this.translate.instant('shared_care_plan.new_scp_alert_cancel'),
+          role: 'cancel',
+        },
+      ],
+    });
+
+
+    await alert.present();
+
+    await alert.onDidDismiss();
+  }
+  
+
+
   navigateToDietsPage() {
     this.router.navigate([ContentTypePath.Diets], { state: { segment: 'diets'}});
   }
@@ -1982,7 +2296,9 @@ export class HomePage implements OnInit {
   }
 
   navigateToExercisesPage(slide: any) {
-    if (!slide?.configurations) this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+    console.log('navigateToExercisesPage()', slide);
+    if (!slide?.configurations) 
+      this.router.navigate([ContentTypePath.ExercisesDetail], { state: { id: slide?.exercise?.id}});
     else {
       this.openShowIframe(slide)
     }
@@ -2005,5 +2321,62 @@ export class HomePage implements OnInit {
 
   }
 
+
+  async setDateDayPhraseReaded(date: Date): Promise<void> {
+    const dateString = date.toISOString(); // Convert Date object to ISO string format
+    Preferences.set({
+      key: 'dateReaded',
+      value: dateString,
+    });
+  }
+
+  async getDatedayPhraseReaded(): Promise<Date> {
+    const result = await Preferences.get({ key: 'dateReaded' });
+
+    if (result.value) {
+      return new Date(result.value); // Convert the ISO string back to a Date object
+    } else {
+      return null;
+    }
+
+    //return new Date(result.value); 
+  }
+ 
+
+  activateList() {
+    this.ngZone.run(() => {
+      console.log("Acivate/des Focus")
+    this.activateFocus = true;
+    });
+  }
+
+  onCancel($event?:any) {
+    this.activateFocus = false;
+  }
+
+  checkBlur() {
+    this.activateFocus = false;
+  }
+
+  checkPermissionsTasks() {
+    return this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewMedication || this.permissionService.canViewDiets ||
+           this.permissionService.canViewGames || this.permissionService.canViewMonitoring
+  }
+
+  handleInput(event) {
+    //this.activateFocus = true;
+    const query = event.target.value.toLowerCase();
+    this.results = this.listFamilyUnit.filter(item => 
+      item.name.toLowerCase().includes(query)
+    );  
+  }
+
+
+
+  truncateText(text: string, maxLength: number): string {
+    if (!text) return ''; // Si no hay texto, devolver una cadena vacía
+    if (text.length <= maxLength) return text; // Si el texto es igual o más corto que maxLength, no lo truncamos
+    return text.substring(0, maxLength) + '...'; // Truncar el texto y agregar "..."
+  }
 
 }

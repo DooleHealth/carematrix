@@ -12,15 +12,17 @@
     <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>
         <ion-item mode="ios" lines="none" [ngClass]="error ? 'form-input-error' : 'form-input'">
           <ion-input (ionBlur)="checkLastValue()" (ionInput)="setValue($event)" (ionChange)="checkValue()"
-          [value]="this.value" [min]="min" [max]="max" type="number" maxlength="20"
+          [value]="value" [min]="min" [max]="max" type="number" maxlength="20"
           inputmode="decimal" [placeholder]="this.data?.placeholder" required="this.data?.required"></ion-input>
         </ion-item>
         <ion-item mode="ios" lines="none">
-          <ion-range (ionChange)="setValue($event)" (touchend)="sendValue($event)" [value]="this.value" [min]="min" [max]="max" [step]="step" snaps="true" [pin]="true">
-            <ion-label slot="start">{{min}}</ion-label>
-            <ion-label slot="end">{{max}}</ion-label>
+          <ion-range (ionChange)="setValue($event)" (userChange)="this.update()" (touchend)="sendValue($event)" [value]="this.value" [min]="min" [max]="max" [step]="step" snaps="true" [pin]="true">
+            <ion-text slot="start">{{min}}</ion-text>
+            <ion-text slot="end">{{max}}</ion-text>
           </ion-range>
         </ion-item>
+
+     
   </ion-grid>
   </div>
   <ng-template #verticalSlider>

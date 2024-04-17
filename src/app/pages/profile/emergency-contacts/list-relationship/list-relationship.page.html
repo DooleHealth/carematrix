@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'emergency_contact.header_relationship' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'emergency_contact.header_relationship' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
   (ionInput)="filterList($event)" >
 </ion-searchbar>
 <div class="spin" *ngIf="this.isLoading">
-  <ion-spinner ></ion-spinner>
+ <ion-spinner ></ion-spinner>
 </div>
 <ion-list *ngFor="let relationship of listRelationship">
   <ion-item (click)="getDataContact(relationship)" class="ion-activatable ripple-parent" routerLink="../edit-contact" [state]="{newContact: emergencyContact, socialRelationType:relationship}"  routerLinkActive='active-item'>

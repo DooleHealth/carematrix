@@ -1,4 +1,4 @@
-# Rosia
+# Inca Health
 
 ## Contiene:
 - Ionic 7 y Capacitor 5
@@ -90,7 +90,7 @@ public class CapacitorFirebaseMessagingService extends FirebaseMessagingService 
       try {
         final String phoneAccountLabel = "Doole";
         PhoneAccountHandle phoneAccountHandle = new PhoneAccountHandle(
-                new ComponentName(this.getApplicationContext(), Class.forName("com.doole.rosia.DooleConnectionService")),
+                new ComponentName(this.getApplicationContext(), Class.forName("com.doole.inca.DooleConnectionService")),
                 phoneAccountLabel);
 
         PhoneAccount phoneAccount = PhoneAccount.builder(phoneAccountHandle, phoneAccountLabel).setCapabilities(PhoneAccount.CAPABILITY_CALL_PROVIDER).setCapabilities(PhoneAccount.CAPABILITY_CONNECTION_MANAGER).setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED).build();
@@ -117,7 +117,7 @@ public class CapacitorFirebaseMessagingService extends FirebaseMessagingService 
 
   public void startMain(RemoteMessage remoteMessage){
     try{
-      Intent startIntent = new Intent(this, Class.forName("com.doole.rosia.MainActivity"));
+      Intent startIntent = new Intent(this, Class.forName("com.doole.inca.MainActivity"));
       startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       startIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 

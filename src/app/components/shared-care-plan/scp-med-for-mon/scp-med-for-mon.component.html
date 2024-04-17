@@ -1,177 +1,69 @@
-<ion-card *ngIf="content?.type != this.segment; else noRouterLink" class="cardProfile1 ion-no-padding"
-  (click)="goTo(content)">
-  <ion-grid class="ion-no-padding" style="height: 100% !important">
-    <ion-row>
-      <ion-col size="3.5" size-md="2" size-lg="1">
-        <ion-thumbnail class="thumbnail">
-          <img class="paddingRight imagefit" [src]="content?.img"
-            onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt="" />
-        </ion-thumbnail>
-      </ion-col>
+<ion-card class="cardProfile1 ion-no-padding" (click)="goTo(content)" style="margin-top: 5%; margin-bottom: 5%;">
 
-      <ion-col size="8.5" size-md="10" size-lg="11">
-        <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
-          <ion-text class="txtSubtitle" style="display: inline-flex !important;">
-            <p>{{ content?.from }} </p>&nbsp;
-            <p *ngIf="content?.to"> --- {{ content?.to }}</p>
-          </ion-text>
-          &nbsp;
-          <ion-icon *ngIf="content?.accepted === false" src="assets/icons/ellipsis orange.svg"
-            (click)="presentAlert()"></ion-icon>
-        </ion-row>
-        <ion-row class="txtSubtitle" *ngIf="content?.type === 'App\\Monitoring'">
-          <p>
-            {{ "form.goals" | translate }} {{ content?.description }}
-          </p>
+  <ion-card-content style="padding-top: 5%; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;">
 
-        </ion-row>
-        <ion-row>
-          <ion-text class="txtSubtitle2 textlines2">{{
-            content?.title
-            }}</ion-text>
 
-          <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-        </ion-row>
+    <ion-grid class="ion-no-padding" style="height: 100% !important">
 
-        <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
-          <p style="color: var(--malva)">
-            {{ "medication.dose" | translate }}
-            {{ content?.description }}
-          </p>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+      <ion-row>
+        <ion-col size="3" style="display: flex; align-items: center;">
+          <ng-container >
+            <!--<ion-icon  *ngIf="content?.type === 'forms'"   [src]= "imgurl"></ion-icon>-->
+            <img *ngIf="content?.type === 'forms'" [src]=  "content?.img ? content?.img :'/assets/icons/form_icon.svg'"  class="img_icon">
+            <img  *ngIf="content?.type === 'medication'" class="img_icon" [src]=  "content?.img ? content?.img : '/assets/icons/pill_drug.svg'">
+
+          </ng-container>
+
+        
+        </ion-col>
+
+
+        <ion-col size="9" size-md="10" size-lg="11">
+          <ion-row>
+            <ion-row class="txtSubtitle2" style="margin-bottom: 2%">
+              <ion-text class="txtSubtitle" style="display: inline-flex !important;">
+                <ion-text *ngIf="content?.from" class="txt-date"> {{'medication.from' | translate}} {{
+                  setFormatDate(content?.from ) }} </ion-text>&nbsp;
+                <ion-text class="txt-date" *ngIf="content?.to"> {{'medication.to' | translate}} {{
+                  setFormatDate(content?.to)}}</ion-text>
+              </ion-text>
+              &nbsp;
+            </ion-row>
+
+          </ion-row>
+
+
+          <ion-row style="margin-bottom: 2%">
+            <ion-text class="txt-title">{{content?.title}}</ion-text>
+
+            <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
+          </ion-row>
+
+          <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
+            <ion-text class="txt-schedule"> {{ "medication.dose" | translate }}
+              {{ getDose(content) }} {{ content?.description }} </ion-text>
+          </ion-row>
+          <ion-row *ngIf="content.type === 'forms'" class="txtSubtitle3">
+            <ion-col>
+              <ion-text class="txt-schedule">{{'form.scheduled' | translate}} {{ content?.frequency }}</ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text
+                *ngIf="content?.hasFormAnswered === true && this.permissionService.canViewAnswerForms && content?.canViewFormAnswered "
+                class="see-answers-btn ion-float-right custom-button" (click)="SeeAnswers($event, content)">{{
+                'form.button.see_answer' | translate }}
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+        </ion-col>
+
+
+
+      </ion-row>
+    </ion-grid>
+
+  </ion-card-content>
 
 </ion-card>
-
-
-<ng-template #noRouterLink> <!-- Contenido del ion-card cuando el tipo no es 1 -->
-
-
-
-  
-  <div *ngIf="(content?.type == 'medication') || (content?.type == 'form' && !content?.accepted) || (content?.type == 'exercises' && !content?.accepted)">
-    
-    <ion-card class="cardProfile1 ion-no-padding" [state]="{ id: content?.id, header: content?.title}">
-      <ion-grid class="ion-no-padding" style="height: 100% !important">
-        <ion-row>
-          <ion-col size="3.5" size-md="2" size-lg="1">
-            <ion-thumbnail class="thumbnail">
-              <img class="paddingRight imagefit" [src]="content?.img"
-                onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt="" />
-            </ion-thumbnail>
-          </ion-col>
-  
-          <ion-col size="8.5" size-md="10" size-lg="11">
-            <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
-              <ion-text class="txtSubtitle" style="display: inline-flex !important;">
-                <p>{{ content?.from }} </p>&nbsp;
-                <p *ngIf="content?.to"> --- {{ content?.to }}</p>
-              </ion-text>
-              &nbsp;&nbsp;
-  
-  
-              <ion-row class="verticalAlignItem">
-                <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
-                  {{ this.state?.name | translate }}&nbsp;
-                </ion-text>
-                <ion-icon *ngIf="this.isPending" class="status-icon" [src]="this.state?.icon"
-                  (click)="presentAlert()"></ion-icon>
-              </ion-row>
-  
-            </ion-row>
-  
-            <ion-row class="txtSubtitle" *ngIf="content?.type === 'App\\Monitoring'">
-              <p>
-                {{ "form.goals" | translate }} {{ content?.description }}
-              </p>
-  
-            </ion-row>
-            <ion-row>
-              <ion-text class="txtSubtitle2 textlines2">{{
-                content?.title
-                }}</ion-text>
-  
-              <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-            </ion-row>
-  
-            <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
-              <p style="color: var(--malva)">
-                {{ "medication.dose" | translate }}
-                {{ content?.description }}
-              </p>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  
-    </ion-card>
-  </div>
-
-<!--   [routerLink]="getRouterLink(content?.type, content?.id)" [state]="{ id: content?.id, header: content?.title}"  routerLinkActive="active-item"
- -->  <div *ngIf="(content?.type == 'form' && content?.accepted) || (content?.type == 'exercises' && content?.accepted)"> 
-    <ion-card class="cardProfile1 ion-no-padding" 
-
-    (click)="goTo(content)"
-
-    
-    >
-      <ion-grid class="ion-no-padding" style="height: 100% !important">
-        <ion-row>
-          <ion-col size="3.5" size-md="2" size-lg="1">
-            <ion-thumbnail class="thumbnail">
-              <img class="paddingRight imagefit" [src]="content?.img"
-                onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt="" />
-            </ion-thumbnail>
-          </ion-col>
-  
-          <ion-col size="8.5" size-md="10" size-lg="11">
-            <ion-row class="verticalAlignItem" style="margin: unset;" *ngIf="content?.type !== 'App\\Monitoring'">
-              <ion-text class="txtSubtitle" style="display: inline-flex !important;">
-                <p>{{ content?.from }} </p>&nbsp;
-                <p *ngIf="content?.to"> --- {{ content?.to }}</p>
-              </ion-text>
-              &nbsp;&nbsp;
-  
-  
-              <ion-row class="verticalAlignItem">
-                <ion-text class="status" [ngStyle]="{ color: this.state?.color }">
-                  {{ this.state?.name | translate }}&nbsp;
-                </ion-text>
-                <ion-icon *ngIf="this.isPending" class="status-icon" [src]="this.state?.icon"
-                  (click)="presentAlert()"></ion-icon>
-              </ion-row>
-  
-            </ion-row>
-  
-            <ion-row class="txtSubtitle" *ngIf="content?.type === 'App\\Monitoring'">
-              <p>
-                {{ "form.goals" | translate }} {{ content?.description }}
-              </p>
-  
-            </ion-row>
-            <ion-row>
-              <ion-text class="txtSubtitle2 textlines2">{{
-                content?.title
-                }}</ion-text>
-  
-              <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-            </ion-row>
-  
-            <ion-row *ngIf="content.type === 'medication'" class="txtSubtitle3">
-              <p style="color: var(--malva)">
-                {{ "medication.dose" | translate }}
-                {{ content?.description }}
-              </p>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  
-    </ion-card>
-
-  </div>
-
-  
-</ng-template>

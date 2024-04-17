@@ -1,9 +1,11 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { catchError } from 'rxjs/operators';
 import { TokenService } from '../services/token.service';
+import { AlertController, ModalController} from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * This interceptor automatically adds the token header needed by our backend API if such token is present
@@ -14,7 +16,7 @@ import { TokenService } from '../services/token.service';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  constructor(private loginService: AuthenticationService, private token: TokenService) {}
+  constructor(private loginService: AuthenticationService, private token: TokenService, private alertController: AlertController, private translate: TranslateService, private ngZone: NgZone, private modalCtrl: ModalController,) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -36,7 +38,10 @@ export class TokenInterceptorService implements HttpInterceptor {
 
       const error = err.error?.message || err.statusText;
       console.error(err);
+      
       return throwError(err);
   }))
   }
+
+  
 }

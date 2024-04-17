@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
@@ -6,6 +6,10 @@ import { DrugsDetailPage } from '../../diary/drugs-detail/drugs-detail.page';
 import { ModalController } from '@ionic/angular';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
+import { DooleService } from 'src/app/services/doole.service';
+import { TranslateService } from '@ngx-translate/core';
+import { PermissionService } from 'src/app/services/permission.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-goals',
@@ -18,9 +22,27 @@ export class GoalsPage implements OnInit {
   iconContent = ContentTypeIcons.Goals
   private scpGoals:SharedCarePlanGoals
   isLoading = false
+  challenge: any;
+  current_level: any;
+  progressBarValue = 0;
+  goalsList = [];
+  goals = [];
+  segment = "goals"
+  @Input()event: any;
+  items = []
+  isRequired = false
+  isChallengeCompleted = false
+  fetching = true;
+
   constructor(
     public router:Router,
     private scpService: SharedCarePlanService,
+    private dooleService: DooleService,
+    private ngZone: NgZone,
+    public translate: TranslateService, 
+    private changeDetectorRef: ChangeDetectorRef,
+    public permissionService: PermissionService,
+    public authService: AuthenticationService
     // private modalCtrl: ModalController,
     // private notification: NotificationService,
     ) { 
@@ -28,11 +50,11 @@ export class GoalsPage implements OnInit {
     }
 
   ngOnInit() {
-
   }
 
   ionViewWillEnter() {
-    this.getGoalImformation()
+    this.refreshPage(null);
+    
   }
 
   getGoalImformation(){
@@ -56,28 +78,168 @@ export class GoalsPage implements OnInit {
           throw err; 
       });
   }
+  async getChallenge() {
+    let goalsAll =[];
+    this.goalsList = [];
+    this.isLoading = true;
+    await this.dooleService.getAPIChallenges2().subscribe(
+      async (res: any) => {
+        await res;
+        let goal= res.challenges
+         goal.forEach(g => {
+          if(g.aderence.isCompleted != true){
 
-  // async addDrugPlan(drug, id){
-  //   const modal = await this.modalCtrl.create({
-  //     component:  DrugsDetailPage,
-  //     componentProps: { drug: drug, id: id},
-  //     cssClass: "modal-custom-class"
-  //   });
+            //pending
+            if (g?.last_accepted_or_declined === null) this.goalsList.push(g)
+            //not declined
+            else if (g?.last_accepted_or_declined?.type !== 'declined')  this.goalsList.push(g)
+          }
+         });
+         this.isLoading = false;
+      }, (err) => {
+        console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
+        this.isLoading = false;
+        throw err;
+      });
+  }
 
-  //   modal.onDidDismiss()
-  //     .then((result) => {
-  //       console.log('addDrugPlan()', result);
+  async getChallengeCompleted() {
+    let goalsAll =[];
+    this.goalsList = [];
+    this.isLoading = true;
+    await this.dooleService.getAPIChallenges2().subscribe(
+      async (res: any) => {
+        await res;
+        let goal = res.challenges
 
-  //       if(result?.data?.error){
-  //        // let message = this.translate.instant('landing.message_wrong_credentials')
-  //         //this.dooleService.presentAlert(message)
-  //       }else if(result?.data?.action !== undefined){
-  //         this.notification.displayToastSuccessful()
-  //         //this.segmentChanged()
-  //       }
-  //     });
+         goal.forEach(g => {
+          if(g.aderence.isCompleted){
+            console.log("PUSH COMPLETED GOAL")
+            this.goalsList.push(g)
+          }
+         });
+         console.log(this.goalsList)
+         this.isLoading = false;
+      }, (err) => {
+        console.log('[DetailPage] getAPIChallenge() ERROR(' + err.code + '): ' + err.message);
+        throw err;
+      });
+  }
+ 
 
-  //     await modal.present();
-  //   }
+  setChallenge(res) {
+    this.goals = res?.current_level?.goals;
+    this.current_level = res?.current_level;
+    this.challenge = res?.challenge;
+    this.isChallengeCompleted = res.challenge_completed
+    let name = '';
+    let message = '';
+    let link = '';
+    let id = '';
+    let tempGoals = [];
+    let type = ''
+    this.goals?.forEach(goal => {
+      if(goal?.required)
+      this.isRequired = true
+      switch (goal?.goalable_type) {
+        case "App\\Form":
+
+          if (goal.hasOwnProperty("form")) {
+            id = goal?.form?.id;
+            message = this.translate.instant("health_path.form") //+ '"' + goal?.form?.title + '"';
+            name =   goal?.form?.title
+          } else {
+            id = goal?.goalable?.id;
+            message = this.translate.instant("health_path.form")// + '"' + goal?.goalable?.title + '"';
+            name =   goal?.goalable?.title
+          }
+          link = '/journal/add';
+          break;
+
+        case "App\\Drug":
+          id = goal?.drug?.id;
+          name =  goal?.drug?.name;
+          message = this.translate.instant("health_path.drug");
+          link = '/form';
+          break;
+        case "App\\News":
+          id = goal?.news?.id;
+          name =   goal?.news?.subject;
+          message = this.translate.instant("health_path.news") //+ '"' + goal?.news?.subject + '"';
+          link = '/form';
+          break;
+        case "App\\Advice":
+          id = goal?.advice?.id;
+          name =  goal?.advice?.name;
+          message = this.translate.instant("health_path.advice") //+ '"' + goal?.advice?.name + '"';
+          link = '/form';
+          break;
+        case "App\\Diet":
+          id = goal?.diet?.id;
+          name =  goal?.diet?.name;
+          message = this.translate.instant("health_path.diet") //+ '"' + goal?.diet?.name + '"';
+          link = '/form';
+          break;
+        case "App\\Element":
+          id = goal?.element?.id;
+          name =  goal?.element?.name;
+          message = this.translate.instant("health_path.measure") //+ '"' + goal?.element?.name + '"';
+          link = '/form';
+          break;
+        case "App\\Game":
+          if (goal?.game?.form) {
+            id = goal?.game?.form_id;
+            name =  goal?.game?.form?.title;
+            type = 'form';
+          }else{
+            id = goal?.game?.id;
+            name =  goal?.game?.title;
+            type = 'game';
+            link = goal?.game?.url_access;
+          }
+          message = this.translate.instant("health_path.game") //+ '"' + goal?.element?.name + '"';
+          break;
+        default:
+          name = '';
+          message = ''
+          link = '';
+          console.error("goal.goalable_type not found: ", goal)
+          break;
+      }
+      tempGoals.push({ name: name, message: message, link: link, id: id, goalable_type: goal?.goalable_type, completed: goal?.completed, required: goal?.required, type: type })
+    });
+    
+    this.goalsList = tempGoals;
+    console.log("gsetChallenge() ", this.goalsList)
+    //this.progressBarValue = this.current_level?.percentage_completed > 0 ? this.current_level?.percentage_completed / 100 : 0;
+    this.fetching = false;
+    this.changeDetectorRef.detectChanges();
+
+  }
+
+  async segmentChanged($event?){
+      
+    console.log('[DiaryPage] segmentChanged()', this.segment);
+    console.log('[DiaryPage] event()', $event);
+    this.items = []
+    switch (this.segment) {
+      case 'goals':
+        //await this.getDietList()
+        await this.getChallenge()
+        break;
+      case 'achievements':
+        await this.getChallengeCompleted()
+        break;
+      default:
+        console.log('Segment not found');
+        break;
+    }
+  }
+
+
+  refreshPage(data: any) {
+    console.log("Entro desde goal page")
+    if (this.permissionService.canViewGoals) this.getChallenge();
+  }
 
 }

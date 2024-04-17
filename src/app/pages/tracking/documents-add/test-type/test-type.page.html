@@ -1,20 +1,20 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start" (click)="closeModal()">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'documents_add.header_test_type' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'documents_add.header_test_type' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" >
   <ion-searchbar
-  [animated]="true"
+  mode="ios" 
   (ionInput)="filterList($event)" >
 </ion-searchbar>
 
 <div class="spin" *ngIf="this.isLoading">
-  <ion-spinner ></ion-spinner>
+ <ion-spinner ></ion-spinner>
 </div>
 
 <ion-list *ngFor="let test of listTestType">

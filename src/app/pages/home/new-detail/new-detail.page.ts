@@ -5,6 +5,10 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
+import { NavigationService } from 'src/app/services/navigation.service';
+import { LanguageService } from 'src/app/services/language.service';
+import { DateService } from 'src/app/services/date.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-detail',
@@ -35,7 +39,8 @@ export class NewDetailPage implements OnInit {
     public alertCtrl: AlertController,
     public navCtrl: NavController,
     private dooleService: DooleService,
-    public sanitizer: DomSanitizer, private router: Router) {
+    private navigation: NavigationService,
+    public sanitizer: DomSanitizer, private router: Router, private languageService: LanguageService, public dateService: DateService) {
   }
 
   ngOnInit() {
@@ -48,6 +53,13 @@ export class NewDetailPage implements OnInit {
     if(this.id)
       this.getDetailNew();
   }
+
+  getImageSource(listcontets): string {
+    if (listcontets?.cover) return listcontets.cover
+    else if (listcontets?.image?.temporaryUrl) return listcontets.image.temporaryUrl;
+    else return '/assets/images/shared-care-plan/image-not-found.png';
+  }
+  
 
   async getDetailNew(onlyStatus?){
     console.log('[DiaryPage] getDetailNew()');
@@ -168,6 +180,31 @@ export class NewDetailPage implements OnInit {
     /* else
       this.router.navigate([`/advices`]); */
   }
+
+  // async close() {
+  //   this.navigation.close(this.modalCtrl)
+  // }
+
+
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getFormatSelectedDate2());
+  }
+
+  extractText(htmlContent: string): string {
+    // Si el contenido es nulo o indefinido, retorna una cadena vacía
+    if (!htmlContent) {
+      return '';
+    }
+
+    // Utiliza una expresión regular para eliminar las etiquetas HTML
+    const regex = /(<([^>]+)>)/ig;
+    const result = htmlContent.replace(regex, "");
+
+    return result;
+  }
+
 
 
 }

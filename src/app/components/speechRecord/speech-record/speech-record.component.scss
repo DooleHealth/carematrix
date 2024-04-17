@@ -1,0 +1,24 @@
+.search-button {
+    position: absolute;
+    top: 50%;
+    right: 2px; 
+    transform: translateY(-50%);
+    z-index: 1; 
+  }
+
+  .searchV2 {
+    position: absolute;
+    top: 13%;
+    right: 2px; 
+    transform: translateY(-50%);
+    z-index: 1; 
+  }
+  
+  .searchbar-input {
+    padding-right: 40px; 
+  }
+  ion-searchbar {
+    display: flex;
+    align-items: center;
+  }
+  

@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'diet.detail' | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{'diet.detail' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="spin" *ngIf="this.isLoading;else showDiet">
-    <ion-spinner ></ion-spinner>
+    <ion-spinner name="bubbles" ></ion-spinner>
   </div>
   <ng-template #showDiet>
   <ion-card class="cardProfile">
@@ -36,7 +36,7 @@
 
 
     <div class="main-container" *ngIf="linkpdf2 || video">
-      <ion-text class="txtTitleNoMargin">Enlaces directos</ion-text>
+      <ion-text class="txtTitleNoMargin">{{'advices.links' |translate}}</ion-text>
     </div>
     <ion-card class="cardProfilePadding" *ngIf="video"  (click)="openVideo()">
       <ion-row>

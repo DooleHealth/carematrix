@@ -25,7 +25,6 @@ tmp/
 temp/
 hooks/
 platforms/
-plugins/
 plugins/android.json
 plugins/ios.json
 $RECYCLE.BIN/
@@ -37,7 +36,7 @@ ios/capacitor-cordova-ios-plugins
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-*.xml
+#*.xml
 android/.idea/misc.xml
 #*.json
 package-lock.json

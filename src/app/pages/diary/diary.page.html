@@ -1,393 +1,124 @@
 <ion-header>
-  <ion-toolbar mode="ios" [ngSwitch]="segment">
-    <ion-row class="textBlueCentered1">
-      <ion-col size="2">
-        <ion-buttons>
-          <ion-button type="submit" float-left ion-button color="primary" (click)="prev()">
-            <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-col>
-
-      <ion-col size="8" class="textBlueCentered1">
-        <swiper-container #slides>
-          <swiper-slide>
-            <p>{{ formatSelectedDate(date) | titlecase}}</p>
-          </swiper-slide>
-        </swiper-container>
-      </ion-col>
-      <ion-col size="2">
-        <ion-buttons>
-          <ion-button type="submit" float-right ion-button color="primary" (click)="next()">
-            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row>
-    <!-- hide medication shipping cart -->
-
-    <ion-buttons slot="end" *ngSwitchCase="'medication'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addDrug()"></ion-icon>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-
-    <ion-buttons slot="end" *ngSwitchCase="'health'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
+    <ion-title class="toolbarTitle">{{ 'diet.detail' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/profile">
+        <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
   <!-- SegmentBar -->
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
-    <ion-segment-button *ngIf="role?.component?.diet" value="diets">
-      <ion-label>{{'diary.field_diet' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.drug" value="medication">
-      <ion-label>{{'diary.field_drug' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.game" value="games">
-      <ion-label>{{'diary.field_game' | translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button *ngIf="role?.component?.element" value="health">
-      <ion-label>{{'diary.field_health' | translate}}</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <ion-row style="background-color: var(--secondary-bkg); padding-top: 3%;">
+    <ion-col size="0.5"></ion-col>
+    <ion-col size="11" style="display: flex; justify-content: center;">
+      <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="segment" scrollable>
+        <ion-segment-button *ngIf="role?.component?.diet" value="diets">
+          <ion-label>{{'diary.field_today' | translate}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="role?.component?.drug" value="Receipt">
+          <ion-label>{{'diary.field_recipes' | translate}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col size="0.5"></ion-col>
 
-  <!-- Slides-->
-  <!-- <ion-row>
-      <ion-col size="2">
-        <ion-buttons >
-          <ion-button type="submit" float-left ion-button  color="primary" class="btnPrev" (click)="prev()"><ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon></ion-button>
-        </ion-buttons>
+    <ion-row style="width: 100%;">
+      <ion-col size="12">
+        <app-caregiver></app-caregiver>
       </ion-col>
+    </ion-row>
+  </ion-row>
 
-      <ion-col size="8" class="textBlueCentered">
-        <swiper-container #slides >
-          <swiper-slide>
-            <p>{{ formatSelectedDate(date) | titlecase}}</p>
-          </swiper-slide>
-        </swiper-container>
-      </ion-col >
-      <ion-col size="2">
-        <ion-buttons >
-          <ion-button type="submit" float-right ion-button color="primary" class="btnNext" (click)="next()"><ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon></ion-button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row> -->
+
 
   <!-- segment -->
+  <div class="verticalLine2" [ngSwitch]="segment"></div>
   <div class="verticalLine2" [ngSwitch]="segment">
-    <!-- Diets-->
+    <!-- Diets Today-->
     <div *ngSwitchCase="'diets'">
-      <ng-container *ngIf="this.isLoadingDiets; else second">
-        <ion-spinner ></ion-spinner>
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+       <ion-spinner ></ion-spinner>
       </ng-container>
-      <ng-template #second>
-        <ng-container *ngIf="this.listDiets.length > 0 || (this.diets !== undefined) ;else third">
-          <ion-list>
-            <ion-card class="cardProfile" *ngIf="this.diets?.id">
-              <ion-item lines="none" routerLink="diets-detail" [state]="{id: diets?.id}" routerLinkActive="active-item">
-                <ion-col size="2">
-                  <ion-img src="assets/icons/apple-diet.svg" style="margin-right: 5px">
-                  </ion-img>
-                </ion-col>
-                <ion-label style="color: #e67e22">{{diets?.name}}</ion-label>
-                <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-              </ion-item>
-            </ion-card>
 
-            <ion-card *ngFor="let item of this.listDiets" class="cardProfile">
-              <ion-item *ngIf="item.expanded" lines="none" (click)="expandItemDiet(item)">
-                <ion-col size="2">
-                  <ion-img src="assets/icons/apple-diet.svg" style="margin-right: 5px">
-                  </ion-img>
-                </ion-col>
-                <ion-label style="color: #e67e22">{{item.name }}</ion-label>
-                <p style="color: #e67e22"> {{ formatHour(item.date.split(' ')[1]) }}</p>
-                <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
-              </ion-item>
-              <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItemDiet(item)">
-                <ion-col size="2">
-                  <ion-img src="assets/icons/Union.svg" style="margin-right: 5px">
-                  </ion-img>
-                </ion-col>
-                <ion-label style="color: #e67e22">{{item.name }}</ion-label>
-                <p style="color: #e67e22">
-                  {{ formatHour(item.date.split(' ')[1]) }}
-                </p>
-                <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
-              </ion-item>
+      <ng-template #finishedLoading>
+        <ion-list *ngIf="listDiets.length > 0; else noData">
+          <ion-grid *ngFor="let content of listDiets" class="ion-no-padding">
+            <ion-row>
 
-              <app-expandable expandHeight="250px" [expanded]="item.expanded">
-                <ion-list *ngFor="let e of item.items;let i= index">
-                  <ion-item [lines]="(i== item.items.length-1)? 'none':'full' " (click)="goDetailRecipe(e)">
-                    <ion-label>
-                      - {{e.item?.name[0]?.toUpperCase()+''+
-                      e.item?.name?.substr(1).toLowerCase()}} ({{ e?.quantity
-                      }})</ion-label>
-                    <ion-icon *ngIf="e.item_type == 'App\\Receipt'" slot="end" size="small"
-                      name="chevron-forward-outline"></ion-icon>
-                  </ion-item>
-                </ion-list>
-                <!--  <ion-button  size="small" color="transparent" class="buttonLink">{{'button.detail' | translate}}</ion-button>&nbsp;  -->
-              </app-expandable>
-            </ion-card>
-          </ion-list>
-        </ng-container>
+              <ion-col size="0.8">
+                <ion-icon ChangeIconColor [timeOfDay]="content?.date"  class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+              </ion-col>
+              
+
+              <ion-col size="11.2" class="text-column" style="display: flex; align-items: center;">
+                <ion-text class="txt-momentDay" ChangeColor [timeOfDay]="content?.date" >{{ content?.name}}</ion-text>
+              </ion-col>
+
+
+            
+            </ion-row>
+            <ion-row *ngFor="let diets of content.items">
+              <ion-col size="0.8" style="align-items: center;">
+                <ion-icon ChangeLineColor [timeOfDay]="diets?.date_intake"  style="font-size: large; width: 100%; height: 100%;" 
+                  src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
+              </ion-col>
+              <ion-col size="11.2">
+                <app-content-date [content]="diets" ></app-content-date>
+              </ion-col>
+
+            </ion-row>
+           
+          </ion-grid>
+
+        </ion-list>
       </ng-template>
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+
+
+      <ng-template #noData>
+        <app-no-data></app-no-data>
       </ng-template>
 
     </div>
-    <!-- Medication-->
-    <div *ngSwitchCase="'medication'">
-       <!--medication shipping cart buttton-->
-      <ng-container *ngIf="this.isLoadingDrugs;else second">
-        <div class="spin" >
-          <ion-spinner ></ion-spinner>
-        </div>
-
+    <!-- Recipes-->
+    <div *ngSwitchCase="'Receipt'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+       <ion-spinner ></ion-spinner>
       </ng-container>
-      <ng-template #second>
-        <ng-container *ngIf="this.listDrug.length > 0;else third">
-          <br>
-          <ion-list *ngFor="let list of this.listDrug">
-            <ion-label class="txtTitle">{{'diary.field_drug' | translate}} {{list.date|
-              titlecase}}</ion-label>
-            <ion-card *ngFor="let item of list.itemDrugs" class="cardProfilePaddingBottom" >
-              <ion-item *ngIf="item.expanded" lines="none" (click)="expandItem(item)">
-                <ion-col size="2">
-                  <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
-                    style="margin-right: 5px"></ion-img>
-                  <ion-img *ngIf="item.item.forgotten == 0" src="assets/icons/Pill_green.svg" style="margin-right: 5px">
-                  </ion-img>
-                  <ion-img *ngIf="item.item.forgotten == 1" src="assets/icons/Pill_red.svg" style="margin-right: 5px">
-                  </ion-img>
-                </ion-col>
-                <ion-label *ngIf="item.item.forgotten == 2" color="primary">{{ (item.item.alias !== null)?
-                  item.item.alias: item.item.name
-                  }}
-                </ion-label>
-                <ion-label *ngIf="item.item.forgotten == 1" color="danger">{{ (item.item.alias !== null)?
-                  item.item.alias: item.item.name
-                  }}
-                </ion-label>
-                <ion-label *ngIf="item.item.forgotten == 0" color="success">{{ (item.item.alias !== null)?
-                  item.item.alias: item.item.name
-                  }}
-                </ion-label>
-                <ion-text style="align-items: center;" class="txtTitleTrackingLittle">{{item.item.hour_intake}}</ion-text>
-                <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
-              </ion-item>
-              <ion-item *ngIf="!item.expanded" lines="none" (click)="expandItem(item)">
-                <ion-col size="2">
-                  <ion-img *ngIf="item.item.forgotten == 2" src="assets/icons/Pill_primary.svg"
-                    style="margin-right: 5px"></ion-img>
-                  <ion-img *ngIf="item.item.forgotten == 0" src="assets/icons/Pill_green.svg" style="margin-right: 5px">
-                  </ion-img>
-                  <ion-img *ngIf="item.item.forgotten == 1" src="assets/icons/Pill_red.svg" style="margin-right: 5px">
-                  </ion-img>
-                </ion-col>
-                <ion-label *ngIf="item.item.forgotten == 2" color="primary">{{ (item.item.alias !== null)?
-                  item.item.alias: item.item.name
-                  }}
-                </ion-label>
-                <ion-label *ngIf="item.item.forgotten == 1" color="danger">{{ (item.item.alias !== null)?
-                  item.item.alias: item.item.name
-                  }}
-                </ion-label>
-                <ion-label *ngIf="item.item.forgotten == 0" color="success">{{ (item.item.alias !== null)?
-                  item.item.alias: item.item.name
-                  }}
-                </ion-label>
-                <ion-text style="align-items: center;" class="txtTitleTrackingLittle">{{item.item.hour_intake}}</ion-text>
-                <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
-              </ion-item>
 
-              <app-expandable expandHeight="200px" [expanded]="item.expanded">
-                <ion-item lines="none">
-                  <p class="txtTitleTrackingDate">
-                    {{item.item.name}} (Dosi: {{item.item.dose}})
-                  </p>
-                </ion-item>
-                <div class="main-container3">
-                  <ion-button *ngIf="item.item.origin == 1 && item.item.frequency != 'instant'" size="small" color="transparent" class="buttonLink"
-                    (click)="this.addDrugPlan(item.item, item.item.id)">{{ 'detail_contact.button_edit' | translate }}
-                  </ion-button>&nbsp;
-                  <ion-button *ngIf="item.item.forgotten == 2 && !this.isFutureDay" color="primary"
-                    (click)="changeTake(item.item.id, item.item.state)">{{ 'button.take' | translate }}</ion-button>
 
-                  <ion-button *ngIf="item.item.forgotten == 1 && !this.isFutureDay" color="danger"
-                    (click)="changeTake(item.item.id, item.item.state)">{{ 'button.forgotten' | translate }}<ion-icon
-                      style="margin-left: 5px" name="alert-outline" color="light"></ion-icon>
-                  </ion-button>
 
-                  <ion-button *ngIf="item.item.forgotten == 0 && !this.isFutureDay" color="success"
-                    (click)="changeTake(item.item.id, item.item.state)">{{ 'button.taked' | translate }}<ion-icon
-                      style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
-                  </ion-button>&nbsp;&nbsp;&nbsp;
-                  <app-info info="{{'info.medication' | translate}}"></app-info>
-                </div>
-              </app-expandable>
-            </ion-card>
-          </ion-list>
+     
 
+      <ng-template #finishedLoading>
+
+        <!--<ion-searchbar *ngIf="this.permissionService.canViewRecipes" mode="ios" (ionInput)="filterListRecipes($event)"
+        (ionClear)="this.getRecipesist()" placeholder="{{ 'advices.searchbar' | translate}}" style="padding-bottom: 0px;">
+      </ion-searchbar>-->
+
+          <!-- Componente de grabación de voz -->
+ 
+    <app-speech-record  class="custom-speech-record"  (record)="filterListRecipes($event)" (loadList)="getRecipesist()" *ngIf="permissionService.canViewRecipes"></app-speech-record>
+  
+        <ng-container *ngIf="!this.isLoading && items.length > 0; else noData">
+
+      
+          <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items"
+            [segment]="this.segment"></app-view-more-information>
         </ng-container>
 
-        <div class="send-drugs">
-          <ion-toolbar>
-            <ion-buttons slot="secondary">
-              <ion-button routerLink="/medication" routerLinkActive='active-item'>{{'medication.send_medication' | translate}}
-                <ion-icon slot="start" name="send-outline"></ion-icon>
-              </ion-button>
-
-            </ion-buttons>
-            <ion-buttons slot="primary">
-
-            </ion-buttons>
-            <ion-title></ion-title>
-          </ion-toolbar>
-
-        </div>
+        <ng-template #noData>
+          <app-no-data></app-no-data>
+        </ng-template>
+      </ng-template>
 
 
-      </ng-template>
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ng-template>
-    </div>
-    <!-- Games -->
-    <div *ngSwitchCase="'games'">
-      <div class="spin" *ngIf="this.isLoadingGames; else second">
-        <ion-spinner></ion-spinner>
-      </div>
-      <ng-template #second>
-        <ng-container *ngIf="this.listGames.length > 0;else third">
-          <ion-list>
-            <ion-card class="cardProfile" *ngFor="let item of this.listGamePlays">
-              <img *ngIf="item.item?.file !== null" (click)="openGames(item.item)"
-                [src]="item?.item?.file?.temporaryUrl" />
-              <ion-item lines="none" (click)="openGames(item.item)">
-                <div>
-                  <ion-img src="assets/icons/game-controller.svg" style="width: 130%">
-                  </ion-img>
-                </div>
-                <ion-label style="color: #9b59b6">
-                  &nbsp;&nbsp; {{item.item.title}}</ion-label>
-
-<!--                 <div>
-                  <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-                </div> -->
-                <ion-label style="color: #9b59b6">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  {{formatHourGamePlay(item?.item?.scheduled_date)}}
-                </ion-label>
-              </ion-item>
-              <ion-card-content *ngIf="item.item?.description" [innerHtml]="item.item?.description? (item.item?.description  | safeHtml):'' ">
-              </ion-card-content>
-              <ion-button size="small" color="transparent" class="buttonLink" (click)="openGames(item.item)">{{'button.detail' | translate}}
-              </ion-button>
-              &nbsp;
-            </ion-card>
-          </ion-list>
-        </ng-container>
-      </ng-template>
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ng-template>
-    </div>
-    <!-- Health -->
-    <div *ngSwitchCase="'health'">
-      <ng-container *ngIf="this.isLoadingElements; else second">
-        <ion-spinner ></ion-spinner>
-      </ng-container>
-      <ng-template #second>
-        <ng-container *ngIf="this.groupedElements.length > 0;else third">
-          <br />
-          <ion-list *ngFor="let group of this.groupedElements">
-            <ion-label *ngIf="!this.isLoadingElements && group?.elements.length > 0" class="txtTitle">{{group.group }}</ion-label>
-            <ion-card class="cardProfile" *ngFor="let element of this.group.elements">
-              <ion-item lines="none" routerLink="/activity-goal" [state]="{id: element.id, header:element.name}"
-                routerLinkActive="active-item">
-                <div class="verticalLine" [ngStyle]="{'background': (element?.color)? element?.color: '#bcbcbc'}"></div>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-icon style="align-items: left; margin-right: 5px; zoom: 2"
-                        [ngStyle]="{'color': (element?.color)? element?.color: '#bcbcbc' }"
-                        name="{{element?.icon? element?.icon: 'fitness-outline'}}"></ion-icon>
-                    </ion-col>
-                    <ion-col size="8">
-                      <ion-card-title class="txtTitleGoals">{{element.name}}</ion-card-title>
-                    </ion-col>
-                    <ion-col size="2">
-                      <ion-label style="text-align: right">
-                        <ion-icon class="arrow" slot="end" size="small" name="chevron-forward-outline"></ion-icon>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-col size="12">
-                    <ion-card-title *ngIf="element?.value" style="padding-left: 2px;" class="txtTitleGoals"
-                    >{{element.value}} {{element.units}}
-                  </ion-card-title>
-                  <ion-card-title *ngIf="!element?.value" style="padding-left: 2px;" class="txtTitleGoals"
-                    >{{ 'home.get_firts_data' | translate | uppercase}}
-                  </ion-card-title>
-                  </ion-col>
-                </ion-grid>
-              </ion-item>
-            </ion-card>
-          </ion-list>
-        </ng-container>
-      </ng-template>
-      <ng-template #third>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-icon class="iconNoData" name="heart"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h4 style="text-align: center">{{ "no_data"| translate}}</h4>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ng-template>
     </div>
   </div>
 </ion-content>

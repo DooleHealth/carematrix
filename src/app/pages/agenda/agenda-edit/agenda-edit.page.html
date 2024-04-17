@@ -16,8 +16,8 @@
         <ion-icon class="primaryIcon" name="close" text=""></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title *ngIf="this.event?.origin == 1 && this.event?.staff?.length > 0" text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title>
-    <ion-title *ngIf="this.event?.origin == 1 && !this.event?.staff || !this.event" text-wrap>{{ (isNewEvent)? ('appointment.add_event' | translate): ('appointment.edit_event' | translate) }}</ion-title>
+    <ion-title class="toolbarTitle" *ngIf="this.event?.origin == 1 && this.event?.staff?.length > 0" text-wrap>{{ (isNewEvent)? ('appointment.add_appointment' | translate): ('appointment.edit_appointment' | translate) }}</ion-title>
+    <ion-title class="toolbarTitle" *ngIf="this.event?.origin == 1 && !this.event?.staff || !this.event" text-wrap>{{ (isNewEvent)? ('appointment.add_event' | translate): ('appointment.edit_event' | translate) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button  slot="end" (click)="submit()">
         <ion-icon class="primaryIcon" name="checkmark-outline"></ion-icon>
@@ -70,12 +70,12 @@
             <h5 >{{'reminder.field_start' | translate}}</h5>
             <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
-          <ion-datetime-button slot="end" datetime="date"></ion-datetime-button>
+          <ion-datetime-button firstDayOfWeek="1" slot="end" datetime="date"></ion-datetime-button>
         </ion-item>
 
         <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
           <ng-template>
-            <ion-datetime mode="ios" color="primary" [locale]="this.locale" [min]="this.date" presentation="date-time" id="date" (ionChange)="this.isSubmittedStartDate = false;" formControlName="date"></ion-datetime>
+            <ion-datetime firstDayOfWeek="1" mode="ios" color="primary" [locale]="this.locale" [min]="this.date" presentation="date-time" id="date" (ionChange)="this.isSubmittedStartDate = false;" formControlName="date"></ion-datetime>
             <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
               <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
               <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
@@ -116,6 +116,20 @@
     </ion-card>
   </form>
   <div class="spinnerCenter">
-  <ion-spinner *ngIf="this.isSaving"  ></ion-spinner>
+  <ion-spinner name="bubbles" *ngIf="this.isSaving"  ></ion-spinner>
   </div>
 </ion-content>
+
+<ion-footer>
+ 
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <!-- Floating Button -->
+    <ion-button color="primary" shape="round" class="floating-button ion-margin" style="margin-bottom: 66px;" >
+      {{'agenda.create_reminder' | translate}}
+    </ion-button>
+  </div>
+
+
+
+</ion-footer>
+

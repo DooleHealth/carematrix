@@ -31,6 +31,8 @@ export class ExercicesDetailComponent  implements OnInit {
     this.id = history.state.id;
     if(this.id)
     this.getDetailExercise();
+
+    console.log('[ExercisePage] ionViewWillEnter() id', this.id);
   }
   getDetailExercise() {
     console.log('[ExercisePage] getDetailExercise()', this.programable_id);
@@ -38,12 +40,11 @@ export class ExercicesDetailComponent  implements OnInit {
     let params = {programable_play: this.programable_id, challenge_id: this.challengeId} 
 
     console.log(params)
-    this.dooleService.getAPIExerciseDetail(this.programable_id, null/* , params */).subscribe(
+    this.dooleService.getAPIExerciseDetail(this.id, params).subscribe(
       async (res: any) =>{
         console.log('[ExercisePage] getDetailExercise()', await res);
         if(res.success){
           this.exercise=res.exercise;
-          //setTimeout(()=> this.querySelectorButton(), 500);
         }
    
         this.isLoading = false

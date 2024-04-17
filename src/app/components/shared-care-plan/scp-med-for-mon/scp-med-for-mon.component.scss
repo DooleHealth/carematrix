@@ -27,3 +27,50 @@
   width: 98px !important;
   height: 105px !important;
 }
+
+ion-card {
+  box-shadow: none !important;
+}
+
+.txt-title {
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  color: #22577A;
+}
+
+.txt-schedule {
+  font-family: 'Poppins-Regular';
+  font-size: 10px;
+  line-height: 10px;
+  color: var(--malva);
+}
+
+.txt-hour {
+  font-family: 'Poppins-bold';
+  font-size: 11px;
+  line-height: 1wpx;
+  color: var(--malva);
+}
+
+.txt-date {
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  line-height: 18px;
+  color: #575757;
+}
+
+.see-answers-btn {
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  color: var(--seeAllColor); 
+  padding-right: 10%;
+}
+
+.img_icon{
+  width: 92%;
+  height: 170%; 
+  margin: -2px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}

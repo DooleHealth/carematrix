@@ -11,7 +11,9 @@ export class ContentComponent  implements OnInit {
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("content", this.content)
+  }
 
   goTo(type){
       this.redirect.emit({type: type})

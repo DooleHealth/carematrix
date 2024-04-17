@@ -72,8 +72,16 @@ export class DateService {
   public getformatSelectedDate(){
     let lang =  this.translate.currentLang;
     let format = 'EEEE, d MMMM'
-    if(lang === 'en' )
-      format = 'MMMM d, EEEE';
+    /* if(lang === 'en' )
+      format = 'MMMM d, EEEE'; */
+    return format;
+  }
+
+  public getFormatSelectedDate2() {
+    let lang =  this.translate.currentLang;
+    let format = 'd, MMM YYYY'
+    /* if(lang === 'en' )
+      format = 'MMMM d, EEEE'; */
     return format;
   }
 
@@ -157,10 +165,10 @@ export class DateService {
 
   public ddMMyFormat(date){
     let lang =  this.translate.currentLang;
-    let format = 'dd MMM y';
+    let format = 'dd MMM, y';
 
     if(lang === 'en' )
-      format = 'MMM dd y';
+      format = 'MMM dd, y';
 
       let day = this.transformDate(date, format);
       return day[0].toUpperCase() + day.slice(1);
@@ -208,8 +216,8 @@ export class DateService {
     let lang =  this.translate.currentLang;
     let format = 'EEEE, d MMMM'
 
-    if(lang === 'en' )
-      format = 'MMMM d, YYYY';
+   /*  if(lang === 'en' )
+      format = 'MMMM d, YYYY'; */
 
     let day = this.transformDate(date, format);
     return day[0].toUpperCase() + day.slice(1);
@@ -270,7 +278,10 @@ export class DateService {
     return format;
 
   }
-
+  public yyyyMMddTHHmmssSSSZFormat(date?){
+    const fechaFormateada =this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS\'Z\'');
+    return fechaFormateada;
+  }
 
   public getLongDateFormat(){
     let lang =  this.translate.currentLang;
@@ -360,6 +371,19 @@ export class DateService {
     }
   }
 
+  public getDateMonDay(date){
+    let format = 'MMM d';
+    if(date){
+      date = new Date(date)
+      return this.transformDate(date,  format)
+    }
+  }
+
+  transformDateyyyyMMdd(date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
+  
+
 
   ddMMyyyy(date){
     let lang =  this.translate.currentLang;
@@ -440,8 +464,6 @@ export class DateService {
   }
 
   format24h(time) {
-
-    console.log("ENTRO  " +  time)
     let lang =  this.translate.currentLang;
     if(lang === 'en'){
       // Check correct time format and split into components

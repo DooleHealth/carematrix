@@ -6,6 +6,7 @@ import { AlertController, IonPopover, LoadingController, ModalController } from 
 import { TranslateService } from '@ngx-translate/core';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { FirebaseProfileModel } from 'src/app/services/firebase/auth/firebase-profile.model';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -42,6 +43,10 @@ export class ReminderAddPage implements OnInit {
   titlePlaceholder = '';
   date: any;
   locale:string;
+
+  crossStartDate:boolean = false;
+  crossEndDate:boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public dateService: DateService,
@@ -68,7 +73,7 @@ export class ReminderAddPage implements OnInit {
       title: [''],
       start_date: [this.date, [Validators.required]],
       time: [this.date],
-      end_date: [ this.date, [Validators.required, this.checkDate.bind(this)]],
+      end_date: [ this.date, [Validators.required]],
       description: [],
       frequency: ['daily'],
       origin_id: [],
@@ -80,7 +85,7 @@ export class ReminderAddPage implements OnInit {
       day5: [1],
       day6: [1],
       day7: [1],
-    });
+    }, { validators: this.checkDate.bind(this) });
     this.getReminder()
     if(this.isNewEvent) this.isInit = false
   }
@@ -92,18 +97,24 @@ export class ReminderAddPage implements OnInit {
   private checkDate(group: FormControl) {
     if(this.form !== null && this.form !== undefined) {
       const start_date = this.form.get('start_date').value;
-      const end_date = group.value;
+      const end_date = this.form.get('end_date').value;
 
       if(start_date && end_date){
-        let a = new Date(start_date).getTime();
-        let b = new Date(end_date).getTime();
-        console.log(`[ReminderAddPage] checkDate(${a}, ${b})`);
-        return a <= b ? null : {
-          NotLess: true
-      };
+        let start = new Date(start_date).getTime();
+        let end = new Date(end_date).getTime();
+        console.log(`[ReminderAddPage] checkDate Start(${start}, End ${end})`);
+        if (start <= end) {
+          this.form.get('end_date').setErrors(null);
+          return null;
+        } else {
+          this.form.get('end_date').setErrors({ NotLess: true });
+          return {NotLess: true};
+        }
       }
     }
  }
+
+ 
 
   getErrorEndDate() {
     if (this.form.get('end_date').hasError('required')) {
@@ -111,6 +122,16 @@ export class ReminderAddPage implements OnInit {
     }
     if (this.form.get('end_date').hasError('NotLess')) {
       return this.translate.instant("reminder.error_end_date");
+    }
+    return '';
+  }
+
+  getErrorStartDate() {
+    if (this.form.get('start_date').hasError('required')) {
+      return this.translate.instant("error_required");
+    }
+    if (this.form.get('start_date').hasError('NotLess')) {
+      return this.translate.instant("reminder.error_start_date");
     }
     return '';
   }
@@ -316,6 +337,8 @@ export class ReminderAddPage implements OnInit {
     console.log('[ReminderAddPage] submit()', this.form.value );
     this.isSubmited = true
     this.isSubmittedFields(true);
+
+    console.log(this.form.invalid)
     if(this.form.invalid || this.times.length <= 0){
       this.isSubmited = false
       return false;
@@ -527,11 +550,35 @@ export class ReminderAddPage implements OnInit {
     console.log('[DrugsDetailPage] checkTreatmentDates()');
       let to_date = this.form.get('end_date').value
       let from_date = this.form.get('start_date').value
+
       if(new Date(from_date) > new Date(to_date) ){
-        let messagge = this.translate.instant('medication.message_error_treatment_date')
-        this.dooleService.presentAlert(messagge)
+        console.log("Data start mes gran que end")
+        this.date = to_date
+        this.form.get('end_date').setValue(from_date)
+        console.log(this.form.value)
+        this.crossEndDate = false;
+      }
+      else {
+        this.crossEndDate = false;
       }
   }
+
+
+  checkTreatmentDates2() {
+
+    let to_date = this.form.get('end_date').value
+      let from_date = this.form.get('start_date').value
+
+    if (new Date(to_date) < new Date(from_date)){
+      this.crossEndDate = true;
+      let messagge = this.translate.instant('reminder.error_end_date')
+      this.dooleService.presentAlert(messagge)
+    }
+    else {
+      this.crossEndDate = false;
+    }
+  }
+
 
 }
 

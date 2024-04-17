@@ -9,6 +9,7 @@ import { SettingsPageRoutingModule } from './settings-routing.module';
 import { SettingsPage } from './settings.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { PasswordPageModule } from './password/password.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { PasswordPageModule } from './password/password.module';
     IonicModule,
     TranslateModule,
     SettingsPageRoutingModule,
-    PasswordPageModule
+    PasswordPageModule,
+    ComponentsModule
   ],
   declarations: [SettingsPage],
 })

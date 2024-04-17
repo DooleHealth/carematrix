@@ -3,9 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{diagnosticTestType?.name}}</ion-title>
+    <ion-title class="toolbarTitle">{{diagnosticTestType?.name}}</ion-title>
     <ion-buttons slot="end">
-    <ion-button *ngIf="this.diagnosticTest?.addedByUser" (click)="editDiagnosticTest()" slot="end" fill="clear">
+    <ion-button [disabled]="!this.permissionService.canManageMedicalTests" *ngIf="this.diagnosticTest?.addedByUser" (click)="editDiagnosticTest()" slot="end" fill="clear">
       <ion-icon name="create-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -14,9 +14,11 @@
 
 <ion-content  fullscreen>
 
-  <div class="spin" *ngIf="this.isLoading">
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
     <ion-spinner ></ion-spinner>
-  </div>
+      </ng-container>
+
+      <ng-template #finishedLoading>
 
   <ion-row>
     <ion-text class="txtTitle2">{{ 'documents.subtitle_information' | translate}}</ion-text>
@@ -159,5 +161,5 @@
       </div>
 
   </ion-card>
-
+</ng-template>
 </ion-content>

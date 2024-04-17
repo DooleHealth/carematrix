@@ -32,6 +32,7 @@ export class LifeStyle extends ScpAdapters {
    */
 
     adapterForView(list: any[], field1: string, field2: string, field3?: string){
+        
         let newList: medication[] = []
             list.forEach((element) => {
                 let temporaryUrl;
@@ -137,7 +138,7 @@ export class SharedCarePlanGoals extends ScpAdapters implements SharedCarePlanGo
                 else
                     console.error(`${ContentType.MEDICATIONS_PLAN} -> drug: Not field ${title}`)
 
-                this.routerlink = ContentTypePath.MedicationID
+                this.routerlink = ContentTypePath.MedicationDetail
                 break;
             case ContentType.ADVICE:
                 const titleAdvice = goal['advice']
@@ -173,7 +174,7 @@ export class MedicalPlanProceduresAdapter extends ScpAdapters implements SharedC
         super();
     }
 
-    adapterForView(list: any[], title: string, date: string, type: string, staff:string, department, img){
+    adapterForView(list: any[], title: string, date: string, type: string, staff:string, department, img, description: string){
         let newList: SharedCarePlanProcedure[] = []
             if(list?.length >0)
             list.forEach((procedure) => {
@@ -183,7 +184,8 @@ export class MedicalPlanProceduresAdapter extends ScpAdapters implements SharedC
                     id: procedure?.id,       // id -> id procedure
                     title: procedure[title],
                     date: procedure[date],  
-                    type: procedure[type],    
+                    type: procedure[type],
+                    description: procedure[description],      
                     staff: this.staff,  
                     img: procedure.media?.thumbnailTemporaryUrl // temporaryUrl[this.temporaryUrl],
                 }                 

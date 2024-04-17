@@ -17,10 +17,10 @@ enum StatusMedicationCreated {
 })
 
 export class DrugsDetailPage implements OnInit {
-  days = [{day1:1, disabled:false}, {day2:1, disabled:false}, {day3:1, disabled:false}, {day4:1, disabled:false}, {day5:1, disabled:false}, {day6:1, disabled:false}, {day7:1,disabled:false}]
+  days = [{ day1: 1, disabled: false }, { day2: 1, disabled: false }, { day3: 1, disabled: false }, { day4: 1, disabled: false }, { day5: 1, disabled: false }, { day6: 1, disabled: false }, { day7: 1, disabled: false }]
   @ViewChild('datetimePopover') popover: IonPopover;
-  @Input()drug : any
-  @Input()id: any;
+  @Input() drug: any
+  @Input() id: any;
   drugID = history.state?.id; // 26;//   //23 //
   form: FormGroup;
   times = []
@@ -34,31 +34,38 @@ export class DrugsDetailPage implements OnInit {
   isSubmittedTimes = false;
   frequency = 'daily';
   frequencySeleted = 'daily';
+  toDateBool = true;
   isInit = true;
   expanded = true;
   isInstant = false;
-  maxYear : string;
-  date:any;
-  time:any;
-  locale:string;
-  modifyMedicationPlans:boolean = true;
+  interactions = [];
+  maxYear: string;
+  date: any;
+  time: any;
+  locale: string;
+  units
+  unit_id
+  drug_id
+  medication_plan_id
+  datadrug_ExtId
+  modifyMedicationPlans: boolean = true;
   constructor(
     private dooleService: DooleService,
     private fb: FormBuilder,
     private datepipe: DatePipe,
-    private translate : TranslateService,
+    private translate: TranslateService,
     public alertController: AlertController,
     private modalCtrl: ModalController,
     public dateService: DateService
   ) {
     this.locale = this.dateService.getLocale();
     this.date = this.dateService.getToday()
-    this.time = this.date ;//  localISOTime;
+    this.time = this.date;//  localISOTime;
   }
 
   ngOnInit() {
-    this.id = this.drugID? this.drugID:this.id
-    console.log('[DrugsDetailPage] ngOnInit() id: ',this.id);
+    this.id = this.drugID ? this.drugID : this.id
+    console.log('[DrugsDetailPage] ngOnInit() id: ', this.id);
     this.form = this.fb.group({
       from_date: [this.date, [Validators.required]],
       to_date: [this.date, [Validators.required]],
@@ -76,67 +83,80 @@ export class DrugsDetailPage implements OnInit {
       day6: [1],
       day7: [1],
     });
-    if(this.drug)
-    this.form.get('drug').setValue(this.drug.id)
-    if(this.id){
-      console.log('[DrugsDetailPage] ngOnInit()',this.drug);
+    if (this.drug)
+      this.form.get('drug').setValue(this.drug.id)
+    if (this.id) {
+      console.log('[DrugsDetailPage] ngOnInit()', this.drug);
       this.showDetailsDrug()
       this.getMedicationPlan()
       this.isEditDrug = true
     }
-    if(!this.isEditDrug) this.isInit = false
+    if (!this.isEditDrug) {
+      this.isInit = false
+      this.drug_id = this.drug?.id
+      this.getDrudUnit()
+    }
   }
 
-  showDetailsDrug(){
+  showDetailsDrug() {
     this.form.get('from_date').setValue(this.drug?.from_date)
     this.form.get('to_date').setValue(this.drug?.to_date)
     this.form.get('dose').setValue(this.drug?.dose)
-    if(this.drug?.alias) this.form.get('alias').setValue(this.drug?.alias)
+    if (this.drug?.alias) this.form.get('alias').setValue(this.drug?.alias)
 
   }
 
-  isSubmittedFields(isSubmitted){
+  drugSelecting(drug) {
+
+    drug.forEach(element => {
+      this.drug = element
+    });
+
+    console.log("drug drug-details", this.drug)
+  }
+
+  isSubmittedFields(isSubmitted) {
     this.isSubmittedFromDate = isSubmitted
     this.isSubmittedToDate = isSubmitted;
-    this.isSubmittedDate= isSubmitted;
+    this.isSubmittedDate = isSubmitted;
     this.isSubmittedDosis = isSubmitted;
     this.isSubmittedTimes = isSubmitted;
   }
 
   expandItem(): void {
-      this.expanded = !this.expanded
+    this.expanded = !this.expanded
   }
 
-  submit(){
+  submit() {
     //console.log('[DrugsDetailPage] submit()',this.form.value);
 
-    if(this.isInstant){
+    if (this.isInstant) {
       this.isSubmittedDosis = true;
       let error = this.form.get('dose').errors
       console.log('[DrugsDetailPage] saveDrug()', error);
-      if(error?.required)
-      return
+      if (error?.required)
+        return
     }
-    else{
+    else {
 
       this.isSubmited = true
       this.isSubmittedFields(true)
-      if(!this.form.valid || this.times.length <= 0){
+      if (!this.form.valid || this.times.length <= 0) {
         this.isSubmited = false
         return false;
       }
     }
 
 
-    if(this.isEditDrug){
+    if (this.isEditDrug) {
       this.updateDrug()
-    }else{
+    } else {
       this.saveDrug()
     }
   }
 
-  setFields(){
-    if(this.isInstant){ // Instant medication
+  setFields() {
+    if (this.isInstant) { // Instant medication
       const date = new Date()
       return {
         from_date: this.transformDate(date),
@@ -156,67 +176,69 @@ export class DrugsDetailPage implements OnInit {
         day7: 1,
       }
     }
-    else{ //Medication Plan
+    else { //Medication Plan
       this.form.get('time').setValue(this.times)
 
       let from_date = this.form.get('from_date').value
       this.form.get('from_date').setValue(this.transformDate(from_date))
 
       let to_date = this.form.get('to_date').value
+
       this.form.get('to_date').setValue(this.transformDate(to_date))
 
       let f = this.form.get('frequency').value
-      if(f !== 'daily')
-      this.form.get('frequency').setValue('daily');
+      if (f !== 'daily')
+        this.form.get('frequency').setValue('daily');
+      this.form.get('drug').setValue(this.drug.id)
 
       return this.form.value
     }
 
   }
 
-  saveDrug(){
+  saveDrug() {
 
     const form = this.setFields()
 
     console.log('[DrugsDetailPage] saveDrug()', form);
 
-    this.dooleService.postAPImedicationPlan(form).subscribe(async json=>{
+    this.dooleService.postAPImedicationPlan(form).subscribe(async json => {
       console.log('[DrugsDetailPage] saveDrug()', await json);
-      if(json.success){
-        this.modalCtrl.dismiss({error:null, action: 'add'});
-      }else{
+      if (json.success) {
+        this.modalCtrl.dismiss({ error: null, action: 'add' });
+      } else {
         let message = this.translate.instant('medication.error_message_add_medication')
         alert(message)
       }
-    },err => {
-      alert(`Error: ${err.code }, Message: ${err.message}`)
+    }, err => {
+      alert(`Error: ${err.code}, Message: ${err.message}`)
       console.log('[DrugsDetailPage] saveDrug() ERROR(' + err.code + '): ' + err.message);
       throw err;
     });
 
   }
 
-  snapshot(){
+  snapshot() {
     this.isInstant = !this.isInstant
   }
 
-  updateDrug(){
+  updateDrug() {
     this.isLoading = true;
     const form = this.setFields()
     console.log('[DrugsDetailPage] updateDrug()', form);
 
-    this.dooleService.putAPImedicationPlan(this.drug.medication_plan_id , form).subscribe(async json=>{
+    this.dooleService.putAPImedicationPlan(this.medication_plan_id, form).subscribe(async json => {
       console.log('[DrugsDetailPage] updateDrug()', await json);
-      if(json.success){
-        this.modalCtrl.dismiss({error:null, action: 'update'});
-      }else{
+      if (json.success) {
+        this.modalCtrl.dismiss({ error: null, action: 'update' });
+      } else {
         let message = this.translate.instant('medication.error_message_edit_medication')
         alert(message)
       }
       this.isLoading = false
-    },err => {
+    }, err => {
       this.isLoading = false
-      alert(`Error: ${err.code }, Message: ${err.message}`)
+      alert(`Error: ${err.code}, Message: ${err.message}`)
       console.log('[DrugsDetailPage] updateDrug() ERROR(' + err.code + '): ' + err.message);
       throw err;
     });
@@ -224,61 +246,49 @@ export class DrugsDetailPage implements OnInit {
   }
 
   transformHour(date) {
-    if( date instanceof Date)
-    return this.datepipe.transform(date, 'HH:mm');
+    if (date instanceof Date)
+      return this.datepipe.transform(date, 'HH:mm');
   }
   transformDate(date) {
     return this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
-  formatDate(d){
-    if(d === undefined || d === null)
-    return
-    var auxdate = d.split(' ')
-    //let date = new Date(auxdate[0]);
-    d = d.replace(' ', 'T')
-    let date0 = new Date(d).toUTCString();
-    let date = new Date(date0);
-    let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
-    return date.toISOString();
-  }
 
-  inputTimes(event){
+
+  inputTimes(event) {
     // console.log('[DrugsDetailPage] this.time()', event);
     // console.log('[DrugsDetailPage] this.time()', this.time);
-    if(this.isSubmited)
-    return
+    if (this.isSubmited)
+      return
     let time = this.form.get('time').value
     console.log('[DrugsDetailPage] time()', time);
     //this.form.get('time').setValue('')
-    if(time && time !== '' ){
+    if (time && time !== '') {
       let date = new Date(time)
       let hour = this.transformHour(date)
       console.log('[DrugsDetailPage] hour', hour);
-      if ( this.times.indexOf( hour) == -1 ) // if hour is not repeated
-      this.times.push(hour)
+      if (this.times.indexOf(hour) == -1) // if hour is not repeated
+        this.times.push(hour)
     }
   }
 
-  closeTimeAlert(event){
+  closeTimeAlert(event) {
     console.log('[DrugsDetailPage] this.time()', event);
     this.popover.dismiss()
   }
 
-  checkTreatmentDates(){
+  checkTreatmentDates() {
     console.log('[DrugsDetailPage] checkTreatmentDates()');
-      let to_date = this.form.get('to_date').value
-      let from_date = this.form.get('from_date').value
-      if(new Date(from_date) > new Date(to_date) ){
-        let messagge = this.translate.instant('medication.message_error_treatment_date')
-        this.dooleService.presentAlert(messagge)
-        this.form.get('to_date').setValue('')
-      }
+    let to_date = this.form.get('to_date').value
+    let from_date = this.form.get('from_date').value
+    if (new Date(from_date) > new Date(to_date)) {
+      let messagge = this.translate.instant('medication.message_error_treatment_date')
+      this.dooleService.presentAlert(messagge)
+      this.form.get('to_date').setValue('')
+    }
   }
 
-  removeTime(time){
+  removeTime(time) {
     console.log("[DrugsDetailPage] removeTime() ", time);
     this.times.forEach((element, index) => {
       if (element == time)
@@ -313,51 +323,60 @@ export class DrugsDetailPage implements OnInit {
     await alert.present();
   }
 
-  async deleteDrug(){
+  async deleteDrug() {
     this.isLoading = true
-    this.dooleService.deleteAPImedicationPlan(this.drug.medication_plan_id).subscribe(
-      async (res: any) =>{
+    console.log('[DrugsDetailPage] deleteDrug()', await this.drug_id);
+    this.dooleService.deleteAPImedicationPlan(this.medication_plan_id).subscribe(
+      async (res: any) => {
         console.log('[DrugsDetailPage] deleteDrug()', await res);
-        if(res.success){
-          this.modalCtrl.dismiss({error:null, action: 'update'});
+        if (res.success) {
+          this.modalCtrl.dismiss({ error: null, action: 'update' });
         }
-        else{
+        else {
           let message = this.translate.instant('medication.error_message_deleted_medication')
           alert(message)
         }
         this.isLoading = false
-       },(err) => {
+      }, (err) => {
         this.isLoading = false
-        alert(`Error: ${err.code }, Message: ${err.message}`)
-          console.log('[DrugsDetailPage] deleteDrug() ERROR(' + err.code + '): ' + err.message);
-          throw err;
-      }) ,() => {
+        alert(`Error: ${err.code}, Message: ${err.message}`)
+        console.log('[DrugsDetailPage] deleteDrug() ERROR(' + err.code + '): ' + err.message);
+        throw err;
+      }), () => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
       };
   }
 
-  async getMedicationPlan(){
-    const medication_plan_id =  this.drug?.medication_plan_id? this.drug.medication_plan_id: this.id
+  async getMedicationPlan() {
+
+    const medication_plan_id = this.drug?.medication_plan_id ? this.drug.medication_plan_id : this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
-      async (res: any) =>{
+      async (res: any) => {
         console.log('[DrugsDetailPage] getMedicationPlan()', await res);
-        if(res.success){
-          let medicationPlan = res.medicationPlan
+        if (res.success) {
 
-          this.modifyMedicationPlans =  this.getStateModifyMedication(medicationPlan?.origin)
+
+          let medicationPlan = res.medicationPlan
+          if (this.drug?.id)
+            this.drug = medicationPlan.drug
+
+          this.medication_plan_id = medicationPlan?.id
+
+          this.modifyMedicationPlans = this.getStateModifyMedication(medicationPlan?.origin)
 
           let from_date = medicationPlan.from_date
-          this.form.get('from_date').setValue(this.formatDate(from_date))
+          this.form.get('from_date').setValue(this.dateService.yyyyMMddTHHmmssSSSZFormat(from_date))
 
           let to_date = medicationPlan.to_date
-          this.form.get('to_date').setValue(this.formatDate(to_date))
-          
-          if(medicationPlan?.alias) 
-          this.form.get('alias').setValue(medicationPlan.alias)
+          this.form.get('to_date').setValue(this.dateService.yyyyMMddTHHmmssSSSZFormat(to_date))
+          if(!this.form.get('to_date').value) this.toDateBool = false;
 
-          if(medicationPlan.frequency) {
+          if (medicationPlan?.alias)
+            this.form.get('alias').setValue(medicationPlan.alias)
+
+          if (medicationPlan.frequency) {
             this.form.get('frequency').setValue(medicationPlan?.frequency)
             this.frequencySeleted = medicationPlan.frequency
           }
@@ -366,53 +385,90 @@ export class DrugsDetailPage implements OnInit {
           this.setDaysMedicationPlan(medicationPlan)
           this.gettingDay()
 
+          let isDose = false
           let plan = medicationPlan.medication_plan_times
           plan.forEach(element => {
             let hour = element.time.split(':')
             this.times.push(`${hour[0]}:${hour[1]}`)
+
+            if (element?.dose) isDose = true;
           });
+
+          if (!this.form.get('dose').value && isDose == false) {
+            if (medicationPlan?.dose_by_default)
+              this.form.get('dose').setValue(medicationPlan?.dose_by_default)
+          } else {
+            this.form.get('dose').setValue(plan[0].dose)
+          }
+
+          // this.getDrudUnit()
+          // this.unit_id = medicationPlan?.medication_plan_times[0]?.unit_id
+          // if(!this.unit_id && medicationPlan?.unit_id_by_default)
+          // this.unit_id = medicationPlan?.unit_id_by_default
+
+
           this.isInit = false
 
         }
-       },(err) => {
-          console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message);
-          alert( 'ERROR(' + err.code + '): ' + err.message)
-          throw err;
+      }, (err) => {
+        console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message);
+        alert('ERROR(' + err.code + '): ' + err.message)
+        throw err;
       });
   }
 
-  setDaysMedicationPlan(medicationPlan:any){
+  getDrudUnit() {
+    this.isLoading = true
+    this.dooleService.getAPIDrugUnits(this.drug_id).subscribe(
+      async (res: any) => {
+        console.log('[DrugsDetailPage] getDrudUnit()', await res);
+        if (res.success) {
+          this.units = res.units
+          if (this.unit_id)
+            this.form.get('unit_id').setValue(this.unit_id)
+          else if (!this.isEditDrug && this.units.length > 0)
+            this.form.get('unit_id').setValue(this.units[0]?.id ? this.units[0]?.id : '')
+        }
+        this.isLoading = false
+      }, (err) => {
+        console.log('[DrugsDetailPage] getDrudUnit() ERROR(' + err.code + '): ' + err.message);
+        this.isLoading = false
+        throw err;
+      });
+  }
+
+  setDaysMedicationPlan(medicationPlan: any) {
     for (let index = 1; index < 8; index++) {
-      this.form.get(`day${index}`).setValue( medicationPlan[`day${index}`] )   
-      if(this.modifyMedicationPlans === false)  {
-        if( medicationPlan[`day${index}`] === 0)
-        this.form.get(`day${index}`)?.disable()
-      }   
+      this.form.get(`day${index}`).setValue(medicationPlan[`day${index}`])
+      if (this.modifyMedicationPlans === false) {
+        if (medicationPlan[`day${index}`] === 0)
+          this.form.get(`day${index}`)?.disable()
+      }
     }
   }
 
-  selectedFrequency(){
+  selectedFrequency() {
     let fq = this.form.get('frequency').value
     //console.log('[DrugsDetailPage] isChangedSelect()', fq);
     switch (fq) {
       case 'daily':
-        if(this.isSubmited)
-        return
-        let dialy = [0,1,2,3,4,5,6]
+        if (this.isSubmited)
+          return
+        let dialy = [0, 1, 2, 3, 4, 5, 6]
         this.settingDayForm(dialy)
         this.frequencySeleted = fq
         break;
       case '1week':
-        if(this.isSubmited)
+        if (this.isSubmited)
           return
-          this.settingBackupDay()
-          this.frequencySeleted = fq
+        this.settingBackupDay()
+        this.frequencySeleted = fq
         break;
       case 'custom':
-        if(this.isSubmited)
+        if (this.isSubmited)
           return
-          this.settingBackupDay()
-          this.frequencySeleted = fq
+        this.settingBackupDay()
+        this.frequencySeleted = fq
         break;
       default:
         this.settingBackupDay()
@@ -422,55 +478,66 @@ export class DrugsDetailPage implements OnInit {
 
   }
 
-  getStateModifyMedication(state){
-      if(state === StatusMedicationCreated.CENTER) return false
-      if(state === StatusMedicationCreated.USER) return true
-      return true;
+  getStateModifyMedication(state) {
+    if (state === StatusMedicationCreated.CENTER) return false
+    if (state === StatusMedicationCreated.USER) return true
+    return true;
   }
 
-  settingBackupDay(){
-    if(!this.isInit)
-    this.days.forEach((day, i) =>{
-      let value =  day['day'+(i +1)]? 1:0
-      this.form.get('day'+(i+1)).setValue(value)
-    })
+  settingBackupDay() {
+    if (!this.isInit)
+      this.days.forEach((day, i) => {
+        let value = day['day' + (i + 1)] ? 1 : 0
+        this.form.get('day' + (i + 1)).setValue(value)
+      })
     //console.log('[DrugsDetailPage] settingBackupDay() day', this.days);
   }
 
-  settingDayForm(index){
-    for(let i =1; i <=7; i++){
-      this.form.get('day'+(i)).setValue(0)
+  settingDayForm(index) {
+    for (let i = 1; i <= 7; i++) {
+      this.form.get('day' + (i)).setValue(0)
     }
-    if(index.length > 0)
-    index.forEach(i => {
-      this.form.get('day'+(i+1)).setValue(1)
-    });
+    if (index.length > 0)
+      index.forEach(i => {
+        this.form.get('day' + (i + 1)).setValue(1)
+      });
   }
 
-  setDay(event, day, i){
-    if(!this.isInit){
-      let value = (event.detail.checked)? 1: 0
-      if(this.form.get('frequency').value == 'custom')
-      day['day'+(i +1)] = value
+  setDay(event, day, i) {
+    if (!this.isInit) {
+      let value = (event.detail.checked) ? 1 : 0
+      if (this.form.get('frequency').value == 'custom')
+        day['day' + (i + 1)] = value
       //console.log('[DrugsDetailPage] setDay()',day);
-      this.form.get('day'+(i+1)).setValue(value)
+      this.form.get('day' + (i + 1)).setValue(value)
     }
   }
 
-  gettingDay(){
+  gettingDay() {
     let ceros = 1
-    this.days.forEach((day, i) =>{
-      let d = this.form.get('day'+(i+1)).value? 1:0
-      day['day'+(i +1)] = d
-      if(d==0) ceros =0
-      if(this.modifyMedicationPlans === false)  day.disabled = true
+    this.days.forEach((day, i) => {
+      let d = this.form.get('day' + (i + 1)).value ? 1 : 0
+      day['day' + (i + 1)] = d
+      if (d == 0) ceros = 0
+      if (this.modifyMedicationPlans === false) day.disabled = true
     })
     console.log('[DrugsDetailPage] gettingDay() day', this.days);
-    if(ceros==0) this.form.get('frequency').setValue('custom')
+    if (ceros == 0) this.form.get('frequency').setValue('custom')
   }
 
   close() {
-    this.modalCtrl.dismiss({error:null});
+    this.modalCtrl.dismiss({ error: null });
   }
+
+
+  dataInteractions(interactions) {
+
+    this.interactions = interactions;
+  }
+
+  datadrug(datadrug_ExtId) {
+    this.datadrug_ExtId = datadrug_ExtId
+  }
+
 
 }

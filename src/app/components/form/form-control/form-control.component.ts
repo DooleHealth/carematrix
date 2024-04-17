@@ -268,6 +268,7 @@ export class FormControlComponent implements OnInit {
   }
 
   send(){
+    
     let error_question = []
     let success_question = []
     let listAnswer = []

@@ -50,3 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Call the element loader after the platform has been bootstrapped
 defineCustomElements(window);
+
+declare module "@awesome-cordova-plugins/chooser/ngx" {
+  export interface ChooserResult {
+    dataURI: string;
+  }
+}

@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Filter {
   start_date?: string,
@@ -16,7 +17,9 @@ export interface Filter {
   selector: 'app-documents-filter',
   templateUrl: './documents-filter.page.html',
   styleUrls: ['./documents-filter.page.scss'],
+  providers:[DatePipe, TranslateService]
 })
+
 export class DocumentsFilterPage implements OnInit {
   @Input()filter: Filter;
   toggle = false
@@ -30,7 +33,15 @@ export class DocumentsFilterPage implements OnInit {
   locale:string;
   start_date:string;
   end_date:string;
+
+  isSubmited = false
+  crossStartDate:boolean = false;
+  crossEndDate:boolean = false;
+  isSubmittedDuration = false;
+  isSubmittedStartDate = false;
+
   constructor(
+    public translate: TranslateService,
     private fb: FormBuilder,
     private dooleService: DooleService,
     public datepipe: DatePipe,
@@ -44,11 +55,18 @@ export class DocumentsFilterPage implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      start_date: [this.date],
-      end_date: [this.date],
+    /* this.form = this.fb.group({
+      start_date: [this.date, [Validators.required, this.checkDate.bind(this)]],
+      end_date: [ this.date, [Validators.required, this.checkDate.bind(this)]],
       diagnosticTestTypes: [this.diagnosticTestTypes],
-    });
+    }); */
+
+    this.form = this.fb.group({
+      start_date: [this.date, Validators.required],
+      end_date: [this.date, Validators.required],
+      diagnosticTestTypes: [this.diagnosticTestTypes],
+    }, { validators: this.checkDate.bind(this) });
+
     this.getDiagnosticTestType()
     this.setFilter()
   }
@@ -128,9 +146,10 @@ export class DocumentsFilterPage implements OnInit {
 
   submit(){
       let filter = this.isEmptyForm()? undefined:  this.form.value
+
       if(filter){
-        // this.changeFormatFromDate()
-        // this.changeFormatToDate()
+        this.isSubmittedFields(true);
+
         if(this.toggle === false){
           filter.start_date = null
           filter.end_date = null
@@ -138,9 +157,18 @@ export class DocumentsFilterPage implements OnInit {
 
         if(this.toggle2 === false)
         filter.diagnosticTestTypes = []
-      }
-      console.log('[DocumentsFilterPage] submit()', filter);
-      this.modalCtrl.dismiss({error:null, action: 'add', filter: filter});
+
+        if(this.form.invalid){
+          console.log(this.form.get('start_date').invalid)
+          console.log(this.form.get('end_date').invalid)
+          this.isSubmited = false
+          return false;
+        }
+
+        this.modalCtrl.dismiss({error:null, action: 'add', filter: filter});
+
+      } 
+
   }
 
   isEmptyForm(){
@@ -206,5 +234,107 @@ export class DocumentsFilterPage implements OnInit {
     //console.log('[DocumentsFilterPage] getEndDate()', event);
     this.end_date = event.detail.value
   }
+
+
+  checkDates(group: FormGroup): ValidationErrors | null {
+    const start_date = this.form.get('start_date').value;
+    const end_date = this.form.get('end_date').value;
+  
+    if (start_date && end_date && start_date > end_date) {
+      // Set end_date control as invalid
+      this.form.get('end_date').setErrors({ dateInvalid: true });
+      return { dateInvalid: true }; // Return error at form group level if needed
+    } else {
+      // Clear previous errors related to dateInvalid
+      if (this.form.get('end_date').hasError('dateInvalid')) {
+        this.form.get('end_date').updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      }
+    }
+  
+    return null; // No error
+  }
+  
+  private checkDate(group: FormControl) {
+    if(this.form !== null && this.form !== undefined) {
+      const start_date = this.form.get('start_date').value;
+      const end_date = this.form.get('end_date').value;
+
+      if(start_date && end_date){
+        let start = new Date(start_date).getTime();
+        let end = new Date(end_date).getTime();
+        console.log(`[ReminderAddPage] checkDate Start(${start}, End ${end})`);
+
+        console.log(start <= end);
+
+        if (start <= end) {
+          this.form.get('end_date').setErrors(null);
+          return null;
+        } else {
+          this.form.get('end_date').setErrors({ NotLess: true });
+          return {NotLess: true};
+        }
+      }
+    }
+ }
+
+
+ checkTreatmentDates(){
+  console.log('[DrugsDetailPage] checkTreatmentDates()');
+    let to_date = this.form.get('end_date').value
+    let from_date = this.form.get('start_date').value
+
+    if(new Date(from_date) > new Date(to_date) ){
+      console.log("Data start mes gran que end")
+      this.date = to_date
+      this.form.get('end_date').setValue(from_date)
+      console.log(this.form.value)
+      this.crossEndDate = false;
+    }
+    else {
+      this.crossEndDate = false;
+    }
+}
+
+
+checkTreatmentDates2() {
+
+  let to_date = this.form.get('end_date').value
+    let from_date = this.form.get('start_date').value
+
+  if (new Date(to_date) < new Date(from_date)){
+    this.crossEndDate = true;
+    let messagge = this.translate.instant('reminder.error_end_date')
+    this.dooleService.presentAlert(messagge)
+  }
+  else {
+    this.crossEndDate = false;
+  }
+}
+
+isSubmittedFields(isSubmitted){
+  this.isSubmittedDuration= isSubmitted;
+  this.isSubmittedStartDate= isSubmitted;
+}
+
+getErrorEndDate() {
+  if (this.form.get('end_date').hasError('required')) {
+    return this.translate.instant("error_required");
+  }
+  if (this.form.get('end_date').hasError('NotLess')) {
+    return this.translate.instant("reminder.error_end_date");
+  }
+  return '';
+}
+
+getErrorStartDate() {
+  if (this.form.get('start_date').hasError('required')) {
+    return this.translate.instant("error_required");
+  }
+  if (this.form.get('start_date').hasError('NotLess')) {
+    return this.translate.instant("reminder.error_start_date");
+  }
+  return '';
+}
+
 
 }

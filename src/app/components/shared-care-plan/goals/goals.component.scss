@@ -1,0 +1,67 @@
+.progress-bar {
+  width: 100%;
+  border-radius: 100px;
+  height: 22px;
+  margin: auto;
+  --background: #EBD7F2;
+  --progress-background: #A2047F;
+}
+
+.icono-personalizado {
+  background-color: purple;
+  padding: 5px;
+  border-radius: 50%;
+  color: white;
+}
+
+.custom-button {
+  font-size: 12px;
+  font-family: 'Poppins-Regular';
+  /* Ajusta el tamaño del texto */
+  padding-top: 0px;
+  border-radius: 15px;
+}
+
+.txt-title-goal {
+  font-family: 'Poppins-SemiBold';
+  font-size: 16px;
+  color: var(--ion-color-primary);
+}
+
+ion-card {
+  box-shadow: none !important;
+
+  ion-card-header {
+    padding-right: 2%;
+    padding-left: 0px;
+  }
+}
+
+ion-img::part(image) {
+  width: unset !important;
+  width: unset !important
+}
+
+.txt-keep-up {
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  color: var(--default-text);
+}
+
+.txt-tasks-to-do {
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  color: var(--ion-color-primary);
+}
+
+.txt-active {
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  color: var(--default-text);
+}
+
+.txt-disabled {
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  color: #7F8C8D;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContentTypeIcons, ContentTypeTranslatedName } from 'src/app/models/shared-care-plan';
 import { MedicalPlanProceduresAdapter, SharedCarePlanGoals } from 'src/app/models/shared-care-plan/scp-adapters';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class ProceduresPage implements OnInit {
   isDateInPast = false;
   constructor(
     private scpService: SharedCarePlanService,
-    private dateService: DateService
+    private dateService: DateService,
+    public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -32,7 +34,9 @@ export class ProceduresPage implements OnInit {
   }
 
   getIsDateInPast(date){
+    
     this.isDateInPast = new Date(date) < this.currentDate;
+    console.log("isDateInPast", this.isDateInPast)
     return this.isDateInPast
 
   }
@@ -51,7 +55,8 @@ export class ProceduresPage implements OnInit {
           'type', //type
           'staff', //staff
           'department',
-          'media' // se espera una imagen
+          'media', // se espera una imagen,
+          'description',
           )  
         this.isLoading = false
         console.log('[ProceduresPage] getProceduresImformation() procedures', await this.listItem);
@@ -76,4 +81,13 @@ export class ProceduresPage implements OnInit {
     return this.currentDate;
 }
 
+transformDate(date) {
+  
+  if (date != null) {
+    return this.dateService.formatDateLongFormat(date)
+  } else {
+    return ""
+  }
+
+}
 }

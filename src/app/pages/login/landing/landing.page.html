@@ -1,57 +1,106 @@
 <ion-content fullscreen>
     <div class="main-container">
-        <img style="padding-top: 40%;" src="/assets/images/logo.svg" />
-        <ion-grid>
+      <ion-col size="12" style="display: flex; align-items: center; justify-content: center; margin-top: 30%; margin-bottom: 5%;">
+          <img class="logo" src="/assets/icons/logo_inca_landing.svg" />
+      </ion-col>      
+      
+      <ion-grid mode="md">
             <ion-col>
                 <form [formGroup]="loginForm" (ngSubmit)="doDooleAppLogin()">
                     <ion-item-divider>
-                        <ion-icon name="person"></ion-icon>
+                        <ion-icon src="/assets/icons/profile.svg"></ion-icon>
                         <ion-input type="text" placeholder="{{'landing.user_placeholder' | translate }}"
                             formControlName="username">
                         </ion-input>
                     </ion-item-divider>
                     <ion-item-divider>
-                        <ion-icon name="lock-closed"></ion-icon>
-                        <app-show-hide-password >
-                            <ion-input type="password" placeholder="{{'landing.password_placeholder' | translate }}"
-                                formControlName="password">
-                            </ion-input>
+                      <ion-icon src="/assets/icons/password.svg"></ion-icon>
+                      <app-show-hide-password >
+                          <ion-input type="password" placeholder="{{'landing.password_placeholder' | translate }}"
+                              formControlName="password">
+                          </ion-input>
                         </app-show-hide-password>
                     </ion-item-divider>
-                    <ion-text (click)="passwordRecovery()">
-                        <a>{{ 'landing.password_recovery' | translate}}</a>
-                    </ion-text>
-
-
-                    <ion-button type="submit" size="medium"
+  
+                    <ion-button type="submit" size="medium" shape="round" mode="ios"
                         [disabled]="!loginForm.valid || this.numFailLogin >= NUM_FAIL_LOGIN"
                         [color]="this.isProd? 'primary':'tertiary' " expand="block" class="enter-btn">
                         {{ 'landing.button_signin' | translate}}</ion-button>
+                        <br>
+  
+                        <div *ngIf="!this.hasBiometricAuth" >
+                          <ion-text (click)="passwordRecovery()" class="password-recovery">
+                              <a>{{ 'landing.password_recovery' | translate}}</a>
+                           </ion-text>
+
+
+                           <br>
+                           <br>
+                           <br>
+                           <ion-title (click)="navigateToLegalPage()" class="text-align-center">
+                            <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
+                        </ion-title>
+
+                       </div>
                 </form>
+  
+                <div *ngIf="this.hasBiometricAuth" class=" center-container ion-margin-bottom ">
+                  <div class="spacing-container"></div>
+                  <div style="display: flex; align-items: center;">
+                    <div style="padding: 0 10px; text-align: center;">
+                      <ion-text class="color-text-too">{{'landing.too' | translate}}</ion-text>
+                    </div>
+                  </div>
+                  <div class="spacing-container"></div>
+                </div>
+  
+  
                 <div *ngIf="this.numFailFingerP < NUM_FAIL_LOGIN" style="margin-top: 5%;">
-                    <div *ngIf="this.hasBiometricAuth">
-                        <ion-button expand="block" [disabled]="this.numFailFingerP >= NUM_FAIL_LOGIN" size="medium"
+                   <div *ngIf="this.hasBiometricAuth">
+                        <ion-button color="secondary" class="bio-btn" expand="block" [disabled]="this.numFailFingerP >= NUM_FAIL_LOGIN" shape="round" mode="ios"
                             (click)="doBiometricLogin()">
                             <ion-icon slot="start" name="finger-print-outline"></ion-icon>
                             {{ 'landing.biometrics' | translate }}
                         </ion-button>
                     </div>
                 </div>
-
+  
                 <div *ngIf="this.numFailLogin >= 3" style="margin-top: 10%;">
                     <ion-text>
                         <a>{{ 'landing.blocked_login' | translate}}</a>
                     </ion-text>
                 </div>
+  
+  
+                <div *ngIf="this.hasBiometricAuth" style="margin-top: 15%;">
+                  <ion-text (click)="passwordRecovery()" class="password-recovery">
+                      <a>{{ 'landing.password_recovery' | translate}}</a>
+                   </ion-text>
+
+
+                   <br><br>
+
+                   <ion-title (click)="navigateToLegalPage()" class="text-align-center">
+                    <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
+                    </ion-title>
+
+                    
+               </div>
+
+               
+  
+                
+  
             </ion-col>
         </ion-grid>
 
+       
     </div>
-</ion-content>
-<ion-footer class="ion-no-border justify-content-center">
+  </ion-content>
+<!--   <ion-footer class="ion-no-border justify-content-center">
     <ion-toolbar>
-        <ion-title size="small" (click)="showAppUsageTips()" class="text-align-center">
-            <a>{{ 'landing.about_app' | translate}}</a>
+        <ion-title [routerLink]="['/landing/legal']" class="text-align-center">
+            <a class="about_app" color="secondary">{{ 'landing.legal' | translate}}</a>
         </ion-title>
     </ion-toolbar>
-</ion-footer>
+  </ion-footer> -->

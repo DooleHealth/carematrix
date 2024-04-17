@@ -17,13 +17,17 @@ import { AlarmFormPage } from './alarm-form/alarm-form.page';
 export class FormPage implements OnInit {
   private data: any = history.state?.data;
   private form_programmation_id = history?.state.form_programmation_id;
+  private form_answer_id = history?.state.form_answer_id;
   private formAnswer: any = history.state?.formAnswer;
   private gamePlayId: any = history.state?.game_play_id;
   private source: string
+
+
   @Input()id: any;
   @Input()isModal: boolean;
   @Input()goalsByAlarms: any;
   @Input()challengeId: any;
+
   userLang = 'es-es';
   isLoading = false
   date = new Date(Date.now()).toISOString()
@@ -120,15 +124,15 @@ export class FormPage implements OnInit {
     event['form_id'] = this.id
     event['user_id'] = this.auth.user.idUser
     event['user_auth'] = this.auth.id_user
-    if(this.challengeId)
-    event['challenge_id'] = this.challengeId
+
+    if(this.challengeId) event['challenge_id'] = this.challengeId
 
     console.log('[FormPage] send()', event)
     this.isLoading = true;
 
 
-    
     if (this.form_programmation_id) event["form_programmation_id"]=this.form_programmation_id
+    if (this.form_answer_id) event['form_answer_id'] = this.form_answer_id
 
     this.dooleService.postAPIFormFill(event).subscribe( (res) =>{
       console.log(res)

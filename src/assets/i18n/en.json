@@ -3,12 +3,12 @@
     "login": "Verifying credentials...",
     "user_placeholder": "User",
     "password_placeholder": "Password",
-    "password_recovery": "Forgot your password?",
-    "button_signin": "Sign in",
+    "password_recovery": "Forgot your password? Click here",
+    "button_signin": "Login",
     "button_registre": "Create user",
     "user": "User",
     "too": "Or:",
-    "biometrics": "Biometric authentication",
+    "biometrics": "Biometric Login",
     "header_message_password_recovery": "Enter your username",
     "message_password_recovery": "If the username is correct, an email will be sent to recover your password",
     "message_email_sent": "The mail has been sent",
@@ -19,7 +19,9 @@
     "message_error_internet_disconnected": "There is no Internet connection. Connect to the Internet and try again.",
     "login_again": "Please sign in again",
     "about_app": "About this app",
-    "usage-tips": "<div><p>Welcome to our safe and trusted application!</p><p>To ensure your safety and security, we have put together this short getting started guide to highlight the best practices that you can follow when using our app. Follow these tips for a secure and worry-free experience:</p><ul><li>Choose a strong password: To protect your data, it's important to select a strong and unique password. a combination of uppercase and lowercase letters, numbers, and special characters. Avoid using obvious passwords or easily identifiable personal information.</li><li>Turn on two-factor authentication: Further secure your account by enabling two-factor authentication. This it will require a second level of verification, such as a temporary access code sent to your mobile phone, so even if someone gets your password, they won't be able to get in without the additional verification code.</li><li>Keep the app updated: App updates not only add new features, but also fix potential security vulnerabilities. Make sure you always have the latest version of our app installed to take advantage of all the improvements and additional protections.</li><li>Privacy Settings: Explore our privacy settings options to personalize your experience. You can control what information you share and with whom you share it. Remember to regularly review and adjust these settings to maintain an optimal level of privacy.</li></ul><p>These are just a few essential tips to maximize security when using our app. We are committed to your protection and are constantly working to ensure the integrity of your data. We will always be here to help you in case you have any questions or concerns about the security of the app, you can contact us via email support@doolehealth.com.</p><p>Thank you for choosing our app and trusting us! on us!</p><p>Team Rehabilify.</p></div>"
+    "legal": "Privacy policy and legal terms",
+    "usage-tips": "<div><p>Welcome to our safe and trusted application!</p><p>To ensure your safety and security, we have put together this short getting started guide to highlight the best practices that you can follow when using our app. Follow these tips for a secure and worry-free experience:</p><ul><li>Choose a strong password: To protect your data, it's important to select a strong and unique password. a combination of uppercase and lowercase letters, numbers, and special characters. Avoid using obvious passwords or easily identifiable personal information.</li><li>Turn on two-factor authentication: Further secure your account by enabling two-factor authentication. This it will require a second level of verification, such as a temporary access code sent to your mobile phone, so even if someone gets your password, they won't be able to get in without the additional verification code.</li><li>Keep the app updated: App updates not only add new features, but also fix potential security vulnerabilities. Make sure you always have the latest version of our app installed to take advantage of all the improvements and additional protections.</li><li>Privacy Settings: Explore our privacy settings options to personalize your experience. You can control what information you share and with whom you share it. Remember to regularly review and adjust these settings to maintain an optimal level of privacy.</li></ul><p>These are just a few essential tips to maximize security when using our app. We are committed to your protection and are constantly working to ensure the integrity of your data. We will always be here to help you in case you have any questions or concerns about the security of the app, you can contact us via email support@doolehealth.com.</p><p>Thank you for choosing our app and trusting us! on us!</p><p>Team INCA Health.</p></div>",
+    "accept-btn": "Accept"
   },
   "legal": {
     "header": "Terms of Use",
@@ -30,7 +32,7 @@
     "no_get_conditions_label": "There are no legal terms assigned to this user",
     "error_conditions_label": "Error in obtaining legal terms",
     "error_post_conditions_label": "Could not update legal conditions",
-    "messaje_reject_terms": "This app for proper use requires that the legal conditions have been accepted, in which case you will not be able to continue browsing. Do you want to refuse the legal conditions?"
+    "messaje_reject_terms": "This app requires acceptance of the legal conditions for proper use. If you decline, you will not be able to continue browsing. Do you want to refuse the legal conditions?"
   },
   "sms": {
     "header": "Identity Verification",
@@ -41,7 +43,7 @@
     "ok_button": "Yes",
     "ko_button": "Edit",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 9 digits",
     "error_invalid_email": "Please enter a valid email address"
   },
@@ -54,7 +56,7 @@
     "send_email_alert_message": "The verification code has been sent again",
     "error_send_email_alert_message": "An error occurred while sending the verification code",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 6 digits",
     "error_no_numeric": "Error: Entering numbers only"
   },
@@ -65,28 +67,21 @@
     "tracking": "Follow up",
     "journal": "My Journal"
   },
+  
+  
   "intro": {
-    "title1": "Welcome to",
-    "slider1_text1": "All-in-one",
-    "slider1_text2": "All your medical information in one app",
-    "slider1_text3": "Contact your doctor",
-    "slider1_text4": "Talk directly with your specialist or request a face-to-face consultation",
-    "slider1_text5": "Health and sport",
-    "slider1_text6": "Connect other health apps to measure your progress",
+    "skip": "Skip intro",
+    "title1": "Contact",
+    "slider1_text": "Get in touch with health staff through messaging and video calls.",
     "title2": "Agenda",
-    "slider2_text1": "The Rosia agenda allows you to include all your appointments and medical reminders. You won't be able to live without it!",
-    "title3": "Contact",
-    "slider3_text1": "Talk to your doctor and specialist through video or chat and request a face to face appointment. It's never been so fast and comfortable!",
-    "title4": "Tracking",
-    "slider4_text1": "Review clinical results, answer forms or check the evolution of your constants. Now you can review them whenever you want!",
-    "title5": "Journal",
-    "slider5_text1": "At a glance review your diet, medication, games and health information for the day. Taking care of your health has never been easier!",
-    "title6": "News & Advices",
-    "slider6_text1": "Have the latest health news and advice from the medical team Stay updated at all times!",
-    "title7": "Profile",
-    "slider7_text1": "Set your data and notification preferences so you can always be informed. Enjoy your experience at Rosia!"
+    "slider2_text": "Keep your appointment diary up to date with our reminder system.",
+    "title3": "Shared Care Plan",
+    "slider3_text": "Explore your shared care plan, designed by your healthcare team to promote collaboration and improve health through personalised and accessible strategies.",
+    "title4": "My Daily Tasks",
+    "slider4_text": "All your tasks in one place so you can keep your health on track.",
+    "continue": "Next!"
   },
-  "home": {
+    "home": {
     "hello": "Hi",
     "goals_title": "Your goal",
     "goals_no_data": "No data",
@@ -113,7 +108,13 @@
     "enable_notifications": "Turn on notifications",
     "message_enable_notifications": "Want to turn on all notifications?",
     "close_app": "Want to close the app?",
-    "get_firts_data": "Enter your first data"
+    "get_firts_data": "Enter your first data",
+    "advices": "Advices",
+    "see_advices": "See all Advices",
+    "caregiver_title": "Caregiver's responsible",
+    "caregiver_change": "You are going to change ",
+    "back_caregiver": "Back to my profile",
+    "tip": "Tip of the day!"
   },
   "profile": {
     "title_profile": "My Profile",
@@ -169,14 +170,36 @@
     "subtitle_advices": "Advices",
     "points": "Points",
     "new": "new",
-    "de": " of "
+    "de": " of ",
+    "achievements":"Achievements",
+    "text_goals1":"Be proud of yourself!",
+    "text_goals2":"You have",
+    "text_goals3":" successfully passed ",
+    "text_goals4":" this objective 🏆",
+    "go": "Go",
+    "accordion_goals":"These are the tasks you must perform:",
+    "accordion_completed":"These are your achievements:",
+    "accepted_rejected": "Do you want to approve or reject this challenges?",
+    "accepted_rejectedExercises": "Do you want to approve or reject this challenges?",
+    "button_rejected": "Reject",
+    "button_accepted": "Approve",
+    "rejectd_option1": "I have doubts, I need more information",
+    "rejectd_option2": "I don't agree with the goals",
+    "rejectd_option2F": "I do not agree with the form",
+    "rejectd_option2E": "I do not agree with the recommended exercise",
+    "rejectd_option3": "Other",
+    "placeholder": "Write a message.",
+    "rejectd_send": "Message sent to your medical team",
+    "keppUp": "Keep it up!"
   },
   "health_path": {
     "title": "Health Path",
     "card_title": "Challenges",
     "goals": "Goals",
+    "see_all_goals": "See all Goals",
     "start": "Start",
-    "detail": "How to reach my goal?",
+    "detail": "How to reach my goals?",
+    "see_more": "See more",
     "weight": "Take your ",
     "measure": "Enter the measurement: ",
     "form": "Complete the form ",
@@ -188,14 +211,14 @@
     "blocked_level": "This level is still locked",
     "goal": "<p>You have <strong>{{ total }} points</strong>.</p>",
     "goal1": "<div>Get {{ required }} more and move to the next level.</div>",
-
     "goal_txt1": "You have",
     "goal_txt2": "get",
     "goal_txt3": "more",
-    "goal_txt4": " and move to the next level.",
+    "goal_txt4": " and move to the next level",
     "level_congratulations": "Congratulations!",
     "level_accomplished": "You have reached the next level",
-    "done": "done!"
+    "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Meeting the <strong>objectives marked with an asterisk</strong> is <strong>essential</strong> to move to the next level.</p>",
+    "done": "Done!"
   },
   "activity_goal": {
     "definition": "Definition",
@@ -245,7 +268,8 @@
     "button_send": "Send",
     "header_error": "Error",
     "header_info": "Information",
-    "header_confirmation": "Confirmation"
+    "header_confirmation": "Confirmation",
+    "header_atention": "Attention"
   },
   "error_required": "Required",
   "setting": {
@@ -270,8 +294,10 @@
     "subtitle_messages": "Messages",
     "subtitle_games": "Games",
     "subtitle_release": "Updates",
+    "subtitle_procedure": "Medical procedures",
     "lenguage_ca": "Catalan",
     "lenguage_es": "Spanish",
+    "testimonials": "Testimonials",
     "password": {
       "password": "Password",
       "title_change_password": "Change Password",
@@ -296,7 +322,9 @@
     },
     "sign_off": "Log out",
     "message_sign_off": "Want to sign out on all devices?",
-    "error_message_sign_off": "An error occurred while logging out"
+    "error_message_sign_off": "An error occurred while logging out",
+    "notifications": "Notifications",
+    "email": "Email"
   },
   "report_problem": {
     "title_report_problem": "Report Problem",
@@ -318,7 +346,7 @@
     "name": "Name",
     "affiliation_number": "Sharpening number",
     "expiration_date": "Caducity",
-    "expedition_date": "Date of Issue",
+    "expedition_date": "Date of issue",
     "Optional": "Optional",
     "error_required": "Required",
     "button_return": "Home"
@@ -331,7 +359,8 @@
     "error_alert_message_add_card": "Error: The card could not be added",
     "placeholder_select": "Select one",
     "error_end_date": "The expiration date must be greater than the date of issue",
-    "error_start_date": "The date of issue must be less than the expiry date"
+    "error_start_date": "The date of issue must be less than the expiry date",
+    "error_types": "Currently unable to add a card, please try again later"
   },
   "edit_health_card": {
     "header_edit_card": "Edit Health Card",
@@ -391,20 +420,7 @@
   "agenda": {
     "header_agenda": "Agenda",
     "no_events": "No events",
-    "month": [
-      "In",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "At the",
-      "Set",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
+    "month": ["In","Feb","Mar","Apr","May","Jun","Jul","At the","Set","Oct","Nov","Dec"],
     "days": ["L", "M", "X", "J", "In", "S", "D"],
     "today": "Today",
     "yesterday": "Yesterday",
@@ -416,7 +432,10 @@
     "day": "DAY",
     "week": "WEEK",
     "months": "MONTH",
-    "year": "YEAR"
+    "year": "YEAR",
+    "calendar": "Calendar",
+    "reminders": "Reminders",
+    "create_reminder": "Create reminder"
   },
   "reminder": {
     "header": "Reminder",
@@ -457,6 +476,7 @@
     "form": "Form",
     "diet": "Diet",
     "week_day": "Days of the week",
+    "save": "Save Reminder",
     "day": {
       "day1": "Monday",
       "day2": "Tuesday",
@@ -479,7 +499,10 @@
       "month2": "2 months",
       "month3": "3 months"
     },
-    "error_end_date": "End date must be greater than start date"
+
+    "error_end_date": "End date of reminder must be greater than start date of the reminder",
+    "error_start_date": "Start date of reminder must be lower than end date of reminder"
+
   },
   "appointment": {
     "header_appointment": "Appointment",
@@ -491,6 +514,7 @@
     "field_doctor": "Doctor",
     "field_center": "Center",
     "field_specially": "Professional",
+    "no_field_specially": "No Profesional Assigned",
     "field_appointment_type": "Type of appointment",
     "field_instructions": "Instructions",
     "field_information": "Information",
@@ -509,7 +533,9 @@
     "add_appointment": "Add appointment",
     "edit_event": "Edit Event",
     "add_event": "Add Event",
-    "delete_event": "Delete Event"
+    "delete_event": "Delete Event",
+    "video": "Video Consultation",
+    "presential": "Face to Face Consultation" 
   },
   "doctor": {
     "header_doctor": "Medical Detail",
@@ -521,8 +547,9 @@
     "header": "Follow-up",
     "tap_documents": "Documents",
     "tap_forms": "Forms",
+    "tap_formsPlan": "Planning Forms",
     "tap_graphics": "Graphics",
-    "tap_test": "Medical tests"
+    "tap_test": "Medical Tests"
   },
   "documents": {
     "subtitle_information": "Information",
@@ -550,8 +577,8 @@
     "error_alert_message": "An error occurred while adding a new medical document",
     "select": "Select",
     "camera": "Camera",
-    "file": "Records",
-    "pictures": "Pictures",
+    "file": "Documents",
+    "pictures": "Photos and videos",
     "delete_media_file": "Are you sure you want to delete this file?",
     "delete_document": "Are you sure you want to delete this diagnostic test?",
     "input_file_name": "Enter a name for the file",
@@ -582,14 +609,19 @@
     "field_drug": "Medication",
     "field_game": "Games",
     "field_health": "Health",
+    "field_recipes": "Recipes",
+    "field_today": "Today",
+    "field_goals": "Goals",
+    "calories": "calories",
     "description": "Description",
     "dose": "Doses",
-    "morning": "morning",
-    "noon": "midday",
-    "aftenoon": "afternoon",
-    "night": "nighttime",
-    "midnight": "midnight",
-    "dawning": "Dawn",
+    "frequency": "Frequency",
+    "morning": "Morning",
+    "noon": "Midday",
+    "aftenoon": "Afternoon",
+    "night": "Nighttime",
+    "midnight": "Midnight",
+    "dawning": "Dawning",
     "all_day": "All day"
   },
   "diet": {
@@ -598,7 +630,7 @@
     "brunch": "Lunch",
     "lunch": "Food",
     "afternoon_snack": "Snack",
-    "dinner": "Price"
+    "dinner": "Dinner"
   },
   "game": {
     "games": "Games",
@@ -611,7 +643,7 @@
     "add_medication": "Add medication",
     "edit_medication": "Edit medication",
     "send_medication": "Request medication shipment",
-    "save_medication": "Save medication",
+    "save_medication": "Save",
     "delete_medication": "Remove medication",
     "message_add_medication": "A new drug has been added",
     "message_edit_medication": "The drug has been successfully edited",
@@ -630,12 +662,12 @@
     "placeholder_chosse": "Select",
     "placeholder_dose": "Nº of dose",
     "placeholder_alias": "Alternative name",
-    "placeholder_search": "Search by name or code",
+    "placeholder_search": "Search",
     "snapshot_medication": "Instant shot",
     "medication_plan": "Medication Plan",
     "button_details": "See details",
     "from": "From",
-    "to": "To",
+    "to": "to",
     "dose": "Dose : ",
     "accepted_rejected": "Do you want to approve or reject this medication plan?",
     "accepted_rejectedExercises": "Do you want to approve or reject this exercise?",
@@ -649,7 +681,8 @@
     "rejectd_option2F": "I do not agree with the form",
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
-    "medication_status": "pending"
+    "medication_status": "Pending",
+    "name":"Name"
   },
 
   
@@ -668,7 +701,6 @@
     "rejectd_option3": "Other",
     "medication_status": "pending"
   },
-
   "button": {
     "see_details": "See details",
     "detail": "Detail",
@@ -678,13 +710,16 @@
     "edit": "Edit",
     "ok": "OK",
     "add": "Add",
-    "delete": "Eliminate",
+    "delete": "Delete",
     "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
+    "takeds": "Taken",
     "taked": "Outlet",
     "forgotten": "Forgotten",
+    "completed": "Answered",
     "continue": "Continue",
+    "pending": "Pending",
     "send": "Send",
     "perfil": "Profile",
     "open": "Open",
@@ -715,6 +750,8 @@
     "tap_appointment": "Face to face",
     "tap_chat": "Chat",
     "tap_pusher": "Pusher",
+    "tap_medical_visits": "Medical visits",
+    "tap_my_centers": "My centers",
     "text_video": "Talk directly to your regular doctor or a specialist from wherever you want. You will be attended at the selected time",
     "regular_professional": "Regular Doctor",
     "text_regular_professional": "Book an appointment with your doctor or usual healthcare professional to make a video consultation",
@@ -727,7 +764,11 @@
     "recent_conversations": "Recent conversations",
     "text_recent_conversations": "Access your latest conversations with your regular doctors",
     "new_conversation": "New conversation",
-    "text_new_conversation": "Open a new conversation with your regular doctors"
+    "text_new_conversation": "Open a new conversation with your regular doctors",
+    "new_message": "Add a new message",
+    "new_visit": "Request a visit",
+    "center": "Medical center",
+    "emergency": "Emergency call"
   },
   "medical_directory": {
     "header": "Select",
@@ -747,18 +788,34 @@
     "field_specially": "Speciality",
     "reason_appointment": "Reason for the appointment",
     "attachments": "Attachments",
-    "text_attachments": "You can attach files or images that help us make a better diagnosis",
-    "button_videocall": "Confirm appointment"
+    "text_attachments": "You can attach files or images to help us make a better diagnosis",
+    "button_videocall": "Confirm"
   },
   "bookings": {
     "header": "Booking",
     "field_date": "Date",
     "reason_appointment": "Reason for the appointment",
+    "type": "Type of appointment",
     "attachments": "Attachments",
-    "text_attachments": "You can attach files or images that help us make a better diagnosis",
-    "button_videocall": "Confirm appointment",
+    "text_attachments": "You can attach files or images to help us make a better diagnosis",
+    "button_videocall": "Confirm",
     "button_videocall_charge": "Confirm appointment with payment",
-    "error_upload_files": "Error attaching files"
+    "error_upload_files": "Error attaching files",
+
+    "placeholder": "Not specified",
+    "profesional": "Select Profesional",
+
+    "types": {
+      "online": "Online",
+      "presential": "Face to Face"
+    },
+
+    "reasons": {
+        "1": "Common disease",
+        "2": "Prescription",
+        "3": "Doubt",
+        "4": "Other reasons"
+    }
   },
   "chat": {
     "header": "Chat",
@@ -808,6 +865,7 @@
   "medications": {
     "list": "List of orders",
     "title": "Medication",
+    "titlePlans": "Medication Plans",
     "direction": "Reorder",
     "directions_title": "1.-Select a shipping address",
     "directions_title_2": "2.-Select a type of shipment",
@@ -832,7 +890,10 @@
     "go_back": "Back to previous step",
     "add_address": "Add Address",
     "edit_address": "Edit Address",
-    "head_card_text": "Here you will find information about the prescribed medication plans. You can contact your medical team if you have any questions about it"
+    "head_card_text": "Here you will find information about the prescribed medication plans. You can contact your medical team if you have any questions about it",
+    "msm_caution": "This drug has dangerous interactions with:",
+    "caution": "Caution:",
+    "msm_contact_hp": "*It is recommended to contact health personnel before consumption."
   },
   "recipe": {
     "header": "Recipes",
@@ -842,18 +903,20 @@
   "notifications": {
     "register_error": "Failed to register device. You will not be able to receive notifications.",
     "voip_register_error": "Failed to register device. You will not be able to receive VoIP notifications.",
-    "scp": "Shared care plan",
+    "scp": "Shared Care Plan",
     "chat": "Message",
     "form": "Form",
     "drug": "Medicament",
     "videocall": "Video call",
     "open": "Open",
-    "close": "Close"
+    "close": "Close",
+    "join": "Join",
+    "cancel": "Cancel"
   },
   "security": {
     "rooted": "This device has been detected to have been initialized with unusual user rights (root). For reasons of security and data integrity, access has been blocked.",
     "alert_security": "Security Alert",
-    "ens_message": "<p>Dear user,<br><br> We have detected that your device is rooted (Android) or jailbroken (Apple). We would like to inform you about the risks associated with using an unlocked device for security purposes data.<br><br>Unlocking your device removes any factory restrictions imposed by the operating system, which may compromise the integrity of data stored on your device.This may open the door to potential security threats, such as installation of malicious applications without your knowledge, unauthorized access to your personal data or loss of sensitive information.<br><br>As a telemedicine application, we take the privacy and security of your personal and medical data very seriously. We strongly recommend that you use an unlocked device to ensure adequate protection of your information and to prevent potential security breaches.<br><br>If you continue to use our app on this device, you do so at your own risk. We are not responsible for any loss, damage, or unauthorized access to your data that may occur as a result of using an unlocked device.<br><br>We strongly recommend that you restore your device to its original factory settings or use an alternative device not unlocked to ensure the safety of your data while using our app.<br><br>If you have any questions or concerns, please feel free to contact our support team at email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a> <br><br>Sincerely,<br>The Rosia S.L. Team</p> "
+    "ens_message": "<p>Dear user,<br><br> We have detected that your device is rooted (Android) or jailbroken (Apple). We would like to inform you about the risks associated with using an unlocked device for security purposes data.<br><br>Unlocking your device removes any factory restrictions imposed by the operating system, which may compromise the integrity of data stored on your device.This may open the door to potential security threats, such as installation of malicious applications without your knowledge, unauthorized access to your personal data or loss of sensitive information.<br><br>As a telemedicine application, we take the privacy and security of your personal and medical data very seriously. We strongly recommend that you use an unlocked device to ensure adequate protection of your information and to prevent potential security breaches.<br><br>If you continue to use our app on this device, you do so at your own risk. We are not responsible for any loss, damage, or unauthorized access to your data that may occur as a result of using an unlocked device.<br><br>We strongly recommend that you restore your device to its original factory settings or use an alternative device not unlocked to ensure the safety of your data while using our app.<br><br>If you have any questions or concerns, please feel free to contact our support team at email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a> <br><br>Sincerely,<br>The Inca Health S.L. Team</p> "
   },
   "commons": {
     "error-network": "Internet connection lost",
@@ -866,13 +929,14 @@
     "mode_activate": "Developer mode enabled",
     "mode_desactivate": "Developer mode disabled",
     "mode_0": "Production",
-    "mode_1": "Quality",
-    "mode_2": "Development"
+    "mode_1": "Development",
+    "mode_2": "Quality"
   },
   "list_notifications": {
     "header": "Notifications",
     "form": "Time to fill out a form",
     "level": "Completed level achievements",
+    "new_level": "A new challenge has been assigned",
     "drugintake": "Time to take medication",
     "visitonline": "Time of your online appointment",
     "message": "You have received a new message",
@@ -908,7 +972,8 @@
     "button": {
       "accept": "Accept",
       "cancel": "Cancel",
-      "send": "Send"
+      "send": "Send",
+      "see_answer": "See Answers"
     },
     "file": {
       "select": "Select",
@@ -932,20 +997,21 @@
     "text3": "There is no information associated with this form",
     "text4": "ATTENTION",
     "selected_value": "selected value",
-    "go_to_app": "Return to homepage",
+    "go_to_app": "Return to page",
     "score": "Points earned for completing the form:",
     "score1": "Points earned:",
+    "to": "to",
 
     "goal": {
       "title": "Attention",
       "message": "This form <strong>only scores</strong> if it is answered <strong>correctly</strong>"
     },
-    "scheduled": "Scheduled : ",
+    "scheduled": "Scheduled:",
     "goals": "Goal:",
     "head_card_text": "We will periodically send you forms and scales to keep us informed about your health status, and you will be notified when it is time to fill them in.",
     "alert_forms": "You can only fill out this form when it is scheduled; we will send you a notification on the specified day.",
     "alert_title": "Action not allowed",
-
+    "alert_form_answered": "Form has been answered",
     "accepted_rejected": "Do you want to approve or reject this form?",
     "button_accepted": "Approve",
     "button_rejected": "Reject",
@@ -959,7 +1025,6 @@
     "placeholder": "Write a message.",
     "form_status": "pending"
   },
-
   
   "answer_form": {
     "title": "Completed forms",
@@ -980,13 +1045,19 @@
   "lifestyle": {
     "header": "Lifestyle Habits",
     "head_card_title": "Lifestyle Habits",
-    "head_card_text": "Lifestyle habits can have a significant impact on an individual's physical, mental, and emotional health"
+    "head_card_text": "Lifestyle habits can have a significant impact on an individual's physical, mental, and emotional health",
+    "last_score": "Last score:",
+    "scorepoints": " points"
   },
   "shared_care_plan": {
     "title": "Shared care plan",
-    "description": "<p>This is your <b>Shared Care Plan</b></p>",
-    "monitoring": "Monitoring",
-    "medical_procedure": "Medical Procedure",
+    "descriptionGL": "News that might interest you.",
+    "descriptionForms":"Health remommendations.",
+    "descriptionMMpHc":"To keep you in shape.",
+    "medicalTestSub":"Laboratory result",
+    "monitoring": "Your data",
+    "lastValue": "Last data:",
+    "medical_procedure": "Medical procedures",
     "informed_consent": "Informed Consent",
     "new_scp_notification_title": "New goals have been added to your Shared Care Plan",
     "new_scp_notification_msg": "Please review the changes to approve or reject",
@@ -999,7 +1070,25 @@
     },
     "monitoringList": {
       "text" : "Monitoring is crucial to assess your health status, detect early changes and adjust treatment."
-    }
+    },
+    "addButton":{
+      "MedicalTest":"Add a medical test",
+      "Medication":"Add a new drug",
+      "HealthCharts": "Add value"
+    },
+    "readingTime": "minutes reading",
+    "preparationTime": "minutes of preparation",
+    "exercicesTime": "minutes of exercice",
+    "button_info": "More information",
+    "like": "Members Likes",
+    "source": "Source:",
+
+    "descriptionNews": "News that might interest you",
+    "descriptionAdvices": "Advices Recommendations",
+    "descriptionExercises": "To keep you in shape",
+    "descriptionDiets": "Improve your diet",
+    "descriptionTestimonials": "Experiences similar to yours",
+    "descriptionGames": "Some entertainment is available for you!"
   },
   "exercices": {
     "header": "Exercises"
@@ -1012,5 +1101,6 @@
   },
   "medical_procedure_list":{
     "text":"Here you will find all your medical procedures and diagnostic tests scheduled on a timeline."
-  }
+  },
+  "content": "There is currently no data available to show"
 }

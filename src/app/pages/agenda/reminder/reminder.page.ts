@@ -9,6 +9,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ElementsAddPage } from '../../tracking/elements-add/elements-add.page';
 import { ReminderAddPage } from '../reminder-add/reminder-add.page';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-reminder',
@@ -17,8 +18,8 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 })
 export class ReminderPage implements OnInit {
   private data: any = history.state?.data;
-  days = [{day1:1}, {day2:1}, {day3:1}, {day4:1}, {day5:1}, {day6:1}, {day7:1}]
-  id:any
+  days = [{ day1: 1 }, { day2: 1 }, { day3: 1 }, { day4: 1 }, { day5: 1 }, { day6: 1 }, { day7: 1 }]
+  id: any
   event = []
   reminder: any = {}
   frequency = ''
@@ -33,29 +34,42 @@ export class ReminderPage implements OnInit {
     private dateService: DateService,
     private dooleService: DooleService,
     private languageService: LanguageService,
-    private translate : TranslateService,
+    private translate: TranslateService,
     public alertController: AlertController,
     private modalCtrl: ModalController,
     public nav: NavController,
     public notification: NotificationService,
+    public permissionsService: PermissionService
   ) { }
 
   ngOnInit() {
     this.id = history.state.id;
-    if(this.id){
+    if (this.id) {
       this.event = history.state.event;
       console.log('[ReminderPage] ngOnInit()', this.event, this.id);
       this.getReminderData()
     }
   }
+
+
+  checkPermissions(reminder) {
+    if (reminder.reminderable_type === 'App\\Element' && this.permissionsService.canManageMonitoring) return false;
+    if(reminder.reminderable_type === 'App\\Element' && !this.permissionsService.canManageMonitoring) return true;
+
+    if (reminder.reminderable_type === 'App\\Form') return true
+    if (reminder.reminderable_type === 'App\\Agenda' && !this.permissionsService.canManageEvents) return true
+    if (reminder.reminderable_type === 'App\\Agenda' && this.permissionsService.canManageEvents) return false
+    else return false;
+  }
+
   expandItem(): void {
     this.expanded = !this.expanded
   }
 
-  async getReminderData(){
+  async getReminderData() {
     this.isLoading = true
     this.dooleService.getAPIreminderID(this.id).subscribe(
-      async (res: any) =>{
+      async (res: any) => {
         console.log('[ReminderPage] getReminderData()', await res);
         if (res.reminder) {
           this.reminder = res.reminder
@@ -67,27 +81,27 @@ export class ReminderPage implements OnInit {
           this.days[5].day6 = res.reminder.day6
           this.days[6].day7 = res.reminder.day7
           this.times = []
-          if(this.reminder?.times.length > 0)
-          this.reminder.times.forEach(element => {
-            let t = element.time.split(':')
-            this.times.push(this.dateService.format24h(t[0]+':'+t[1]))
-          });
-          this.selectType(  this.reminder )
+          if (this.reminder?.times.length > 0)
+            this.reminder.times.forEach(element => {
+              let t = element.time.split(':')
+              this.times.push(this.dateService.format24h(t[0] + ':' + t[1]))
+            });
+          this.selectType(this.reminder)
           this.selectedFrequency(res.reminder?.frequency)
         }
         this.isLoading = false
-       },(err) => {
+      }, (err) => {
         this.isLoading = false
-          console.log('[ReminderPage] getReminderData() ERROR(' + err.code + '): ' + err.message);
-          throw err;
-      }) ,() => {
+        console.log('[ReminderPage] getReminderData() ERROR(' + err.code + '): ' + err.message);
+        throw err;
+      }), () => {
         // Called when operation is complete (both success and error)
         this.isLoading = false
       };
   }
 
 
-  formatSelectedDate(date){
+  formatSelectedDate(date) {
 
     return this.dateService.formatDateLongFormat(date);
     // date = this.formatDate(date)
@@ -96,7 +110,7 @@ export class ReminderPage implements OnInit {
     // return datePipe.transform(date, 'EEEE, d MMMM yyyy, HH:mm');
   }
 
-  selectedFrequency(frequency){
+  selectedFrequency(frequency) {
     switch (frequency) {
       // case 'day':
       //   this.frequency = this.translate.instant('reminder.frequency.day');
@@ -123,58 +137,58 @@ export class ReminderPage implements OnInit {
     }
   }
 
-  settingDay(index){
-    this.days.forEach((day, i) =>{
-      day['day'+(i +1)] = false
+  settingDay(index) {
+    this.days.forEach((day, i) => {
+      day['day' + (i + 1)] = false
     })
-    if(index.length > 0)
-    index.forEach(i => {
-      let day = this.days[i]
-      day['day'+(i +1)] = true
-    });
+    if (index.length > 0)
+      index.forEach(i => {
+        let day = this.days[i]
+        day['day' + (i + 1)] = true
+      });
 
   }
 
-  setDay( day, i){
-     return day['day'+(i +1)]
+  setDay(day, i) {
+    return day['day' + (i + 1)]
   }
 
-  gettingFrequency(){
+  gettingFrequency() {
     let ceros = 1
-    this.days.forEach((day, i) =>{
-      let d = day['day'+(i +1)]
-      if(d==0 || d == false) ceros =0
+    this.days.forEach((day, i) => {
+      let d = day['day' + (i + 1)]
+      if (d == 0 || d == false) ceros = 0
     })
     //console.log('[DrugsDetailPage] gettingFrequency() day', this.days);
-    if(ceros==0){
+    if (ceros == 0) {
       this.frequency = this.translate.instant('reminder.frequency.custom');
-      this.frequencySeleted =  'custom'
+      this.frequencySeleted = 'custom'
     }
   }
 
-/*   trasnforHourToMinutes(time): any{
-        let hour = time.split(':');
-        return (Number(hour[0]))*60 + (Number(hour[1]))
-  } */
+  /*   trasnforHourToMinutes(time): any{
+          let hour = time.split(':');
+          return (Number(hour[0]))*60 + (Number(hour[1]))
+    } */
 
-  formatDate(d){
-    if(d === undefined || d === null)
-    return
+  formatDate(d) {
+    if (d === undefined || d === null)
+      return
     var auxdate = d.split(' ')
     //let date = new Date(auxdate[0]);
     d = d.replace(' ', 'T')
     let date0 = new Date(d).toUTCString();
     let date = new Date(date0);
     let time = auxdate[1];
-    date.setHours(time.substring(0,2));
-    date.setMinutes(time.substring(3,5));
+    date.setHours(time.substring(0, 2));
+    date.setMinutes(time.substring(3, 5));
     return date;
   }
 
-  async editReminder(){
+  async editReminder() {
     const modal = await this.modalCtrl.create({
-      component:  ReminderAddPage,
-      componentProps: {typeId: this.id, type: 'Agenda', event: this.reminder},
+      component: ReminderAddPage,
+      componentProps: { typeId: this.id, type: 'Agenda', event: this.reminder },
       cssClass: "modal-custom-class"
     });
 
@@ -182,60 +196,60 @@ export class ReminderPage implements OnInit {
       .then((result) => {
         console.log('editReminder()', result);
 
-        if(result?.data?.error){
-         // let message = this.translate.instant('landing.message_wrong_credentials')
+        if (result?.data?.error) {
+          // let message = this.translate.instant('landing.message_wrong_credentials')
           //this.dooleService.presentAlert(message)
-        }else if(result?.data?.action == 'update'){
+        } else if (result?.data?.action == 'update') {
           //let reminder  = result?.data?.reminder
           this.getReminderData()
         }
-    });
+      });
 
     await modal.present();
 
   }
 
-  getReminderType(){
-    let type = (this.reminder?.reminderable?.name)? this.reminder?.reminderable.name : this.reminder?.reminderable_type?.split("App\\")[0]
-    if(type == undefined)
-    type =  this.reminder?.reminder_origin_type?.split("App\\")[1]
-     return type
+  getReminderType() {
+    let type = (this.reminder?.reminderable?.name) ? this.reminder?.reminderable.name : this.reminder?.reminderable_type?.split("App\\")[0]
+    if (type == undefined)
+      type = this.reminder?.reminder_origin_type?.split("App\\")[1]
+    return type
   }
 
-  getReminderTitle(){
-    if(this.reminder?.reminder_origin?.title){
-        if(this.reminder?.reminder_origin?.title.length > 25)
-        return this.reminder?.reminder_origin?.title.substr(0,24)+'...'
-        else
+  getReminderTitle() {
+    if (this.reminder?.reminder_origin?.title) {
+      if (this.reminder?.reminder_origin?.title.length > 25)
+        return this.reminder?.reminder_origin?.title.substr(0, 24) + '...'
+      else
         return this.reminder?.reminder_origin?.title
     }
-    let type = (this.reminder?.reminderable?.title)? this.reminder?.reminderable.title : this.reminder?.reminderable?.name
-    if(type == undefined)
-    type =  this.reminder?.reminder_origin_type?.split("App\\")[1]
-     return type
+    let type = (this.reminder?.reminderable?.title) ? this.reminder?.reminderable.title : this.reminder?.reminderable?.name
+    if (type == undefined)
+      type = this.reminder?.reminder_origin_type?.split("App\\")[1]
+    return type
   }
 
-  selectType( instruction){
-    console.log('[AgendaPage] selectType()',  instruction);
+  selectType(instruction) {
+    console.log('[AgendaPage] selectType()', instruction);
     //let type = ''
     switch (instruction?.reminderable_type) {
       case "App\\Element":
         this.type = this.translate.instant('reminder.activity')
         this.isElement = true
         break;
-      case  "App\\Advice":
+      case "App\\Advice":
         break;
-      case  "App\\Diet":
+      case "App\\Diet":
         this.type = this.translate.instant('reminder.diet')
         break;
-      case  "App\\Form":
+      case "App\\Form":
         this.type = this.translate.instant('reminder.form')
         break;
-      case  "App\\Agenda":
-        if(instruction?.reminderable?.model_type == "App\\Visit")
-        this.type = this.translate.instant('reminder.medical')
+      case "App\\Agenda":
+        if (instruction?.reminderable?.model_type == "App\\Visit")
+          this.type = this.translate.instant('reminder.medical')
         else
-        this.type = this.translate.instant('reminder.personal')
+          this.type = this.translate.instant('reminder.personal')
         break;
 
       default:
@@ -245,57 +259,57 @@ export class ReminderPage implements OnInit {
     //return type
   }
 
-  actionIntrucction(){
+  actionIntrucction() {
     let instruction = this.reminder
-    console.log('[AgendaPage] actionIntrucction()',  instruction);
+    console.log('[AgendaPage] actionIntrucction()', instruction);
     let id
     switch (instruction.reminderable_type) {
       case "App\\Element":
         id = instruction.reminderable_id
-        console.log('[AgendaPage] actionIntrucction()',  id);
+        console.log('[AgendaPage] actionIntrucction()', id);
         this.addElement(id)
         break;
-      case  "App\\Agenda":
+      case "App\\Agenda":
         let agenda = instruction?.reminder_origin
-        this.nav.navigateForward("agenda/detail", { state: {event: agenda} });
+        this.nav.navigateForward("agenda/detail", { state: { event: agenda } });
         break;
 
       default:
         id = instruction.reminderable_id
-        if(instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda"){
-            id = instruction?.reminder_origin_id
-            if(id){
-              console.log('[AgendaPage] actionIntrucction()',  id);
-              let agenda = instruction?.reminder_origin
-              this.nav.navigateForward("agenda/detail", { state: {event: agenda} });
-            }
+        if (instruction.reminderable_id == null && instruction.reminder_origin_type == "App\\Agenda") {
+          id = instruction?.reminder_origin_id
+          if (id) {
+            console.log('[AgendaPage] actionIntrucction()', id);
+            let agenda = instruction?.reminder_origin
+            this.nav.navigateForward("agenda/detail", { state: { event: agenda } });
+          }
         }
         break;
     }
   }
 
-  async addElement(id){
+  async addElement(id) {
     const modal = await this.modalCtrl.create({
       component: ElementsAddPage,
-      componentProps: {id: id },
+      componentProps: { id: id },
       cssClass: "modal-custom-class"
     });
 
     modal.onDidDismiss()
       .then((result) => {
-        if(result?.data['action'] === 'add'){
+        if (result?.data['action'] === 'add') {
           this.notification.displayToastSuccessful()
-         }
-        if(result?.data['error']){
-        //TODO: handle error message
         }
-    });
+        if (result?.data['error']) {
+          //TODO: handle error message
+        }
+      });
     await modal.present();
   }
 
-  backButton(){
-    if(this.data)
-    this.router.navigate([`/home`]);
+  backButton() {
+    if (this.data)
+      this.router.navigate([`/home`]);
   }
 
 }

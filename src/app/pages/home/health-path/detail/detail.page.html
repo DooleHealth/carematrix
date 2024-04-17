@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ this.title }}</ion-title>
+    <ion-title class="toolbarTitle">{{ this.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div class="spin" *ngIf="this.fetching;else showChallenge">
-    <ion-spinner ></ion-spinner>
+   <ion-spinner ></ion-spinner>
 </div>
 <ng-template #showChallenge>
 
@@ -79,8 +79,10 @@
         <ion-item lines="full" detail="false" (click)="g?.completed ? false : openGoal(g)">
           <p *ngIf="g?.required" color="danger" style="font-size: 20px; color:red; margin-top: 8px;">*&nbsp;</p>
           <ion-label class="name-goal text1line">{{ g?.name }}</ion-label>
-          <ion-text *ngIf="g?.completed;else showArrow" slot="end" class="goal-done">{{ 'health_path.done'| translate  }}</ion-text>
-          <ng-template #showArrow><ion-icon name="chevron-forward-outline" slot="end" size="small" style="color: purple;"></ion-icon></ng-template>
+          <ion-text *ngIf="g?.completed;else showArrow" slot="end" class="goal-done" style="color: #4D7A05;">{{ 'health_path.done'| translate  }}</ion-text>
+          <ng-template #showArrow>
+            <ion-text style="color: #A2047F;"> <strong>{{'goals.go' | translate}}</strong></ion-text>
+            <ion-icon name="chevron-forward-outline" slot="end" size="small" style="color: purple;"></ion-icon></ng-template>
         </ion-item>
       </ion-list>
     </ion-card-content>

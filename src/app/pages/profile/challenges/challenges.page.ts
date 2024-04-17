@@ -8,7 +8,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./challenges.page.scss'],
 })
 export class ChallengesPage {
-  listChallenges=[];
+  listChallenges:any[] = [];
   nameChallenge: string = 'Doolehealth'
   isLoading = false
   progressBarValue = 0;

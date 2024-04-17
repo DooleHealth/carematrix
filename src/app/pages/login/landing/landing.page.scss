@@ -1,19 +1,113 @@
-.enter-btn{
-    margin-top: 10%;
-}
-.slides{
-    background-color: lightblue;
-}
-
-.card-content-css{
-    background-color: yellow;
-}
-
-.swiper{
-    max-height: 200px !important;
+.enter-btn {
+  margin-top: 20%;
+  border-radius: 5px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  height: 50px;
+  text-transform: none;
 }
 
-.text-align-center{
-text-align: center;
-  }
+.bio-btn {
+  border-radius: 5px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  height: 50px;
+  text-transform: none;
+}
 
+a {
+  color: var(--ion-color-primary);
+  font-family: 'Poppins-Bold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.slides {
+  background-color: lightblue;
+}
+
+.card-content-css {
+  background-color: yellow;
+}
+
+.swiper {
+  max-height: 200px !important;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.center-container {
+  display: flex;
+  align-items: center;
+}
+
+.spacing-container {
+  flex: 1;
+  height: 0;
+  border-bottom: 1px solid #757575;
+  opacity: 21%;
+
+}
+
+
+ion-input {
+  font-family: 'Poppins-Regular';
+  padding-left:10px !important;
+  color: var(--ion-color-primary) !important;
+  --placeholder-opacity: 1;
+}
+
+.color-text-too {
+  font-family: 'Poppins-Regular';
+  color: var(--Gris-oscuro, #757575);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.password-recovery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.about_app {
+  color: var(--ion-color-secondary) !important;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+
+ion-toolbar {
+  --background: white !important;
+}
+
+ion-header {
+  background: white;
+  --ion-background-color: unset !important;
+  box-shadow: unset !important;
+}
+
+ion-content {
+  --background: white !important
+}
+
+ion-footer {
+  box-shadow: unset !important;
+  background: white;
+}

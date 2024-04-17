@@ -43,8 +43,8 @@ chat-bubble {
   }
 
   .chat-bubble.right {
-    background-color: map-get($chat-bubble, background-right);
-    color: map-get($chat-bubble, font-right);
+    background-color: var(--ion-color-primary);
+    color: white;
     float: right;
   }
 
@@ -57,7 +57,7 @@ chat-bubble {
   }
 
   .chat-bubble.right:before {
-    background-color: map-get($chat-bubble, background-right);
+    background-color: var(--ion-color-primary);
     right: -4px;
     border-bottom-left-radius: 50%;
     border-top-right-radius: 100%;

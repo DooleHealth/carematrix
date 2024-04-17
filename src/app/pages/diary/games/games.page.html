@@ -1,48 +1,79 @@
 <ion-header>
   <!-- <ion-toolbar> -->
 
-    <ion-toolbar mode="ios">
-      <ion-title>{{'diary.field_game' | translate}}</ion-title>
-      <ion-buttons slot="start">
-        <ion-back-button text=""></ion-back-button>
-      </ion-buttons>
-       <ion-buttons slot="end">
-        <ion-button fill="clear" routerLink="/profile">
-          <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+  <ion-toolbar mode="ios">
+    <ion-title class="toolbarTitle">{{'diary.field_game' | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/profile">
+        <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content view-cached=”false”>
 
-  <div>
+
+
+
+<ion-content>
+  <app-caregiver></app-caregiver>
+
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+      </ng-container>
+
+   <ng-template #finishedLoading>
     <ion-list *ngIf="items.length > 0; else noData">
-        <app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>
+      <div *ngFor="let content of items">
+        <ion-card class="cardProfile ion-no-padding" *ngIf="this.canPlayGames">
+
+          <ion-item class="ion-no-padding item" lines="none" mode="ios">
+            <ion-thumbnail class="thumbnail" slot="start">
+              <img class="img" [src]="content.data.img"
+                onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " alt="" />
+            </ion-thumbnail>
+            <ion-grid style="height: 100% !important;" class="ion-no-padding">
+
+
+              <ion-row style="padding-top: 5%;">
+                <ion-col size="6" style="display: flex; align-items: center; justify-content: start;">
+                  <ion-text class="txt-title-card" style="margin: 0px;">{{content?.data.title | translate}}</ion-text>
+                </ion-col>
+                <ion-col size="6" style="display: flex; align-items: center; justify-content: end;">
+                  <ion-button class="play-btn" shape="round" style="width: 60%" (click)="openGames(content.data)">
+                    {{'health_path.game' | translate}}
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="content.data.type != 'form'">
+                <ion-col size="9.5" size-md="10" size-lg="11">
+                  <p class="txt-subtitle-card">
+                    {{'lifestyle.last_score' | translate}} {{ content?.data.score }} {{'lifestyle.scorepoints' | translate}}
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-card>
+
+      </div>
     </ion-list>
-  </div>
+  
+
   <ng-template #noData>
-    <div *ngIf="!this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="newspaper"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col >
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  </div>
+    <div>
+      <app-no-data></app-no-data>
+    </div>
   </ng-template>
-  </ion-content>
+  </ng-template>
 
+</ion-content>
 
-
-
-  <ion-footer>
-    <ion-toolbar>
-      <app-tabs></app-tabs>
-    </ion-toolbar>
-  </ion-footer>
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-title class="ion-text-wrap">{{ nameLifeStyle | translate}}</ion-title>
+    <ion-title class="ion-text-wrap toolbarTitle">{{ nameLifeStyle | translate}}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
+      <ion-back-button defaultHref="/tracking" text=""></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button fill="clear" routerLink="/profile">
@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="cardProfile ion-no-padding">
+  <!--<ion-card class="cardProfile ion-no-padding">
     <ion-item lines="none">
       <ion-grid>
         <ion-row>
@@ -30,9 +30,13 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-  </ion-card>
-
+  </ion-card>-->
+  <app-caregiver></app-caregiver>
   <div>
+    <div class="spin" *ngIf="this.isLoading">
+     <ion-spinner ></ion-spinner>
+    </div>
+
     <ion-list>
       <app-lifestyle-index
         *ngFor="let content of this.listContent"

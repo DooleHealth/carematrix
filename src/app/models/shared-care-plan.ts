@@ -17,48 +17,79 @@ export enum ContentType {
 }
 
 export enum ContentTypePath {
-    Goals = '/profile/goals',
-    LifestyleHabits = '/lifestyle-habits',
-    Medication= '/medication/', 
-    Forms= '/tracking/form-list', 
-    Monitoring= '/tracking/monitoring', 
-    MedicalProcedure= '/tracking/procedures', 
-    InformedConsent = '/tracking/informed-consent',
-    Challenges = '/home/health-path',
+    //ADVICES
+    Advices = '/tracking/advices',
+    AdvicesDetail= Advices + '/advices-detail',
+    //AGENDA
+    Agenda = '/agenda',
+    AgendaDetail = '/agenda/detail',
+    //CHALLENGES
+    Challenges = '/tracking/profile/goals',
     ChallengesDetail = '/home/health-path/detail',
-    // LifeStyle
-    News = '/news',
-    Advices = '/advices',
-    Exercises= '/exercices', 
-    Games= '/games', 
-    Diets= '/diets', 
-
+    //DIETS 
+    Diets= '/tracking/journal', 
     DietsDetail= Diets + '/diets-detail',
-    AdvicesDetail= Advices+ '/advices-detail',
-    NewsDetail = News + '/new-detail',
-    FormDetail = '/tracking/form',
-    GamesDetail = Games + '/games-detail',
+    //EXERCISE
+    Exercises= '/tracking/exercices', 
     ExercisesDetail = Exercises + '/exercices-detail',
+    //FORM
+    Forms= '/tracking/form-list', 
+    FormDetail = '/tracking/form',
+    //GAME   
+    Games= '/tracking/games', 
+    GamesDetail = Games + '/games-detail',
+    //GOALS    
+    Goals = '/tracking/profile/goals',
+    //HOME
+    Home = '/home',
+    //LIFESTYLEHABITS
+    LifestyleHabits = '/tracking/lifestyle-habits',
+    //MEDICAL PROCEDURES
+    MedicalProcedure= '/tracking/procedures', 
+    //MEDICAL TEST
+    MedicalTest= '/document-detail', 
+    //MEDICATION
+    Medication= '/tracking/medication/', 
+    MedicationDetail = '/drugs-detail', // Medication Plan
+    //MESSAGE
+    Message = '/contact/chat/conversation',
+    //MONITORING
+    Monitoring= '/tracking/monitoring', 
+    //NEWS
+    News = '/tracking/news',
+    NewsDetail = News + '/new-detail',
+    //REMINDERS
+    ReminderDetail = '/agenda/reminder',
+    //TESTIMONIALS
+    Testimonials= '/tracking/testimonials',
+    //TRACKING OR FOLLOW UP
+    Tracking= '/tracking',
+    //INFORMED COSENT
+    InformedConsent = '/tracking/informed-consent', 
 
-
-    // Medication Plan
-    MedicationID = '/drugs-detail'
 }
 
 export enum ContentTypeIcons {
-    Goals = 'assets/icons/shared-care-plan/scp-goals.svg',
-    LifestyleHabits = 'assets/icons/shared-care-plan/scp-lifestyle.svg',
-    Medication = 'assets/icons/shared-care-plan/scp-medication.svg',
-    Forms = 'assets/icons/shared-care-plan/scp-form.svg',
-    Monitoring = 'assets/icons/shared-care-plan/scp-monitoring.svg',
-    MedicalProcedure = 'assets/icons/shared-care-plan/scp-medical-procedures.svg',
-    InformedConsent = 'assets/icons/shared-care-plan/scp-informed.svg',
+    Goals = 'assets/images/shared-care-plan/goals.png',
+    LifestyleHabits = 'assets/images/shared-care-plan/lifestyle.png',
+    Forms = 'assets/images/shared-care-plan/forms.png',
+    Medication = 'assets/images/shared-care-plan/medication.png',
+    MedicalProcedure = 'assets/images/shared-care-plan/medicalProcedure.png',
+    Monitoring = 'assets/images/shared-care-plan/healthcharts.png',
+   
+    InformedConsent = 'assets/images/shared-care-plan/news.png',
     // LifeStyle
     News =  'assets/images/shared-care-plan/news.png',
     Advices = 'assets/images/shared-care-plan/advices.png',
-    Exercises= 'assets/images/shared-care-plan/exercices.png', 
-    Games= 'assets/images/shared-care-plan/games.png', 
-    Diets= 'assets/images/shared-care-plan/diets.png', 
+    Exercises= 'assets/images/shared-care-plan/exercises.png',
+    Diets= 'assets/images/shared-care-plan/diets.png',  
+    Testimonials= 'assets/images/shared-care-plan/testimonials.png', 
+    Games= 'assets/images/shared-care-plan/games.png',  
+
+    //AddBUtton
+    buttonMeditalTest= 'assets/images/shared-care-plan/flask.svg',
+    buttomTodayDrug = 'assets/images/shared-care-plan/drug.svg',
+    buttomHealthCharts = 'assets/images/shared-care-plan/medical.svg'
 }
 
 export enum ContentTypeTranslatedName {
@@ -73,15 +104,37 @@ export enum ContentTypeTranslatedName {
     News = 'setting.subtitle_news',
     Advices = 'setting.subtitle_advices',
     Exercises= 'exercices.header', 
-    Games= 'setting.subtitle_games', 
     Diets= 'setting.subtitle_diets', 
+    Testimonials= 'setting.testimonials',
+    Games= 'setting.subtitle_games', 
+   
+
+    //AddButtons
+    addButtonMeditaltest = 'shared_care_plan.addButton.MedicalTest',
+    addButtonTodayDrug= 'shared_care_plan.addButton.Medication',
+    addButtonHealthCharts= 'shared_care_plan.addButton.HealthCharts',
+    
+
 }
 
 declare const enum ContentTypeDescription {
-    Description = 'shared_care_plan.description',
+    descriptionGL = 'shared_care_plan.descriptionGL',
+    descriptionForms= 'shared_care_plan.descriptionForms',
+    descriptionMMpHc= 'shared_care_plan.descriptionMMpHc',
+}
+
+declare const enum LifestyleHabitsTypeDescription {
+    descriptionNews = 'shared_care_plan.descriptionNews',
+    descriptionAdvices= 'shared_care_plan.descriptionAdvices',
+    descriptionExercises= 'shared_care_plan.descriptionExercises',
+    descriptionDiets= 'shared_care_plan.descriptionDiets',
+    descriptionTestimonials= 'shared_care_plan.descriptionTestimonials',
+    descriptionGames= 'shared_care_plan.descriptionGames',
+
 }
 
 export interface ContentComponent {
+    img?: string;
     icon?: string;
     title: string;
     description?: string;
@@ -99,16 +152,17 @@ export interface SCPContentType {
 }
 
 export const ListContentType: SCPContentType = [
-    {icon: ContentTypeIcons.Goals, title: ContentTypeTranslatedName.Goals, description: ContentTypeDescription.Description, type: NotificationsType.GOALS, state: '', boolean_state: false, routerlink: ContentTypePath.Goals},
-    {icon: ContentTypeIcons.LifestyleHabits, title: ContentTypeTranslatedName.LifestyleHabits, description: ContentTypeDescription.Description, type: NotificationsType.LIFE_STILE_HABITS, state: '', boolean_state: false, routerlink: ContentTypePath.LifestyleHabits},
-    {icon: ContentTypeIcons.Medication, title:ContentTypeTranslatedName.Medication, description: ContentTypeDescription.Description, type: NotificationsType.MEDICATIONS, state: '', boolean_state: false, routerlink: ContentTypePath.Medication},
-    {icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.Description, type: NotificationsType.FORMS, state: '', boolean_state: false, routerlink: ContentTypePath.Forms},
-    {icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.Description, type: NotificationsType.MONITORING, state: '', boolean_state: false, routerlink: ContentTypePath.Monitoring},
-    {icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.Description, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
-    //{icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
+    {img: ContentTypeIcons.Goals, icon: ContentTypeIcons.Goals, title: ContentTypeTranslatedName.Goals, description: ContentTypeDescription.descriptionGL, type: NotificationsType.GOALS, state: '', boolean_state: false, routerlink: ContentTypePath.Goals},
+    {img: ContentTypeIcons.LifestyleHabits, icon: ContentTypeIcons.LifestyleHabits, title: ContentTypeTranslatedName.LifestyleHabits, description: ContentTypeDescription.descriptionGL, type: NotificationsType.LIFE_STILE_HABITS, state: '', boolean_state: false, routerlink: ContentTypePath.LifestyleHabits},
+    {img: ContentTypeIcons.Forms, icon: ContentTypeIcons.Forms, title: ContentTypeTranslatedName.Forms, description: ContentTypeDescription.descriptionForms, type: NotificationsType.FORMS, state: '', boolean_state: false, routerlink: ContentTypePath.Forms},
+    {img: ContentTypeIcons.Medication, icon: ContentTypeIcons.Medication, title:ContentTypeTranslatedName.Medication, description: ContentTypeDescription.descriptionMMpHc, type: NotificationsType.MEDICATIONS, state: '', boolean_state: false, routerlink: ContentTypePath.Medication},
+    {img: ContentTypeIcons.MedicalProcedure, icon: ContentTypeIcons.MedicalProcedure, title: ContentTypeTranslatedName.MedicalProcedure, description: ContentTypeDescription.descriptionMMpHc, type: NotificationsType.PROCEDURES, state: '', boolean_state: false, routerlink: ContentTypePath.MedicalProcedure},
+    {img: ContentTypeIcons.Monitoring, icon: ContentTypeIcons.Monitoring, title: ContentTypeTranslatedName.Monitoring, description: ContentTypeDescription.descriptionMMpHc, type: NotificationsType.MONITORING, state: '', boolean_state: false, routerlink: ContentTypePath.Monitoring},
+   //{icon: ContentTypeIcons.InformedConsent, title: ContentTypeTranslatedName.InformedConsent, description: ContentTypeDescription.Description, type: NotificationsType.INFORMED_CONSENT, state: '', boolean_state: false, routerlink: ContentTypePath.InformedConsent}
 ]
 
 export function setStatusContentType(status, content:SharedCarePlan){
+    
     let option = content.type
     switch (option) {
         case NotificationsType.GOALS:
@@ -210,11 +264,13 @@ export interface SharedCarePlanGoal extends SharedCarePlan  {
  */
 
 export const ListSCPLifeStyle: SharedCarePlanLifeStyle [] = [
-    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:"", traduction: ""},
-    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:"", traduction: ""},
-    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:"", traduction: ""},
-    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: ""},
-    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:"", traduction: ""},
+    {img: ContentTypeIcons.News, title: ContentTypeTranslatedName.News,  type: NotificationsType.NEWS, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionNews },
+    {img: ContentTypeIcons.Advices, title: ContentTypeTranslatedName.Advices,  type: NotificationsType.ADVICES, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionAdvices},
+    {img: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionExercises},
+    {img: ContentTypeIcons.Diets, title: ContentTypeTranslatedName.Diets,  type:NotificationsType.DIETS, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionDiets},
+    {img: ContentTypeIcons.Testimonials, title: ContentTypeTranslatedName.Testimonials,  type:NotificationsType.TESTIMONIALS, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionTestimonials},
+    {img: ContentTypeIcons.Games, title: ContentTypeTranslatedName.Games,  type:NotificationsType.GAMES, id:"", traduction: "", subtitle: LifestyleHabitsTypeDescription.descriptionGames},
+   
 ]
 
 export interface SharedCarePlanLifeStyle {
@@ -228,6 +284,11 @@ export interface SharedCarePlanLifeStyle {
     state?: string;
     accepted?: boolean;
     traduction?:string;
+    frequency?: string;
+    isAnswers?: string;
+    hasFormAnswered?: string;
+    score?: string;
+    subtitle?:string;
 
 }
 
@@ -239,6 +300,9 @@ export interface medication extends SharedCarePlanLifeStyle{
     model?: string,
     form_id?: string,
     showAlert?: boolean,
+    lastdata?: string,
+    date?: string,
+    canViewFormAnswered?: string,
 }
 
 export enum ACCESS_TYPE {
@@ -268,4 +332,22 @@ export interface SharedCarePlanProcedure extends SharedCarePlan {
     staff?: string | any;
     department?: string
     img?: string;
+    description?: string;
 }
+
+/**Medical test of Shared care Plan */
+export interface AddButtonComponent {
+    id?: string | number;
+    title: string;
+    icon?: string;
+    type?: string;
+}
+
+export const AddButtonList: AddButtonComponent [] = [
+    {icon: ContentTypeIcons.buttonMeditalTest, title: ContentTypeTranslatedName.addButtonMeditaltest,  type: NotificationsType.AddButtonMedicalTest, id:""},
+    {icon: ContentTypeIcons.buttomTodayDrug, title: ContentTypeTranslatedName.addButtonTodayDrug,  type: NotificationsType.AddButtonTodayDrug, id:""},
+    {icon: ContentTypeIcons.buttomHealthCharts, title: ContentTypeTranslatedName.addButtonHealthCharts,  type: NotificationsType.AddButtonHealthCharts, id:""},
+  
+    // {icon: ContentTypeIcons.Exercises, title: ContentTypeTranslatedName.Exercises,  type:NotificationsType.EXERCISES, id:""},
+   
+]

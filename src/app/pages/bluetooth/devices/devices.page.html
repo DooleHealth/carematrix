@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" >
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'profile.configuration.bluetooth'  | translate}}</ion-title>
+    <ion-title class="toolbarTitle">{{ 'profile.configuration.bluetooth'  | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <section class="full-width">
-    <ion-button expand="full" color="secondary" (click)="this.scan()">{{ 'profile.configuration.bluetooth_search'  | translate}}</ion-button>
+    <ion-button expand="full" color="primary" (click)="this.scan()">{{ 'profile.configuration.bluetooth_search'  | translate}}</ion-button>
   </section>
 
   <ion-list>

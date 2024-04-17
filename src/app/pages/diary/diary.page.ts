@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { ModalController, NavController} from '@ionic/angular';
@@ -8,13 +8,11 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
-import { DrugAddPage } from './drug-add/drug-add.page';
-import { DrugsDetailPage } from './drugs-detail/drugs-detail.page';
 import { StorageService } from 'src/app/services/storage.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { Router } from '@angular/router';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 export interface ItemDiary {
   expanded?: boolean;
   item?: any;
@@ -36,8 +34,11 @@ export interface ListItemByDate {
 })
 
 export class DiaryPage implements OnInit {
+  segment="diets"
   firstTime: boolean;
   public items: ItemDiary[] = [];
+  public itemsCopy: ItemDiary[] = [];
+
   listDrug:  ListDrugByDate[] = [];
   listDiets:  ListItemByDate[] = [];
   listGames= [];
@@ -48,14 +49,20 @@ export class DiaryPage implements OnInit {
   groupedElements: Array<any>;
   newGroupedElements: Array<any>;
   date = Date.now()
-  segment = history.state?.segment ? history.state.segment : 'diets';
+  //segment = history.state?.segment ? history.state.segment : 'diets';
   isLoading:boolean;
   isLoadingDiets:boolean = true;
   isLoadingDrugs:boolean = true;
   isLoadingGames:boolean = true;
   isLoadingElements:boolean = true;
   isFutureDay = false
-
+  isDateInPast = false;
+  currentDate;
+  lastName;
+  isSame: boolean = false;
+  listDietsToday = [];
+  Lasttimestring;
+  saves_items;
   constructor(
     private dooleService: DooleService,
     private datePipe: DatePipe,
@@ -69,12 +76,17 @@ export class DiaryPage implements OnInit {
     private storageService: StorageService,
     private nav: NavController,
     public role: RolesService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone,
+    public permissionService: PermissionService
   ) {}
 
   ngOnInit() {
-    this.setSegment()
-    this.items = []
+    this.getCurrentDate();
+    this.items = [];
+    this.itemsCopy = [];
+
+    this.listDietsToday = [];
     console.log('[DiaryPage] ngOnInit()');
     // let state = history.state?.segment;
     // if(state) this.segment = state
@@ -91,6 +103,23 @@ export class DiaryPage implements OnInit {
     }
   }
 
+  refreshPage(data: any) {
+    if (this.permissionService.canViewRecipes) this.getRecipesist()
+  }
+
+  getIsDateInPast(date: string | number | Date){
+  
+    this.isDateInPast = new Date(date) < this.currentDate;
+    return this.isDateInPast
+
+  }
+
+  getCurrentDate() {    
+    // Obtener la fecha actual en el mismo formato que content.date
+    this.currentDate = new Date();
+    // ... Realizar cualquier formato necesario para que coincida con content.date
+    return this.currentDate;
+}
   load(){
     this.firstTime = true;
     this.storageService.saveFirstTimeLoad(false);
@@ -98,21 +127,7 @@ export class DiaryPage implements OnInit {
   ionViewWillEnter(){
     this.segmentChanged()
   }
-  next() {
-    let nextDay =  new Date(this.date).getDate() + 1
-    this.date = new Date(this.date ).setDate(nextDay)
-    this.isFutureDay = (Date.now() < this.date)? true:false
-    this.resetLoaders();
-    this.segmentChanged()
-  }
-
-  prev() {
-    let lastDay =  new Date(this.date).getDate() - 1
-    this.date = new Date(this.date ).setDate(lastDay)
-    this.isFutureDay = (Date.now() < (new Date(this.date).getMilliseconds() ) )? true:false
-    this.resetLoaders();
-    this.segmentChanged()
-  }
+  
 
   resetLoaders(){
     this.isLoadingDiets = true;
@@ -120,14 +135,7 @@ export class DiaryPage implements OnInit {
     this.isLoadingGames = true;
     this.isLoadingElements = true;
   }
-  expandItem(item): void {
-    console.log('[DiaryPage] expandItem()', item.expanded);
-    item.expanded = !item.expanded;
-  }
-
-  expandItemDiet(item){
-      item.expanded = !item.expanded;
-  }
+  
 
   transformDate(date) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -183,24 +191,31 @@ export class DiaryPage implements OnInit {
     console.log('[DiaryPage] getDietListByDate()');
     let date  = this.transformDate2(this.date)
     const params = {date: date, grouped_by_times: true}
+    this.isLoading = true;
+
     this.dooleService.getAPIdietsByDate(params).subscribe(
       async (res: any) =>{
         console.log('[DiaryPage] getDietListByDate()', await res);
         if(res.success){
           this.listDiets = []
-
+         
           this.diets = res?.diet?.id ? res.diet : undefined;
+          this.items = res.dietIntakes
+          console.log('[DiaryPage] getDietListByDate(dietIntakes)', await this.items);
+         this.treeIterateDiets(res.dietIntakes, '')
 
-          this.treeIterateDiets(res.dietIntakes, '')
 
           console.log("VERIFY DIETS")
           console.log(this.diets)
           console.log(this.diets?.length)
+          this.isLoading = false;
+
         }
 
        },(err) => {
           console.log('[DiaryPage] getDietListByDate() ERROR(' + err.code + '): ' + err.message);
           alert( 'ERROR(' + err.code + '): ' + err.message)
+          this.isLoading = false;
 
           throw err;
       }, ()=>{
@@ -209,170 +224,26 @@ export class DiaryPage implements OnInit {
   }
 
   treeIterateDiets(obj, stack) {
+    this.listDietsToday=[];
     for (var property in obj) {
       console.log('[DiaryPage] treeIterateDiets()', property);
       if (obj.hasOwnProperty(property)) {
         if (typeof obj[property] == "object") {
           console.log('[DiaryPage] treeIterateDiets()', obj[property]);
+          obj[property].forEach(element => {
+            this.listDietsToday.push(element)
+          });
+         
           this.listDiets.push({name: property, date: obj[property][0]?.date_intake, items: obj[property], expanded: false,})
           //this.treeIterate(obj[property], stack + '.' + property);
+         
         }
       }
     }
+    console.log('[DiaryPage] listDietsToday()', this.listDietsToday);
     console.log('[DiaryPage] treeIterateDiets()', this.listDiets);
-  }
-
-  async getDrugIntakeList(){
-    console.log('[DiaryPage] getDrugIntakeList()');
-    this.items = []
-    let formattedDate = this.transformDate(this.date)
-    let date = {date: formattedDate}
-    this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
-      async (res: any) =>{
-        console.log('[DiaryPage] getDrugIntakeList()', await res);
-        this.listDrug = [];
-        let list = res?.drugIntakes
-        if(list){
-          this.listDrugIntakes = res.drugIntakes;
-          list = this.sortDate(list)
-          let items = this.addItems(list)
-          console.log('[DiaryPage] getDrugIntakeList() items', items);
-          this.groupDiagnosticsByDate(items)
-        }
-
-       },(err) => {
-          console.log('[DiaryPage] getDrugIntakeList() ERROR(' + err.code + '): ' + err.message);
-          throw err;
-      }, ()=>{
-        this.isLoadingDrugs = false
-      });
-  }
-
-  groupDiagnosticsByDate(drugs){
-    drugs.forEach( (drug, index) =>{
-      let date = this.selectDayPeriod(drug.item.hour_intake)
-      if(index == 0 || date !== this.selectDayPeriod(drugs[index-1].item.hour_intake)){
-        let list = drugs.filter( event =>
-          (this.selectDayPeriod(event.item.hour_intake) === date)
-        )
-        this.listDrug.push({date: date, itemDrugs: list})
-      }
-    })
-    console.log('[DiaryPage] groupDiagnosticsByDate()', this.listDrug);
-  }
-
-  sortDate(drugs){
-    return drugs.sort( function (a, b) {
-      if (a.hour_intake > b.hour_intake)
-        return 1;
-      if (a.hour_intake < b.hour_intake)
-        return -1;
-      return 0;
-    })
-  }
-
-  changeTake(id,taked){
-
-    taked=(taked=="0") ? "1" : "0";
-    var dict = [];
-    dict.push({
-        key:   "date",
-        value: ""
-    });
-    this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
-      console.log('[DiaryPage] changeTake()',  json);
-      this.getDrugIntakeList()
-    },(err) => {
-      console.log('[DiaryPage] changeTake() ERROR(' + err.code + '): ' + err.message);
-      alert( 'ERROR(' + err.code + '): ' + err.message)
-      throw err;
-  });
-  }
-
-  async getGameListByDate(){
-    console.log('[DiaryPage] getGameListByDate()');
-    this.items = []
-    let date = this.transformDate(this.date)
-    this.dooleService.getAPIgamesByDate(date, date).subscribe(
-      async (res: any) =>{
-        console.log('[DiaryPage] getGameListByDate()', await res);
-         if(res.gamePlays){
-          this.listGames = []
-          res.gamePlays.forEach(element => {
-            element.game['scheduled_date'] = element.scheduled_date
-            this.listGames.push(element.game)
-          });
-          this.listGames.sort(function(a,b){
-            return a.scheduled_date.localeCompare(b.scheduled_date);
-          })
-          this.listGamePlays = this.addItems(this.listGames)
-         }
-
-       },(err) => {
-          console.log('[DiaryPage] getGameListByDate() ERROR(' + err.code + '): ' + err.message);
-          alert( 'ERROR(' + err.code + '): ' + err.message)
-
-          throw err;
-      }, ()=>{
-        this.isLoadingGames = false
-      });
-  }
-
-  async openGames(item){
-    var browser : any;
-    if(item.game_type=="html5"){
-      console.log('[DiaryPage] openGames()', 'html5');
-      this.router.navigate([`/journal/games-detail`],{state:{ id:item.id}});
-    }
-
-    if(item.game_type=="form") {
-      console.log('[DiaryPage] openGames()', 'form');
-      this.router.navigate([`/journal/games-detail`],{state:{ id:item.id, form_id: item.form_id}});
-    }
-
-  }
-
-
-  async getElementsList() {
-    this.isLoadingElements = true
-    this.groupedElements = [];
-    this.newGroupedElements = [];
-    let params = { only_with_values: '0', grouped: '1', filter: 1 }
-    //Activar filtro getAPIelementsList(true)
-    this.dooleService.getAPIelementsList(params).subscribe(
-      async (data: any) => {
-        console.log('[TrackingPage] getElementsList()', await data);
-          this.treeIterate(data?.elements)
-          console.log('[TrackingPage] getElementsList() ', this.groupedElements);
-        this.isLoadingElements = false
-      }, (err) => {
-        alert(`Error: ${err.code}, Message: ${err.message}`)
-        console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
-        this.isLoadingElements = false
-        throw err;
-      });
-
-  }
-
-  groupElements(elements) {
-    elements.forEach((element) => {
-      element['units'] = element?.element_unit?.abbreviation ? element?.element_unit?.abbreviation : '';
-      element['value'] = element?.last_value?.value;
-    })
-
-    console.log('[DiaryPage] groupElements()', this.groupedElements);
-  }
-
-  treeIterate(obj) {
-    console.log('[DiaryPage] groupElements()', obj);
-    for (var property in obj) {
-      if (obj.hasOwnProperty(property)) {
-        console.log('[DiaryPage] groupElements()', property);
-              let elements = obj[property]
-              this.groupElements(elements)
-              this.groupedElements.push({ group: property, elements: elements });
-      }
-    }
+    
+        
   }
 
   async segmentChanged($event?){
@@ -382,16 +253,10 @@ export class DiaryPage implements OnInit {
     switch (this.segment) {
       case 'diets':
         //await this.getDietList()
-        await this.getDietListByDate()
+        if (this.permissionService.canViewDiets) await this.getDietListByDate()
         break;
-      case 'medication':
-        await this.getDrugIntakeList()
-        break;
-      case 'games':
-        await this.getGameListByDate()
-        break;
-      case 'health':
-        await this.getElementsList()
+      case 'Receipt':
+        if (this.permissionService.canViewRecipes) await this.getRecipesist()
         break;
       default:
         console.log('Segment not found');
@@ -399,133 +264,47 @@ export class DiaryPage implements OnInit {
     }
   }
 
-  setSegment(){
-    if(!this.role?.component?.diet){
-      this.segment = 'medication'
-      if(!this.role?.component?.drug){
-          this.segment = 'games'
-          if(!this.role?.component?.game){
-            this.segment = 'health'
-            if(!this.role?.component?.element){
-              this.segment = ''
-            }
-          }
-      }
+
+
+ 
+  selectMealTimes(time) {
+    
+    let timeMeals = "";
+    let hour = new Date(time).getHours();
+  
+    if (hour >= 6 && hour <= 10) {
+      timeMeals = this.translate.instant('diet.breakfast');
+    } else if (hour >= 11 && hour < 13) {
+      timeMeals = this.translate.instant('diet.brunch');
+    } else if (hour >= 13 && hour <= 16) {
+      timeMeals = this.translate.instant('diet.lunch');
+    } else if (hour >= 17 && hour <= 19) {
+      timeMeals = this.translate.instant('diet.afternoon_snack');
+    } else if (hour > 19 && hour <= 22) {
+      timeMeals = this.translate.instant('diet.dinner');
     }
+  
+    return timeMeals;
   }
 
-  selectDayPeriod(time){
-    let h =  time.split(':')  //new Date(time).getHours()
-    let hour = Number(h[0])
-    if(hour >= 6  && hour < 12){
-      return this.translate.instant('diary.morning')
+
+  getPeriodEat(name) {
+    
+    if (!this.Lasttimestring) {
+        this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
+        return true; // Siempre muestra el primer elemento
     }
-    if(hour == 12){
-      return this.translate.instant('diary.noon')
+    const isDifferent = name !== this.Lasttimestring;
+    if (isDifferent) {
+        this.updateLastTimeString(name);
     }
-    if(hour >= 13 && hour < 20){
-      return this.translate.instant('diary.aftenoon')
-    }
-    if(hour >= 20 && hour < 24){
-      return this.translate.instant('diary.night')
-    }
-    if(hour == 24 || hour == 0){
-      return this.translate.instant('diary.midnight')
-    }
-    if(hour >0 && hour < 6){
-      return this.translate.instant('diary.dawning')
-    }
-    return  this.translate.instant('diary.all_day')
+    console.log("saber que devuelve el getLastName", isDifferent)
+    return isDifferent;
   }
-
-  selectMealTime(time){
-    let h =  time.split(':')  //new Date(time).getHours()
-    let minute = Number(h[1])
-    let hour = Number(h[0]) + minute/60
-    if(hour >= 6  && hour <= 10){
-      return this.translate.instant('diet.breakfast')
-    }
-    if(hour >= 11 && hour < 13){
-      return this.translate.instant('diet.brunch')
-    }
-    if(hour >= 13 && hour <= 16){
-      return this.translate.instant('diet.lunch')
-    }
-    if(hour >=17 && hour <= 19){
-      return this.translate.instant('diet.afternoon_snack')
-    }
-    if(hour >19 && hour <= 22){
-      return this.translate.instant('diet.dinner')
-    }
-  }
-
-  async addDrugPlan(drug, id){
-    const modal = await this.modalCtrl.create({
-      component:  DrugsDetailPage,
-      componentProps: { drug: drug, id: id},
-      cssClass: "modal-custom-class"
-    });
-
-    modal.onDidDismiss()
-      .then((result) => {
-        console.log('addDrugPlan()', result);
-
-        if(result?.data?.error){
-         // let message = this.translate.instant('landing.message_wrong_credentials')
-          //this.dooleService.presentAlert(message)
-        }else if(result?.data?.action !== undefined){
-          this.notification.displayToastSuccessful()
-          this.segmentChanged()
-        }
-      });
-
-      await modal.present();
-    }
-
-    async addDrug(){
-      const modal = await this.modalCtrl.create({
-        component:  DrugAddPage,
-        componentProps: { },
-        cssClass: "modal-custom-class"
-      });
-
-      modal.onDidDismiss()
-        .then((result) => {
-          console.log('addDrug()', result);
-
-          if(result?.data?.error){
-           // let message = this.translate.instant('landing.message_wrong_credentials')
-            //this.dooleService.presentAlert(message)
-          }else if(result?.data?.action == 'add'){
-            let drug = result?.data?.drug
-            this.addDrugPlan(drug, undefined)
-          }
-        });
-
-        await modal.present();
-    }
-
-    async addElement(){
-      const modal = await this.modalCtrl.create({
-        component:  ElementsAddPage,
-        componentProps: { },
-        cssClass: "modal-custom-class"
-      });
-
-      modal.onDidDismiss()
-        .then((result) => {
-          console.log('addElement()', result);
-
-          if(result?.data?.error){
-           // let message = this.translate.instant('landing.message_wrong_credentials')
-            //this.dooleService.presentAlert(message)
-          }else if(result?.data?.action == 'add'){
-            this.notification.displayToastSuccessful()
-            this.getElementsList()
-          }
-        });
-
-        await modal.present();
+  
+      updateLastTimeString(name) {
+        this.Lasttimestring = name;
+       
       }
 
       goDetailRecipe(e){
@@ -549,5 +328,80 @@ export class DiaryPage implements OnInit {
         }else return ''
       }
 
+
+     
+      async getRecipesist(){
+    
+        console.log('[DiaryPage] getRecipesList()');
+        this.items = []
+        ///let formattedDate = this.transformDate(this.date)
+       //// let date = {date: formattedDate}
+       this.isLoading = true;
+
+       let  params={
+        tags:1,
+        interactions:1,
+        readingTime:1,
+        from_date:"2024-01-01",
+        to_date:"2025-02-01"
+      }
+        await this.dooleService.getAPIListRecipe(params).subscribe(
+          async (res: any) =>{
+            
+    
+            if(res?.receipts){
+             
+              
+              let recipes = res.receipts
+              this.saves_items = recipes;
+
+              recipes.forEach(element => {
+                this.items.push(element)
+                this.itemsCopy.push(element)
+              });
+            
+              console.log('[DiaryPage] getRecipesList()', await this.items);
+             // this.adapterForView(res.diets)
+             this.isLoading = false
+            }
+    
+    
+           },(err) => {
+              console.log('[DiaryPage] getDietList() ERROR(' + err.code + '): ' + err.message);
+              alert( 'ERROR(' + err.code + '): ' + err.message)
+              this.isLoading = false
+              throw err;
+          }, ()=>{
+            
+          });
+      }
+
+
+      filterListRecipes(event) {
+       
+        let search;
+        const searchTerm = event.toLowerCase(); 
+
+        if (searchTerm === '') {
+          this.items = this.itemsCopy
+        }
+        else {
+          if(this.items.length > 0){
+            search = this.items 
+          } 
+          else{
+            search= this.saves_items;
+          }
+          const filteredItems = search.filter(item => {
+            const subject = item.name.toLowerCase();
+            return subject.includes(searchTerm) || subject === searchTerm;
+          })
+            this.items = (filteredItems)
+        }
+        
+      };
+    
+    
+     
 }
 

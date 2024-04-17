@@ -8,8 +8,14 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationsType } from 'src/app/models/notifications/notification-options';
 import { Router } from '@angular/router';
 import { LifeStyle } from 'src/app/models/shared-care-plan/scp-adapters';
-import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan';
 import { DateService } from 'src/app/services/date.service';
+import { RolesService } from 'src/app/services/roles.service';
+import { AddButtonList, ContentTypePath } from 'src/app/models/shared-care-plan';
+import { DrugAddPage } from '../drug-add/drug-add.page';
+import { DrugsDetailPage } from '../drugs-detail/drugs-detail.page';
+import { PermissionService } from 'src/app/services/permission.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 
 @Component({
   selector: 'app-medication',
@@ -17,35 +23,50 @@ import { DateService } from 'src/app/services/date.service';
   styleUrls: ['./medication.page.scss'],
 })
 export class MedicationPage implements OnInit {
-  segment = "medication"
+  segment = "today"
   @Input()event: any;
   items = []
   isLoading:boolean = true
   id:any
   isSubmitted = false;
+  isDateInPast = false;
+  currentDate;
+  Lasttimestring="";
+  lastName;
+  date = Date.now();
+  listDrugIntakes = [];
+  listDrug = [];
+  addButton = AddButtonList;
+  CanDoMedication: boolean
   public lifeStyle:LifeStyle
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
-    private languageService: LanguageService,
     private modalCtrl: ModalController,
     private notification: NotificationService,
     public alertController: AlertController,
     public loadingCtrl: LoadingController,
     public nav: NavController,
     private router: Router,
+    public role: RolesService,
     private datePipe: DatePipe,
     public sharedCarePlan:SharedCarePlanService, 
     public dateService: DateService,
+    public permissionService: PermissionService,
+    public authService: AuthenticationService,
 
   ) {
     this.lifeStyle = new LifeStyle( NotificationsType.MEDICATIONS, "medication")
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.items = []
+    this.listDrugIntakes = []
+  }
 
   ionViewWillEnter(){
-    this.loadData()
+   this.getCurrentDate();
+   this.segmentChanged()
   }
 
   loaderAgain(event: { type: string }) {  
@@ -54,38 +75,6 @@ export class MedicationPage implements OnInit {
 
 
  async loadData(){
-/*
-const aaa =  [{
-  id: 25,
-  drug_id: 3,
-  drup_name: "Clopidogrel",
-  cover: [],
-  from_date: "2023-12-01 17:26:00",
-  to_date: null,
-  start_date: "2023-12-01 17:26:00",
-  end_date: null,
-  frequency: "daily",
-  observations: null,
-  day1: 1,
-  day2: 1,
-  day3: 1,
-  day4: 1,
-  day5: 1,
-  day6: 1,
-  day7: 1,
-  last_accepted_or_declined: null,
-  medication_plan_times: [
-      {
-          dose: "1",
-          time: "12:00:00",
-          unit: "\u00b5g\/dosis"
-      }
-  ],
-  model: "MedicationPlan",
-  model_id: 25
-}]*/
-
-
 
     this.items = [] 
     this.isLoading = true; 
@@ -104,6 +93,7 @@ const aaa =  [{
             'name',   //title
             'id')     //id*/
          }
+         this.isLoading = false
         
        },(err) => {
           console.log('[MedicationPage] loadData() ERROR(' + err.code + '): ' + err.message);
@@ -114,12 +104,6 @@ const aaa =  [{
       });
 
   }
-
-  
-  goTo(){  
-    this.router.navigate(['/medication-details']);
-    //this.router.navigate(['/medication-details']);
-}
 
     async presentAlert() {
 
@@ -140,9 +124,10 @@ const aaa =  [{
     }
 
    
+   
     transformDate(date) {
           if(date != null){
-        return this.dateService.ddMMyFormat(date)
+            return this.datePipe.transform(date, 'yyyy-MM-dd');
       }else{
         return ""
       }
@@ -161,10 +146,15 @@ const aaa =  [{
     adapterForView(list){
       if(list.length > 0)
       list.forEach(element => {  
+        let image = "";
+        const temporaryUrl = element.media;
+        if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
+          image = temporaryUrl.temporaryUrl
+        }
          
       //Se adapta la respuesta de la API a lo que espera el componente  
         let data={
-          img: element.cover.temporaryUrl,
+          img: image,
           title: element.drup_name,
           from:  this.transformDate(element.from_date),
           to:  this.transformDate(element.to_date),
@@ -174,14 +164,241 @@ const aaa =  [{
           id:element.id,
           model_id:element.model_id,
           model:element.model,
-          state: element?.last_accepted_or_declined?.type
+          state: element?.last_accepted_or_declined?.type,
+          medication_plan_times: element?.medication_plan_times
 
-          //routerlink: "new-detail"
         }
-        console.log("sss", data)
         this.items.push(data)
       })
     }
 
 
+    async segmentChanged($event?){
+      console.log('[MedicationPage] segmentChanged()', this.segment, $event);
+      this.items = []
+      switch (this.segment) {
+        case 'today':
+          if (this.permissionService.canViewMedication) await this.getDrugIntakeList()
+          break;
+        case 'medication':
+          if (this.permissionService.canViewMedicationPlans) await this.loadData()
+          break;
+        default:
+          console.log('Segment not found');
+          break;
+      }
+    }
+
+    updateLastName(time) {
+      const meal = this.selectMealTime(time);
+      if (this.lastName !== meal) {
+        this.lastName = meal;
+      }
+      return meal
+    }
+
+    selectMealTime(time){
+      
+      let timeMeals;
+      let hour = new Date(time).getHours()// time.split(':')  //new Date(time).getHours()
+     // let minute = Number(h[1])
+     // let hour = Number(h[0]) + minute/60
+      if(hour >= 6  && hour <= 12){
+        timeMeals= this.translate.instant("diary.morning");
+      }
+      if (hour == 12) {
+        timeMeals= this.translate.instant("diary.noon");
+      }
+      if(hour >= 13 && hour < 20) {
+        timeMeals=  this.translate.instant("diary.aftenoon");
+      }
+      if (hour >= 20 && hour < 24) {
+        timeMeals= this.translate.instant("diary.night");
+      }
+      if (hour == 24 || hour == 0) {
+        timeMeals=  this.translate.instant("diary.midnight");
+      }
+      if (hour > 0 && hour < 6) {
+        timeMeals=  this.translate.instant("diary.dawning");
+      }
+     // timeMeals=  this.translate.instant("diary.all_day");
+    
+     return timeMeals
+     
+         
+      
+    }
+  
+   
+getPeriodTime(name) {
+  if (!this.Lasttimestring) {
+      this.Lasttimestring = name; // Si Lasttimestring está vacío, establece su valor al primer elemento
+      return true; // Siempre muestra el primer elemento
+  }
+  const isDifferent = name !== this.Lasttimestring;
+  if (isDifferent) {
+      this.updateLastTimeString(name);
+  }
+  //console.log("saber que devuelve el getLastName", isDifferent)
+  return isDifferent;
+}
+
+    updateLastTimeString(name) {
+      this.Lasttimestring = name;
+     
+    }
+    getIsDateInPast(date){
+      this.isDateInPast = new Date(date) < this.currentDate;
+      return this.isDateInPast
+    }
+
+    async getDrugIntakeList() {
+      this.isLoading = true;
+      let formattedDate = this.transformDate(this.date);
+      let date = { date: formattedDate };
+      this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
+        async (res: any) => {
+          console.log("[MedicationPage] getDrugIntakeList()", await res);
+          this.listDrugIntakes = [];
+          let list = res?.drugIntakes;
+          this.isLoading = false;
+          if (list) {
+            console.log("[MedicationPage] getDrugIntakeList() listDrugIntakes", this.listDrugIntakes);
+            list = this.sortDate(list);
+            this.groupDiagnosticsByDate(list);
+          }
+        },
+        (err) => {
+          console.log(
+            "[MedicationPage] getDrugIntakeList() ERROR(" +
+              err.code +
+              "): " +
+              err.message
+          );
+          throw err;
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+    }
+
+
+    sortDate(drugs) {
+      return drugs.sort(function (a, b) {
+        if (a.hour_intake > b.hour_intake) return 1;
+        if (a.hour_intake < b.hour_intake) return -1;
+        return 0;
+      });
+    }
+
+    groupDiagnosticsByDate(drugs){
+      drugs.forEach( (drug, index) =>{
+        drug.item_type = "medication"
+        let date = this.selectDayPeriod(drug.hour_intake)
+        if(index == 0 || date !== this.selectDayPeriod(drugs[index-1].hour_intake)){
+          let list = drugs.filter( event =>
+            (this.selectDayPeriod(event.hour_intake) === date)
+          )
+          const lastElement = list.length - 1;
+        
+          this.listDrugIntakes.push({date: date, time:list[list.length - 1].date_intake, itemDrugs: list})
+        }
+      })
+      console.log('[MedicationPage] groupDiagnosticsByDate()', this.listDrugIntakes);
+    }
+
+
+    // groupDrugByDate(drugs) {
+      
+    //   drugs.forEach((drug) => {
+    //     let date = this.selectDayPeriod(drug.hour_intake);
+    //     drug.period = date;
+    //     drug.item_type = "medication"
+    //     this.items.push(drug);
+    //   });
+
+    //   console.log("[MedicationPage] groupDiagnosticsByDate()", this.items);
+     
+    // }
+    
+    selectDayPeriod(time) {
+      let h = time.split(":"); //new Date(time).getHours()
+      let hour = Number(h[0]) + Number(h[1]/60);
+      if (hour >= 6 && hour < 12) {
+        return this.translate.instant("diary.morning");
+      }
+      if (hour == 12) {
+        return this.translate.instant("diary.noon");
+      }
+      if (hour >= 13 && hour < 20) {
+        return this.translate.instant("diary.aftenoon");
+      }
+      if (hour >= 20 && hour < 24) {
+        return this.translate.instant("diary.night");
+      }
+      if (hour == 24 || hour == 0) {
+        return this.translate.instant("diary.midnight");
+      }
+      if (hour > 0 && hour < 6) {
+        return this.translate.instant("diary.dawning");
+      }
+      return this.translate.instant("diary.all_day");
+    }
+
+
+    changeTake(event){
+    let taked = event.taked;
+    let id= event.id;
+          taked=(taked=="0") ? "1" : "0";
+          var dict = [];
+          dict.push({
+              key:   "date",
+              value: ""
+          });
+          this.dooleService.postAPIchangeStatedrugIntake(id,taked).subscribe(json=>{
+            console.log('[MedicationPage] changeTake()',  json);
+            this.getDrugIntakeList()
+          },(err) => {
+            console.log('[MedicationPage] changeTake() ERROR(' + err.code + '): ' + err.message);
+            alert( 'ERROR(' + err.code + '): ' + err.message)
+            throw err;
+        });
+        }
+
+        getCurrentDate() {    
+          // Obtener la fecha actual en el mismo formato que content.date
+          this.currentDate = new Date();
+          // ... Realizar cualquier formato necesario para que coincida con content.date
+          return this.currentDate;
+      }
+
+
+
+  async addDrugPlan(drug, id){
+
+    if (this.permissionService.canManageMedication) {
+      console.log('[MedicationPage] addDrugPlan()',  drug);
+      const modal = await this.modalCtrl.create({
+        component:  DrugsDetailPage,
+        componentProps: { drug: drug, id: id},
+        cssClass: "modal-custom-class"
+      });
+  
+      modal.onDidDismiss()
+        .then((result) => {
+          console.log('addDrugPlan()', result);
+  
+          if(result?.data?.error){
+           // let message = this.translate.instant('landing.message_wrong_credentials')
+            //this.dooleService.presentAlert(message)
+          }else if(result?.data?.action !== undefined){
+            this.notification.displayToastSuccessful()
+            this.segmentChanged()
+          }
+        });
+  
+        await modal.present();
+      }
+    }
   }

@@ -8,14 +8,15 @@ import { ChallengesPageRoutingModule } from './challenges-routing.module';
 
 import { ChallengesPage } from './challenges.page';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { ComponentsModule } from 'src/app/components/components.module';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     TranslateModule,
-    ChallengesPageRoutingModule
+    ChallengesPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [ChallengesPage]
 })

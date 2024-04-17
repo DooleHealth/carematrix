@@ -19,7 +19,7 @@
     "message_error_internet_disconnected": "Não existe ligação à Internet. Ligar à Internet e tentar de novo.",
     "login_again":"Por favor, iniciar sessão novamente",
     "about_app":"Sobre esta aplicação",
-    "usage-tips":"<div><p>Bem-vindo à nossa aplicação segura e de confiança!</p><p>Para garantir a sua segurança, elaborámos este breve guia de primeiros passos para destacar as melhores práticas que pode seguir ao usar a nossa aplicação. Siga estas dicas para uma experiência segura e tranquila:</p><ul><li>Escolher uma palavra-passe forte: Para proteger os seus dados, é importante selecionar uma palavra-passe forte e única, uma combinação de letras maiúsculas e minúsculas, números e caracteres especiais. Evitar utilizar palavras-passes óbvias ou informações pessoais facilmente identificáveis.</li><li>Ativar a autenticação de fator duplo: Para proteger ainda mais a sua conta ao ativar a autenticação de fator duplo. Isso exigirá um segundo nível de verificação, como um código de acesso temporário enviado para o seu telemóvel, portanto, mesmo que alguém obtenha a sua palavra-passe, não conseguirá aceder sem o código de verificação adicional.</li><li>Manter a aplicação atualizada: As atualizações de aplicações não só adicionam novos recursos, mas também corrigem possíveis vulnerabilidades de segurança. Certifique-se de ter sempre a versão mais recente da nossa aplicação instalada para tirar partido de todas as melhorias e proteções adicionais.</li><li>Definições de segurança: Explorar as nossas opções de definições de privacidade para personalizar a sua experiência. Pode controlar que informação partilha e com quem. Lembre-se de rever e ajustar regularmente estas definições para manter um nível ideal de privacidade.</li></ul><p>Estes são apenas algumas dicas essenciais para maximizar a segurança ao utilizar a nossa aplicação. Estamos comprometidos com a sua proteção e trabalhamos constantemente para garantir a integridade dos seus dados. Estaremos sempre aqui para ajudá-lo caso tenha alguma dúvida ou preocupação sobre a segurança da aplicação, pode entrar em contacto connosco através do e-mail support@doolehealth.com.</p><p>Obrigado por escolher a nossa aplicação e por confiar em nós!</p><p>Equipa Rosia.</p></div>"
+    "usage-tips":"<div><p>Bem-vindo à nossa aplicação segura e de confiança!</p><p>Para garantir a sua segurança, elaborámos este breve guia de primeiros passos para destacar as melhores práticas que pode seguir ao usar a nossa aplicação. Siga estas dicas para uma experiência segura e tranquila:</p><ul><li>Escolher uma palavra-passe forte: Para proteger os seus dados, é importante selecionar uma palavra-passe forte e única, uma combinação de letras maiúsculas e minúsculas, números e caracteres especiais. Evitar utilizar palavras-passes óbvias ou informações pessoais facilmente identificáveis.</li><li>Ativar a autenticação de fator duplo: Para proteger ainda mais a sua conta ao ativar a autenticação de fator duplo. Isso exigirá um segundo nível de verificação, como um código de acesso temporário enviado para o seu telemóvel, portanto, mesmo que alguém obtenha a sua palavra-passe, não conseguirá aceder sem o código de verificação adicional.</li><li>Manter a aplicação atualizada: As atualizações de aplicações não só adicionam novos recursos, mas também corrigem possíveis vulnerabilidades de segurança. Certifique-se de ter sempre a versão mais recente da nossa aplicação instalada para tirar partido de todas as melhorias e proteções adicionais.</li><li>Definições de segurança: Explorar as nossas opções de definições de privacidade para personalizar a sua experiência. Pode controlar que informação partilha e com quem. Lembre-se de rever e ajustar regularmente estas definições para manter um nível ideal de privacidade.</li></ul><p>Estes são apenas algumas dicas essenciais para maximizar a segurança ao utilizar a nossa aplicação. Estamos comprometidos com a sua proteção e trabalhamos constantemente para garantir a integridade dos seus dados. Estaremos sempre aqui para ajudá-lo caso tenha alguma dúvida ou preocupação sobre a segurança da aplicação, pode entrar em contacto connosco através do e-mail support@doolehealth.com.</p><p>Obrigado por escolher a nossa aplicação e por confiar em nós!</p><p>Equipa Inca Health.</p></div>"
   },
   "legal": {
     "header": "Termos de Utilização",
@@ -74,7 +74,7 @@
     "slider1_text5": "Saúde e desporto",
     "slider1_text6": "Conectar a outras aplicações para medir o seu progresso",
     "title2": "Agenda",
-    "slider2_text1": "A agenda Rosia permite-lhe incluir todas as suas consultas e lembretes médicos. Não conseguirá viver sem ela!",
+    "slider2_text1": "A agenda Inca Health permite-lhe incluir todas as suas consultas e lembretes médicos. Não conseguirá viver sem ela!",
     "title3": "Contacto",
     "slider3_text1": "Fale com o seu médico e especialista por vídeo ou chat e solicite uma consulta presencial. Nunca foi tão rápido e confortável!",
     "title4": "Monitorização",
@@ -84,7 +84,7 @@
     "title6": "Notícias e Conselhos",
     "slider6_text1": "Receba as notícias e conselhos mais recentes sobre saúde da equipa médica! Mantenha-se sempre atualizado!",
     "title7": "Perfil",
-    "slider7_text1": "Defina as suas preferências de dados e notificações para estar sempre informado. Desfrute da sua experiência em Rosia!"
+    "slider7_text1": "Defina as suas preferências de dados e notificações para estar sempre informado. Desfrute da sua experiência em Inca Health!"
   },
   "home": {
     "hello": "Olá",
@@ -268,6 +268,7 @@
     "subtitle_messages": "Mensagens",
     "subtitle_games": "Jogos",
     "subtitle_release": "Atualizações",
+    "subtitle_procedure": "Procedimientos médicos",
     "lenguage_ca": "Catalão",
     "lenguage_es": "Espanhol",
     "password": {
@@ -294,7 +295,9 @@
     },
     "sign_off": "Encerrar sessão",
     "message_sign_off": "Quer encerrar sessão em todos os dispositivos?",
-    "error_message_sign_off": "Ocorreu um erro ao encerrar sessão"
+    "error_message_sign_off": "Ocorreu um erro ao encerrar sessão",
+    "notifications": "Notificações",
+    "email": "Email"
   },
   "report_problem": {
     "title_report_problem": "Comunicar problema",
@@ -841,7 +844,10 @@
     "go_back": "Voltar ao passo anterior",
     "add_address": "Adicionar morada",
     "edit_address": "Editar morada",
-    "head_card_text": "Aqui encontra informações sobre os planos de medicação prescritos. Pode contactar a sua equipa médica se tiver alguma dúvida sobre o assunto"
+    "head_card_text": "Aqui encontra informações sobre os planos de medicação prescritos. Pode contactar a sua equipa médica se tiver alguma dúvida sobre o assunto",
+    "msm_caution": "Este medicamento tem interações perigosas com:",
+    "caution": "Cuidado:",
+    "msm_contact_hp": "*Recomenda-se entrar em contato com o pessoal de saúde antes do consumo."
 
   },
   "recipe": {
@@ -862,7 +868,7 @@
   "security": {
     "rooted": "Foi detetado que este dispositivo foi inicializado com direitos de utilizador incomuns (root). Por razões de segurança e integridade dos dados, o acesso foi bloqueado.",
     "alert_security": "Alerta de Segurança",
-    "ens_message": "<p>Caro utilizador,<br/><br/> Detetámos que o seu dispositivo tem “acesso root” (Android) ou está desbloqueado (Apple). Gostaríamos de informá-lo acerca dos riscos associados à utilização de um dispositivo desbloqueado para fins de segurança de dados.<br/><br/>Desbloquear o seu dispositivo remove quaisquer restrições de fábrica impostas pelo sistema operacional, o que pode comprometer a integridade dos dados armazenados no seu dispositivo. Isto pode abrir a porta a possíveis ameaças à segurança, como instalação de aplicações maliciosas sem o seu conhecimento, acesso não autorizado aos seus dados pessoais. dados ou perda de informações confidenciais.<br/><br/>Como aplicação de telemedicina, levamos muito a sério a privacidade e a segurança dos seus dados pessoais e médicos. Recomendamos vivamente que utilize um dispositivo desbloqueado para garantir a proteção adequada das suas informações e evitar potenciais violações de segurança.<br/><br/>Se continuar a usar a nossa aplicação neste dispositivo, fá-lo-á por sua própria conta e risco. Não nos responsabilizamos por qualquer perda, dano ou acesso não autorizado aos seus dados que possa ocorrer como resultado da utilização de um dispositivo desbloqueado.<br/><br/>Recomendamos vivamente que restaure o seu dispositivo às configurações originais de fábrica ou utilize um dispositivo alternativo não desbloqueado para garantir a segurança dos seus dados ao utilizar a nossa aplicação.<br/><br/>Se tiver alguma dúvida ou preocupação, não hesite em contactar a nossa equipa de assistência através do e-mail: <a href=\"mailto: support@doolehealth.com\">support@doolehealth.com</a> <br/><br/>Atentamente,<br/>A Equipa Rosia S.L. Team</p> "
+    "ens_message": "<p>Caro utilizador,<br/><br/> Detetámos que o seu dispositivo tem “acesso root” (Android) ou está desbloqueado (Apple). Gostaríamos de informá-lo acerca dos riscos associados à utilização de um dispositivo desbloqueado para fins de segurança de dados.<br/><br/>Desbloquear o seu dispositivo remove quaisquer restrições de fábrica impostas pelo sistema operacional, o que pode comprometer a integridade dos dados armazenados no seu dispositivo. Isto pode abrir a porta a possíveis ameaças à segurança, como instalação de aplicações maliciosas sem o seu conhecimento, acesso não autorizado aos seus dados pessoais. dados ou perda de informações confidenciais.<br/><br/>Como aplicação de telemedicina, levamos muito a sério a privacidade e a segurança dos seus dados pessoais e médicos. Recomendamos vivamente que utilize um dispositivo desbloqueado para garantir a proteção adequada das suas informações e evitar potenciais violações de segurança.<br/><br/>Se continuar a usar a nossa aplicação neste dispositivo, fá-lo-á por sua própria conta e risco. Não nos responsabilizamos por qualquer perda, dano ou acesso não autorizado aos seus dados que possa ocorrer como resultado da utilização de um dispositivo desbloqueado.<br/><br/>Recomendamos vivamente que restaure o seu dispositivo às configurações originais de fábrica ou utilize um dispositivo alternativo não desbloqueado para garantir a segurança dos seus dados ao utilizar a nossa aplicação.<br/><br/>Se tiver alguma dúvida ou preocupação, não hesite em contactar a nossa equipa de assistência através do e-mail: <a href=\"mailto: support@doolehealth.com\">support@doolehealth.com</a> <br/><br/>Atentamente,<br/>A Equipa Inca Health S.L. Team</p> "
   },
   "commons": {
     "error-network": "Ligação à Internet perdida",
@@ -875,13 +881,14 @@
     "mode_activate": "Modo de desenvolvedor ativado",
     "mode_desactivate": "Modo de desenvolvedor desativado",
     "mode_0": "Produção",
-    "mode_1": "Qualidade",
-    "mode_2": "Desenvolvimento"
+    "mode_1": "Desenvolvimento",
+    "mode_2": "Qualidade"
   },
   "list_notifications": {
     "header": "Notificações",
     "form": "Hora de preencher um formulário",
     "level": "Conquistas de nível concluídas",
+    "new_level": "Um novo desafio foi atribuído",
     "drugintake": "Hora de tomar a medicação",
     "visitonline": "Hora da sua consulta online",
     "message": "Recebeu uma notificação nova",

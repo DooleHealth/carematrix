@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { AlertController, IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
+import { ContentTypePath } from 'src/app/models/shared-care-plan';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 
@@ -13,7 +15,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./list-notifications.page.scss'],
 })
 export class ListNotificationsPage implements OnInit {
-  @ViewChild(IonContent, {read: IonContent, static: false}) content: IonContent;
+  @ViewChild(IonContent, { read: IonContent, static: false }) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   notifications = [];
   isLoading = true;
@@ -25,21 +27,26 @@ export class ListNotificationsPage implements OnInit {
   nextPage = 0
   currentPage = 0
   footerHidden: boolean;
+
+  inFamilyUnitMode: boolean = false;
+
   constructor(
     private dooleService: DooleService,
     private translate: TranslateService,
     public alertController: AlertController,
-    public router:Router,
+    public router: Router,
     public dateService: DateService,
     private analyticsService: AnalyticsService,
     private _zone: NgZone,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
-
   }
 
   ionViewDidEnter(){
+    if (this.authService?.user?.familyUnit != null) this.inFamilyUnitMode = true;
+
     this.lastPage = 0
     this.nextPage = 0
     this.currentPage = 0
@@ -49,41 +56,41 @@ export class ListNotificationsPage implements OnInit {
 
   getNumNotification() {
     this.dooleService.getAPINotificationsCount().subscribe((res) => {
-      console.log('[ListNotificationsPage] getNumNotification()',  res);
+      console.log('[ListNotificationsPage] getNumNotification()', res);
       if (res?.success) this.totalNotification = res?.notifications;
     });
   }
 
-  getNotifications(isFirstLoad, withPaginate?, event?){
-    let params = {withPaginate: withPaginate? 1:0}
-    params['page'] = isFirstLoad? 0: this.nextPage
-    this.nextPage = isFirstLoad? 0: this.nextPage
-    if(this.nextPage > this.lastPage){
+  getNotifications(isFirstLoad, withPaginate?, event?) {
+    let params = { withPaginate: withPaginate ? 1 : 0 }
+    params['page'] = isFirstLoad ? 0 : this.nextPage
+    this.nextPage = isFirstLoad ? 0 : this.nextPage
+    if (this.nextPage > this.lastPage) {
       console.log('[ListNotificationsPage] getNotifications() this.nextPage', this.nextPage);
       this.toggleInfiniteScroll()
       return;
     }
     console.log('[ListNotificationsPage] getNotifications() inicio');
     this.dooleService.getAPINotifications(params).subscribe(
-      async (res: any) =>{
+      async (res: any) => {
         console.log('[ListNotificationsPage] getNotifications()', await res);
-        if(res.success){
+        if (res.success) {
           this.currentPage = res.currentPage
-          this.nextPage =  res.nextPage? (this.currentPage) + 1 : (res.lastPage +1)
-          this.lastPage =  res.lastPage
+          this.nextPage = res.nextPage ? (this.currentPage) + 1 : (res.lastPage + 1)
+          this.lastPage = res.lastPage
           this.numNotification = res.countNotifications
           //Se filtran las notificaciones de objetivos
-           res.notifications = res.notifications.filter( n => n?.notification_origin_type !== "App\\Goalable")
+          res.notifications = res.notifications.filter(n => n?.notification_origin_type !== "App\\Goalable")
 
-          if(this.numNotification > 0){
+          if (this.numNotification > 0) {
 
             let listNotiAux = res.notifications
             listNotiAux?.forEach(n => {
-                this.getTypeNotificatios(n)
-                this.notifications.push(n)
+              this.getTypeNotificatios(n)
+              this.notifications.push(n)
             })
 
-            if(this.currentPage <= 1){
+            if (this.currentPage <= 1) {
               this.notifications = []
               this.notifications = listNotiAux
             }
@@ -96,25 +103,25 @@ export class ListNotificationsPage implements OnInit {
 
 
           }
-          else if(this.numNotification == 0 && res.nextPage == null && isFirstLoad == true){
+          else if (this.numNotification == 0 && res.nextPage == null && isFirstLoad == true) {
             console.log('[ListNotificationsPage] getNotifications() autollamado');
             this.notifications = []
             this.notifications = res.notifications
             this.allNotification = false
           }
-          else{
-              if(res.nextPage != null && withPaginate){
-                this.getNotifications(false, true)
-                console.log('[ListNotificationsPage] getNotifications() autollamado');
-              }
+          else {
+            if (res.nextPage != null && withPaginate) {
+              this.getNotifications(false, true)
+              console.log('[ListNotificationsPage] getNotifications() autollamado');
+            }
           }
 
         }
         this.isLoading = false
-       },(err) => {
-          console.log('[ListNotificationsPage] getNotifications() ERROR(' + err.code + '): ' + err.message);
-          this.isLoading = false
-          throw err;
+      }, (err) => {
+        console.log('[ListNotificationsPage] getNotifications() ERROR(' + err.code + '): ' + err.message);
+        this.isLoading = false
+        throw err;
       });
   }
 
@@ -122,12 +129,12 @@ export class ListNotificationsPage implements OnInit {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
-  getTypeNotificatios(notification){
+  getTypeNotificatios(notification) {
     switch (notification.notification_origin_type) {
       case "App\\FormAnswer":
         notification['message'] = this.translate.instant('list_notifications.form')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
-        notification['title'] = notification?.form_title? notification?.form_title : notification?.notification_origin?.form?.title
+        notification['title'] = notification?.form_title ? notification?.form_title : notification?.notification_origin?.form?.title
         notification['color'] = '#2356f9'
         notification['checked'] = false
         break;
@@ -142,7 +149,7 @@ export class ListNotificationsPage implements OnInit {
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
         notification['title'] = notification.drug_name
         notification['dose'] = notification?.notification_origin?.dose + ' ' +
-          (notification?.notification_origin?.unit?.name? notification?.notification_origin?.unit?.name:this.translate.instant('drug.unit'))
+          (notification?.notification_origin?.unit?.name ? notification?.notification_origin?.unit?.name : this.translate.instant('drug.unit'))
         notification['color'] = '#5AC445'
         notification['checked'] = false
         break;
@@ -245,19 +252,22 @@ export class ListNotificationsPage implements OnInit {
         notification['message'] = this.translate.instant('shared_care_plan.new_scp_notification_title')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
         notification['title'] = notification?.notification_origin?.title
-        //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
-        //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
         notification['color'] = '#BA0186'
         notification['checked'] = false
         break;
-      // case "App\\Goalable":
-      //   notification['message'] = this.translate.instant('list_notifications.diagnostic')
-      //   notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
-      //   notification['title'] = notification?.notification_origin?.title
-      //   //notification['centro'] = 'En el ' + notification?.notification_origin?.originString
-      //   //notification['time'] = this.dateService.getCalendarDayTime(new Date(notification?.notification_origin?.data).getTime());
-      //   notification['color'] = '#1A8E92'
-      //   break;
+      case "App\\Level":
+        notification['message'] = this.translate.instant('list_notifications.new_level')
+        notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
+        notification['title'] = notification?.notification_origin?.title
+        notification['color'] = '#BA0186'
+        notification['checked'] = false
+        break;
+      case "App\\Goalable":
+        notification['message'] = this.translate.instant('list_notifications.new_level')
+        notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
+        notification['title'] = notification?.notification_origin?.title
+        notification['color'] = '#1A8E92'
+        break;
       default:
         notification['message'] = this.translate.instant('list_notifications.default')
         notification['date'] = this.dateService.getCalendarDay2(new Date(notification?.created_at).getTime());
@@ -267,118 +277,128 @@ export class ListNotificationsPage implements OnInit {
     }
   }
 
-  goPage(notification){
+  goPage(notification) {
     console.log('[ListNotificationsPage] goPage(): ', notification)
     let data = notification.notification_origin;
-    if(data == null) data = {id: notification.notification_origin_id}
+    if (data == null) data = { id: notification.notification_origin_id }
     switch (notification.notification_origin_type) {
       case "App\\FormAnswer":
         this.setRead(notification.id)
-        this.router.navigate([`/tracking/form`, {id: data.form_id}],{state:{data:null, formAnswer:data.id}}); //No se accede xq son formularios v1
+        this.router.navigate([ContentTypePath.FormDetail, { id: data.form_id }], { state: { data: null, formAnswer: data.id } }); //No se accede xq son formularios v1
         break;
       case "App\\LevelAccomplishment":
         this.setRead(notification.id)
-        const dataA = {id: data.id, name: ''}
-        this.router.navigate([`home/health-path/detail`] , { state: { challenge: dataA } });
-        //this.router.navigate([`/home`]);
+        const dataA = { id: data.id, name: '' }
+        //this.router.navigate([`home/health-path/detail`], { state: { challenge: dataA } });
+        this.router.navigate([ContentTypePath.Goals], { state: { data: data } });
         break;
       case "App\\DrugIntake":
         this.setRead(notification.id)
         this._zone.run(() => {
-          this.router.navigate([`/medication-details`], { state: { data: data, segment: 'medication' } });
+          this.router.navigate([ContentTypePath.MedicationDetail], { state: { data: data, segment: 'medication' } });
         });
         break;
       case "App\\Agenda":
         this.setRead(notification.id)
-        this.router.navigate([`/agenda/detail`],{state:{data:null, id: data.id}});
+        this.router.navigate([ContentTypePath.AgendaDetail], { state: { data: null, id: data.id } });
         break;
       case "App\\Message":
         this.setRead(notification.id)
-        this.router.navigate([`/contact/chat/conversation`],{state:{data:null, chat:data.message_header_id, staff:null}}); //Falta información de staff, no cargan los mensajes
+        this.router.navigate([ContentTypePath.Message], { state: { data: null, chat: data.message_header_id, staff: null } }); //Falta información de staff, no cargan los mensajes
         break;
       case "App\\Advice":
         this.setRead(notification.id)
-        this.router.navigate([`/advices/advices-detail`],{state:{data:null, id: data.id}}); //Bien
+        this.router.navigate([ContentTypePath.AdvicesDetail], { state: { data: null, id: data.id } }); //Bien
         break;
       case "App\\News":
         this.setRead(notification.id)
-        this.router.navigate([`/new-detail`],{state:{data:null, id: data.id}}); //Bien
+        this.router.navigate([ContentTypePath.NewsDetail], { state: { data: null, id: data.id } }); //Bien
         break;
       case "App\\Reminder":
         this.setRead(notification.id)
-        this.router.navigate([`/agenda/reminder`],{state:{data:null, id: data.id}}); //Bien
+        this.router.navigate([ContentTypePath.ReminderDetail], { state: { data: null, id: data.id } }); //Bien
         break;
       case "App\\ReminderExecution":
-      this.setRead(notification.id)
-      this.router.navigate([`/agenda/reminder`],{state:{data:null, id: data.id}}); //Bien
-      break;
+        this.setRead(notification.id)
+        this.router.navigate([ContentTypePath.ReminderDetail], { state: { data: null, id: data.id } }); //Bien
+        break;
       case "App\\Exercise":
         this.setRead(notification.id)
         //this.router.navigate([`/tracking/exercise`],{state:{data:null, id: data.id, programable_id: notification.notification_origin_id}}); //Bien
-        this.router.navigate([`/exercices/exercices-detail`],{state:{data:null, id: data.id}});
+        this.router.navigate([ContentTypePath.ExercisesDetail], { state: { data: null, id: data.id } });
         break;
       case "App\\Diet":
         this.setRead(notification.id)
-        this.router.navigate([`/journal/diets-detail`],{state:{data:null, id:data.id}});
+        this.router.navigate([ContentTypePath.DietsDetail], { state: { data: null, id: data.id } });
         break;
       case "App\\GamePlay":
         this.setRead(notification.id)
-        if(data?.game?.form_id)
-          this.router.navigate([`/tracking/form`, {id: data?.game?.form_id}],{state:{data:null, game_play_id: data?.id}});
+        if (data?.game?.form_id)
+          this.router.navigate([ContentTypePath.FormDetail, { id: data?.game?.form_id }], { state: { data: null, game_play_id: data?.id } });
         else
-          this.router.navigate([`/journal/games-detail`],{state:{data:null, id:data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url}});
+          this.router.navigate([ContentTypePath.GamesDetail], { state: { data: null, id: data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url } });
         break;
       case "App\\Game":
         this.setRead(notification.id)
-        if(data?.game?.form_id)
-          this.router.navigate([`/tracking/form`, {id: data?.game?.form_id}],{state:{data:null, game_play_id: data?.id}});
+        if (data?.game?.form_id)
+          this.router.navigate([ContentTypePath.FormDetail, { id: data?.game?.form_id }], { state: { data: null, game_play_id: data?.id } });
         else
-          this.router.navigate([`/journal/games-detail`],{state:{data:null, id:data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url}});
+          this.router.navigate([ContentTypePath.GamesDetail], { state: { data: null, id: data.id, programable_id: notification.notification_origin_id, server_url: data?.game?.server_url } });
         break;
       case "App\\MedicalProcedure":
         this.setRead(notification.id)
         let params = {
-          byEpisode: notification?.byEpisode? 1:0,
-          medical_procedure_id: notification?.notification_origin_id? notification?.notification_origin_id: null,
-          episode_id: notification?.episode_id? notification?.episode_id: null
+          byEpisode: notification?.byEpisode ? 1 : 0,
+          medical_procedure_id: notification?.notification_origin_id ? notification?.notification_origin_id : null,
+          episode_id: notification?.episode_id ? notification?.episode_id : null
         }
-        this.router.navigate([`/more/procedure-detail`],{state:{data:null, procedure:params}});
+        this.router.navigate([ContentTypePath.MedicalProcedure], { state: { data: null, procedure: params } });
         break;
       case "App\\DiagnosticTest":
         this.setRead(notification.id)
-        this.router.navigate([`/document-detail`],{state:{data:null, procedure:params}});
-      case "App\\ShareCarePlan": 
+        this.router.navigate([ContentTypePath.MedicalTest], { state: { data: null, procedure: params } });
+      case "App\\ShareCarePlan":
         this.setRead(notification.id)
-        this.router.navigate([`/tracking`],{state:{data:null, segment: 'sharedcareplan'  }});
+        this.router.navigate([ContentTypePath.Tracking], { state: { data: null, segment: 'sharedcareplan' } });
         break;
       case "App\\ProgramablePlay":
         this.setRead(notification.id)
-        this.router.navigate([`/home`],{state:{data:null, id:data.id}});
+        this.router.navigate([ContentTypePath.Home], { state: { data: null, id: data.id } });
+        break;
+      case "App\\Level":
+        this.setRead(notification.id)
+        this.router.navigate([ContentTypePath.Goals], { state: { data: null, segment: 'goals' } });
+        break;
+      case "App\\Goalable":
+        this.setRead(notification.id)
+        this.router.navigate([ContentTypePath.Goals], { state: { data: null, segment: 'goals' } });
         break;
       default:
-        this.router.navigate([`/home`],{state:{data:null, id:data.id}});
+        this.setRead(notification.id)
+        //this.router.navigate([`/home`], { state: { data: null, id: data.id } });
         break;
     }
+    
   }
 
-  setRead(id){
+  setRead(id) {
     console.log('[ListNotificationsPage] setRead():', id)
-    let notification = {notification: id}
-    this.dooleService.postAPINotificationRead(notification).subscribe((res)=>{
-      if(res?.success)
-      console.log('Se ha leido la notificación')
+    let notification = { notification: id }
+    this.dooleService.postAPINotificationRead(notification).subscribe((res) => {
+      if (res?.success)
+        console.log('Se ha leido la notificación')
     })
   }
 
-  setAllRead(){
+  setAllRead() {
     console.log('[ListNotificationsPage] setAllRead():', this.checkedNotifications)
-    if(this.checkedNotifications?.length > 0){
-      let notification = {notification: this.checkedNotifications}
-      this.dooleService.postAPINotificationRead(notification).subscribe((res)=>{
-        if(res?.success){
+    if (this.checkedNotifications?.length > 0) {
+      let notification = { notification: this.checkedNotifications }
+      this.dooleService.postAPINotificationRead(notification).subscribe((res) => {
+        if (res?.success) {
           console.log('Se ha leido la notificación')
           //Esto es para evitar refrescar toda la página
-          if(this.allNotification){
+          if (this.allNotification) {
             //Refresco el número de notificaciones
             this.getNumNotification()
             this.getNotifications(true, true)
@@ -393,82 +413,94 @@ export class ListNotificationsPage implements OnInit {
     }
   }
 
-  deleteNotificationsList(){
-          this.notifications = this.notifications.filter(item => this.filterNotifications(item))
-          this.totalNotification =   this.totalNotification - this.checkedNotifications.length
-          //console.log('[ListNotificationsPage] deleteNotificationsList():',       this.notifications)
-          this.allNotification = false
+  deleteNotificationsList() {
+    this.notifications = this.notifications.filter(item => this.filterNotifications(item))
+    this.totalNotification = this.totalNotification - this.checkedNotifications.length
+    //console.log('[ListNotificationsPage] deleteNotificationsList():',       this.notifications)
+    this.allNotification = false
   }
 
-  filterNotifications(item){
-    const res = this.checkedNotifications.findIndex( e=> e === item.id)
-    return (res < 0)? true: false;
+  filterNotifications(item) {
+    const res = this.checkedNotifications.findIndex(e => e === item.id)
+    return (res < 0) ? true : false;
   }
 
-  addToList(event, notification){
+  addToList(event, notification) {
     console.log('[ListNotificationsPage] addToList():', event)
-    if(event?.detail?.checked){
-        this.checkedNotifications.push(notification?.id)
-    }else{
-      this.checkedNotifications  = this.checkedNotifications.filter(item => item != notification?.id)
+    if (event?.detail?.checked) {
+      this.checkedNotifications.push(notification?.id)
+    } else {
+      this.checkedNotifications = this.checkedNotifications.filter(item => item != notification?.id)
       //this.allNotification = event?.detail?.checked
     }
     console.log('[ListNotificationsPage] addToList():', this.checkedNotifications)
   }
 
-  addAllNotificationList(event){
+  addAllNotificationList(event) {
 
     this.allNotification = event?.detail?.checked
-    //console.log('[ListNotificationsPage] allNotification:', this.allNotification)
-    if(this.notifications.length > 0){
-      this.notifications.forEach(item => {
-        item['checked'] = event?.detail?.checked
-        this.checkedNotifications.push(item['id'])
-      } )
+    console.log('[ListNotificationsPage] allNotification:', this.allNotification)
+
+    if (this.allNotification) {
+      if (this.notifications.length > 0) {
+        this.notifications.forEach(item => {
+          item['checked'] = event?.detail?.checked
+          this.checkedNotifications.push(item['id'])
+        })
+      }
+    }
+    else {
+      if (this.notifications.length > 0) {
+        this.notifications.forEach(item => {
+          item['checked'] = event?.detail?.checked
+          this.checkedNotifications.push(item['id'])
+        })
+        this.checkedNotifications = []
+      }
     }
   }
 
-  async confirmDeleteNotifications(){
+  async confirmDeleteNotifications() {
     let error = false
-    console.log("this.checkedNotifications:",this.checkedNotifications)
-    if(this.checkedNotifications.length === 0){
+    console.log("this.checkedNotifications:", this.checkedNotifications)
+    if (this.checkedNotifications.length === 0) {
       error = true
     }
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
       //mode: 'ios',
       //header: this.translate.instant('alert.header_atention'),
-      message: this.translate.instant( error?
-        'list_notifications.alert_delete_error_message':'list_notifications.alert_delete_message'),
-      buttons: error?
-      [
-        {
-          text: this.translate.instant("button.accept"),
-          role: 'confirm',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('[LandingPage] AlertConfirm Cancel');
+      message: this.translate.instant(error ?
+        'list_notifications.alert_delete_error_message' : 'list_notifications.alert_delete_message'),
+      buttons: error ?
+        [
+          {
+            text: this.translate.instant("button.accept"),
+            role: 'confirm',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('[LandingPage] AlertConfirm Cancel');
+            }
           }
-        }
-      ]
+        ]
         :
-      [
-        {
-          text: this.translate.instant("button.cancel"),
-          role: 'cancel',
-          cssClass: 'warning',
-          handler: (blah) => {
-            console.log('[LandingPage] AlertConfirm Cancel');
-          }
-        }, {
-          text: this.translate.instant("button.continue"),
-          role: 'confirm',
-          cssClass: 'primary',
-          handler: (data) => {
+        [
+          {
+            text: this.translate.instant("button.cancel"),
+            role: 'cancel',
+            cssClass: 'warning',
+            handler: (blah) => {
+              console.log('[LandingPage] AlertConfirm Cancel');
+            }
+          }, {
+            text: this.translate.instant("button.continue"),
+            role: 'confirm',
+            cssClass: 'primary',
+            handler: (data) => {
               this.setAllRead()
+            }
           }
-        }
-      ]
+        ]
     });
 
     await alert.present();
@@ -476,13 +508,13 @@ export class ListNotificationsPage implements OnInit {
 
   async onScroll(event: any) {
     const scrollElement = await this.content.getScrollElement(); // get scroll element
-    this.footerHidden = ( scrollElement.scrollTop > scrollElement.clientHeight/(2) )? true:false;
+    this.footerHidden = (scrollElement.scrollTop > scrollElement.clientHeight / (2)) ? true : false;
   }
 
   scrollToBottom() {
     //console.log('[ConversationPage] scrollToBottom() contentArea' ,   this.content);
-      setTimeout(() => {
-          this.content.scrollToTop(300);
+    setTimeout(() => {
+      this.content.scrollToTop(300);
     }, 500);
   }
 

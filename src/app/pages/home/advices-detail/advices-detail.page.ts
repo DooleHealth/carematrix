@@ -5,6 +5,10 @@ import { AlertController, LoadingController, ModalController, NavController } fr
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { Location } from "@angular/common";
+import { DateService } from 'src/app/services/date.service';
+import { DatePipe } from '@angular/common';
+import { LanguageService } from 'src/app/services/language.service';
+
 
 @Component({
   selector: 'app-advices-detail',
@@ -38,12 +42,14 @@ export class AdvicesDetailPage implements OnInit {
     private dooleService: DooleService,
     public translate: TranslateService,
     private modalCtrl: ModalController,
-    public sanitizer: DomSanitizer,private location: Location) {
+    public sanitizer: DomSanitizer,private location: Location,
+    private languageService: LanguageService, public dateService: DateService) {
   }
   ngOnInit() {
   }
 
   ionViewWillEnter(){
+    console.log(history.state?.id)
     if(history.state?.id)
       this.id = history.state.id;
 
@@ -207,6 +213,25 @@ export class AdvicesDetailPage implements OnInit {
     });
     await alert.present();
   
+  }
+
+  formatSelectedDate(date){
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getFormatSelectedDate2());
+  }
+
+  extractText(htmlContent: string): string {
+    // Si el contenido es nulo o indefinido, retorna una cadena vacía
+    if (!htmlContent) {
+      return '';
+    }
+
+    // Utiliza una expresión regular para eliminar las etiquetas HTML
+    const regex = /(<([^>]+)>)/ig;
+    const result = htmlContent.replace(regex, "");
+
+    return result;
   }
 }
 

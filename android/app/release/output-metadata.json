@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.doole.rosia",
+  "applicationId": "com.doole.inca",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0.3",
+      "versionCode": 4,
+      "versionName": "1.0.1",
       "outputFile": "app-release.apk"
     }
   ],

@@ -28,12 +28,16 @@ export class User {
   familyUnit: string;
   name: string;
   listFamilyUnit: FamilyUnit[] = [];
+
+  selectedCaregiverResponsible;
+
   constructor(idUser: string, secret: string, name: string, first_name: string, image: string) {
     this.idUser = idUser
     this.secret = secret
     this.name = name
     this.first_name = first_name
     this.image = image
+
   };
 
 }
@@ -127,7 +131,9 @@ export class AuthenticationService {
 
               if (this.platform.is('ios')){
                 if(this.voipDeviceToken)
-                  this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip');
+                this.registerDevice(this.voipDeviceToken, (this.indexEndPoint==0)?'iosvoip':'iosvoipdev'); // desaorrollo
+                  //this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip'); //produccion
+                
 
               }
 
@@ -135,11 +141,13 @@ export class AuthenticationService {
 
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
-        this.setUserLocalstorage(this.user)
-        this.setTwoFactor(res.twoFactorCenter)
+        
         if (res?.familyUnit.length > 0) {
           this.user.listFamilyUnit = res.familyUnit;
         }
+
+        this.setUserLocalstorage(this.user)
+        this.setTwoFactor(res.twoFactorCenter)
 
         return res;
 
@@ -196,8 +204,14 @@ export class AuthenticationService {
     this.isFamily = true;
     let s: string = user['name'];
     let fullname = s.split(',');
-    this.user = new User(user.id, '', fullname[0].replace(',',''), fullname[1], user.thumbnail);
+
+    let previousUser = this.user
+    
+
+    this.user = new User(user.id, '', /* fullname[0].replace(',','') */ user['name'], fullname[1], user.thumbnail);
+    this.user.selectedCaregiverResponsible = previousUser;
     this.user.familyUnit = user.id;
+    
     Preferences.set({
       key: String(user.id),
       value: JSON.stringify(this.user)
@@ -215,10 +229,11 @@ export class AuthenticationService {
   public async setUserFamilyId(id) {
 
     await this.getUserLocalstorage().then(user => {
+      this.isFamily = false;
       console.log(`[AuthenticationService] MEMBER(${id})`, user);
       let s: string = user['name'];
       let fullname = s.split(',');
-      this.user = new User(user['idUser'], '', fullname[0].replace(',',''), fullname[1], user['image']);
+      this.user = new User(user['idUser'], '', /* fullname[0].replace(',','') */ user['name'], fullname[1], user['image']);
       this.user.familyUnit = id;
       this.setUserLocalstorage(this.user)
     })
@@ -263,6 +278,7 @@ export class AuthenticationService {
         map( (res: any) => {
           console.log(`[AuthenticationService] logout(${path}) res: `, JSON.stringify(res) );
           this.isAuthenticated.next(false);
+           Preferences.remove({ key:  this.user.familyUnit }).then((val) => { });
            Preferences.remove({ key: 'user' }).then((val) => { });
            this.tokenService.removeAuthToken()
           return res;
@@ -357,9 +373,11 @@ export class AuthenticationService {
      if(platform == 'FCM')
       platform = 'android';
      if(platform == 'APNS')
-      platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
+      //platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
+      platform =  (this.indexEndPoint==0)?'ios':'ios_dev';
      if(platform == 'ios')
-      platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
+      //platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
+      platform =  (this.indexEndPoint==0)?'ios':'ios_dev';
 
      const postData = {
       token: token,

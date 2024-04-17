@@ -1,3 +1,62 @@
 ion-card {
     background-color: white;
+    box-shadow: none !important;
+}
+
+.custom-button {
+    font-size: 12px; 
+    padding: 8px 16px; 
+    color: white;
+    font-family: 'Poppins-regular' !important;
+    border-radius: 15px;
+}
+
+.button-text {
+    font-size: 12px; /* Ajusta el tamaño del texto */
+    color: white;
+}
+
+.txt-diet-title {
+    font-family: 'Poppins-SemiBold';
+    font-size: 14px;
+    color: #22577A;
+}
+
+.txt-title {
+    font-family: 'Poppins-SemiBold';
+    font-size: 14px;
+    color: #22577A;
+    margin-bottom: 8%;
+}
+
+.txt-schedule {
+    font-family: 'Poppins-Regular';
+    font-size: 10px;
+    line-height: 10px;
+    color: var(--malva);
+}
+
+.txt-hour {
+    font-family: 'Poppins-bold';
+    font-size: 11px;
+    line-height: 1wpx;
+    color: var(--malva);
+}
+
+.txt-date {
+    font-family: 'Poppins-Regular';
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--default-text);
+}
+.txt-subtitle{
+    font-family: 'Poppins-Regular';
+    font-size: 12px;
+    color: #2C3E50;
+}
+.txtQuality{
+    font-family: 'Poppins-Regular';
+    font-size: 12px;
+    color: #BA0186;
+  line-height: 4;
 }

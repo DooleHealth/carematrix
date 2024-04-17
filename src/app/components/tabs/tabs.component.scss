@@ -11,13 +11,13 @@ ion-tabs {
 
     &.tab-selected {
       ion-icon {
-        color: var(--blue);
+        color: var(--ion-color-primary);
         /* Set the selected color for icons */
       }
 
       ion-label {
        
-        color: var(--blue);
+        color: var(--ion-color-primary);
         /* Set the selected color for labels */
         font-weight: 400 !important;
         opacity: 1 !important;

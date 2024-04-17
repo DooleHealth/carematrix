@@ -1,50 +1,200 @@
-<ion-card 
-class="ion-no-padding" 
-(click)="goTo(content.type)"  
-routerLinkActive="active-item" 
-[routerLink]="content.routerlink" >
+<ion-card class="ion-no-padding" (click)="goTo(content.type)" routerLinkActive="active-item"
+  style="margin-bottom: 2%; margin-top: 2%;" routerLink="diets-detail/recipe" [state]="{id: content?.item_id}"
+  *ngIf="content?.item_type === 'App\\Ingredient' || content?.item_type === 'App\\Receipt';else Other">
+  <!--DIETS-->
+  <ion-grid class="ion-no-padding" style="height: 100% !important">
+    <ion-row>
+      <ion-col size="4">
+        <ion-thumbnail class="thumbnail">
+          <img class="paddingRight imagefit" [src]="content?.item.media[0]?.temporaryUrl"
+            onError="this.onerror=null; this.src='/assets/images/shared-care-plan/diets.png' " alt="" />
+        </ion-thumbnail>
+      </ion-col>
 
-  <!-- <ion-item class="ion-no-padding item" lines="none" mode="ios"> -->
+      <ion-col size="8">
+        <ion-row>
 
-    <ion-grid class="ion-no-padding" style="height: 100% !important"> 
-      <ion-row>
-        <ion-col size="4">
-          <ion-thumbnail class="thumbnail">
-            <img
-              class="paddingRight imagefit"
-              [src]="content?.img"
-              onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
-              alt=""
-            />
-          </ion-thumbnail>
-        </ion-col>
-  
-        <ion-col size="8">
-          <ion-row>
-            <p>{{content?.title}}</p>
-          </ion-row>
-          <ion-row>
-            <ion-text class="txtSubtitle2">
-                {{content?.type}}
+          <p class="txt-diet-title">
+            {{content?.item.name}}
+          </p>
+        </ion-row>
+        <ion-row>
+          <ion-text class="txtSubtitle2">
+            {{content?.item.description_corta}}
+          </ion-text>
+        </ion-row>
+     
+
+        <ion-row align-items-center>
+          <ion-col size="9.5" size-md="10" size-lg="11">
+            <ion-text class="txtQuality" >
+              {{content?.quantity}} {{ 'diary.calories' | translate}}
             </ion-text>
-          </ion-row>
-    
-          <ion-row>
-            <ion-col size="9.5" size-md="10" size-lg="11">
-              <p class="txtSubtitle3" style="color: var(--malva)">
-                {{content?.staff}}
-              </p>
-    
-            </ion-col>
-            <ion-col size="2.5" size-md="2" size-lg="1">
-              <p class="txtSubtitleDate" style="color: var(--malva)">
-                {{this.date}}
-              </p>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+          </ion-col>
+          <ion-col size="2.5" size-md="2" size-lg="1">
+            <p class="txtSubtitleDate" style="color: var(--malva)">
+              {{this.date}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
 
-    </ion-grid>
+  </ion-grid>
   <!-- </ion-item> -->
 </ion-card>
+
+
+<ng-template #Other>
+  <ion-card class="ion-no-padding" (click)="goTo(content)" routerLinkActive="active-item"
+    style="margin-bottom: 2%; margin-top: 2%;" [state]="{id: content?.form_id, form_programmation_id: content?.id, form_answer_id: content?.form_answer_id}"
+    *ngIf="content?.type === 'forms'; else Drugs">
+
+
+    <ion-card-content style="padding-top: 2%; padding-bottom: 2%; padding-left: 0px; padding-right: 0px;">
+      <ion-grid class="ion-no-padding" style="height: 100% !important">
+        <ion-row>
+          <ion-col size="3" style="display: flex; align-items: center;">
+            <ng-container *ngIf="content?.type === 'forms'">
+              
+              <img class="paddingRight imagefit" [src]="content?.image ? content?.image :'/assets/icons/form_icon.svg'"
+                />
+            </ng-container>
+          </ion-col>
+
+          <ion-col size="9">
+            <ion-row style="padding-bottom: 2%;">
+
+              <ion-col size="5.5" style="display: flex; align-items: center;">
+                <ion-text class="txt-title">{{ content?.title}}</ion-text>
+              </ion-col>
+
+              <ion-col size="6.5" size-md="6" size-lg="5">
+                <ion-button *ngIf="content?.status == 2" mode="ios" shape="round" class="ion-float-right custom-button "
+                  color="medium" style="padding-top: 0px; padding-bottom: 0px; margin-bottom: 0px; margin-top: 0px;">{{
+                  'button.pending' | translate }}
+                </ion-button>
+
+                <ion-button *ngIf="content?.status == 1" mode="ios" shape="round" class="ion-float-right custom-button "
+                  color="success" style="padding-top: 0px; padding-bottom: 0px; margin-bottom: 0px; margin-top: 0px;">{{
+                  'button.completed' | translate }}
+                </ion-button>
+                <ion-button *ngIf="content?.status == 0" mode="ios" shape="round"
+                  class="ion-float-right custom-button  " color="danger"
+                  style="padding-top: 0px; padding-bottom: 0px; margin-bottom: 0px; margin-top: 0px;">{{
+                  'button.forgotten' | translate }}
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-row class="txtSubtitle2">
+                <ion-text class="txtSubtitle" style="display: inline-flex !important;">
+                  <ion-text class="txt-date"> {{'medication.from' | translate}} {{ setFormatDate(content?.from_date ) }}
+                  </ion-text>&nbsp;
+                  <ion-text class="txt-date" *ngIf="content?.to_date"> {{'medication.to' | translate}} {{
+                    setFormatDate(content?.to_date )}}</ion-text>
+                </ion-text>
+                &nbsp;
+
+              </ion-row>
+
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="9.5" size-md="10" size-lg="11" *ngIf="content?.content_type =='App\\FormProgrammation'">
+                <ion-text class="txt-schedule">
+                  {{'form.scheduled' | translate}} {{ content.frequency }}
+                </ion-text>
+
+              </ion-col>
+              <ion-col size="2.5" size-md="2" size-lg="1">
+                <ion-text class="txt-hour">
+                  {{this.date}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </ion-card-content>
+
+
+  </ion-card>
+
+</ng-template>
+<ng-template #Drugs>
+
+  <ion-card class="ion-no-padding" style="margin-bottom: 2%; margin-top: 2%;">
+
+    <ion-card-content style="padding-top: 2%; padding-bottom: 2%; padding-left: 0px; padding-right: 0px;">
+
+
+      <ion-grid class="ion-no-padding" style="height: 100% !important">
+        <ion-row>
+
+          <ion-col size="3" style="display: flex; align-items: center;" (click)="goTo(content)">
+            <ng-container *ngIf="!(content?.media?.temporaryUrl); else useImg">
+              <ion-icon style="width: 100%; height: 100%;" src="/assets/icons/pill_drug.svg"></ion-icon>
+            </ng-container>
+
+            <ng-template #useImg>
+              <img class="paddingRight imagefit" [src]="content?.media?.temporaryUrl"
+                onError="this.onerror=null; this.src='/assets/icons/pill_drug.svg' " alt="" />
+            </ng-template>
+          </ion-col>
+
+
+          <ion-col size="9">
+            <ion-row>
+
+              <ion-col size="5.5" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;">
+                <ion-text class="txt-title">{{(content?.alias !== null)? content?.alias: content?.name}}</ion-text>
+              </ion-col>
+
+              <ion-col size="6.5" size-md="6" size-lg="5">
+                <ion-button mode="ios" *ngIf="content?.forgotten == 2" color="primary"
+                  class="ion-float-right custom-button" (click)="changeTake(content?.id, content?.state)" [disabled]="!this.permissionService.canManageMedication"
+                  [disabled]="!this.permissionService.canManageMedication">{{ 'button.take' | translate }}
+                </ion-button>
+
+                <ion-button mode="ios" *ngIf="content?.forgotten == 1" class="ion-float-right custom-button" [disabled]="!this.permissionService.canManageMedication"
+                  color="danger" (click)="changeTake(content?.id, content?.state)"
+                  [disabled]="!this.permissionService.canManageMedication">{{ 'button.forgotten' | translate }}
+                </ion-button>
+                <ion-button mode="ios" *ngIf="content.forgotten == 0" class="ion-float-right custom-button" [disabled]="!this.permissionService.canManageMedication"
+                  color="success" (click)="changeTake(content.id, content.state)"
+                  [disabled]="!this.permissionService.canManageMedication">{{ 'button.takeds' | translate }}
+                </ion-button>
+              </ion-col>
+              <ion-col size="9.5" size-md="10" size-lg="11">
+                <ion-text class="txt-subtitle" style="margin-top: -4%;" 
+                [innerHTML]="content?.observations"></ion-text>
+
+              </ion-col>
+            </ion-row>
+
+
+            <ion-row (click)="goTo(content)">
+              <ion-col size="9.5" size-md="10" size-lg="11">
+                <ion-text class="txt-schedule">
+                  {{'medication.dose' | translate}} {{content?.dose? content?.dose:'' }} {{content?.frequency}}
+                </ion-text>
+
+              </ion-col>
+              <ion-col size="2.5" size-md="2" size-lg="1">
+                <ion-text class="txt-hour">
+                  {{this.date}}
+                </ion-text>
+              </ion-col>
+            </ion-row>
+
+
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ng-template>

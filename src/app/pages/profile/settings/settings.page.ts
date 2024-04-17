@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { Capacitor } from '@capacitor/core';
+import { NotificationOptions, notificationOpt } from 'src/app/components/notification/notification-options';
+
 
 @Component({
   selector: 'app-settings',
@@ -21,33 +23,31 @@ import { Capacitor } from '@capacitor/core';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-  settingsBio = '';
+  private settingsBio = '';
   authentication = false
   faceId = false
-  communications = false
-  appointment = false
-  diets = false
-  medication = false
-  goals = false
-  advices = false
-  offers = false
-  form = false
-  messages = false
   language
   listLanguage = []
   isFaID = true
   isTwoFactor = true
   biometric: any
-  reminder = false
-  news = false
-  release = false
   listEndPoint = []
   biometric_list = []
   modeDevelop = false;
   environment = 0
   isSelectEndPoint = false;
-  games = false
   api: any;
+  /**
+   * optionList: To load all notifications
+   */
+  /**/
+  optionList:notificationOpt[] = []
+  private notification_options: NotificationOptions
+  /**
+   * optAppAndEmail: This variable is to have the app and email options separate
+   */
+  /**/
+  optAppAndEmail = true;  
   constructor(
     private dooleService: DooleService,
     public languageService: LanguageService,
@@ -63,8 +63,11 @@ export class SettingsPage implements OnInit {
     private endPoint: ApiEndpointsService,
     private alertController: AlertController,
     private pusherConnection: PusherConnectionService
-    ) {}
+    ) {
+      this.notification_options = new NotificationOptions()
+    }
   ngOnInit() {
+    this.optionList = this.notification_options.getListOptions()
     this.getListBiometric()
     this.isAvailableFaID()
     this.isAvailableTwoFactor()
@@ -85,11 +88,10 @@ export class SettingsPage implements OnInit {
   getNotificationConfiguration(){
     this.dooleService.getAPInotificationConfigurations().subscribe(
       async (res: any) =>{
-       //console.log('[SettingsPage] getNotificationConfiguration()', await res);
+       console.log('[SettingsPage] getNotificationConfiguration()', await res);
        if(res){
         this.getConfigurationParams(res)
        }
-
        },(err) => {
           console.log('[SettingsPage] getNotificationConfiguration() ERROR(' + err.code + '): ' + err.message);
           throw err;
@@ -99,20 +101,8 @@ export class SettingsPage implements OnInit {
   getConfigurationParams(params: any){
     this.authentication = (params?.two_factor_authentication== "1")? true:false
     this.faceId = JSON.parse(localStorage.getItem(this.settingsBio))
-    //console.log('[SettingsPage] getConfigurationParams()', this.faceId, localStorage.getItem('settings-bio'));
-    this.communications = (params?.communicationsNotificaton== "1")? true:false
-    this.appointment = (params?.appointmentNotificaton== "1")? true:false
-    this.diets = (params?.dietsNotificaton== "1")? true:false
-    this.medication = (params?.drugIntakeNotificationMail == "1")? true:false
-    this.goals = (params?.goalsNotificaton== "1")? true:false
-    this.advices = (params?.advicesNotificaton== "1")? true:false
-    this.offers = (params?.offersNotificaton== "1")? true:false
-    this.form = (params?.formNotificaton== "1")? true:false
-    this.messages = (params?.messagesNotificaton== "1")? true:false
-    this.reminder = (params?.reminderNotificationApp== "1")? true:false
-    this.release = (params?.promoteContentNotification== "1")? true:false
-    this.news = (params?.newsNotificationApp== "1")? true:false
-    this.games = (params?.gamePlayNotificationApp== "1")? true:false
+    this.optionList = this.notification_options.setAppMailField(this.optionList, params)
+    //console.log('[SettingsPage] getConfigurationParams() 2', this.optionList);
   }
 
   changeAuthentication(){
@@ -131,142 +121,20 @@ export class SettingsPage implements OnInit {
     this.showBioAuthDlg(this.faceId)
   }
 
-  changeCommunications(){
-    let params = {
-      name: 'communicationsNotificaton',
-      value: this.communications
+  changeStateOptionsNoti(notification){
+    if(notification.item_expanded)
+    notification.item_expanded = false
+    else{
+      this.optionList.map(item => {
+        if(notification == item){
+          item.item_expanded = !item.item_expanded
+        }else{
+          item.item_expanded = false
+        }
+        return item;
+      })
     }
-    this.sendConfigution(params)
   }
-
-  changeAppointment(){
-    let params = {
-      name: 'appointmentNotificaton',
-      value: this.appointment
-    }
-    this.sendConfigution(params)
-  }
-
-  changeDiets(){
-    let params = {
-      name: 'dietsNotificaton',
-      value: this.diets
-    }
-    this.sendConfigution(params)
-  }
-
-  changeMedication(){
-    let params = {
-      name: 'drugIntakeNotificationApp',
-      value: this.medication
-    }
-    this.sendConfigution(params)
-    let params2 = {
-      name: 'drugIntakeNotificationMail',
-      value: this.medication
-    }
-    this.sendConfigution(params2)
-    let params3 = {
-      name: 'medicationPlanExpiredNotificationApp',
-      value: this.medication
-    }
-    this.sendConfigution(params3)
-    let params4 = {
-      name: 'medicationPlanExpiredNotificationEmail',
-      value: this.medication
-    }
-    this.sendConfigution(params4)
-  }
-
-  changeAdvices(){
-    let params = {
-      name: 'advicesNotificaton',
-      value: this.advices
-    }
-    this.sendConfigution(params)
-  }
-
-  changeOffers(){
-    let params = {
-      name: 'offersNotificaton',
-      value: this.offers
-    }
-    this.sendConfigution(params)
-  }
-
-  changeGoals(){
-    let params = {
-      name: 'goalsNotificaton',
-      value: this.goals
-    }
-    this.sendConfigution(params)
-  }
-
-  changeForm(){
-    let params = {
-      name: 'formNotificaton',
-      value: this.form
-    }
-    this.sendConfigution(params)
-  }
-
-  changeMessages(){
-    let params = {
-      name: 'messagesNotificaton',
-      value: this.messages
-    }
-    this.sendConfigution(params)
-  }
-
-  changeReminders(){
-    let params = {
-      name: 'reminderNotificationApp',
-      value: this.reminder
-    }
-    this.sendConfigution(params)
-    let params2 = {
-      name: 'reminderNotificationMail',
-      value: this.reminder
-    }
-    this.sendConfigution(params2)
-  }
-
-  changeNews(){
-    let params = {
-      name: 'newsNotificationApp',
-      value: this.news
-    }
-    this.sendConfigution(params)
-    let params2 = {
-      name: 'newsNotificationMail',
-      value: this.news
-    }
-    this.sendConfigution(params2)
-  }
-
-  changeRelease(){
-    let params = {
-      name: 'promoteContentNotification',
-      value: this.release
-    }
-    this.sendConfigution(params)
-  }
-
-  changeGames(){
-    let params = {
-      name: 'gamePlayNotificationApp',
-      value: this.games
-    }
-    this.sendConfigution(params)
-
-    let params2 = {
-      name: 'gamePlayNotificationMail',
-      value: this.games
-    }
-    this.sendConfigution(params2)
-  }
-
-
 
   sendConfigution(params){
     this.dooleService.postAPIConfiguration(params).subscribe(
@@ -274,10 +142,8 @@ export class SettingsPage implements OnInit {
        //console.log('[SettingsPage] sendConfigution()', await res);
        if(res.success){
        // console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
-       }
-        else{
+       }else{
           console.log(`[SettingsPage] sendConfigution(success: ${res.success})`);
-          //alert(res.success)
         }
        },(err) => {
           console.log('[SettingsPage] sendConfigution() ERROR(' + err.code + '): ' + err.message);

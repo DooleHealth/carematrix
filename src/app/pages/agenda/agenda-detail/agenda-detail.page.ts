@@ -19,6 +19,7 @@ import { ReminderAddPage } from '../reminder-add/reminder-add.page';
 import { VideocallIframePage } from '../videocall-iframe/videocall-iframe.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-agenda-detail',
@@ -58,7 +59,8 @@ export class AgendaDetailPage implements OnInit {
     public notification: NotificationService,
     private languageService: LanguageService,
     public platform: Platform,
-    public role: RolesService
+    public role: RolesService,
+    public permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -96,10 +98,13 @@ export class AgendaDetailPage implements OnInit {
 
           this.enableVideocallButton = this.checkVideocallOnTime(startDate, currentDate);
 
+          console.log(this.enableVideocallButton)
+
           let staff = this.event?.staff
           if(staff?.length >0){
             let edit  = staff?.find(item => (item?.id) )
             this.isEditable = edit? true:false
+            console.log(this.isEditable)
           }
         }
 

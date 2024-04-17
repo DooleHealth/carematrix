@@ -1,11 +1,11 @@
 PODS:
-  - Capacitor (5.5.1):
+  - Capacitor (5.6.0):
     - CapacitorCordova
-  - CapacitorApp (5.0.6):
+  - CapacitorApp (5.0.7):
     - Capacitor
-  - CapacitorBrowser (5.1.0):
+  - CapacitorBrowser (5.2.0):
     - Capacitor
-  - CapacitorCamera (5.0.7):
+  - CapacitorCamera (5.0.9):
     - Capacitor
   - CapacitorCommunityContacts (5.0.4):
     - Capacitor
@@ -14,40 +14,42 @@ PODS:
     - FirebaseAnalytics
   - CapacitorCommunityNativeMarket (5.0.0):
     - Capacitor
+  - CapacitorCommunitySpeechRecognition (5.1.0):
+    - Capacitor
   - CapacitorCommunitySqlite (5.0.3):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (5.5.1)
+  - CapacitorCordova (5.6.0)
   - CapacitorDevice (5.0.5):
     - Capacitor
-  - CapacitorFilesystem (5.1.4):
+  - CapacitorFilesystem (5.2.1):
     - Capacitor
-  - CapacitorFirebaseAppCheck (5.2.0):
+  - CapacitorFirebaseAppCheck (5.4.0):
     - Capacitor
-    - FirebaseAppCheck (= 10.8.0)
-  - CapacitorHaptics (5.0.6):
+    - FirebaseAppCheck (~> 10.8)
+  - CapacitorHaptics (5.0.7):
     - Capacitor
-  - CapacitorKeyboard (5.0.6):
+  - CapacitorKeyboard (5.0.8):
     - Capacitor
-  - CapacitorLocalNotifications (5.0.6):
+  - CapacitorLocalNotifications (5.0.7):
     - Capacitor
-  - CapacitorNetwork (5.0.6):
+  - CapacitorNetwork (5.0.7):
     - Capacitor
-  - CapacitorPreferences (5.0.6):
+  - CapacitorPreferences (5.0.7):
     - Capacitor
-  - CapacitorPushNotifications (5.1.0):
+  - CapacitorSplashScreen (5.0.7):
     - Capacitor
-  - CapacitorSplashScreen (5.0.6):
+  - CapacitorStatusBar (5.0.7):
     - Capacitor
-  - CapacitorStatusBar (5.0.6):
+  - CapacitorTextZoom (5.0.7):
     - Capacitor
   - CapawesomeCapacitorBadge (5.0.0):
     - Capacitor
-  - CordovaPlugins (5.5.1):
+  - CordovaPlugins (5.6.0):
     - CapacitorCordova
   - CordovaPluginsResources (0.0.105)
-  - CordovaPluginsStatic (5.5.1):
+  - CordovaPluginsStatic (5.6.0):
     - CapacitorCordova
     - OpenTok (~> 2.17.0)
   - Firebase/CoreOnly (10.10.0):
@@ -162,6 +164,7 @@ DEPENDENCIES:
   - "CapacitorCommunityContacts (from `../../node_modules/@capacitor-community/contacts`)"
   - "CapacitorCommunityFirebaseAnalytics (from `../../node_modules/@capacitor-community/firebase-analytics`)"
   - "CapacitorCommunityNativeMarket (from `../../node_modules/@capacitor-community/native-market`)"
+  - "CapacitorCommunitySpeechRecognition (from `../../node_modules/@capacitor-community/speech-recognition`)"
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
@@ -172,9 +175,9 @@ DEPENDENCIES:
   - "CapacitorLocalNotifications (from `../../node_modules/@capacitor/local-notifications`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
-  - "CapacitorPushNotifications (from `../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - "CapacitorTextZoom (from `../../node_modules/@capacitor/text-zoom`)"
   - "CapawesomeCapacitorBadge (from `../../node_modules/@capawesome/capacitor-badge`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - CordovaPluginsResources (from `../capacitor-cordova-ios-plugins`)
@@ -215,6 +218,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/firebase-analytics"
   CapacitorCommunityNativeMarket:
     :path: "../../node_modules/@capacitor-community/native-market"
+  CapacitorCommunitySpeechRecognition:
+    :path: "../../node_modules/@capacitor-community/speech-recognition"
   CapacitorCommunitySqlite:
     :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
@@ -235,12 +240,12 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/network"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
-  CapacitorPushNotifications:
-    :path: "../../node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
+  CapacitorTextZoom:
+    :path: "../../node_modules/@capacitor/text-zoom"
   CapawesomeCapacitorBadge:
     :path: "../../node_modules/@capawesome/capacitor-badge"
   CordovaPlugins:
@@ -251,30 +256,31 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
-  CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
-  CapacitorBrowser: 7a0fb6a1011abfaaf2dfedfd8248f942a8eda3d6
-  CapacitorCamera: 084b0b228bba7d00587910337b1c89e93b1d32ab
+  Capacitor: ebfc16cdb8116d04c101686b080342872da42d43
+  CapacitorApp: 17fecd0e6cb23feafac7eb0939417389038b0979
+  CapacitorBrowser: a6deae9e5bf87f62b62a753cff7992c5def9e771
+  CapacitorCamera: 4892c5c392f60039d853dde78bc50ba19fbd113e
   CapacitorCommunityContacts: 45de2477f7dc6265d267677939a2c75465d2ed87
   CapacitorCommunityFirebaseAnalytics: a29279a99fad771ba307d9a07571372ea2f36b1f
   CapacitorCommunityNativeMarket: 70b329cac2db3aee51430c83cdbe63cfc7c250bd
+  CapacitorCommunitySpeechRecognition: 4b07fb675f4e5ce3376748557875d182973a788a
   CapacitorCommunitySqlite: b90d3ca2785560e666cfacd3438dc42bed74f9dc
-  CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
+  CapacitorCordova: 931b48fcdbc9bc985fc2f16cec9f77c794a27729
   CapacitorDevice: 4c78eeaa553c7a46bc07372c6eb03a5665459885
-  CapacitorFilesystem: af704badfbc69f6f8623d9ed313e5490e3723dcb
-  CapacitorFirebaseAppCheck: eba071266612be9f851d6caffed4aaa24ada4134
-  CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
-  CapacitorKeyboard: b978154b024a5f65e044908e37d15b7de58b9d12
-  CapacitorLocalNotifications: c2d8b14794064fd4814b1d6c4ddbac8029afa295
-  CapacitorNetwork: d80b3e79bef6ec37640ee2806c19771f07ff2d0c
-  CapacitorPreferences: f03954bcb0ff09c792909e46bff88e3183c16b10
-  CapacitorPushNotifications: b31e326c6e4eb216a622041d6ca21a973f34943f
-  CapacitorSplashScreen: 5fa2ab5e46cf5cc530cf16a51c80c7a986579ccd
-  CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
+  CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
+  CapacitorFirebaseAppCheck: 33df3ec806a230b40b34e27ab9dcd81052edb6b1
+  CapacitorHaptics: 7c7c206f0c96a628fed073830c96d28c4b2e772e
+  CapacitorKeyboard: aec619a578235c6ce279075009a2689c2cf5c42c
+  CapacitorLocalNotifications: c58afadd159f6bc540ef9b3cbdbc82510a2bf112
+  CapacitorNetwork: 81ef9728aa7a65cac8c1181ce79e578162b57b57
+  CapacitorPreferences: 77ac427e98db83bace772455f8ba447430382c4c
+  CapacitorSplashScreen: dd3de3f3644710fa2a697cfb91ec262eece4d242
+  CapacitorStatusBar: f390fbb49b82ffb754ea4b3cf71dc8b048baf3e7
+  CapacitorTextZoom: 69814a62b1d0f23a899cca06ea9838c38de187ff
   CapawesomeCapacitorBadge: 2b9919ea79b85bdc5455143cf6607c9e25bec9ae
-  CordovaPlugins: 20e908b0adefe7cc53082db0f9956553a916cb4e
+  CordovaPlugins: 961dbd6932a693dcb2b5f654b9b0d7faf7634f91
   CordovaPluginsResources: 0c211f770ed91763a179ebcd9b9346e120b70662
-  CordovaPluginsStatic: 16d91d77ff17e777f3154b9f9172cd92864a645a
+  CordovaPluginsStatic: 18cb906fd22b9d473c4ada78b2ff829e2359b74f
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
   FirebaseAnalytics: 7bc7de519111dae802f5bc0c9c083918f8b8870d
   FirebaseAppCheck: 8bde2c5f393518ab98290151188bf196b4bab91e
@@ -291,6 +297,6 @@ SPEC CHECKSUMS:
   SQLCipher: 905b145f65f349f26da9e60a19901ad24adcd381
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: 150d29a5512655e7a663e75f64231100da270db1
+PODFILE CHECKSUM: 89f98ad1ca97c250e1540d8549d800c34995ea5a
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.13.0

@@ -168,7 +168,7 @@ export class AddHealthCardPage implements OnInit {
     this.formHealthCard.get('issue_date').setValue(issue_date)
   }
   compareFn(e1: any, e2: any): boolean {
-    return  e1.id === e2.id
+    return  e1 === e2
   }
 
   openMessageStartDate(){
@@ -187,27 +187,40 @@ export class AddHealthCardPage implements OnInit {
     }
   }
 
-  getHealthCardTypes(){
+  getHealthCardTypes() {
     console.log('[AddHealthCardPage] getHealthCardTypes()');
     this.dooleService.getAPIhealthCardTypes().subscribe(
-      async (res: any) =>{
-        console.log('[AddHealthCardPage] getHealthCardTypes()', await res);
-        if(res.success ){
-          this.healthCardTypes = res.healthCardTypes
-          if(this.card?.type?.id){
-            let type = this.healthCardTypes.find(type => (type.id === this.card.type.id))
-            this.formHealthCard.get('health_card_type_id').setValue(type.id)
-          }else{
-            const id = this.healthCardTypes[0]?.id
-            if(id) this.formHealthCard.get('health_card_type_id').setValue(id)
+      (res: any) => {
+        if (!res.ok && res.status) { // Check if the response is an error
+          console.error('[AddHealthCardPage] getHealthCardTypes() ERROR: ', res);
+          let errorMessage = 'Error fetching health card types';
+          if (res.error && res.error.message) {
+            errorMessage = res.error.message;
+          } else if (res.message) {
+            errorMessage = res.message;
+          }
+          this.presentAlert(this.translate.instant('add_health_card.error_types'));
+        } else {
+          console.log('[AddHealthCardPage] getHealthCardTypes()', res);
+          if (res.success) {
+            this.healthCardTypes = res.healthCardTypes;
+            if (this.card?.type?.id) {
+              let type = this.healthCardTypes.find(type => type.id === this.card.type.id);
+              this.formHealthCard.get('health_card_type_id').setValue(type.id);
+            } else {
+              const id = this.healthCardTypes[0]?.id;
+              if (id) this.formHealthCard.get('health_card_type_id').setValue(id);
+            }
           }
         }
-       },(err) => {
-          console.log('[AddHealthCardPage] getHealthCardTypes() ERROR(' + err.code + '): ' + err.message);
-           this.presentAlert(err.messagge)
-          throw err;
-      });
+      },
+      (err) => {
+        console.error('[AddHealthCardPage] getHealthCardTypes() ERROR: ', err);
+        this.presentAlert('An error occurred while fetching health card types');
+      }
+    );
   }
+  
 
   transformDate(date) {
     return this.datepipe.transform(date, 'dd/MM/yyyy');

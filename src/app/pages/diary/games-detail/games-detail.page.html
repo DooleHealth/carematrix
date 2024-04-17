@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="game">{{game?.title}}</ion-title>
+    <ion-title class="toolbarTitle" *ngIf="game">{{game?.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
 
   <ion-list *ngIf="game">
@@ -55,7 +55,7 @@
   </ion-card>
 
   <div class="main-container">
-    <ion-button expand="block"  (click)="openGames(game)">{{'game.go_game' | translate }}</ion-button>
+    <ion-button expand="block" *ngIf="this.canPlayGames"  (click)="openGames(game)">{{'game.go_game' | translate }}</ion-button>
   </div>
 
 </ion-content>

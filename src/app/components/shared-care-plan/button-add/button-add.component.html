@@ -1,0 +1,7 @@
+<ion-button mode="ios" color="primary" shape="round" class="floating-button ion-margin" (click)="goTo(content.type)" >
+ 
+  <ion-label class="floatButton">{{content?.title | translate}}</ion-label>
+  <ion-icon slot="end" [src]="this.content?.icon" ></ion-icon>
+</ion-button>
+
+

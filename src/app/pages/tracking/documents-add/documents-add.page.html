@@ -3,25 +3,33 @@
        <ion-buttons slot="start">
       <ion-back-button (click)="close()" text="" icon="close"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'documents_add.header' | translate }} </ion-title>
+    <ion-title class="toolbarTitle">{{'documents_add.header' | translate }} </ion-title>
     <ion-buttons slot="end">
-    <ion-button (click)="submit()" [disabled]="this.isLoading">
+    <!-- <ion-button (click)="submit()" [disabled]="this.isLoading">
       <ion-icon name="checkmark-outline"></ion-icon>
-    </ion-button>
+    </ion-button> -->
   </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="submit()" [formGroup]="form">
+  <form (ngSubmit)="submit()" [formGroup]="form" style="padding-bottom: 30%;">
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item (click)="openModal()">
-        <ion-label  stacked>
-          <h5>{{ 'documents_add.field_test_type' | translate }}</h5>
+        <!-- <ion-label stacked style="width: max-content;">
+          <h5 style="font-size: 14px !important;" >{{ 'documents_add.field_test_type' | translate }}</h5>
           <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
-        </ion-label>
-        <ion-input formControlName="type" slot="end" [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false"></ion-input>
+        </ion-label> -->
+        <ion-input labelPlacement="floating" style="font-size: 14px !important;"  formControlName="type"  [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false">
+          <div slot="label">
+            <ion-text color="danger">{{ 'documents_add.field_test_type' | translate }}&nbsp;
+              <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
+            </ion-text>
+            
+          </div>
+        </ion-input>
+    
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
 
@@ -40,11 +48,11 @@
           <h5 >{{ 'documents_add.field_date' | translate}}</h5>
           <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
         </ion-label>
-        <ion-datetime-button slot="end" datetime="date"></ion-datetime-button>
+        <ion-datetime-button firstDayOfWeek="1" slot="end" datetime="date"></ion-datetime-button>
       </ion-item>
       <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime mode="ios" [locale]="this.locale" (ionInput)="isSubmittedDate = false" presentation="date" id="date" (ionChange)="this.isSubmittedDate = false;" formControlName="date"></ion-datetime>
+          <ion-datetime firstDayOfWeek="1" mode="ios" [locale]="this.locale" (ionInput)="isSubmittedDate = false" presentation="date" id="date" (ionChange)="this.isSubmittedDate = false;" formControlName="date"></ion-datetime>
           <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
             <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
             <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
@@ -91,8 +99,31 @@
 </ion-card>
 </form>
 
-  <section>
+  <!-- <section>
+    
     <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" expand="block"  (click)="submit()" >{{'documents_add.button_add_result' | translate }}</ion-button>
+    
     <ion-button *ngIf="this.isEdit" expand="block"  (click)="presentAlertConfirm()" >{{'button.delete' | translate }}</ion-button>
-  </section>
+  </section> -->
 </ion-content>
+
+
+<ion-footer>
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <ion-button  *ngIf="this.isEdit" (click)="presentAlertConfirm()" color="danger" shape="round" class="floating-button ion-margin" style="margin-bottom: 18%;" >
+      {{'button.delete' | translate }}
+    </ion-button>
+  </div>
+
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <ion-button [disabled]="this.isLoading" *ngIf="this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
+      {{'documents_add.button_add_result' | translate }}
+    </ion-button>
+  </div>
+
+  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
+    <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
+      {{'documents_add.button_add_result' | translate }}
+    </ion-button>
+  </div>
+</ion-footer>

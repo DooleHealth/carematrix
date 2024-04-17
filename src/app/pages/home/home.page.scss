@@ -2,8 +2,31 @@
   --border-width: 0 0 0 ;
 }
 
+.seeAll {
+  color: var(--seeAllColor);
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+ion-card-content {
+  padding-top: 20px;
+}
+
+
 .take-btn {
-  --background: var(--blue) !important;
+  --background: var(--ion-color-primary) !important;
+}
+
+.greeting {
+  color: var(--ion-color-primary);
+  font-family: 'Poppins-Medium';
+  font-size: 20px;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.03px;
 }
 
 .icon-notifications {
@@ -80,14 +103,45 @@
 .progress-bar {
   width: 100%;
   border-radius: 100px;
-  height: 20px;
+  height: 22px;
   margin: auto;
-  --background: #f5f5f5;
-  --progress-background: purple;
+  --background: #EBD7F2;
+  --progress-background: #A2047F;
 }
 
 ion-item {
   height: auto !important;
+
+
+  .item-radio-checked{
+    --background: #F9F4FF;
+  }
+
+ 
+}
+
+ion-searchbar {
+  --background: white; 
+  color: var(--default-text);
+  
+}
+
+
+.item-radio-checked{
+  --background: #F9F4FF;
+}
+
+ion-radio.ios.in-item.radio-justify-space-between.radio-alignment-center.radio-label-placement-start.hydrated.radio-checked  {
+  background: #F9F4FF;
+}
+
+
+
+
+
+.dependants-list {
+  border-radius: 10px;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.05);
 }
 
 .vertical-card {
@@ -111,17 +165,48 @@ ion-item {
 }
 
 ion-card {
-  box-shadow: none;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.05);
 }
 
 .card-title {
   display: flex;
   align-items: center;
   padding-left: 5px;
-  font-size: 14px;
+  font-family: 'Poppins-SemiBold';
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 21px;
+  line-height: normal;
+  letter-spacing: 0.04px;
+}
+
+.hour-txt {
+  color: var(--default-text);
+  font-family: 'Poppins-SemiBold';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.048px;
+}
+
+.appointment-txt {
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.024px;
+  padding-left: 0px;
+}
+
+.date-txt {
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.035px;
 }
 
 
@@ -165,23 +250,76 @@ ion-card {
 .challenge-txt {
   margin-left:10px; 
   color:var(--purple);
+  font-family: 'Poppins-SemiBold';
+  font-size: 16px;
+  font-style: normal;
   font-weight: 600;
-  line-height: 21px;  
+  line-height: normal;
+  letter-spacing: 0.04px;  
+
+
+}
+
+.txt-cards {
+  color: var(--default-text);
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.035px;
+}
+
+.txt-card-advices {
+  color: var(--default-text);
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.035px;
+  text-align: start;
+  padding-left: 0px;
 }
 
 .customCardHealthPath {
   background-color: white;
   box-shadow: none !important;
-  //height: 230px
+  height: auto;
+  max-height: 250px;
 }
 .strechCardContent {
   min-width: 300px !important;
   padding-top: 0%;
 }
 
+.imagefitAdvices {
+  width: auto;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
 .zeroMarginPadding {
   padding: 0%;
   margin: 0%;
+}
+
+.thumbnail{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  width: 98px !important;
+  height: 80px !important;
+}
+
+.caregiver-item {
+ --padding-start: 0px
+}
+
+.caregiver-item2 {
+  --padding-start: 0px;
+  --inner-padding-end: 0px
 }
 
 .cardHeader {
@@ -272,12 +410,105 @@ ion-progress-bar {
   -webkit-line-clamp: 1;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  color: black;
+
+  color: var(--default-text);
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.035px;
+}
+
+.challenge-description {
+  overflow: hidden;
+  color: #6A6A6A;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Poppins Body */
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.035px;
+}
+
+.a-type1{
+  color: var(--seeAllColor);
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.048px;
+
+  b {
+    font-size: 16px;
+    font-family: 'Poppins-Medium';
+    font-weight: 400;
+    
+  }
+}
+
+.staff-txt {
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.03px;
+
+  b {
+    font-family: 'Poppins-SemiBold' !important;
+    font-weight: 400 !important;
+    color:var(--ion-color-primary)
+  }
+}
+
+
+.caregiver-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  color: var(--default-text);
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.035px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.birth-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  color: var(--ion-color-medium);
+  font-family: 'Poppins-Regular';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.035px;
+}
+
+.see-more-appointment {
+  color: var(--seeAllColor);
+  font-family: 'Poppins-Medium';
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 21px;
-  //padding-left: 5%;
+  line-height: normal;
+  letter-spacing: 0.175px;
 }
 
 .alertCancel{
@@ -308,8 +539,6 @@ div#alert-1-ms.alert-message.sc-ion-alert-ios {
   padding: 0px;
 }
 
-
-
 strong {
   color: black;
 }
@@ -320,6 +549,7 @@ strong {
   margin-left: -9px;
   position: absolute;
   z-index: 99999;
+  color: white;
 }
 
 
@@ -361,49 +591,7 @@ strong {
 .slider-vertical {
   height: 100px !important;
 }
-// .swiper {
-//   width: 100%;
-//   height: 100%;
-// }
-// .swiper-pagination {
-//   height: auto !important;
-// }
 
-// .swiper-slide-container {
-//   text-align: center;
-//   font-size: 18px;
-//   background: #fff;
-//   height: 100%;
-//   max-width: 600px;
-//   margin: auto;
-//   /* Center slide text vertically */
-//   display: -webkit-box;
-//   display: -ms-flexbox;
-//   display: -webkit-flex;
-//   display: flex;
-//   -webkit-box-pack: center;
-//   -ms-flex-pack: center;
-//   -webkit-justify-content: center;
-//   justify-content: center;
-//   -webkit-box-align: center;
-//   -ms-flex-align: center;
-//   -webkit-align-items: center;
-//   align-items: center;
-// }
-
-// .swiper .swiper-slide {
-//   height: auto;
-// }
-
-// .swiper-slide {
-//   display: block;
-
-//   object-fit: cover;
-//   border-radius: 15px;
-//   .cover img {
-//     height: 200px;
-//   }
-// }
 
 @media (min-width: 640px) and (max-width: 1024px) {
   .card {

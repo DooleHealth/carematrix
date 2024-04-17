@@ -49,8 +49,29 @@ const routes: Routes = [
     loadChildren: () => import('./procedures/procedures.module').then( m => m.ProceduresPageModule)
   },
   {
+
+    path: 'profile/goals',
+    loadChildren: () => import('../profile/goals/goals.module').then( m => m.GoalsPageModule)
+  },
+  {
+    path: 'medication',
+    loadChildren: () => import('../diary/medication/medication.module').then( m => m.MedicationPageModule)
+  },
+  {
     path: 'monitoring',
     loadChildren: () => import('./monitoring/monitoring.module').then( m => m.MonitoringPageModule)
+  },
+  {
+    path: 'testimonials',
+    loadChildren: () => import('./testimonials/testimonials.module').then( m => m.TestimonialsPageModule)
+  },
+  {
+    path: 'testimonials-details',
+    loadChildren: () => import('./testimonials-details/testimonials-details.module').then( m => m.TestimonialsDetailsPageModule)
+  },
+  {
+    path: 'answers',
+    loadChildren: () => import('./answers/answers.module').then( m => m.AnswersPageModule)
   },
 ];
 

@@ -11,14 +11,17 @@ import { DocumentsFilterPage } from './documents-filter/documents-filter.page';
 import { ElementsAddPage } from './elements-add/elements-add.page';
 import { RolesService } from 'src/app/services/roles.service';
 import { DateService } from 'src/app/services/date.service';
-import { ListContentType, SCPContentType, SharedCarePlan, setStatusContentType } from 'src/app/models/shared-care-plan';
+import { AddButtonComponent, AddButtonList, ListContentType, SCPContentType, SharedCarePlan, setStatusContentType } from 'src/app/models/shared-care-plan';
 import { Router } from '@angular/router';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 export interface ListDiagnosticTests {
   date?: string;
   diagnosticTests?: any[];
-  color?: string
+  color?: string;
+  ddMMyFormat?: string;
+ 
 }
 export interface Filter {
   start_date?: string,
@@ -33,8 +36,11 @@ export interface Filter {
   styleUrls: ['./tracking.page.scss'],
 })
 export class TrackingPage implements OnInit {
-  listContent: SCPContentType = ListContentType;
-
+  listData: SCPContentType = ListContentType;
+  
+  listContent=[]
+  addButton = AddButtonList;
+  showButton: boolean = false;
   listDiagnostic:  ListDiagnosticTests[];
   diagnosticTests : Array<any>;
   forms: Array<any>;
@@ -62,33 +68,79 @@ export class TrackingPage implements OnInit {
     private notification: NotificationService,
     private dateService: DateService,
     public role: RolesService,
+    public permissionService: PermissionService
   ) { }
 
 
   ngOnInit() {
+   
   }
 
   ionViewWillEnter(){
     //this.setSegment()
+    this.showButton= false;
     this.segmentChanged();
     this.fireEvent(null, 0)
   }
 
   getStatusContent(){
+
+    this.showButton= false,
+    this.isLoading = true;
+   this.getPermission()
     this.scpService.getAPI_SCP_StatusContent().subscribe(
       async (res: any) =>{
+        
         console.log('[TrackingPage] getStatusContent()', await res);
-        this.listContent.forEach(content => {
+        this.listData.forEach(content => {
           setStatusContentType(res,content)
         })
-        console.log('[TrackingPage] getStatusContent() this.listContent', this.listContent);
+        this.isLoading = false;
+
+        console.log('[TrackingPage] getStatusContent() this.listContent', this.listData);
        },(err) => {
+        this.isLoading = false;
           console.log('[TrackingPage] getStatusContent() ERROR(' + err.code + '): ' + err.message);
           throw err;
       });
   }
 
+  getPermission() {
+    
+    const permissionFunctions = {
+      goals: () => this.permissionService.canViewGoals,
+      life_style_habits: () => this.getLifeStyleHabitsViews(),
+      forms: () => this.permissionService.canViewForms,
+      medication_plans: () => this.permissionService.canViewMedication || this.permissionService.canViewMedicationPlans,
+      medical_procedures: () => this.permissionService.canViewMedicalProcedures,
+      monitoring: () => this.permissionService.canViewMonitoring
+    };
+  
+    this.listContent = this.listData.filter(item => {
+      const permissionFunction = permissionFunctions[item.type];
+      return permissionFunction && permissionFunction();
+    });
+
+
+  }
+getLifeStyleHabitsViews(){
+
+  const permissionsArray = [
+    this.permissionService.canViewNews,
+    this.permissionService.canViewAdvices,
+    this.permissionService.canViewExercises,
+    this.permissionService.canViewDiets,
+    this.permissionService.canViewRecipes,
+    this.permissionService.canViewGames,
+    this.permissionService.canViewTestimonials,
+    this.permissionService.canViewGoals,
+  ];
+  // Verificar si alguno de los valores en el array es true
+   return permissionsArray.some(permiso => permiso === true);
+}
+
   getDiagnosticTestsList(){
+   this.showButton= true,
     console.log('[TrackingPage] getDiagnosticTestsList()' ,  this.filter);
     if(this.filter){
       this.getFilteredDiagnosticTests()
@@ -101,8 +153,13 @@ export class TrackingPage implements OnInit {
     return this.dateService.selectedDateFormat(date);
   }
 
-  ddMMyFormat(date){
-    return this.dateService.ddMMyFormat(date);
+  transformDate(date) {
+    if (date != null) {
+      return this.dateService.ddMMyFormat(date)
+    } else {
+      return ""
+    }
+
   }
 
   setDayMonthYearTimeFormat(date){
@@ -160,15 +217,19 @@ export class TrackingPage implements OnInit {
   groupDiagnosticsByDate(list){
     let diagnosticTests = list.diagnosticTests
     diagnosticTests.forEach( (diagnostic, index) =>{
+      
+      
       let date = diagnostic.date_european
       if(index == 0 || date !== diagnosticTests[index-1].date_european){
         let list = diagnosticTests.filter( event =>
           (event.date_european == date)
         )
         let color = (index == 0)? this.active_color: this.inactive_color
-        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color})
+        this.listDiagnostic.push({date: diagnostic.data, diagnosticTests: list, color: color })
       }
+      
     })
+    console.log("list", this.listDiagnostic)
     this.loadingTests = false
   }
 
@@ -339,6 +400,13 @@ async addDocument(){
 
         await modal.present();
 
+      }
+
+      checkPermissions() {
+        return this.permissionService.canViewGoals || this.permissionService.canViewNews || this.permissionService.canViewAdvices || 
+               this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewDiets ||
+               this.permissionService.canViewTestimonials || this.permissionService.canViewGames || this.permissionService.canViewMedication || this.permissionService.canViewMedicationPlans
+               || this.permissionService.canViewMonitoring
       }
 
     

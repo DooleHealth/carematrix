@@ -3,11 +3,11 @@
       "login":"Verificando credenciales...",
       "user_placeholder": "Usuario",
       "password_placeholder": "Contraseña",
-      "password_recovery": "¿Has olvidado tu contraseña?",
+      "password_recovery": "¿Has olvidado tu contraseña? Pulse aquí",
       "button_signin": "Iniciar sesión",
       "button_registre": "Crear Usuario",
       "user": "Usuario",
-      "too": "O también:",
+      "too": "O:",
       "biometrics": "Autenticación biométrica",
       "header_message_password_recovery": "Ingresa tu usuario",
       "message_password_recovery":"Si el usuario es correcto se enviará un correo para recuperar tu contraseña",
@@ -16,10 +16,12 @@
       "blocked_login": "La APP se ha bloqueado debido a que se ha excedido el número de intentos, intenta despues de 2 minutos.",
       "message_error_serve":"Error del servidor",
       "message_failure_response":"Ha ocurrido un error inesperado intenta otra vez",
-      "message_error_internet_disconnected":"No hay conexión a Internet. Conectate a Internet e inténtalo de nuevo.",
+      "message_error_internet_disconnected":"No hay conexión a Internet. Conéctate a Internet e inténtalo de nuevo.",
       "login_again":"Por favor inicie sesión nuevamente",
       "about_app":"Consejos de uso de la aplicación",
-      "usage-tips":"<div><p>¡Bienvenido a nuestra aplicación segura y de confianza!</p><p>Para garantizar tu protección y seguridad, hemos preparado esta breve guía de inicio para resaltar las mejores prácticas que puedes seguir al utilizar nuestra aplicación. Sigue estos consejos para disfrutar de una experiencia segura y sin preocupaciones:</p><ul><li>Elige una contraseña sólida: Para proteger tus datos, es importante seleccionar una contraseña segura y única. Utiliza una combinación de letras mayúsculas y minúsculas, números y caracteres especiales. Evita utilizar contraseñas obvias o información personal fácilmente identificable.</li><li>Activa la autenticación de dos factores: Asegura aún más tu cuenta habilitando la autenticación de dos factores. Esto requerirá un segundo nivel de verificación, como un código de acceso temporal enviado a tu teléfono móvil. De esta manera, incluso si alguien obtiene tu contraseña, no podrán acceder sin el código de verificación adicional.</li><li>Mantén la aplicación actualizada: Las actualizaciones de la aplicación no solo agregan nuevas funciones, sino que también solucionan posibles vulnerabilidades de seguridad. Asegúrate de tener siempre instalada la última versión de nuestra aplicación para aprovechar todas las mejoras y protecciones adicionales.</li><li>Configuración de privacidad: Explora nuestras opciones de configuración de privacidad para personalizar tu experiencia. Puedes controlar qué información compartes y con quién la compartes. Recuerda revisar y ajustar regularmente estas configuraciones para mantener un nivel óptimo de privacidad.</li></ul><p>Estos son solo algunos consejos esenciales para maximizar la seguridad al utilizar nuestra aplicación. Estamos comprometidos con tu protección y trabajamos constantemente para garantizar la integridad de tus datos. Siempre estaremos aquí para ayudarte en caso de que tengas alguna pregunta o inquietud sobre la seguridad de la aplicación, puedes comunicarte con nosotros a través del email support@doolehealth.com.</p><p>¡Gracias por elegir nuestra aplicación y confiar en nosotros!</p><p>Equipo Rehabilify.</p></div>"
+      "legal": "Política de privacidad y términos legales",
+      "usage-tips":"<div><p>¡Bienvenido a nuestra aplicación segura y de confianza!</p><p>Para garantizar tu protección y seguridad, hemos preparado esta breve guía de inicio para resaltar las mejores prácticas que puedes seguir al utilizar nuestra aplicación. Sigue estos consejos para disfrutar de una experiencia segura y sin preocupaciones:</p><ul><li>Elige una contraseña sólida: Para proteger tus datos, es importante seleccionar una contraseña segura y única. Utiliza una combinación de letras mayúsculas y minúsculas, números y caracteres especiales. Evita utilizar contraseñas obvias o información personal fácilmente identificable.</li><li>Activa la autenticación de dos factores: Asegura aún más tu cuenta habilitando la autenticación de dos factores. Esto requerirá un segundo nivel de verificación, como un código de acceso temporal enviado a tu teléfono móvil. De esta manera, incluso si alguien obtiene tu contraseña, no podrán acceder sin el código de verificación adicional.</li><li>Mantén la aplicación actualizada: Las actualizaciones de la aplicación no solo agregan nuevas funciones, sino que también solucionan posibles vulnerabilidades de seguridad. Asegúrate de tener siempre instalada la última versión de nuestra aplicación para aprovechar todas las mejoras y protecciones adicionales.</li><li>Configuración de privacidad: Explora nuestras opciones de configuración de privacidad para personalizar tu experiencia. Puedes controlar qué información compartes y con quién la compartes. Recuerda revisar y ajustar regularmente estas configuraciones para mantener un nivel óptimo de privacidad.</li></ul><p>Estos son solo algunos consejos esenciales para maximizar la seguridad al utilizar nuestra aplicación. Estamos comprometidos con tu protección y trabajamos constantemente para garantizar la integridad de tus datos. Siempre estaremos aquí para ayudarte en caso de que tengas alguna pregunta o inquietud sobre la seguridad de la aplicación, puedes comunicarte con nosotros a través del email support@doolehealth.com.</p><p>¡Gracias por elegir nuestra aplicación y confiar en nosotros!</p><p>Equipo INCA Health.</p></div>",
+      "accept-btn": "Aceptar"
     },
     "legal": {
       "header": "Condiciones de uso",
@@ -27,10 +29,10 @@
       "ko_button": "No acepto",
       "acept_conditions_label": "He leído y acepto las condiciones",
       "no_acept_conditions": "Rechazar condiciones legales",
-      "no_get_conditions_label": "No existe terminos legales asignados para este usuario",
-      "error_conditions_label": "Error al obtener los terminos legales",
+      "no_get_conditions_label": "No existen términos legales asignados para este usuario",
+      "error_conditions_label": "Error al obtener los términos legales",
       "error_post_conditions_label": "No se pudo actualizar las condiciones legales",
-      "messaje_reject_terms": "Esta app para su adecuado uso requiere que las condiciones legales se han aceptadas, en tal caso no podrás seguir navegando. ¿Deseas rechazar las condiciones legales?"
+      "messaje_reject_terms": "Esta app requiere la aceptación de las condiciones legales para su adecuado uso. Si las rechazas no podrás seguir navegando. ¿Deseas rechazar las condiciones legales?"
     },
     "sms":{
       "header": "Verificación de Identidad",
@@ -38,24 +40,24 @@
       "text1": "Recibirás un correo con un código de verificación. ¡Porque tu privacidad es lo más importante!",
       "text2": "Tu correo únicamente será utilizado para situaciones urgentes o de emergencia, pero nunca será compartido con otras empresas o terceros.",
       "alert_message": "¿Es el correo correcto?",
-      "ok_button": "Si",
+      "ok_button": "Sí",
       "ko_button": "Editar",
       "next_button":"Continuar",
       "error_required": "Error: Campo requerido",
-      "error_min_lenght": "Error: Debe ser 9 digitos",
+      "error_min_lenght": "Error: Deben ser 9 dígitos",
       "error_invalid_email": "Ingresa un correo válido"
     },
     "verification":{
       "header": "Verificación de Identidad",
       "title":"Confirma tu código de verificación",
-      "text1": "Te hemos enviado un correo con un código para verificar tu cuenta de usuario y poder continuar. Si no ha recibido ningún correo pulse ",
+      "text1": "Te hemos enviado un correo con un código para verificar tu cuenta de usuario y poder continuar. Si no has recibido ningún correo pulsa ",
       "text2": "aquí",
       "alert_message": "El código no es válido",
       "send_email_alert_message": "El código de verificación se ha enviado de nuevo",
       "error_send_email_alert_message": "Ha ocurrido un error al enviar el código de verificación",
       "next_button":"Continuar",
       "error_required": "Error: Campo requerido",
-      "error_min_lenght": "Error: Debe ser 6 dígitos",
+      "error_min_lenght": "Error: Deben ser 6 dígitos",
       "error_no_numeric": "Error: Ingresar sólo números"
     },
     "tab":{
@@ -63,34 +65,21 @@
       "agenda": "Agenda",
       "contact": "Contacto",
       "tracking": "Seguimiento",
-      "journal": "Mi diario"
+      "journal": "Mi Diario"
     },
-    "intro":{
-      "title1": "Bienvenido a",
-      "slider1_text1": "Todo en uno",
-      "slider1_text2": "Toda tu información médica en una sola app",
-      "slider1_text3": "Contacta con tu médico",
-      "slider1_text4": "Habla con tu especialista directamente o solicita una consulta presencial",
-      "slider1_text5": "Salud y deporte",
-      "slider1_text6": "Conecta tus aplicaciones de salud para ver tu evolución",
 
+
+    "intro": {
+      "skip": "Omitir intro",
+      "title1": "Contacto",
+      "slider1_text": "Ponte en contacto con el personal sanitario a través de mensajería y videollamadas.",
       "title2": "Agenda",
-      "slider2_text1": "La agenda de Rosia te permite incluir todas tus citas y recordatorios médicos. ¡No podrás vivir sin ella!",
-
-      "title3": "Contacta",
-      "slider3_text1": "Habla con tu médico y especialista a través de videollamada o chat y solicita una cita presencial ¡Nunca fué tan rápido y cómodo!",
-
-      "title4": "Seguimiento",
-      "slider4_text1": "Revisa resultados clínicos, contesta formularios o comprueba la evolución de tus constantes. ¡Ahora podrás revisarlos siempre que quieras!",
-
-      "title5": "Mi Diario",
-      "slider5_text1": "En un vistazo revisa tu dieta, medicación, juegos e información de salud del día. ¡Cuidar de tu salud nunca había sido tan fácil!",
-
-      "title6": "Novedades y Consejos",
-      "slider6_text1": "Dispón de las últimas novedades sanitarias y consejos por parte del equipo médico ¡Mantente actualizado en todo momento!",
-
-      "title7": "Mi Perfil",
-      "slider7_text1": "Configura tus datos y tus preferencias de notificación para poder estar siempre informado. ¡Disfruta tu experiencia en Rosia!"
+      "slider2_text": "Mantén tu agenda de citas actualizada con nuestro sistema de recordatorios.",
+      "title3": "Shared Care Plan",
+      "slider3_text": "Explora tu plan de atención compartida, diseñado por tu equipo de atención médica para promover la colaboración y mejorar la salud a través de estrategias personalizadas y accesibles.",
+      "title4": "Mis tareas diarias",
+      "slider4_text": "Todas tus tareas en un solo lugar para que puedas mantener tu salud bajo control.",
+      "continue": "¡Continuar!"
     },
     "home": {
       "hello": "Hola",
@@ -104,6 +93,8 @@
       "lunch_subtitle": "Almuerzo",
       "medication_subtitle": "Medicación",
       "plays_subtitle": "Juegos",
+      "exercises_subtitle": "Ejercicios",
+      "forms_subtitle": "Formularios",
       "physical_activity_subtitle": "Actividad física",
       "see_all_button": "Ver todas",
       "detail_button": "Detalles",
@@ -114,10 +105,16 @@
       "elements":"Visualizar todos mis datos",
       "element":"Elementos",
       "monitoring":"Monitoreo",
-      "enable_notifications": "Activar Notificaciones",
+      "enable_notifications": "Activar notificaciones",
       "message_enable_notifications": "¿Deseas activar todas las notificaciones?",
       "close_app": "¿Deseas cerrar la aplicación?",
-      "get_firts_data": "Introduce tu primer dato"
+      "get_firts_data": "Introduce tu primer dato",
+      "advices": "Consejos",
+      "see_advices": "Ver todos los consejos",
+      "caregiver_title": "Personas a tu cargo",
+      "caregiver_change": "Vas a cambiar ",
+      "back_caregiver": "Volver a tu perfil",
+      "tip": "¡Consejo del día!"
     },
     "profile":{
       "title_profile": "Mi Perfil",
@@ -173,33 +170,55 @@
       "subtitle_advices": "Consejos",
       "points": "Puntos",
       "new": "nuevo",
-      "de": " de "
+      "de": " de ",
+      "achievements":"logros",
+      "text_goals1":"¡Siéntete orgulloso de ti mismo!",
+      "text_goals2":"Has superado con éxito este objetivo 🏆",
+      "text_goals3":" Superado exitosamente ",
+      "text_goals4":" este objetivo 🏆",
+      "go": "Ir",
+      "accordion_goals":"Estas son las tareas que debes realizar:",
+      "accordion_completed":"Estos son tus logros:",
+      "accepted_rejected": "¿Quieres aprobar o rechazar estas retos?",
+      "accepted_rejectedExercises": "¿Quieres aprobar o rechazar estos desafíos?",
+      "button_rejected": "Rechazar",
+      "button_accepted": "Aprobar",
+      "rejectd_option1": "Tengo dudas, necesito más información",
+      "rejectd_option2": "No estoy de acuerdo con los objetivos",
+      "rejectd_option2F": "No estoy de acuerdo con los formularios",
+      "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
+      "rejectd_option3": "Otras",
+      "placeholder": "Escribe un mensaje.",
+      "rejectd_send": "Mensaje enviado a su equipo médico",
+      "keppUp": "¡Sigue así!"
     },
     "health_path": {
       "title":"Camino de la salud",
       "card_title": "Mis retos",
       "goals": "Objetivos",
+      "see_all_goals": "Ver todos mis objetivos",
       "start": "Inicio",
-      "detail":"¿Cómo alcanzar mi objetivo?",
+      "detail":"¿Cómo alcanzar mis objetivos?",
+      "see_more": "Ver más",
       "weight":"Toma tu ",
       "measure":"Introduce la medida: ",
       "form":"Responde al formulario ",
       "advice":"Lee el consejo ",
       "game":"Juega a ",
       "drug": "Tomar el medicamento ",
-      "news":"Lee la notícia ",
+      "news":"Lee la noticia ",
       "diet":"Lee la dieta ",
       "blocked_level": "Este nivel todavía está bloqueado",
+      "goal":"<p>Tienes <strong>{{ total }} Puntos</strong>.</p>",
+      "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
       "goal_txt1": "Tienes",
       "goal_txt2": "consigue",
       "goal_txt3":"más",
       "goal_txt4":" y pasa al siguiente nivel.",
-      "goal":"<p>Tienes <strong>{{ total }} Puntos</strong>.</p>",
-      "goal1":"<div>Consigue {{ required }} más y pasa al siguiente nivel.</div>",
-      "level_congratulations":"Felicitaciones!",
+      "level_congratulations":"¡Felicitaciones!",
       "level_accomplished":"Has avanzado de nivel",
-      "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensables</strong> para pasar al siguiente nivel.</p>",
-      "done":"Hecho!"
+      "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensable</strong> para pasar al siguiente nivel.</p>",
+      "done":"¡Hecho!"
     },
     "activity_goal":{
       "definition": "Definición",
@@ -207,7 +226,7 @@
       "out_range_value": "Valores fuera de rango:",
       "danger_value": "Valores anómalos:",
       "no_data_date":"Aún no se han registrado datos",
-      "no_data_help":"Para cargar un dato, usá el botón +.",
+      "no_data_help":"Para cargar un dato, usa el botón +.",
       "no_data":"No hay datos a mostrar",
       "daily": "diario",
       "weekly": "semanal",
@@ -233,7 +252,6 @@
       "diagnostics":"Diagnóstico",
       "allergies": "Alergias",
       "phone":"Teléfono",
-
       "male":"Masculino",
       "feminine": "Femenino",
       "non-binary":"No binario",
@@ -250,10 +268,10 @@
       "button_send": "Enviar",
       "header_error": "Error",
       "header_info": "Información",
-      "header_confirmation": "Confirmación"
+      "header_confirmation": "Confirmación",
+      "header_atention": "Atención"
     },
     "error_required": "Requerido",
-
     "setting":{
       "title_setting": "Ajustes",
       "button_profile": "Perfil",
@@ -276,8 +294,10 @@
       "subtitle_messages": "Mensajes",
       "subtitle_games": "Juegos",
       "subtitle_release": "Novedades",
+      "subtitle_procedure": "Procedimientos médicos",
       "lenguage_ca": "Catalán",
       "lenguage_es": "Castellano",
+      "testimonials": "Testimonios",
       "password":{
         "password": "Contrasenya",
         "title_change_password": "Cambiar Contraseña",
@@ -285,10 +305,9 @@
         "new-password": "Nueva contraseña",
         "confirmedPassword": "Repetir contraseña",
         "password_confirmation": "¿Quieres cambiar de contraseña?",
-        "success_changed_password": "Contraseña se ha actualizado con éxito!",
-        "no_success_changed_password": "No se ha podido actualizar la contraseña!",
-        "error_changed_password": "Error al actualizar la contraseña!",
-
+        "success_changed_password": "¡La contraseña se ha actualizado con éxito!",
+        "no_success_changed_password": "¡No se ha podido actualizar la contraseña!",
+        "error_changed_password": "¡Error al actualizar la contraseña!",
         "validators_required": "Campo requerido",
         "validators_minlength": "El tamaño mínimo es 6 carateres",
         "validators_check_password": "La contraseña no coincide con la anterior",
@@ -303,14 +322,15 @@
       },
       "sign_off": "Cerrar sesión",
       "message_sign_off": "¿Deseas cerrar sesión en todos los dispositivos?",
-      "error_message_sign_off": "Ha ocurrido un error al cerrar sesión"
-
+      "error_message_sign_off": "Ha ocurrido un error al cerrar sesión",
+      "notifications": "Notificaciones",
+      "email": "Email"
     },
     "report_problem":{
       "title_report_problem": "Reportar Problema",
-      "alert_confirm_exit": "La información introducida se perderá ¿Quieres salir de todas formas?",
+      "alert_confirm_exit": "La información introducida se perderá. ¿Quieres salir de todas formas?",
       "alert_successful_response": "Problema reportado con éxito",
-      "alert_no_successful_response": "Ha ocurrido un error al reportat el problema",
+      "alert_no_successful_response": "Ha ocurrido un error al reportar el problema",
       "button_send": "Enviar",
       "subtitle_category": "Categoría",
       "subtitle_description": "Descripción",
@@ -319,16 +339,14 @@
       "button_add_file": "Añadir archivos",
       "placeholder":"Puedes adjuntar capturas de pantalla para ayudarnos a solucionar tu problema",
       "placeholderDescription":"Cuéntanos aquí cual ha sido tu problema"
-
     },
     "health_card":{
       "header_card": "Tus Tarjetas Sanitarias",
-
       "modality": "Modalidad",
       "name": "Nombre",
       "affiliation_number":"Número de afilación",
       "expiration_date":"Caducidad",
-      "expedition_date": "Fecha de Expedición",
+      "expedition_date": "Fecha de expedición",
       "Optional": "Opcional",
       "error_required": "Requerido",
       "button_return": "Inicio"
@@ -341,7 +359,8 @@
       "error_alert_message_add_card": "Error: la tarjeta no ha podido ser añadida",
       "placeholder_select":"Selecciona uno",
       "error_end_date": "La fecha de caducidad debe ser mayor que la fecha de expedición",
-      "error_start_date": "La fecha de expedición debe ser menor que la fecha de caducidad"
+      "error_start_date": "La fecha de expedición debe ser menor que la fecha de caducidad",
+      "error_types": "En estos momentos no se puede añadir una tarjeta, vuelve a intentarlo más tarde"
     },
     "edit_health_card":{
       "header_edit_card": "Editar Tarjeta Sanitaria",
@@ -394,7 +413,6 @@
       "alert_message_delete_contact":"El contacto ha sido eliminado",
       "alert_message_update_contact":"El contacto ha sido actualizado",
       "alert_message_confirmation_delete":"¿Quieres eliminar este contacto?",
-
       "error_alert_message_new_contact":"Error: el contacto no ha podido ser añadido",
       "error_alert_message_delete_contact":"Error: el contacto no ha podido ser eliminado",
       "error_alert_message_update_contact":"Error: el contacto no ha podido ser actualizado"
@@ -411,10 +429,13 @@
       "error_alert_message_get_token":"Error al obtener el token de videollamada",
       "error_alert_message_get_agenda":"Error al obtener la agenda",
       "to": "a las",
-      "day": "DíA",
+      "day": "DÍA",
       "week": "SEMANA",
       "months": "MES",
-      "year": "AÑO"
+      "year": "AÑO",
+      "calendar": "Calendario",
+      "reminders": "Recordatorios",
+      "create_reminder": "Crear recordatorio"
     },
     "reminder":{
       "header": "Recordatorio",
@@ -437,7 +458,7 @@
       "field_finish_repetition": "Terminar repetición",
       "field_notice": "Avisar",
       "field_time": "Hora",
-      "field_show_as": "Mostrar como",
+      "field_show_as": "Mostrar cómo",
       "field_comments_doctor": "Comentarios para el médico",
       "placeholder_comments":"Ingresar más información aquí...",
       "button_delete": "Eliminar Recordatorio",
@@ -455,10 +476,11 @@
       "form": "Formulario",
       "diet": "Dieta",
       "week_day": "Días de la semana",
+      "save": "Guardar recordatorio",
       "day":{
         "day1": "Lunes",
         "day2": "Martes",
-        "day3": "Miercoles",
+        "day3": "Miércoles",
         "day4": "Jueves",
         "day5": "Viernes",
         "day6": "Sábado",
@@ -477,7 +499,10 @@
         "month2": "2 meses",
         "month3": "3 meses"
       },
-      "error_end_date": "La fecha de término debe ser mayor que la fecha de empieza"
+
+      "error_end_date": "La fecha de finalización del recordatorio debe ser mayor que la fecha de comienzo",
+      "error_start_date": "La fecha de comienzo del recordatorio debe ser menor que la fecha de finalización"
+
     },
     "appointment":{
       "header_appointment": "Detalle cita",
@@ -489,6 +514,7 @@
       "field_doctor": "Médico",
       "field_center": "Centro",
       "field_specially": "Profesional",
+      "no_field_specially": "Ningún profesional asignado",
       "field_appointment_type": "Tipo de cita",
       "field_instructions": "Instrucciones",
       "field_information": "Información",
@@ -507,10 +533,12 @@
       "add_appointment": "Añadir cita",
       "edit_event": "Editar evento",
       "add_event": "Añadir evento",
-      "delete_event": "Eliminar evento"
+      "delete_event": "Eliminar evento",
+      "video": "Consulta de vídeo",
+      "presential": "Consulta cara a cara" 
     },
     "doctor":{
-      "header_doctor": "Detall Médico",
+      "header_doctor": "Detalle Médico",
       "field_city": "Ciudad",
       "field_centers": "Centros de atención",
       "button_chat":"Abrir Chat"
@@ -519,6 +547,7 @@
       "header": "Seguimiento",
       "tap_documents": "Documentos",
       "tap_forms": "Formularios",
+      "tap_formsPlan": "Formularios planificados",
       "tap_graphics": "Gráficos",
       "tap_test":"Pruebas médicas"
     },
@@ -544,12 +573,12 @@
       "attachments": "Documentos Adjuntos",
       "button_add_files": "Añadir Archivos",
       "button_add_result": "Añadir Resultado",
-      "alert_message": "La documentación médica ha sido añadido correctamente",
+      "alert_message": "La documentación médica ha sido añadida correctamente",
       "error_alert_message": "Ha ocurrido un error al añadir un nuevo documento médico",
       "select": "Seleccionar",
       "camera": "Cámara",
-      "file": "Archivos",
-      "pictures":"Imágenes",
+      "file": "Documentos",
+      "pictures":"Imágenes y videos",
       "delete_media_file": "¿Estás seguro de eliminar el archivo?",
       "delete_document": "¿Estás seguro de eliminar la prueba diagnóstica?",
       "input_file_name": "Ingresa un nombre para el archivo",
@@ -567,12 +596,11 @@
         "field_measure": "Valor",
         "field_units": "Unidades",
         "field_date": "Fecha",
-        "alert_message_add_element": "Los datos ha sido añadido correctamente",
+        "alert_message_add_element": "Los datos han sido añadido correctamente",
         "error_alert_message_add_element": "Ha ocurrido un error al añadir el valor",
         "value_invalid":"El valor no es válido. Ingresa un valor de",
-        "confirmation": "Está información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
-
-    },
+        "confirmation": "Esta información quedará registrada de forma permanente para ser consultada y no se podrá modificar o eliminar."
+      },
     "no_data": "En este momento no hay datos para mostrar",
     "no_data_notifications": "En este momento no tienes notificaciones pendientes",
     "diary":{
@@ -581,15 +609,20 @@
         "field_drug": "Medicación",
         "field_game": "Juegos",
         "field_health": "Salud",
+        "field_recipes": "Recetas",
+        "field_today": "Hoy",
+        "field_goals": "Metas",
+        "calories": "calorias",
         "description": "Descripción",
         "dose": "Dosi",
-        "morning": "mañana",
-        "noon": "mediodía",
-        "aftenoon": "tarde",
-        "night": "noche",
-        "midnight": "media noche",
-        "dawning": "madrugada",
-        "all_day": "todo el día"
+        "frequency": "Frecuencia",
+        "morning": "Mañana",
+        "noon": "Mediodía",
+        "aftenoon": "Tarde",
+        "night": "Noche",
+        "midnight": "Media noche",
+        "dawning": "Amanecer",
+        "all_day": "Todo el día"
     },
     "diet":{
         "detail": "Dieta",
@@ -610,18 +643,16 @@
         "add_medication":"Añadir medicamento",
         "edit_medication":"Editar medicamento",
         "send_medication":"Solicitar envío de medicación",
-        "save_medication":"Guardar medicamento",
+        "save_medication":"Guardar",
         "delete_medication":"Eliminar medicamento",
         "message_add_medication":"Se ha añadido un nuevo medicamento",
         "message_edit_medication":"Se ha editado el medicamento con éxito",
         "message_error_treatment_date":"La fecha de inicio del tratamiento debe ser menor a la fecha final",
         "confirmation_delete_medication":"¿Estás seguro de eliminar el plan de medicación?",
         "message_deleted_medication":"Se ha eliminado el medicamento con éxito",
-
         "error_message_add_medication":"Ha ocurrido un error al añadir el medicamento",
         "error_message_edit_medication":"Ha ocurrido un error al editar el medicamento",
         "error_message_deleted_medication":"Ha ocurrido un error al eliminar el medicamento",
-
         "field_from_date": "Fecha de inicio del tratamiento",
         "field_to_date": "Fecha fin del tratamiento",
         "field_dose": "Ingesta",
@@ -632,41 +663,43 @@
         "placeholder_dose":"Nº de dosis",
         "placeholder_alias":"Nombre alternativo",
         "placeholder_search":"Busca por nombre o código",
-
-        "snapshot_medication":"Toma instantanea",
+        "snapshot_medication":"Toma instantánea",
         "medication_plan":"Plan de Medicación",
-        "from": "From",
-        "to": "To",
+        "button_details": "Ver detalles",
+        "from": "Desde",
+        "to": "Hasta",
         "dose":"Dosis : ",
-        "accepted_rejected": "¿Desea aprobar o rechazar este plan de medicación?",
-        "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
-        "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
+        "accepted_rejected": "¿Quieres aprobar o rechazar este plan de medicación?",
+        "accepted_rejectedExercises": "¿Quieres aprobar o rechazar este ejercicio?",
+        "rejected": "Nos gustaría que nos explicaras brevemente los motivos de su negativa.",
         "button_accepted": "Aprobar",
         "button_rejected": "Rechazar",
         "placeholder": "Escribe un mensaje.",
-        "rejectd_send": " Mensaje enviado a su equipo médico",
+        "rejectd_send": " Mensaje enviado a tu equipo médico",
         "rejectd_option1": "Tengo dudas, necesito más información",
         "rejectd_option2": "No estoy de acuerdo con la medicación prescrita",
         "rejectd_option2F": "No estoy de acuerdo con el formulario",
         "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
         "rejectd_option3": "Otros",
-        "medication_status": "pendiente"
-       
-    },
-    "exercises": {
-      "accepted_rejected": "¿Desea aprobar o rechazar este ejercicio?",
-      "accepted_rejectedExercises": "¿Desea aprobar o rechazar este ejercicio",
-      "rejected": "Nos gustaría que nos explicara brevemente los motivos de su negativa.",
+        "medication_status": "Pendiente",
+        "name":"Nombre"
+      },
+      
+      
+      "exercises": {
+      "accepted_rejected": "¿Quieres aprobar o rechazar este ejercicio?",
+      "accepted_rejectedExercises": "¿Quieres aprobar o rechazar este ejercicio?",
+      "rejected": "Nos gustaría que nos explicaras brevemente los motivos de tu negativa.",
       "button_accepted": "Aprobar",
       "button_rejected": "Rechazar",
       "placeholder": "Escribe un mensaje.",
-      "rejectd_send": " Mensaje enviado a su equipo médico",
+      "rejectd_send": " Mensaje enviado a tu equipo médico",
       "rejectd_option1": "Tengo dudas, necesito más información",
       "rejectd_option2": "No estoy de acuerdo con la medicación prescrita",
       "rejectd_option2F": "No estoy de acuerdo con el formulario",
       "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
       "rejectd_option3": "Otros",
-      "medication_status": "pendiente"
+      "medication_status": "Pendiente"
     },
     "button":{
       "see_details": "Ver detalles",
@@ -681,16 +714,19 @@
       "see_detail": "Ver detalle",
       "go_detail": "Ir a detalle",
       "take": "Tomar",
+      "takeds": "Tomada",
       "taked": "Tomada",
       "forgotten": "Olvidada",
+      "completed": "Contestada",
       "continue": "Continuar",
+      "pending": "Pendiente",
       "send": "Enviar",
       "perfil":"Perfil",
       "open": "Abrir",
       "exit": "Salir",
       "reject": "Rechazar",
       "confirm": "Confirmar",
-      "yes": "Si",
+      "yes": "Sí",
       "no": "No"
     },
     "conversation":{
@@ -711,9 +747,11 @@
     "contact":{
       "header": "Contacta",
       "tap_video": "Videoconsulta",
-      "tap_appointment": "Cita Presencial",
+      "tap_appointment": "Presencial",
       "tap_chat": "Chat",
       "tap_pusher": "Pusher",
+      "tap_medical_visits": "Visitas médicas",
+      "tap_my_centers": "Mis Centros",
       "text_video": "Habla directamente con tu profesional habitual o un especialista desde donde tú quieras.Te atenderán en el horario seleccionado",
       "regular_professional": "Profesional Habitual",
       "text_regular_professional": "Reserva una cita con tu médico o profesional de siempre para realizar la videoconsulta",
@@ -726,7 +764,11 @@
       "recent_conversations":"Conversaciones recientes",
       "text_recent_conversations":"Accede a tus últimas conversaciones con tus profesionales habituales",
       "new_conversation":"Nueva conversación",
-      "text_new_conversation":"Abre una nueva conversación con tus profesionales habituales"
+      "text_new_conversation":"Abre una nueva conversación con tus profesionales habituales",
+      "new_message": "Añade un nuevo mensaje",
+      "new_visit": "Pide una visita",
+      "center": "Centro Médico",
+      "emergency": "Llamada de emergencia"
     },
     "medical_directory":{
       "header":"Seleccionar",
@@ -746,19 +788,35 @@
       "field_specially": "Especialidad",
       "reason_appointment": "Motivo de la cita",
       "attachments": "Documentos Adjuntos",
-      "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-      "button_videocall": "Confirmar cita"
+      "text_attachments": "PPuedes adjuntar archivos o imágenes que nos ayuden a realizar un mejor diagnóstico",
+      "button_videocall": "Confirmar"
     },
     "bookings":{
       "header":"Reservar",
       "field_date": "Fecha",
       "reason_appointment": "Motivo de la cita",
+      "type": "Tipo de consulta",
       "attachments": "Documentos Adjuntos",
-      "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a ralizar un mejor diagnóstico",
-      "button_videocall": "Confirmar cita",
+      "text_attachments": "Puedes adjuntar archivos o imágenes que nos ayuden a realizar un mejor diagnóstico",
+      "button_videocall": "Confirmar",
       "button_videocall_charge": "Confirmar cita con pago",
-      "error_upload_files": "Error al adjuntar los archivos"
+      "error_upload_files": "Error al adjuntar los archivos",
+
+    "placeholder": "No especificado",
+    "profesional": "Seleccionar profesional",
+
+    "types": {
+      "online": "Online",
+      "presential": "Presencial"
     },
+
+    "reasons": {
+        "1": "Enfermedad común",
+        "2": "Prescripción",
+        "3": "Duda",
+        "4": "Otros motivos"
+    }
+  },
     "chat":{
       "header":"Chat",
       "writting":"Escribiendo...",
@@ -807,6 +865,7 @@
     "medications":{
       "list":"Listado de pedidos",
       "title":"Medicación",
+      "titlePlans": "Planes de Medicación",
       "direction":"Nuevo pedido",
       "directions_title":"1.-Selecciona una dirección de envío",
       "directions_title_2":"2.-Selecciona un tipo de envío",
@@ -831,8 +890,10 @@
       "go_back": "Volver al paso anterior",
       "add_address": "Añadir dirección",
       "edit_address": "Editar dirección",
-      "head_card_text": "Aquí encontrará información sobre los planes de medicación prescritos. Puede ponerse en contacto con su equipo médico si tiene alguna duda al respecto"
-
+      "head_card_text": "Aquí encontrarás información sobre los planes de medicación prescritos. Puedes ponerte en contacto con tu equipo médico si tienes alguna duda al respecto",
+      "msm_caution": "Este medicamento tiene interacciones peligrosas con:",
+      "caution": "Precaución:",
+      "msm_contact_hp": "*Se recomienda contactar con personal sanitario antes de su consumo."
     },
     "recipe": {
       "header": "Recetas",
@@ -842,21 +903,24 @@
     "notifications":{
       "register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones.",
       "voip_register_error":"Error al registrar el dispositivo. No podrá recibir notificaciones VoIP.",
+      "scp": "Plan de atención compartida",
       "chat":"Mensaje",
       "form":"Formulario",
       "drug":"Medicamento",
       "videocall":"Videollamada",
       "open":"Abrir",
-      "close":"Cerrar"
+      "close":"Cerrar",
+      "join": "Unirse",
+      "cancel": "Cancelar"
     },
     "security":{
       "rooted": "Se ha detectado que este dispositivo se ha inicializado con derechos de usuario inusuales (root). Por motivos de seguridad e integridad de los datos se ha bloqueado el acceso.",
       "alert_security": "Alerta de Seguridad",
-      "ens_message": "<p>Estimado usuario,<br><br>Hemos detectado que su dispositivo se encuentra rooted (Android) o jailbroken (Apple). Nos gustaría informarle sobre los riesgos asociados con el uso de un dispositivo desbloqueado para fines de seguridad de datos. <br><br>Al desbloquear su dispositivo, se eliminan todas las restricciones de fábrica impuestas por el sistema operativo, lo que puede comprometer la integridad de los datos almacenados en su dispositivo. Esto puede abrir la puerta a posibles amenazas de seguridad, como la instalación de aplicaciones maliciosas sin su conocimiento, el acceso no autorizado a sus datos personales o la pérdida de información confidencial.<br><br>Como aplicación de telemedicina, nos tomamos muy en serio la privacidad y seguridad de sus datos personales y médicos. Recomendamos encarecidamente que utilice un dispositivo no desbloqueado para garantizar la protección adecuada de su información y evitar posibles brechas de seguridad.<br><br>Si continúa utilizando nuestra aplicación en este dispositivo, lo hace bajo su exclusiva responsabilidad. No nos hacemos responsables de cualquier pérdida, daño o acceso no autorizado a sus datos que pueda ocurrir como resultado del uso de un dispositivo desbloqueado.<br><br>Le recomendamos encarecidamente que restaure su dispositivo a su configuración original de fábrica o utilice un dispositivo alternativo no desbloqueado para garantizar la seguridad de sus datos mientras utiliza nuestra aplicación.<br><br>Si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nuestro equipo de soporte en el email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a><br><br>Atentamente,<br>El equipo de Rosia S.L.</p> "
+      "ens_message": "<p>Estimado usuario,<br><br>Hemos detectado que su dispositivo se encuentra rooted (Android) o jailbroken (Apple). Nos gustaría informarle sobre los riesgos asociados con el uso de un dispositivo desbloqueado para fines de seguridad de datos. <br><br>Al desbloquear su dispositivo, se eliminan todas las restricciones de fábrica impuestas por el sistema operativo, lo que puede comprometer la integridad de los datos almacenados en su dispositivo. Esto puede abrir la puerta a posibles amenazas de seguridad, como la instalación de aplicaciones maliciosas sin su conocimiento, el acceso no autorizado a sus datos personales o la pérdida de información confidencial.<br><br>Como aplicación de telemedicina, nos tomamos muy en serio la privacidad y seguridad de sus datos personales y médicos. Recomendamos encarecidamente que utilice un dispositivo no desbloqueado para garantizar la protección adecuada de su información y evitar posibles brechas de seguridad.<br><br>Si continúa utilizando nuestra aplicación en este dispositivo, lo hace bajo su exclusiva responsabilidad. No nos hacemos responsables de cualquier pérdida, daño o acceso no autorizado a sus datos que pueda ocurrir como resultado del uso de un dispositivo desbloqueado.<br><br>Le recomendamos encarecidamente que restaure su dispositivo a su configuración original de fábrica o utilice un dispositivo alternativo no desbloqueado para garantizar la seguridad de sus datos mientras utiliza nuestra aplicación.<br><br>Si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nuestro equipo de soporte en el email: <a href='mailto: support@doolehealth.com'>support@doolehealth.com</a><br><br>Atentamente,<br>El equipo de Inca Health S.L.</p> "
     },
     "commons":{
       "error-network": "Se ha perdido la conexión con Internet",
-      "error-timeout": "Se ha superado el tiempo de espera, por favor intentelo de nuevo"
+      "error-timeout": "Se ha superado el tiempo de espera, por favor inténtalo de nuevo"
     },
     "patient":{
       "title": "Pacientes"
@@ -865,13 +929,14 @@
       "mode_activate": "Modo desarrollador activado",
       "mode_desactivate": "Modo desarrollador desactivado",
       "mode_0":"Producción",
-      "mode_1": "Calidad",
-      "mode_2": "Desarrollo"
+      "mode_1": "Desarrollo",
+      "mode_2": "Calidad"
     },
     "list_notifications":{
       "header": "Notificaciones",
       "form": "Hora de completar un formulario",
       "level": "Logros del nivel completado",
+      "new_level": "Un nuevo reto ha sido asignado",
       "drugintake": "Hora de tomar la medicación",
       "visitonline": "Hora de tu cita online",
       "message": "Has recibido un nuevo mensaje",
@@ -880,15 +945,15 @@
       "reminder": "Ver recordatorio",
       "exercise": "Ver ejercicio",
       "new_exercise": "Se ha creado un nuevo ejercicio",
-      "procedure": "Hoy tenés un procedimiento",
+      "procedure": "Hoy tienes un procedimiento",
       "diet": "Hora de comenzar la comida",
       "games": "Hora de jugar",
       "apren": "Hora de aprender",
-      "news": "Hoy tenés novedades",
-      "diagnostic": "Hoy tenés un nuevo estudio médico",
+      "news": "Hoy tienes novedades",
+      "diagnostic": "Hoy tienes un nuevo estudio médico",
       "default": "Nueva notificación",
-      "alert_delete_message": "Estás por eliminar notificaciones sin leerlas previamente.",
-      "alert_delete_error_message": "Debés seleccionar al menos una notificación para eliminar.",
+      "alert_delete_message": "Estás a punto de eliminar notificaciones sin leerlas previamente.",
+      "alert_delete_error_message": "Debes seleccionar al menos una notificación para eliminar.",
       "subtitle0": "Tienes",
       "subtitle1": "notificaciones nuevas",
       "subtitle2": "notificación nueva"
@@ -907,7 +972,8 @@
       "button":{
         "accept": "Aceptar",
         "cancel":"Cancelar",
-        "send": "Enviar"
+        "send": "Enviar",
+        "see_answer": "Ver Respuestas"
       },
       "file":{
         "select": "Seleccionar",
@@ -920,13 +986,13 @@
         "name": "Nombre"
       },
       "error_required": "Valor requerido",
-      "error_no_valid": "Valor no válido, ingrese un valor",
-      "error_min_character": "Valor no válido, ingrese mínimo",
+      "error_no_valid": "Valor no válido, ingresa un valor",
+      "error_min_character": "Valor no válido, ingresa mínimo",
       "character": "caracteres",
       "time": "Tiempo",
       "send_success": "Formulario enviado correctamente",
       "send_error": "Ha ocurrido un error al enviar el formulario",
-      "text1": "Por favor, para conocer cómo se siente hoy necesitamos que responda el",
+      "text1": "Por favor, para conocer cómo te sientes hoy necesitamos que responda el",
       "text2": "CUESTIONARIO DE SÍNTOMAS.",
       "text3": "No hay información asociada a este formulario",
       "text4": "ATENCIÓN",
@@ -934,6 +1000,7 @@
       "go_to_app": "Volver a la página de inicio",
       "score": "Puntos conseguidos por completar el formulario: ",
       "score1": "Puntos conseguidos: ",
+      "to": "a",
 
       "goal":{
         "title": "Atención",
@@ -941,22 +1008,22 @@
       },
       "scheduled": "Programada : ",
       "goals": "Objetivos:",
-      "head_card_text": "Le enviaremos periódicamente formularios y escalas para mantenernos informados sobre su estado de salud, y se le avisará cuando llegue el momento de cumplimentarlos.",
-      "alert_forms": "Sólo puede rellenar este formulario cuando esté programado; le enviaremos una notificación el día especificado.",
+      "head_card_text": "Te enviaremos periódicamente formularios y escalas para mantenernos informados sobre tu estado de salud, y se te avisará cuando llegue el momento de cumplimentarlos.",
+      "alert_forms": "Sólo puedes rellenar este formulario cuando esté programado; te enviaremos una notificación el día especificado.",
       "alert_title": "Acción no autorizada",
-
+      "alert_form_answered": "El formulario ha sido respondido.",
       "accepted_rejected": "¿Quieres aprobar o rechazar este formulario?",
       "button_accepted": "Aprobar",
       "button_rejected": "Rechazar",
-      "rejected": "Nos gustaría que nos diera una breve explicación de los motivos de su negativa.",
-      "rejectd_send": "Mensaje enviado a su equipo médico",
+      "rejected": "Nos gustaría que nos dieras una breve explicación de los motivos de su negativa.",
+      "rejectd_send": "Mensaje enviado a tu equipo médico",
       "rejectd_option1": "Tengo dudas, necesito más información.",
       "rejectd_option2": "No estoy de acuerdo con el formulario prescrito",
       "rejectd_option2F": "No estoy de acuerdo con el formulario.",
       "rejectd_option2E": "No estoy de acuerdo con el formulario recomendado.",
       "rejectd_option3": "Otros",
       "placeholder": "Escribe un mensaje.",
-      "form_status": "pendiente"
+      "form_status": "Pendiente"
     },
     
     "answer_form":{
@@ -978,16 +1045,22 @@
     "lifestyle":{
       "header":"Hábitos de estilo de vida",
       "head_card_title":"Hábitos de estilo de vida" , 
-      "head_card_text": "Los hábitos de vida pueden influir considerablemente en la salud física, mental y emocional de una persona."
+      "head_card_text": "Los hábitos de vida pueden influir considerablemente en la salud física, mental y emocional de una persona.",
+      "last_score": "Última puntuación:",
+      "score_points:": " puntos"
     },
     "shared_care_plan":{
       "title": "Plan de cuidados compartido",
-      "description": "<p>Este es su <b>Plan de cuidados compartido</b></p>",
+      "descriptionGL": "Noticias que te pueden interesar.",
+      "descriptionForms":"Recomendaciones de salud.",
+      "descriptionMMpHc":"Para mantenerte en forma.",
+      "medicalTestSub":"Resultados del laboratorio",
       "monitoring": "Monitorización",
+      "lastValue": "Ùltimo valor:",
       "medical_procedure": "Procedimentos médicos",
       "informed_consent": "Consentimento Informado",
-      "new_scp_notification_title": "Se agregaron nuevos objetivos a su Plan de Atención Compartida",
-      "new_scp_notification_msg": "Por favor revise los cambios para aprobarlos o rechazarlos.",
+      "new_scp_notification_title": "Se agregaron nuevos objetivos a tu Plan de Atención Compartida",
+      "new_scp_notification_msg": "Por favor revisa los cambios para aprobarlos o rechazarlos.",
       "new_scp_alert_cancel": "Cerrar",
       "new_scp_alert_review": "Revisar",
       "goal_state":{
@@ -996,8 +1069,26 @@
         "pending": "Pendiente"
       },
       "monitoringList": {
-        "text" : "El seguimiento es crucial para evaluar su estado de salud, detectar cambios tempranos y ajustar el tratamiento."
-      }
+        "text" : "El seguimiento es crucial para evaluar tu estado de salud, detectar cambios tempranos y ajustar el tratamiento."
+      },
+      "addButton":{
+        "MedicalTest":"Añadir una prueba médica",
+        "Medication":"Añadir un nuevo medicamento",
+        "HealthCharts": "Agregar valor"
+      },
+      "readingTime": "minutos de lectura",
+      "preparationTime": "minutos de preparación",
+      "exercicesTime": "minutos de ejercicio",
+      "button_info": "Más información",
+      "like": "Afiliados Likes",
+      "source": "Fuente: ",
+
+      "descriptionNews": "Noticias que te pueden interesar",
+      "descriptionAdvices": "Consejos recomendados",
+      "descriptionExercises": "Para mantenerte en forma.",
+      "descriptionDiets": "Mejora tu dieta",
+      "descriptionTestimonials": "Experiencias similares a la tuya",
+      "descriptionGames": "¡Algo de entretenimiento está disponible para ti!"
     },
     "exercices":{
       "header": "Ejercicios"
@@ -1006,9 +1097,10 @@
       "take_time": "Horas de toma"
     },
     "confirmation-answers":{
-      "title": "Por favor, verifique as suas respostas antes de confirmar o envio."
+      "title": "Por favor, verifica tus respuestas antes de confirmar tu envío."
     },
     "medical_procedure_list":{
-      "text":"Aquí encontrará todos sus procedimientos médicos y pruebas diagnósticas programados en un calendario."
-    }
+      "text":"Aquí encontrarás todos tus procedimientos médicos y pruebas diagnósticas programados en un calendario."
+    },
+    "content": "Actualmente no hay datos disponibles para mostrar"
 }

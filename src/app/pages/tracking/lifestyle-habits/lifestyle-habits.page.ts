@@ -14,6 +14,8 @@ export class LifestyleHabitsPage implements OnInit {
   listContent: SharedCarePlanLifeStyle [] = [];
   nameLifeStyle: string = ContentTypeTranslatedName.LifestyleHabits
   iconLifeStyle = ContentTypeIcons.LifestyleHabits
+  isLoading = true
+
   constructor(
     private router: Router,
     public translate: TranslateService,
@@ -22,7 +24,7 @@ export class LifestyleHabitsPage implements OnInit {
    }
 
   ngOnInit() {
-    console.log("aaa", ListSCPLifeStyle)
+    this.isLoading=true;
     this.listContent.push(...ListSCPLifeStyle)
     
 
@@ -34,7 +36,6 @@ export class LifestyleHabitsPage implements OnInit {
       element 
     }); 
 
-    console.log("after", this.listContent)
   
   }
 
@@ -48,8 +49,8 @@ export class LifestyleHabitsPage implements OnInit {
     this.listContent.forEach(element => {
       element.title = this.translate.instant(element.traduction)
     });
+    this.isLoading= false;
 
-    console.log("after", this.listContent)
   
   }
 
@@ -71,6 +72,9 @@ export class LifestyleHabitsPage implements OnInit {
       case NotificationsType.DIETS:             
         this.router.navigate([ContentTypePath.Diets]);
         break;     
+        case NotificationsType.TESTIMONIALS:             
+        this.router.navigate([ContentTypePath.Testimonials]);
+        break;  
     }
   }
 

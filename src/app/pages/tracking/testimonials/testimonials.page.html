@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title class="toolbarTitle">{{'setting.testimonials' | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tracking/lifestyle-habits" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/profile">
+        <ion-icon slot="icon-only" name="menu" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content view-cached=”false”>
+  <app-caregiver></app-caregiver>
+  <!-- SegmentBar -->
+  
+    <!-- Componente de grabación de voz -->
+ 
+    <app-speech-record (record)="filterListTertimonials($event)" (loadList)="getNewsTestimonial()" *ngIf="permissionService.canViewTestimonials"></app-speech-record>
+  
+  <div class="spin" *ngIf="this.isLoading">
+   <ion-spinner ></ion-spinner>
+  </div>
+  <div  style="padding-top: 10%;">
+    <ion-list *ngIf="items.length > 0; else noData">
+
+      <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items" segment="Testimony"></app-view-more-information>
+    </ion-list>
+  </div>
+  <ng-template #noData>
+    <div *ngIf="!this.isLoading">
+      <app-no-data></app-no-data>
+
+    </div>
+  </ng-template>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

@@ -8,6 +8,7 @@ import { CardsPageRoutingModule } from './cards-routing.module';
 
 import { CardsPage } from './cards.page';
 import { AddHealthCardPageModule } from './add-health-card/add-health-card.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { AddHealthCardPageModule } from './add-health-card/add-health-card.modul
     IonicModule,
     TranslateModule,
     CardsPageRoutingModule,
-    AddHealthCardPageModule
+    AddHealthCardPageModule,
+    ComponentsModule
   ],
   declarations: [CardsPage]
 })

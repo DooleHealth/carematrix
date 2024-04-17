@@ -7,6 +7,7 @@ import { NotificationsType } from 'src/app/models/notifications/notification-opt
 import { Router } from '@angular/router';
 import { SharedCarePlanService } from 'src/app/services/shared-care-plan/shared-care-plan.service';
 import { DateService } from 'src/app/services/date.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-exercises',
@@ -14,9 +15,11 @@ import { DateService } from 'src/app/services/date.service';
   styleUrls: ['./exercises.page.scss'],
 })
 export class ExercisesPage implements OnInit {
-  segment="exercises"
+  segment="Exercise"
   exercises: Array<any>;
   items: any[] = []
+  itemsCopy: any[] = []
+  saves_items;
   nameContent: string = ContentTypeTranslatedName.Exercises
   iconContent = ContentTypeIcons.Exercises
   isLoading = false
@@ -27,29 +30,44 @@ export class ExercisesPage implements OnInit {
     private router: Router,
     private scp: SharedCarePlanService,
     private dateService: DateService,
+    public permissionService: PermissionService
   ) { 
     this.lifeStyle = new LifeStyle( NotificationsType.EXERCISES, "exercices-detail")
   }
 
   ngOnInit() {
-    this.getExercisesList()
+    //if (this.permissionService.canViewExercises) this.getExercisesList()
   }
 
   loaderAgain(event: { type: string }) {  
     this.getExercisesList()
   }
 
+  ionViewWillEnter() {
+    this.refreshPage(null);
+  }
+
+  refreshPage(data: any) {
+    if (this.permissionService.canViewExercises) this.getExercisesList()
+  }
+
   async getExercisesList(){
     console.log('[ExercisesPage] getExercisesList()');
     this.items = []
-    this.isLoading = true,  
+    this.isLoading = true 
+    let  params={
+      tags:1,
+      interactions:1,
+      readingTime:1
+    }
   //  this.dooleService.getAPIExercises().subscribe(
-    this.scp.getAPIExercises().subscribe(
+    this.scp.getAPIExercises(params).subscribe(
       async (res: any) =>{      
         if(res){
           console.log("aaa", res)
           this.exercises = []
           this.exercises = res
+        
           this.adapterForView(this.exercises)
          }
          this.isLoading = false 
@@ -81,31 +99,37 @@ export class ExercisesPage implements OnInit {
           image = temporaryUrl.temporaryUrl
         }
 
-        // let show=this.IsAllowed(element.from_date);
-
         //Se adapta la respuesta de la API a lo que espera el componente  
         let modelType = element.content_type.replace(/App\\/, '')
 
         console.log(element.last_accepted_or_declined);
         let data = {
-          img: image === "" ? element.exercise.cover: image,
-          title: element.exercise.name,
-          from: this.transformDate(element?.from_date),
-          to: this.transformDate(element?.to_date),
+          image: image === "" ? element.exercise.cover: image,
+          name: element.exercise.name,
+          scheduled_date: this.transformDate(element?.from_date),
           form_id: element.form_id,
-          accepted: this.accepterOrDecline(element.last_accepted_or_declined), 
-          type: "exercises",
+          type: "Exercises",
           description: "",
-          id: element.id,
+          id: element.exercise.id,
+          exercise_id: element.exercise.id,
           programable_id: element.programable_id,
           model_id: element.id,
           model: modelType,
           showAlert: this.showAlert(element.from_date),
           routerLink: null,
-          state: element?.last_accepted_or_declined?.type
+          state: element?.last_accepted_or_declined?.type,
+          frequency: element.frequency,
+          from_date: element.from_date,
+          to_date: element.to_date,
+          statusable: element.statusable,
+          interactions: element.exercise.interactions,
+          tags_name: element.exercise.tags_name
         }
         this.items.push(data)
       })
+      console.log(this.items)
+      this.saves_items = this.items;
+      this.itemsCopy = this.items;
     }
   }
 
@@ -132,4 +156,27 @@ export class ExercisesPage implements OnInit {
       return true;
     }
   }
+
+  filterListExercises(event) {
+    
+    let search;
+    const searchTerm = event.toLowerCase(); 
+    
+    if (searchTerm === '') {
+      this.items = this.itemsCopy
+    }
+    else {
+      if(this.items.length > 0){
+        search = this.items 
+      }else{
+        search= this.saves_items;
+      }
+      const filteredItems = search.filter(item => {
+        const subject = item.name.toLowerCase();
+        return subject.includes(searchTerm) || subject === searchTerm;
+      });
+        this.items = (filteredItems)
+    }
+    
+  };
 }

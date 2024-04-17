@@ -57,6 +57,14 @@ $max-lines-count: 6;
     color: inherit;
     // 0 is the default value (see: https://stackoverflow.com/a/15963044/1116959)
     animation: 0;
+
+    color: var(--default-text) !important;
+    /* Caption */
+    font-family: 'Poppins-SemiBold' !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 18px !important;
   }
 }
 

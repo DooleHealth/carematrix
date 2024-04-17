@@ -53,6 +53,20 @@ import { ConfirmationAnswersComponent } from './form/confirmation-answers/confir
 import { ContentDateComponent } from './shared-care-plan/content-date/content-date.component';
 import { ShowIframeComponent } from './shared-care-plan/show-iframe/show-iframe.component';
 import { PendingComponentComponent } from './shared-care-plan/pending-component/pending-component.component';
+import { ButtonAddComponent } from './shared-care-plan/button-add/button-add.component';
+import { ViewMoreInformationComponent } from './shared-care-plan/view-more-information/view-more-information.component';
+
+import { NoDataComponent } from './no-data/no-data.component';
+import { AddDrugFilterComponent } from './shared-care-plan/add-drug-filter/add-drug-filter.component';
+import { HighChartsComponent } from './high-charts/high-charts.component';
+import { CaregiverComponent } from './caregiver/caregiver.component';
+import { GoalsComponent } from './shared-care-plan/goals/goals.component';
+import { ProcedureComponent } from './shared-care-plan/procedure/procedure.component';
+import { InteractionsMedicineComponent } from './interactions-medicine/interactions-medicine.component';
+import { NotificationOptionsComponent } from './notification/notification-options/notification-options.component';
+import { NotificationBellComponent } from './notification/notification-bell/notification-bell.component';
+import { SpeechRecordComponent } from './speechRecord/speech-record/speech-record.component';
+
 
 @NgModule({
     imports: [
@@ -110,7 +124,20 @@ import { PendingComponentComponent } from './shared-care-plan/pending-component/
     FileUploadV2Component,
     ContentDateComponent,
     ShowIframeComponent,
-    PendingComponentComponent
+    PendingComponentComponent,
+    ButtonAddComponent,
+    ViewMoreInformationComponent,
+    NoDataComponent,
+    AddDrugFilterComponent,
+    HighChartsComponent,
+    CaregiverComponent,
+    GoalsComponent,
+    ProcedureComponent,
+    InteractionsMedicineComponent,
+    // Notifcations
+    NotificationOptionsComponent,
+    NotificationBellComponent,
+    SpeechRecordComponent
   ],
   exports: [
     ShellModule,
@@ -155,7 +182,20 @@ import { PendingComponentComponent } from './shared-care-plan/pending-component/
     FileUploadV2Component,
     ContentDateComponent,
     ShowIframeComponent,
-    PendingComponentComponent
+    PendingComponentComponent,
+    ButtonAddComponent,
+    ViewMoreInformationComponent,
+    NoDataComponent,
+    AddDrugFilterComponent,
+    HighChartsComponent,
+    CaregiverComponent,
+    GoalsComponent,
+    ProcedureComponent,
+    InteractionsMedicineComponent,
+    // Notifcations
+    NotificationOptionsComponent,
+    NotificationBellComponent,
+    SpeechRecordComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

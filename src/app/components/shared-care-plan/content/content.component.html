@@ -1,31 +1,28 @@
 <ion-card class="cardProfile" (click)="goTo(content.type)"  routerLinkActive="active-item" [routerLink]="content.routerlink" >
-  <ion-item lines="none">
-    <div class="verticalLineMalva"></div>
-    <ion-grid> 
-      <ion-row class="verticalAlignItem">
-        <ion-col size="0.9" size-md="0.5" size-lg="0.4">
-          <ion-icon [src]="content.icon"></ion-icon>
-        </ion-col>
-        <ion-col size="10.3" size-md="10.5" size-lg="11.3">
-          <ion-row class="ion-no-padding">
-            <ion-text class="imgPadding">{{content?.title | translate}}</ion-text>&nbsp;&nbsp;
-            <ion-badge style="height: 20px;" *ngIf="content?.boolean_state" mode="ios">{{
-              'goals.new' | translate}}
-            </ion-badge>
-          </ion-row>
-        </ion-col>
-        <ion-col size="0.8" size-md="0.8" size-lg="0.3">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </ion-col>
+  <ion-item class="ion-no-padding item" lines="none" mode="ios">
+    <ion-thumbnail class="thumbnail" slot="start">
+      <img
+        class="img"
+        [src]="content?.img"
+        onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' "
+        alt=""
+      />
+    </ion-thumbnail>
+    <ion-grid style="height: 100% !important">
+
+      <ion-row class="marginTop">
+        <ion-text class="txt-title-card">{{content?.title | translate}}</ion-text>
       </ion-row>
-      <ion-row  class="txtTitleGoals textAdvicesSlider">
-        <ion-col size="0.9" size-md="0.5" size-lg="0.4">
-        </ion-col>
-        <ion-col size="11.1"size-md="11.5" size-lg="11.6">
+
+   <!--    <ion-row style="padding-right: 5%;">
+        <ion-text class="txt-subtitle-card textAdvicesSlider" style="margin-top: -5%;">
           <p [innerHtml]="content?.description | translate"></p>
-        </ion-col>
-      </ion-row>
+        </ion-text>
+      </ion-row> -->
+     
     </ion-grid>
+    <ion-buttons slot="end">
+      <ion-icon size="small" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+    </ion-buttons>
   </ion-item>
 </ion-card>
-<!-- https://ionicframework.com/docs/api/grid -->

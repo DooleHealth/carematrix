@@ -2,8 +2,6 @@ import { ErrorHandler, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, APP_I
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { IonicModule, IonicRouteStrategy, Platform } from "@ionic/angular";
-import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AppComponent } from "./app.component";
@@ -51,12 +49,13 @@ import { HttpRequestInterceptor } from "./interceptors/loading.interceptor";
 import { Badge } from "@awesome-cordova-plugins/badge/ngx";
 import { ReminderAddPageModule } from "./pages/agenda/reminder-add/reminder-add.module";
 import { BackgroundMode } from "@awesome-cordova-plugins/background-mode/ngx";
-import { BLE } from "@awesome-cordova-plugins/ble/ngx";
+//import { BLE } from "@awesome-cordova-plugins/ble/ngx";
 import { Market } from "@awesome-cordova-plugins/market/ngx";
 import { Device } from "@awesome-cordova-plugins/device/ngx";
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { VideocallPageModule } from "./pages/agenda/videocall/videocall.module";
-import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
+import { DirectiveModule } from "./directive/directive.module";
 
 registerLocaleData(localeEn);
 registerLocaleData(localeEs);
@@ -91,6 +90,7 @@ export function createTranslateLoader(http: HttpClient) {
     ReminderAddPageModule,
     NgCircleProgressModule,
     VideocallPageModule,
+    DirectiveModule
     
   ],
   providers: [
@@ -120,7 +120,7 @@ export function createTranslateLoader(http: HttpClient) {
     LanguageService,
     FileTransfer,
     File,
-    BLE,
+    //BLE,
     Badge,
     DocumentViewer,
     PhotoViewer,

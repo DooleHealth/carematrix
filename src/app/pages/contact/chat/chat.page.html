@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'chat.header' | translate}}
+    <ion-title class="toolbarTitle">{{ 'chat.header' | translate}}
       <app-info info="{{'info.chat' | translate}}"></app-info>
     </ion-title>
     <ion-buttons slot="end">
@@ -16,7 +16,7 @@
 
 <ion-content fullscreen class="whiteBackground">
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
   <ion-list *ngIf="this.data && this.data?.length > 0; else noData">
     <div *ngFor="let post of this.data; let i = index" >
@@ -124,18 +124,7 @@
   </ion-list>
   <ng-template #noData>
     <div *ngIf=" !this.isLoading">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon class="iconNoData" name="chatbubbles-outline"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h4 style="text-align: center;"> {{ "no_data"| translate}} </h4>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <app-no-data></app-no-data>
     </div>
   </ng-template>
 </ion-content>

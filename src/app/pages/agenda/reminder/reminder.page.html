@@ -3,17 +3,19 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backButton()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
+    <ion-title class="toolbarTitle">{{ (reminder.origin == 1)? ('reminder.personal_reminder' | translate): ('reminder.medical_reminder' |
       translate)}}</ion-title> <!-- event.type -->
-    <ion-button *ngIf="reminder.origin == 1" fill="clear" slot="end" (click)="editReminder()">
-      <ion-icon name="create-outline"></ion-icon>
-    </ion-button>
+      <ion-buttons slot="end">
+        <ion-button [disabled]="!this.permissionsService.canManageEvents" *ngIf="reminder.origin == 1" fill="clear"  (click)="editReminder()">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
-
 <ion-content fullscreen>
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
   <div class="whiteBackground">
     <ion-grid class="paddingGrid2">
@@ -41,7 +43,7 @@
         <ion-label>{{ 'reminder.field_type' | translate }}</ion-label>
         <ion-text class="textMedium">{{this.type}}</ion-text>
       </ion-item>
-      <ion-item (click)="actionIntrucction()">
+      <ion-item (click)="actionIntrucction()" [disabled]="checkPermissions(reminder)" >
         <ion-label>{{ (this.isElement)?('reminder.field_reminder' | translate) :('reminder.field_appointment' | translate) }}</ion-label>
         <ion-text class="textMedium">{{this.getReminderTitle() }}</ion-text>
         <ion-icon  name="chevron-forward-outline" slot="end" size="small"></ion-icon>
