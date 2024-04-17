@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonContent } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Swiper } from 'swiper/types';
 
@@ -12,6 +13,7 @@ const INTRO_KEY = 'intro';
 export class IntroPage implements OnInit {
 
   @ViewChild('swiper') swiperRef: ElementRef<HTMLElement & { swiper?: Swiper } & { initialize: () => void }> | undefined;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
   swiper?: Swiper;
   isLastSlide: boolean = false;
 
@@ -29,6 +31,13 @@ export class IntroPage implements OnInit {
     this.currentSlideIndex = this.swiperRef?.nativeElement.swiper.activeIndex+1;
   }
 
+  ngAfterViewInit() {
+    // Espera un tick para asegurar que la vista está completamente cargada
+    setTimeout(() => {
+      this.content.scrollToBottom(1); // 300 es la duración de la animación en milisegundos
+    }, 1);
+  }
+  
   async introAction() {
     await this.authService.setShowIntroLocalstorage()
     this.router.navigate(['home']);

@@ -142,3 +142,63 @@ ion-footer {
 center {
     padding: auto;
 }
+
+/* Establece la altura máxima del contenido para evitar el desplazamiento */
+ion-content {
+    --overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+  }
+  
+  /* Alturas para header y footer */
+  :root {
+    --header-height: 20px; /* Ajusta según la altura de tu header */
+    --footer-height: 50px; /* Ajusta según la altura de tu footer */
+  }
+  
+  /* Asegúrate de que el swiper-container se adapte al contenido */
+  .swiper-container-wrapper {
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .swiper-slide img {
+    max-width: 100%;
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+  
+  .main-container h2, .main-container p {
+    font-size: 4vw; /* Ajusta el tamaño del texto basado en el ancho de la pantalla */
+  }
+
+
+  @media (max-width: 600px) {
+    .center-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        img {
+            margin-top: 10%;
+            width: 350px;
+            height: 350px;
+        }
+    }
+  }
+  
+  @media (max-width: 370px) {
+    .center-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        img {
+            margin-top: 10%;
+            width: 250px;
+            height: 250px;
+        }
+    }
+  
+  }
