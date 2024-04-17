@@ -517,6 +517,12 @@ export class HighchartsService {
       var r = [];
       var color;
 
+        /*
+      * No toma en cuenta los decimales con coma (,)
+      */
+      range.value1 =  parseFloat(range.value1?.replace(",","."));
+      range.value2 =  parseFloat(range.value2?.replace(",","."));
+
       if (range.rangeCondition == '>' || range.rangeCondition == '=>') {
         r["from"] = range.value1;
         const maxValue = this.getMaxRange(range.value1, max) ;
