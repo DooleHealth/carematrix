@@ -87,11 +87,11 @@
         <ion-label>{{ 'appointment.field_description' | translate}}</ion-label>
         <ion-textarea class="textMedium" [innerHtml]="event?.description? (event?.description | safeHtml):''"></ion-textarea>
       </ion-item>
-      <ion-item >
+      <!--<ion-item >
         <ion-label>{{ 'appointment.field_attached_files' | translate}}</ion-label>
         <ion-text  class="textMedium">{{ (event?.files?.length > 0)? '': 'appointment.no_files' | translate}}</ion-text>
       </ion-item>
-      <!-- <ion-item>
+       <ion-item>
         <ion-button size="large" expand="full"  color="primary" (click)="share()"><ion-icon name="share"></ion-icon></ion-button>
       </ion-item>
       <ion-item>
