@@ -17,7 +17,7 @@
   
   <!-- Componente de grabación de voz -->
  
-  <app-speech-record (record)="filterListAdvices($event)" (loadList)="getAdvicesList()" *ngIf="permissionService.canViewAdvices"></app-speech-record>
+  <app-speech-record type="advices" (record)="filterListAdvices($event)" (loadList)="getAdvicesList()" *ngIf="permissionService.canViewAdvices"></app-speech-record>
   
   
   <div class="spin" *ngIf="this.isLoading">

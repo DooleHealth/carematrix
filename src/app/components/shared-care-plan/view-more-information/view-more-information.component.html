@@ -7,7 +7,9 @@
     <div *ngFor="let list of listcontets?.tags_name">
       <ion-text class="study">{{ list.name}}</ion-text>
     </div>
-
+    
+ <ion-icon color="secundary" name="volume-high-outline" slot="end" color="primary" (click)="setSpeak(listcontets.description)" style="margin-left: 2px;"></ion-icon>
+   
     <ion-icon
       *ngIf="(this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null)"
       color="primary" [name]=" getColorLike(listcontets?.statusable)" slot="end"

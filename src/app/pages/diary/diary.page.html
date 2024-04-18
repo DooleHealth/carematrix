@@ -104,7 +104,7 @@
 
           <!-- Componente de grabación de voz -->
  
-    <app-speech-record  class="custom-speech-record"  (record)="filterListRecipes($event)" (loadList)="getRecipesist()" *ngIf="permissionService.canViewRecipes"></app-speech-record>
+    <app-speech-record type="receipes" class="custom-speech-record"  (record)="filterListRecipes($event)" (loadList)="getRecipesist()" *ngIf="permissionService.canViewRecipes"></app-speech-record>
   
         <ng-container *ngIf="!this.isLoading && items.length > 0; else noData">
 

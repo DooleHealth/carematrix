@@ -20,6 +20,8 @@ PODS:
     - Capacitor
     - SQLCipher
     - ZIPFoundation
+  - CapacitorCommunityTextToSpeech (4.0.0):
+    - Capacitor
   - CapacitorCordova (5.6.0)
   - CapacitorDevice (5.0.5):
     - Capacitor
@@ -166,6 +168,7 @@ DEPENDENCIES:
   - "CapacitorCommunityNativeMarket (from `../../node_modules/@capacitor-community/native-market`)"
   - "CapacitorCommunitySpeechRecognition (from `../../node_modules/@capacitor-community/speech-recognition`)"
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
+  - "CapacitorCommunityTextToSpeech (from `../../node_modules/@capacitor-community/text-to-speech`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
@@ -222,6 +225,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/speech-recognition"
   CapacitorCommunitySqlite:
     :path: "../../node_modules/@capacitor-community/sqlite"
+  CapacitorCommunityTextToSpeech:
+    :path: "../../node_modules/@capacitor-community/text-to-speech"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
@@ -265,6 +270,7 @@ SPEC CHECKSUMS:
   CapacitorCommunityNativeMarket: 70b329cac2db3aee51430c83cdbe63cfc7c250bd
   CapacitorCommunitySpeechRecognition: 4b07fb675f4e5ce3376748557875d182973a788a
   CapacitorCommunitySqlite: b90d3ca2785560e666cfacd3438dc42bed74f9dc
+  CapacitorCommunityTextToSpeech: 01006ca642440323372afb2d9b684815495c210d
   CapacitorCordova: 931b48fcdbc9bc985fc2f16cec9f77c794a27729
   CapacitorDevice: 4c78eeaa553c7a46bc07372c6eb03a5665459885
   CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
@@ -297,6 +303,6 @@ SPEC CHECKSUMS:
   SQLCipher: 905b145f65f349f26da9e60a19901ad24adcd381
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: 89f98ad1ca97c250e1540d8549d800c34995ea5a
+PODFILE CHECKSUM: 50012db17264dbfbaa731ffaa262f9acf14309a6
 
 COCOAPODS: 1.13.0

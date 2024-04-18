@@ -66,6 +66,7 @@ import { InteractionsMedicineComponent } from './interactions-medicine/interacti
 import { NotificationOptionsComponent } from './notification/notification-options/notification-options.component';
 import { NotificationBellComponent } from './notification/notification-bell/notification-bell.component';
 import { SpeechRecordComponent } from './speechRecord/speech-record/speech-record.component';
+import { SpeakRecordComponent } from './speakRecord/speak-record/speak-record.component';
 
 
 @NgModule({
@@ -137,7 +138,8 @@ import { SpeechRecordComponent } from './speechRecord/speech-record/speech-recor
     // Notifcations
     NotificationOptionsComponent,
     NotificationBellComponent,
-    SpeechRecordComponent
+    SpeechRecordComponent,
+    SpeakRecordComponent
   ],
   exports: [
     ShellModule,
@@ -195,7 +197,8 @@ import { SpeechRecordComponent } from './speechRecord/speech-record/speech-recor
     // Notifcations
     NotificationOptionsComponent,
     NotificationBellComponent,
-    SpeechRecordComponent
+    SpeechRecordComponent,
+    SpeakRecordComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

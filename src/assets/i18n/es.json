@@ -189,7 +189,7 @@
       "rejectd_option2E": "No estoy de acuerdo con el ejercicio recomendado",
       "rejectd_option3": "Otras",
       "placeholder": "Escribe un mensaje.",
-      "rejectd_send": "Mensaje enviado a su equipo médico",
+      "rejectd_send": "Mensaje enviado a su equipo sanitario",
       "keppUp": "¡Sigue así!"
     },
     "health_path": {
@@ -269,7 +269,8 @@
       "header_error": "Error",
       "header_info": "Información",
       "header_confirmation": "Confirmación",
-      "header_atention": "Atención"
+      "header_atention": "Atención",
+      "recording":"Grabando..."
     },
     "error_required": "Requerido",
     "setting":{

@@ -16,10 +16,10 @@
   [(ngModel)]="myText"
   style="padding-bottom: 0px; width: 90%;">
 </ion-searchbar>
-<ion-button class="search-button" [ngClass]="{'searchV2': opcion === 5, 'search-button': opcion !== 1}" fill="clear" slot="end" (click)="starRecognition()" *ngIf="!recoding">
+<ion-button class="search-button" [ngClass]="{'searchV2': type === 'receipes', 'search-button': type !== 'receipes'}" fill="clear" slot="end" (click)="starRecognition()" *ngIf="!recoding">
   <ion-icon style="color: blueviolet;" name="mic-outline" slot="icon-only"></ion-icon>
 </ion-button>
-<ion-button class="search-button" fill="clear" slot="end" (click)="stopRecognition()" *ngIf="recoding" [ngClass]="{'searchV2': opcion === 5, 'search-button': opcion !== 1}">
+<ion-button class="search-button" fill="clear" slot="end" (click)="stopRecognition()" *ngIf="recoding" [ngClass]="{'searchV2': type === 'receipes', 'search-button': type !== 'receipes'}">
   <ion-icon style="color: red;" name="mic-off-outline" slot="icon-only"></ion-icon>
 </ion-button>
 

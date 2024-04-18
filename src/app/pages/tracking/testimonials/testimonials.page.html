@@ -17,7 +17,7 @@
   
     <!-- Componente de grabación de voz -->
  
-    <app-speech-record (record)="filterListTertimonials($event)" (loadList)="getNewsTestimonial()" *ngIf="permissionService.canViewTestimonials"></app-speech-record>
+    <app-speech-record type="testimonials" (record)="filterListTertimonials($event)" (loadList)="getNewsTestimonial()" *ngIf="permissionService.canViewTestimonials"></app-speech-record>
   
   <div class="spin" *ngIf="this.isLoading">
    <ion-spinner ></ion-spinner>

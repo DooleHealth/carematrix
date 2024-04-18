@@ -10,7 +10,7 @@ import { DooleService } from 'src/app/services/doole.service';
   styleUrls: ['./recipe.page.scss'],
 })
 export class RecipePage implements OnInit {
-  isLoading: boolean;
+  isLoading= false;
   id
   recipe
   video: any;
@@ -31,6 +31,7 @@ export class RecipePage implements OnInit {
   }
 
   async getDetailRecipe(){
+    this.isLoading= true;
     console.log('[RecipePage] getDetailRecipe()');
     this.isLoading = true
     this.dooleService.getAPIdetailRecipe( this.id).subscribe(
@@ -45,7 +46,7 @@ export class RecipePage implements OnInit {
             this.recipe.description=this.recipe.description.replace('"//www.','"https://www.');
             this.recipe.description=this.sanitizer.bypassSecurityTrustHtml(this.recipe.description);
           }
-
+          this.isLoading= false;
         }
     
         this.isLoading = false
