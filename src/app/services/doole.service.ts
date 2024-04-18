@@ -2194,7 +2194,7 @@ export class DooleService {
     const endpoint = this.api.getEndpoint(path);
     return this.http.get(endpoint, ).pipe(
       map((res: any) => {
-        console.log(`[DooleService] getAPIChallenges(${path}) res: `, res);
+        console.log(`[DooleService] getAPIChallenges2(${path}) res: `, res);
         return res;
       })
     );
