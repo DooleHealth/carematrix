@@ -226,7 +226,7 @@
     "out_range_value": "Out-of-range values:",
     "danger_value": "Anomalous values:",
     "no_data_date": "No data has been recorded yet",
-    "no_data_help": "To load a data, use the + button.",
+    "no_data_help": "To load a data, use the  \"add button\".",
     "no_data": "There is no data to show",
     "daily": "daily",
     "weekly": "weekly",
