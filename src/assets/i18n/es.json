@@ -226,7 +226,7 @@
       "out_range_value": "Valores fuera de rango:",
       "danger_value": "Valores anómalos:",
       "no_data_date":"Aún no se han registrado datos",
-      "no_data_help":"Para cargar un dato, usa el botón +.",
+      "no_data_help":"Para cargar un dato, usa el botón \"Agregar valor\".",
       "no_data":"No hay datos a mostrar",
       "daily": "diario",
       "weekly": "semanal",
