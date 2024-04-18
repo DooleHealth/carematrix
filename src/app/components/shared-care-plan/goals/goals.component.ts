@@ -40,6 +40,7 @@ export class GoalsComponent  implements OnInit {
   isRequired = false
   isChallengeCompleted = false;
   last_accepted_or_declined;
+  isDisabled= true;
   constructor(public translate: TranslateService,   private changeDetectorRef: ChangeDetectorRef,private modalCtrl: ModalController, private alertController: AlertController, 
     private pusher: PusherChallengeNotificationsService, private router: Router, private iab: InAppBrowser,  public sharedCarePlan: SharedCarePlanService,
     private ngZone: NgZone, public authService: AuthenticationService, public permissionService: PermissionService, public dooleService: DooleService) { }
@@ -50,6 +51,12 @@ export class GoalsComponent  implements OnInit {
 
     this.note = this.translate.instant('health_path.goal_note') 
     //this.setChallenge(this.content);
+    if( this.current_level.last_accepted_or_declined === null){
+      this.isDisabled = false;
+    }else{
+      this.isDisabled = true;
+    }
+   
   }
 
   ngOnInit(){

@@ -19,7 +19,7 @@
   </ion-searchbar>-->
     <!-- Componente de grabación de voz -->
  
-    <app-speech-record (record)="filterListNews($event)" (loadList)="getNewsList()" *ngIf="permissionService.canViewNews"></app-speech-record>
+    <app-speech-record type="news" (record)="filterListNews($event)" (loadList)="getNewsList()" *ngIf="permissionService.canViewNews"></app-speech-record>
   
 
   <div class="spin" *ngIf="this.isLoading">

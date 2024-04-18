@@ -4,6 +4,7 @@ import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { DateService } from 'src/app/services/date.service';
 import { DatePipe } from '@angular/common';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ViewMoreInformationComponent implements OnInit {
 
 
 
-  constructor(private dooleService: DooleService, public authService: AuthenticationService, private languageService: LanguageService, public dateService: DateService) { }
+  constructor(private dooleService: DooleService, public authService: AuthenticationService,
+    private languageService: LanguageService, public dateService: DateService) { }
 
   ngOnInit() {
     console.log("[ViewMoreInformationComponent] ngOnInit(): ", this.content)
@@ -173,4 +175,24 @@ export class ViewMoreInformationComponent implements OnInit {
     const datePipe: DatePipe = new DatePipe(language);
     return datePipe.transform(date, this.dateService.getFormatSelectedDate2());
   }
+
+  setSpeak(speak: any){
+    const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)/ig;
+
+let result = speak.replace(regex, (match, p1, p2, alt) => {
+    if (alt) { // Si hay un texto alternativo para la imagen
+        return alt; 
+    } else {
+        return ''; 
+    }
+});
+
+    console.log("showtexto", result)
+    let language = this.languageService.getCurrent()
+    TextToSpeech.speak({
+      text:result,
+      lang: language,
+    })
+  }
 }
+
