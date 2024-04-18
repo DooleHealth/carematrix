@@ -11,7 +11,7 @@
   
   .error-container {
     flex: 1; /* Asegura que los errores también tienen espacio para mostrarse */
-    padding-left: 20px; /* Da algo de espacio entre el input y los errores */
+    padding-left: 10px; /* Da algo de espacio entre el input y los errores */
   }
   
   .error {
@@ -19,4 +19,5 @@
     width: 100%;
     text-align: center;
     color: var(--ion-color-danger);
+    font-size: small;
   }
