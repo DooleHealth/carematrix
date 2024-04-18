@@ -51,11 +51,7 @@ export class GoalsComponent  implements OnInit {
 
     this.note = this.translate.instant('health_path.goal_note') 
     //this.setChallenge(this.content);
-    if( this.current_level.last_accepted_or_declined === null){
-      this.isDisabled = false;
-    }else{
-      this.isDisabled = true;
-    }
+   
    
   }
 
@@ -66,7 +62,11 @@ export class GoalsComponent  implements OnInit {
     this.setChallenge(this.content);
     console.log("goals..", this.content)
     this.canDoGoal = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewGoals;
-   
+    if( this.current_level.last_accepted_or_declined === null){
+      this.isDisabled = true;
+    }else{
+      this.isDisabled = false;
+    }
   }
   setChallenge(res) {
 
