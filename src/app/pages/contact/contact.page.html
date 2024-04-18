@@ -52,7 +52,7 @@
     <div *ngSwitchCase="'my-centers'" style="margin-bottom: 20%;">
       <ng-container *ngIf="this.isLoading; else myCenters">
         <div class="spin">
-          <ion-spinner></ion-spinner>
+         <ion-spinner ></ion-spinner>
         </div>
       </ng-container>
 
@@ -158,7 +158,7 @@
     <div *ngSwitchCase="'medical-visits'" style="margin-bottom: 20%;">
       <ng-container *ngIf="this.isLoading; else medicalVisits">
         <div class="spin">
-          <ion-spinner></ion-spinner>
+         <ion-spinner ></ion-spinner>
         </div>
       </ng-container>
 
@@ -227,7 +227,7 @@
 
       <ng-container *ngIf="this.isLoading; else chat">
         <div class="spin">
-          <ion-spinner></ion-spinner>
+         <ion-spinner ></ion-spinner>
         </div>
 
       </ng-container>
@@ -445,6 +445,7 @@
 
     <!-- Appointment -->
     <div *ngSwitchCase="'appointment'" style="margin-bottom: 20%;">
+      
       <ion-list>
         <ion-grid>
           <ion-row>
@@ -528,7 +529,7 @@
     style="display: flex; justify-content: center;">
     <ion-button routerLink="medical-directory" [state]="{isChat:true}" routerLinkActive='active-item' color="primary"
       shape="round" class="floating-button ion-margin">
-      {{'contact.new_message' | translate}}
+      <ion-text class="floatButton">{{'contact.new_message' | translate}}</ion-text>
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/message.svg"></ion-icon>
     </ion-button>
   </div>
@@ -537,11 +538,9 @@
     style="display: flex; justify-content: center;">
 
     <ion-button (click)="requestVisit()" color="primary" shape="round" class="floating-button ion-margin">
-      {{'contact.new_visit' | translate}}
+      <ion-text class="floatButton">{{'contact.new_visit' | translate}}</ion-text> 
       <ion-icon style="padding-left: 2%;" src="../../assets/icons/new_visit.svg"></ion-icon>
     </ion-button>
   </div>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

@@ -777,7 +777,11 @@
         "shipping_method":"Tipus d'enviament: ",
         "go_back": "Tornar a el pas anterior",
         "add_address": "Añadir dirección",
-        "edit_address": "Editar dirección"
+        "edit_address": "Editar dirección",
+        "head_card_text": "Aquí trobareu informació sobre els plans de medicació prescrits. Podeu posar-vos en contacte amb el vostre equip mèdic si teniu algun dubte sobre això",
+        "msm_caution": "Aquest medicament té interaccions perilloses amb:",
+        "caution": "Precaució:",
+        "msm_contact_hp": "*Es recomana contactar amb personal sanitari abans del seu consum."
       },
       "recipe": {
         "header": "Receptes",

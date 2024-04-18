@@ -844,7 +844,10 @@
     "go_back": "Voltar ao passo anterior",
     "add_address": "Adicionar morada",
     "edit_address": "Editar morada",
-    "head_card_text": "Aqui encontra informações sobre os planos de medicação prescritos. Pode contactar a sua equipa médica se tiver alguma dúvida sobre o assunto"
+    "head_card_text": "Aqui encontra informações sobre os planos de medicação prescritos. Pode contactar a sua equipa médica se tiver alguma dúvida sobre o assunto",
+    "msm_caution": "Este medicamento tem interações perigosas com:",
+    "caution": "Cuidado:",
+    "msm_contact_hp": "*Recomenda-se entrar em contato com o pessoal de saúde antes do consumo."
 
   },
   "recipe": {

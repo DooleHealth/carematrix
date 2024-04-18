@@ -10,8 +10,13 @@
 
 <ion-content>
  
+  <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+   <ion-spinner ></ion-spinner>
+  </ng-container>
+
+  <ng-template #finishedLoading>
   <ion-row>
-    <ion-text class="txtTitle2">{{'medical_directory.your_professionals' | translate}}</ion-text>
+    <ion-text *ngIf="!this.isLoading && staff?.length != 0 && staff" class="txtTitle2">{{'medical_directory.your_professionals' | translate}}</ion-text>
   </ion-row>
   <ion-list >
     <ion-card class="cardProfile" *ngFor="let s of staff" style="margin-top: 0px;">
@@ -44,8 +49,9 @@
   </ion-list>
 
 <!--   <ng-template #noData> -->
-    <div *ngIf="!this.isLoading && staff?.length == 0">
+    <div *ngIf="!this.isLoading && (staff?.length == 0 || !staff) " >
       <app-no-data></app-no-data>
   </div>
+</ng-template>
  <!--  </ng-template> -->
 </ion-content>

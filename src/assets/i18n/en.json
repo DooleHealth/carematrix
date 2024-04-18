@@ -32,7 +32,7 @@
     "no_get_conditions_label": "There are no legal terms assigned to this user",
     "error_conditions_label": "Error in obtaining legal terms",
     "error_post_conditions_label": "Could not update legal conditions",
-    "messaje_reject_terms": "This app for proper use requires that the legal conditions have been accepted, in which case you will not be able to continue browsing. Do you want to refuse the legal conditions?"
+    "messaje_reject_terms": "This app requires acceptance of the legal conditions for proper use. If you decline, you will not be able to continue browsing. Do you want to refuse the legal conditions?"
   },
   "sms": {
     "header": "Identity Verification",
@@ -43,7 +43,7 @@
     "ok_button": "Yes",
     "ko_button": "Edit",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 9 digits",
     "error_invalid_email": "Please enter a valid email address"
   },
@@ -56,7 +56,7 @@
     "send_email_alert_message": "The verification code has been sent again",
     "error_send_email_alert_message": "An error occurred while sending the verification code",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 6 digits",
     "error_no_numeric": "Error: Entering numbers only"
   },
@@ -67,24 +67,21 @@
     "tracking": "Follow up",
     "journal": "My Journal"
   },
+  
+  
   "intro": {
-
     "skip": "Skip intro",
     "title1": "Contact",
     "slider1_text": "Get in touch with health staff through messaging and video calls.",
-    
     "title2": "Agenda",
     "slider2_text": "Keep your appointment diary up to date with our reminder system.",
-
     "title3": "Shared Care Plan",
     "slider3_text": "Explore your shared care plan, designed by your healthcare team to promote collaboration and improve health through personalised and accessible strategies.",
-
     "title4": "My Daily Tasks",
     "slider4_text": "All your tasks in one place so you can keep your health on track.",
-    
     "continue": "Next!"
   },
-  "home": {
+    "home": {
     "hello": "Hi",
     "goals_title": "Your goal",
     "goals_no_data": "No data",
@@ -214,14 +211,14 @@
     "blocked_level": "This level is still locked",
     "goal": "<p>You have <strong>{{ total }} points</strong>.</p>",
     "goal1": "<div>Get {{ required }} more and move to the next level.</div>",
-
     "goal_txt1": "You have",
     "goal_txt2": "get",
     "goal_txt3": "more",
     "goal_txt4": " and move to the next level",
     "level_congratulations": "Congratulations!",
     "level_accomplished": "You have reached the next level",
-    "done": "done!"
+    "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Meeting the <strong>objectives marked with an asterisk</strong> is <strong>essential</strong> to move to the next level.</p>",
+    "done": "Done!"
   },
   "activity_goal": {
     "definition": "Definition",
@@ -229,7 +226,7 @@
     "out_range_value": "Out-of-range values:",
     "danger_value": "Anomalous values:",
     "no_data_date": "No data has been recorded yet",
-    "no_data_help": "To load a data, use the + button.",
+    "no_data_help": "To load a data, use the  \"add button\".",
     "no_data": "There is no data to show",
     "daily": "daily",
     "weekly": "weekly",
@@ -349,7 +346,7 @@
     "name": "Name",
     "affiliation_number": "Sharpening number",
     "expiration_date": "Caducity",
-    "expedition_date": "Date of Issue",
+    "expedition_date": "Date of issue",
     "Optional": "Optional",
     "error_required": "Required",
     "button_return": "Home"
@@ -423,20 +420,7 @@
   "agenda": {
     "header_agenda": "Agenda",
     "no_events": "No events",
-    "month": [
-      "In",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "At the",
-      "Set",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
+    "month": ["In","Feb","Mar","Apr","May","Jun","Jul","At the","Set","Oct","Nov","Dec"],
     "days": ["L", "M", "X", "J", "In", "S", "D"],
     "today": "Today",
     "yesterday": "Yesterday",
@@ -631,6 +615,7 @@
     "calories": "calories",
     "description": "Description",
     "dose": "Doses",
+    "frequency": "Frequency",
     "morning": "Morning",
     "noon": "Midday",
     "aftenoon": "Afternoon",
@@ -716,7 +701,6 @@
     "rejectd_option3": "Other",
     "medication_status": "pending"
   },
-
   "button": {
     "see_details": "See details",
     "detail": "Detail",
@@ -730,7 +714,7 @@
     "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
-    "takeds": "Taked",
+    "takeds": "Taken",
     "taked": "Outlet",
     "forgotten": "Forgotten",
     "completed": "Answered",
@@ -1028,7 +1012,6 @@
     "alert_forms": "You can only fill out this form when it is scheduled; we will send you a notification on the specified day.",
     "alert_title": "Action not allowed",
     "alert_form_answered": "Form has been answered",
-
     "accepted_rejected": "Do you want to approve or reject this form?",
     "button_accepted": "Approve",
     "button_rejected": "Reject",
@@ -1042,7 +1025,6 @@
     "placeholder": "Write a message.",
     "form_status": "pending"
   },
-
   
   "answer_form": {
     "title": "Completed forms",
@@ -1073,8 +1055,7 @@
     "descriptionForms":"Health remommendations.",
     "descriptionMMpHc":"To keep you in shape.",
     "medicalTestSub":"Laboratory result",
-
-    "monitoring": "Health charts",
+    "monitoring": "Your data",
     "lastValue": "Last data:",
     "medical_procedure": "Medical procedures",
     "informed_consent": "Informed Consent",
@@ -1098,7 +1079,7 @@
     "readingTime": "minutes reading",
     "preparationTime": "minutes of preparation",
     "exercicesTime": "minutes of exercice",
-    "button_info": "More Information",
+    "button_info": "More information",
     "like": "Members Likes",
     "source": "Source:",
 
@@ -1108,8 +1089,6 @@
     "descriptionDiets": "Improve your diet",
     "descriptionTestimonials": "Experiences similar to yours",
     "descriptionGames": "Some entertainment is available for you!"
-
-
   },
   "exercices": {
     "header": "Exercises"

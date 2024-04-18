@@ -13,16 +13,19 @@
 </ion-header>
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
-  <ion-searchbar *ngIf="this.permissionService.canViewExercises" mode="ios" (ionInput)="filterListExercises($event)"
-    (ionClear)="getExercisesList()" placeholder="{{ 'advices.searchbar' | translate}}" style="padding-bottom: 0px;">
-  </ion-searchbar>
+ 
+
+    <!-- Componente de grabación de voz -->
+ 
+    <app-speech-record (record)="filterListExercises($event)" (loadList)="getExercisesList()" *ngIf="permissionService.canViewExercises"></app-speech-record>
+  
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
 
-  <div>
-    <ion-list *ngIf="items.length > 0; else noData" style="padding-top: 0px;">
+  <div style="padding-top: 10%;">
+    <ion-list *ngIf="items.length > 0; else noData" >
       <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items"
         [segment]="this.segment"></app-view-more-information>
     </ion-list>
@@ -35,7 +38,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

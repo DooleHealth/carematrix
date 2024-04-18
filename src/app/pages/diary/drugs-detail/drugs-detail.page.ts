@@ -34,6 +34,7 @@ export class DrugsDetailPage implements OnInit {
   isSubmittedTimes = false;
   frequency = 'daily';
   frequencySeleted = 'daily';
+  toDateBool = true;
   isInit = true;
   expanded = true;
   isInstant = false;
@@ -182,6 +183,7 @@ export class DrugsDetailPage implements OnInit {
       this.form.get('from_date').setValue(this.transformDate(from_date))
 
       let to_date = this.form.get('to_date').value
+
       this.form.get('to_date').setValue(this.transformDate(to_date))
 
       let f = this.form.get('frequency').value
@@ -251,19 +253,7 @@ export class DrugsDetailPage implements OnInit {
     return this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
-  formatDate(d) {
-    if (d === undefined || d === null)
-      return
-    var auxdate = d.split(' ')
-    //let date = new Date(auxdate[0]);
-    d = d.replace(' ', 'T')
-    let date0 = new Date(d).toUTCString();
-    let date = new Date(date0);
-    let time = auxdate[1];
-    date.setHours(time.substring(0, 2));
-    date.setMinutes(time.substring(3, 5));
-    return date.toISOString();
-  }
+
 
   inputTimes(event) {
     // console.log('[DrugsDetailPage] this.time()', event);
@@ -377,10 +367,11 @@ export class DrugsDetailPage implements OnInit {
           this.modifyMedicationPlans = this.getStateModifyMedication(medicationPlan?.origin)
 
           let from_date = medicationPlan.from_date
-          this.form.get('from_date').setValue(this.formatDate(from_date))
+          this.form.get('from_date').setValue(this.dateService.yyyyMMddTHHmmssSSSZFormat(from_date))
 
           let to_date = medicationPlan.to_date
-          this.form.get('to_date').setValue(this.formatDate(to_date))
+          this.form.get('to_date').setValue(this.dateService.yyyyMMddTHHmmssSSSZFormat(to_date))
+          if(!this.form.get('to_date').value) this.toDateBool = false;
 
           if (medicationPlan?.alias)
             this.form.get('alias').setValue(medicationPlan.alias)

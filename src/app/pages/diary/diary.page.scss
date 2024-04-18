@@ -13,6 +13,13 @@ ion-img {
   color: #2ecc71;
 }
 
+.custom-speech-record .search-button {
+  position: absolute;
+  top: 13% !important;
+  right: 10px !important; 
+  transform: translateY(-50%);
+  z-index: 1; 
+}
 
 
 ion-spinner {

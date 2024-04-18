@@ -7,9 +7,9 @@
 </ion-header>
 
 
-<ion-content fullscreen class="ion-padding">
+<ion-content fullscreen class="ion-padding" #scrollElement>
 
-  <div class="main-container swiper-container-wrapper">
+  <div class="main-container swiper-container-wrapper" style="display: flex; flex-direction: column; justify-content: center;">
 
     <swiper-container #swiper (slidechange)="onSlideChange()" [slidesPerView]="1">
 

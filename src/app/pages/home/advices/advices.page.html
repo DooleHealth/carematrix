@@ -14,17 +14,17 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   <!-- SegmentBar -->
-  <ion-searchbar *ngIf="this.permissionService.canViewAdvices" 
-    mode="ios"
-    (ionInput)="filterListAdvices($event)"
-    (ionClear)="getAdvicesList()" placeholder="{{ 'advices.searchbar' | translate}}"
-    style="padding-bottom: 0px;">
-  </ion-searchbar>
+  
+  <!-- Componente de grabación de voz -->
+ 
+  <app-speech-record (record)="filterListAdvices($event)" (loadList)="getAdvicesList()" *ngIf="permissionService.canViewAdvices"></app-speech-record>
+  
+  
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
-  <div>
-    <ion-list *ngIf="items.length > 0; else noData" style="padding-top: 0px;">
+  <div style="padding-top: 10%;">
+    <ion-list *ngIf="items.length > 0; else noData" >
       <!--<app-lifestyle-index *ngFor="let content of items" [content]="content"></app-lifestyle-index>-->
       <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items" [segment]="this.segment"></app-view-more-information>
     </ion-list>
@@ -42,7 +42,5 @@
 
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

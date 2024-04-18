@@ -81,7 +81,7 @@
   <!--medication shipping cart buttton-->
   <ng-container *ngIf="this.isLoadingDrugs;else second">
     <div class="spin">
-      <ion-spinner></ion-spinner>
+     <ion-spinner ></ion-spinner>
     </div>
   </ng-container>
   <ng-template #second>
@@ -181,7 +181,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

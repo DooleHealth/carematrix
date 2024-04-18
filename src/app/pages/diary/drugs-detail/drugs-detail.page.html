@@ -64,13 +64,13 @@
             <h5 >{{ 'medication.field_from_date' | translate}}</h5>
             <ion-note *ngIf="this.isSubmittedFromDate && this.form.get('from_date').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
-          <ion-datetime-button mode="ios" [disabled]="!modifyMedicationPlans" slot="end" datetime="from_date"></ion-datetime-button>
+          <ion-datetime-button firstDayOfWeek="1" mode="ios" [disabled]="!modifyMedicationPlans" slot="end" datetime="from_date"></ion-datetime-button>
           <ion-icon slot="end" color="primary" name="calendar"></ion-icon>
         </ion-item>
 
         <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
           <ng-template>
-            <ion-datetime mode="ios" [locale]="this.locale" presentation="date" id="from_date" (ionChange)="this.isSubmittedFromDate = false"  formControlName="from_date"></ion-datetime>
+            <ion-datetime firstDayOfWeek="1" mode="ios" [locale]="this.locale" presentation="date" id="from_date" (ionChange)="this.isSubmittedFromDate = false"  formControlName="from_date"></ion-datetime>
             <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
               <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
               <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
@@ -80,19 +80,19 @@
         </ion-modal>
       </div>
     <!-- field_to_date -->
-      <div *ngIf="!isInstant">
+      <div *ngIf="!isInstant && toDateBool">
         <ion-item>
           <ion-label  stacked>
             <h5 >{{ 'medication.field_to_date' | translate}}</h5>
             <ion-note *ngIf="this.isSubmittedToDate && this.form.get('to_date').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
-          <ion-datetime-button mode="ios" [disabled]="!modifyMedicationPlans" slot="end" datetime="to_date"></ion-datetime-button>
+          <ion-datetime-button firstDayOfWeek="1" mode="ios" [disabled]="!modifyMedicationPlans" slot="end" datetime="to_date"></ion-datetime-button>
           <ion-icon slot="end" color="primary" name="calendar"></ion-icon>
         </ion-item>
 
         <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
           <ng-template>
-            <ion-datetime mode="ios" [locale]="this.locale" presentation="date" id="to_date" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date"></ion-datetime>
+            <ion-datetime firstDayOfWeek="1" mode="ios" [locale]="this.locale" presentation="date" id="to_date" (ionChange)="this.isSubmittedToDate = false; checkTreatmentDates()" formControlName="to_date"></ion-datetime>
             <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
               <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
               <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
@@ -102,20 +102,21 @@
         </ion-modal>
       </div>
   
-
+      
+  
       <div *ngIf="!isInstant">
         <ion-item lines="none">
           <ion-label  stacked>
             <h5 >{{ (modifyMedicationPlans)? ('medication.field_take_time' | translate):('medication.take_time' | translate) }}</h5>
             <ion-note *ngIf="this.isSubmittedTimes && this.times.length == 0 " class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
-          <ion-datetime-button mode="ios" *ngIf="modifyMedicationPlans" slot="end" datetime="time"></ion-datetime-button>
+          <ion-datetime-button firstDayOfWeek="1" mode="ios" *ngIf="modifyMedicationPlans" slot="end" datetime="time"></ion-datetime-button>
           <ion-icon *ngIf="modifyMedicationPlans" slot="end" color="primary" name="add-circle-outline"></ion-icon>
         </ion-item>
 
           <ion-popover #datetimePopover [keepContentsMounted]="true" side="left" alignment="end">
             <ng-template>
-              <ion-datetime mode="ios" #datetime id="time" hourCycle="h23" [preferWheel]="true"  [locale]="this.locale" presentation="time" displayFormat="HH:mm" (ionChange)="this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
+              <ion-datetime firstDayOfWeek="1" mode="ios" #datetime id="time" hourCycle="h23" [preferWheel]="true"  [locale]="this.locale" presentation="time" displayFormat="HH:mm" (ionChange)="this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
               <ion-buttons mode="ios" slot="buttons">
                 <ion-button color="danger" (click)="closeTimeAlert($event);" slot="start">{{'notifications.close' | translate}}</ion-button>
                 <ion-button style="width: 50px;"></ion-button>

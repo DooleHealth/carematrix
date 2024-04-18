@@ -168,7 +168,7 @@ export class AddHealthCardPage implements OnInit {
     this.formHealthCard.get('issue_date').setValue(issue_date)
   }
   compareFn(e1: any, e2: any): boolean {
-    return  e1.id === e2.id
+    return  e1 === e2
   }
 
   openMessageStartDate(){

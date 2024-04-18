@@ -22,14 +22,14 @@
     <ion-card class="cardProfile">
       <ion-list>
         <ion-item>
-          <ion-label  stacked>
+          <ion-label  stacked class="typography">
             {{'reminder.field_title' | translate}}
             <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
           </ion-label>
           <ion-input formControlName="title" class="textMedium" required  [placeholder]="this.titlePlaceholder"></ion-input>
         </ion-item>
         <ion-item lines="none">
-          <ion-label  stacked>
+          <ion-label  stacked class="typography">
             {{'reminder.field_notes' | translate}}
           </ion-label>
         </ion-item>
@@ -43,17 +43,17 @@
     <ion-list>
       
       <ion-item>
-        <ion-label stacked>
+        <ion-label stacked class="typography">
          {{'reminder.field_start' | translate}}
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('start_date').invalid" (ionInput)="isSubmittedDuration = false" class="error " color="danger">{{ getErrorStartDate() }}</ion-note>
         </ion-label>
-        <ion-datetime-button [ngStyle]="{'text-decoration': this.crossStartDate ? 'line-through' : 'none'}" slot="end" datetime="start_date"></ion-datetime-button>
+        <ion-datetime-button firstDayOfWeek="1" [ngStyle]="{'text-decoration': this.crossStartDate ? 'line-through' : 'none'}" slot="end" datetime="start_date"></ion-datetime-button>
       </ion-item>
 
 
       <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime [locale]="this.locale" presentation="date" id="start_date" [min]="this.date" [max]="dateMax"  (ionChange)="this.isSubmittedStartDate = false; checkTreatmentDates()"  formControlName="start_date"></ion-datetime>
+          <ion-datetime firstDayOfWeek="1" [locale]="this.locale" presentation="date" id="start_date" [min]="this.date" [max]="dateMax"  (ionChange)="this.isSubmittedStartDate = false; checkTreatmentDates()"  formControlName="start_date"></ion-datetime>
           <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
             <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
             <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
@@ -64,15 +64,15 @@
       
 
       <ion-item>
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{ 'reminder.field_end' | translate}}
           <ion-note *ngIf="this.isSubmittedDuration && this.form.get('end_date').invalid" (ionInput)="isSubmittedDuration = false"  class="error " color="danger">{{ getErrorEndDate() }}</ion-note>
         </ion-label>
-        <ion-datetime-button [ngStyle]="{'text-decoration': this.crossEndDate ? 'line-through' : 'none'}" slot="end" datetime="end_date"></ion-datetime-button>
+        <ion-datetime-button firstDayOfWeek="1" [ngStyle]="{'text-decoration': this.crossEndDate ? 'line-through' : 'none'}" slot="end" datetime="end_date"></ion-datetime-button>
       </ion-item>
       <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
         <ng-template>
-          <ion-datetime [locale]="this.locale" presentation="date" id="end_date" (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates2()" formControlName="end_date" [min]="this.date" [max]="dateMax"></ion-datetime>
+          <ion-datetime firstDayOfWeek="1" [locale]="this.locale" presentation="date" id="end_date" (ionChange)="this.isSubmittedDuration = false; checkTreatmentDates2()" formControlName="end_date" [min]="this.date" [max]="dateMax"></ion-datetime>
           <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
             <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
             <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
@@ -82,17 +82,17 @@
       </ion-modal>
 
       <ion-item>
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{ 'reminder.field_time' | translate}}
           <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label>
-        <ion-datetime-button slot="end" datetime="time"></ion-datetime-button>
+        <ion-datetime-button firstDayOfWeek="1" slot="end" datetime="time"></ion-datetime-button>
         <ion-icon slot="end" color="primary" name="add-circle-outline"></ion-icon>
       </ion-item>
 
       <ion-popover #datetimePopover [keepContentsMounted]="true" side="left" alignment="end">
         <ng-template>
-          <ion-datetime mode="ios"  #datetime id="time" hourCycle="h23" [preferWheel]="true"  [locale]="this.locale" presentation="time" displayFormat="HH:mm" (ionChange)="this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
+          <ion-datetime firstDayOfWeek="1" mode="ios"  #datetime id="time" hourCycle="h23" [preferWheel]="true"  [locale]="this.locale" presentation="time" displayFormat="HH:mm" (ionChange)="this.isSubmittedTimes = false" formControlName="time"></ion-datetime>
           <ion-buttons slot="buttons">
             <ion-button color="danger" (click)="closeTimeAlert($event);" slot="start">{{'notifications.close' | translate}}</ion-button>
             <ion-button style="width: 50px;"></ion-button>
@@ -112,7 +112,7 @@
 
       <ion-item lines="none">
 
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{'reminder.field_repeat' | translate}}
           <ion-note *ngIf="this.isSubmittedTimes && this.times.length ==0 " class="error " color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label>
@@ -129,14 +129,14 @@
     <div>
       <ion-item (click)="expandItem()"  *ngIf="this.expanded" lines="none">
 
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{'reminder.week_day' | translate}}        
         </ion-label>
         <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
       </ion-item>
       <ion-item (click)="expandItem()"  *ngIf="!this.expanded"  lines="none">
 
-        <ion-label  stacked>
+        <ion-label  stacked class="typography">
           {{'reminder.week_day' | translate}}        
         </ion-label>
 

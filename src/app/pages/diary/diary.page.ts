@@ -378,11 +378,11 @@ export class DiaryPage implements OnInit {
 
 
       filterListRecipes(event) {
-        console.log("Entro" + event.srcElement.value.length)
+       
         let search;
-        const searchTerm = event.srcElement.value.toLowerCase(); 
+        const searchTerm = event.toLowerCase(); 
 
-        if (event.srcElement.value.length === 0) {
+        if (searchTerm === '') {
           this.items = this.itemsCopy
         }
         else {

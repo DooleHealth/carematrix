@@ -3,22 +3,20 @@
 
   <ion-toolbar mode="ios" [ngSwitch]="segment">
     <ion-title class="toolbarTitle">{{ 'tracking.header' | translate}}</ion-title>
+    <ion-buttons slot="end" *ngSwitchCase="this.permissionService.canViewMedicalTests && 'documents'">
+      <ion-icon class="primaryIcon" slot="icon-only" name="options-outline" (click)="addFilters()"></ion-icon>&nbsp;
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-tab-button style="margin-top: 1%; padding: 0%;" routerLink="/profile" mode="ios">
         <ion-icon class="icon-menu" style="margin-left: -5px;" src="../../assets/icons/menu.svg"></ion-icon>
       </ion-tab-button>
-    </ion-buttons>
-    <ion-buttons slot="end" *ngSwitchCase="this.permissionService.canViewMedicalTests && 'documents'">
-      <ion-icon class="primaryIcon" slot="icon-only" name="options-outline" (click)="addFilters()"></ion-icon>&nbsp;
-
-
     </ion-buttons>
     <ion-buttons slot="end" *ngSwitchCase="'graphics'">
       <ion-icon class="primaryIcon" slot="icon-only" name="add" (click)="addElement()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content view-cached="”false”">
+<ion-content view-cached="”false”" [class.app-selected-background]="this.permissionService.colorCargiver">
   <!-- SegmentBar -->
 
   <ion-row style="background-color: var(--secondary-bkg); padding-top: 3%;">
@@ -47,6 +45,16 @@
     <!-- Shared Care Plan -->
     <div style="margin-top: 3%;" *ngSwitchCase="'sharedcareplan'">
 
+      <ng-container *ngIf="this.isLoading; else sharedcareplan">
+        <div class="spin">
+         <ion-spinner ></ion-spinner>
+        </div>
+
+      </ng-container>
+
+      <ng-template #sharedcareplan>
+
+    
       <ng-container *ngIf="checkPermissions(); else noData">
         <ion-list>
           <scp-content *ngFor="let content of this.listContent" [content]="content"></scp-content>
@@ -56,13 +64,14 @@
       <ng-template #noData>
         <app-no-data></app-no-data>
       </ng-template>
+    </ng-template>
 
     </div>
 
     <!-- Documents -->
     <div *ngSwitchCase="'documents'">
       <div class="spin" *ngIf="this.loadingTests">
-        <ion-spinner></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </div>
 
       <div
@@ -82,7 +91,7 @@
                   <ion-row>
 
                     <ion-col size="3" style="display: flex; align-items: center; justify-content: center;">
-                      <ion-icon style="width: 100%; height: 100%" src="assets/icons/pill_drug.svg"></ion-icon>
+                      <ion-icon style="width: 100%; height: 100%" src="assets/icons/medical_test.svg"></ion-icon>
                     </ion-col>
 
                     <ion-col size="9">
@@ -138,7 +147,7 @@
     <!-- Forms -->
     <div *ngSwitchCase="'forms'">
       <div class="spin" *ngIf="this.loadingForms">
-        <ion-spinner></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </div>
       <div *ngIf="!this.loadingForms && this.forms && this.forms.length > 0; else noData">
         <ion-list *ngFor="let event of this.forms">
@@ -177,7 +186,7 @@
     <!-- Graphics -->
     <div *ngSwitchCase="'graphics'">
       <div class="spin" *ngIf="this.loadingGraphics">
-        <ion-spinner></ion-spinner>
+       <ion-spinner ></ion-spinner>
       </div>
       <div *ngIf="!this.loadingGraphics && this.groupedElements && this.groupedElements.length > 0; else noData">
         <br />
@@ -232,7 +241,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

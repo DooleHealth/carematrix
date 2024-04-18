@@ -14,9 +14,11 @@
 
 <ion-content  fullscreen>
 
-  <div class="spin" *ngIf="this.isLoading">
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
     <ion-spinner ></ion-spinner>
-  </div>
+      </ng-container>
+
+      <ng-template #finishedLoading>
 
   <ion-row>
     <ion-text class="txtTitle2">{{ 'documents.subtitle_information' | translate}}</ion-text>
@@ -159,5 +161,5 @@
       </div>
 
   </ion-card>
-
+</ng-template>
 </ion-content>

@@ -17,6 +17,7 @@ export class AdvicesPage implements OnInit {
   public items= [];
   public itemsCopy = [];
   segment="Advice"
+  recoding= false;
   //itemsBackup= []
   //advices = []
   saves_items;
@@ -78,23 +79,31 @@ export class AdvicesPage implements OnInit {
  
   filterListAdvices(event) {
     let search;
-    const searchTerm = event.srcElement.value.toLowerCase(); 
+    let searchTerm;  
 
-    if (event.srcElement.value.length === 0) {
-      this.items = this.itemsCopy
+  searchTerm = event.toLowerCase();
+  
+
+  if (searchTerm === '') {
+    this.items = this.itemsCopy
+  }
+  else {
+    if(this.items.length > 0){
+      search = this.items 
+    }else{
+      search= this.saves_items;
     }
-    else {
-      if(this.items.length > 0){
-        search = this.items 
-      }else{
-        search= this.saves_items;
-      }
-      const filteredItems = search.filter(item => {
-        const subject = item.name.toLowerCase();
-        return subject.includes(searchTerm) || subject === searchTerm;
-      });
-        this.items = (filteredItems)
-    }
+    console.log("items", this.items)
+    console.log("searchTerm", searchTerm)
+    const filteredItems = search.filter(item => {
+      const subject = item.name.toLowerCase();
+      return subject.includes(searchTerm) || subject === searchTerm;
+    });
+      this.items = (filteredItems)
+  }
+
+
+   
    
   };
 

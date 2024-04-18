@@ -16,7 +16,11 @@
 
   <app-caregiver></app-caregiver>
 
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+      </ng-container>
 
+   <ng-template #finishedLoading>
   <div *ngIf="permissionService.canViewMedicalProcedures && listItem.length > 0; else noData" style="padding-top: 5%;">
 
 
@@ -76,10 +80,9 @@
   <ng-template #noData>
     <app-no-data></app-no-data>
   </ng-template>
+  </ng-template>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

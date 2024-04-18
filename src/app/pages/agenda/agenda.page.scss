@@ -214,6 +214,7 @@ ion-list {
   border-radius: 15px;
   box-shadow: none !important;
   padding: 0px;
+  max-height: 110px;
 }
 
 .floating-button {
@@ -268,3 +269,27 @@ ion-segment-button.segment-button-checked {
 ion-segment-button.segment-button-after-checked {
   color: #7F8C8D !important;
 }
+
+.floatButton{ 
+  color: #fff;
+  font-family: 'Poppins-Bold';
+font-size: 16px;
+font-weight: 700;
+line-height: 24px;
+text-align: left;
+}
+
+ion-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 5em;
+  width: em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+
