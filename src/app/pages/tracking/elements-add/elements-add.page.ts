@@ -52,6 +52,7 @@ export class ElementsAddPage implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading=true;
     this.form = this.fb.group({
       category: ['', [Validators.required]],
       data: ['', [Validators.required]],
@@ -194,6 +195,7 @@ export class ElementsAddPage implements OnInit {
             this.form.get('category').setValue(this.nameElement)
           }
         }
+        this.isLoading=false;
        },async (err) => {
           alert(`Error: ${err.code }, Message: ${err.message}`)
           console.log('[ElementsAddPage] getElementAvailable() ERROR(' + err.code + '): ' + err.message);
