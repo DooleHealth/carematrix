@@ -28,7 +28,7 @@ import { ContentTypePath } from './models/shared-care-plan';
 import { register } from 'swiper/element/bundle';
 import { Capacitor } from '@capacitor/core';
 
-import { CallCapacitor } from 'src/plugins/CallCapacitor';
+import { CallCapacitor } from '@doole/videocall-notications-plugins';
 import { TextZoom } from '@capacitor/text-zoom';
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
@@ -152,20 +152,20 @@ export class AppComponent implements OnInit {
   }
 
   receiveVoIPEvents() {
-    //console.log('[AppComponent] receiveVoIPEvents()')
+    console.log('[AppComponent] receiveVoIPEvents()')
     CallCapacitor.addListener('accept-call', data => {
       this.opentokService.agendaId$ = data.callId;
       console.log('accept-call', data);
       // This should be probably called in the VideoActivity, but is beyond this task point
-      CallCapacitor.updateCallState({ callId: data.callId, state: "started" });
+      CallCapacitor.updateCallState({callId: data.callId, state: "started"});
       this._zone.run(() => {
-        this.startVideocallIframe(data.callId)
+        this.startVideocallIframe(data.callId)         
       });
     });
     CallCapacitor.addListener('end-call', data => {
       console.log('end-call');
       // TODO: Send termination to API
-      CallCapacitor.updateCallState({ callId: data.callId, state: "ended" });
+      CallCapacitor.updateCallState({callId: data.callId, state: "ended"});
     })
   }
 
@@ -300,44 +300,46 @@ export class AppComponent implements OnInit {
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        console.log('push token - Push notification received: ', 'Push received: ' + JSON.stringify(notification));
+    (notification) => {
+      console.log('push token - Push notification received: ', 'Push received: ' + JSON.stringify(notification));
 
+      
+      this.getNumNotification();
 
-        this.getNumNotification();
+     this.badge.get().then(res => (
+      notification.badge = res
 
-        this.badge.get().then(res => (
-          notification.badge = res
+      ));
 
-        ));
+      console.log('push token - [pushNotificationReceived] Push received:', notification);
 
-        console.log('push token - [pushNotificationReceived] Push received:', notification);
+      const voip = notification?.data?.voip;
 
-        const voip = notification?.data?.voip;
+      if (voip == "true") {
+        // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
+        let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data?.isCancelPush;
 
-        if (voip == "true") {
-          // Notifications has different Payloads: iOS = cancelPush, Android = isCancelPush
-          let cancel = notification.data?.CancelPush ? notification.data.CancelPush : notification.data?.isCancelPush;
+        console.log("Cancel " + cancel);
 
-          if (!cancel || cancel == "false") {
-            const caller = JSON.parse(notification.data.Caller);
-            this.opentokService.agendaId$ = caller.callId;
+        if (!cancel || cancel == "false") {
+          const caller = JSON.parse(notification.data.Caller);
+          this.opentokService.agendaId$ = caller.callId;
 
-            if (this.platform.is('ios')) {
-              cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
-            } else {
+          if (this.platform.is('ios')) {
+            cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
+          } else {
+            CallCapacitor.receiveCall({from: caller.Username });
+          }
+        } else
+          console.log("End call push");
 
-            }
-          } else
-            console.log("End call push");
+      } else {
+        console.log("is notification: ", notification);
+        //this.showNotification(notification);
 
-        } else {
-          console.log("is notification: ", notification);
-          //this.showNotification(notification);
-
-        }
       }
-    );
+    }
+  );
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
@@ -663,7 +665,7 @@ export class AppComponent implements OnInit {
         if (cancel == "false") {
           self.opentokService.agendaId$ = extra.Caller.ConnectionId;
         } else
-          console.log("Hang up notification");
+          self.opentokService.emitCallEvent({type: "hangup"});
       } else {
         console.error("Caller not found in voip notification");
       }
@@ -767,72 +769,80 @@ export class AppComponent implements OnInit {
   // }
 
   async startVideocallIframe(id, startVideo?) {
-    //console.log('[AppComponent] startVideocallIframe()', id, startVideo)
-    if (this.isModalOpen)
-      return
+    console.log('[AppComponent] startVideocallIframe()', id, startVideo)
+    if(this.isModalOpen)
+    return
     this.isModalOpen = true
     const modal = await this.modalCtrl.create({
-      component: VideocallPage,
-      componentProps: { id: id, startVideo: true },
-      cssClass: "modal-custom-class"
+      component:  VideocallPage,
+      componentProps: {id: id, startVideo: true },
+      cssClass: "modal-custom-class",
+      canDismiss: true,
+      id: VideocallPage.VIDEOCALL_MODAL_ID,
     });
 
     modal.onDidDismiss()
       .then((result) => {
         console.log('addElement()', result);
         this.isModalOpen = false
+        if(result?.data?.error){
+         // let message = this.translate.instant('landing.message_wrong_credentials')
+          //this.dooleService.presentAlert(message)
+        }else if(result?.data?.action == 'add'){
+
+        }
       });
 
-    await modal.present()
-    //cordova.plugins.CordovaCall.endCall();
-    return
-  }
+      await modal.present()
+      //cordova.plugins.CordovaCall.endCall();
+      return
+    }
 
 
-  phonecallHandlers() {
-
-    var self = this;
-
-    cordova.plugins.CordovaCall.setVideo(true);
-    //accept de videocall
-    cordova.plugins.CordovaCall.on('answer', async function (data) {
-      console.log(data);
-      self.lastResume = new Date;
-
-      // Grab last agenda id from BO
-      if (!self.opentokService.agendaId$)
-        self.getAgenda();
-      else
-        self.startVideocall(self.opentokService.agendaId$)
-
-    });
-
-    //reject de videocall
-    cordova.plugins.CordovaCall.on('reject', function (data) {
-      console.log("reject");
-      console.log(data);
-    });
-
-    //hangup de videocall
-    cordova.plugins.CordovaCall.on('hangup', function (data) {
-      console.log("hangup");
-      console.log(data);
-    });
-
-    //receive
-    cordova.plugins.CordovaCall.on('receiveCall', function (data) {
-      console.log("receiveCall");
-
-
-    });
-
-    //send
-    cordova.plugins.CordovaCall.on('sendCall', function (data) {
-      console.log("send call");
-      console.log(data);
-    });
-
-  }
+    phonecallHandlers() {
+      console.log('[AppComponent] phonecallHandlers()')
+      var self = this;
+  
+      cordova.plugins.CordovaCall.setVideo(true);
+      //accept de videocall
+      cordova.plugins.CordovaCall.on('answer', async function (data) {
+        console.log(data);
+        self.lastResume = new Date;
+  
+        // Grab last agenda id from BO
+        if (!self.opentokService.agendaId$)
+          self.getAgenda();
+        else
+          self.startVideocall(self.opentokService.agendaId$)
+  
+      });
+  
+      //reject de videocall
+      cordova.plugins.CordovaCall.on('reject', function (data) {
+        console.log("reject");
+        console.log(data);
+      });
+  
+      //hangup de videocall
+      cordova.plugins.CordovaCall.on('hangup', function (data) {
+        console.log("hangup");
+        console.log(data);
+      });
+  
+      //receive
+      cordova.plugins.CordovaCall.on('receiveCall', function (data) {
+        console.log("receiveCall");
+  
+  
+      });
+  
+      //send
+      cordova.plugins.CordovaCall.on('sendCall', function (data) {
+        console.log("send call");
+        console.log(data);
+      });
+  
+    }
   lockDevice() {
     // Lock phone after 2 minutes in pause
     this.getNumNotification()

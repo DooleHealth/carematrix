@@ -18,9 +18,9 @@
         <h2 class="ion-margin-top">{{'notifications.videocall' | translate}}</h2>
 
         <br>
-        <ion-button mode="md" expand="block" *ngIf="!connected" ion-button icon-left id="btnConectar"(click)="startVideocall()" [disabled]="connecting">
+        <ion-button mode="md" expand="block" *ngIf="!connected" ion-button icon-left id="btnConectar" (click)="startVideocall()" [disabled]="connecting">
           <ion-icon slot="start" name="videocam" style="color: white;"></ion-icon>
-          {{btnConectarStr}}
+          <!-- <ion-spinner name="lines-small"></ion-spinner> -->
         </ion-button>
       </ion-col>
     </ion-row>
@@ -37,4 +37,3 @@ class="OT_video-element" style="transform: rotate(0deg);">Sorry, Web RTC is not 
   <iframe *ngIf="activateIFrame" id="iframeVideocall" [src]="this.safeUrl" allow="camera; microphone" scrolling="no" width="100%" height="100%" frameborder="0"></iframe>
 
 </ion-content>
-

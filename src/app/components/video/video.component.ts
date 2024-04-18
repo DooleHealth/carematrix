@@ -3,8 +3,7 @@ import { ViewContainerRef, Component, ElementRef, AfterViewInit, ViewChild, Comp
 import * as OT from '@opentok/client';
 import { SubscriberComponent } from '../subscriber/subscriber.component';
 import { OpentokService } from '../../services/opentok.service';
-import { Router } from '@angular/router';
-import { ActionSheetController, ModalController, NavController, Platform } from '@ionic/angular';
+import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
 import { File } from '@awesome-cordova-plugins/file/ngx';
@@ -41,7 +40,6 @@ export class VideoComponent implements  AfterViewInit, OnInit {
 constructor(
   private componentFactoryResolver: ComponentFactoryResolver,
   private opentokService: OpentokService,
-  private navController: NavController,
   public platform: Platform,
   private dooleService: DooleService,
   private modalCtrl: ModalController,
@@ -52,7 +50,6 @@ constructor(
 ) { }
 
   async ngOnInit() {
-
     this.apiKey = this.opentokService.apiKey$;
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
