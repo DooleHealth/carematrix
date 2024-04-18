@@ -31,6 +31,7 @@ import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-if
 import { Preferences } from '@capacitor/preferences';
 import { PermissionService } from 'src/app/services/permission.service';
 import { Form } from 'src/app/models/form';
+import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
@@ -238,6 +239,7 @@ export class HomePage implements OnInit {
     private notification: NotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherNotifications: PusherNotificationService,
+    private pusherChallenge: PusherChallengeNotificationsService,
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
@@ -290,6 +292,7 @@ export class HomePage implements OnInit {
 
   initPushers() {
     this.pusherAlarms?.init()
+    this.pusherChallenge.init()
     const channel = this.pusherNotifications.init();
 
     if (channel)
