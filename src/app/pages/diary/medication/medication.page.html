@@ -102,6 +102,7 @@
 
       <ng-template #finishedLoading>
       <div>
+       
         <ion-list *ngIf="this.permissionService.canViewMedicationPlans && items.length > 0; else noData">
           <app-scp-med-for-mon *ngFor="let content of items" (redirect)="addDrugPlan(content, content.id)"
             [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"></app-scp-med-for-mon>

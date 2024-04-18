@@ -15,6 +15,10 @@
 
 
 <ion-content>
+  <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+   </ng-container>
+   <ng-template #finishedLoading>
   <ion-card *ngIf="!isEditDrug"  class="cardProfilePaddingBottom" >
     <ion-item lines="none">
       <app-add-drug-filter style="width: 100%;" (drugUpdated)="drugSelecting($event)"   (datadrug_ExtId)="datadrug($event)" (dataInteractions)="dataInteractions($event)"></app-add-drug-filter>
@@ -202,6 +206,7 @@
     <ion-button style="width: 100% !important;" *ngIf="isEditDrug" (click)="submit()" class="buttonClose" color="primary" shape="round">{{'medication.edit_medication' | translate}}</ion-button>
     <ion-button style="width: 100% !important;" *ngIf="isEditDrug" (click)="presentAlertConfirm()" class="buttonClose" color="danger" shape="round">{{'medication.delete_medication' | translate}}</ion-button>
   </div>
+  </ng-template>
 </ion-content>
 
 

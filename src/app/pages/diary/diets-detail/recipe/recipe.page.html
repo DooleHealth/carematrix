@@ -9,9 +9,10 @@
 
 
 <ion-content>
-  <div class="spin" *ngIf="this.isLoading">
+  <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
     <ion-spinner ></ion-spinner>
-   </div>
+   </ng-container>
+   <ng-template #finishedLoading>
   <ion-card class="cardProfile">
 <!--     <ion-card-header>
       <ion-card-title>{{recipe?.name}}</ion-card-title>
@@ -37,4 +38,5 @@
     </div>
 
   </ion-card>
+  </ng-template>
 </ion-content>

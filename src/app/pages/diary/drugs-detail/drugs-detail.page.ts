@@ -64,6 +64,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading= true;
     this.id = this.drugID ? this.drugID : this.id
     console.log('[DrugsDetailPage] ngOnInit() id: ', this.id);
     this.form = this.fb.group({
@@ -349,7 +350,7 @@ export class DrugsDetailPage implements OnInit {
   }
 
   async getMedicationPlan() {
-
+this.isLoading= true;
     const medication_plan_id = this.drug?.medication_plan_id ? this.drug.medication_plan_id : this.id
     console.log('[DrugsDetailPage] getMedicationPlan()', medication_plan_id);
     this.dooleService.getAPImedicationPlan(medication_plan_id).subscribe(
@@ -384,6 +385,7 @@ export class DrugsDetailPage implements OnInit {
 
           this.setDaysMedicationPlan(medicationPlan)
           this.gettingDay()
+          this.isLoading= false;
 
           let isDose = false
           let plan = medicationPlan.medication_plan_times
@@ -411,6 +413,7 @@ export class DrugsDetailPage implements OnInit {
 
         }
       }, (err) => {
+        this.isLoading= false;
         console.log('[DrugsDetailPage] getMedicationPlan() ERROR(' + err.code + '): ' + err.message);
         alert('ERROR(' + err.code + '): ' + err.message)
         throw err;
