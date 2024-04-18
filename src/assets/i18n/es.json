@@ -214,7 +214,7 @@
       "goal_txt1": "Tienes",
       "goal_txt2": "consigue",
       "goal_txt3":"más",
-      "goal_txt4":" y pasa al siguiente nivel.",
+      "goal_txt4":" para completar el objetivo.",
       "level_congratulations":"¡Felicitaciones!",
       "level_accomplished":"Has avanzado de nivel",
       "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Cumplir los <strong>objetivos marcados con un asterisco</strong> es <strong>indispensable</strong> para pasar al siguiente nivel.</p>",
