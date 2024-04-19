@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -7,6 +7,7 @@ import { FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { RolesService } from 'src/app/services/roles.service';
+import { Keyboard } from '@capacitor/keyboard';
 
 
 @Component({
@@ -26,16 +27,40 @@ export class TabsComponent implements OnInit {
   tracking= 'Seguimiento'
   journal= 'Mi diario'
   pusherNotification = false;
+  hideFABs=false;
   constructor(
      private router: Router , 
      public role: RolesService,
-     private authService: AuthenticationService, private route: ActivatedRoute)  {
+     private authService: AuthenticationService, private route: ActivatedRoute,private cdr: ChangeDetectorRef)  {
+      Keyboard.addListener('keyboardDidShow', this.onKeyboardDidShow.bind(this));
+      Keyboard.addListener('keyboardDidHide', this.onKeyboardDidHide.bind(this));
     { this.user = this.authService?.user?.familyUnit}
   }
   ngOnInit() {
     this.translateTab();
     // this.getFamilyUnitData(); 
   }
+
+  onKeyboardDidShow() {
+    console.log('Keyboard did show');
+    this.hideFABs = true;
+    this.updateFABVisibility();
+    this.cdr.detectChanges();
+}
+
+onKeyboardDidHide() {
+    console.log('Keyboard did hide');
+    this.hideFABs = false;
+    this.updateFABVisibility();
+    this.cdr.detectChanges();
+}
+
+updateFABVisibility() {
+  const fabButtons = document.querySelectorAll('ion-fab');
+  fabButtons.forEach((fab) => {
+      fab.style.display = this.hideFABs ? 'none' : 'block';
+  });
+}
 
   translateTab(){
     
