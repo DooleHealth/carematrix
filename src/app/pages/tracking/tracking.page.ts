@@ -182,7 +182,7 @@ getLifeStyleHabitsViews(){
           }
           this.loadingTests = false
          },(err) => {
-            alert(`Error: ${err.code }, Message: ${err.message}`)
+           // alert(`Error: ${err.code }, Message: ${err.message}`)
             console.log('[TrackingPage] getFilteredDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
             this.loadingTests = false
             throw err;
@@ -207,7 +207,7 @@ getLifeStyleHabitsViews(){
 
 
          },(err) => {
-            alert(`Error: ${err.code }, Message: ${err.message}`)
+          //  alert(`Error: ${err.code }, Message: ${err.message}`)
             console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
             this.loadingTests = false
             throw err;
@@ -243,7 +243,7 @@ getLifeStyleHabitsViews(){
           this.forms = res.forms
           this.loadingForms = false
          },async (err) => {
-            alert(`Error: ${err.code }, Message: ${err.message}`)
+          //  alert(`Error: ${err.code }, Message: ${err.message}`)
             console.log('[TrackingPage] getDiagnosticTests() ERROR(' + err.code + '): ' + err.message);
             this.loadingForms = false
             throw err;
@@ -263,7 +263,7 @@ getLifeStyleHabitsViews(){
           console.log('[TrackingPage] getElementsList() ', this.groupedElements);
         this.loadingGraphics = false
       }, (err) => {
-        alert(`Error: ${err.code}, Message: ${err.message}`)
+      //  alert(`Error: ${err.code}, Message: ${err.message}`)
         console.log('[TrackingPage] getElementsList() ERROR(' + err.code + '): ' + err.message);
         this.loadingGraphics = false
         throw err;

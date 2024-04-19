@@ -105,14 +105,19 @@ export class AgendaPage implements OnInit{
 
   async ionViewDidEnter() {
     if (this.permissionService.canViewEvents && this.segment === 'calendar') {
-      this.myCal.currentDate = new Date();
+     
       this.isLoading = true;
+      this.updateCal()
       this.getallAgenda()
     } 
     else {
       this.eventSource = []
     }
     
+  }
+
+  updateCal(){
+    this.myCal.currentDate = new Date();
   }
 
   markDisabled = (date: Date) => {
@@ -125,10 +130,10 @@ export class AgendaPage implements OnInit{
 
 
   getallAgenda() {
-    //this.isLoading = true;
+   // this.isLoading = true;
     return this.dooleService.getAPIallAgenda().subscribe(
       async (res: any) => {
-       
+       this.isLoading= false;
         console.log('[AgendaPage] getallAgenda()', await res);
 
         if (this.permissionService.canViewEvents) {
@@ -176,6 +181,7 @@ export class AgendaPage implements OnInit{
   }
 
   onCurrentDateChanged(event: Date) {
+   
     this.ngZone.run(() => {
       console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
       if (this.permissionService.canViewEvents) this.getallAgenda();
@@ -392,6 +398,7 @@ export class AgendaPage implements OnInit{
   }
 
   async addAgenda() {
+    debugger
     const modal = await this.modalCtrl.create({
       component: AgendaEditPage,
       componentProps: {},
@@ -445,7 +452,7 @@ export class AgendaPage implements OnInit{
           break;
   
         case 'reminders':
-          this.isLoadingReminders= true
+          this.isLoadingReminders
           this.inReminders=true
           this.listAppointment = this.eventSource;
           this.onViewTitleChangedReminders(new Date())

@@ -194,6 +194,10 @@ const routes: Routes = [
   {
     path: 'gif',
     loadChildren: () => import('./pages/onboarding/gif/gif.module').then( m => m.GifPageModule)
+  },
+  {
+    path: 'google-fit',
+    loadChildren: () => import('./pages/google-fit/google-fit.module').then( m => m.GoogleFitPageModule)
   }
   
     

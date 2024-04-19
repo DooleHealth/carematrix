@@ -1,0 +1,62 @@
+<ion-header mode="md" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="redirectHomePage()">
+        <ion-text color="primary">
+          {{'google-fit.cancel' | translate | lowercase }}
+        </ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="main-container">
+
+    <div class="spin" *ngIf="this.loadingData">
+      <ion-spinner ></ion-spinner>
+    </div>
+
+
+    <ion-text class="ion-text-center">
+      <h1 style="font-weight: bold;">Google fit</h1>
+    </ion-text>
+    <br>
+
+
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" style="display: flex; justify-content: center;">
+        <ion-img style="width: 50%" src="/assets/icons/Google_Fit_icon.svg"></ion-img>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+
+    <br>
+
+    <ion-text class="ion-text-center">
+      <h1 style="font-weight: bold;">{{'google-fit.connect' | translate}}</h1>
+    </ion-text>
+
+    <ion-text class="ion-text-center" >
+      <p style="margin: 5%" [innerHTML]="'google-fit.info' | translate"></p>
+      <p style="margin: 5%" [innerHTML]="'google-fit.more_info' | translate"></p>
+    </ion-text>
+
+    <br>
+    <ion-button expand="block" fill="outline" shape="round" style="margin-bottom: 3%;" (click)="redirectGoogleFitMarket()">
+      {{'google-fit.install_app' | translate}}
+    </ion-button>
+
+    <ion-button expand="block" shape="round" (click)="connectGoogleFit()">
+      {{'google-fit.connect_to' | translate}}
+    </ion-button>
+
+    <ion-text class="ion-text-center">
+      <p style="margin: 5%; margin-bottom: 1%;" [innerHTML]="'google-fit.disconnect_info' | translate"></p>
+      <a style="display: flex; justify-content: center;" (click)='redirectSettings()'>{{'google-fit.config' | translate}} {{'google-fit.app' | translate}} </a>
+    </ion-text>
+  </div>
+</ion-content>
+

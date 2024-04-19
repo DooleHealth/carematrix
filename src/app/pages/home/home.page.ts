@@ -989,6 +989,16 @@ export class HomePage implements OnInit {
     }
   }
 
+ViewData(){
+      
+  if( this.forms?.length > 0 || this.exercises?.length > 0 || this.drugs?.length > 0 || this.diets?.length > 0 || this.games?.length > 0 ||  this.activity?.length > 0 ){
+    return true
+  }else{
+    return false
+  }
+}
+  
+
 
   setSliderOption(option, list?) {
     switch (option) {

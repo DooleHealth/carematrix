@@ -189,7 +189,7 @@
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
     "placeholder": "Write a message.",
-    "rejectd_send": "Message sent to your medical team",
+    "rejectd_send": "Message sent to your Healthcare team",
     "keppUp": "Keep it up!"
   },
   "health_path": {
@@ -1104,5 +1104,24 @@
   "medical_procedure_list":{
     "text":"Here you will find all your medical procedures and diagnostic tests scheduled on a timeline."
   },
+  "google-fit": {
+    "cancel": "Cancel",
+    "connect": "Connect with your devices",
+    "info": "Google fit is a platform that allows you to track your <strong>physical activity</strong> and <strong>training</strong> data from different apps and devices.",
+    "more_info": "When you connect to Google Fit, we'll collect information about your activity to better understand your progress",
+    "connect_to": "Connect to Google Fit",
+    "install_app": "Download Google Fit App",
+    "disconnect_info": "You can disconnect from Google Fit at any time from the section ",
+    "disconnect": "Disconnect from Google Fit",
+    "config":"Configuration",
+    "app": "of the application",
+    "info-disconnect-title": "How to sign out of Google Fit",
+    "info-disconnect-msg": "To disconnect from Google Fit, open the Settings section of the App and revoke the Physical Activity permission",
+    "error_msg": "Error connecting to Google Fit",
+    "return_home": "Go to the main page"
+  },
   "content": "There is currently no data available to show"
+
+
+  
 }

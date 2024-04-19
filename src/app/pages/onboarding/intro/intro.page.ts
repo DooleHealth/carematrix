@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent } from '@ionic/angular';
+import { IonContent, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Swiper } from 'swiper/types';
 
@@ -21,6 +21,7 @@ export class IntroPage implements OnInit {
 
   constructor(
     public router: Router,
+    public platform: Platform,
     private authService: AuthenticationService,) { }
 
   ngOnInit() {
@@ -40,7 +41,12 @@ export class IntroPage implements OnInit {
   
   async introAction() {
     await this.authService.setShowIntroLocalstorage()
-    this.router.navigate(['home']);
+    if (this.platform.is('android') || this.platform.is('mobileweb') || this.platform.is('desktop')) {
+      this.router.navigate(['google-fit']);
+     }
+     else { 
+      this.router.navigate(['home']);
+     }
   }
 
   onSlideChange() {
