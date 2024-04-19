@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -31,9 +31,11 @@ export class TabsComponent implements OnInit {
   constructor(
      private router: Router , 
      public role: RolesService,
-     private authService: AuthenticationService, private route: ActivatedRoute,private cdr: ChangeDetectorRef)  {
+     private authService: AuthenticationService, private route: ActivatedRoute,private cdr: ChangeDetectorRef,private platform: Platform)  {
+      if (this.platform.is('hybrid')) {
       Keyboard.addListener('keyboardDidShow', this.onKeyboardDidShow.bind(this));
       Keyboard.addListener('keyboardDidHide', this.onKeyboardDidHide.bind(this));
+      }
     { this.user = this.authService?.user?.familyUnit}
   }
   ngOnInit() {
