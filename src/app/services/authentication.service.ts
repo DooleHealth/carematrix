@@ -488,4 +488,17 @@ export class AuthenticationService {
       await alert.present();
     }
 
+    getShowGoogleFitLocalstorage(): Promise<any> {
+      return Preferences.get({ key: 'showGoogleFit' }).then((val) => {
+        return Boolean(val.value)
+      });
+    }
+    
+    async setShowGoogleFitLocalstorage() {
+      await Preferences.set({
+        key: 'showGoogleFit',
+        value: 'true'
+      });
+    }
+
 }

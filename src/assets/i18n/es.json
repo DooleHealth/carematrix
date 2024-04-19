@@ -157,7 +157,6 @@
     },
     "goals": {
       "your_goals": "Tus Objetivos",
-      "goals": "Objetivos",
       "start": "Inicio",
       "achieve": "Alcanzar",
       "end": "Fin",
@@ -1102,6 +1101,23 @@
     },
     "medical_procedure_list":{
       "text":"Aquí encontrarás todos tus procedimientos médicos y pruebas diagnósticas programados en un calendario."
+    },
+    
+    "google-fit": {
+      "cancel": "Cancelar",
+      "connect": "Conecta tus dispositivos",
+      "info": "Google fit es una plataforma que te permite rastrear tu <strong>actividad física</strong> y datos de <strong>entrenamiento</strong> desde diferentes aplicaciones y dispositivos.",
+      "more_info": "Cuando te conectes a Google Fit, recopilaremos información sobre tu actividad, para comprender mejor tu progreso",
+      "connect_to": "Conectar a Google Fit",
+      "install_app": "Descargar App de Google Fit",
+      "disconnect_info": "Podrás desconectarte de Google Fit en cualquier momento desde el apartado de ",
+      "disconnect": "Desconectar de Google Fit",
+      "config":"Configuración",
+      "app": " de la aplicación",
+      "info-disconnect-title": "Como desconectarse de Google Fit",
+      "info-disconnect-msg": "Para desconectarse de Google Fit abra el apartado Configuración de la App y revoque el permiso de Actividad Física",
+      "error_msg": "Error al conectarse a Google Fit",
+      "return_home": "Ir a la página principal"
     },
     "content": "Actualmente no hay datos disponibles para mostrar"
 }
