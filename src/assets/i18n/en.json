@@ -32,7 +32,7 @@
     "no_get_conditions_label": "There are no legal terms assigned to this user",
     "error_conditions_label": "Error in obtaining legal terms",
     "error_post_conditions_label": "Could not update legal conditions",
-    "messaje_reject_terms": "This app for proper use requires that the legal conditions have been accepted, in which case you will not be able to continue browsing. Do you want to refuse the legal conditions?"
+    "messaje_reject_terms": "This app requires acceptance of the legal conditions for proper use. If you decline, you will not be able to continue browsing. Do you want to refuse the legal conditions?"
   },
   "sms": {
     "header": "Identity Verification",
@@ -43,7 +43,7 @@
     "ok_button": "Yes",
     "ko_button": "Edit",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 9 digits",
     "error_invalid_email": "Please enter a valid email address"
   },
@@ -56,7 +56,7 @@
     "send_email_alert_message": "The verification code has been sent again",
     "error_send_email_alert_message": "An error occurred while sending the verification code",
     "next_button": "Continue",
-    "error_required": "Error: Required Field",
+    "error_required": "Error: Required field",
     "error_min_lenght": "Error: Must be 6 digits",
     "error_no_numeric": "Error: Entering numbers only"
   },
@@ -189,7 +189,7 @@
     "rejectd_option2E": "I do not agree with the recommended exercise",
     "rejectd_option3": "Other",
     "placeholder": "Write a message.",
-    "rejectd_send": "Message sent to your medical team",
+    "rejectd_send": "Message sent to your Healthcare team",
     "keppUp": "Keep it up!"
   },
   "health_path": {
@@ -214,11 +214,11 @@
     "goal_txt1": "You have",
     "goal_txt2": "get",
     "goal_txt3": "more",
-    "goal_txt4": " and move to the next level",
+    "goal_txt4": " to complete the goal.",
     "level_congratulations": "Congratulations!",
     "level_accomplished": "You have reached the next level",
     "goal_note":"<p><span style='font-size:20px; color:red; margin-top: 8px;'> * </span>Meeting the <strong>objectives marked with an asterisk</strong> is <strong>essential</strong> to move to the next level.</p>",
-    "done": "done!"
+    "done": "Done!"
   },
   "activity_goal": {
     "definition": "Definition",
@@ -226,7 +226,7 @@
     "out_range_value": "Out-of-range values:",
     "danger_value": "Anomalous values:",
     "no_data_date": "No data has been recorded yet",
-    "no_data_help": "To load a data, use the + button.",
+    "no_data_help": "To load a data, use the  \"Add value\" button.",
     "no_data": "There is no data to show",
     "daily": "daily",
     "weekly": "weekly",
@@ -269,7 +269,9 @@
     "header_error": "Error",
     "header_info": "Information",
     "header_confirmation": "Confirmation",
-    "header_atention": "Attention"
+    "header_atention": "Attention",
+    "recording": "Recording..."
+
   },
   "error_required": "Required",
   "setting": {
@@ -346,7 +348,7 @@
     "name": "Name",
     "affiliation_number": "Sharpening number",
     "expiration_date": "Caducity",
-    "expedition_date": "Date of Issue",
+    "expedition_date": "Date of issue",
     "Optional": "Optional",
     "error_required": "Required",
     "button_return": "Home"
@@ -675,7 +677,7 @@
     "button_accepted": "Approve",
     "button_rejected": "Reject",
     "placeholder": "Write a message.",
-    "rejectd_send": "Message sent to your medical team",
+    "rejectd_send": "Message sent to your Healthcare team",
     "rejectd_option1": "I have doubts, I need more information",
     "rejectd_option2": "I don't agree with the prescribed medication",
     "rejectd_option2F": "I do not agree with the form",
@@ -714,7 +716,7 @@
     "see_detail": "See Details",
     "go_detail": "Go to detail",
     "take": "Take",
-    "takeds": "Taked",
+    "takeds": "Taken",
     "taked": "Outlet",
     "forgotten": "Forgotten",
     "completed": "Answered",
@@ -1055,7 +1057,7 @@
     "descriptionForms":"Health remommendations.",
     "descriptionMMpHc":"To keep you in shape.",
     "medicalTestSub":"Laboratory result",
-    "monitoring": "Health charts",
+    "monitoring": "Your data",
     "lastValue": "Last data:",
     "medical_procedure": "Medical procedures",
     "informed_consent": "Informed Consent",
@@ -1079,7 +1081,7 @@
     "readingTime": "minutes reading",
     "preparationTime": "minutes of preparation",
     "exercicesTime": "minutes of exercice",
-    "button_info": "More Information",
+    "button_info": "More information",
     "like": "Members Likes",
     "source": "Source:",
 
@@ -1102,5 +1104,24 @@
   "medical_procedure_list":{
     "text":"Here you will find all your medical procedures and diagnostic tests scheduled on a timeline."
   },
+  "google-fit": {
+    "cancel": "Cancel",
+    "connect": "Connect with your devices",
+    "info": "Google fit is a platform that allows you to track your <strong>physical activity</strong> and <strong>training</strong> data from different apps and devices.",
+    "more_info": "When you connect to Google Fit, we'll collect information about your activity to better understand your progress",
+    "connect_to": "Connect to Google Fit",
+    "install_app": "Download Google Fit App",
+    "disconnect_info": "You can disconnect from Google Fit at any time from the section ",
+    "disconnect": "Disconnect from Google Fit",
+    "config":"Configuration",
+    "app": "of the application",
+    "info-disconnect-title": "How to sign out of Google Fit",
+    "info-disconnect-msg": "To disconnect from Google Fit, open the Settings section of the App and revoke the Physical Activity permission",
+    "error_msg": "Error connecting to Google Fit",
+    "return_home": "Go to the main page"
+  },
   "content": "There is currently no data available to show"
+
+
+  
 }

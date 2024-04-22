@@ -25,7 +25,7 @@ export class ContentDateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("que llego aca", this.content)
+   
     this.setDate()
   }
 

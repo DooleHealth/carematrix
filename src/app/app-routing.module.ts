@@ -190,6 +190,14 @@ const routes: Routes = [
   },   {
     path: 'request-visit',
     loadChildren: () => import('./pages/request-visit/request-visit.module').then( m => m.RequestVisitPageModule)
+  },
+  {
+    path: 'gif',
+    loadChildren: () => import('./pages/onboarding/gif/gif.module').then( m => m.GifPageModule)
+  },
+  {
+    path: 'google-fit',
+    loadChildren: () => import('./pages/google-fit/google-fit.module').then( m => m.GoogleFitPageModule)
   }
   
     

@@ -11,8 +11,14 @@ project(':capacitor-community-firebase-analytics').projectDir = new File('../nod
 include ':capacitor-community-native-market'
 project(':capacitor-community-native-market').projectDir = new File('../node_modules/@capacitor-community/native-market/android')
 
+include ':capacitor-community-speech-recognition'
+project(':capacitor-community-speech-recognition').projectDir = new File('../node_modules/@capacitor-community/speech-recognition/android')
+
 include ':capacitor-community-sqlite'
 project(':capacitor-community-sqlite').projectDir = new File('../node_modules/@capacitor-community/sqlite/android')
+
+include ':capacitor-community-text-to-speech'
+project(':capacitor-community-text-to-speech').projectDir = new File('../node_modules/@capacitor-community/text-to-speech/android')
 
 include ':capacitor-firebase-app-check'
 project(':capacitor-firebase-app-check').projectDir = new File('../node_modules/@capacitor-firebase/app-check/android')
@@ -58,3 +64,6 @@ project(':capacitor-text-zoom').projectDir = new File('../node_modules/@capacito
 
 include ':capawesome-capacitor-badge'
 project(':capawesome-capacitor-badge').projectDir = new File('../node_modules/@capawesome/capacitor-badge/android')
+
+include ':capacitor-native-settings'
+project(':capacitor-native-settings').projectDir = new File('../node_modules/capacitor-native-settings/android')

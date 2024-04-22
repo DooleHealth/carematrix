@@ -217,7 +217,7 @@ export class FormListPage implements OnInit {
   }
 
   groupDiagnosticsByDate(forms) {
-      
+   let listFormss = [];
     forms.forEach((form) => {
       
       form.type= "forms";
@@ -229,35 +229,62 @@ export class FormListPage implements OnInit {
 
       if(form.formProgrammationTimes.length > 1){
         form.formProgrammationTimes.forEach(element => {
-          
+
           let newForm = { ...form };
           let date = this.selectDayPeriod(element.time);
           newForm.status = element.status;
           newForm.period = date;
           newForm.time = element.time;
+          newForm.date_intake = this.times(element.time);
           newForm.form_answer_id = element.form_answer_id;
           newForm.programmation_id = element.id;
-          this.listForms.push(newForm);
+          listFormss.push(newForm);
           
         });
        
       }else{
+
         form.period = this.selectDayPeriod(form.formProgrammationTimes[0].time);
         form.time = form.formProgrammationTimes[0].time
+        form.date_intake = this.times(form.formProgrammationTimes[0].time);
         form.form_answer_id = form.formProgrammationTimes[0].form_answer_id
         form.status = form.formProgrammationTimes[0].status
         form.programmation_id = form.formProgrammationTimes[0].id
-      this.listForms.push(form);
+      listFormss.push(form);
       }
-      
-
+     
 
     });
 
+   
+    
+    listFormss.sort((a, b) => a.date_intake.localeCompare(b.date_intake));
+    this.listForms = listFormss.reduce((acc, curr) => {
+      const existingItem = acc.find(item => item.date === curr.period);
+      if (existingItem) {
+        existingItem.items.push({ ...curr });
+      } else {
+        acc.push({
+          date: curr.period,
+          items: [{ ...curr }],
+          time: curr.date_intake,
+        });
+      }
+      return acc;
+    }, []);
+   // this.listForms.sort((a, b) => a.time.localeCompare(b.time));
     this.listForms = Form.sortFormsByTimes(this.listForms)
 
   }
- 
+
+  times(time){
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    const todayWithTime = new Date();
+    todayWithTime.setHours(hours, minutes, seconds);
+    return this.datePipe.transform(todayWithTime, 'yyyy-MM-dd HH:mm:ss');
+  }
+  
+
   selectDayPeriod(time) {
     let h = time.split(":");
     let hour = Number(h[0]);
@@ -372,3 +399,7 @@ getPeriodTime(name) {
      
     }
 }
+
+[
+  
+]

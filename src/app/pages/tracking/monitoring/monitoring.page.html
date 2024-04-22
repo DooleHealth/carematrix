@@ -15,7 +15,11 @@
 <ion-content view-cached=”false”>
   <app-caregiver></app-caregiver>
   
+  <ng-container  *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+      </ng-container>
 
+   <ng-template #finishedLoading>
 
     <ng-container *ngIf="items.length > 0; else noData">
       <ion-list style="padding-top: 5%;">
@@ -70,6 +74,7 @@
         <app-no-data></app-no-data>
       </div>
     </ng-template>
+  </ng-template>
 
     
 
@@ -80,7 +85,5 @@
 
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

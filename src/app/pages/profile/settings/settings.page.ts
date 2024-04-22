@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +15,8 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { Capacitor } from '@capacitor/core';
 import { NotificationOptions, notificationOpt } from 'src/app/components/notification/notification-options';
+import { Health } from '@awesome-cordova-plugins/health/ngx';
+import { NativeSettings, AndroidSettings } from 'capacitor-native-settings';
 
 
 @Component({
@@ -37,6 +39,9 @@ export class SettingsPage implements OnInit {
   environment = 0
   isSelectEndPoint = false;
   api: any;
+  enableGoogleFitSettings = false;
+  connected: boolean;
+  checkedGoogleFit = false;
   /**
    * optionList: To load all notifications
    */
@@ -62,7 +67,9 @@ export class SettingsPage implements OnInit {
     private router: Router,
     private endPoint: ApiEndpointsService,
     private alertController: AlertController,
-    private pusherConnection: PusherConnectionService
+    private pusherConnection: PusherConnectionService,
+    private health: Health,
+    private ngZone: NgZone
     ) {
       this.notification_options = new NotificationOptions()
     }
@@ -430,6 +437,47 @@ export class SettingsPage implements OnInit {
       });
 
       await alert.present();
+    }
+
+    checkGoogleFitConnection() {
+      if (this.platform.is('android')) {
+  
+        this.health
+          .isAvailable()
+          .then((available: boolean) => {
+            this.ngZone.run(() => {
+              this.enableGoogleFitSettings = available;
+            });
+  
+            
+            console.log(this.enableGoogleFitSettings)
+            this.health.isAuthorized([
+              {
+                read : ['distance', 'steps', 'heart_rate', 'activity', 'weight', 'blood_glucose'] // Read permission 
+              }
+            ]).then((authorized: boolean) => {
+  
+              this.ngZone.run(() => {
+                console.log("Authorized " + authorized);
+                this.connected = authorized;
+              });
+              
+            })
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    }
+  
+    doGoogleFitAction() {
+      this.router.navigate(['google-fit'], { state: { settings: true } });
+    }
+  
+    openAppConfig() {
+      NativeSettings.openAndroid({
+        option: AndroidSettings.ApplicationDetails,
+      });
     }
 
 }

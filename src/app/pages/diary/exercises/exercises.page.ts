@@ -64,7 +64,6 @@ export class ExercisesPage implements OnInit {
     this.scp.getAPIExercises(params).subscribe(
       async (res: any) =>{      
         if(res){
-          console.log("aaa", res)
           this.exercises = []
           this.exercises = res
         
@@ -79,8 +78,7 @@ export class ExercisesPage implements OnInit {
       });
   }
 
-  handleRedirect(event: { type: string, routerlink: string,  }) {   
-    console.log("entro a la redireccion")  
+  handleRedirect(event: { type: string, routerlink: string,  }) { 
    // this.router.navigate([`/activity-goal`]);
     this.router.navigate([event.routerlink]);
    
@@ -123,7 +121,8 @@ export class ExercisesPage implements OnInit {
           to_date: element.to_date,
           statusable: element.statusable,
           interactions: element.exercise.interactions,
-          tags_name: element.exercise.tags_name
+          tags_name: element.exercise.tags_name,
+          summary: element.exercise.summary
         }
         this.items.push(data)
       })
@@ -160,9 +159,9 @@ export class ExercisesPage implements OnInit {
   filterListExercises(event) {
     
     let search;
-    const searchTerm = event.srcElement.value.toLowerCase(); 
+    const searchTerm = event.toLowerCase(); 
     
-    if (event.srcElement.value.length === 0) {
+    if (searchTerm === '') {
       this.items = this.itemsCopy
     }
     else {
@@ -180,3 +179,4 @@ export class ExercisesPage implements OnInit {
     
   };
 }
+

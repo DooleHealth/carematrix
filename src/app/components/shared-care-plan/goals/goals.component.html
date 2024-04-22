@@ -8,12 +8,17 @@
             slot="start"><strong>{{ this.current_level?.name}}</strong></ion-text>
         </ion-item>
       </ion-col>
+      <ion-col></ion-col>
       <ion-col size="4" *ngIf="current_level?.last_accepted_or_declined == null">
         <ng-container>
-          <ion-button *ngIf="current_level?.last_accepted_or_declined == null" shape="round" color="warning" mode="ios"
+          <!--<ion-button *ngIf="current_level?.last_accepted_or_declined == null" shape="round" color="warning" mode="ios"
             class="ion-float-right custom-button" (click)="AcceptOrDeclined(current_level?.id)">
             {{ 'medication.medication_status' | translate }}
-          </ion-button>
+          </ion-button>-->
+          <ion-text *ngIf="current_level?.last_accepted_or_declined == null"  color="warning" mode="ios"
+          class="ion-float-right custom-button" (click)="AcceptOrDeclined(current_level?.id)">
+          {{ 'medication.medication_status' | translate }}
+        </ion-text>
         </ng-container>
       </ion-col>
     </ion-row>
@@ -59,17 +64,17 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-accordion-group *ngIf="current_level?.last_accepted_or_declined != null && current_level?.last_accepted_or_declined?.type === 'accepted' && this.goalsList?.length > 0">
-            <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
+          <ion-accordion-group  *ngIf="this.goalsList?.length > 0">
+            <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end"  >
 
               <ion-item slot="header">
                 <ion-label class="txt-tasks-to-do">{{ 'goals.accordion_goals'| translate }}</ion-label>
               </ion-item>
 
-              <div slot="content">
-                <ion-list *ngFor="let g of this.goalsList; let last = last" style="background-color: white;" class="ion-no-padding">
+              <div slot="content" >
+                <ion-list  *ngFor="let g of this.goalsList; let last = last" style="background-color: white;" class="ion-no-padding">
 
-                  <ion-item lines="{{last ? 'none' : 'full'}}" detail="false" (click)="g?.completed ? false : openGoal(g)">
+                  <ion-item lines="{{last ? 'none' : 'full'}}" detail="false" (click)="g?.completed ? false : openGoal(g)" [disabled]="isDisabled">
                     <ion-col size="7" slot="start" class="ion-no-padding">
 
                       <ion-label *ngIf="g?.completed" class="txt-disabled" style="padding-top: 5%; padding-bottom: 5%;">{{g?.message}} <span *ngIf="g?.name">"{{

@@ -17,6 +17,7 @@ export class Constants {
     public readonly TRAK_URL = "https://salud.rehabilify.com/app/trak/patient";
     public readonly VIDEOCALL_URL = 'https://videocalls.doole.io/';
 
+    public readonly googleFitPackageID = 'com.google.android.apps.fitness'
 
     public setEndPoint(index){
       let opt = this.LIST_ENPOINT[index]

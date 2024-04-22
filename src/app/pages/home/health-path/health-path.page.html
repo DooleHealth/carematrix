@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="spin" *ngIf="this.fetching;else showLevels">
-    <ion-spinner ></ion-spinner>
+   <ion-spinner ></ion-spinner>
 </div>
 <ng-template #showLevels>
   <div class="level-container" *ngIf="this.current_level" routerLink="/home/health-path/detail" routerLinkActive="active-item" [state]="{ challenge: this.challenge}">

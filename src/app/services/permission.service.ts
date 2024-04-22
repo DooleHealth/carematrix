@@ -30,6 +30,7 @@ export class PermissionService {
   canAccessVideocall:boolean = true
   canManageMessages:boolean = true
   canSeeCenters:boolean = true
+  colorCargiver:boolean = false
   
 
   constructor() { }
@@ -59,6 +60,7 @@ export class PermissionService {
     this.canAccessVideocall = this.canViewEvents && permissions.includes("canAccessVideocall") ? true : false;    
     this.canManageMessages = permissions.includes("canManageMessages") ? true : false;
     this.canSeeCenters = permissions.includes("canSeeCenters") ? true : false; 
+    this.colorCargiver = permissions.includes("colorCargiver") ? true : false; 
   }
 
   resetPermissions(){
@@ -86,5 +88,6 @@ export class PermissionService {
     this.canManageMessages = true
     this.canSeeCenters= true
     this.canAccessVideocall = true;
+    this.colorCargiver=false;
   }
 }

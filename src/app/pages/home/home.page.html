@@ -31,12 +31,12 @@
 </ion-header>
 
 
-<ion-content mode="md">
+<ion-content mode="md" >
 
 
   <ng-container *ngIf="this.isLoading && this.isLoadingNumNotifications; else finishedLoading">
     <div class="spin">
-      <ion-spinner name="bubbles"></ion-spinner>
+     <ion-spinner ></ion-spinner>
     </div>
   </ng-container>
 
@@ -62,7 +62,7 @@
                   style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
 
                 <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
-                  <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)">
+                  <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)" ChangeColorCargiver>
 
                     <div *ngFor="let result of results; let i = index; let isLast=last">
                       <ion-item slot="end" lines="none" class="caregiver-item2">
@@ -137,15 +137,18 @@
       
       <!-- GOALS -->
       <ng-container *ngIf="this.permissionService.canViewGoals && nChallengesNotCompleted() !== 0">
-        <ion-row class="ion-padding-top">
+
+        <ion-row style="align-items: center;">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'health_path.goals' | translate}}</ion-text>
           </ion-col>
-
+        
           <ion-col size="6">
-            <ion-text class="seeAll" style="display:flex; justify-content: end; padding-right: 5%;" routerLink="/profile/goals">{{
-              'health_path.see_all_goals' | translate}}</ion-text>
+            <ion-text class="seeAll"  style="display:flex; justify-content: end; padding-right: 5%;"
+               routerLink="/profile/goals">{{ 'health_path.see_all_goals' | translate}}
+            </ion-text>
           </ion-col>
+
         </ion-row>
 
         <ion-row mode="md" *ngIf="this.challenges?.length > 0">
@@ -157,12 +160,13 @@
                 <ion-card class="customCardHealthPath">
                   <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToChallengesPage(challenge)"
                     routerLinkActive="active-item">
-
+                    <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:var(--purple)"></ion-icon>
                     <div class="slidersHeader">
-                      <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:var(--purple)"></ion-icon>
-                      <ion-text class="challenge-txt" slot="start">{{(challenge?.name )? challenge?.name:
-                        ('home.health_path' |
-                        translate)}}</ion-text>
+                    
+
+                      <ion-text class="challenge-txt" slot="start">{{ truncateText(challenge?.name,1, 60) }}</ion-text>
+
+          
                     </div>
                     <ion-icon class="icon-arrow" slot="end" size="small"
                       src="assets/icons/challenge_card_btn.svg"></ion-icon>
@@ -183,7 +187,9 @@
                         <ion-col size="3" class="ion-no-padding"
                           style="  height: 100%; width: auto;display: block; padding-left: 5%; padding-right: 5%">
                           <ion-img class="ion-text-center" style="margin: auto;"
-                            src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/IconGoal.svg'}}"></ion-img>
+                            src="{{this.challenge?.current_level?.cover ? this.challenge.current_level.cover : 'assets/icons/shared-care-plan/goal_current.svg'}}">
+                          
+                          </ion-img>
                         </ion-col>
                         <ion-col size="9">
                           <ion-row style="display: inline-flex !important; margin-bottom: 4%;"
@@ -255,12 +261,12 @@
   
       <!-- TASKS OF TODAY -->
       <ion-row class="ion-padding-top" *ngIf="checkPermissionsTasks()">
-        <ion-text class="txtTitle" style="white-space: nowrap">
+        <ion-text class="txtTitle" style="white-space: nowrap" *ngIf="ViewData()">
           {{ 'home.today_title' | translate}}</ion-text>
       </ion-row>
 
       <!-- Forms -->
-      <ion-row *ngIf="this.permissionService.canViewForms">
+      <ion-row *ngIf="this.permissionService.canViewForms && this.forms?.length > 0">
         <ion-card class="vertical-card">
           <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToFormsPage()">
             <div class="slidersHeader">
@@ -299,7 +305,7 @@
 
 
       <!-- Exercises -->
-      <ion-row *ngIf="this.permissionService.canViewExercises">
+      <ion-row *ngIf="this.permissionService.canViewExercises && this.exercises?.length > 0">
         <ion-card class="vertical-card">
           <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToExercises()">
             <div class="slidersHeader">
@@ -341,7 +347,7 @@
 
       <!-- Drugs -->
       <ion-row *ngIf="this.permissionService.canViewMedication">
-        <ion-card class="vertical-card" style="max-height: 135px !important;">
+        <ion-card class="vertical-card" style="max-height: 135px !important;"  *ngIf="this.drugs?.length >0">
           <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToMedicationPage()"
             routerLinkActive="active-item">
             <div class="slidersHeader">
@@ -378,7 +384,7 @@
                         style="margin-left: 5px" name="close-outline" color="light"></ion-icon>
                     </ion-button>
                     <ion-button mode="md" *ngIf="slide.forgotten == 0" size="small" shape="round" color="success" [disabled]="!this.permissionService.canManageMedication"
-                      (click)="changeTake(slide.id, slide.state)">{{ 'button.taked' | translate }}<ion-icon
+                      (click)="changeTake(slide.id, slide.state)">{{ 'button.takeds' | translate }}<ion-icon
                         style="margin-left: 5px" name="checkmark-outline" color="light"></ion-icon>
                     </ion-button>&nbsp;
                   </ion-row>
@@ -392,7 +398,7 @@
 
       <!-- Diets -->
       <ion-row *ngIf="this.permissionService.canViewDiets">
-        <ion-card class="vertical-card">
+        <ion-card class="vertical-card" *ngIf="this.diets?.length >0">
           <ion-item lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToDietsPage()">
             <div class="slidersHeader">
@@ -431,7 +437,7 @@
       <!-- Games -->
       <ion-row *ngIf="this.permissionService.canViewGames">
 
-        <ion-card class="vertical-card">
+        <ion-card class="vertical-card" *ngIf="this.games?.length >0">
           <ion-item mode="md" lines="none" mode="md" class="noMargin" routerLinkActive="active-item"
             (click)="navigateToGamesPage()">
             <div class="slidersHeader">
@@ -537,7 +543,7 @@
       </ion-row>
 
       <!-- Agendas -->
-      <ion-row *ngIf="this.permissionService.canViewEvents">
+      <ion-row *ngIf="this.permissionService.canViewEvents && this.appointment?.length > 0">
         <swiper-container [slidesPerView]="this.appointment?.length == 1 ? 1:1.1">
           <swiper-slide swiperSlide *ngFor="let slide of this.appointment">
 
@@ -605,7 +611,7 @@
       
       <!-- ADVICES -->
       <ng-container *ngIf="this.permissionService.canViewAdvices && this.advices?.length > 0">
-        <ion-row>
+        <ion-row style="align-items: center;">
           <ion-col size="6">
             <ion-text class="txtTitle">{{ 'home.advices' | translate}}</ion-text>
           </ion-col>
@@ -651,7 +657,5 @@
   </ng-template>
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
     <app-tabs #tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

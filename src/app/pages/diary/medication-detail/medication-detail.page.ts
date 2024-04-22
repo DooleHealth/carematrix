@@ -156,6 +156,7 @@ export class MedicationDetailPage implements OnInit {
   }
 
   async getDrugIntakeList() {
+    this.isLoadingDrugs= true;
     console.log("[DiaryPage] getDrugIntakeList()");
     this.items = [];
     let formattedDate = this.transformDate(this.date);

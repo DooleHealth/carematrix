@@ -14,9 +14,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
-  <div class="spin" *ngIf="this.isLoading">
+  <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
     <ion-spinner ></ion-spinner>
-  </div>
+   </ng-container>
+   <ng-template #finishedLoading>
+  
   <div class="whiteBackground">
     <ion-grid class="paddingGrid2">
       <ion-row>
@@ -95,5 +97,5 @@
         </ion-list>
       </app-expandable>
     </div>
-
+</ng-template>
 </ion-content>

@@ -7,7 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+  <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+    <ion-spinner ></ion-spinner>
+   </ng-container>
+   <ng-template #finishedLoading>
   <ion-card class="cardProfile">
 <!--     <ion-card-header>
       <ion-card-title>{{recipe?.name}}</ion-card-title>
@@ -33,4 +38,5 @@
     </div>
 
   </ion-card>
+  </ng-template>
 </ion-content>

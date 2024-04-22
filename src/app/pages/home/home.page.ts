@@ -31,6 +31,8 @@ import { ShowIframeComponent } from 'src/app/components/shared-care-plan/show-if
 import { Preferences } from '@capacitor/preferences';
 import { PermissionService } from 'src/app/services/permission.service';
 import { Form } from 'src/app/models/form';
+import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
+import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
@@ -204,11 +206,13 @@ export class HomePage implements OnInit {
   prescribedApps: SharedCarePlanPrescribedApps[] = [];
   scpProcedures:PrescribedAppsAdapter;
   safeUrl;
+ 
 
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
 
   caregiverSelected = '';
+  changeColorCargiver = "";
 
   dayPhrase:string;
   datePhraseReaded: Date = null;
@@ -238,14 +242,18 @@ export class HomePage implements OnInit {
     private notification: NotificationService,
     private pusherAlarms: PusherAlarmService,
     private pusherNotifications: PusherNotificationService,
+    private pusherChallenge: PusherChallengeNotificationsService,
     private appRef: ApplicationRef,
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
-    public permissionService: PermissionService
+    public permissionService: PermissionService,
+   // public speechRecognition: SpeechRecognition;
+ 
 
 
   ) { 
-    this.scpProcedures = new PrescribedAppsAdapter(this.platform)
+    this.scpProcedures = new PrescribedAppsAdapter(this.platform);
+    SpeechRecognition.requestPermissions();
 
   }
 
@@ -261,6 +269,9 @@ export class HomePage implements OnInit {
 
 
   async ionViewWillEnter() {
+    
+  
+
     this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
     this.activateFocus = false;
     this.openNotificationAlertDialog = history.state?.openNotificationAlertDialog;
@@ -288,8 +299,12 @@ export class HomePage implements OnInit {
     }
   }
 
+
+
+
   initPushers() {
     this.pusherAlarms?.init()
+    this.pusherChallenge.init()
     const channel = this.pusherNotifications.init();
 
     if (channel)
@@ -300,6 +315,8 @@ export class HomePage implements OnInit {
 
       this.pusherNotifications.initAssignedLevel()
   }
+
+
 
   activatePusherNotification() {
     const channel = this.pusherNotifications?.init();
@@ -411,6 +428,7 @@ export class HomePage implements OnInit {
 
       this.isLoading = false;
     }
+   
   }
 
 
@@ -551,8 +569,15 @@ export class HomePage implements OnInit {
             this.authService.setUserFamilyId(null).then((val) => {
               this.ngZone.run(()=>{
                 this.isLoading = true;
+                this.changeColorCargiver="";
                 this.permissionService.resetPermissions();
                 this.ionViewWillEnter()
+                
+                const root = document.documentElement;
+                //const ionContent = document.querySelector('ion-content');
+                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+                //root.style.setProperty('--default-bkg', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+                root.style.setProperty('--carguiverBackground', '#EFEFEF' ? 'rgba(239,239,239)' : '#EFEFEF');
               });
             });
           }
@@ -599,6 +624,12 @@ export class HomePage implements OnInit {
           cssClass: 'secondary',
           handler: (data) => {
             this.changeUser(caregiverSelected)
+            this.changeColorCargiver = this.caregiverSelected;
+              const root = document.documentElement;
+                //const ionContent = document.querySelector('ion-content');
+                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+                root.style.setProperty('--carguiverBackground', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+            
           }
         }
       ]
@@ -613,7 +644,7 @@ export class HomePage implements OnInit {
       this.ngZone.run(()=>{
         this.isLoading = true;
 
-         /*user.permissionsName = [
+       /*  user.permissionsName = [
           "canViewGoals",
           "canManageGoals",
           "canViewForms",
@@ -640,11 +671,14 @@ export class HomePage implements OnInit {
           "canSeeMedicalVisits",
           "canManageRequesVisit",
           "canSeeCenters", 
+          "colorCargiver"
         ]*/
         
         this.permissionService.setPermissions(user.permissionsName);
         this.pusherConnection.unsubscribePusher()
         this.ionViewWillEnter()
+       
+       
       });
     });
       
@@ -954,6 +988,16 @@ export class HomePage implements OnInit {
       throw error;
     }
   }
+
+ViewData(){
+      
+  if( this.forms?.length > 0 || this.exercises?.length > 0 || this.drugs?.length > 0 || this.diets?.length > 0 || this.games?.length > 0 ||  this.activity?.length > 0 ){
+    return true
+  }else{
+    return false
+  }
+}
+  
 
 
   setSliderOption(option, list?) {
@@ -2209,8 +2253,8 @@ export class HomePage implements OnInit {
   public async openAICoachMessage(text:string) {
 
     let message = `
-    <ion-row>
-      <ion-col class="text-align-center" style="padding: 0px" >
+    <ion-row class="ion-padding ion-margin">
+      <ion-col class="text-align-center ion-padding" style="padding: 0px" >
         <img src="${'../../assets/images/doctor_dayPhrase.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
         <h1>`+ this.translate.instant('home.tip') + `</h1>
         <ion-text> <p>`+ text+ `</p> </ion-text>
@@ -2340,5 +2384,37 @@ export class HomePage implements OnInit {
     );  
   }
 
+
+
+   truncateText(text, maxLines, maxLength) {
+    if (!text) return ''; 
+    
+  
+    text = text.replace(/(\r\n|\n|\r)/gm, " ");
+    
+   
+    if (text.length > maxLength) {
+        text = text.substring(0, maxLength) + '...';
+    }
+    
+   
+    let lines = text.split(' ').reduce((acc, word) => {
+        const currentLine = acc.pop();
+        if ((currentLine + ' ' + word).length > maxLength) {
+            acc.push(currentLine);
+            acc.push(word);
+        } else {
+            acc.push(currentLine + ' ' + word);
+        }
+        return acc;
+    }, ['']);
+    
+    if (lines.length > maxLines) {
+
+        return lines.slice(0, maxLines).join(' ').trim() + '...';
+    }
+    
+    return text.trim(); 
+}
 
 }

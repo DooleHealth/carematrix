@@ -33,6 +33,8 @@ export class AgendaPage implements OnInit{
   inReminders = false;
   month = 0;
   year;
+  isLoading = false;
+  isLoadingReminders= false;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -62,7 +64,7 @@ export class AgendaPage implements OnInit{
     threshold: 50
   };
 
-  isLoading: boolean;
+  
   selectedDate: Date;
   date = new Date();
 
@@ -103,13 +105,19 @@ export class AgendaPage implements OnInit{
 
   async ionViewDidEnter() {
     if (this.permissionService.canViewEvents && this.segment === 'calendar') {
-      this.myCal.currentDate = new Date();
+     
+      this.isLoading = true;
+      this.updateCal()
       this.getallAgenda()
     } 
     else {
       this.eventSource = []
     }
     
+  }
+
+  updateCal(){
+    this.myCal.currentDate = new Date();
   }
 
   markDisabled = (date: Date) => {
@@ -122,9 +130,10 @@ export class AgendaPage implements OnInit{
 
 
   getallAgenda() {
-    this.isLoading = true;
+   // this.isLoading = true;
     return this.dooleService.getAPIallAgenda().subscribe(
       async (res: any) => {
+       this.isLoading= false;
         console.log('[AgendaPage] getallAgenda()', await res);
 
         if (this.permissionService.canViewEvents) {
@@ -145,6 +154,7 @@ export class AgendaPage implements OnInit{
   }
 
   getReminders() {
+   // this.isLoading = true;
     return this.dooleService.getAPIreminders().subscribe(
       async (res: any) => {
         console.log('[AgendaPage] getReminders()', await res);
@@ -171,6 +181,7 @@ export class AgendaPage implements OnInit{
   }
 
   onCurrentDateChanged(event: Date) {
+   
     this.ngZone.run(() => {
       console.log('[AgendaPage] onCurrentDateChanged()', event.getDate());
       if (this.permissionService.canViewEvents) this.getallAgenda();
@@ -387,6 +398,7 @@ export class AgendaPage implements OnInit{
   }
 
   async addAgenda() {
+    debugger
     const modal = await this.modalCtrl.create({
       component: AgendaEditPage,
       componentProps: {},
@@ -440,6 +452,7 @@ export class AgendaPage implements OnInit{
           break;
   
         case 'reminders':
+          this.isLoadingReminders
           this.inReminders=true
           this.listAppointment = this.eventSource;
           this.onViewTitleChangedReminders(new Date())
@@ -535,6 +548,7 @@ export class AgendaPage implements OnInit{
 
 
   showDayEvents(){
+    this.isLoadingReminders = true;
     this.eventMonth.forEach( (e, index) =>{
       let day = new Date(e.startTime).getDate()
       if(index == 0 || day !== new Date(this.eventMonth[index-1].startTime).getDate()){
@@ -542,6 +556,7 @@ export class AgendaPage implements OnInit{
           (new Date(event.startTime).getDate() == day)
         )
         this.dayEvents.push({date: e.startTime, events: events})
+        this.isLoadingReminders = false;
       }
     })
 
@@ -554,6 +569,7 @@ export class AgendaPage implements OnInit{
     if (currentDate.getMonth() === (this.month+1) && currentDate.getFullYear() === this.year){
       console.log('[ListAppointmentPage] showDayEvents()', this.dayEvents);
       this.dayEvents = this.filterByDate()
+      this.isLoadingReminders = false;
 
       console.log('[ListAppointmentPage] showDayEvents() Filter', this.dayEvents);
 

@@ -87,8 +87,13 @@
 }
 
 
+
 ion-content {
- --background: var(--default-bkg) !important;
+  --background: var(--carguiverBackground) !important;
+ }
+
+.app-selected-background {
+  --default-bkg: #ECDDFE
 }
 
 

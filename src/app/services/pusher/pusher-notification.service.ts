@@ -147,6 +147,9 @@ export class PusherNotificationService {
           {
             text: this.translate.instant('shared_care_plan.new_scp_alert_cancel'),
             role: 'cancel',
+            handler: () => {
+              this.isScpAlertOpened = false;
+            }
           },
 
           {

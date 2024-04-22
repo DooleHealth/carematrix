@@ -93,6 +93,7 @@ export class MedicationPage implements OnInit {
             'name',   //title
             'id')     //id*/
          }
+         this.isLoading = false
         
        },(err) => {
           console.log('[MedicationPage] loadData() ERROR(' + err.code + '): ' + err.message);
@@ -145,10 +146,15 @@ export class MedicationPage implements OnInit {
     adapterForView(list){
       if(list.length > 0)
       list.forEach(element => {  
+        let image = "";
+        const temporaryUrl = element.media;
+        if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
+          image = temporaryUrl.temporaryUrl
+        }
          
       //Se adapta la respuesta de la API a lo que espera el componente  
         let data={
-          img: element.cover.temporaryUrl,
+          img: image,
           title: element.drup_name,
           from:  this.transformDate(element.from_date),
           to:  this.transformDate(element.to_date),
@@ -162,7 +168,6 @@ export class MedicationPage implements OnInit {
           medication_plan_times: element?.medication_plan_times
 
         }
-        console.log("sss", data)
         this.items.push(data)
       })
     }
@@ -248,6 +253,7 @@ getPeriodTime(name) {
     }
 
     async getDrugIntakeList() {
+      this.isLoading = true;
       let formattedDate = this.transformDate(this.date);
       let date = { date: formattedDate };
       this.dooleService.getAPIdrugIntakeByDate(date).subscribe(
@@ -255,6 +261,7 @@ getPeriodTime(name) {
           console.log("[MedicationPage] getDrugIntakeList()", await res);
           this.listDrugIntakes = [];
           let list = res?.drugIntakes;
+          this.isLoading = false;
           if (list) {
             console.log("[MedicationPage] getDrugIntakeList() listDrugIntakes", this.listDrugIntakes);
             list = this.sortDate(list);
@@ -271,7 +278,7 @@ getPeriodTime(name) {
           throw err;
         },
         () => {
-         // this.isLoadingDrugs = false;
+          this.isLoading = false;
         }
       );
     }
@@ -293,7 +300,9 @@ getPeriodTime(name) {
           let list = drugs.filter( event =>
             (this.selectDayPeriod(event.hour_intake) === date)
           )
-          this.listDrugIntakes.push({date: date, itemDrugs: list})
+          const lastElement = list.length - 1;
+        
+          this.listDrugIntakes.push({date: date, time:list[list.length - 1].date_intake, itemDrugs: list})
         }
       })
       console.log('[MedicationPage] groupDiagnosticsByDate()', this.listDrugIntakes);

@@ -32,7 +32,7 @@ export class LifeStyle extends ScpAdapters {
    */
 
     adapterForView(list: any[], field1: string, field2: string, field3?: string){
-        debugger
+        
         let newList: medication[] = []
             list.forEach((element) => {
                 let temporaryUrl;

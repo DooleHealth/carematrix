@@ -39,6 +39,21 @@
           </ion-list>
     </ion-card>
 
+    <ng-container *ngIf="this.enableGoogleFitSettings">     
+      <ion-text class="txtTitle2">Google Fit</ion-text>
+      <ion-card class="cardProfile">
+        <ion-list>
+          <ion-item lines="none"  *ngIf="!this.connected" [button]="true" (click)="doGoogleFitAction()">
+            <ion-label> {{'google-fit.connect_to' | translate}}</ion-label>
+          </ion-item>
+  
+          <ion-item lines="none" *ngIf="this.connected" [button]="true" (click)="openAppConfig()">
+            <ion-label> {{'google-fit.disconnect' | translate}} {{'google-fit.app' | translate}} </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ng-container>
+
     <ion-text class="txtTitle">{{ 'setting.title_notification' | translate}}</ion-text>
     <ion-card class="cardProfile">
           <ion-list lines="full">

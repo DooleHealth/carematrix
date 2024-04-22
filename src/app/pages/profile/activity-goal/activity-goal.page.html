@@ -32,7 +32,7 @@
   </ion-segment>
 
   <div class="spin" *ngIf="this.isLoading">
-    <ion-spinner ></ion-spinner>
+   <ion-spinner ></ion-spinner>
   </div>
 
   <ion-row class="textBlueCentered1, header-change-month" style="background-color: white !important;">
@@ -205,7 +205,7 @@
     </ion-card>
   </div>
 
-  <span *ngIf="this.ranges.length > 0">
+<!--   <span *ngIf="this.ranges.length > 0">
     <ion-card class="cardProfilePadding card0">
       <ion-item>
         <ion-text class="txtPoppinsBlueLightBold16px">{{ 'goals.subtitle_information' | translate |
@@ -213,8 +213,6 @@
       </ion-item>
       <ion-card-title *ngIf="description" class="txtTitleGoals txtMarginElement">{{ 'activity_goal.definition' |
         translate}}</ion-card-title><br>
-      <div *ngIf="description" class="txtMarginElement" [innerHtml]="this.description"></div>
-      <!-- <ion-item-divider></ion-item-divider> -->
       <div *ngIf="this.normalValue.length > 0" class="txtMarginElement">
         <ion-text class="titleGoalBlack">{{ 'activity_goal.normal_value' | translate}}</ion-text>
         <div *ngFor="let range of this.normalValue">
@@ -235,7 +233,7 @@
       </div>
       <br>
     </ion-card>
-  </span>
+  </span> -->
 
   <ng-template #noData>
     <div *ngIf="!this.isLoading">
@@ -247,7 +245,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

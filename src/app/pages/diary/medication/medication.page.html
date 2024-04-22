@@ -40,17 +40,23 @@
 
   <div class="verticalLine2" [ngSwitch]="segment">
     <div *ngSwitchCase="'today'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+       <ion-spinner ></ion-spinner>
+      </ng-container>
+
+      <ng-template #finishedLoading>
+
       <div style="margin-top: 3%;">
         <ion-list *ngIf="this.permissionService.canViewMedication &&  listDrugIntakes.length > 0; else noData" style="padding-bottom: 25%;">
           <ion-grid *ngFor="let item of listDrugIntakes">
 
             <ion-row>
               <ion-col size="0.8">
-                <ion-icon class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
+                <ion-icon ChangeIconColor [timeOfDay]="item?.time"  class="center" src='/assets/icons/shared-care-plan/ellipse.svg'></ion-icon>&nbsp;
               </ion-col>
 
               <ion-col size="11.2" class="text-column" style="display: flex; align-items: center;">
-                <ion-text class="txt-momentDay">{{item?.date }}</ion-text>
+                <ion-text class="txt-momentDay" ChangeColor [timeOfDay]="item?.time">{{item?.date }}</ion-text>
               </ion-col>
 
               
@@ -59,7 +65,7 @@
 
             <ion-row *ngFor="let drug of item.itemDrugs">
               <ion-col size="0.8" style="align-items: center;">
-                <ion-icon style="font-size: large; width: 100%; height: 100%;"
+                <ion-icon ChangeLineColor [timeOfDay]="drug?.date_intake" style="font-size: large; width: 100%; height: 100%;"
                   src='/assets/icons/shared-care-plan/linea.svg'></ion-icon>
               </ion-col>
               <ion-col size="11.2">
@@ -85,11 +91,18 @@
         </div>
 
       </div>
+
+      </ng-template>
     </div>
 
     <div *ngSwitchCase="'medication'">
+      <ng-container class="spin" *ngIf="this.isLoading; else finishedLoading">
+       <ion-spinner ></ion-spinner>
+      </ng-container>
 
+      <ng-template #finishedLoading>
       <div>
+       
         <ion-list *ngIf="this.permissionService.canViewMedicationPlans && items.length > 0; else noData">
           <app-scp-med-for-mon *ngFor="let content of items" (redirect)="addDrugPlan(content, content.id)"
             [content]="content" [segment]="this.segment" (dataUpdated)="loaderAgain($event)"></app-scp-med-for-mon>
@@ -99,13 +112,12 @@
       <ng-template #noData>
           <app-no-data></app-no-data>
       </ng-template>
+      </ng-template>
     </div>
 
   </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
     <app-tabs></app-tabs>
-  </ion-toolbar>
 </ion-footer>

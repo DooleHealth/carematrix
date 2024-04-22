@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button (click)="close()" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="toolbarTitle">{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
+    <ion-title  *ngIf="!this.isLoading" class="toolbarTitle">{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button [disabled]="this.isLoading" (click)="submit()">
         <ion-icon name="checkmark-outline"></ion-icon>
@@ -12,9 +12,15 @@
   </ion-toolbar>
 </ion-header>
 
+
+
 <ion-content>
+  <div class="spin" *ngIf="this.isLoading">
+    <ion-spinner></ion-spinner>
+   </div>
+  
   <form (ngSubmit)="submit()" [formGroup]="form">
-  <ion-card class="cardProfile" *ngIf="!this.isNewValueElement">
+  <ion-card class="cardProfile" *ngIf="!this.isLoading && !this.isNewValueElement">
     <ion-list>
       <ion-item>
         <ion-label>{{ 'element.field_category' | translate}}</ion-label>
@@ -35,7 +41,7 @@
 
 
     <ion-list>
-      <ion-card class="cardProfile" *ngIf="this.element || isNewValueElement">
+      <ion-card class="cardProfile" *ngIf="!this.isLoading && (this.element || isNewValueElement)">
 
 
       <ion-item>
@@ -57,7 +63,7 @@
 
     </ion-card>
       <div *ngIf="this.element">
-        <ion-card class="cardProfile" *ngIf="this.element || isNewValueElement">
+        <ion-card class="cardProfile" *ngIf="!this.isLoading && (this.element || isNewValueElement)">
           <ion-item lines="none">
             <ion-label>
               <h5>{{ 'element.field_date' | translate}}</h5>

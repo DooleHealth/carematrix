@@ -26,7 +26,7 @@ staff : any;
 dataStore: DataStore<Array<ShowcaseShellUserModel>>;
 data: Array<ShowcaseShellUserModel> & ShellModel;
 isChat:boolean;
-isLoading = false
+isLoading:boolean= true;
 @HostBinding('class.is-shell') get isShell() {
   return (this.data && this.data.isShell) ? true : false;
 }
@@ -35,6 +35,7 @@ isLoading = false
   
   ngOnInit() {
     this.isLoading = true
+    console.log(this.staff)
     this.isChat = history.state?.isChat;
     const dataSource = this.dooleService.getAPIallowedContacts();
      // Initialize the model specifying that it is a shell model
@@ -49,9 +50,10 @@ isLoading = false
       console.log('[MedicalDirectoryPage] allowedContacts()', res);
       if(!res.isShell){
         this.staff = res;
-       // this.data = res;
+        console.log(this.staff)
+        this.isLoading = false
       }
-      this.isLoading = false
+      
     },
     (err) => { 
       this.isLoading = false

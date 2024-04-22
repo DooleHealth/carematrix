@@ -67,9 +67,9 @@ export class TestimonialsPage implements OnInit {
   }
   filterListTertimonials(event) {
     let search;
-    const searchTerm = event.srcElement.value.toLowerCase(); 
+    const searchTerm = event.toLowerCase(); 
 
-    if (event.srcElement.value.length === 0) {
+    if (searchTerm === '') {
       this.items = this.itemsCopy
     }
     else {
