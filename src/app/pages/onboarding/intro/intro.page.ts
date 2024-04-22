@@ -1,7 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { IonContent, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LanguageService } from 'src/app/services/language.service';
 import { Swiper } from 'swiper/types';
 
 const INTRO_KEY = 'intro';
@@ -18,10 +21,13 @@ export class IntroPage implements OnInit {
   isLastSlide: boolean = false;
 
   currentSlideIndex: number;
+  showSpeak= false;
 
   constructor(
     public router: Router,
     public platform: Platform,
+    public translate: TranslateService,
+    private languageService: LanguageService,
     private authService: AuthenticationService,) { }
 
   ngOnInit() {
@@ -62,7 +68,39 @@ export class IntroPage implements OnInit {
   }
 
   swipeNext() {
+    this.stopSpeak();
     this.swiperRef?.nativeElement.swiper.slideNext();
+  }
+
+  setSpeak(speak: any){
+    let text;
+    switch (speak) {
+      case 1:
+        text = this.translate.instant('intro.slider1_text')        
+        break;
+        case 2:
+          text = this.translate.instant('intro.slider2_text')        
+          break;
+          case 3:
+            text = this.translate.instant('intro.slider3_text')        
+            break;
+            case 4:
+              text = this.translate.instant('intro.slider4_text')        
+              break;
+      
+    }
+
+    this.showSpeak = true;
+    let language = this.languageService.getCurrent()
+    TextToSpeech.speak({
+      text:text,
+      lang: language,
+    })
+  }
+
+  stopSpeak(){
+    this.showSpeak = false;
+    TextToSpeech.stop();
   }
 
 

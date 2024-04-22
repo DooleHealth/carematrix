@@ -202,3 +202,20 @@ ion-content {
     }
   
   }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title-container {
+    display: flex; /* Hace que los elementos se muestren en línea */
+    align-items: center; /* Centra verticalmente los elementos */
+  }
+
+  .icons-container {
+    margin-left: auto; /* Mueve los iconos hacia el extremo derecho */
+  }
+  .title-container h2 {
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  }

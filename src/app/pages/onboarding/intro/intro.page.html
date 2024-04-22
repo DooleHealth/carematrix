@@ -19,8 +19,15 @@
         </div>
 
         <div class="main-container">
-          <h2>{{'intro.title1' | translate}}</h2>
-          <p>{{'intro.slider1_text' | translate}}</p>
+          <div class="title-container">
+            <h2 style="height: auto;">{{ 'intro.title1' | translate }}</h2>
+            <div style="margin-left: 60%; margin-top: 2%;">
+              <ion-icon *ngIf="showSpeak" (click)="stopSpeak()" color="secundary" name="pause-outline" slot="end"  ></ion-icon>
+              <ion-icon *ngIf="!showSpeak" color="secundary" (click)="setSpeak(1)" name="volume-high-outline" slot="end"  style="margin-left: 2px; margin-top: 2%;"></ion-icon>
+            
+            </div>
+            </div>
+          <p>{{ 'intro.slider1_text' | translate }}</p>
         </div>
       </swiper-slide>
 
@@ -31,7 +38,13 @@
         </div>
 
         <div class="main-container">
-          <h2>{{'intro.title2' | translate}}</h2>
+          <div class="title-container">
+            <h2 style="height: auto;">{{'intro.title2' | translate}}</h2>
+              <div style=" margin-left: 60%; margin-top: 2%;">
+            <ion-icon *ngIf="showSpeak" (click)="stopSpeak()" color="secundary" name="pause-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="!showSpeak" color="secundary" (click)="setSpeak(2)" name="volume-high-outline" slot="end"  style="margin-left: 2px; margin-top: 2%;"></ion-icon>
+              </div>  
+          </div>
           <p>{{'intro.slider2_text' | translate}}</p>
         </div>
       </swiper-slide>
@@ -43,7 +56,13 @@
         </div>
 
         <div class="main-container">
-          <h2>{{'intro.title3' | translate}}</h2>
+          <div class="title-container">
+            <h2 style="height: auto;">{{'intro.title3' | translate}}</h2>
+            <div style="margin-left: 40%; margin-top: 2%;" class="icons-container">
+            <ion-icon *ngIf="showSpeak" (click)="stopSpeak()" color="secundary" name="pause-outline" slot="end"  ></ion-icon>
+            <ion-icon *ngIf="!showSpeak" color="secundary" (click)="setSpeak(3)" name="volume-high-outline" slot="end"  style="margin-left: 2px; margin-top: 2%;"></ion-icon>
+          </div>    
+          </div>     
           <p>{{'intro.slider3_text' | translate}}</p>
         </div>
       </swiper-slide>
@@ -54,7 +73,13 @@
         </div>
 
         <div class="main-container">
-          <h2>{{'intro.title4' | translate}}</h2>
+          <div class="title-container">
+            <h2>{{'intro.title4' | translate}}</h2>
+            <div style="margin-left: 40%; margin-top: 2%;">
+            <ion-icon  *ngIf="showSpeak" (click)="stopSpeak()" color="secundary" name="pause-outline" slot="end" ></ion-icon>
+            <ion-icon *ngIf="!showSpeak" color="secundary" (click)="setSpeak(4)" name="volume-high-outline" slot="end"  style="margin-left: 2px; margin-top: 2%;"></ion-icon>
+          </div></div>
+          
           <p>{{'intro.slider4_text' | translate}}</p>
         </div>
       </swiper-slide>
