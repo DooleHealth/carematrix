@@ -2377,19 +2377,22 @@ export class HomePage implements OnInit {
   }
 
   handleInput(event) {
-    //this.activateFocus = true;
-    //const query = event.target.value.toLowerCase();
-
-    const query = event.toLowerCase();
+    // Normalize and remove diacritical marks from the input query
+    const query = event.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     if (query === '') {
       this.results = [];
     }
     else {
-      this.results = this.listFamilyUnit.filter(item =>
-        item.name.toLowerCase().includes(query)
-      );
-      }
-  }
+      this.results = this.listFamilyUnit.filter(item => {
+        // Normalize and remove diacritical marks from each item's name
+        const processedName = item.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        console.log(processedName); // Log the processed item name
+        return processedName.includes(query); // Perform the filtering
+      });
+    }
+}
+
+
 
 
 
