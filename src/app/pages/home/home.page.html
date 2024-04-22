@@ -56,14 +56,15 @@
 
           <ng-container *ngIf="this.listFamilyUnit?.length > 1; else onlyOneCaregiver">
             <ion-row>
-              <ion-col size="12">
-                <ion-searchbar mode="ios" show-cancel-button="always" (ionCancel)="onCancel($event)"
-                  (ionFocus)="activateList()" [debounce]="1000" (ionInput)="handleInput($event)"
-                  style="padding-left: 0px; padding-right: 0px;"></ion-searchbar>
-
-                <ion-list *ngIf="this.activateFocus" class="dependants-list ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                 <app-speech-record type="caregivers" (record)="handleInput($event)" (loadList)="getCaregiversList()"></app-speech-record>
+                 
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12" style="width: 100% ;padding-left: 2%; padding-right: 2%;">
+                <ion-list *ngIf="this.results.length > 0"  class="dependants-list">
                   <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)" ChangeColorCargiver>
-
                     <div *ngFor="let result of results; let i = index; let isLast=last">
                       <ion-item slot="end" lines="none" class="caregiver-item2">
                         <ion-radio mode="ios" value="space-between" justify="space-between" value="{{i}}" checked="true"
@@ -77,6 +78,8 @@
                   </ion-radio-group>
                 </ion-list>
               </ion-col>
+               
+              
             </ion-row>
           </ng-container>
 

@@ -204,9 +204,9 @@ export class HomePage implements OnInit {
 
   textGoals = ''
   prescribedApps: SharedCarePlanPrescribedApps[] = [];
-  scpProcedures:PrescribedAppsAdapter;
+  scpProcedures: PrescribedAppsAdapter;
   safeUrl;
- 
+
 
   private dataShareCarePlanNotification: any = history.state?.data;
   private openNotificationAlertDialog: any = history.state?.openNotificationAlertDialog;
@@ -214,15 +214,15 @@ export class HomePage implements OnInit {
   caregiverSelected = '';
   changeColorCargiver = "";
 
-  dayPhrase:string;
+  dayPhrase: string;
   datePhraseReaded: Date = null;
   canReadPhrase: boolean = false;
 
 
-  public results :any[];
+  public results: any[] = [];
   activateFocus: boolean = false;
 
-  canDoForm:boolean = false
+  canDoForm: boolean = false
   constructor(
     public router: Router,
     public platform: Platform,
@@ -247,17 +247,17 @@ export class HomePage implements OnInit {
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
     public permissionService: PermissionService,
-   // public speechRecognition: SpeechRecognition;
- 
+    // public speechRecognition: SpeechRecognition;
 
 
-  ) { 
+
+  ) {
     this.scpProcedures = new PrescribedAppsAdapter(this.platform);
     SpeechRecognition.requestPermissions();
 
   }
 
- 
+
 
 
   async ngOnInit() {
@@ -269,8 +269,8 @@ export class HomePage implements OnInit {
 
 
   async ionViewWillEnter() {
-    
-  
+
+
 
     this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
     this.activateFocus = false;
@@ -278,13 +278,13 @@ export class HomePage implements OnInit {
     console.log('[HomePage] ionViewWillEnter()' + this.openNotificationAlertDialog);
 
     if (this.getDatedayPhraseReaded()) this.datePhraseReaded = await this.getDatedayPhraseReaded();
-   
+
 
     console.log(this.datePhraseReaded)
-    
-    this.getUserInformation()   
+
+    this.getUserInformation()
     this.getNumNotification();
-    
+
     this.update()
 
 
@@ -311,9 +311,9 @@ export class HomePage implements OnInit {
       channel.bind(this.pusherNotifications.NOTIFICATION_BIND, ({ data }) => {
         console.log('[HomePage] initPushers()', data);
         this.getNumNotification();
-    });
+      });
 
-      this.pusherNotifications.initAssignedLevel()
+    this.pusherNotifications.initAssignedLevel()
   }
 
 
@@ -354,12 +354,12 @@ export class HomePage implements OnInit {
           this.health.requestAuthorization(
             //read and write permissions
             [
-              'distance', 
-              'steps', 
-              'heart_rate', 
-              'activity', 
-              'weight', 
-              'oxygen_saturation'  
+              'distance',
+              'steps',
+              'heart_rate',
+              'activity',
+              'weight',
+              'oxygen_saturation'
             ]
           )
             .then(res => {
@@ -405,10 +405,10 @@ export class HomePage implements OnInit {
         this.getFamilyUnitData(),
         this.getUserImage(),
         this.getPersonalInformation(),
-        this.getChallenges(), 
+        this.getChallenges(),
 
         this.getFormsList(),
-        this.getAdvicesList(), 
+        this.getAdvicesList(),
         this.getExercisesList(),
         (this.drugs = [], this.getDrugIntake()),
         this.getDietList(),
@@ -428,7 +428,7 @@ export class HomePage implements OnInit {
 
       this.isLoading = false;
     }
-   
+
   }
 
 
@@ -437,7 +437,7 @@ export class HomePage implements OnInit {
 
       console.log(this.datePhraseReaded)
       if (this.datePhraseReaded !== null) {
-        if(this.hasMoreThanOneDayPassed(this.datePhraseReaded, new Date())) {
+        if (this.hasMoreThanOneDayPassed(this.datePhraseReaded, new Date())) {
           const res: any = await new Promise((resolve, reject) => {
             this.dooleService.getAPIDayPhrase().subscribe(
               (data: any) => {
@@ -450,9 +450,9 @@ export class HomePage implements OnInit {
               }
             );
           });
-    
+
           this.dayPhrase = res.dayPrase.phrase;
-              
+
           if (this.dayPhrase != null) {
             this.openAICoachMessage(this.dayPhrase)
             this.setDateDayPhraseReaded(new Date());
@@ -462,7 +462,7 @@ export class HomePage implements OnInit {
           console.log("cant read")
           this.canReadPhrase = false;
         }
-        
+
       }
       else {
 
@@ -479,16 +479,16 @@ export class HomePage implements OnInit {
             }
           );
         });
-  
+
         this.dayPhrase = res.dayPrase.phrase;
-        
+
         //this.dayPhrase = "Your health is your greatest wealth, and every food choice is an opportunity to strengthen it. With the power of your decisions, you can manage diabetes and live a full and healthy life. Every bite counts towards a brighter future!"
         if (this.dayPhrase != null) {
           this.openAICoachMessage(this.dayPhrase)
           this.setDateDayPhraseReaded(new Date());
         }
       }
-      
+
 
     } catch (error) {
       // Handle errors if needed
@@ -501,15 +501,15 @@ export class HomePage implements OnInit {
   hasMoreThanOneDayPassed(date1: Date, date2: Date): boolean {
     // Calculate the difference in time between the two dates
     const differenceInTime = Math.abs(date2.getTime() - date1.getTime());
-  
+
     // Calculate the number of days between the two dates
     const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-  
+
     // Check if the difference is greater than 1 day
     return differenceInDays >= 1;
   }
 
-  async getFamilyUnitData(){
+  async getFamilyUnitData() {
 
     try {
       const res: any = await new Promise((resolve, reject) => {
@@ -529,8 +529,8 @@ export class HomePage implements OnInit {
 
       console.log(this.listFamilyUnit)
 
-      
-      this.results = [...this.listFamilyUnit];
+
+      //this.results = [...this.listFamilyUnit];
 
       console.log(this.listFamilyUnit)
 
@@ -541,7 +541,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  async returnUser(){
+  async returnUser() {
 
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
@@ -556,7 +556,7 @@ export class HomePage implements OnInit {
           handler: (blah) => {
             this.onCancel()
             console.log('[LandingPage] AlertConfirm Cancel');
-          } 
+          }
         }, {
           text: this.translate.instant("alert.button_change"),
           role: 'confirm',
@@ -565,14 +565,14 @@ export class HomePage implements OnInit {
             this.authService.isFamily = false;
             this.pusherConnection.unsubscribePusher()
             console.log(this.authService.user.familyUnit)
-            Preferences.remove({ key:  this.authService.user.familyUnit }).then((val) => { });
+            Preferences.remove({ key: this.authService.user.familyUnit }).then((val) => { });
             this.authService.setUserFamilyId(null).then((val) => {
-              this.ngZone.run(()=>{
+              this.ngZone.run(() => {
                 this.isLoading = true;
-                this.changeColorCargiver="";
+                this.changeColorCargiver = "";
                 this.permissionService.resetPermissions();
                 this.ionViewWillEnter()
-                
+
                 const root = document.documentElement;
                 //const ionContent = document.querySelector('ion-content');
                 //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
@@ -587,8 +587,8 @@ export class HomePage implements OnInit {
 
     await alert.present();
 
-   
-   
+
+
   }
 
   async onCaregiverSelect(event: any) {
@@ -617,7 +617,7 @@ export class HomePage implements OnInit {
           handler: (blah) => {
             this.onCancel()
             console.log('[LandingPage] AlertConfirm Cancel');
-          } 
+          }
         }, {
           text: this.translate.instant("alert.button_change"),
           role: 'confirm',
@@ -625,11 +625,11 @@ export class HomePage implements OnInit {
           handler: (data) => {
             this.changeUser(caregiverSelected)
             this.changeColorCargiver = this.caregiverSelected;
-              const root = document.documentElement;
-                //const ionContent = document.querySelector('ion-content');
-                //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
-                root.style.setProperty('--carguiverBackground', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
-            
+            const root = document.documentElement;
+            //const ionContent = document.querySelector('ion-content');
+            //ionContent.style.backgroundColor = 'rgba(236, 221, 254, 1)';
+            root.style.setProperty('--carguiverBackground', '#ECDDFE' ? 'rgba(236, 221, 254, 1)' : '#ECDDFE');
+
           }
         }
       ]
@@ -638,51 +638,51 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  changeUser(user?){
+  changeUser(user?) {
     console.log('[FamilyUnitPage] changeUser() Cuenta de:', user);
     this.authService.setFamilyUnit(user).then((val) => {
-      this.ngZone.run(()=>{
+      this.ngZone.run(() => {
         this.isLoading = true;
 
-       /*  user.permissionsName = [
-          "canViewGoals",
-          "canManageGoals",
-          "canViewForms",
-          "canViewAnswerForms",
-          "canViewExercises",
-          "canViewDiets",
-          "canViewRecipes",
-          "canViewGames",
-          "canViewMonitoring",
-          "canManageMonitoring",
-          "canViewAdvices",
-          "canViewMedicalProcedures",
-          "canViewNew",
-          "canViewTestimonials",
-          "canViewMedicalTests",
-          "canManageMedicalTests",
-          "canViewMedication",
-          "canManageMedication",
-          "canViewMedicationPlans",
-          "canViewPlanningForm",
-          "canViewEvents",
-          "canManageEvents",
-          "canManageMessages",
-          "canSeeMedicalVisits",
-          "canManageRequesVisit",
-          "canSeeCenters", 
-          "colorCargiver"
-        ]*/
-        
+        /*  user.permissionsName = [
+           "canViewGoals",
+           "canManageGoals",
+           "canViewForms",
+           "canViewAnswerForms",
+           "canViewExercises",
+           "canViewDiets",
+           "canViewRecipes",
+           "canViewGames",
+           "canViewMonitoring",
+           "canManageMonitoring",
+           "canViewAdvices",
+           "canViewMedicalProcedures",
+           "canViewNew",
+           "canViewTestimonials",
+           "canViewMedicalTests",
+           "canManageMedicalTests",
+           "canViewMedication",
+           "canManageMedication",
+           "canViewMedicationPlans",
+           "canViewPlanningForm",
+           "canViewEvents",
+           "canManageEvents",
+           "canManageMessages",
+           "canSeeMedicalVisits",
+           "canManageRequesVisit",
+           "canSeeCenters", 
+           "colorCargiver"
+         ]*/
+
         this.permissionService.setPermissions(user.permissionsName);
         this.pusherConnection.unsubscribePusher()
         this.ionViewWillEnter()
-       
-       
+
+
       });
     });
-      
-   
+
+
   }
 
   async getUserImage() {
@@ -727,7 +727,7 @@ export class HomePage implements OnInit {
       this.userDoole = res.user;
       this.first_name = this.userDoole?.first_name?.split(' ')[0];
 
-      this.greeting = this.translate.instant('home.hello') + ', ' + "<b>"+this.first_name+"</b>";
+      this.greeting = this.translate.instant('home.hello') + ', ' + "<b>" + this.first_name + "</b>";
 
 
     } catch (error) {
@@ -740,10 +740,10 @@ export class HomePage implements OnInit {
 
   async getAdvicesList() {
     try {
-      let  params={
-        tags:1,
-        interactions:1,
-        readingTime:1
+      let params = {
+        tags: 1,
+        interactions: 1,
+        readingTime: 1
       }
       const res: any = await new Promise((resolve, reject) => {
         this.dooleService.getAPIlistAdvices(params).subscribe(
@@ -776,10 +776,10 @@ export class HomePage implements OnInit {
 
   async getNewsList(advices) {
     try {
-      let  params={
-        tags:1,
-        interactions:1,
-        readingTime:1
+      let params = {
+        tags: 1,
+        interactions: 1,
+        readingTime: 1
       }
       const res: any = await new Promise((resolve, reject) => {
         this.dooleService.getAPIlistNews(params).subscribe(
@@ -835,7 +835,7 @@ export class HomePage implements OnInit {
       const params = { filter: '1' };
       const data: any = await new Promise((resolve, reject) => {
         this.scpService.get_APi_ACP_monitoring().subscribe(
-        //this.dooleService.getAPIelementsListByDate(params).subscribe(
+          //this.dooleService.getAPIelementsListByDate(params).subscribe(
           (response: any) => {
             console.log('[TrackingPage] getElementsList()', response);
             resolve(response);
@@ -886,19 +886,19 @@ export class HomePage implements OnInit {
     }
   }
 
-  navigateToFormPage(content){
+  navigateToFormPage(content) {
     console.log('[FormListPage] navigateToFormPage() ', content)
 
     if (this.canDoForm) {
-       this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });
+      this.router.navigate([ContentTypePath.FormDetail, { id: content.form_id }], { state: { game_play_id: content.data?.game_play_id, form_programmation_id: content.id, form_answer_id: content?.id } });
     }
   }
 
-  
+
 
   async getFormsList() {
     try {
-      const params = {date: this.date, grouped_by_times: false}
+      const params = { date: this.date, grouped_by_times: false }
       const data: any = await new Promise((resolve, reject) => {
         this.dooleService.getAPIFormsByDate(params).subscribe(
           async (res: any) => {
@@ -923,9 +923,9 @@ export class HomePage implements OnInit {
   async getChallenges() {
     try {
 
-     
+
       const data: any = await new Promise((resolve, reject) => {
-        this.dooleService.getAPIChallenges({onlyAccepted:1}).subscribe(
+        this.dooleService.getAPIChallenges({ onlyAccepted: 1 }).subscribe(
           async (res: any) => {
             console.log('[TrackingPage] getAPIChallenges()', await res);
             this.setChallengesSlider(res.challenges)
@@ -946,24 +946,24 @@ export class HomePage implements OnInit {
 
   async getExercisesList() {
     try {
-        const exercisesPromise = await new Promise((resolve, reject) => {
-          this.scpService.getAPIExercises().subscribe(
+      const exercisesPromise = await new Promise((resolve, reject) => {
+        this.scpService.getAPIExercises().subscribe(
           //  this.dooleService.getAPIExercisesByDate(this.date, this.date).subscribe(
-                res => resolve(res),
-                error => reject(error)
-            );
-        });
-       
+          res => resolve(res),
+          error => reject(error)
+        );
+      });
+
       //  let [exercisesResponse] = await Promise.all([exercisesPromise]) as [any];;
-      console.log('[TrackingPage] getExercisesList()', exercisesPromise );
+      console.log('[TrackingPage] getExercisesList()', exercisesPromise);
       this.setExercisesSlider(exercisesPromise);
 
     } catch (error) {
-        // Handle errors if needed
-        console.error('Error fetching elements list:', error);
-        throw error;
+      // Handle errors if needed
+      console.error('Error fetching elements list:', error);
+      throw error;
     }
-}
+  }
 
 
   async getExercisesListOld() {
@@ -989,15 +989,15 @@ export class HomePage implements OnInit {
     }
   }
 
-ViewData(){
-      
-  if( this.forms?.length > 0 || this.exercises?.length > 0 || this.drugs?.length > 0 || this.diets?.length > 0 || this.games?.length > 0 ||  this.activity?.length > 0 ){
-    return true
-  }else{
-    return false
+  ViewData() {
+
+    if (this.forms?.length > 0 || this.exercises?.length > 0 || this.drugs?.length > 0 || this.diets?.length > 0 || this.games?.length > 0 || this.activity?.length > 0) {
+      return true
+    } else {
+      return false
+    }
   }
-}
-  
+
 
 
   setSliderOption(option, list?) {
@@ -1141,7 +1141,7 @@ ViewData(){
 
   setGamesSlider(games) {
     console.log('[DiaryPage] setDietSlider()', games);
-   
+
 
     if (this.games !== undefined && this.games.length > 0) {
 
@@ -1150,14 +1150,14 @@ ViewData(){
         hour: this.games[this.currentIndexGame]?.scheduled_date !== null ? this.transformDate(new Date(this.games[this.currentIndexGame]?.scheduled_date), 'HH:mm') : ''
       }
 
-      
+
       this.setSliderOption('games')
       //this.updateGamesSlider(games)
 
       this.sliderGames.nativeElement.swiper.activeIndex = this.currentIndexGame;
     }
 
-  
+
   }
 
   setExercisesSlider(exercises) {
@@ -1168,13 +1168,13 @@ ViewData(){
       this.searchIndexExercise();
       this.infoExercises = {
         title: this.exercises[this.currentIndexExercise]?.exercise?.name,
-        hour:  this.exercises[this.currentIndexExercise]?.scheduled_date? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
+        hour: this.exercises[this.currentIndexExercise]?.scheduled_date ? this.transformDate(new Date(this.exercises[this.currentIndexExercise]?.scheduled_date), 'HH:mm') : ''
       }
 
       this.setSliderOption('exercises')
       this.updateExercisesSlider(exercises)
     }
-    
+
   }
 
   setChallengesSlider(challenges) {
@@ -1204,22 +1204,22 @@ ViewData(){
     }
   }
 
-  groupelement(elements){
+  groupelement(elements) {
     let group = []
-    elements.forEach( (element, index) => {
-        const groupName = element?.group?.name
-        if(index == 0 || groupName !== elements[index-1].group?.name){
-          let list = elements.filter(e => (e?.group?.name === groupName) )
-          const item = {group: groupName, elements: list}
-          group.push(item)
-        }
+    elements.forEach((element, index) => {
+      const groupName = element?.group?.name
+      if (index == 0 || groupName !== elements[index - 1].group?.name) {
+        let list = elements.filter(e => (e?.group?.name === groupName))
+        const item = { group: groupName, elements: list }
+        group.push(item)
+      }
 
     })
     return group
   }
 
-  sortElements(elements){
-    return elements.sort( function (a, b) {
+  sortElements(elements) {
+    return elements.sort(function (a, b) {
       if (a?.group?.name > b?.group?.name)
         return 1;
       if (a?.group?.name < b?.group?.name)
@@ -1230,10 +1230,10 @@ ViewData(){
 
   setPhysicalSlider(constants) {
     this.activity = []
-    if(constants?.length > 0){
+    if (constants?.length > 0) {
       this.activity = this.groupelement(
         this.sortElements(constants)
-      ) 
+      )
       this.slideActivityChange()
     }
     this.setSliderOption('physical')
@@ -1862,7 +1862,7 @@ ViewData(){
   }
 
   changeTake(id, taked) {
-    if(this.permissionService.canManageMedication) {
+    if (this.permissionService.canManageMedication) {
       taked = (taked == "0") ? "1" : "0";
       var dict = [];
       dict.push({
@@ -1876,7 +1876,7 @@ ViewData(){
         throw err;
       });
     }
-    
+
   }
 
   filterDrugsByStatus() {
@@ -1892,7 +1892,7 @@ ViewData(){
       }
       this.setSliderOption('drugs')
       this.sliderDrug.nativeElement.swiper.activeIndex = this.currentIndexDrug;
- 
+
     } else {
       this.infoDrugs = null;
     }
@@ -1920,7 +1920,7 @@ ViewData(){
 
   searchIndexExercise() {
     if (this.exercises !== undefined && this.exercises?.length > 0) {
-      if(!this.exercises[0]?.scheduled_date){
+      if (!this.exercises[0]?.scheduled_date) {
         this.currentIndexExercise = 0
         return
       }
@@ -2058,7 +2058,7 @@ ViewData(){
     return this.datePipe.transform(date, 'dd-MM-yyyy');
   }
 
-  
+
 
   goUnitName(unitName) {
     let name = JSON.parse(unitName)
@@ -2207,12 +2207,12 @@ ViewData(){
     return value
   }
 
-  openActionPrescribedApps(app){
+  openActionPrescribedApps(app) {
     console.log(app)
-      if(app.access_type === ACCESS_TYPE.APP)
-        this.openMarketApp(app.id_pkg)
-      else
-        this.openShowIframe(app)
+    if (app.access_type === ACCESS_TYPE.APP)
+      this.openMarketApp(app.id_pkg)
+    else
+      this.openShowIframe(app)
   }
 
   openMarketApp(id) {
@@ -2225,7 +2225,7 @@ ViewData(){
     console.log('openActionPrescribedApps()', slide);
     const modal = await this.modalCtrl.create({
       component: ShowIframeComponent,
-      componentProps: {app: slide.configurations},
+      componentProps: { app: slide.configurations },
     });
 
     modal.onDidDismiss()
@@ -2243,21 +2243,21 @@ ViewData(){
   }
 
 
-   nChallengesNotCompleted() {
-    
-  
+  nChallengesNotCompleted() {
+
+
     return this.challenges.filter(challenge => !challenge.completed).length;
   }
 
 
-  public async openAICoachMessage(text:string) {
+  public async openAICoachMessage(text: string) {
 
     let message = `
     <ion-row class="ion-padding ion-margin">
       <ion-col class="text-align-center ion-padding" style="padding: 0px" >
         <img src="${'../../assets/images/doctor_dayPhrase.svg'}" alt="photo" style='width: -webkit-fill-available' /> 
         <h1>`+ this.translate.instant('home.tip') + `</h1>
-        <ion-text> <p>`+ text+ `</p> </ion-text>
+        <ion-text> <p>`+ text + `</p> </ion-text>
       </ion-col>
     </ion-row>`;
 
@@ -2280,11 +2280,11 @@ ViewData(){
 
     await alert.onDidDismiss();
   }
-  
+
 
 
   navigateToDietsPage() {
-    this.router.navigate([ContentTypePath.Diets], { state: { segment: 'diets'}});
+    this.router.navigate([ContentTypePath.Diets], { state: { segment: 'diets' } });
   }
 
   goDetailRecipe(e) {
@@ -2295,42 +2295,42 @@ ViewData(){
 
 
   navigateToExercises() {
-    this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises'}});
+    this.router.navigate([ContentTypePath.Exercises], { state: { segment: 'exercises' } });
 
   }
 
 
   navigateToMedicationPage() {
-    this.router.navigate([ContentTypePath.Medication], { state: { segment: 'medication'}});
+    this.router.navigate([ContentTypePath.Medication], { state: { segment: 'medication' } });
   }
 
   navigateToFormsPage() {
-    this.router.navigate([ContentTypePath.Forms], { state: { segment: 'forms'}});
+    this.router.navigate([ContentTypePath.Forms], { state: { segment: 'forms' } });
   }
 
   navigateToExercisesPage(slide: any) {
     console.log('navigateToExercisesPage()', slide);
-    if (!slide?.configurations) 
-      this.router.navigate([ContentTypePath.ExercisesDetail], { state: { id: slide?.exercise?.id}});
+    if (!slide?.configurations)
+      this.router.navigate([ContentTypePath.ExercisesDetail], { state: { id: slide?.exercise?.id } });
     else {
       this.openShowIframe(slide)
     }
   }
 
-  navigateToGamesPage(){
-    this.router.navigate([ContentTypePath.Games], { state: { segment: 'games'}});
+  navigateToGamesPage() {
+    this.router.navigate([ContentTypePath.Games], { state: { segment: 'games' } });
   }
 
-  navigateToMonitoringPage(){
-    this.router.navigate([ContentTypePath.Monitoring], { state: { segment: 'health'}});
+  navigateToMonitoringPage() {
+    this.router.navigate([ContentTypePath.Monitoring], { state: { segment: 'health' } });
   }
 
-  navigateToChallengesPage(challenge:any) {
-    this.router.navigate([ContentTypePath.Challenges], { state: { challenge: challenge}});
+  navigateToChallengesPage(challenge: any) {
+    this.router.navigate([ContentTypePath.Challenges], { state: { challenge: challenge } });
   }
 
-  navigateToChallengeDetailPage(challenge:any) {
-    this.router.navigate([ContentTypePath.ChallengesDetail], { state: { challenge: challenge}});
+  navigateToChallengeDetailPage(challenge: any) {
+    this.router.navigate([ContentTypePath.ChallengesDetail], { state: { challenge: challenge } });
 
   }
 
@@ -2354,16 +2354,16 @@ ViewData(){
 
     //return new Date(result.value); 
   }
- 
+
 
   activateList() {
     this.ngZone.run(() => {
       console.log("Acivate/des Focus")
-    this.activateFocus = true;
+      this.activateFocus = true;
     });
   }
 
-  onCancel($event?:any) {
+  onCancel($event?: any) {
     this.activateFocus = false;
   }
 
@@ -2373,48 +2373,59 @@ ViewData(){
 
   checkPermissionsTasks() {
     return this.permissionService.canViewForms || this.permissionService.canViewExercises || this.permissionService.canViewMedication || this.permissionService.canViewDiets ||
-           this.permissionService.canViewGames || this.permissionService.canViewMonitoring
+      this.permissionService.canViewGames || this.permissionService.canViewMonitoring
   }
 
   handleInput(event) {
     //this.activateFocus = true;
-    const query = event.target.value.toLowerCase();
-    this.results = this.listFamilyUnit.filter(item => 
-      item.name.toLowerCase().includes(query)
-    );  
+    //const query = event.target.value.toLowerCase();
+
+    const query = event.toLowerCase();
+    if (query === '') {
+      this.results = [];
+    }
+    else {
+      this.results = this.listFamilyUnit.filter(item =>
+        item.name.toLowerCase().includes(query)
+      );
+      }
   }
 
 
 
-   truncateText(text, maxLines, maxLength) {
-    if (!text) return ''; 
-    
-  
+  truncateText(text, maxLines, maxLength) {
+    if (!text) return '';
+
+
     text = text.replace(/(\r\n|\n|\r)/gm, " ");
-    
-   
+
+
     if (text.length > maxLength) {
-        text = text.substring(0, maxLength) + '...';
+      text = text.substring(0, maxLength) + '...';
     }
-    
-   
+
+
     let lines = text.split(' ').reduce((acc, word) => {
-        const currentLine = acc.pop();
-        if ((currentLine + ' ' + word).length > maxLength) {
-            acc.push(currentLine);
-            acc.push(word);
-        } else {
-            acc.push(currentLine + ' ' + word);
-        }
-        return acc;
+      const currentLine = acc.pop();
+      if ((currentLine + ' ' + word).length > maxLength) {
+        acc.push(currentLine);
+        acc.push(word);
+      } else {
+        acc.push(currentLine + ' ' + word);
+      }
+      return acc;
     }, ['']);
-    
+
     if (lines.length > maxLines) {
 
-        return lines.slice(0, maxLines).join(' ').trim() + '...';
+      return lines.slice(0, maxLines).join(' ').trim() + '...';
     }
-    
-    return text.trim(); 
-}
+
+    return text.trim();
+  }
+
+  getCaregiversList() {
+    return this.listFamilyUnit;
+  }
 
 }
