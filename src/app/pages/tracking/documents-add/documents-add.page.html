@@ -23,7 +23,7 @@
         </ion-label> -->
         <ion-input labelPlacement="floating" style="font-size: 14px !important;"  formControlName="type"  [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false">
           <div slot="label">
-            <ion-text color="danger">{{ 'documents_add.field_test_type' | translate }}&nbsp;
+            <ion-text class="typography" color="danger">{{ 'documents_add.field_test_type' | translate }}&nbsp;
               <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
             </ion-text>
             
@@ -33,69 +33,69 @@
         <ion-icon name="chevron-forward-outline" slot="end" size="small"></ion-icon>
       </ion-item>
 
-      <ion-item lines="none">
-        <ion-label  stacked>
-          <h5>{{ 'documents_add.field_title' | translate }}</h5>
-          <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-textarea labelPlacement="start" formControlName="title" (ionInput)="isSubmittedTitle = false" maxlength="100"></ion-textarea>
-      </ion-item>
 
       <ion-item>
-        <ion-label  stacked>
-          <h5 >{{ 'documents_add.field_date' | translate}}</h5>
-          <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
+        <ion-label  stacked class="typography">
+          {{ 'documents_add.field_title' | translate }}
+          <ion-note *ngIf="this.isSubmittedTitle && this.form.get('title').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
         </ion-label>
-        <ion-datetime-button firstDayOfWeek="1" slot="end" datetime="date"></ion-datetime-button>
+        <ion-input  class="textMedium" required  labelPlacement="start" formControlName="title" (ionInput)="isSubmittedTitle = false" maxlength="100"></ion-input>
       </ion-item>
-      <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
-        <ng-template>
-          <ion-datetime firstDayOfWeek="1" mode="ios" [locale]="this.locale" (ionInput)="isSubmittedDate = false" presentation="date" id="date" (ionChange)="this.isSubmittedDate = false;" formControlName="date"></ion-datetime>
-          <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
-            <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
-            <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
-            <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
-          </ion-buttons>
-        </ng-template>
-      </ion-modal>
+
+
               <!-- FIXME: <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date" [displayFormat]="this.dateService.getShortDateFormat()" (ionInput)="isSubmittedDate = false" [placeholder]="this.dateService.ddMMyyyyFormat(this.currentDate)" min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
               <!-- <ion-datetime cancelText="{{'button.cancel' | translate}}" doneText="{{'button.accept' | translate}}" formControlName="date"  min="1990-01-01" [max]="this.dateMax"></ion-datetime> -->
 
 
       <ion-item lines="none">
-          <ion-label  stacked>
-            <h5>{{ 'documents_add.field_description' | translate }}</h5>
+          <ion-label  stacked class="typography">
+            {{ 'documents_add.field_description' | translate }}
           </ion-label>
       </ion-item>
       <ion-item>
-        <ion-textarea rows="8" formControlName="description"></ion-textarea>
+        <ion-textarea rows="8" class="textMediumLeft" formControlName="description"></ion-textarea>
       </ion-item>
-      <ion-item lines="none">
-        <ion-label  stacked>
-          <h5>{{ 'documents_add.field_private' | translate }}</h5>
-        </ion-label>
-        <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
-
-      </ion-item>
+      
     </ion-list>
   </ion-card>
 
 
 <ion-card class="cardProfile" text-wrap>
-  <form>
+  <ion-item>
+    <ion-label  stacked class="typography">
+      {{ 'documents_add.field_date' | translate}}
+      <ion-note *ngIf="this.isSubmittedDate && this.form.get('date').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
+    </ion-label>
+    <ion-datetime-button firstDayOfWeek="1" slot="end" datetime="date"></ion-datetime-button>
+  </ion-item>
+  <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
+    <ng-template>
+      <ion-datetime firstDayOfWeek="1" mode="ios" [locale]="this.locale" (ionInput)="isSubmittedDate = false" presentation="date" id="date" (ionChange)="this.isSubmittedDate = false;" formControlName="date"></ion-datetime>
+      <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
+        <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+        <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
+        <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+      </ion-buttons>
+    </ng-template>
+  </ion-modal>
+  <ion-item lines="none">
+    <ion-label  stacked class="typography">
+     {{ 'documents_add.field_private' | translate }}
+    </ion-label>
+    <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
+
+  </ion-item>
     <ion-list text-wrap>
       <ion-item lines="none">
-        <ion-label  stacked>
-          <h5>{{ 'documents_add.attachments' | translate }}</h5>
+        <ion-label  stacked class="typography">
+          {{ 'documents_add.attachments' | translate }}
         </ion-label>
       </ion-item>
 
         <app-file-upload #uploadFile [media]="this.media"></app-file-upload>
 
     </ion-list>
-  </form>
+
 </ion-card>
 </form>
 
@@ -111,13 +111,13 @@
 <ion-footer>
   <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
     <ion-button  *ngIf="this.isEdit" (click)="presentAlertConfirm()" color="danger" shape="round" class="floating-button ion-margin" style="margin-bottom: 18%;" >
-      {{'button.delete' | translate }}
+      {{'documents_add.button_delete_result' | translate }}
     </ion-button>
   </div>
 
   <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
     <ion-button [disabled]="this.isLoading" *ngIf="this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
-      {{'documents_add.button_add_result' | translate }}
+      {{'documents_add.button_edit_result' | translate }}
     </ion-button>
   </div>
 

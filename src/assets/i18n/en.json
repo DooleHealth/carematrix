@@ -575,6 +575,8 @@
     "attachments": "Attachments",
     "button_add_files": "Add Files",
     "button_add_result": "Add Result",
+    "button_delete_result": "Delete Result",
+    "button_edit_result": "Save Result",
     "alert_message": "Medical documentation has been successfully added",
     "error_alert_message": "An error occurred while adding a new medical document",
     "select": "Select",
