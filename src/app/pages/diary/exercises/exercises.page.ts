@@ -107,7 +107,7 @@ export class ExercisesPage implements OnInit {
           scheduled_date: this.transformDate(element?.from_date),
           form_id: element.form_id,
           type: "Exercises",
-          description: "",
+          description: element.exercise.description,
           id: element.exercise.id,
           exercise_id: element.exercise.id,
           programable_id: element.programable_id,

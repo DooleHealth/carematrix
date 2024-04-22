@@ -1,14 +1,16 @@
-<ion-card *ngFor="let listcontets of content">
+<ion-card mode="md" *ngFor="let listcontets of content">
 
   <img class="imagefit" [src]="getImageSource(listcontets)"
     onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
     
-  <ion-item lines="none">
+  <ion-item lines="none" mode="md">
     <div *ngFor="let list of listcontets?.tags_name">
       <ion-text class="study">{{ list.name}}</ion-text>
     </div>
-    
- <ion-icon color="secundary" name="volume-high-outline" slot="end" color="primary" (click)="setSpeak(listcontets.description)" style="margin-left: 2px;"></ion-icon>
+   
+ <ion-icon *ngIf="showSpeak" color="secundary" name="pause-outline" slot="end" color="primary" (click)="stopSpeak()" style="margin-left: 2px;"></ion-icon>
+  
+ <ion-icon *ngIf="!showSpeak" color="secundary" name="volume-high-outline" slot="end" color="primary"  (click)="setSpeak(listcontets.description ? listcontets.description : listcontets.content)"  style="margin-left: 2px;"></ion-icon>
    
     <ion-icon
       *ngIf="(this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null)"

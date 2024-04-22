@@ -23,12 +23,8 @@
   }
 }
 
-.user-lastname > app-text-shell {
-  --text-shell-line-height: 14px;
-  max-width: 120px;
-  &.text-loaded {
-    max-width: inherit;
-  }
+p {
+  font-size: 12px;
 }
 
 ion-list {

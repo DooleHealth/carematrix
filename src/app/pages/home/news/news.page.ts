@@ -68,6 +68,7 @@ export class NewsPage implements OnInit {
         if(res.news)
        // this.adapterForView(res.news)
         this.items = res.news;
+        
         this.itemsCopy = res.news;
         this.saves_items = this.items;
         console.log('[NewsPage] getNewsList(content)', this.items);
