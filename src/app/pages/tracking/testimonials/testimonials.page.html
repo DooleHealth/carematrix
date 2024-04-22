@@ -22,7 +22,7 @@
   <div class="spin" *ngIf="this.isLoading">
    <ion-spinner ></ion-spinner>
   </div>
-  <div  style="padding-top: 10%;">
+  <div>
     <ion-list *ngIf="items.length > 0; else noData">
 
       <app-view-more-information (notifyParent)="refreshPage($event)" [content]="items" segment="Testimony"></app-view-more-information>

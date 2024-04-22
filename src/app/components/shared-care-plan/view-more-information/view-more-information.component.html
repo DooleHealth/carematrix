@@ -1,4 +1,4 @@
-<ion-card *ngFor="let listcontets of content">
+<ion-card mode="md" *ngFor="let listcontets of content">
 
   <img class="imagefit" [src]="getImageSource(listcontets)"
     onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
