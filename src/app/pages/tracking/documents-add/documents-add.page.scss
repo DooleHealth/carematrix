@@ -16,3 +16,19 @@
   ion-footer {
     position: relative; 
   }
+
+  ion-label {
+    --color: var(--default-text) !important;
+  }
+  ion-card{
+    box-shadow: none !important;
+  }
+  
+  .typography{
+    font-family: 'Poppins-Medium';
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+  
+  }

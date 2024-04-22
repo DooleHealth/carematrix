@@ -25,47 +25,19 @@
   </ion-row>
   <ion-card class="cardProfile">
     <ion-list>
-      <ion-item *ngIf="diagnosticTest.title !== null" lines="none">
-        <ion-label>{{ 'documents_add.field_title' | translate}}</ion-label>
+      <ion-item *ngIf="diagnosticTest.title !== null" >
+        <ion-label stacked class="typography">{{ 'documents_add.field_title' | translate}}</ion-label>
+        <ion-text class="textMedium">{{diagnosticTest.title}}</ion-text>
       </ion-item>
-      <ion-item *ngIf="diagnosticTest.title !== null" lines="full">
-        <ion-text class="textMedium1">{{diagnosticTest.title}}</ion-text>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>{{ 'documents_add.field_date' | translate}}</ion-label>
-        <ion-label *ngIf="diagnosticTest !== undefined" class="textMedium">{{formatSelectedDate(diagnosticTest.data) }}
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-card>
-  <ion-card class="cardProfile">
-    <ion-list>
-      <!-- <ion-item>
-        <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
-        <ion-label class="textMedium">{{diagnosticTest?.description}}</ion-label>
-      </ion-item>
-      <ion-item >
-        <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
-        <ion-label class="textMedium">{{diagnosticTest?.diagnostic}}</ion-label>
-      </ion-item> -->
-
-      <!-- description and diagnostic accordion start here-->
-
-      <!-- <div (click)="expandItem(item)" *ngFor="let item of items| slice:0:1; let i = index" [attr.data-index]="i"
-        class="cardProfile"> -->
-
-        <ion-item *ngIf="expandDescription" lines="none" (click)="expandDescription = !expandDescription">
-          <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
-          <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
-        </ion-item>
-        <ion-item *ngIf="!expandDescription" lines="none" (click)="expandDescription = !expandDescription">
-          <ion-label>{{ 'documents_add.field_description' | translate}}</ion-label>
-          <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
+      
+        <ion-item  lines="none" (click)="expandDescription = !expandDescription">
+          <ion-label stacked class="typography">{{ 'documents_add.field_description' | translate}}</ion-label>
         </ion-item>
 
-        <ion-item *ngIf="expandDescription">
+
+        <ion-item  lines="none">
  
-          <div class="textMedium1" [innerHtml]="diagnosticTest?.description? (diagnosticTest?.description | safeHtml):'' "></div>
+          <div class="textMedium" [innerHtml]="diagnosticTest?.description? (diagnosticTest?.description | safeHtml):'' "></div>
         </ion-item>
 
         <!-- ACORDION -->
@@ -74,13 +46,17 @@
             <ion-label class="textMedium">{{diagnosticTest?.description}}</ion-label>
           </ion-item>
         </app-expandable> -->
-
+        <ion-item lines="none">
+          <ion-label  stacked class="typography">{{ 'documents_add.field_date' | translate}}</ion-label>
+          <ion-label *ngIf="diagnosticTest !== undefined" class="textMedium">{{formatSelectedDate(diagnosticTest.data) }}
+          </ion-label>
+        </ion-item>
         <ion-item *ngIf="expandDiagnostic" lines="none" (click)="expandDiagnostic = !expandDiagnostic">
-          <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
+          <ion-label stacked class="typography">{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
           <ion-icon name="chevron-up-outline" slot="end" size="small"></ion-icon>
         </ion-item>
         <ion-item *ngIf="!expandDiagnostic" lines="none" (click)="expandDiagnostic = !expandDiagnostic">
-          <ion-label>{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
+          <ion-label stacked class="typography">{{ 'documents_add.field_diagnostic' | translate}}</ion-label>
           <ion-icon name="chevron-down-outline" slot="end" size="small"></ion-icon>
         </ion-item>
         <ion-item *ngIf="expandDiagnostic">
