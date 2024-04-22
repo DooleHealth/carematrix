@@ -17,9 +17,17 @@
           class="user-name"
           [data]="this.staff?.name"
           animation="bouncing"
-        ></app-text-shell>
+        >
+       
+      </app-text-shell>
       </h3>
 
+      <ng-container *ngFor="let speciality of this.specialityNames">
+        <h4 style="margin-left: 5px; font-size: 12px;">
+          {{speciality}}
+        </h4>
+      </ng-container>
+     
     </ion-label>
 
   </ion-toolbar>

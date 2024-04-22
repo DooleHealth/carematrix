@@ -73,6 +73,8 @@ export class ConversationPage implements OnInit {
   footerHidden: boolean;
   private btnImageEnabled = true;
 
+  specialityNames;
+
   constructor(
               private authService: AuthenticationService,
               public _zone: NgZone,
@@ -96,17 +98,29 @@ export class ConversationPage implements OnInit {
   ngOnInit() {
 
 
+    if (this.staff?.specialities?.length > 0) {
+      this.specialityNames = this.staff.specialities.map(speciality => speciality.name);
+    } else {
+      this.specialityNames = [];
+    }
+
     if(this.id)
     this.getMessagesList(false)
   }
 
   ionViewWillEnter(){
 
+    console.log(this.staff)
+
     if(this.id){
       this.getPusher()
     }
-    else
+    else {
       console.log('no id');
+    }
+
+  
+    
   }
 
   ionViewWillLeave(){
@@ -174,7 +188,7 @@ export class ConversationPage implements OnInit {
               this.staff = {
                 name: r.messageable.name,
                 image: r.messageable.temporaryUrl,
-                type: 'department'
+                type: 'department',
               }
           }
           else{
