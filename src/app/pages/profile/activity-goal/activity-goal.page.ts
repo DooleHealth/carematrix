@@ -278,7 +278,7 @@ export class ActivityGoalPage implements OnInit {
     this.highchartsService.setUnits(this.units)
     //this.highchartsService.setScrollMinWidth(interval)
     this.highchartsService.setXAxis(typeChart, this.graphDates)
-    this.highchartsService.setYAxis(min, null, this.ranges, this.units)
+    this.highchartsService.setYAxis(this.minY, null, this.ranges, this.units)
     this.highchartsService.setSeries(name, this.graphData, this.pointWidth)
     let options =  this.highchartsService.getOptionsChart(this.graphBaseOn)
     //HighCharts.setOptions(options)
