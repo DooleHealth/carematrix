@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button (click)="close()" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="toolbarTitle">{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
+    <ion-title  *ngIf="!this.isLoading" class="toolbarTitle">{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button [disabled]="this.isLoading" (click)="submit()">
         <ion-icon name="checkmark-outline"></ion-icon>
