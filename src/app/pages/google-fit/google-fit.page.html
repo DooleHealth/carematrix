@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-button (click)="redirectHomePage()">
-        <ion-text color="primary">
+        <ion-text style="color:#8E44AD">
           {{'google-fit.cancel' | translate | lowercase }}
         </ion-text>
       </ion-button>
@@ -45,7 +45,7 @@
     </ion-text>
 
     <br>
-    <ion-button expand="block" fill="outline" shape="round" style="margin-bottom: 3%;" (click)="redirectGoogleFitMarket()">
+    <ion-button expand="block"  shape="round" style="margin-bottom: 3%;" (click)="redirectGoogleFitMarket()">
       {{'google-fit.install_app' | translate}}
     </ion-button>
 
@@ -55,7 +55,7 @@
 
     <ion-text class="ion-text-center">
       <p style="margin: 5%; margin-bottom: 1%;" [innerHTML]="'google-fit.disconnect_info' | translate"></p>
-      <a style="display: flex; justify-content: center;" (click)='redirectSettings()'>{{'google-fit.config' | translate}} {{'google-fit.app' | translate}} </a>
+      <a style="display: flex; justify-content: center; color: #8E44AD;" (click)='redirectSettings()'>{{'google-fit.config' | translate}} {{'google-fit.app' | translate}} </a>
     </ion-text>
   </div>
 </ion-content>
