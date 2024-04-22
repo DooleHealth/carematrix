@@ -85,6 +85,7 @@
     "hello": "Hi",
     "goals_title": "Your goal",
     "goals_no_data": "No data",
+    "no_description":"Description no available",
     "advices_title": "News & Advices",
     "prescribed_apps_title": "Prescribed apps",
     "today_title": "Tasks of the day",

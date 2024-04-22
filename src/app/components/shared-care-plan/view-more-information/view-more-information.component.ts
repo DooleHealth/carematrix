@@ -5,6 +5,8 @@ import { LanguageService } from 'src/app/services/language.service';
 import { DateService } from 'src/app/services/date.service';
 import { DatePipe } from '@angular/common';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { TranslateService } from '@ngx-translate/core';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -22,20 +24,25 @@ export class ViewMoreInformationComponent implements OnInit {
   hide = false;
   favourite = false;
   toLink;
+  showSpeak = false;
 
 
 
-  constructor(private dooleService: DooleService, public authService: AuthenticationService,
-    private languageService: LanguageService, public dateService: DateService) { }
+  constructor(private dooleService: DooleService, public authService: AuthenticationService,private navCtrl: NavController,
+    private languageService: LanguageService, public dateService: DateService,  public translate: TranslateService,) { }
 
   ngOnInit() {
     console.log("[ViewMoreInformationComponent] ngOnInit(): ", this.content)
     //this.toRouterLink()
 
   }
+  ngOnDestroy(){
+    this.stopSpeak();
+  }
+ 
 
   toRouterLink() {
-
+   
     switch (this.segment) {
       case "News":
         return 'new-detail'
@@ -177,22 +184,40 @@ export class ViewMoreInformationComponent implements OnInit {
   }
 
   setSpeak(speak: any){
-    const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)/ig;
+    
+    //const regex = /(<([^>]+)>)/ig;
+   // const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)/ig;
+    const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)|(<([^>]+)>)/ig;
 
-let result = speak.replace(regex, (match, p1, p2, alt) => {
-    if (alt) { // Si hay un texto alternativo para la imagen
-        return alt; 
-    } else {
-        return ''; 
+    let result;
+    if(speak !== null || speak !== ""){
+       result = speak.replace(regex, "");
+     /* let result = speak.replace(regex, (match, p1, p2, alt) => {
+        if (alt) { // Si hay un texto alternativo para la imagen
+            return alt; 
+        } else {
+            return p2; 
+        }
+    });*/
+    }else{
+      result =this.translate.instant('alert.recording')
     }
-});
+
+
 
     console.log("showtexto", result)
+    this.showSpeak = true;
     let language = this.languageService.getCurrent()
     TextToSpeech.speak({
       text:result,
       lang: language,
     })
+  }
+
+
+  stopSpeak(){
+    this.showSpeak = false;
+    TextToSpeech.stop();
   }
 }
 
