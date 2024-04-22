@@ -48,8 +48,6 @@
 	<string>Query user&apos;s activity</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>To query user&apos;s health activity</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Always allow Geolocation?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Geolocation?</string>
 	<key>NSMicrophoneUsageDescription</key>

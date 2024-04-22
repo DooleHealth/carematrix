@@ -38,5 +38,39 @@
 		"staticPlugins": [
 			"cordova-plugin-opentok"
 		]
-	}
+	},
+	"packageClassList": [
+		"ContactsPlugin",
+		"ContactsPlugin",
+		"FirebaseAnalytics",
+		"FirebaseAnalytics",
+		"NativeMarket",
+		"NativeMarket",
+		"SpeechRecognition",
+		"SpeechRecognition",
+		"CapacitorSQLitePlugin",
+		"CapacitorSQLitePlugin",
+		"TextToSpeechPlugin",
+		"TextToSpeechPlugin",
+		"FirebaseAppCheckPlugin",
+		"FirebaseAppCheckPlugin",
+		"AppPlugin",
+		"CAPBrowserPlugin",
+		"CAPCameraPlugin",
+		"DevicePlugin",
+		"FilesystemPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"LocalNotificationsPlugin",
+		"CAPNetworkPlugin",
+		"PreferencesPlugin",
+		"SplashScreenPlugin",
+		"StatusBarPlugin",
+		"TextZoomPlugin",
+		"BadgePlugin",
+		"BadgePlugin",
+		"NativeSettingsPlugin",
+		"NativeSettingsPlugin",
+		"CDVPlugin"
+	]
 }
