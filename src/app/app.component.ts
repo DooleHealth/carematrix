@@ -33,6 +33,7 @@ import { TextZoom } from '@capacitor/text-zoom';
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
 import { NavigationService } from './services/navigation.service';
+import config from 'capacitor.config';
 
 register();
 
@@ -1058,8 +1059,9 @@ export class AppComponent implements OnInit {
   }
 
   showExitConfirm() {
+    const name = config.appName
     this.alertController.create({
-      header: 'Doole App',
+      header: name,
       message: this.translate.instant('home.close_app'),
       backdropDismiss: false,
       buttons: [{
