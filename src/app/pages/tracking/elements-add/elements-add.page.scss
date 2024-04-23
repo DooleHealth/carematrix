@@ -2,3 +2,24 @@
     width: 100%;
     background-color: white;
 }
+
+.typography{
+    font-family: 'Poppins-Medium';
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+  
+  }
+
+  ion-input {
+    font-family: 'Poppins-Regular';
+  font-size: 14px;
+  
+  }
+
+  .error {
+    display: flex !important;
+    margin-top: 10px !important;
+  }
+

@@ -3,7 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button (click)="close()" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title  *ngIf="!this.isLoading" class="toolbarTitle">{{ this.isNewValueElement? this.nameElement :('element.elements_add'| translate ) }}</ion-title>
+    <ion-title *ngIf="!this.isLoading" class="toolbarTitle">{{ this.isNewValueElement? this.nameElement
+      :('element.elements_add'| translate ) }}</ion-title>
     <ion-buttons slot="end">
       <ion-button [disabled]="this.isLoading" (click)="submit()">
         <ion-icon name="checkmark-outline"></ion-icon>
@@ -17,51 +18,61 @@
 <ion-content>
   <div class="spin" *ngIf="this.isLoading">
     <ion-spinner></ion-spinner>
-   </div>
-  
-  <form (ngSubmit)="submit()" [formGroup]="form">
-  <ion-card class="cardProfile" *ngIf="!this.isLoading && !this.isNewValueElement">
-    <ion-list>
-      <ion-item>
-        <ion-label>{{ 'element.field_category' | translate}}</ion-label>
-        <ion-select interface="action-sheet"  (ionChange)="selectedCategory(); isSubmittedCategory = false" formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option *ngFor="let group of groupElements" [value]="group.id">{{group.text}}</ion-select-option>
-        </ion-select>
-<!--         <ion-note *ngIf="this.isSubmittedCategory && this.form.get('category').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
-      </ion-item>
+  </div>
 
-      <ion-item lines="none" *ngIf="this.group?.elements || isNewValueElement">
-        <ion-label>{{ 'element.field_data' | translate}}</ion-label>
-        <ion-select interface="action-sheet" (ionChange)="selectedElement()" formControlName="data" placeholder="{{ 'placeholder_select' | translate}}">
-          <ion-select-option *ngFor="let e of group?.elements" [value]="e.name">{{e.name}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-  </ion-card>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+    <ion-card class="cardProfile" *ngIf="!this.isLoading && !this.isNewValueElement">
+      <ion-list>
+        <ion-item>
+          <ion-label>{{ 'element.field_category' | translate}}</ion-label>
+          <ion-select interface="action-sheet" (ionChange)="selectedCategory(); isSubmittedCategory = false"
+            formControlName="category" placeholder="{{ 'placeholder_select' | translate}}">
+            <ion-select-option *ngFor="let group of groupElements" [value]="group.id">{{group.text}}</ion-select-option>
+          </ion-select>
+          <!--         <ion-note *ngIf="this.isSubmittedCategory && this.form.get('category').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
+        </ion-item>
+
+        <ion-item lines="none" *ngIf="this.group?.elements || isNewValueElement">
+          <ion-label>{{ 'element.field_data' | translate}}</ion-label>
+          <ion-select interface="action-sheet" (ionChange)="selectedElement()" formControlName="data"
+            placeholder="{{ 'placeholder_select' | translate}}">
+            <ion-select-option *ngFor="let e of group?.elements" [value]="e.name">{{e.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-card>
 
 
     <ion-list>
       <ion-card class="cardProfile" *ngIf="!this.isLoading && (this.element || isNewValueElement)">
 
 
-      <ion-item>
-        <ion-label>
-          <h5>{{ 'element.field_measure' | translate}}</h5>
-          <ion-note style="width: min-content; padding: 0%;" *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note>
-        </ion-label>
-        <!-- <ion-label>{{ 'element.field_measure' | translate}}</ion-label> -->
-        <ion-input style="text-align: end;" type="number" [placeholder]="placeholderRange" formControlName="measure" slot="end" (ionFocus)="isSubmittedData = false" required></ion-input>
-        <!-- <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'error_required' | translate}}</p></ion-note> -->
-      </ion-item>
+        
 
-      <ion-item *ngIf="this.element" lines="none">
-        <ion-label>
-          <h5>{{ 'element.field_units' | translate}}</h5>
-        </ion-label>
-        <ion-text slot="end">{{ (this.units)? this.units: ''}}</ion-text >
-      </ion-item>
+          <ion-item>
+           
+            <ion-input label="{{ 'element.field_measure' | translate}}" labelPlacement="start" style="text-align: end;" type="number" [placeholder]="placeholderRange" formControlName="measure"
+               (ionFocus)="isSubmittedData = false" required>
+               <ion-note *ngIf="this.isSubmittedData && this.form.get('measure').invalid" class="error " style="text-align: start;"
+               color="danger">{{ 'error_required' | translate}}</ion-note></ion-input>
 
-    </ion-card>
+            
+                
+              
+          </ion-item>
+
+
+        
+
+        
+
+        <ion-item *ngIf="this.element" lines="none">
+          <ion-label>
+            <h5>{{ 'element.field_units' | translate}}</h5>
+          </ion-label>
+          <ion-text slot="end">{{ (this.units)? this.units: ''}}</ion-text>
+        </ion-item>
+      </ion-card>
       <div *ngIf="this.element">
         <ion-card class="cardProfile" *ngIf="!this.isLoading && (this.element || isNewValueElement)">
           <ion-item lines="none">
@@ -72,11 +83,13 @@
           </ion-item>
           <ion-modal [keepContentsMounted]="true" [backdropDismiss]="false">
             <ng-template>
-              <ion-datetime firstDayOfWeek="1"  mode="ios" [locale]="this.locale" presentation="date-time" id="date" [max]="maxDate"   formControlName="date"></ion-datetime>
+              <ion-datetime firstDayOfWeek="1" mode="ios" [locale]="this.locale" presentation="date-time" id="date"
+                [max]="maxDate" formControlName="date"></ion-datetime>
               <ion-buttons mode="ios" slot="buttons" style="background-color: white;">
-                <ion-button class="btn-style-1" mode="ios" color="danger"  slot="start"></ion-button>
+                <ion-button class="btn-style-1" mode="ios" color="danger" slot="start"></ion-button>
                 <ion-button class="btn-style-1" mode="ios" style="width: 50px;"></ion-button>
-                <ion-button class="btn-style-1" mode="ios" color="primary" slot="end" (click)="close();">{{'button.confirm' | translate}}</ion-button>
+                <ion-button class="btn-style-1" mode="ios" color="primary" slot="end"
+                  (click)="close();">{{'button.confirm' | translate}}</ion-button>
               </ion-buttons>
             </ng-template>
           </ion-modal>
@@ -89,5 +102,5 @@
 
     </ion-list>
 
-</form>
+  </form>
 </ion-content>
