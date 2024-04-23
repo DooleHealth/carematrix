@@ -247,7 +247,9 @@ export class ActivityGoalPage implements OnInit {
     //Sólo para HPC no quieren el máximo del elemnto
     let max = (this.maxY == 0)? this.maxY+1:this.maxY
     console.log("values graphData max: ", max);
-    min = min < 0? min: 0
+    //min = min < 0? min: 0
+    min = Number(min.toString().replace(',', '.'));
+    if(min<1) min=0;
     this.setRangesElement(json, undefined, min, max)
 
     this.graphValues = valuesA;
@@ -278,7 +280,10 @@ export class ActivityGoalPage implements OnInit {
     this.highchartsService.setUnits(this.units)
     //this.highchartsService.setScrollMinWidth(interval)
     this.highchartsService.setXAxis(typeChart, this.graphDates)
-    this.highchartsService.setYAxis(this.minY, null, this.ranges, this.units)
+    const adjustedMinY = min - Math.abs(min) * 0.05;
+    console.log("adjustedMinY: ",adjustedMinY)
+    console.log("min: ",min)
+    this.highchartsService.setYAxis(adjustedMinY, null, this.ranges, this.units)
     this.highchartsService.setSeries(name, this.graphData, this.pointWidth)
     let options =  this.highchartsService.getOptionsChart(this.graphBaseOn)
     //HighCharts.setOptions(options)
