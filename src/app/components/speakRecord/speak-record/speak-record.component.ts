@@ -16,7 +16,7 @@ export class SpeakRecordComponent  implements OnInit {
 
   speakText(){
     TextToSpeech.speak({
-      text:this.speak
+      text:this.speak,
     })
   }
 }

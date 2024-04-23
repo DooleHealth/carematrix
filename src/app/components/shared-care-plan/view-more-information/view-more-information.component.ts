@@ -40,6 +40,9 @@ export class ViewMoreInformationComponent implements OnInit {
     this.stopSpeak();
   }
  
+  ionViewWillLeave() {
+    this.stopSpeak(); // Detener la reproducción de texto a voz al salir de la página
+  }
 
   toRouterLink() {
    
@@ -185,33 +188,30 @@ export class ViewMoreInformationComponent implements OnInit {
 
   setSpeak(speak: any){
     
-    //const regex = /(<([^>]+)>)/ig;
-   // const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)/ig;
+   
     const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)|(<([^>]+)>)/ig;
 
     let result;
     if(speak !== null || speak !== ""){
        result = speak.replace(regex, "");
-     /* let result = speak.replace(regex, (match, p1, p2, alt) => {
-        if (alt) { // Si hay un texto alternativo para la imagen
-            return alt; 
-        } else {
-            return p2; 
-        }
-    });*/
+    
     }else{
       result =this.translate.instant('alert.recording')
     }
 
-
-
-    console.log("showtexto", result)
+    const textLength = result.length;
+    const averageReadingSpeed = 10; // Por ejemplo, 3 caracteres por segundo
+        // Calcular el tiempo de lectura estimado en segundos
+    const estimatedTime = textLength / averageReadingSpeed;
     this.showSpeak = true;
     let language = this.languageService.getCurrent()
     TextToSpeech.speak({
       text:result,
-      lang: language,
-    })
+      lang: language,     
+          })
+    setTimeout(() => {
+      this.showSpeak = false; // Establecer showSpeak en false después del tiempo estimado
+    }, estimatedTime * 750);
   }
 
 
