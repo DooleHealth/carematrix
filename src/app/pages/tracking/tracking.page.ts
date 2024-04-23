@@ -155,7 +155,7 @@ getLifeStyleHabitsViews(){
 
   transformDate(date) {
     if (date != null) {
-      return this.dateService.ddMMyFormat(date)
+      return this.dateService.ddMMyFormat(this.dateService.yyyyMMddTHHmmssSSSZFormat(date))
     } else {
       return ""
     }

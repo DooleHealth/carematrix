@@ -75,7 +75,7 @@ export class DocumentDetailPage implements OnInit {
   formatSelectedDate(date){
 
     if(date)
-      return this.dateService.ddMMMyyyformat(date);
+      return this.dateService.ddMMMyyyformat(this.dateService.yyyyMMddTHHmmssSSSZFormat(date));
     // let language = this.languageService.getCurrent()
     // const datePipe: DatePipe = new DatePipe(language);
     // return datePipe.transform(date, 'dd MMM yyy');
