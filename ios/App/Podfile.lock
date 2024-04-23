@@ -1,11 +1,9 @@
 PODS:
-
   - AppCheckCore (10.19.0):
     - GoogleUtilities/Environment (~> 7.13)
     - GoogleUtilities/UserDefaults (~> 7.13)
     - PromisesObjC (~> 2.3)
   - Capacitor (6.0.0):
-
     - CapacitorCordova
   - CapacitorApp (6.0.0):
     - Capacitor
@@ -28,16 +26,12 @@ PODS:
     - ZIPFoundation
   - CapacitorCommunityTextToSpeech (4.0.0):
     - Capacitor
-
   - CapacitorCordova (6.0.0)
   - CapacitorDevice (6.0.0):
-
     - Capacitor
   - CapacitorFilesystem (6.0.0):
     - Capacitor
-
   - CapacitorFirebaseAppCheck (6.0.0):
-
     - Capacitor
     - FirebaseAppCheck (~> 10.24)
   - CapacitorHaptics (6.0.0):
@@ -60,12 +54,10 @@ PODS:
     - Capacitor
   - CapawesomeCapacitorBadge (6.0.0):
     - Capacitor
-
   - CordovaPlugins (6.0.0):
     - CapacitorCordova
   - CordovaPluginsResources (0.0.105)
   - CordovaPluginsStatic (6.0.0):
-
     - CapacitorCordova
     - OpenTok (~> 2.17.0)
   - Firebase/CoreOnly (10.24.0):
@@ -292,20 +284,17 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-
   AppCheckCore: 58dbd968d93b7c56650c28a1ac404d7a54307c0e
   Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
   CapacitorBrowser: 7e1e2cdbb3e372f09f0bad0c4c21a6d187b679ad
   CapacitorCamera: b61f125d92a0ef75d7becb7956fed7dd13187ee0
   CapacitorCommunityContacts: e8fbc4d669c9478a29f1e104818b4c16e158b2e0
-
   CapacitorCommunityFirebaseAnalytics: a29279a99fad771ba307d9a07571372ea2f36b1f
   CapacitorCommunityNativeMarket: 70b329cac2db3aee51430c83cdbe63cfc7c250bd
   CapacitorCommunitySpeechRecognition: 4b07fb675f4e5ce3376748557875d182973a788a
   CapacitorCommunitySqlite: e2e42bdeea8daba9c4712113ab2840133b1679d1
   CapacitorCommunityTextToSpeech: 01006ca642440323372afb2d9b684815495c210d
-
   CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
   CapacitorDevice: f8fd88f9edd1261c55a109f32015b09bbbfdc4a0
   CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
@@ -335,7 +324,6 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-
   OpenTok: ca8dc629f930dc438a87147258c469a1944e2eef
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd

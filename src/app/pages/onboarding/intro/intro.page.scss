@@ -41,7 +41,7 @@ p {
 }
 
 .intro-btn {
-    margin-bottom: 20%;
+    margin-bottom: 10%;
     border-radius: 5px;
     font-size: 16px;
     font-style: normal;
@@ -174,34 +174,21 @@ ion-content {
   }
 
 
-  @media (max-width: 600px) {
+  @media (max-height: 700px) {
     .center-container {
         display: flex;
         align-items: center;
         justify-content: center;
     
         img {
-            margin-top: 10%;
-            width: 350px;
-            height: 350px;
-        }
+          margin-top: 0px;
+          width: 250px;
+          height: 250px;
+      }
     }
   }
   
-  @media (max-width: 370px) {
-    .center-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    
-        img {
-            margin-top: 10%;
-            width: 250px;
-            height: 250px;
-        }
-    }
-  
-  }
+
 
   .main-container {
     display: flex;
