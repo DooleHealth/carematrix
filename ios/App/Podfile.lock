@@ -1,17 +1,15 @@
 PODS:
-
   - AppCheckCore (10.19.0):
     - GoogleUtilities/Environment (~> 7.13)
     - GoogleUtilities/UserDefaults (~> 7.13)
     - PromisesObjC (~> 2.3)
-  - Capacitor (6.0.0):
-
+  - Capacitor (5.7.5):
     - CapacitorCordova
-  - CapacitorApp (6.0.0):
+  - CapacitorApp (5.0.7):
     - Capacitor
-  - CapacitorBrowser (6.0.0):
+  - CapacitorBrowser (5.2.0):
     - Capacitor
-  - CapacitorCamera (6.0.0):
+  - CapacitorCamera (5.0.9):
     - Capacitor
   - CapacitorCommunityContacts (5.0.5):
     - Capacitor
@@ -22,50 +20,44 @@ PODS:
     - Capacitor
   - CapacitorCommunitySpeechRecognition (5.1.0):
     - Capacitor
-  - CapacitorCommunitySqlite (5.7.2):
+  - CapacitorCommunitySqlite (5.0.3):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
   - CapacitorCommunityTextToSpeech (4.0.0):
     - Capacitor
-
-  - CapacitorCordova (6.0.0)
-  - CapacitorDevice (6.0.0):
-
+  - CapacitorCordova (5.7.5)
+  - CapacitorDevice (5.0.5):
     - Capacitor
-  - CapacitorFilesystem (6.0.0):
+  - CapacitorFilesystem (5.2.1):
     - Capacitor
-
-  - CapacitorFirebaseAppCheck (6.0.0):
-
+  - CapacitorFirebaseAppCheck (5.4.1):
     - Capacitor
-    - FirebaseAppCheck (~> 10.24)
-  - CapacitorHaptics (6.0.0):
+    - FirebaseAppCheck (~> 10.8)
+  - CapacitorHaptics (5.0.7):
     - Capacitor
-  - CapacitorKeyboard (6.0.0):
+  - CapacitorKeyboard (5.0.8):
     - Capacitor
-  - CapacitorLocalNotifications (6.0.0):
+  - CapacitorLocalNotifications (5.0.7):
     - Capacitor
   - CapacitorNativeSettings (5.0.1):
     - Capacitor
-  - CapacitorNetwork (6.0.0):
+  - CapacitorNetwork (5.0.7):
     - Capacitor
-  - CapacitorPreferences (6.0.0):
+  - CapacitorPreferences (5.0.7):
     - Capacitor
-  - CapacitorSplashScreen (6.0.0):
+  - CapacitorSplashScreen (5.0.7):
     - Capacitor
-  - CapacitorStatusBar (6.0.0):
+  - CapacitorStatusBar (5.0.7):
     - Capacitor
-  - CapacitorTextZoom (6.0.0):
+  - CapacitorTextZoom (5.0.7):
     - Capacitor
-  - CapawesomeCapacitorBadge (6.0.0):
+  - CapawesomeCapacitorBadge (5.0.0):
     - Capacitor
-
-  - CordovaPlugins (6.0.0):
+  - CordovaPlugins (5.7.5):
     - CapacitorCordova
   - CordovaPluginsResources (0.0.105)
-  - CordovaPluginsStatic (6.0.0):
-
+  - CordovaPluginsStatic (5.7.5):
     - CapacitorCordova
     - OpenTok (~> 2.17.0)
   - Firebase/CoreOnly (10.24.0):
@@ -292,37 +284,34 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-
   AppCheckCore: 58dbd968d93b7c56650c28a1ac404d7a54307c0e
-  Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
-  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorBrowser: 7e1e2cdbb3e372f09f0bad0c4c21a6d187b679ad
-  CapacitorCamera: b61f125d92a0ef75d7becb7956fed7dd13187ee0
+  Capacitor: 7d42085cb786b2d3ea9ac8a17ebd7e3305be7b72
+  CapacitorApp: 17fecd0e6cb23feafac7eb0939417389038b0979
+  CapacitorBrowser: a6deae9e5bf87f62b62a753cff7992c5def9e771
+  CapacitorCamera: 4892c5c392f60039d853dde78bc50ba19fbd113e
   CapacitorCommunityContacts: e8fbc4d669c9478a29f1e104818b4c16e158b2e0
-
   CapacitorCommunityFirebaseAnalytics: a29279a99fad771ba307d9a07571372ea2f36b1f
   CapacitorCommunityNativeMarket: 70b329cac2db3aee51430c83cdbe63cfc7c250bd
   CapacitorCommunitySpeechRecognition: 4b07fb675f4e5ce3376748557875d182973a788a
-  CapacitorCommunitySqlite: e2e42bdeea8daba9c4712113ab2840133b1679d1
+  CapacitorCommunitySqlite: b90d3ca2785560e666cfacd3438dc42bed74f9dc
   CapacitorCommunityTextToSpeech: 01006ca642440323372afb2d9b684815495c210d
-
-  CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
-  CapacitorDevice: f8fd88f9edd1261c55a109f32015b09bbbfdc4a0
-  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
-  CapacitorFirebaseAppCheck: 2dd8f4e8fc3e152cdd0834a6bcb5a9cbbdf1939f
-  CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
-  CapacitorKeyboard: deacbd09d8d1029c3681197fb05d206b721d5f73
-  CapacitorLocalNotifications: 4ab68f0be5f697a579558fadd307d823a9ec1c26
+  CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
+  CapacitorDevice: 4c78eeaa553c7a46bc07372c6eb03a5665459885
+  CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
+  CapacitorFirebaseAppCheck: ce24ffecbe5725e20325b7294c7a35f6f0555b86
+  CapacitorHaptics: 7c7c206f0c96a628fed073830c96d28c4b2e772e
+  CapacitorKeyboard: aec619a578235c6ce279075009a2689c2cf5c42c
+  CapacitorLocalNotifications: c58afadd159f6bc540ef9b3cbdbc82510a2bf112
   CapacitorNativeSettings: 6e94ed3c0465206756f320df18efc52f053ce3c7
-  CapacitorNetwork: f15a94c16a33cba7c47a17814cb6bcfe3ea34ded
-  CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
-  CapacitorSplashScreen: 5431ab8d19c1c6e95777d53bfaa7a36a6c3d94c7
-  CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
-  CapacitorTextZoom: 696722e5c479b364f2429584f11ad386d609bd1a
-  CapawesomeCapacitorBadge: 3d0f281ad8e4a4f8db8c3d88b7622a7f4c413342
-  CordovaPlugins: 1ded8e03a0c2595b961201534f136395e604df44
+  CapacitorNetwork: 81ef9728aa7a65cac8c1181ce79e578162b57b57
+  CapacitorPreferences: 77ac427e98db83bace772455f8ba447430382c4c
+  CapacitorSplashScreen: dd3de3f3644710fa2a697cfb91ec262eece4d242
+  CapacitorStatusBar: f390fbb49b82ffb754ea4b3cf71dc8b048baf3e7
+  CapacitorTextZoom: 69814a62b1d0f23a899cca06ea9838c38de187ff
+  CapawesomeCapacitorBadge: 2b9919ea79b85bdc5455143cf6607c9e25bec9ae
+  CordovaPlugins: a437322df7a625a4ff8f8c34954bcdbc3f768ed1
   CordovaPluginsResources: 0c211f770ed91763a179ebcd9b9346e120b70662
-  CordovaPluginsStatic: 05686d8740eee218a5566bb3e1cc935b63901b1c
+  CordovaPluginsStatic: 7c98e594358c17fa53ebcf317baeb6820954618f
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
   FirebaseAnalytics: b5efc493eb0f40ec560b04a472e3e1a15d39ca13
   FirebaseAppCheck: afb42367002c12bbb5f58c4a954ecd2f0a171182
@@ -335,7 +324,6 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-
   OpenTok: ca8dc629f930dc438a87147258c469a1944e2eef
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd
@@ -343,4 +331,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 12eb326b1165d9c04a5b56f2af6f5bbd54ed3e2b
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.13.0

@@ -27,6 +27,7 @@ export class ContentDateComponent implements OnInit {
   ngOnInit() {
    
     this.setDate()
+   
   }
 
   goTo(content){
