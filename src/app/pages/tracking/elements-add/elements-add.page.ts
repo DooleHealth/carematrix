@@ -82,6 +82,13 @@ export class ElementsAddPage implements OnInit {
     this.isSubmittedCategory = true
     if(this.form.invalid)
     return
+    
+    let measureValue = this.form.get('measure').value;
+    measureValue = measureValue.toString().replace(/,/g, '.');
+    const measureValueNumber = Number(measureValue);
+
+    this.form.get('measure').setValue(measureValueNumber);
+
     if(this.isValueCorrect( Number(this.form.get('measure').value)))
       this.showAlertConfirm()
       //this.addElement()
