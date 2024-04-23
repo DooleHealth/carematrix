@@ -104,9 +104,10 @@ export class AgendaPage implements OnInit{
   }; 
 
   async ionViewDidEnter() {
+    this.isLoading = true;
     if (this.permissionService.canViewEvents && this.segment === 'calendar') {
      
-      this.isLoading = true;
+      
       this.updateCal()
       this.getallAgenda()
     } 
@@ -133,7 +134,7 @@ export class AgendaPage implements OnInit{
    // this.isLoading = true;
     return this.dooleService.getAPIallAgenda().subscribe(
       async (res: any) => {
-       this.isLoading= false;
+       
         console.log('[AgendaPage] getallAgenda()', await res);
 
         if (this.permissionService.canViewEvents) {
@@ -145,12 +146,15 @@ export class AgendaPage implements OnInit{
         else {
           this.listAppointment = []
         }
-        
+        this.isLoading= false;
       }, (err) => {
         console.log('[AgendaPage] getallAgenda() ERROR(' + err.code + '): ' + err.message);
         alert('ERROR(' + err.code + '): ' + err.message)
         throw err;
       });
+  }
+  ionViewWillLeave(): void {
+   this.isLoading= true;
   }
 
   getReminders() {
