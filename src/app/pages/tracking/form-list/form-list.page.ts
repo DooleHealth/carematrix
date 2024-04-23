@@ -115,9 +115,9 @@ export class FormListPage implements OnInit {
         let image = "";
         let isAnswers= false;
         const temporaryUrl = element.media;
-        if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
+        /*if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
           image = temporaryUrl.temporaryUrl
-        }
+        }*/
 
         // let show=this.IsAllowed(element.from_date);
 
@@ -132,7 +132,7 @@ export class FormListPage implements OnInit {
 
         let modelType = element.content_type.replace(/App\\/, '')
         let data = {
-          img: image,
+         // img: image,
           title: element.title,
           from: this.transformDate(element.from_date),
           to: this.transformDate(element.to_date),
@@ -222,9 +222,9 @@ export class FormListPage implements OnInit {
       
       form.type= "forms";
       const temporaryUrl = form.media;
-      if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
+      /*if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
         form.image = temporaryUrl.temporaryUrl
-      }
+      }*/
       
 
       if(form.formProgrammationTimes.length > 1){
