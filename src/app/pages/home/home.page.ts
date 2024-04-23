@@ -262,7 +262,10 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
-    this.checkHealthAccess();
+
+    if (this.platform.is('android')) this.checkHealthAccessAndroid();
+    if (this.platform.is('ios')) this.checkHealthAccessiOS();
+
     this.checkStorageNotification();
     this.initPushers()
   }
@@ -345,36 +348,62 @@ export class HomePage implements OnInit {
     console.log('[HomePage] update() cambio ');
   }
 
-  checkHealthAccess() {
-    if (this.platform.is('cordova')) {
-      this.health.isAvailable()
+  checkHealthAccessAndroid() {
+    if (this.platform.is("cordova")) {
+
+      this.health
+          .isAvailable()
+          .then((available: boolean) => {
+            this.health.promptInstallFit()
+              this.health
+              .requestAuthorization([
+                {
+                  read : ['distance', 'steps', 'heart_rate', 'activity', 'weight', "blood_glucose"] // Read permission 
+                }
+              ])
+              .then((res) => {
+                this.syncData(30);
+                this.showGoogleFit = !available;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+    }
+  }
+
+  checkHealthAccessiOS() {
+    if (this.platform.is("cordova")) {
+      this.health
+        .isAvailable()
         .then((available: boolean) => {
-          //console.log(available);
-          this.showGoogleFit = !available;
-          this.health.requestAuthorization(
-            //read and write permissions
-            [
-              'distance',
-              'steps',
-              'heart_rate',
-              'activity',
-              'weight',
-              'oxygen_saturation'
-            ]
-          )
-            .then(res => {
-              //console.log(res);
-              this.syncData(30);
-            })
-            .catch(e => {
-              console.log(e)
-            });
+          //if has granted physical activity granted after intro
+          //check if physical activity is granted by user
+          this.health
+              .requestAuthorization([
+                {
+                  read : ['distance', 'steps', 'heart_rate', 'activity', 'weight',  "blood_glucose"] // Read permission 
+                }
+              ])
+              .then((res) => {
+                //this.authService.setShowGoogleFitLocalstorage()
+                this.syncData(30);
+              })
+              .catch((e) => {
+                //this.presentAlertConfirm();
+                console.log(e);
+              });
         })
-        .catch(e => {
-          console.log(e)
+        .catch((e) => {
+          console.log(e);
         });
     }
   }
+
+
 
   setAnalyticsUserProperty() {
     // if(this.userDoole?.age)
@@ -1603,100 +1632,55 @@ export class HomePage implements OnInit {
   }
 
   syncData(days) {
-
     let startDate = new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000);
     let endDate = new Date(); // now
+    const healthDataTypes = ['steps', 'distance', 'heart_rate', 'weight', 'blood_glucose', 'height'];
+    let promises = [];
 
-    console.log('dataType: steps');
+    healthDataTypes.forEach((dataType) => {
+      console.log('dataType:', dataType);
+      const queryType = dataType === 'steps' || dataType === 'distance' ? 'queryAggregated' : 'query';
+      const promise = this.health[queryType]({
+        startDate: startDate,
+        endDate: endDate,
+        dataType: dataType,
+        ...(queryType === 'queryAggregated' && { bucket: 'hour' })
+      }).then(data => {
+        return this.postHealth(dataType, data);
+      }).catch(error => {
+        console.error(error);
+        return error;
+      });
 
-    this.health.queryAggregated({
-      startDate: startDate,
-      endDate: endDate,
-      dataType: 'steps',
-      bucket: 'hour'
-    }).then(data => {
-      this.postHealth('steps', data);
-    }).catch(error => {
-      console.error(error);
-      throw error;
+      promises.push(promise);
     });
 
-    console.log('dataType: distance');
-    this.health.queryAggregated({
-      startDate: startDate,
-      endDate: endDate,
-      dataType: 'distance',
-      bucket: 'hour'
-    }).then(data => {
-      this.postHealth('distance', data);
-
+    Promise.all(promises).then(() => {
+      
     }).catch(error => {
-      console.error(error);
-      throw error;
+      console.error('Error with one of the health data queries:', error);
     });
-
-    console.log('dataType: heart_rate');
-    this.health.query({
-      startDate,
-      endDate,
-      dataType: 'heart_rate',
-    }).then(data => {
-      this.postHealth('heart_rate', data);
-    }).catch(error => {
-      console.error(error);
-      throw error;
-    });
-
-    console.log('dataType: weight');
-    this.health.query({
-      startDate,
-      endDate,
-      dataType: 'weight',
-    }).then(data => {
-      this.postHealth('weight', data);
-    }).catch(error => {
-      console.error(error);
-      throw error;
-    });
-
-
-    console.log('dataType: oxygen_saturation');
-    this.health.query({
-      startDate,
-      endDate,
-      dataType: 'oxygen_saturation',
-    }).then(data => {
-      this.postHealth('oxygen_saturation', data);
-
-    }).catch(error => {
-      console.error(error);
-      throw error;
-    });
-
   }
 
   //envia post amb dades de salut a api
   postHealth(type, data) {
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    console.log('syncData', timezone)
     const postData = {
-      timezone: timezone,
       type: type,
       vals: JSON.stringify(data),
     };
-    if (this.authService?.deviceToken)
-      postData['device_token'] = this.authService.deviceToken
     this.dooleService.post('user/element/sync', postData).subscribe(
       async (data) => {
         console.log("postHealth: ", data);
       },
 
       (error) => {
+        // Called when error
         console.log('error: ', error);
         throw error;
       },
       () => {
-
+        // Called when operation is complete (both success and error)
+        // loading.dismiss();
       });
   }
 

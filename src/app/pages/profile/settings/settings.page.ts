@@ -80,6 +80,8 @@ export class SettingsPage implements OnInit {
     this.isAvailableTwoFactor()
     this.getCenterLanguages()
     this.getModeDevelopmne()
+    this.checkGoogleFitConnection()
+
   }
 
   ionViewDidEnter(){
