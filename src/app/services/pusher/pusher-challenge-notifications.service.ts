@@ -112,7 +112,7 @@ export class PusherChallengeNotificationsService {
       <ion-row><ion-col class="text-align-center"><img src="assets/images/trofeo.png" class="card-alert"></img></ion-col></ion-row>
       <div class="after"></div>
       </div>`;
-      header = this.translate.instant('health_path.congratulation')
+      header = this.translate.instant('health_path.level_congratulations')
     }
     else{
       message = `<div class="pyro">
@@ -121,7 +121,7 @@ export class PusherChallengeNotificationsService {
       <div class="after"></div>
       </div>`;
       let name_level = notification?.levelDetail?.name? notification?.levelDetail?.name:''
-      header = this.translate.instant('health_path.congratulation_level') + ' ' + name_level
+      header = this.translate.instant('health_path.level_congratulations') + ' ' + name_level
     }
 
     const alert = await this.alertController.create({
