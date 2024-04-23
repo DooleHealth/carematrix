@@ -16,7 +16,7 @@ export class Constants {
 
     public readonly TRAK_URL = "https://salud.rehabilify.com/app/trak/patient";
     public readonly VIDEOCALL_URL = 'https://videocalls.doole.io/';
-    public readonly PRIMARY_COLOR = '#009cb3'
+    public readonly PRIMARY_COLOR = '#8E44AD'
 
 
     public setEndPoint(index){
