@@ -283,4 +283,8 @@ async getAllChat(){
   sanitizeUrl(url:string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
+  emergenyCall(){
+    
+  }
 }

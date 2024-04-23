@@ -146,6 +146,10 @@
           </div>
         </ng-container>
 
+        <ion-button color="warning" class="ion-padding" (click)="emergenyCall()" expand="block" shape="round">
+          Emergency Button
+        </ion-button>
+
         <ng-template #noData>
           <div *ngIf=" !this.isLoading">
             <app-no-data></app-no-data>
