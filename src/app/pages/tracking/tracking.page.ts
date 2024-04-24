@@ -215,6 +215,7 @@ getLifeStyleHabitsViews(){
   }
 
   groupDiagnosticsByDate(list){
+    console.log("Diagnostic test: ", list)
     let diagnosticTests = list.diagnosticTests
     diagnosticTests.forEach( (diagnostic, index) =>{
       
@@ -230,6 +231,15 @@ getLifeStyleHabitsViews(){
       
     })
     console.log("list", this.listDiagnostic)
+    //ordanem la llista
+
+    this.listDiagnostic.forEach(list => {
+      list.diagnosticTests.sort((a, b) => {
+          const dateA = new Date(a.created_at).getTime();
+          const dateB = new Date(b.created_at).getTime();
+          return dateB - dateA;
+      });
+  });
     this.loadingTests = false
   }
 

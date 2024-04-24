@@ -27,8 +27,7 @@ export class TestTypePage implements OnInit {
     this.dooleService.getAPIdiagnosticTestTypesAvailable().subscribe(
       async (res: any) =>{
         console.log('[TestTypePage] getTestType()', await res);
-        this.listTestType = res.diagnosticTestTypes
-        this.listTestTypeBackup = this.listTestType
+        this.listTestTypeBackup = res.diagnosticTestTypes
         this.isLoading = false
        },(err) => { 
         this.isLoading = false
@@ -45,17 +44,19 @@ export class TestTypePage implements OnInit {
     console.log('[TestTypePage] filterList()');
     this.listTestType = this.listTestTypeBackup;
     const searchTerm = evt.srcElement.value;
-  
+
     if (!searchTerm) {
-      return;
+        this.listTestType = [];
+        return;
     }
-  
+
     this.listTestType = this.listTestType.filter(test => {
-      if (test.name && searchTerm) {
-        return (test.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
+        if (test.name) {
+            return test.name.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+        return false;
     });
-  }
+}
 
   async presentModal() {
     const modal = await this.modalCtrl.create({

@@ -21,7 +21,7 @@
           <h5 style="font-size: 14px !important;" >{{ 'documents_add.field_test_type' | translate }}</h5>
           <ion-note *ngIf="this.isSubmittedType && this.form.get('type').invalid" class="error" color="danger">{{ 'error_required' | translate}}</ion-note>
         </ion-label> -->
-        <ion-input  style="font-size: 14px !important;"  formControlName="type"  [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false">
+        <ion-input  style="font-size: 16px !important;"  formControlName="type"  [placeholder]="changePlaceholder()" (ionInput)="isSubmittedType = false">
           <div slot="label">
             <ion-text class="typography" color="danger">{{ 'documents_add.field_test_type' | translate }}&nbsp;  
             </ion-text>

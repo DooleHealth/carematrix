@@ -37,7 +37,7 @@
 
         <ion-item  lines="none">
  
-          <div class="textMedium" [innerHtml]="diagnosticTest?.description? (diagnosticTest?.description | safeHtml):'' "></div>
+          <ion-textarea class="textMedium textLeft" [innerHtml]="diagnosticTest?.description? (diagnosticTest?.description | safeHtml):'' "></ion-textarea>
         </ion-item>
 
         <!-- ACORDION -->
