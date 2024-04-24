@@ -294,7 +294,7 @@ export class ProfilePage implements OnInit {
             cssClass: 'secondary',
             handler: (blah) => {
               console.log('[LandingPage] AlertConfirm Cancel');
-              this.signOut(false)
+              //this.signOut(false)
             }
           }, {
             text: this.translate.instant("button.yes"),
