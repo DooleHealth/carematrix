@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.doole.inca',
-  appName: 'Inca Health',
+  appName: 'INCA Health',
   bundledWebRuntime: false,
   webDir: "www",
   plugins: {

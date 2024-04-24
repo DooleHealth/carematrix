@@ -147,7 +147,7 @@ export class MedicationPage implements OnInit {
       if(list.length > 0)
       list.forEach(element => {  
         let image = "";
-        const temporaryUrl = element.media;
+        const temporaryUrl = element.cover[0];
         if (temporaryUrl?.hasOwnProperty("temporaryUrl")) {
           image = temporaryUrl.temporaryUrl
         }
