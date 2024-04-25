@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -14,7 +14,7 @@ import { NavController } from '@ionic/angular';
   templateUrl: './view-more-information.component.html',
   styleUrls: ['./view-more-information.component.scss'],
 })
-export class ViewMoreInformationComponent implements OnInit {
+export class ViewMoreInformationComponent implements OnInit, OnDestroy {
   @Input() content: any;
   @Input() segment: string;
   @Output() notifyParent: EventEmitter<any> = new EventEmitter();
