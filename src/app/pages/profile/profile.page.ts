@@ -16,6 +16,7 @@ import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { Capacitor } from '@capacitor/core';
 import { PermissionService } from 'src/app/services/permission.service';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 @Component({
   selector: 'app-profile',
@@ -49,7 +50,7 @@ export class ProfilePage implements OnInit {
     public role: RolesService) { }
 
   ngOnInit() {
-    
+    TextToSpeech.stop();
     this.canDoProfile = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null);
     this.getUserProfile();
   }

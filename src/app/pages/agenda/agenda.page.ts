@@ -13,6 +13,7 @@ import { SwiperOptions } from 'swiper/types/swiper-options';
 import { ReminderAddPage } from './reminder-add/reminder-add.page';
 import { IEvent } from 'ionic2-calendar/calendar.interface';
 import { PermissionService } from 'src/app/services/permission.service';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 export interface DayEvent {
   date?: string;
@@ -50,6 +51,7 @@ export class AgendaPage implements OnInit{
     // this.analyticsService.setScreenName('agenda','AgendaPage')
   }
   ngOnInit(): void {
+    TextToSpeech.stop();
     this.segment = 'calendar'
   }
 
@@ -402,7 +404,7 @@ export class AgendaPage implements OnInit{
   }
 
   async addAgenda() {
-    debugger
+    
     const modal = await this.modalCtrl.create({
       component: AgendaEditPage,
       componentProps: {},

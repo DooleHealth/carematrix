@@ -13,6 +13,7 @@ import { RequestVisitPage } from '../request-visit/request-visit.page';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PermissionService } from 'src/app/services/permission.service';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 export class ShellRecipientModel extends ShellModel {
   id: string;
@@ -88,6 +89,7 @@ export class ContactPage implements OnInit {
     public permissionService: PermissionService) { }
 
   ngOnInit() {
+    TextToSpeech.stop();
     this.setSegment()
     this.segmentChanged()
   }

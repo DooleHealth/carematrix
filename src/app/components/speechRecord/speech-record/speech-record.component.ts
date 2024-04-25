@@ -86,7 +86,7 @@ export class SpeechRecordComponent implements OnInit {
     });
 
     await alert.present();
-    debugger
+    
     // Obtener el elemento del GIF dentro del alerta
     const micImage = document.getElementById('micImage');
     if (micImage) {

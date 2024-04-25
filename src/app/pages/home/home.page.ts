@@ -33,6 +33,7 @@ import { PermissionService } from 'src/app/services/permission.service';
 import { Form } from 'src/app/models/form';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
@@ -261,6 +262,7 @@ export class HomePage implements OnInit {
 
 
   async ngOnInit() {
+    TextToSpeech.stop();
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
 
     if (this.platform.is('android')) this.checkHealthAccessAndroid();

@@ -19,7 +19,7 @@ export class ViewMoreInformationComponent implements OnInit {
   @Input() segment: string;
   @Output() notifyParent: EventEmitter<any> = new EventEmitter();
 
-
+  activeSpeakerId: any;
   like = false;
   hide = false;
   favourite = false;
@@ -40,9 +40,7 @@ export class ViewMoreInformationComponent implements OnInit {
     this.stopSpeak();
   }
  
-  ionViewWillLeave() {
-    this.stopSpeak(); // Detener la reproducción de texto a voz al salir de la página
-  }
+  
 
   toRouterLink() {
    
@@ -186,8 +184,8 @@ export class ViewMoreInformationComponent implements OnInit {
     return datePipe.transform(date, this.dateService.getFormatSelectedDate2());
   }
 
-  setSpeak(speak: any){
-    
+ setSpeak(id, speak: any){
+  
    
     const regex = /(<(?!img)[^>]+>)|(<img[^>]+alt="([^"]+)">)|(<([^>]+)>)/ig;
 
@@ -205,6 +203,7 @@ export class ViewMoreInformationComponent implements OnInit {
     const estimatedTime = textLength / averageReadingSpeed;
     this.showSpeak = true;
     let language = this.languageService.getCurrent()
+    this.activeSpeakerId = id;
     TextToSpeech.speak({
       text:result,
       lang: language,     
@@ -216,6 +215,7 @@ export class ViewMoreInformationComponent implements OnInit {
 
 
   stopSpeak(){
+    this.activeSpeakerId = null;
     this.showSpeak = false;
     TextToSpeech.stop();
   }
