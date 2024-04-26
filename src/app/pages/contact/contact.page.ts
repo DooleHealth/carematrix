@@ -285,4 +285,14 @@ async getAllChat(){
   sanitizeUrl(url:string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
+  emergencyCall(){
+    //recuperar valor numero general
+    
+    let num=this.authService.emergencyNumber;
+    console.log('[ContactPage] emergencyCall()', num);
+    this.callService.callNumber(""+num, true)
+    .then(res => console.log('Launched dialer!', res))
+    .catch(err => console.log('Error launching dialer', err));
+  }
 }

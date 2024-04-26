@@ -127,10 +127,7 @@
                     <ion-col size="6"
                       style="display: flex; flex-direction: column; justify-content: space-between; padding: unset">
                       <div style="align-self: flex-end;">
-                        <ion-button shape="round" color="warning" style="--background: var(--form-home-color); font-size: 90%;" (click)="callNumber(slide.phone)">
-                          {{'detail_contact.call' | translate }}
-                          <ion-icon style="padding-left: 2%;" src="../../assets/icons/phone_emergency.svg"></ion-icon>
-                        </ion-button>
+                       
                       </div>
                     </ion-col>
                   </ion-row>
@@ -145,6 +142,11 @@
             </ion-card>
           </div>
         </ng-container>
+
+        <ion-button color="warning" class="ion-padding" (click)="emergencyCall()" expand="block" shape="round">
+          {{'detail_contact.emergencyCall' | translate }}
+          <ion-icon style="padding-left: 2%;" src="../../assets/icons/phone_emergency.svg"></ion-icon>
+        </ion-button>
 
         <ng-template #noData>
           <div *ngIf=" !this.isLoading">

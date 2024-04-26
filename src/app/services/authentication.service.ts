@@ -51,6 +51,7 @@ export class AuthenticationService {
   public isRecovery: boolean = false;
   public action: string;
   public id_user: string;
+  public emergencyNumber: string;
   public data: Array<any>;
   public email: string;
   public agendaUser = [];
@@ -141,6 +142,7 @@ export class AuthenticationService {
 
         this.user = new User(res.idUser, credentials.password, res.name, res.first_name, res.temporary_url);
         this.id_user = res.idUser;
+        this.emergencyNumber = res.emergency_phone_button;
         
         if (res?.familyUnit.length > 0) {
           this.user.listFamilyUnit = res.familyUnit;
@@ -174,6 +176,15 @@ export class AuthenticationService {
     Preferences.set({
       key: 'user',
       value: JSON.stringify(user)
+    });
+
+  }
+
+  setEmergencyNumberLocalStorage(number) {
+    console.log(`[AuthenticationService] setEmergencyNumberLocalStorage()`, number);
+    Preferences.set({
+      key: 'emergencyNumber',
+      value: JSON.stringify(number)
     });
 
   }
