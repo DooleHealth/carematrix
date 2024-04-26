@@ -132,6 +132,7 @@ export class AppComponent implements OnInit {
         this.listenConnection();
 
         // Enable background mode
+     
         //this.backgroundMode.enable();
 
         this.backButton();
@@ -142,7 +143,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-
+ 
   async createCacheFolder() {
     await Filesystem.mkdir({
       directory: FilesystemDirectory.Cache,
@@ -1043,6 +1044,7 @@ export class AppComponent implements OnInit {
   }
 
   backButton() {
+    
     this.platform.backButton.subscribeWithPriority(10, () => {
       // this does work
       if (this.router.url.endsWith('home')) {

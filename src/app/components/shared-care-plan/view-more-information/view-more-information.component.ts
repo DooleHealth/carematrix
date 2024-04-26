@@ -6,8 +6,9 @@ import { DateService } from 'src/app/services/date.service';
 import { DatePipe } from '@angular/common';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
+import { App, AppState } from '@capacitor/app';
 
 @Component({
   selector: 'app-view-more-information',
@@ -28,11 +29,15 @@ export class ViewMoreInformationComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private dooleService: DooleService, public authService: AuthenticationService,private navCtrl: NavController,
+  constructor(private dooleService: DooleService, public authService: AuthenticationService,private navCtrl: NavController,  public platform: Platform,
     private languageService: LanguageService, public dateService: DateService,  public translate: TranslateService,) { }
 
   ngOnInit() {
     console.log("[ViewMoreInformationComponent] ngOnInit(): ", this.content)
+    this.platform.ready().then(() => {
+      this.listenToAppState();
+    })
+
     //this.toRouterLink()
 
   }
@@ -41,7 +46,14 @@ export class ViewMoreInformationComponent implements OnInit, OnDestroy {
   }
  
   
-
+  listenToAppState() {
+    App.addListener('appStateChange', (state: AppState) => {
+      if (!state.isActive) {
+        this.stopSpeak();
+        console.log("La aplicación está en segundo plano");
+      }
+    });
+  }
   toRouterLink() {
    
     switch (this.segment) {
