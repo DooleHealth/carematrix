@@ -119,10 +119,10 @@
   <ng-template #buttons>
     <div class="buttonContainer"  *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">
       
-      <ion-button [disabled]="this.permissionService.canManageEvents" *ngIf="event?.origin === 1 && !this.isEditable" expand="block" color="primary" (click)="this.editAgenda(event)">
+      <ion-button [disabled]="this.permissionService.canManageEvents" *ngIf="event?.origin === 1 && !this.isEditable" shape="round" expand="block" color="primary" (click)="this.editAgenda(event)">
         {{ 'appointment.edit_appointment' | translate}}</ion-button>
 
-      <ion-button [disabled]="this.permissionService.canManageEvents" *ngIf="event?.origin === 1" fill="clear" expand="full" color="danger" (click)="presentAlertConfirm()">
+      <ion-button [disabled]="this.permissionService.canManageEvents" *ngIf="event?.origin === 1"  shape="round" expand="block" color="danger" (click)="presentAlertConfirm()">
         {{ 'appointment.button_delete' | translate}}</ion-button>
     </div>
 

@@ -68,7 +68,7 @@
               <ion-select-option value="{{this.types[1].label | translate}}">{{'bookings.types.presential' | translate}}</ion-select-option>
             </ion-select>
 
-            <ion-note *ngIf="this.isSubmittedOnline && this.form.get('online').invalid" class="error ion-padding"
+            <ion-note *ngIf="this.isSubmittedOnline && this.form.get('online').invalid" class="error marginl"
             color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
 
           </ion-item>
