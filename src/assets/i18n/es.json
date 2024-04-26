@@ -1120,7 +1120,9 @@
       "info-disconnect-title": "Como desconectarse de Google Fit",
       "info-disconnect-msg": "Para desconectarse de Google Fit abra el apartado Configuración de la App y revoque el permiso de Actividad Física",
       "error_msg": "Error al conectarse a Google Fit",
-      "return_home": "Ir a la página principal"
+      "return_home": "Ir a la página principal",
+      "error_msg_permissions_denied_details": "Es necesario permitir los permisos en la configuración de la app. Haz clic en 'Abrir configuración'.",
+      "button_open_settings":"Abrir configuración"
     },
     "content": "Actualmente no hay datos disponibles para mostrar"
 }

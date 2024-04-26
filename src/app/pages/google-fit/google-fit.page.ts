@@ -157,6 +157,7 @@ export class GoogleFitPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-alert-class',
       header: this.translate.instant("google-fit.error_msg"),
+      message: this.translate.instant("google-fit.error_msg_permissions_denied_details"),
       buttons: [
         {
           text: this.translate.instant("alert.button_cancel"),
@@ -165,7 +166,13 @@ export class GoogleFitPage implements OnInit {
           handler: async (blah) => {
             console.log('Confirm Cancel: blah');
           }
-        }, {
+        }, 
+        {
+          text: this.translate.instant("google-fit.button_open_settings"),
+          handler: () => {
+            this.redirectSettings();
+        }
+        },{
           text: this.translate.instant("google-fit.return_home"),
           handler:  () => {
             this.authService.setShowGoogleFitLocalstorage()
