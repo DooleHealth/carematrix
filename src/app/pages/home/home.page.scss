@@ -521,11 +521,8 @@ ion-progress-bar {
 .my-custom-class {
   .alert-wrapper {
     .alert-head {
-        // header styling here eg. background
+        /* header styling here eg. background*/ 
         --padding: 0px
-        h2 {
-            // header text styling here eg. color, font size
-        }
     }
 
     .alert-message {
