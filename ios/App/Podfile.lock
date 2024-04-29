@@ -52,6 +52,8 @@ PODS:
   - CordovaPluginsStatic (5.6.0):
     - CapacitorCordova
     - OpenTok (~> 2.17.0)
+  - DooleVideocallNoticationsPlugins (1.0.1):
+    - Capacitor
   - Firebase/CoreOnly (10.10.0):
     - FirebaseCore (= 10.10.0)
   - Firebase/Messaging (10.10.0):
@@ -182,6 +184,7 @@ DEPENDENCIES:
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - CordovaPluginsResources (from `../capacitor-cordova-ios-plugins`)
   - CordovaPluginsStatic (from `../capacitor-cordova-ios-plugins`)
+  - "DooleVideocallNoticationsPlugins (from `../../node_modules/@doole/videocall-notications-plugins`)"
   - Firebase/Messaging
   - FirebaseCore
 
@@ -254,6 +257,8 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
   CordovaPluginsStatic:
     :path: "../capacitor-cordova-ios-plugins"
+  DooleVideocallNoticationsPlugins:
+    :path: "../../node_modules/@doole/videocall-notications-plugins"
 
 SPEC CHECKSUMS:
   Capacitor: ebfc16cdb8116d04c101686b080342872da42d43
@@ -281,6 +286,7 @@ SPEC CHECKSUMS:
   CordovaPlugins: 961dbd6932a693dcb2b5f654b9b0d7faf7634f91
   CordovaPluginsResources: 0c211f770ed91763a179ebcd9b9346e120b70662
   CordovaPluginsStatic: 18cb906fd22b9d473c4ada78b2ff829e2359b74f
+  DooleVideocallNoticationsPlugins: 6924bc3e2765de5904f0c538a47471bfb689cc9e
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
   FirebaseAnalytics: 7bc7de519111dae802f5bc0c9c083918f8b8870d
   FirebaseAppCheck: 8bde2c5f393518ab98290151188bf196b4bab91e
@@ -297,6 +303,6 @@ SPEC CHECKSUMS:
   SQLCipher: 905b145f65f349f26da9e60a19901ad24adcd381
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: 89f98ad1ca97c250e1540d8549d800c34995ea5a
+PODFILE CHECKSUM: d2dfb83bd613728cb19e3914cb8fb3bc1b7a78c7
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2

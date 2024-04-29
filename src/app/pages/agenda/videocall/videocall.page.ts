@@ -26,7 +26,7 @@ export class VideocallPage implements OnInit {
   environment;
   user: User;
 
-  private browser:any; // InAppBrowserObject;
+  private browser: InAppBrowserObject;
   private callEventSubscription: Subscription;
 
   public connected: boolean;
@@ -118,7 +118,7 @@ ngOnInit() {
         console.log('startVideocall()', urlWithParams);
         this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlWithParams);
         //console.log(this.safeUrl);
-
+        //this.openVideocall(urlWithParams)
         if(this.platform.is('ios')){
           this.openVideocall(urlWithParams)
         }else{
@@ -158,8 +158,10 @@ ngOnInit() {
     }
 
     //const urlWithParams = this.getUrlWithParams();
-    //this.browser.addEventListener("loadstop", this.backButton());
     this.browser = this.iab.create(urlWithParams , '_blank', iosoption);
+    this.browser.on('exit').subscribe(event => { 
+      this.backButton()
+    });
 
 }
 
@@ -173,6 +175,7 @@ getUrlWithParams(){
   }
 
   return `${this.constants.DOOLE_ENDPOINT}/${path}?${params.toString()}`;
+  //return `${this.environment.endpoint}/${path}?${params.toString()}`;
 }
 
 }
