@@ -46,6 +46,7 @@ export class IntroPage implements OnInit {
   }
   
   async introAction() {
+    this.stopSpeak();
     await this.authService.setShowIntroLocalstorage()
     if (this.platform.is('android') || this.platform.is('mobileweb') || this.platform.is('desktop')) {
       this.router.navigate(['google-fit']);
@@ -56,7 +57,7 @@ export class IntroPage implements OnInit {
   }
 
   onSlideChange() {
-
+    this.stopSpeak();
     this.currentSlideIndex = this.swiperRef?.nativeElement.swiper.activeIndex+1;
 
     if (this.swiperRef?.nativeElement.swiper.isEnd) {
@@ -89,13 +90,18 @@ export class IntroPage implements OnInit {
               break;
       
     }
-
+    const textLength = text.length;
+    const averageReadingSpeed = 10;
+    const estimatedTime = textLength / averageReadingSpeed;
     this.showSpeak = true;
     let language = this.languageService.getCurrent()
     TextToSpeech.speak({
       text:text,
       lang: language,
     })
+    setTimeout(() => {
+      this.showSpeak = false; // Establecer showSpeak en false después del tiempo estimado
+    }, estimatedTime * 750);
   }
 
   stopSpeak(){

@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActionSheetController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { ActionSheetController, IonSelect, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DooleService } from 'src/app/services/doole.service';
 import { MedicalCalendarPage } from '../contact/medical-calendar/medical-calendar.page';
@@ -24,6 +24,7 @@ export class RequestVisitPage implements OnInit {
   selectedDate: string;
   files: Array<{ name: string, file: any, type: string }> = [];
   @ViewChild('uploadFile') uploadFile: FileUploadComponent;
+  @ViewChild('selectElement') selectElement: IonSelect;
   form: FormGroup;
   dateMax:any;
   slot_id: any;
@@ -77,7 +78,10 @@ export class RequestVisitPage implements OnInit {
       user_availability_slot_id: []
     });    
   }
-
+  openSelect() {
+    
+    this.selectElement.open();
+  }
 
   onTypeSelect(event: any) {
     console.log(event.detail)

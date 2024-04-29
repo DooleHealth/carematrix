@@ -99,3 +99,7 @@ ion-card {
     //--padding-start: 0px;
     //--inner-padding-end: 5%;
   }
+
+  .sin-icono::part(icon) {
+    display: none;
+  }
