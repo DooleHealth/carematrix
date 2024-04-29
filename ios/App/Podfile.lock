@@ -169,10 +169,10 @@ PODS:
   - nanopb/encode (2.30910.0)
   - OpenTok (2.17.1)
   - PromisesObjC (2.4.0)
-  - SQLCipher (4.5.6):
-    - SQLCipher/standard (= 4.5.6)
-  - SQLCipher/common (4.5.6)
-  - SQLCipher/standard (4.5.6):
+  - SQLCipher (4.5.7):
+    - SQLCipher/standard (= 4.5.7)
+  - SQLCipher/common (4.5.7)
+  - SQLCipher/standard (4.5.7):
     - SQLCipher/common
   - ZIPFoundation (0.9.19)
 
@@ -326,9 +326,9 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OpenTok: ca8dc629f930dc438a87147258c469a1944e2eef
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd
+  SQLCipher: 5e6bfb47323635c8b657b1b27d25c5f1baf63bf5
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 12eb326b1165d9c04a5b56f2af6f5bbd54ed3e2b
+PODFILE CHECKSUM: 7794d761506959c29a6021bc6bac4f83a1882495
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2
