@@ -81,10 +81,9 @@ export class NewsPage implements OnInit {
       });
   }
 
-  filterListNews(event) {
+  filterListNews(event) {   
     let search;
     const searchTerm = event.toLowerCase(); 
-
 
     if (searchTerm === '') {
       this.items = this.itemsCopy

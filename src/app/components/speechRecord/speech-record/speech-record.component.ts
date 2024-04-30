@@ -39,6 +39,10 @@ export class SpeechRecordComponent implements OnInit, OnDestroy {
           await alert.dismiss();
         }
         this.stopRecognition();
+        //this.myText='ClearFilter';
+        //console.log("mytext", this.myText)
+        //this.record.emit("aaa")
+        //this.loadList.emit();
         console.log("La aplicación está en segundo plano");
       }
     });
@@ -75,10 +79,9 @@ export class SpeechRecordComponent implements OnInit, OnDestroy {
   }
 
   async filterList(event) {
-
-    this.record.emit(event.srcElement.value);
-  }
-
+  this.record.emit(event.srcElement.value);
+}
+    
   async getList() {
 
     this.loadList.emit();

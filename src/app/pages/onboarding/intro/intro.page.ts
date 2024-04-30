@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { Swiper } from 'swiper/types';
+import { App, AppState } from '@capacitor/app';
 
 const INTRO_KEY = 'intro';
 @Component({
@@ -31,13 +32,23 @@ export class IntroPage implements OnInit {
     private authService: AuthenticationService,) { }
 
   ngOnInit() {
-    
+    this.platform.ready().then(() => {
+      this.listenToAppState();
+    })
   }
 
   ionViewWillEnter(){
     this.currentSlideIndex = this.swiperRef?.nativeElement.swiper.activeIndex+1;
   }
 
+  listenToAppState() {
+    App.addListener('appStateChange', (state: AppState) => {
+      if (!state.isActive) {
+        this.stopSpeak();
+        console.log("La aplicación está en segundo plano");
+      }
+    });
+  }
   ngAfterViewInit() {
     // Espera un tick para asegurar que la vista está completamente cargada
     setTimeout(() => {

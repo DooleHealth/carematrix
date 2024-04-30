@@ -84,8 +84,8 @@
           </ion-item>        
           <div *ngFor="let reason of reasons; let i = index; let isLast=last">
             <ion-item [lines]="isLast ? 'full' : 'none'">
-              <ion-label>{{ reason.label | translate }}</ion-label>
-              <ion-radio slot="start" value="{{reason.label | translate}}"></ion-radio>
+              <ion-label style="margin-left: 15%;">{{ reason.label | translate }}</ion-label>
+              <ion-radio slot="start" value="{{reason.label | translate}}" style="position: absolute;"></ion-radio>
             </ion-item>
           </div>
         </ion-radio-group>
