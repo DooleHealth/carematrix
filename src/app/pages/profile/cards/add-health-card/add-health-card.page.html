@@ -38,11 +38,11 @@
   <ion-card class="cardProfile">
     <ion-list>
       <ion-item>
-        <ion-label  stacked>
+        <ion-label stacked>
           <h5 >{{'health_card.name' | translate}}</h5>
           <ion-note *ngIf="this.isSubmittedName && this.formHealthCard.get('name').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
         </ion-label>
-        <ion-input  class="textMedium" formControlName="name" placeholder="" slot="end" (ionFocus)="isSubmitted = false" maxlength="50" required></ion-input>
+        <ion-input style="width: 50% !important;" class="textMedium" formControlName="name" placeholder="" slot="end" (ionFocus)="isSubmitted = false" maxlength="50" required></ion-input>
       </ion-item>
 
       <ion-item>
@@ -50,7 +50,7 @@
           <h5 >{{'health_card.affiliation_number' | translate}}</h5>
           <ion-note *ngIf="this.isSubmittedAffiliationNumber && this.formHealthCard.get('card_number').invalid" class="error" color="danger"><p>{{ 'error_required' | translate}}</p></ion-note>
         </ion-label>
-        <ion-input class="textMedium" formControlName="card_number" placeholder="" slot="end" (ionFocus)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
+        <ion-input style="width: 50% !important;" class="textMedium" formControlName="card_number" placeholder="" slot="end" (ionFocus)="isSubmittedAffiliationNumber = false" maxlength="30" required></ion-input>
       </ion-item>
 
       <ion-item>

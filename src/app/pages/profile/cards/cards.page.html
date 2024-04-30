@@ -15,7 +15,7 @@
    <ion-spinner ></ion-spinner>
   </div>
 
-  <ion-list *ngIf="listCard.length > 0; else noData">
+  <ion-list *ngIf="listCard.length > 0; else noData" mode="ios">
     <ion-card *ngFor="let card of listCard" class="cardProfile" routerLink="detailCard" [state]="{id:card.id}" routerLinkActive='active-item'>
       <ion-card-content>
         <ion-item lines="none">
