@@ -1,5 +1,5 @@
 ext {
-    minSdkVersion = 24
+    minSdkVersion = 26
     compileSdkVersion = 34
     targetSdkVersion = 34
     androidxActivityVersion = '1.8.0'
@@ -16,6 +16,8 @@ ext {
     androidxMaterialVersion ='1.10.0'
     androidxExifInterfaceVersion = '1.3.6'
     androidxBrowserVersion = '1.7.0'
-    firebaseMessagingVersion='23.1.2'
+    firebaseMessagingVersion='23.3.1'
     lifecycleVersion = "2.6.2"
+    androidxCoreKTXVersion = "1.12.0"
+    kotlinxCoroutinesVersion = "1.7.3"
 }

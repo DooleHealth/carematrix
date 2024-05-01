@@ -3,6 +3,7 @@ package com.doole.inca.call
 import android.content.Intent
 import android.os.Handler
 import android.telecom.DisconnectCause
+import android.util.Log
 import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin
 import com.getcapacitor.PluginCall
@@ -50,11 +51,13 @@ class CallCapacitorPlugin : Plugin() {
 
     override fun handleOnNewIntent(data: Intent) {
         super.handleOnNewIntent(data)
+        Log.d("CallCapacitorPlugin", "handleOnNewIntent")
         val bundle = data.extras
         if (bundle != null && bundle.containsKey("callId")) {
             val capAction = when(data.action) {
                 CallActionReceiver.ACTIONS.DECLINE.name -> "end-call"
                 CallActionReceiver.ACTIONS.ACCEPT.name -> "accept-call"
+                CallActionReceiver.ACTIONS.DISCONNECTED.name -> "disconnected-call"
                 else -> "error"
             }
             val dataObject = JSObject()
@@ -62,6 +65,7 @@ class CallCapacitorPlugin : Plugin() {
                 val valueStr = bundle.getString(key)
                 dataObject.put(key, valueStr)
             }
+            Log.i("CallCapacitorPlugin", "notifyListeners $capAction")
             notifyListeners(capAction, dataObject, true)
         }
     }

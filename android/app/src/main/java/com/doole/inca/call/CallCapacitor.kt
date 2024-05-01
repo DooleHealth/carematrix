@@ -55,11 +55,11 @@ class CallCapacitor(private val context: Context) {
             callInfo.putString("from", from)
             callInfo.putString("callId", callId)
             callInfo.putInt(TelecomManager.EXTRA_INCOMING_VIDEO_STATE, VideoProfile.STATE_BIDIRECTIONAL)
-            val isCallPermitted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /*val isCallPermitted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tm.isIncomingCallPermitted(handle)
             } else {
                 true
-            }
+            }*/
             tm.addNewIncomingCall(handle, callInfo)
         }
     }

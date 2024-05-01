@@ -252,6 +252,7 @@ export class AuthenticationService {
 
   getShowIntroLocalstorage(): Promise<any> {
     return Preferences.get({ key: 'showIntro' }).then((val) => {
+      console.log(`[AuthService] getShowIntroLocalstorage()`, val.value);
       return Boolean(val.value)
     });
   }

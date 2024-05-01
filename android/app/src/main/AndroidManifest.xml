@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
 
-        <activity
+<!--        <activity
             android:name=".call.CallIncomingActivity"
             android:showWhenLocked="true"
             android:excludeFromRecents="true"
@@ -42,7 +42,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-        </activity>
+        </activity>-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -63,7 +63,7 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/primary" />
 
-        <service android:directBootAware="true" android:exported="false" android:name=".pushnotifications.MessagingService">
+<!--        <service android:directBootAware="true" android:exported="false" android:name=".pushnotifications.MessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -74,7 +74,7 @@
                 <action android:name="android.telecom.ConnectionService" />
             </intent-filter>
         </service>
-        <receiver android:name=".call.CallActionReceiver" android:exported="false"></receiver>
+        <receiver android:name=".call.CallActionReceiver" android:exported="false"></receiver>-->
 
 
     </application>

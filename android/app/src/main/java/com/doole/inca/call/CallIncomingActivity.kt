@@ -30,16 +30,19 @@ class CallIncomingActivity : Activity() {
         super.onCreate(savedInstanceState)
         tm = applicationContext.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
         setContentView(R.layout.incoming_call_activity)
-        val call = CallConnectionService.activeCalls.entries.first().value
-        val callerName = call.from
-        callId = call.callId
-        /*if(intent.extras?.getBoolean("ring") == true) {
+        //setContentView(com.doole.plugin.R.layout.incoming_call_activity)
+        if(CallConnectionService.activeCalls.size > 0) {
+            val call = CallConnectionService.activeCalls.entries.first().value
+            //val callerName = call.from
+            callId = call.callId
+            /*if(intent.extras?.getBoolean("ring") == true) {
             ringtone = RingtoneManager.getRingtone(
                     this,
                     RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
             ringtone?.play()
-        }*/
-        registerListener()
+            }*/
+            registerListener()
+        }
     }
 
     private fun registerListener() {
