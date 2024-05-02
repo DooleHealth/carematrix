@@ -98,7 +98,7 @@ ngOnInit() {
   async startVideocall(){
     //this.analyticsService.logEvent('videollamada_doole', this.user)
       this.connecting = true;
-      this.btnConectarStr = "Conectando...";
+      this.btnConectarStr =  ""; //"Conectando...";
 
     const loading = await this.loadingController.create({
       mode: "md",

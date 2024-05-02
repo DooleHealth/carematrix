@@ -132,7 +132,7 @@ export class AuthenticationService {
 
               if (this.platform.is('ios')){
                 if(this.voipDeviceToken)
-                this.registerDevice(this.voipDeviceToken, (this.indexEndPoint==0)?'iosvoip':'iosvoipdev'); // desaorrollo
+                this.registerDevice(this.voipDeviceToken, this.constants.device_ios?.ios_voip); // desaorrollo
                   //this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip'); //produccion
                 
 
@@ -385,11 +385,9 @@ export class AuthenticationService {
      if(platform == 'FCM')
       platform = 'android';
      if(platform == 'APNS')
-      //platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
-      platform =  (this.indexEndPoint==0)?'ios':'ios_dev';
+      platform = this.constants?.device_ios?.ios_push;
      if(platform == 'ios')
-      //platform =  (this.indexEndPoint!==0)?'ios_dev':'ios';
-      platform =  (this.indexEndPoint==0)?'ios':'ios_dev';
+      platform = this.constants?.device_ios?.ios_push; 
 
      const postData = {
       token: token,
