@@ -32,11 +32,7 @@ ion-card {
   box-shadow: none !important;
 }
 
-.txt-title {
-  font-family: 'Poppins-SemiBold';
-  font-size: 14px;
-  color: #22577A;
-}
+
 
 .txt-schedule {
   font-family: 'Poppins-Regular';
@@ -74,3 +70,27 @@ ion-card {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }*/
+
+.text2line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.txt-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+ 
+  color: #22577A;
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.035px;
+}

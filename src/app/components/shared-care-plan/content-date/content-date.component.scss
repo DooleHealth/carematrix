@@ -21,13 +21,23 @@ ion-card {
     font-size: 14px;
     color: #22577A;
 }
-
 .txt-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+   
+    color: #22577A;
     font-family: 'Poppins-SemiBold';
     font-size: 14px;
-    color: #22577A;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.035px;
     margin-bottom: 8%;
-}
+  }
+
 
 .txt-schedule {
     font-family: 'Poppins-Regular';
