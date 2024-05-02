@@ -1,8 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesystem';
-//import { PushNotificationSchema, ActionPerformed, Token, PushNotifications } from '@capacitor/push-notifications'
-import { ActionPerformed, Token, PushNotifications, PushNotificationSchema } from '../plugins/PushNotifications'
+import { ActionPerformed, Token, PushNotifications } from '@doole/videocall-notications-plugins/dist/esm/PushNotifications';
 import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
 
 import { AlertController, MenuController, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
@@ -22,15 +21,10 @@ import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { VideocallIframePage } from './pages/agenda/videocall-iframe/videocall-iframe.page';
 import { ApiEndpointsService } from './services/api-endpoints.service';
 import { VideocallPage } from './pages/agenda/videocall/videocall.page';
-
-import { ContentTypePath } from './models/shared-care-plan';
-
 import { register } from 'swiper/element/bundle';
 import { Capacitor } from '@capacitor/core';
-
-import { CallCapacitor } from 'src/plugins/CallCapacitor';
+import { CallCapacitor } from '@doole/videocall-notications-plugins';
 import { TextZoom } from '@capacitor/text-zoom';
-
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
 import { NavigationService } from './services/navigation.service';
 import config from 'capacitor.config';
@@ -302,7 +296,7 @@ export class AppComponent implements OnInit {
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
+      (notification: any) => {
         console.log('push token - Push notification received: ', 'Push received: ' + JSON.stringify(notification));
 
 
@@ -614,7 +608,6 @@ export class AppComponent implements OnInit {
   }
 
   async openVideocallIframeModal(agenda) {
-
     const modal = await this.modalCtrl.create({
       component: VideocallIframePage,
       componentProps: { "id": agenda }
@@ -665,7 +658,7 @@ export class AppComponent implements OnInit {
         if (cancel == "false") {
           self.opentokService.agendaId$ = extra.Caller.ConnectionId;
         } else
-          console.log("Hang up notification");
+          self.opentokService.emitCallEvent({type: "hangup"});
       } else {
         console.error("Caller not found in voip notification");
       }
@@ -776,7 +769,9 @@ export class AppComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: VideocallPage,
       componentProps: { id: id, startVideo: true },
-      cssClass: "modal-custom-class"
+      cssClass: "modal-custom-class",
+      canDismiss: true,
+      id: VideocallPage.VIDEOCALL_MODAL_ID,
     });
 
     modal.onDidDismiss()

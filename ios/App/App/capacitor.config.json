@@ -69,6 +69,8 @@
 		"TextZoomPlugin",
 		"BadgePlugin",
 		"BadgePlugin",
+		"PushNotificationsPlugin",
+		"PushNotificationsPlugin",
 		"NativeSettingsPlugin",
 		"NativeSettingsPlugin",
 		"CDVPlugin"
