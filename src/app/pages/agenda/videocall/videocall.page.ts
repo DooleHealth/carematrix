@@ -162,9 +162,9 @@ ngOnInit() {
       //const urlWithParams = this.getUrlWithParams();
       //this.browser.addEventListener("loadstop", this.backButton());
       this.browser = this.iab.create(urlWithParams , '_blank', iosoption);
-      this.browser.on("loadstop").subscribe(event =>{
-        this.browser.show()
-      })
+      // this.browser.on("loadstop").subscribe(event =>{
+      //   this.browser.show()
+      // })
     
   }
 
