@@ -3,8 +3,7 @@ import { ViewContainerRef, Component, ElementRef, AfterViewInit, ViewChild, Comp
 import * as OT from '@opentok/client';
 import { SubscriberComponent } from '../subscriber/subscriber.component';
 import { OpentokService } from '../../services/opentok.service';
-import { Router } from '@angular/router';
-import { ActionSheetController, ModalController, NavController, Platform } from '@ionic/angular';
+import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { DooleService } from 'src/app/services/doole.service';
 import { TranslateService } from '@ngx-translate/core';
 import { File } from '@awesome-cordova-plugins/file/ngx';
@@ -39,9 +38,8 @@ export class VideoComponent implements  AfterViewInit, OnInit {
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   files: Array<{ name: string, file: string, type: string }> = [];
 constructor(
-  private componentFactoryResolver: ComponentFactoryResolver,
+  //private componentFactoryResolver: ComponentFactoryResolver,
   private opentokService: OpentokService,
-  private navController: NavController,
   public platform: Platform,
   private dooleService: DooleService,
   private modalCtrl: ModalController,
@@ -52,7 +50,6 @@ constructor(
 ) { }
 
   async ngOnInit() {
-
     this.apiKey = this.opentokService.apiKey$;
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
@@ -74,9 +71,9 @@ onStreamCreated(stream, session) {
 
   console.log('onStreamCreated');
 
-  const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SubscriberComponent);
+  //const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SubscriberComponent);
   const viewContainerRef = this.subscriberHost;
-  const componentRef = viewContainerRef.createComponent(componentFactory);
+  const componentRef = viewContainerRef.createComponent(SubscriberComponent);
   (<SubscriberComponent>componentRef.instance).stream = stream;
   (<SubscriberComponent>componentRef.instance).session = this.session;
   (<SubscriberComponent>componentRef.instance).subscribe();

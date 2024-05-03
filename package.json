@@ -78,6 +78,7 @@
     "@capacitor/status-bar": "^6.0.0",
     "@capacitor/text-zoom": "^6.0.0",
     "@capawesome/capacitor-badge": "^6.0.0",
+    "@doole/videocall-notications-plugins": "github:DooleHealth/videocall-notications-plugins#main",
     "@ionic/angular": "^8.0.0-rc.2",
     "@ionic/angular-server": "^8.0.0-rc.2",
     "@ionic/core": "^7.0.14",

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INCA Health</string>
+    <string name="title_activity_main">INCA Health</string>
+    <string name="package_name">com.doole.inca</string>
+    <string name="custom_url_scheme">com.doole.inca</string>
+    <string name="text_incoming_call">Tu professional sanitari té està cridant</string>
+    <string name="open">Obrir</string>
+    <string name="reject">Rebutjar</string>
+    <string name="incoming_call">Crida entrant</string>
+    <string name="receive_call">Prem per a rebre-la</string>
+</resources>

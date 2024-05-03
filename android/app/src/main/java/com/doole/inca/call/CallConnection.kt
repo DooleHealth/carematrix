@@ -20,7 +20,7 @@ import com.doole.inca.R
 
 const val INCOMING_CALL_NOTIFID = 1
 
-class CallConnection(val delegate: CallConnectionService, val callId: String, val from: String): Connection() {
+class CallConnection(private val delegate: CallConnectionService, val callId: String, private val from: String): Connection() {
 
     fun getCallId() { callId }
     fun getFrom() { from }
@@ -62,7 +62,7 @@ class CallConnection(val delegate: CallConnectionService, val callId: String, va
                 getCallAction(
                     ctx,
                     CallActionReceiver.ACTIONS.DECLINE.name,
-                        ctx.getString(R.string.reject),
+                    ctx.getString(R.string.reject),
                     0xFFF44336u.toInt()
                 )
             )
@@ -70,7 +70,7 @@ class CallConnection(val delegate: CallConnectionService, val callId: String, va
                 getCallAction(
                     ctx,
                     CallActionReceiver.ACTIONS.ACCEPT.name,
-                        ctx.getString(R.string.open),
+                    ctx.getString(R.string.open),
                     0xff00aa00u.toInt()
                 )
             )
@@ -96,7 +96,7 @@ class CallConnection(val delegate: CallConnectionService, val callId: String, va
         try {
             val intent = Intent(ctx, CallIncomingActivity::class.java)
             intent.flags =
-                    Intent.FLAG_ACTIVITY_NO_USER_ACTION or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                Intent.FLAG_ACTIVITY_NO_USER_ACTION or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             intent.action = callId
             intent.setClass(ctx, CallIncomingActivity::class.java)
             intent.putExtra("callId", callId)
@@ -109,6 +109,8 @@ class CallConnection(val delegate: CallConnectionService, val callId: String, va
 
     override fun onAnswer() {
         try {
+            //val startIntent = delegate.packageManager.getLaunchIntentForPackage(delegate.packageName)
+            //    ?: throw Error("Missing intent for package " + delegate.packageName)
             val startIntent = Intent(delegate, MainActivity::class.java)
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
