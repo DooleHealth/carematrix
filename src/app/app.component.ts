@@ -322,7 +322,7 @@ export class AppComponent implements OnInit {
             if (this.platform.is('ios')) {
               cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
             } else {
-
+              CallCapacitor.receiveCall({from: caller.Username });
             }
           } else
             console.log("End call push");
