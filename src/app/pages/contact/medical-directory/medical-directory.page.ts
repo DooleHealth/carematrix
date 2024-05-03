@@ -65,7 +65,7 @@ isLoading:boolean= true;
     redirect(staff){
       console.log('[MedicalDirectoryPage] redirect() ', staff); 
       if(this.isChat){
-        this.router.navigate(['/contact/chat/conversation'],{state:{staff:staff, chat:staff.message_header_id}})
+        this.router.navigate(['/contact/chat/conversation'],{state:{staff:staff, chat:staff?.message_header_id}})
       }else{
 
         ///this.router.navigate(['bookings'], {state:{staff:staff, isOnline:history.state.isOnline}});
