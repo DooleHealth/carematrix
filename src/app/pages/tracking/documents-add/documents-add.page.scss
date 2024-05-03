@@ -5,13 +5,13 @@
 
 
 .floating-button {
-    width: 90%;
-    position: absolute;
-    bottom: 100%;
-    --background: transparent; 
-    text-transform: none;
-    height: 50px !important;
-  }
+  width: 90%;
+  position: absolute;
+  bottom: 100%; 
+  --background: transparent; 
+  text-transform: none;
+  height: 50px !important;
+}
   
   ion-footer {
     position: relative; 

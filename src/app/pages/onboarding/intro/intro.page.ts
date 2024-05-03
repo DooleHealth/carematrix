@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { Swiper } from 'swiper/types';
+import { App, AppState } from '@capacitor/app';
 
 const INTRO_KEY = 'intro';
 @Component({
@@ -31,13 +32,23 @@ export class IntroPage implements OnInit {
     private authService: AuthenticationService,) { }
 
   ngOnInit() {
-    
+    this.platform.ready().then(() => {
+      this.listenToAppState();
+    })
   }
 
   ionViewWillEnter(){
     this.currentSlideIndex = this.swiperRef?.nativeElement.swiper.activeIndex+1;
   }
 
+  listenToAppState() {
+    App.addListener('appStateChange', (state: AppState) => {
+      if (!state.isActive) {
+        this.stopSpeak();
+        console.log("La aplicación está en segundo plano");
+      }
+    });
+  }
   ngAfterViewInit() {
     // Espera un tick para asegurar que la vista está completamente cargada
     setTimeout(() => {
@@ -46,6 +57,7 @@ export class IntroPage implements OnInit {
   }
   
   async introAction() {
+    this.stopSpeak();
     await this.authService.setShowIntroLocalstorage()
     if (this.platform.is('android') || this.platform.is('mobileweb') || this.platform.is('desktop')) {
       this.router.navigate(['google-fit']);
@@ -56,7 +68,7 @@ export class IntroPage implements OnInit {
   }
 
   onSlideChange() {
-
+    this.stopSpeak();
     this.currentSlideIndex = this.swiperRef?.nativeElement.swiper.activeIndex+1;
 
     if (this.swiperRef?.nativeElement.swiper.isEnd) {
@@ -89,13 +101,18 @@ export class IntroPage implements OnInit {
               break;
       
     }
-
+    const textLength = text.length;
+    const averageReadingSpeed = 10;
+    const estimatedTime = textLength / averageReadingSpeed;
     this.showSpeak = true;
     let language = this.languageService.getCurrent()
     TextToSpeech.speak({
       text:text,
       lang: language,
     })
+    setTimeout(() => {
+      this.showSpeak = false; // Establecer showSpeak en false después del tiempo estimado
+    }, estimatedTime * 750);
   }
 
   stopSpeak(){

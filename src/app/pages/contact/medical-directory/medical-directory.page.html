@@ -37,10 +37,12 @@
             <h2 class="user-name">
               <app-text-shell class="user-name" [data]="s.name" animation="bouncing"></app-text-shell>
             </h2>
-            <p class="user-lastname" *ngIf="s.specialities?.length > 0">
-              {{s.specialities[0].name}}
-              <!-- <app-text-shell class="user-name" [data]="s.specialities[0].name" animation="bouncing"></app-text-shell> -->
-            </p>
+            
+            <div *ngFor="let specialty of s.specialities">
+              <p class="user-lastname">
+                  {{ specialty.name }}
+              </p>
+          </div>
           </ion-label>
         </ion-item>
           

@@ -48,7 +48,7 @@
       <ion-list>
         <ion-item lines="none" (click)="this.openCalendarModal()">
           <ion-label class="custom-label">{{'bookings.field_date' | translate}}</ion-label>
-          <ion-input class="textMedium" formControlName="date" required placeholder="{{'bookings.placeholder' | translate}}"></ion-input>
+          <ion-input class="textMedium" formControlName="date" required ></ion-input>
           <ion-note *ngIf="this.isSubmittedStartDate && this.form.get('date').invalid" class="error ion-padding"
             color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
             <ion-icon slot="end" src="assets/icons/challenge_card_btn.svg"></ion-icon>
@@ -61,16 +61,19 @@
         <ion-item lines="full">
           <ion-label class="custom-label">{{'bookings.type' | translate}}</ion-label>
  
-          <ion-item lines="none" slot="end">
-            <ion-select required value="{{this.selectedType}}" (ionChange)="onTypeSelect($event)" placeholder="{{'bookings.placeholder' | translate}}" formControlName="online" toggleIcon="assets/icons/challenge_card_btn.svg">
+          <ion-item lines="none" slot="end" style="margin-right: -5%;">
+            
+            <ion-select class="sin-icono" required value="{{this.selectedType}}" (ionChange)="onTypeSelect($event)"  formControlName="online" 
+            interface="popover" #selectElement>
 
               <ion-select-option value="{{this.types[0].label | translate}}">{{'bookings.types.online' | translate}}</ion-select-option>
               <ion-select-option value="{{this.types[1].label | translate}}">{{'bookings.types.presential' | translate}}</ion-select-option>
             </ion-select>
 
-            <ion-note *ngIf="this.isSubmittedOnline && this.form.get('online').invalid" class="error marginl"
+            <ion-note *ngIf="this.isSubmittedOnline && this.form.get('online').invalid" (click)="openSelect()" class="error ion-padding"
             color="danger" slot="end">{{ 'error_required' | translate}}</ion-note>
-
+            <ion-icon (click)="openSelect()" slot="end" src="assets/icons/challenge_card_btn.svg"></ion-icon>
+          
           </ion-item>
        
 
@@ -81,8 +84,8 @@
           </ion-item>        
           <div *ngFor="let reason of reasons; let i = index; let isLast=last">
             <ion-item [lines]="isLast ? 'full' : 'none'">
-              <ion-label>{{ reason.label | translate }}</ion-label>
-              <ion-radio slot="start" value="{{reason.label | translate}}"></ion-radio>
+              <ion-label style="margin-left: 15%;">{{ reason.label | translate }}</ion-label>
+              <ion-radio slot="start" value="{{reason.label | translate}}" style="position: absolute;"></ion-radio>
             </ion-item>
           </div>
         </ion-radio-group>

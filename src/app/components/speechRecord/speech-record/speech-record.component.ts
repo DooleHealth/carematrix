@@ -1,14 +1,14 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-
+import { App, AppState } from '@capacitor/app';
 @Component({
   selector: 'app-speech-record',
   templateUrl: './speech-record.component.html',
   styleUrls: ['./speech-record.component.scss'],
 })
-export class SpeechRecordComponent implements OnInit {
+export class SpeechRecordComponent implements OnInit, OnDestroy {
   recoding = false;
   myText = "";
   @Input() type: any
@@ -21,8 +21,32 @@ export class SpeechRecordComponent implements OnInit {
     public translate: TranslateService,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.platform.ready().then(() => {
+      this.listenToAppState();
+    })
+  }
 
+  ngOnDestroy(){
+    this.stopRecognition();
+  }
+  listenToAppState() {
+    App.addListener('appStateChange', async (state: AppState) => {
+      if (!state.isActive) {
+        const alert = await this.alertController.getTop();
+
+        if (alert) {
+          await alert.dismiss();
+        }
+        this.stopRecognition();
+        //this.myText='ClearFilter';
+        //console.log("mytext", this.myText)
+        //this.record.emit("aaa")
+        //this.loadList.emit();
+        console.log("La aplicación está en segundo plano");
+      }
+    });
+  }
   async starRecognition() {
     // this.showAlertRecord()
     const { available } = await SpeechRecognition.available();
@@ -55,10 +79,9 @@ export class SpeechRecordComponent implements OnInit {
   }
 
   async filterList(event) {
-
-    this.record.emit(event.srcElement.value);
-  }
-
+  this.record.emit(event.srcElement.value);
+}
+    
   async getList() {
 
     this.loadList.emit();

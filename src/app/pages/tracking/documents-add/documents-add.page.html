@@ -109,22 +109,27 @@
 </ion-content>
 
 
-<ion-footer>
-  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
-    <ion-button  *ngIf="this.isEdit" (click)="presentAlertConfirm()" color="danger" shape="round" class="floating-button ion-margin" style="margin-bottom: 18%;" >
-      {{'documents_add.button_delete_result' | translate }}
-    </ion-button>
-  </div>
 
-  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
-    <ion-button [disabled]="this.isLoading" *ngIf="this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
-      {{'documents_add.button_edit_result' | translate }}
-    </ion-button>
-  </div>
 
-  <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center;">
-    <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
-      {{'documents_add.button_add_result' | translate }}
-    </ion-button>
-  </div>
-</ion-footer>
+<ion-footer mode="ios">
+
+  <!--   <ion-button *ngIf="!this.isNewEvent" class="deleteButton" color="danger" shape="round" (click)="presentAlertConfirm()">{{ 'reminder.button_delete' | translate}}</ion-button>
+   -->
+  
+    <div style="background-color: var(--default-bkg);" style="display: flex; justify-content: center; margin-bottom: 50px;">
+  
+      <ion-button *ngIf="this.isEdit" (click)="presentAlertConfirm()" color="danger" shape="round" class="floating-button ion-margin" style="margin-bottom: 20%;">
+        {{ 'documents_add.button_delete_result' | translate}}
+      </ion-button>
+
+      <ion-button [disabled]="this.isLoading" *ngIf="this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
+        {{'documents_add.button_edit_result' | translate }}
+      </ion-button>
+  
+      <ion-button [disabled]="this.isLoading" *ngIf="!this.isEdit" (click)="submit()" color="primary" shape="round" class="floating-button ion-margin">
+        {{'documents_add.button_add_result' | translate }}
+      </ion-button>
+    </div>
+  
+    
+  </ion-footer>

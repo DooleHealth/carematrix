@@ -66,6 +66,7 @@ export class NewsPage implements OnInit {
       async (res: any) =>{
         console.log('[NewsPage] getNewsList()', await res);
         if(res.news)
+        
        // this.adapterForView(res.news)
         this.items = res.news;
         
@@ -81,10 +82,9 @@ export class NewsPage implements OnInit {
       });
   }
 
-  filterListNews(event) {
+  filterListNews(event) {   
     let search;
     const searchTerm = event.toLowerCase(); 
-
 
     if (searchTerm === '') {
       this.items = this.itemsCopy

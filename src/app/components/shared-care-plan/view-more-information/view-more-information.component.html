@@ -4,8 +4,9 @@
     onError="this.onerror=null; this.src='/assets/images/shared-care-plan/image-not-found.png' " />
     
   <ion-item lines="none" mode="md">
-    <div *ngFor="let list of listcontets?.tags_name">
-      <ion-text class="study">{{ list.name}}</ion-text>
+    <div *ngFor="let list of listcontets?.tags_name" class="tag-item">
+      <ion-text class="study">{{ list }}</ion-text>
+
     </div>
    
  <ion-icon *ngIf="showSpeak  && activeSpeakerId === listcontets.id" color="secundary" name="pause-outline" slot="end" color="primary" (click)="stopSpeak()" style="margin-left: 2px;"></ion-icon>

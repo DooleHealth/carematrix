@@ -10,7 +10,7 @@
         <ion-col size="3" style="display: flex; align-items: center;">
           <ng-container >
             <!--<ion-icon  *ngIf="content?.type === 'forms'"   [src]= "imgurl"></ion-icon>-->
-            <img *ngIf="content?.type === 'forms'" [src]=  "content?.img ? content?.img :'/assets/icons/form_icon.svg'"  class="img_icon">
+            <img *ngIf="content?.type === 'forms'" [src]=  "content?.img ? content?.img :'/assets/icons/form_icon.svg'"  >
             <img  *ngIf="content?.type === 'medication'" class="img_icon" [src]=  "content?.img ? content?.img : '/assets/icons/pill_drug.svg'">
 
           </ng-container>
