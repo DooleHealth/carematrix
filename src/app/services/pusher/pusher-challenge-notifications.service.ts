@@ -113,6 +113,7 @@ export class PusherChallengeNotificationsService {
       <div class="after"></div>
       </div>`;
       header = this.translate.instant('health_path.level_congratulations')
+      this.pendingNotification = null
     }
     else{
       message = `<div class="pyro">
@@ -122,6 +123,7 @@ export class PusherChallengeNotificationsService {
       </div>`;
       let name_level = notification?.levelDetail?.name? notification?.levelDetail?.name:''
       header = this.translate.instant('health_path.level_congratulations') + ' ' + name_level
+      this.pendingNotification = null
     }
 
     const alert = await this.alertController.create({
