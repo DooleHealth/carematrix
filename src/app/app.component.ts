@@ -675,7 +675,6 @@ export class AppComponent implements OnInit {
     return this.dooleService.postAPIPendingConnect().subscribe(async (data) => {
       await data;
       console.log('[AppComponent] getAgendaId()', data)
-      alert(JSON.stringify('getAgenda: '+JSON.stringify(data)))
       if (data.success && data.agenda) {
         this.opentokService.agendaId$ = data.agenda;
         this.startVideocall(data.agenda);
