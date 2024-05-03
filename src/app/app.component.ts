@@ -322,7 +322,7 @@ export class AppComponent implements OnInit {
             if (this.platform.is('ios')) {
               cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
             } else {
-
+              CallCapacitor.receiveCall({from: caller.Username });
             }
           } else
             console.log("End call push");
@@ -672,10 +672,10 @@ export class AppComponent implements OnInit {
   }
 
   async getAgenda() {
-
     return this.dooleService.postAPIPendingConnect().subscribe(async (data) => {
       await data;
       console.log('[AppComponent] getAgendaId()', data)
+      alert(JSON.stringify('getAgenda: '+JSON.stringify(data)))
       if (data.success && data.agenda) {
         this.opentokService.agendaId$ = data.agenda;
         this.startVideocall(data.agenda);
@@ -693,73 +693,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // async startVideocallIos(agenda) {
-  //   console.log("startVideocall")
-  //   return this.dooleService.getAPIvideocall(agenda).subscribe(
-  //     async (data) => {
-  //       await data;
-  //       if (data.result) {
-  //         let tokboxSession = data;
-  //         this..token$ = tokboxSession.token;
-  //         this.opentokService.sessionId$ = tokboxSession.sessionId;
-  //         this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-  //         const modal = await this.modalCtrl.create({
-  //           component: VideoComponent,
-  //           componentProps: {},
-  //           cssClass: "modal-custom-class"
-  //         });
-
-  //         await modal.present();
-  //         cordova.plugins.CordovaCall.endCall();
-  //         return data;
-
-  //       } else {
-  //         let message = this.translate.instant('agenda.error_alert_message_get_token')
-  //         throw message;
-  //       }
-
-  //     },
-  //     (error) => {
-  //       // Called when error
-  //       alert('ERROR(' + error.code + '): ' + error.message)
-  //       console.log("error: ", error);
-  //       throw error;
-  //     });
-  // }
-
-  // async startVideocallAndroid(agenda) {
-
-  //   console.log("startVideocallAndroid")
-  //   this.dooleService.getAPIvideocall(agenda).subscribe(
-  //     async (data) => {
-  //       await data;
-  //       if (data.result) {
-  //         let tokboxSession = data;
-  //         this.opentokService.token$ = tokboxSession.token;
-  //         this.opentokService.sessionId$ = tokboxSession.sessionId;
-  //         this.opentokService.apiKey$ = tokboxSession.tokboxAPI;
-  //         const modal = await this.modalCtrl.create({
-  //           component: VideoComponent,
-  //           componentProps: {},
-  //           cssClass: "modal-custom-class"
-  //         });
-
-  //         await modal.present();
-  //         return data;
-
-  //       } else {
-  //         let message = this.translate.instant('agenda.error_alert_message_get_token')
-  //         throw message;
-  //       }
-
-  //     },
-  //     (error) => {
-  //       // Called when error
-  //       alert('ERROR(' + error.code + '): ' + error.message)
-  //       console.log("error: ", error);
-  //       throw error;
-  //     });
-  // }
 
   async startVideocallIframe(id, startVideo?) {
     //console.log('[AppComponent] startVideocallIframe()', id, startVideo)
@@ -799,8 +732,10 @@ export class AppComponent implements OnInit {
       // Grab last agenda id from BO
       if (!self.opentokService.agendaId$)
         self.getAgenda();
-      else
+      else{
         self.startVideocall(self.opentokService.agendaId$)
+      }
+
 
     });
 

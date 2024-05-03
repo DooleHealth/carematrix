@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSSpeechRecognitionUsageDescription</key>
-<string>Privacy - Speech Recognition Usage Description</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Privacy - Microphone Usage Description</string>
-<key>NSSpeechSynthesisUsageDescription</key>
-<string>Privacy - Audio Usage Description</string>
-
-
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -39,15 +31,15 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Se utiliza la cámara para poder subir imágenes de pruebas diagnósticas y enviar imágenes a tu médico</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Allow to read user&apos;s contacts </string>
+	<string>Allow to read user's contacts </string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Unlock phone with FaceID</string>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
 	<string>Share your health records activity</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Query user&apos;s activity</string>
+	<string>Query user's activity</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>To query user&apos;s health activity</string>
+	<string>To query user's health activity</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Geolocation?</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -56,10 +48,15 @@
 	<string>Store camera photos to camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Se requiere acceder a tus fotos para poder subir imágenes de pruebas diágnosticas y enviar imágenes a tu médico</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Privacy - Speech Recognition Usage Description</string>
+	<key>NSSpeechSynthesisUsageDescription</key>
+	<string>Privacy - Audio Usage Description</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
+		<string>processing</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
@@ -86,6 +83,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	
 </dict>
 </plist>
