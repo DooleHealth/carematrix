@@ -516,7 +516,6 @@ export class AuthenticationService {
 
     getCanceledGoogleFitLocalstorage():boolean {
       const value = localStorage.getItem('cancelGoogleFit')
-      console.log("Booelan: ", value);
       return value !== null ? JSON.parse(value) : false;
     }
 }
