@@ -139,7 +139,7 @@ ngOnInit() {
   }
 
   backButton() {
-    console.log('[FormPage] backButton() ');
+    //console.log('[VideocallPage] backButton() ');
     this.modalCtrl.dismiss({ result: null, error: null }, undefined, VideocallPage.VIDEOCALL_MODAL_ID)
   }
 
@@ -160,11 +160,14 @@ ngOnInit() {
         closebuttoncaption: ` ${this.closeButton}`,
       }
       //const urlWithParams = this.getUrlWithParams();
-      //this.browser.addEventListener("loadstop", this.backButton());
       this.browser = this.iab.create(urlWithParams , '_blank', iosoption);
-      // this.browser.on("loadstop").subscribe(event =>{
-      //   this.browser.show()
-      // })
+      this.browser.on("loadstop").subscribe(event =>{
+        this.browser.show()
+      })
+      this.browser.on("exit").subscribe(event =>{
+        this.backButton()
+      })
+
     
   }
 
