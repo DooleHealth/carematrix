@@ -1,0 +1,16 @@
+.test-bar {
+    width: 60%;
+    background-color: rgba(255, 0, 0, 0.5); 
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    height: 30px; // Reduce la altura si es posible
+    padding: 5px 10px; // Ajusta el padding para mantener el diseño
+    left: 20%;
+    line-height: 20px; // Ajusta esto para alinear el texto verticalmente
+     // Asegurando que el texto no sea transparente
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); // Opcional, mejora la legibilidad
+  }

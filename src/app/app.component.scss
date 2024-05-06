@@ -33,6 +33,11 @@
   }
 }
 
+ion-router-outlet {
+  margin-top: 50px; // Ajusta según la altura de tu barra de test
+  padding-top: 50px; // Aju
+}
+
 body {
   background-color: #3f0202;
 }
