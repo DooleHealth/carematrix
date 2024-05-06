@@ -351,7 +351,8 @@ export class HomePage implements OnInit {
   }
 
   checkHealthAccessAndroid() {
-    if (this.platform.is("cordova")) {
+    console.log("getShowGoogleFitLocalstorage: ", this.authService.getCanceledGoogleFitLocalstorage())
+    if (this.platform.is("cordova") && this.authService.getCanceledGoogleFitLocalstorage()) {
 
       this.health
           .isAvailable()
@@ -374,6 +375,9 @@ export class HomePage implements OnInit {
           .catch((e) => {
             console.log(e);
           });
+    }
+    else{
+      console.log("Vas cancelar GOOGLEFIT: ",this.authService.getShowGoogleFitLocalstorage() )
     }
   }
 
