@@ -15,7 +15,7 @@ export class LanguageService {
       { name: 'English', code: 'en' },
       { name: 'Português', code: 'pt' },
       { name: 'Noruec', code: 'no' },
-      { name: 'Suec', code: 'swe' },
+      { name: 'Suec', code: 'sv' },
     );
   }
 
