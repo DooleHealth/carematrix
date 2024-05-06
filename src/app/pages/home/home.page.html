@@ -161,7 +161,7 @@
               <swiper-slide *ngIf="!challenge.completed" class="ion-no-padding">
 
                 <ion-card class="customCardHealthPath">
-                  <ion-item lines="none" mode="md" class="noMargin" (click)="navigateToChallengesPage(challenge)"
+                  <ion-item lines="none" mode="md" class="noMargin" routerLink="health-path/detail"  [state]="{ challenge: challenge}"
                     routerLinkActive="active-item">
                     <ion-icon name="heart" class="ion-no-margin" slot="start" style="color:var(--purple)"></ion-icon>
                     <div class="slidersHeader">
@@ -219,13 +219,12 @@
                           </ion-row>
                         </ion-col>
 
-                        <ion-row (click)="navigateToChallengesPage(challenge)" routerLinkActive="active-item"
+                        <ion-row  routerLinkActive="active-item"
                           style="width: 100%;">
-                          <a class="a-type1" style="padding-left: 15%;">{{
+                          <a routerLink="health-path/detail" routerLinkActive="active-item" [state]="{ challenge: challenge}" class="a-type1" style="padding-left: 15%;">{{
                             'health_path.detail' | translate }} <b> {{'health_path.see_more' | translate }}! </b> </a>
-
+                            
                         </ion-row>
-
                       </ion-row>
                     </ion-grid>
                   </ion-card-content>
