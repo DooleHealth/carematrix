@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   })
 export class Constants {
     public  LIST_ENPOINT: Array<any> = []
-    public  INDEX:number = 1
+    public  INDEX:number = 0
 
     public  API_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
     public  API_DOOLE_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
@@ -29,18 +29,19 @@ export class Constants {
       this.LIST_ENPOINT = []
       this.LIST_ENPOINT.push({
         id:0,
+        name: 'Desarrollo',
+        api: 'https://bo-dev.incahealthcare.com/api',
+        endpoint: 'https://bo-dev.incahealthcare.com',
+        device_ios: {ios_push: 'ios_dev', ios_voip: 'iosvoipdev'},
+      })
+      this.LIST_ENPOINT.push({
+        id:1,
         name: 'Producción',
         api: 'https://bo.incahealthcare.com/api',
         endpoint: 'https://bo.incahealthcare.com',
         device_ios: {ios_push: 'ios', ios_voip: 'iosvoip'},
       })
 
-      this.LIST_ENPOINT.push({
-        id:1,
-        name: 'Desarrollo',
-        api: 'https://bo-dev.incahealthcare.com/api',
-        endpoint: 'https://bo-dev.incahealthcare.com',
-        device_ios: {ios_push: 'ios_dev', ios_voip: 'iosvoipdev'},
-      })
+      
     }
 }
