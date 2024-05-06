@@ -40,6 +40,7 @@ export class GoogleFitPage implements OnInit {
 
    redirectHomePage() {
     this.authService.setShowGoogleFitLocalstorage()
+    this.authService.setCanceledGoogleFitLocalstorage("false");
     console.log(this.comesFromSettings)
     if (!this.comesFromSettings) {
       this.router.navigate(['home']);
@@ -71,6 +72,7 @@ export class GoogleFitPage implements OnInit {
               .then((res) => {
                 this.loadingData = true;
                 this.authService.setShowGoogleFitLocalstorage()
+                this.authService.setCanceledGoogleFitLocalstorage("true");
                 this.syncData(30);
                 if (!this.comesFromSettings) {
                   this.router.navigate(['home']);

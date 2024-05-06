@@ -351,7 +351,7 @@ export class HomePage implements OnInit {
   }
 
   checkHealthAccessAndroid() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is("cordova") && this.authService.getCanceledGoogleFitLocalstorage()) {
 
       this.health
           .isAvailable()
