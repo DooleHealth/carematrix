@@ -38,7 +38,7 @@
     (onEventSelected)="onEventSelected($event)" (onCurrentDateChanged)="onCurrentDateChanged($event)" startHour="6"
     endHour="20" step="30" [startingDayWeek]="this.dateService.getStartingDayWeek()"
     [monthviewDisplayEventTemplate]="template" [monthviewEventDetailTemplate]="monthviewDefaultEventDetailTemplate"
-    [dateFormatter]="calendar.dateFormatter" (onTimeSelected)="onTimeSelected($event)" [markDisabled]="markDisabled"
+    [dateFormatter]="calendar.dateFormatter" [locale]="this.languageService.getCurrent()"  (onTimeSelected)="onTimeSelected($event)" [markDisabled]="markDisabled"
     [startingDayMonth]="this.dateService.getStartingDayMonth()"
     [sliderOptions]="calendarSliderOptions"
     [lockSwipeToPrev]="buttonAvailable">

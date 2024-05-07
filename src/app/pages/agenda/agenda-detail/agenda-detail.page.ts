@@ -259,7 +259,9 @@ export class AgendaDetailPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    return this.dateService.formatDateLongFormat(date);
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getformatSelectedDate());
   }
 
 
