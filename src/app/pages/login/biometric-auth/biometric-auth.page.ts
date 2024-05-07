@@ -8,6 +8,7 @@ import { Constants } from 'src/app/config/constants';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Md5 } from 'ts-md5/dist/md5';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 @Component({
   selector: 'app-biometric-auth',
   templateUrl: './biometric-auth.page.html',
@@ -17,7 +18,7 @@ export class BiometricAuthPage implements OnInit {
   @Input() isModal: boolean;
   showDialog = true
   biometric_list = []
-  environment = 0
+  environment;
   settingsBio = '';
   constructor(
     private authService: AuthenticationService,
@@ -27,7 +28,8 @@ export class BiometricAuthPage implements OnInit {
     public platform: Platform,
     public alertCtrl: AlertController,
     private faio: FingerprintAIO,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private endpoints: ChangeEndpointsService,
   ) {
     localStorage.setItem('show-bio-dialog','false');
   }
@@ -36,6 +38,12 @@ export class BiometricAuthPage implements OnInit {
     this.getListBiometric()
   }
 
+  getEnvironment(){
+    this.environment = this.endpoints._ENVIROMENT
+    localStorage.setItem(this.environment?.settings_bio,'false');
+    localStorage.setItem(this.environment?.show_bio_dialog,'false');
+  }
+  
   getListBiometric(){
     let list = JSON.parse(localStorage.getItem('biometric_list'))
     this.biometric_list = list? list:[];

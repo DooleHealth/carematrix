@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Constants } from 'src/app/config/constants';
+import { ChangeEndpointsService } from '../change-endpoints.service';
 import { PusherAlarmService } from './pusher-alarm.service';
 import { PusherChallengeNotificationsService } from './pusher-challenge-notifications.service';
 import { PusherNotificationService } from './pusher-notification.service';
@@ -28,7 +28,7 @@ export class PusherConnectionService {
   ]
   pusher
   constructor(
-    private constants: Constants,
+    private endpoints: ChangeEndpointsService,
     private pusherNotification: PusherNotificationService,
     private pusherAlarm: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
@@ -51,10 +51,10 @@ export class PusherConnectionService {
   }
 
   public setPusher(token){
-    let params = this.setEndPoint()
+    let params = this.endpoints._ENVIROMENT.pusher_key;
     this.pusher = new Pusher(params.key, {
       cluster: params.cluster,
-      authEndpoint: this.constants.API_DOOLE_ENDPOINT + '/broadcasting/auth',
+      authEndpoint: this.endpoints.API_ENDPOINT+ '/broadcasting/auth',
       auth: {
         headers: {
           Authorization: `Bearer ${token}`
@@ -62,6 +62,7 @@ export class PusherConnectionService {
       },
       encrypted: true,
     });
+    console.log('[PusherConnectionService] setPusher()', this.pusher);
   }
 
   /**

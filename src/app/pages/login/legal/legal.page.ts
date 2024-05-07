@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -25,7 +26,8 @@ export class LegalPage implements OnInit {
     private authService: AuthenticationService,
     private alertController: AlertController,
     private dooleService: DooleService,
-    private activatedRoute: ActivatedRoute) { 
+    private activatedRoute: ActivatedRoute,
+    private endpoints: ChangeEndpointsService,) { 
 
       
     
@@ -130,7 +132,7 @@ export class LegalPage implements OnInit {
   }
 
   redirectBiometric(){
-    let condicion = JSON.parse(localStorage.getItem('show-bio-dialog') )
+    let condicion = JSON.parse(this.endpoints?._ENVIROMENT?.show_bio_dialog);
     if(condicion){
       this.router.navigate(['/login/biometric-auth']);
     } else{

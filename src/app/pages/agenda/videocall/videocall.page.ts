@@ -6,6 +6,7 @@ import { IonRouterOutlet, LoadingController, ModalController, Platform } from '@
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/config/constants';
 import { AuthenticationService, User } from 'src/app/services/authentication.service';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 import { Subscription } from 'rxjs';
 import { OpentokService } from 'src/app/services/opentok.service';
 
@@ -33,6 +34,7 @@ export class VideocallPage implements OnInit {
 
   btnConectarStr: string;
   closeButton: string = ' '
+  environment;
   user: User;
   // durationStr: string;
   // previousUrl: string;
@@ -53,6 +55,7 @@ export class VideocallPage implements OnInit {
     private iab: InAppBrowser,
     private platform: Platform,
     private translate: TranslateService,
+    private endpoints: ChangeEndpointsService,
     private opentokService: OpentokService,
   ) {
     // platform.ready().then(() => {
@@ -65,7 +68,7 @@ export class VideocallPage implements OnInit {
 
 
 ngOnInit() {
-  //this.environment = this.endpoints._ENVIROMENT
+  this.environment = this.endpoints._ENVIROMENT
   this.idAgenda = this.idAgenda? this.idAgenda: this.id;
   this.getUser();
   this.translate.get('notifications.close').subscribe(translate => {

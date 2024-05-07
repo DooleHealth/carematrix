@@ -12,6 +12,7 @@ import { RolesService } from 'src/app/services/roles.service';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { Capacitor } from '@capacitor/core';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +38,7 @@ export class LoginPage implements OnInit {
     public role: RolesService,
     private navigation: NavigationService,
     private pusherConnection: PusherConnectionService,
+    private endpoints: ChangeEndpointsService,
     ) { }
 
   ngOnInit() {
@@ -169,7 +171,7 @@ export class LoginPage implements OnInit {
   }
 
   redirectBiometric(){
-    let condicion = JSON.parse( localStorage.getItem('show-bio-dialog') )
+    let condicion = JSON.parse( localStorage.getItem(this.endpoints._ENVIROMENT?.show_bio_dialog) )
     console.log('[LoginPage] redirectBiometric() condicion: ',condicion);
     if(condicion){
       this.ngZone.run(() => {

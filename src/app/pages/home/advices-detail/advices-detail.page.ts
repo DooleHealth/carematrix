@@ -8,7 +8,7 @@ import { Location } from "@angular/common";
 import { DateService } from 'src/app/services/date.service';
 import { DatePipe } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
-
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 
 @Component({
   selector: 'app-advices-detail',
@@ -43,7 +43,7 @@ export class AdvicesDetailPage implements OnInit {
     public translate: TranslateService,
     private modalCtrl: ModalController,
     public sanitizer: DomSanitizer,private location: Location,
-    private languageService: LanguageService, public dateService: DateService) {
+    private languageService: LanguageService, public dateService: DateService,private endpoints: ChangeEndpointsService) {
   }
   ngOnInit() {
   }

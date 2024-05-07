@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { Constants } from 'src/app/config/constants';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 import { OpentokService } from 'src/app/services/opentok.service';
 
 @Component({
@@ -15,13 +16,13 @@ export class VideocallIframePage implements OnInit {
   apiKey: string;
   token: string;
   sessionId: string;
-  constructor(private sanitizer: DomSanitizer,private constants: Constants, private modalCtrl: ModalController, public opentokService: OpentokService) { }
+  constructor(private sanitizer: DomSanitizer,private constants: Constants, private modalCtrl: ModalController, public opentokService: OpentokService,private endpoints: ChangeEndpointsService) { }
 
   ngOnInit() {
     this.apiKey = this.opentokService.apiKey$;
     this.token = this.opentokService.token$;
     this.sessionId = this.opentokService.sessionId$;
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.constants.DOOLE_ENDPOINT + '/agenda/'+ this.id +'/guestApp');
+    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.endpoints.DOOLE_ENDPOINT + '/agenda/'+ this.id +'/guestApp');
   }
 
   close(){

@@ -17,6 +17,7 @@ import { Capacitor } from '@capacitor/core';
 import { NotificationOptions, notificationOpt } from 'src/app/components/notification/notification-options';
 import { Health } from '@awesome-cordova-plugins/health/ngx';
 import { NativeSettings, AndroidSettings } from 'capacitor-native-settings';
+import { ChangeEndpointsService, _INDEX_ENPOINT } from 'src/app/services/change-endpoints.service';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class SettingsPage implements OnInit {
   listEndPoint = []
   biometric_list = []
   modeDevelop = false;
-  environment = 0
+  environment;
   isSelectEndPoint = false;
   api: any;
   enableGoogleFitSettings = false;
@@ -65,10 +66,10 @@ export class SettingsPage implements OnInit {
     public role: RolesService,
     public contant: Constants,
     private router: Router,
-    private endPoint: ApiEndpointsService,
     private alertController: AlertController,
     private pusherConnection: PusherConnectionService,
     private health: Health,
+    private endpoints: ChangeEndpointsService,
     private ngZone: NgZone
     ) {
       this.notification_options = new NotificationOptions()
@@ -376,16 +377,17 @@ export class SettingsPage implements OnInit {
       this.isSelectEndPoint = true
     }
 
-    getEndPoint(){
-      //this.contant.addEndPoint()
-      this.listEndPoint =  this.contant.LIST_ENPOINT
-      this.listEndPoint.forEach( (e,index)=>{
-        e['id']=index
-        e.name = this.translate.instant(`mode_development.mode_${index}`)
-        if(index == this.contant.INDEX)
-        this.api = e
+    getEndPoint() {
+      this.endpoints.addEndPoint()
+      this.environment = this.endpoints._ENVIROMENT
+      this.listEndPoint = this.endpoints._LIST_ENPOINT
+      this.listEndPoint.forEach((e, index) => {
+        e.name = this.translate.instant(e.name)
+        if (index == _INDEX_ENPOINT)
+          this.environment = e
       })
-      console.log('[SettingsPage] getEndPoint()', this.listEndPoint, this.api)
+      this.biometric = JSON.parse(localStorage.getItem(this.environment.biometric))
+      console.log('[SettingsPage] getEndPoint()', this.listEndPoint, this.environment)
     }
 
 
@@ -394,7 +396,7 @@ export class SettingsPage implements OnInit {
         await this.authService.logout(confirm).subscribe(res=>{
           console.log('[SettingsPage] signOut()', JSON.stringify(res))
           if(res.success){
-            this.endPoint.setIndexEndPointLocalstorage(index)
+            this.endpoints.setIndexEndPointLocalstorage(index)
             this.pusherConnection.unsubscribePusher()
             this.router.navigateByUrl('/landing');
           }
@@ -405,7 +407,7 @@ export class SettingsPage implements OnInit {
         });
       }else{
         await this.authService.logout1().then(res=>{
-          this.endPoint.setIndexEndPointLocalstorage(index)
+          this.endpoints.setIndexEndPointLocalstorage(index)
           this.pusherConnection.unsubscribePusher()
           this.router.navigate(['/landing'], { replaceUrl: true });
         });

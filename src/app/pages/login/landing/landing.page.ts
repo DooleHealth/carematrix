@@ -17,6 +17,7 @@ import { Market } from '@awesome-cordova-plugins/market/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import moment from 'moment'
 import { Capacitor } from '@capacitor/core';
+import { ChangeEndpointsService, _INDEX_ENPOINT } from 'src/app/services/change-endpoints.service';
 
 
 
@@ -41,7 +42,9 @@ export class LandingPage implements OnInit {
   numFailFingerP = 0;
   public isProd: boolean = true
   biometric_list = []
-  environment = 0
+  environment;
+  colorButtonLogin:string = 'primary'
+  biometric: any
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -62,6 +65,7 @@ export class LandingPage implements OnInit {
     public appVersion: AppVersion,
     public platform: Platform,
     private market: Market,
+    private endpoints: ChangeEndpointsService,
 
   ) {
 
@@ -87,8 +91,7 @@ export class LandingPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    this.getListBiometric()
-    this.getIndexEndPoint()
+    this.setEndPoint()
     console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
     this.pushNotification = history.state.pushNotification;
     console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
@@ -99,6 +102,22 @@ export class LandingPage implements OnInit {
     this.loginForm.clearValidators()
     this.getStoredValues()
     this.blockedLogin()
+  }
+
+  setEndPoint(){
+    let indexEndPoint = this.endpoints.getIndexEndPointLocalstorage()
+    let index = (indexEndPoint != undefined || indexEndPoint != null)? indexEndPoint: _INDEX_ENPOINT
+    this.endpoints.setEndPoint(index)
+    this.environment = this.endpoints._ENVIROMENT
+    this.colorButtonLogin = this.endpoints._ENVIROMENT?.color
+    console.log("setEndPoint() colorButtonLogin", this.colorButtonLogin);
+    this.getListBiometric()
+  }
+
+
+  changeButtonColor(){
+    console.log("changeButtonColor",  this.endpoints._ENVIROMENT?.color);
+    return this.endpoints._ENVIROMENT?.color
   }
 
   getIndexEndPoint(){
@@ -301,17 +320,17 @@ export class LandingPage implements OnInit {
     if(!this.isAvailableFaID())
     return
 
-    const biometricsEnabled = localStorage.getItem(this.settingsBio);
-    const biometricToken =  this.getBiometric(); //localStorage.getItem('bio-auth');
-    console.log('[LandingPage] getStoredValues() 1 biometricsEnabled: ', biometricsEnabled, JSON.stringify(biometricToken));
-    if (biometricToken && biometricToken !== "" && biometricsEnabled && biometricsEnabled === 'true') {
+    const biometricsEnabled = localStorage.getItem(this.environment.settings_bio);
+    //const biometricToken =  localStorage.getItem(this.environment.biometric);
+    console.log('[LandingPage] getStoredValues() biometricsEnabled: ',this.environment.id,  biometricsEnabled, this.biometric?.hash);
+    if (this.biometric?.hash && biometricsEnabled && biometricsEnabled === 'true') {
       this.hasBiometricAuth = true;
-      this.biometricAuth = biometricToken; //JSON.parse(biometricToken) ;
+      this.biometricAuth = this.biometric;
     }else{
       this.hasBiometricAuth = false;
     }
-    const showDialog = localStorage.getItem('show-bio-dialog');
-    console.log('[LandingPage] getStoredValues() 2 showDialog: ', showDialog, this.hasBiometricAuth);
+    const showDialog = localStorage.getItem(this.environment?.show_bio_dialog);
+
     if(showDialog!== 'false'){
       console.log('showDialog: ', showDialog !== 'false');
       this.showBiometricDialog = true;
@@ -347,11 +366,7 @@ export class LandingPage implements OnInit {
   }
 
   getListBiometric(){
-    let list = JSON.parse(localStorage.getItem('biometric_list'))
-    this.biometric_list = list? list:[];
-    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
-    this.settingsBio = 'settings-bio' + this.environment
-    console.log("[BiometricAuthPage] getListBiometric() biometric_list, environment", this.biometric_list, this.environment);
+    this.biometric = JSON.parse(localStorage?.getItem(this.environment.biometric))
   }
 
   isBiometric(){
