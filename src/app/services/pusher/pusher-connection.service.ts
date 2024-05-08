@@ -34,12 +34,12 @@ export class PusherConnectionService {
     private pusherChallenge: PusherChallengeNotificationsService,
   ) { }
 
-  public setEndPoint(){
+  /* public setEndPoint(){
     let index = this.constants?.INDEX
     let params = this.LIST_APP_KEY[index]
     console.log('[PusherConnectionService] setEndPoint() ' ,  params);
     return params
-  }
+  } */
 
   public subscribePusher(token, idUser:string){
     this.setPusher(token)

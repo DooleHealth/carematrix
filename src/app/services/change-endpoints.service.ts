@@ -40,21 +40,9 @@ export class ChangeEndpointsService {
 
   public async addEndPoint(){   
     this._LIST_ENPOINT = [] 
-    this._LIST_ENPOINT.push({ 
-      id:0,
-      name: 'enviroment.production', 
-      api: this.constants.API_DOOLE_ENDPOINT, 
-      endpoint: this.constants.DOOLE_ENDPOINT,
-      device_ios: {ios_push: 'ios_dev', ios_voip: 'iosvoipdev'},
-      pusher_key: this.pusher.PUSHER_KEY_PRO,
-      color: 'primary',
-      settings_bio: 'settings-bio0',
-      biometric: 'biometric0',
-      show_bio_dialog: 'show-bio-dialog0',
-      registered_user: 'registered-user0',
-    }) 
+
     this._LIST_ENPOINT.push({
-      id:1,
+      id:0,
       name: 'enviroment.development', 
       api: this.constants.API_ENDPOINT_DEV, 
       endpoint: this.constants.ENDPOINT_DEV,
@@ -67,6 +55,19 @@ export class ChangeEndpointsService {
       registered_user: 'registered-user1',
      
     })
+    this._LIST_ENPOINT.push({ 
+      id:1,
+      name: 'enviroment.production', 
+      api: this.constants.API_PROD_ENDPOINT, 
+      endpoint: this.constants.PROD_ENDPOINT,
+      device_ios: {ios_push: 'ios_dev', ios_voip: 'iosvoipdev'},
+      pusher_key: this.pusher.PUSHER_KEY_PRO,
+      color: 'primary',
+      settings_bio: 'settings-bio0',
+      biometric: 'biometric0',
+      show_bio_dialog: 'show-bio-dialog0',
+      registered_user: 'registered-user0',
+    }) 
   //      device_ios: {ios_push: 'ios', ios_voip: 'iosvoip'},
   }
 

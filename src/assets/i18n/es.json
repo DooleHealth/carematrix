@@ -1125,5 +1125,11 @@
       "error_msg_permissions_denied_details": "Es necesario permitir los permisos en la configuración de la app. Haz clic en 'Abrir configuración'.",
       "button_open_settings":"Abrir configuración"
     },
-    "content": "Actualmente no hay datos disponibles para mostrar"
+    "content": "Actualmente no hay datos disponibles para mostrar",
+    "enviroment":{
+      "production":"Producción",
+      "development":"Desarrollo Deneb QA",
+      "doole":"Doole",
+      "select":"Selecciona un Endpoint"
+    }
 }

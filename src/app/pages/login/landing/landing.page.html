@@ -1,7 +1,7 @@
 <ion-content fullscreen>
     <div class="main-container">
       <ion-col size="12" style="display: flex; align-items: center; justify-content: center; margin-top: 30%; margin-bottom: 5%;">
-          <img class="logo" src="/assets/icons/logo_inca_landing.svg" />
+          <img class="logo" src="/assets/icons/logo_inca_landing.svg" appClickCounter (processCompleted)="onProcessCompleted($event)" />
       </ion-col>      
       
       <ion-grid mode="md">

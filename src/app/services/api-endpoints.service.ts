@@ -32,7 +32,7 @@ export class ApiEndpointsService {
       (queryStringParameters: QueryStringParameters) => void
   ): string {
     //Change EndPoind
-    this.setEndPoint()
+    // this.setEndPoint()
     const urlBuilder: UrlBuilder = new UrlBuilder(
       this.endpoints.API_ENDPOINT,
       action

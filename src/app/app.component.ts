@@ -92,9 +92,9 @@ export class AppComponent implements OnInit {
 
     this.translate.onLangChange.subscribe(() => this.getTranslations());
     this.storageService.isFirstTimeLoad();
-    this.endPoind.loadEndPoints()
-    this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
-    this.settingsBio = 'settings-bio' + this.environment
+    //this.endPoind.loadEndPoints()
+    //this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
+    //this.settingsBio = 'settings-bio' + this.environment
 
 
     this.platform.ready().then(() => {

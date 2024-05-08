@@ -115,6 +115,14 @@ export class LandingPage implements OnInit {
   }
 
 
+  onProcessCompleted(success: boolean) {
+    if (success) {
+      this.setEndPoint();
+    } else {
+     console.log("No se ha selecionado endpoint");
+    }
+  }
+  
   changeButtonColor(){
     console.log("changeButtonColor",  this.endpoints._ENVIROMENT?.color);
     return this.endpoints._ENVIROMENT?.color
@@ -175,7 +183,7 @@ export class LandingPage implements OnInit {
           }
           else if(message?.message == 'ERR_INTERNET_DISCONNECTED')
           this.dooleService.presentAlert(this.translate.instant('landing.message_error_internet_disconnected'), this.translate.instant("button.accept"))
-          else if(message == 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error' || message?.message == 'Http failure response for ' + this.constants.API_ENDPOINT + '/patient/login: 0 Unknown Error')
+          else if(message == 'Http failure response for ' + this.environment.api + '/patient/login: 0 Unknown Error' || message?.message == 'Http failure response for ' + this.environment.api + '/patient/login: 0 Unknown Error')
           this.dooleService.presentAlert(this.translate.instant('landing.message_failure_response'), this.translate.instant("button.accept"))
           else
           this.dooleService.presentAlert(message?.message? message?.message: message, this.translate.instant("button.accept"))

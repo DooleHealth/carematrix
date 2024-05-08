@@ -1,16 +1,26 @@
 .test-bar {
     width: 60%;
-    background-color: rgba(255, 0, 0, 0.5); 
+    background-color: rgba(255, 0, 0, 0.5);
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 5px 10px;
     position: fixed;
-    top: 0;
+    top: env(safe-area-inset-top, 0); /* Ajuste para todas las versiones de iOS */
     z-index: 1;
-    height: 30px; // Reduce la altura si es posible
-    padding: 5px 10px; // Ajusta el padding para mantener el diseño
+    height: 30px;
     left: 20%;
-    line-height: 20px; // Ajusta esto para alinear el texto verticalmente
-     // Asegurando que el texto no sea transparente
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); // Opcional, mejora la legibilidad
-  }
+    line-height: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+
+    .close-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+}

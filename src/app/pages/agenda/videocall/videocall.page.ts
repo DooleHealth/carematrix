@@ -180,7 +180,7 @@ ngOnInit() {
       params.append('publisher_height', '40%')
     }
 
-    return `${this.constants.DOOLE_ENDPOINT}/${path}?${params.toString()}`;
+    return `${this.environment.endpoint}/${path}?${params.toString()}`;
   }
 
 }

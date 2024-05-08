@@ -67,6 +67,7 @@ import { NotificationOptionsComponent } from './notification/notification-option
 import { NotificationBellComponent } from './notification/notification-bell/notification-bell.component';
 import { SpeechRecordComponent } from './speechRecord/speech-record/speech-record.component';
 import { SpeakRecordComponent } from './speakRecord/speak-record/speak-record.component';
+import { TestBarComponent } from './test-bar/test-bar.component';
 
 
 @NgModule({
@@ -139,7 +140,8 @@ import { SpeakRecordComponent } from './speakRecord/speak-record/speak-record.co
     NotificationOptionsComponent,
     NotificationBellComponent,
     SpeechRecordComponent,
-    SpeakRecordComponent
+    SpeakRecordComponent,
+    TestBarComponent
   ],
   exports: [
     ShellModule,
@@ -198,7 +200,8 @@ import { SpeakRecordComponent } from './speakRecord/speak-record/speak-record.co
     NotificationOptionsComponent,
     NotificationBellComponent,
     SpeechRecordComponent,
-    SpeakRecordComponent
+    SpeakRecordComponent,
+    TestBarComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
