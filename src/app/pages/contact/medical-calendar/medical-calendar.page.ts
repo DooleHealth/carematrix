@@ -92,12 +92,18 @@ export class MedicalCalendarPage implements OnInit, AfterViewInit {
           },
 
           formatMonthViewDayHeader: function(date:Date) {
+            console.log("Entra Format: ",this.locale)
             let days = [ "D","L", "M", "X", "J", "V", "S"]
             if(this.locale === 'ca'){
               days = [ "DG","DL", "DT", "DC", "DJ", "DV", "DS"]
-            }else if(this.locale === 'en')
+            }else if(this.locale === 'en'){
               days = [ "Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
+            }
+            else if (this.locale === 'sv') {
+                days = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
+            } else if (this.locale === 'no') {
+                days = ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"];
+            }
             let num = date.getDay()
             return days[num]
           },
