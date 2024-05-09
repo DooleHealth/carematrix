@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 
@@ -13,23 +14,36 @@ export class TestBarComponent  implements OnInit,OnDestroy {
   endpointName: string ="";
   private subscription: Subscription;
 
-  constructor(private changeEndpointService: ChangeEndpointsService) { }
+  constructor(private changeEndpointService: ChangeEndpointsService, private translate : TranslateService) { }
 
   ngOnInit() {
+   
+
+    
     this.subscription = this.changeEndpointService.getEndpointIndexObservable().subscribe(index => {
       this.isTestEnvironment = index !== 0;
-      console.log('Endpoint Index Changed:', index, 'Is Test Environment:', this.isTestEnvironment);
-       //const root = document.documentElement;
-      //root.style.setProperty('--ion-background-color', this.isTestEnvironment ? 'rgba(255, 165, 0, 0.5)' : '#f5f5f5');
-      this.endpointName= this.changeEndpointService._LIST_ENPOINT[index].name;
+      let lang = this.translate.getBrowserLang() ?? 'en';
+  
+      this.translate.setDefaultLang(lang);
+
+
+        this.translate.get(this.changeEndpointService._LIST_ENPOINT[index].name).subscribe((data:any)=> {
+          this.endpointName=  data
+         });
+   
     });
   }
 
+  
   ngOnDestroy() {
     this.subscription.unsubscribe(); // Limpiar la suscripción
   }
   hideTestBar() {
     this.isTestEnvironment = false;
   }
+
+
+    
+    
 
 }
