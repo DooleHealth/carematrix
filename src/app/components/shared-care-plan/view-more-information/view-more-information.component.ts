@@ -115,16 +115,22 @@ export class ViewMoreInformationComponent implements OnInit, OnDestroy {
   }
 
   truncateDescription(description: string, maxLength: number): string {
-    // Utiliza una expresión regular para eliminar las etiquetas HTML
-    const regex = /(<([^>]+)>)/ig;
-    const result = description.replace(regex, "");
-
-
-    if (result.length > maxLength) {
-      return result.substring(0, maxLength) + '...';
-    } else {
-      return result;
+    if(description){
+      const regex = /(<([^>]+)>)/ig;
+      const result = description.replace(regex, "");
+  
+  
+      if (result.length > maxLength) {
+        return result.substring(0, maxLength) + '...';
+      } else {
+        return result;
+      }
     }
+    else{
+      return ""
+    }
+    // Utiliza una expresión regular para eliminar las etiquetas HTML
+  
   }
 
   extractText(htmlContent: string): string {
