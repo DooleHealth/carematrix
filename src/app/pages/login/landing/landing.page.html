@@ -24,7 +24,7 @@
   
                     <ion-button type="submit" size="medium" shape="round" mode="ios"
                         [disabled]="!loginForm.valid || this.numFailLogin >= NUM_FAIL_LOGIN"
-                        [color]="this.isProd? 'primary':'tertiary' " expand="block" class="enter-btn">
+                        [color]="this.colorButtonLogin"  expand="block" class="enter-btn">
                         {{ 'landing.button_signin' | translate}}</ion-button>
                         <br>
   

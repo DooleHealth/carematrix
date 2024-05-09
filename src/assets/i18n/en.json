@@ -1130,8 +1130,7 @@
 
   "enviroment":{
     "production":"Production",
-    "development":"Development Deneb QA",
-    "doole":"Doole",
+    "development":"Development",
     "select":"Select an Endpoint"
   }
   

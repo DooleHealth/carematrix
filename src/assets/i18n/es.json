@@ -1128,8 +1128,7 @@
     "content": "Actualmente no hay datos disponibles para mostrar",
     "enviroment":{
       "production":"Producción",
-      "development":"Desarrollo Deneb QA",
-      "doole":"Doole",
+      "development":"Desarrollo",
       "select":"Selecciona un Endpoint"
     }
 }

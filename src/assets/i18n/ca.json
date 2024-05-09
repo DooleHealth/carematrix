@@ -920,8 +920,7 @@
       },
       "enviroment":{
         "production":"Producció",
-        "development":"Desenvolupament Deneb QA",
-        "doole":"Doole",
+        "development":"Desenvolupament",
         "select":"Selecciona un Endpoint"
       }
 

@@ -33,6 +33,7 @@ export class ClickCounterDirective {
     if (this.clickCount === 10) {
       this.getEndPoint();
       this.showAlert();
+      
       this.clickCount=0;
     }
   }
@@ -40,7 +41,6 @@ export class ClickCounterDirective {
   getEndPoint() {
     this.endpointsService.addEndPoint()
     this.environment = this.endpointsService._ENVIROMENT
-    console.log("Environment: ", this.environment)
     this.listEndPoint = this.endpointsService._LIST_ENPOINT
     this.listEndPoint.forEach((e, index) => {
       e.name = this.translate.instant(e.name)
@@ -54,17 +54,19 @@ export class ClickCounterDirective {
     const inputs = this.listEndPoint.map(endpoint => ({
       label: endpoint.name,  
       type: 'radio' as const,  
-      value: endpoint.id      
+      value: endpoint.id      ,
+      checked: endpoint.id === this.endpointsService.getIndexEndPointLocalstorage()
     }));
   
     const alert = await this.alertController.create({
       header: this.translate.instant('enviroment.select'),  //falta translate
       inputs: inputs,
+      cssClass:'buttonCss',
       buttons: [
         {
           text: this.translate.instant('button.cancel'),  // falta translate
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'ion-color-danger',
           handler: () => {
             this.processCompleted.emit(false);
           }
