@@ -35,7 +35,8 @@ export class BiometricAuthPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getListBiometric()
+    this.getListBiometric();
+    this.getEnvironment();
   }
 
   getEnvironment(){
@@ -79,7 +80,7 @@ export class BiometricAuthPage implements OnInit {
           });
 
       }).catch(async (error: any) => {
-        localStorage.setItem('show-bio-dialog','false');
+        localStorage.setItem(this.environment?.show_bio_dialog, 'false');
       });
     } else {
       alert('only in device');

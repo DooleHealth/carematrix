@@ -367,19 +367,17 @@ export class LandingPage implements OnInit {
   isAvailableFaID(): Promise<any>{
    return this.faio.isAvailable().then((result: any)  =>{
       console.log(result)
-      const showDialog = localStorage.getItem('show-bio-dialog');
+      const showDialog = localStorage.getItem(this.environment.show_bio_dialog);
       console.log('[LandingPage] isAvailableFaID() 1 showDialog:', showDialog);
       if(showDialog === undefined || showDialog === null)
-        localStorage.setItem('show-bio-dialog','true');
+      localStorage.setItem(this.environment.show_bio_dialog,'true');
       else if(!this.isBiometric())
-        localStorage.setItem('show-bio-dialog','true');
+      localStorage.setItem(this.environment.show_bio_dialog,'false');
       else
-        localStorage.setItem('show-bio-dialog','false');
-
-        console.log('[LandingPage] isAvailableFaID() 2 showDialog:', localStorage.getItem('show-bio-dialog'));
+      localStorage.setItem(this.environment.show_bio_dialog,'false');
       return true
     }).catch(async (error: any) => {
-        localStorage.setItem('show-bio-dialog','false');
+        localStorage.setItem(this.environment.show_bio_dialog,'false');
       return false
     });
   }
