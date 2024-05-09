@@ -90,6 +90,12 @@ export class AgendaPage implements OnInit{
           case 'ca':
             days = ["DG", "DL", "DT", "DC", "DJ", "DV", "DS"]
             break;
+          case 'sv':
+            days = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
+            break;
+          case 'no':
+            days = ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"];
+            break;
           case 'en': 
             days = [ "Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
             break;

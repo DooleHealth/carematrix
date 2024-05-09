@@ -85,23 +85,25 @@ export class DateService {
     return format;
   }
 
-  public getLocale(){
-    let lang =  this.translate.currentLang;
+  public getLocale() {
+    let lang = this.translate.currentLang;
 
-    if(lang === 'ca'){
-      return 'ca-ES'
-    }else if(lang === 'en') {
-      return 'en-US';
-    }
-    else if(lang === 'es') {
-      return 'es-ES';
+    if (lang === 'ca') {
+        return 'ca-ES';
+    } else if (lang === 'en') {
+        return 'en-US';
+    } else if (lang === 'es') {
+        return 'es-ES';
     } else if (lang === 'pt') {
-      return 'pt'
+        return 'pt';
+    } else if (lang === 'sv') {
+        return 'sv-SE';
+    } else if (lang === 'no') {
+        return 'no-NO';
+    } else {
+        return 'es-ES';
     }
-    else {
-      return 'es-ES'
-    } 
-  }
+}
 
   public getStartingDayWeek(){
     let lang =  this.translate.currentLang;

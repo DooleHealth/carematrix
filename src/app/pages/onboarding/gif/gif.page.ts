@@ -13,7 +13,7 @@ export class GifPage implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.router.navigate(['/intro']); 
-    }, 1500);
+    }, 3000);
   }
 
  

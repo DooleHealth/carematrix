@@ -42,6 +42,8 @@ import localeCa from '@angular/common/locales/ca';
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
 import localePt from '@angular/common/locales/pt';
+import localeNo from '@angular/common/locales/no';
+import localeSv from '@angular/common/locales/sv';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from "./interceptors/timeout.interceptor";
 import { Network } from "@awesome-cordova-plugins/network/ngx";
 import { TestTypePageModule } from "./pages/tracking/documents-add/test-type/test-type.module";
@@ -61,6 +63,9 @@ registerLocaleData(localeEn);
 registerLocaleData(localeEs);
 registerLocaleData(localeCa);
 registerLocaleData(localePt);
+registerLocaleData(localeNo);
+registerLocaleData(localeSv);
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");

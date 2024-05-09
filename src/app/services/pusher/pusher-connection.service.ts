@@ -24,8 +24,6 @@ export class PusherConnectionService {
       cluster: "eu"
       
     }
-   
-    
   ]
   pusher
   constructor(

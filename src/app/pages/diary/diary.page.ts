@@ -146,7 +146,9 @@ export class DiaryPage implements OnInit {
   }
 
   formatSelectedDate(date){
-    return this.dateService.selectedDateFormat(date);
+    let language = this.languageService.getCurrent()
+    const datePipe: DatePipe = new DatePipe(language);
+    return datePipe.transform(date, this.dateService.getformatSelectedDate());
   }
 
   addItems(list){
