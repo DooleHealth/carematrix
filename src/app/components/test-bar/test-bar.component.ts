@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
+import { ChangeEndpointsService, _INDEX_ENPOINT } from 'src/app/services/change-endpoints.service';
 
 @Component({
   selector: 'app-test-bar',
@@ -22,11 +22,6 @@ export class TestBarComponent  implements OnInit,OnDestroy {
     
     this.subscription = this.changeEndpointService.getEndpointIndexObservable().subscribe(index => {
       this.isTestEnvironment = index !== 0;
-      let lang = this.translate.getBrowserLang() ?? 'en';
-  
-      this.translate.setDefaultLang(lang);
-
-
         this.translate.get(this.changeEndpointService._LIST_ENPOINT[index].name).subscribe((data:any)=> {
           this.endpointName=  data
          });
