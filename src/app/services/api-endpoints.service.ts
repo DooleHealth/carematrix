@@ -5,22 +5,22 @@ import { UrlBuilder } from '../shared/classes/url-builder';
 import { QueryStringParameters } from '../shared/classes/query-string-parameters';
 // Application Constants
 import { Constants } from 'src/app/config/constants';
+import { ChangeEndpointsService } from './change-endpoints.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiEndpointsService {
   constructor(
     // Application Constants
-    private constants: Constants
+    //private constants: Constants,
+    private endpoints: ChangeEndpointsService,
   ) { }
   /* #region URL CREATOR */
   // URL
   private createUrl( action: string, isDooleAPI: boolean = false): string {
-    //Change EndPoind
-    this.setEndPoint()
-
+ 
     const urlBuilder: UrlBuilder = new UrlBuilder(
-      isDooleAPI ? this.constants.API_DOOLE_ENDPOINT : this.constants.API_ENDPOINT,
+      this.endpoints.API_ENDPOINT,
       action
     );
     return urlBuilder.toString();
@@ -32,9 +32,9 @@ export class ApiEndpointsService {
       (queryStringParameters: QueryStringParameters) => void
   ): string {
     //Change EndPoind
-    this.setEndPoint()
+    // this.setEndPoint()
     const urlBuilder: UrlBuilder = new UrlBuilder(
-      this.constants.API_ENDPOINT, 
+      this.endpoints.API_ENDPOINT,
       action
     );
     // Push extra query string params
@@ -61,7 +61,7 @@ export class ApiEndpointsService {
       }
     }
     const urlBuilder: UrlBuilder = new UrlBuilder(
-      this.constants.API_ENDPOINT,  
+      this.endpoints.API_ENDPOINT,
       `${action}${encodedPathVariablesUrl}`
     );
     return urlBuilder.toString();
@@ -79,7 +79,7 @@ export class ApiEndpointsService {
     return undefined
   }
 
-  setEndPoint(){
+/*   setEndPoint(){
     let indexEndPoint = this.getIndexEndPointLocalstorage()
     let index = indexEndPoint? indexEndPoint:0
     this.constants.setEndPoint(index)
@@ -88,7 +88,7 @@ export class ApiEndpointsService {
 
   loadEndPoints(){
     this.constants.addEndPoint()
-  }
+  } */
 
 
 

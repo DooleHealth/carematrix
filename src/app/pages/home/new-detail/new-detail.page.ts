@@ -10,6 +10,8 @@ import { LanguageService } from 'src/app/services/language.service';
 import { DateService } from 'src/app/services/date.service';
 import { DatePipe } from '@angular/common';
 
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
+
 @Component({
   selector: 'app-new-detail',
   templateUrl: './new-detail.page.html',
@@ -40,7 +42,7 @@ export class NewDetailPage implements OnInit {
     public navCtrl: NavController,
     private dooleService: DooleService,
     private navigation: NavigationService,
-    public sanitizer: DomSanitizer, private router: Router, private languageService: LanguageService, public dateService: DateService) {
+    public sanitizer: DomSanitizer, private router: Router, private languageService: LanguageService, public dateService: DateService,private endpoints: ChangeEndpointsService) {
   }
 
   ngOnInit() {
@@ -87,8 +89,8 @@ export class NewDetailPage implements OnInit {
 
         this.new.files.forEach(element => {
           if(element.mime_type=="application/pdf"){
-            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
-            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
+            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.endpoints.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
+            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.endpoints.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
             this.linkpdf2=this.sanitizer.bypassSecurityTrustResourceUrl(element.temporaryUrl);
             this.thumbnail=(element.thumbnailTemporaryUrl);
             this.linkPdfDescription=(element.description);

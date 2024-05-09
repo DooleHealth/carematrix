@@ -12,6 +12,7 @@ import { FamilyUnit } from '../models/user';
 import { TranslateService } from '@ngx-translate/core';
 import { TokenService } from './token.service';
 import { Capacitor } from '@capacitor/core';
+import { ChangeEndpointsService } from './change-endpoints.service';
 
 const INTRO_KEY = 'intro';
 //const TOKENS = 'tokens';
@@ -76,7 +77,8 @@ export class AuthenticationService {
     public router: Router,
     private constants: Constants,
     public alertController: AlertController,
-    private injector: Injector) {
+    private injector: Injector,
+    private endpoints: ChangeEndpointsService) {
       this.setUser();
   }
 
@@ -132,7 +134,7 @@ export class AuthenticationService {
 
               if (this.platform.is('ios')){
                 if(this.voipDeviceToken)
-                this.registerDevice(this.voipDeviceToken, this.constants.device_ios?.ios_voip); // desaorrollo
+                this.registerDevice(this.voipDeviceToken, this.endpoints._ENVIROMENT.device_ios.ios_voip); // desaorrollo
                   //this.registerDevice(this.voipDeviceToken, (this.indexEndPoint!==0)?'iosvoipdev':'iosvoip'); //produccion
                 
 
@@ -385,9 +387,9 @@ export class AuthenticationService {
      if(platform == 'FCM')
       platform = 'android';
      if(platform == 'APNS')
-      platform = this.constants?.device_ios?.ios_push;
+      platform = this.endpoints._ENVIROMENT.device_ios.ios_push;
      if(platform == 'ios')
-      platform = this.constants?.device_ios?.ios_push; 
+      platform = this.endpoints._ENVIROMENT.device_ios.ios_push;
 
      const postData = {
       token: token,

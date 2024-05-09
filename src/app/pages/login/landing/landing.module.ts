@@ -11,6 +11,7 @@ import { Device } from '@awesome-cordova-plugins/device/ngx';
 import { LocalizedDatePipe } from 'src/app/utils/localized-date.pipe';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { BrowserModule } from '@angular/platform-browser';
+import { DirectiveModule } from 'src/app/directive/directive.module';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes),
     LandingPageRoutingModule,
+    DirectiveModule
   ],
   providers:[Device,LocalizedDatePipe,AppVersion],
   declarations: [LandingPage]

@@ -407,7 +407,14 @@ swiper-slide img {
   height: auto;
   max-height: 100%;
 }
+.buttonCss {
 
+  button.alert-button:nth-child(1){
+    color: red;
+  }
+
+ 
+}
 ion-modal {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.08) !important;
 }

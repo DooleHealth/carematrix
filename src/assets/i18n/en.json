@@ -1126,8 +1126,12 @@
     "error_msg_permissions_denied_details": "You need to allow permissions in the app settings. Click 'Open Settings'.",
     "button_open_settings":"Open Settings"
   },
-  "content": "There is currently no data available to show"
+  "content": "There is currently no data available to show",
 
-
+  "enviroment":{
+    "production":"Production",
+    "development":"Development",
+    "select":"Select an Endpoint"
+  }
   
 }

@@ -917,7 +917,11 @@
         "monitoring": "Medical Procedure",
         "medical_procedure": "Medical Procedure",
         "informed_consent": "Informed Consent"
+      },
+      "enviroment":{
+        "production":"Producció",
+        "development":"Desenvolupament",
+        "select":"Selecciona un Endpoint"
       }
-
 
 }

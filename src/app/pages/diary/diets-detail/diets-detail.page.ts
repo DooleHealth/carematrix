@@ -5,6 +5,7 @@ import { Location } from "@angular/common";
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { Constants } from 'src/app/config/constants';
 import { DooleService } from 'src/app/services/doole.service';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 
 @Component({
   selector: 'app-diets-detail',
@@ -34,7 +35,8 @@ export class DietsDetailPage implements OnInit {
     private dooleService: DooleService,
     private constants: Constants,
     private modalCtrl: ModalController,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,
+    private endpoints: ChangeEndpointsService) {
   }
 
   ngOnInit() {
@@ -67,8 +69,8 @@ export class DietsDetailPage implements OnInit {
   
         this.diet.media.forEach(element => {
           if(element.mime_type=="application/pdf"){
-            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.constants.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
-            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.constants.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
+            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.endpoints.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
+            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.endpoints.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
             this.linkpdf2=this.sanitizer.bypassSecurityTrustResourceUrl(element.temporaryUrl);
             this.thumbnail=(element.thumbnailTemporaryUrl);
             this.linkPdfDescription=(element.description);

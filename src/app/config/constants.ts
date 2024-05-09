@@ -8,15 +8,21 @@ export class Constants {
     public  LIST_ENPOINT: Array<any> = []
     public  INDEX:number = 0
 
-    public  API_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
-    public  API_DOOLE_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
-    public  DOOLE_ENDPOINT: string = 'https://bo.incahealthcare.com';
+    public  API_PROD_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
+    public  PROD_ENDPOINT: string = 'https://bo.incahealthcare.com/';
+
+    public  API_ENDPOINT_DEV: string = 'https://bo-dev.incahealthcare.com/api';
+    public  ENDPOINT_DEV: string = 'https://bo-dev.incahealthcare.com';
+
+  
     public readonly appleAppId = '1672263053'
     public readonly androidBundleId = 'com.doole.inca'
     public readonly TRAK_URL = "https://salud.rehabilify.com/app/trak/patient";
     public readonly VIDEOCALL_URL = 'https://videocalls.doole.io/';
     public readonly googleFitPackageID = 'com.google.android.apps.fitness'
-    public device_ios:any;
+    public readonly PRIMARY_COLOR = '#009cb3'
+
+   /*  public device_ios:any;
     public setEndPoint(index){
       let opt = this.LIST_ENPOINT[index]
       this.API_ENDPOINT = opt.api
@@ -43,5 +49,5 @@ export class Constants {
       })
 
       
-    }
+    } */
 }
