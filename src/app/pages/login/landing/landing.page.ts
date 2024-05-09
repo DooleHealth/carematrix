@@ -117,7 +117,18 @@ export class LandingPage implements OnInit {
 
   onProcessCompleted(success: boolean) {
     if (success) {
-      this.setEndPoint();
+      this.setEndPoint()
+      console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
+      this.pushNotification = history.state.pushNotification;
+      console.log("[LandingPage] ionViewDidEnter() pushNotification", this.pushNotification);
+  
+      this.loginForm.get('username').setValue('')
+      this.loginForm.get('password').setValue('')
+      this.loginForm.get('hash').setValue('')
+      this.loginForm.clearValidators()
+      this.getStoredValues()
+      this.blockedLogin()
+      
     } else {
      console.log("No se ha selecionado endpoint");
     }

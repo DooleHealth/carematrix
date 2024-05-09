@@ -97,9 +97,9 @@ export class BiometricAuthPage implements OnInit {
           console.log(data);
           if(data.success){
             let e = {hash: hash, id: data.id, endpoint: this.environment}
-            localStorage.setItem('bio-auth', JSON.stringify(e));
-            localStorage.setItem('show-bio-dialog', 'false');
-            localStorage.setItem(this.settingsBio, 'true');
+            localStorage.setItem(this.environment?.biometric, JSON.stringify(e));
+            localStorage.setItem(this.environment?.settings_bio, 'true');
+            localStorage.setItem(this.environment?.show_bio_dialog, 'false');
             this.addBiometricToList(e)
             this.notification.displayToastSuccessful()
             this.dismissLockScreen()
