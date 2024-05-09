@@ -23,20 +23,14 @@ export class TestBarComponent  implements OnInit,OnDestroy {
     this.subscription = this.changeEndpointService.getEndpointIndexObservable().subscribe(index => {
       this.isTestEnvironment = index !== 0;
       let lang = this.translate.getBrowserLang() ?? 'en';
-   
-      console.log("TEST BAR LANG: ",lang);
   
       this.translate.setDefaultLang(lang);
-      console.log('TEST BAR: Index Changed:', index, 'Is Test Environment:', this.isTestEnvironment);
 
 
         this.translate.get(this.changeEndpointService._LIST_ENPOINT[index].name).subscribe((data:any)=> {
-          console.log('TEST BAR', data);
           this.endpointName=  data
          });
    
-      console.log("TEST BAR endpoint: ", this.endpointName);
-      console.log("TEST BAR endpoint translate: ", this.translate.instant( this.endpointName));
     });
   }
 
