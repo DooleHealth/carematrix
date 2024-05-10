@@ -10,7 +10,7 @@ export interface PusherKey{
   })
 export class Pushers {
   public readonly PUSHER_KEY_PRO: PusherKey = {
-    app_id: "1753153",
+      app_id: "1753153",
       key: "ab568085e820d78c40dd",
       secret: "5d91abad2e285e24b38b",
       cluster: "eu"

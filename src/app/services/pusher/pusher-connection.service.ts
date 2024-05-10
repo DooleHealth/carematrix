@@ -8,23 +8,6 @@ declare const Pusher: any;
   providedIn: 'root'
 })
 export class PusherConnectionService {
-  public  LIST_APP_KEY: Array<any> = [
-    {
-      name: 'Inca Health Producción',
-      app_id: "1753153",
-      key: "ab568085e820d78c40dd",
-      secret: "5d91abad2e285e24b38b",
-      cluster: "eu"
-    },
-    {
-      name: 'Inca Health Desarrollo',
-      app_id: "1753151",
-      key: "4d712ee2fba4e1be4d4c",
-      secret: "7593af5392913fbc8c54",
-      cluster: "eu"
-      
-    }
-  ]
   pusher
   constructor(
     private endpoints: ChangeEndpointsService,
@@ -32,13 +15,6 @@ export class PusherConnectionService {
     private pusherAlarm: PusherAlarmService,
     private pusherChallenge: PusherChallengeNotificationsService,
   ) { }
-
-  /* public setEndPoint(){
-    let index = this.constants?.INDEX
-    let params = this.LIST_APP_KEY[index]
-    console.log('[PusherConnectionService] setEndPoint() ' ,  params);
-    return params
-  } */
 
   public subscribePusher(token, idUser:string){
     this.setPusher(token)
