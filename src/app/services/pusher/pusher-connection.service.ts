@@ -50,7 +50,7 @@ export class PusherConnectionService {
   public unsubscribePusher(){
     this.pusherAlarm.unsubscribePusher()
     this.pusherNotification.unsubscribePusher()
-    this.pusherAlarm.unsubscribePusher()
+    this.pusherChallenge.unsubscribePusher()
     this.pusher?.disconnect();
   }
 

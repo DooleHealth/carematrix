@@ -270,6 +270,8 @@ export class HomePage implements OnInit {
 
     this.checkStorageNotification();
     this.initPushers()
+    
+    
   }
 
 
@@ -294,6 +296,7 @@ export class HomePage implements OnInit {
 
 
     if (!this.pusherConnection?.isConnectedPusher()) {
+      console.log("ENTRA PUSHER")
       const token = this.authService.getAuthToken()
       this.pusherConnection.subscribePusher(token, this.authService?.user?.idUser)
       this.initPushers()
