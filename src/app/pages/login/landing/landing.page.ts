@@ -18,6 +18,7 @@ import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import moment from 'moment'
 import { Capacitor } from '@capacitor/core';
 import { ChangeEndpointsService, _INDEX_ENPOINT } from 'src/app/services/change-endpoints.service';
+import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 
 
 
@@ -66,6 +67,7 @@ export class LandingPage implements OnInit {
     public platform: Platform,
     private market: Market,
     private endpoints: ChangeEndpointsService,
+    private pusherConnection: PusherConnectionService
 
   ) {
 
@@ -117,6 +119,7 @@ export class LandingPage implements OnInit {
 
   onProcessCompleted(success: boolean) {
     if (success) {
+      this.pusherConnection.unsubscribePusher();
       this.setEndPoint()
       console.log('[LandingPage] ionViewDidEnter() Device: ', this.device.platform);
       this.pushNotification = history.state.pushNotification;

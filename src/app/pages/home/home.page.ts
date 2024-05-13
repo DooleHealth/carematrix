@@ -270,6 +270,8 @@ export class HomePage implements OnInit {
 
     this.checkStorageNotification();
     this.initPushers()
+    
+    
   }
 
 
