@@ -47,17 +47,21 @@ export class AddHealthCardPage implements OnInit {
     this.dateMax = (new Date(Date.now()).getFullYear()) + 20
   }
 
+  
+
+
   setFormCard(){
     this.formHealthCard = this.formBuilder.group({
       id: [''],
       health_card_type_id: ['', [Validators.required]],
       name: ['', [Validators.required]],
       card_number: ['', [Validators.required]],
-      expiration_date: [this.date, [ this.checkDate.bind(this)]],
-      issue_date: [this.date, [ this.checkStartDate.bind(this)]],
-      /* description: ['description'], */
 
-    })
+      issue_date: [this.date, [Validators.required]],
+      expiration_date: [this.date, [Validators.required]]
+      
+
+    }, { validators: this.checkDate.bind(this) })
 
   }
 
@@ -67,25 +71,46 @@ export class AddHealthCardPage implements OnInit {
       const end_date = this.formHealthCard.get('expiration_date').value;
       console.log(`[AddHealthCardPage] checkStartDate(${start_date}, ${end_date})`);
       if(start_date && end_date && end_date !== ''){
-        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+        return new Date(start_date).getTime()  < new Date(end_date).getTime() ? null : {
           NotLess: true
       };
       }
     }
  }
 
-  private checkDate(group: FormControl) {
+  /* private checkDate(group: FormControl) {
     if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
       const start_date = this.formHealthCard.get('issue_date').value;
       const end_date = group.value;
       console.log(`[AddHealthCardPage] checkDate(${start_date}, ${end_date})`);
       if(start_date && end_date && end_date !== ''){
-        return new Date(start_date).getTime()  <= new Date(end_date).getTime() ? null : {
+        return new Date(start_date).getTime()  < new Date(end_date).getTime() ? null : {
           NotLess: true
       };
       }
     }
- }
+ } */
+
+
+ private checkDate(group: FormControl) {
+  if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
+    const start_date = this.formHealthCard.get('issue_date').value;
+    const end_date = this.formHealthCard.get('expiration_date').value;
+
+    if(start_date && end_date){
+      let start = new Date(start_date).getTime();
+      let end = new Date(end_date).getTime();
+      console.log(`[ReminderAddPage] checkDate Start(${start}, End ${end})`);
+      if (start <= end) {
+        this.formHealthCard.get('expiration_date').setErrors(null);
+        return null;
+      } else {
+        this.formHealthCard.get('expiration_date').setErrors({ NotLess: true });
+        return {NotLess: true};
+      }
+    }
+  }
+}
 
  checkDateEvent(){
   // if(this.formHealthCard !== null && this.formHealthCard !== undefined) {
@@ -136,6 +161,7 @@ export class AddHealthCardPage implements OnInit {
   getErrorEndDate() {
     if (this.formHealthCard.get('expiration_date').hasError('NotLess')) {
       console.log('[AddHealthCardPage] getErrorEndDate()' ,  this.translate.instant("add_health_card.error_end_date"));
+      return this.translate.instant("add_health_card.error_start_date");
       return '';
       return this.translate.instant("add_health_card.error_end_date");
       
@@ -230,6 +256,8 @@ export class AddHealthCardPage implements OnInit {
     console.log('[AddHealthCardPage] addCard()' , this.formHealthCard.value, this.formHealthCard.valid);
     this.isSubmittedFields(true);
     if(this.formHealthCard.valid){
+
+      this.isSubmittedFields(false);
 
       let expiration_date = this.formHealthCard.get('expiration_date').value;
       this.formHealthCard.get('expiration_date').setValue(this.transformDate(expiration_date));

@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
+      <ion-back-button text="" defaultHref="/profile/emergency-contacts"></ion-back-button>
     </ion-buttons>
-    <ion-title class="toolbarTitle">
+    <ion-title>
       {{ isNewContact? ('edit_contact.header_add' | translate) : ('edit_contact.header' | translate) }}
     </ion-title>
     <ion-buttons slot="end">
@@ -28,30 +28,44 @@
     </ion-row> -->
   </ion-grid>
 
-  <ion-card class="cardProfile">
+  
     <form [formGroup]="formContact" (ngSubmit)="this.addCard()">
-    <ion-list>
-      <ion-item>
-        <ion-label  class="txtTitleGoals">{{ 'detail_contact.username' | translate}}</ion-label>
-        <ion-input class="textMedium" formControlName="full_name" placeholder="" slot="end" (ionInput)="isSubmittedName = false" maxlength="200" required></ion-input>
-        <ion-label class="textMedium" *ngIf="this.isSubmittedName && this.formContact.get('full_name').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
     
-      </ion-item>
-      <ion-item>
-        <ion-label class="txtTitleGoals">{{ 'detail_contact.telephone' | translate}}</ion-label>
-        <ion-input class="textMedium" inputmode="numeric" formControlName="phone" placeholder="" slot="end" (ionInput)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
-        <ion-label class="textMedium" *ngIf="this.isSubmittedTelephone && this.formContact.get('phone').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
- 
-      </ion-item>
-      <ion-item lines="none"  routerLink="../list-relationship"  routerLinkActive='active-item'>
-        <ion-label class="txtTitleGoals">{{ 'detail_contact.family_relationship' | translate}}</ion-label>
-        <ion-input class="textMedium" formControlName="socialRelationName" placeholder="" slot="end" (ionInput)="isSubmittedRelationship = false" maxlength="100" required></ion-input>
-        <ion-label class="textMedium" *ngIf="this.isSubmittedRelationship && this.formContact.get('socialRelationName').invalid" class="error ion-padding" color="danger" slot="end"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-label>
-   
-      </ion-item>
-    </ion-list>
+
+
+      <ion-card class="cardProfile">
+        <ion-list>
+
+          
+          <ion-item>
+            <ion-label stacked>
+              <h5 >{{ 'detail_contact.username' | translate}}</h5>
+              <ion-note *ngIf="this.isSubmittedName && this.formContact.get('full_name').invalid" class="error" color="danger"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-note>
+            </ion-label>
+            <ion-input style="width: 50% !important;" class="textMedium" formControlName="full_name" placeholder="" slot="end" (ionFocus)="isSubmittedName = false" maxlength="200" required></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label  stacked>
+              <h5 >{{ 'detail_contact.telephone' | translate}}</h5>
+              <ion-note *ngIf="this.isSubmittedTelephone && this.formContact.get('phone').invalid" class="error" color="danger"><p>{{ 'edit_contact.error_required' | translate}}</p></ion-note>
+            </ion-label>
+            <ion-input style="width: 50% !important;" class="textMedium" formControlName="phone" placeholder="" slot="end" (ionFocus)="isSubmittedTelephone = false" maxlength="20" required></ion-input>
+          </ion-item>
+    
+          <ion-item routerLink="../list-relationship"  routerLinkActive='active-item'>
+            <ion-label  stacked>
+              <h5 >{{ 'detail_contact.family_relationship' | translate}}</h5>
+              <ion-note slot="start"  *ngIf="this.isSubmittedRelationship && this.formContact.get('socialRelationName').invalid"class="error " color="danger">{{ 'edit_contact.error_required' | translate}}</ion-note>
+            </ion-label>
+            <ion-input style="width: 50% !important;" class="textMedium" formControlName="socialRelationName" placeholder="" slot="end" (ionFocus)="isSubmittedRelationship = false" maxlength="100" required></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+
+
   </form>
-  </ion-card>
+
 
 
   <section *ngIf="!this.isNewContact">
