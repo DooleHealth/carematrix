@@ -27,6 +27,7 @@ import { CallCapacitor } from '@doole/videocall-notications-plugins';
 import { TextZoom } from '@capacitor/text-zoom';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx'
 import { NavigationService } from './services/navigation.service';
+import { HttpClient } from '@angular/common/http';
 import config from 'capacitor.config';
 
 register();
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit {
   translationsForNotifications: any;
   environment = 0
   isModalOpen = false;
+  svgContent=""
   // Inject HistoryHelperService in the app.components.ts so its available app-wide
   constructor(
     private router: Router,
@@ -81,6 +83,7 @@ export class AppComponent implements OnInit {
     private navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
     private navigation: NavigationService,
+    private http: HttpClient
   ) {
     this.setLanguage();
     if (Capacitor.isNativePlatform() && this.platform.is('android')) {
@@ -96,7 +99,7 @@ export class AppComponent implements OnInit {
     //this.environment = Number(JSON.parse(localStorage.getItem('endpoint')));
     //this.settingsBio = 'settings-bio' + this.environment
 
-
+    this.loadSvg();
     this.platform.ready().then(() => {
 
       // Secutity - Rooted
@@ -137,7 +140,17 @@ export class AppComponent implements OnInit {
     });
   }
 
- 
+  loadSvg(): void {
+    const svgUrl = 'assets/icons/logo_inca_landing.svg'; 
+    this.http.get(svgUrl, { responseType: 'text' }).subscribe(
+      content => {
+        CallCapacitor.configureCallInterface({imageURL: content})
+      },
+      error => {
+        console.error('Error loading SVG:', error);
+      }
+    );
+  }
   async createCacheFolder() {
     await Filesystem.mkdir({
       directory: FilesystemDirectory.Cache,
@@ -320,6 +333,7 @@ export class AppComponent implements OnInit {
             this.opentokService.agendaId$ = caller.callId;
 
             if (this.platform.is('ios')) {
+              this.loadSvg();
               cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
             } else {
               CallCapacitor.receiveCall({from: caller.Username });
