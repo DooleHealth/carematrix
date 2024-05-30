@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
   }
 
   loadSvg(): void {
-    const svgUrl = 'assets/icons/logo_inca_landing.svg'; 
+    const svgUrl = 'assets/images/LogoVideocallInca.svg'; 
     this.http.get(svgUrl, { responseType: 'text' }).subscribe(
       content => {
         CallCapacitor.configureCallInterface({imageURL: content})

@@ -50,7 +50,7 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (6.0.0):
     - Capacitor
-  - CapacitorTextZoom (5.0.7):
+  - CapacitorTextZoom (6.0.0):
     - Capacitor
   - CapawesomeCapacitorBadge (6.0.0):
     - Capacitor
@@ -60,7 +60,7 @@ PODS:
   - CordovaPluginsStatic (6.0.0):
     - CapacitorCordova
     - OpenTok (~> 2.17.0)
-  - DooleVideocallNoticationsPlugins (1.0.1):
+  - DooleVideocallNoticationsPlugins (1.0.3):
     - Capacitor
   - Firebase/CoreOnly (10.24.0):
     - FirebaseCore (= 10.24.0)
@@ -312,12 +312,12 @@ SPEC CHECKSUMS:
   CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
   CapacitorSplashScreen: 5431ab8d19c1c6e95777d53bfaa7a36a6c3d94c7
   CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
-  CapacitorTextZoom: 69814a62b1d0f23a899cca06ea9838c38de187ff
+  CapacitorTextZoom: 696722e5c479b364f2429584f11ad386d609bd1a
   CapawesomeCapacitorBadge: 3d0f281ad8e4a4f8db8c3d88b7622a7f4c413342
   CordovaPlugins: 1ded8e03a0c2595b961201534f136395e604df44
   CordovaPluginsResources: 0c211f770ed91763a179ebcd9b9346e120b70662
   CordovaPluginsStatic: 05686d8740eee218a5566bb3e1cc935b63901b1c
-  DooleVideocallNoticationsPlugins: 6924bc3e2765de5904f0c538a47471bfb689cc9e
+  DooleVideocallNoticationsPlugins: 88cf8af3c40e7cd7ae39523f5fc254e2de67ada3
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
   FirebaseAnalytics: b5efc493eb0f40ec560b04a472e3e1a15d39ca13
   FirebaseAppCheck: afb42367002c12bbb5f58c4a954ecd2f0a171182
