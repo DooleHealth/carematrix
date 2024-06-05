@@ -43,3 +43,30 @@ ion-card {
 .marginTop{
   margin-top: 5%;
 }
+
+.new-label {
+ // background-color: red; /* o el color que prefieras */
+  color: #673ab7;
+  padding: 2px 8px;
+  margin-right: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.flash {
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

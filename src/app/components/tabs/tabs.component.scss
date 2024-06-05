@@ -115,3 +115,9 @@ ion-fab {
   bottom: 2%; /* Ajusta este valor según necesites */
   /* Define horizontal positions if needed */
 }
+
+@media (min-width: 750px) {
+  .small {
+    margin-top: -15%;
+  }
+}

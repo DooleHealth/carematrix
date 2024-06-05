@@ -11,7 +11,9 @@
     <ion-grid style="height: 100% !important">
 
       <ion-row class="marginTop">
+       
         <ion-text class="txt-title-card">{{content?.title | translate}}</ion-text>
+        <ion-text *ngIf="content?.type === 'goals' && this.newgoals === 'true'" class="new-label flash"> {{ 'shared_care_plan.new' | translate}}</ion-text>
       </ion-row>
 
    <!--    <ion-row style="padding-right: 5%;">

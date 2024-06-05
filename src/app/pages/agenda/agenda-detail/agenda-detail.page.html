@@ -7,7 +7,7 @@
     <ion-title class="toolbarTitle" *ngIf="this.event?.origin == 0 || this.event?.origin == 1 && this.event?.staff?.length > 0">{{ 'appointment.header_appointment' | translate}}</ion-title>
     
     <ion-buttons slot="end" [class.isDisabled]="this.isSaving">
-      <ion-button *ngIf="this.permissionService.canManageEvents && this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" [disabled]="this.permissionService.canManageEvents"><ion-icon name="alarm-outline"></ion-icon></ion-button>
+      <ion-button *ngIf="this.permissionService.canManageEvents && this.enableReminder && role?.component?.reminder" color="primary" (click)="addReminder()" [disabled]="!this.permissionService.canManageEvents"><ion-icon name="alarm-outline"></ion-icon></ion-button>
       <ion-button color="primary" (click)="share()"><ion-icon name="share-outline"></ion-icon></ion-button>
       <ion-button color="primary"  (click)="addCalendar(this.event)"><ion-icon name="calendar-outline"></ion-icon></ion-button>
     </ion-buttons>

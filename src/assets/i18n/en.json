@@ -1094,7 +1094,8 @@
     "descriptionExercises": "To keep you in shape",
     "descriptionDiets": "Improve your diet",
     "descriptionTestimonials": "Experiences similar to yours",
-    "descriptionGames": "Some entertainment is available for you!"
+    "descriptionGames": "Some entertainment is available for you!",
+    "new":"NEW"
   },
   "exercices": {
     "header": "Exercises"

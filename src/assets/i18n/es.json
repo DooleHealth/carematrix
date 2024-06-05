@@ -1092,7 +1092,8 @@
       "descriptionExercises": "Para mantenerte en forma.",
       "descriptionDiets": "Mejora tu dieta",
       "descriptionTestimonials": "Experiencias similares a la tuya",
-      "descriptionGames": "¡Algo de entretenimiento está disponible para ti!"
+      "descriptionGames": "¡Algo de entretenimiento está disponible para ti!",
+      "new":"NUEVO"
     },
     "exercices":{
       "header": "Ejercicios"

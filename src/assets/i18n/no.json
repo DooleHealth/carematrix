@@ -1098,7 +1098,8 @@
     "descriptionExercises": "For å holde deg i form",
     "descriptionDiets": "Forbedre kostholdet ditt",
     "descriptionTestimonials": "Erfaringer som ligner dine",
-    "descriptionGames": "Underholdning er tilgjengelig for deg!"
+    "descriptionGames": "Underholdning er tilgjengelig for deg!",
+    "new":"Ny"
   },
   "exercices": {
     "header": "Treningsøvelser"

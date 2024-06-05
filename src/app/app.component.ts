@@ -1,10 +1,10 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filesystem, Directory as FilesystemDirectory } from '@capacitor/filesystem';
 import { ActionPerformed, Token, PushNotifications } from '@doole/videocall-notications-plugins/dist/esm/PushNotifications';
 import { LocalNotificationSchema, ActionPerformed as LocalNotificationActionPerformed, LocalNotifications } from '@capacitor/local-notifications';
 
-import { AlertController, MenuController, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, GestureController, IonRouterOutlet, MenuController, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
 import { Badge } from '@awesome-cordova-plugins/badge/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { FirebaseAuthService } from './services/firebase/auth/firebase-auth.service';
@@ -40,6 +40,7 @@ declare let IRoot: any;
   templateUrl: 'app.component.html',
 })
 export class AppComponent implements OnInit {
+  @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
   NUM_MINUTES_GO_LOGIN = 900;
   NUM_MINUTES_SHOW_BIOMETRIC = 300
   settingsBio = '';
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit {
     private navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
     private navigation: NavigationService,
+    private gestureCtrl: GestureController,
   ) {
     this.setLanguage();
     if (Capacitor.isNativePlatform() && this.platform.is('android')) {
@@ -130,14 +132,19 @@ export class AppComponent implements OnInit {
         //this.backgroundMode.enable();
 
         this.backButton();
-
+       
+        this.addSwipeGesture();
+        this.addSwipeGesture2();
         //this.createCacheFolder();
       }
 
     });
   }
 
- 
+  ngAfterViewInit() {
+    this.addSwipeGesture();
+  }
+
   async createCacheFolder() {
     await Filesystem.mkdir({
       directory: FilesystemDirectory.Cache,
@@ -1024,6 +1031,37 @@ export class AppComponent implements OnInit {
     }
   }
 
+  addSwipeGesture() {
+    console.log("cuba!!!!")
+    const gesture = this.gestureCtrl.create({
+      el: document.querySelector('ion-router-outlet'), // Adjust as needed
+      gestureName: 'swipe-left',
+      onEnd: ev => {
+        if (ev.deltaX < -50) { // Detect left swipe
+          this.handleLeftSwipe();
+        }
+      }
+    });
+    gesture.enable();
+  }
+  addSwipeGesture2() {
+    if (this.platform.is('ios')) {
+      document.addEventListener('swiped-left', () => {
+        this.handleLeftSwipe();
+      });
+    }
+  }
+
+  async handleLeftSwipe() {
+    console.log("VAMOS!!!!")
+    if (this.router.url.endsWith('home')) {
+      this.showExitConfirm();
+    } else if (this.router.url.includes('landing')) {
+      navigator['app'].exitApp();
+    } else {
+      //this.navCtrl.pop();
+    }
+  }
 }
 
 

@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, Input, NgZone, HostBinding, ApplicationRef, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Health } from '@awesome-cordova-plugins/health/ngx';
-import { IonicSafeString, ModalController, NavController, Platform } from '@ionic/angular';
+import { GestureController, IonContent, IonicSafeString, ModalController, NavController, Platform } from '@ionic/angular';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { User, Goal, Diet, Drug, PhysicalActivity, Game, Agenda, Advice, FamilyUnit } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -34,6 +34,7 @@ import { Form } from 'src/app/models/form';
 import { PusherChallengeNotificationsService } from 'src/app/services/pusher/pusher-challenge-notifications.service';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import config from '../../../../capacitor.config';
 
 const ALL_NOTICATION = 'allNotification'
 export interface UserInformation {
@@ -53,12 +54,16 @@ export class ShowcaseShellUserModel extends ShellModel {
     super();
   }
 }
+
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild(IonContent, { static: false }) content: IonContent;
   first_name = ''
   public greeting = '';
   pusherNotification = false;
@@ -248,6 +253,7 @@ export class HomePage implements OnInit {
     private pusherConnection: PusherConnectionService,
     private constants: Constants,
     public permissionService: PermissionService,
+  
     // public speechRecognition: SpeechRecognition;
 
 
@@ -262,6 +268,7 @@ export class HomePage implements OnInit {
 
 
   async ngOnInit() {
+   
     TextToSpeech.stop();
     this.date = this.transformDate(Date.now(), 'yyyy-MM-dd')
 
@@ -277,7 +284,7 @@ export class HomePage implements OnInit {
 
   async ionViewWillEnter() {
 
-
+  
 
     this.canDoForm = (this.authService?.user?.familyUnit == undefined || this.authService?.user?.familyUnit == null) && this.permissionService.canViewForms;
     this.activateFocus = false;
@@ -307,7 +314,15 @@ export class HomePage implements OnInit {
   }
 
 
+  async showAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: 'Deslizamiento hacia la izquierda detectado!',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 
   initPushers() {
     this.pusherAlarms?.init()
@@ -2417,6 +2432,33 @@ export class HomePage implements OnInit {
 
   getCaregiversList() {
     return this.listFamilyUnit;
+  }
+
+ 
+
+
+  showExitConfirm() {
+    const name = config.appName
+    this.alertController.create({
+      header: name,
+      message: this.translate.instant('home.close_app'),
+      backdropDismiss: false,
+      buttons: [{
+        text: this.translate.instant('button.cancel'),
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit prevented!');
+        }
+      }, {
+        text: this.translate.instant('button.accept'),
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    })
+      .then(alert => {
+        alert.present();
+      });
   }
 
 }

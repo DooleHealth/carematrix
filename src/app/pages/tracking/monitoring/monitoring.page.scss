@@ -89,6 +89,9 @@
     font-size: 14px;
     line-height: 21px;
     color: var(--malva);
+    white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
   }
 
   .txt-body {

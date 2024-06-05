@@ -21,3 +21,11 @@
     color: var(--ion-color-danger);
     font-size:12px;
   }
+
+  @media (max-width: 330px) {
+    .min-length-error {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }

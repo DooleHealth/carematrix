@@ -20,7 +20,7 @@
               <ion-label class="error" color="danger" *ngIf="this.code.hasError('required')">
                 {{ 'verification.error_required' | translate}}
               </ion-label>
-              <ion-label class="error" color="danger" *ngIf="this.code.hasError('minlength')">
+              <ion-label class="error error min-length-error" color="danger" *ngIf="this.code.hasError('minlength')">
                 {{ 'verification.error_min_lenght' | translate}}
               </ion-label>
             </div>

@@ -126,6 +126,7 @@ export class PusherNotificationService {
 
     
     if (!this.isScpAlertOpened) {
+      localStorage.setItem('newgoals', "true");
       this.isScpAlertOpened = true;
       let message = `
       <ion-row>
@@ -157,6 +158,7 @@ export class PusherNotificationService {
             role: 'accept',
             handler: () => {
               this.isScpAlertOpened = false;
+              localStorage.setItem('newgoals', "false");
               this.router.navigate([ContentTypePath.Goals]);
             }
           },

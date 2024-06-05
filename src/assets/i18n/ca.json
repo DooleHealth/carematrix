@@ -916,7 +916,9 @@
         "description": "<p>Aquest és el seu <b>Pla de cures compartit</b></p>",
         "monitoring": "Medical Procedure",
         "medical_procedure": "Medical Procedure",
-        "informed_consent": "Informed Consent"
+        "informed_consent": "Informed Consent",
+        "new":"NOU"
+
       },
       "enviroment":{
         "production":"Producció",

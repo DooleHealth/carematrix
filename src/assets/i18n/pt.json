@@ -1015,7 +1015,8 @@
     },
     "monitoringList": {
       "text": "A monitorização é crucial para avaliar o estado de saúde, detetar alterações precoces e ajustar o tratamento."
-    }
+    },
+    "new":"NOVO"
   },
   "exercices": {
     "header": "Exercícios"

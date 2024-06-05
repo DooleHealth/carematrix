@@ -9,13 +9,23 @@ import { SharedCarePlan } from 'src/app/models/shared-care-plan';
 export class ContentComponent  implements OnInit {
   @Input() content: SharedCarePlan
   @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
-  constructor() { }
+  newgoals;
+  constructor() {
+    
+    this.newgoals = localStorage.getItem("newgoals");
+   }
 
   ngOnInit() {
     console.log("content", this.content)
+    
+    
   }
 
   goTo(type){
+    if(type === 'goals'){
+      localStorage.setItem('newgoals', "false");
+    }
+   
       this.redirect.emit({type: type})
   }
     

@@ -1098,7 +1098,8 @@
     "descriptionExercises": "För att hålla dig i form",
     "descriptionDiets": "Förbättra din kost",
     "descriptionTestimonials": "Erfarenheter som liknar din",
-    "descriptionGames": "Det finns lite underhållning tillgänglig för dig!"
+    "descriptionGames": "Det finns lite underhållning tillgänglig för dig!",
+    "new":"NY"
   },
   "exercices": {
     "header": "Övningar"

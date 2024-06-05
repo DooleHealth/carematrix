@@ -64,6 +64,7 @@ export class AgendaDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.disabled = Capacitor.isNative? 'disabled': '';
     this.event = history.state.event;
     this.id = (this.event)? history.state.event.id: history.state.id;
