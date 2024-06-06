@@ -132,7 +132,8 @@ export class LegalPage implements OnInit {
   }
 
   redirectBiometric(){
-    let condicion = JSON.parse(this.endpoints?._ENVIROMENT?.show_bio_dialog);
+    let search = this.endpoints?._ENVIROMENT?.show_bio_dialog;
+    let condicion = JSON.parse(localStorage.getItem(search) )
     if(condicion){
       this.router.navigate(['/login/biometric-auth']);
     } else{
