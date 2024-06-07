@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
         // VOIP calls for IOS
         if (this.platform.is('ios')) {
           this.initVoIpPushNotifications();
-        } else {
+        } else if (this.platform.is('android')) {
           this.receiveVoIPEvents();
         }
 
@@ -328,7 +328,7 @@ export class AppComponent implements OnInit {
 
             if (this.platform.is('ios')) {
               cordova.plugins.CordovaCall.receiveCall(caller.Username, caller.callId);
-            } else {
+            } else if (this.platform.is('android')) {
               CallCapacitor.receiveCall({from: caller.Username });
             }
           } else
