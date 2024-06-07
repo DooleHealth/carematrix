@@ -19,7 +19,13 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <h3 style="text-align: center; margin-top: 0px; padding-left: 0px;" class="txtTitle"> {{this.userDoole?.first_name}}</h3>
+          <h3 
+            style="text-align: center; margin-top: 0px; padding-left: 0px;" 
+            class="txtTitle"
+          >
+            <ion-skeleton-text *ngIf="!this.userDoole?.first_name" animated class="skeleton-centered" ></ion-skeleton-text>
+            <span *ngIf="this.userDoole?.first_name">{{ this.userDoole.first_name }}</span>
+          </h3>
         </ion-col>
       </ion-row>
     </ion-grid>

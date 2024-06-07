@@ -26,3 +26,9 @@ ion-label {
 
 
 
+.skeleton-centered {
+  width: 50%;
+  height: 26px; /* Ajusta la altura según tus necesidades */
+  margin: 0 auto; /* Centra horizontalmente */
+  display: block; /* Asegura que el elemento sea un bloque para aplicar el centrado */
+}
