@@ -9,7 +9,7 @@ export class Constants {
     public  INDEX:number = 0
 
     public  API_PROD_ENDPOINT: string = 'https://bo.incahealthcare.com/api';
-    public  PROD_ENDPOINT: string = 'https://bo.incahealthcare.com/';
+    public  PROD_ENDPOINT: string = 'https://bo.incahealthcare.com';
 
     public  API_ENDPOINT_DEV: string = 'https://bo-dev.incahealthcare.com/api';
     public  ENDPOINT_DEV: string = 'https://bo-dev.incahealthcare.com';
