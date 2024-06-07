@@ -19,7 +19,25 @@
     width: 100%;
     text-align: center;
     color: var(--ion-color-danger);
-    font-size:12px;
+    font-size: 10px; /* Tamaño de fuente por defecto para móviles */
+  }
+  
+  @media (min-width: 320px) {
+    .error {
+      font-size: 10px; /* Tamaño de fuente para móviles pequeños */
+    }
+  }
+  
+  @media (min-width: 420px) {
+    .error {
+      font-size: 12px; /* Tamaño de fuente para móviles medianos */
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .error {
+      font-size: 14px; /* Tamaño de fuente para tablets */
+    }
   }
 
   @media (max-width: 330px) {
