@@ -17,7 +17,7 @@ import { ElementsAddPage } from '../tracking/elements-add/elements-add.page';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PusherAlarmService } from 'src/app/services/pusher/pusher-alarm.service';
 import { PusherNotificationService } from 'src/app/services/pusher/pusher-notification.service';
-import { ExceptionCode } from '@capacitor/core';
+import { Capacitor, ExceptionCode } from '@capacitor/core';
 import { PusherConnectionService } from 'src/app/services/pusher/pusher-connection.service';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { ACCESS_TYPE, SharedCarePlanPrescribedApps } from 'src/app/models/shared-care-plan';
@@ -260,6 +260,7 @@ export class HomePage implements OnInit {
 
   ) {
     this.scpProcedures = new PrescribedAppsAdapter(this.platform);
+    if(Capacitor.isNativePlatform())
     SpeechRecognition.requestPermissions();
 
   }

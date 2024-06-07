@@ -10,10 +10,12 @@
     </ion-row>
     <ion-note class="ion-padding" color="danger">{{this.error_msg}}</ion-note>
     <ion-radio-group [value]="this.valueDefault" (ionChange)="setValue($event); checkValue()">
-      <ion-item  lines="none1" class="item-option" *ngFor="let entry of this.options">
-        <ion-radio [id]="entry?.value" slot="start" mode="md" [value]="entry?.id" ></ion-radio>
+      <ion-item lines="inset" class="item-option" *ngFor="let entry of this.options">
+        <ion-radio labelPlacement="end" [id]="entry?.value" alignment="center" justify="start" mode="md" [value]="entry?.id" >
+          <div [innerHtml]="entry.label | safeHtml"></div>
+        </ion-radio>
         <!-- <ion-text [innerHtml]="entry.label | safeHtml"></ion-text> -->
-        <div [innerHtml]="entry.label | safeHtml"></div>
+
       </ion-item>
     </ion-radio-group>
   </ion-grid>

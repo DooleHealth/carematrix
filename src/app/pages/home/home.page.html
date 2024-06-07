@@ -64,10 +64,10 @@
             <ion-row>
               <ion-col size="12" style="width: 100% ;padding-left: 2%; padding-right: 2%;">
                 <ion-list *ngIf="this.results.length > 0"  class="dependants-list">
-                  <ion-radio-group mode="ios" value="space-between" (ionChange)="onCaregiverSelect($event)" ChangeColorCargiver>
+                  <ion-radio-group mode="ios" (ionChange)="onCaregiverSelect($event)" ChangeColorCargiver>
                     <div *ngFor="let result of results; let i = index; let isLast=last">
                       <ion-item slot="end" lines="none" class="caregiver-item2">
-                        <ion-radio mode="ios" value="space-between" justify="space-between" value="{{i}}" checked="true"
+                        <ion-radio mode="ios" justify="space-between" value="{{i}}" checked="true"
                           style="padding-right: 5%; padding-left: 5%;">
                           <p class="caregiver-txt">{{ result.name }}
                             <span class="birth-txt" *ngIf="result.birthdate">{{ result.birthdate }}</span>
