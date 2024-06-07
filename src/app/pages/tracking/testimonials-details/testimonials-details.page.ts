@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { ChangeEndpointsService } from 'src/app/services/change-endpoints.service';
 import { DateService } from 'src/app/services/date.service';
 import { DooleService } from 'src/app/services/doole.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -38,7 +39,7 @@ export class TestimonialsDetailsPage implements OnInit {
     public navCtrl: NavController,
     private dooleService: DooleService,
     public sanitizer: DomSanitizer,
-    private languageService: LanguageService, public dateService: DateService,
+    private languageService: LanguageService, public dateService: DateService,private endpoints: ChangeEndpointsService,
      private router: Router) {
   }
 
@@ -95,8 +96,8 @@ export class TestimonialsDetailsPage implements OnInit {
 
         this.testimony?.files?.forEach(element => {
           if(element?.mime_type=="application/pdf"){
-            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
-            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl("https://api.doole.io/v2/PDFViewer/web/viewer.html?file="+encodeURIComponent(element.temporaryUrl));
+            element.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.endpoints.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
+            this.linkpdf=this.sanitizer.bypassSecurityTrustResourceUrl(`${this.endpoints.DOOLE_ENDPOINT}/v2/PDFViewer/web/viewer.html?file=`+encodeURIComponent(element.temporaryUrl));
             this.linkpdf2=this.sanitizer.bypassSecurityTrustResourceUrl(element.temporaryUrl);
             this.thumbnail=(element.thumbnailTemporaryUrl);
             this.linkPdfDescription=(element.description);
