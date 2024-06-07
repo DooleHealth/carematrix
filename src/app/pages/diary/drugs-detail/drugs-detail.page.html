@@ -57,9 +57,7 @@
     <!-- Single Shot-->
   
     <ion-item *ngIf="!isEditDrug">
-      <ion-label class="txtTitleGoals" stacked>{{ 'medication.snapshot_medication' | translate}}
-      </ion-label>
-      <ion-toggle (click)="snapshot()"></ion-toggle><br /><br />
+      <ion-toggle class="txtTitleGoals" justify="space-between" (click)="snapshot()">{{ 'medication.snapshot_medication' | translate}}</ion-toggle><br /><br />
     </ion-item>
     <!-- field_from_date -->
       <div *ngIf="!isInstant">
