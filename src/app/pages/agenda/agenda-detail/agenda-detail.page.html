@@ -20,11 +20,11 @@
 
 
   <div class="whiteBackground" *ngIf="!this.isLoading">
-    <ion-fab  *ngIf="this.event?.online === 1 && this.enableVideocallButton" vertical="bottom" horizontal="end" slot="fixed">
+  <!--   <ion-fab  *ngIf="this.event?.online === 1 && this.enableVideocallButton" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button  [disabled]="!this.permissionService.canAccessVideocall" (click)="this.startDooleVideocall()" >
         <ion-icon name="videocam-outline"></ion-icon>
       </ion-fab-button>
-    </ion-fab>
+    </ion-fab> -->
     <ion-list>
 
       <ion-item lines="none" class="ion-padding-top">
