@@ -25,9 +25,21 @@
       </ion-button>
     </ion-item>   
     <ion-item lines="none">
-      <div *ngIf="this.files" id="container" class="addFiles">
+      <!-- <div *ngIf="this.files" id="container" class="addFiles">
         <div id="middle" style="flex-grow: 1;">
           <p class="titule" style="display: inline-block;">{{ this.files?.name }}</p>
+          <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(files)"></ion-icon>
+        </div>
+      </div> -->
+
+      <div *ngIf="this.files" id="container" style="margin-top: 10px; margin-bottom: 10px;">
+        <div id="left">
+          <!-- <ion-icon name="open" color="primary"></ion-icon> -->
+        </div>
+        <div id="middle">
+          <p class="titule">{{ this.files?.name }}</p>
+        </div>
+        <div id="right">
           <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(files)"></ion-icon>
         </div>
       </div>
