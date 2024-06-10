@@ -121,12 +121,13 @@ export class LegalPage implements OnInit {
   }
 
   showIntro(){
+    
       this.authService.getShowIntroLocalstorage().then((showIntro) =>{
         console.log(`[LegalPage] showIntro() localStorage`,showIntro);
         if(showIntro){
-          this.router.navigate(['/home']);
-        }else{
           this.router.navigate(['/intro']);
+        }else{
+          this.router.navigate(['/home']);
         }
       })
   }

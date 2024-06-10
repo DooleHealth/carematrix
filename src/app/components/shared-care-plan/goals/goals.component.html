@@ -8,8 +8,7 @@
             slot="start"><strong>{{ this.current_level?.name}}</strong></ion-text>
         </ion-item>
       </ion-col>
-      <ion-col></ion-col>
-      <ion-col size="4" *ngIf="current_level?.last_accepted_or_declined == null">
+      <ion-col  *ngIf="current_level?.last_accepted_or_declined == null">
         <ng-container>
           <!--<ion-button *ngIf="current_level?.last_accepted_or_declined == null" shape="round" color="warning" mode="ios"
             class="ion-float-right custom-button" (click)="AcceptOrDeclined(current_level?.id)">
