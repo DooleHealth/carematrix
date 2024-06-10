@@ -28,3 +28,22 @@
 section {
   margin: 1em;
 }
+
+.addFiles {
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  display: flex; 
+  align-items: center;
+}
+
+
+#middle {
+  vertical-align: bottom;
+  width: 85%;
+}
+#right {
+  margin-left: 20%;
+  vertical-align: bottom;
+  width: 12%;
+}
+
