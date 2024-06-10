@@ -10,25 +10,25 @@
 #middle,
 #right {
   display: inline-block;
-  display: inline;
   zoom: 1;
   vertical-align: top;
 }
 #left {
-  width: 10%;
+  width: 5%;
 }
 #middle {
   vertical-align: bottom;
-  width: 75%;
+  width: 82%;
 }
 #right {
   vertical-align: bottom;
-  width: 12%;
+  width: 10%;
 }
 
 section {
   margin: 1em;
 }
+
 .addFiles {
   margin-top: 10px;
   margin-bottom: 10px; 
@@ -46,3 +46,4 @@ section {
   vertical-align: bottom;
   width: 12%;
 }
+
