@@ -26,7 +26,7 @@
         <p class="titule">{{ getName(file)  }}</p>
       </div>
       <div id="right">
-        <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, false)"></ion-icon>
+        <ion-icon style="margin-left: 8px;" name="trash-sharp" color="danger"  (click)="presentAlertConfirm(file, i, false)"></ion-icon>
       </div>
     </ion-item>
   </div>
@@ -40,7 +40,7 @@
         <p class="titule">{{ file.name }}</p>
       </div>
       <div id="right">
-        <ion-icon style="margin-left: 8px;" name="close-circle" color="primary" (click)="presentAlertConfirm(file, i, true)"></ion-icon>
+        <ion-icon style="margin-left: 8px;" name="trash-sharp" color="danger"  (click)="presentAlertConfirm(file, i, true)"></ion-icon>
       </div>
     </ion-item>
   </div>
