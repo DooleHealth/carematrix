@@ -13,8 +13,10 @@
       <ion-row class="marginTop">
        
         <ion-text class="txt-title-card">{{content?.title | translate}}</ion-text>
-        <ion-text *ngIf="content?.type === 'goals' && this.newgoals === 'true'" class="new-label flash"> {{ 'shared_care_plan.new' | translate}}</ion-text>
-      </ion-row>
+        <ion-badge style="height: 20px;"*ngIf="content?.type === 'goals' && this.newgoals === 'true'" class="new-label flash" mode="ios">
+          {{ 'shared_care_plan.new' | translate}}
+        </ion-badge>
+         </ion-row>
 
    <!--    <ion-row style="padding-right: 5%;">
         <ion-text class="txt-subtitle-card textAdvicesSlider" style="margin-top: -5%;">

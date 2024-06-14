@@ -78,12 +78,24 @@ export class ChangeEndpointsService {
 
     this.API_ENDPOINT = this._ENVIROMENT.api
     this.DOOLE_ENDPOINT = this._ENVIROMENT.endpoint
+    this.getApiEndpointRegex(this.API_ENDPOINT)
     this.setIndexEndPointLocalstorage(index)
     this._endpointIndex.next(index); 
   }
 
   setIndexEndPointLocalstorage(endpoint) {
     localStorage.setItem(ENDPOINT, JSON.stringify(endpoint));
+  }
+  public getApiEndpointRegex(currentEnv): RegExp | null {
+    
+    if (!currentEnv) {
+      return null; // No se encontró ningún entorno definido
+    }    
+    const apiBaseUrl = currentEnv;
+    const escapedApiBaseUrl = apiBaseUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const reg = new RegExp(`^${escapedApiBaseUrl}/`);
+    localStorage.setItem('SentryConfi', JSON.stringify(reg.source));
+    
   }
 
   getIndexEndPointLocalstorage() {

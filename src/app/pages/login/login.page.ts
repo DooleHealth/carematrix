@@ -114,6 +114,7 @@ export class LoginPage implements OnInit {
 
 
   checkConditionLegal(){
+    
     this.dooleService.getAPILegalInformation().subscribe(
       async (res: any) =>{
         //console.log('[LoginPage] checkConditionLegal()', await res);

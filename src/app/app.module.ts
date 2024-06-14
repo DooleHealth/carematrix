@@ -58,6 +58,11 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { VideocallPageModule } from "./pages/agenda/videocall/videocall.module";
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { DirectiveModule } from "./directive/directive.module";
+import config from '../../capacitor.config';
+import {SentryConfi, AppVersion} from './utils/sentry-confi';
+
+import * as Sentry from "@sentry/capacitor";
+import * as SentrySibling from "@sentry/angular-ivy";
 
 registerLocaleData(localeEn);
 registerLocaleData(localeEs);
@@ -70,6 +75,28 @@ registerLocaleData(localeSv);
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
+/*..SENTRY YA IMPLEMENTADO PARA CUANDO ESTE EN LA WEB TODO LISTO.
+      SOLO PONER EL DSN QUE ESTE EN LA WEB
+*/
+/*
+Sentry.init({
+  dsn: "",
+  release: `${config.appName}`+` V- ` +`${AppVersion}`,
+  dist: "1",
+  tracesSampleRate: 1.0,
+  integrations: [
+    SentrySibling.browserTracingIntegration(),
+  ],
+  tracePropagationTargets: [
+    "localhost",
+    SentryConfi
+  ],
+},
+
+SentrySibling.init
+);*/
+
+
 
 @NgModule({
   declarations: [
