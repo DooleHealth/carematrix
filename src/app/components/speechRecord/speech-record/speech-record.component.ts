@@ -57,7 +57,7 @@ export class SpeechRecordComponent implements OnInit, OnDestroy {
       SpeechRecognition.start({
         popup: false,
         partialResults: true,
-        language: 'es-ES',
+        language: 'en-EN',
 
 
       });
