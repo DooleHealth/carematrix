@@ -171,6 +171,12 @@ PODS:
   - nanopb/encode (2.30910.0)
   - OpenTok (2.17.1)
   - PromisesObjC (2.4.0)
+  - Sentry/HybridSDK (8.21.0):
+    - SentryPrivate (= 8.21.0)
+  - SentryCapacitor (0.18.0):
+    - Capacitor
+    - Sentry/HybridSDK (= 8.21.0)
+  - SentryPrivate (8.21.0)
   - SQLCipher (4.5.7):
     - SQLCipher/standard (= 4.5.7)
   - SQLCipher/common (4.5.7)
@@ -209,6 +215,7 @@ DEPENDENCIES:
   - "DooleVideocallNoticationsPlugins (from `../../node_modules/@doole/videocall-notications-plugins`)"
   - Firebase/Messaging
   - FirebaseCore
+  - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -227,6 +234,8 @@ SPEC REPOS:
     - nanopb
     - OpenTok
     - PromisesObjC
+    - Sentry
+    - SentryPrivate
     - SQLCipher
     - ZIPFoundation
 
@@ -287,6 +296,8 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
   DooleVideocallNoticationsPlugins:
     :path: "../../node_modules/@doole/videocall-notications-plugins"
+  SentryCapacitor:
+    :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
   AppCheckCore: 58dbd968d93b7c56650c28a1ac404d7a54307c0e
@@ -332,9 +343,12 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OpenTok: ca8dc629f930dc438a87147258c469a1944e2eef
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  Sentry: ebc12276bd17613a114ab359074096b6b3725203
+  SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
+  SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
   SQLCipher: 5e6bfb47323635c8b657b1b27d25c5f1baf63bf5
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 689e4224388c5f053b791fe76c63d6b401f320fc
+PODFILE CHECKSUM: b0230400971bc2c7b4c3dc54365e0c4b7afbd8dd
 
 COCOAPODS: 1.15.2

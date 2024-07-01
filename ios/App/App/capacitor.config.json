@@ -71,6 +71,8 @@
 		"BadgePlugin",
 		"PushNotificationsPlugin",
 		"PushNotificationsPlugin",
+		"SentryCapacitor",
+		"SentryCapacitor",
 		"NativeSettingsPlugin",
 		"NativeSettingsPlugin",
 		"CDVPlugin"
