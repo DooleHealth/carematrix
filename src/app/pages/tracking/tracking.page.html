@@ -228,18 +228,26 @@
     </div>
   </div>
 
+  
+
   <ng-template #noData>
     <div *ngIf="!this.loadingForms && !this.loadingTests && !this.loadingGraphics">
       <app-no-data></app-no-data>
     </div>
   </ng-template>
 
-  <div *ngIf="this.showButton && permissionService.canManageMedicalTests">
+  
+
+  <div *ngIf="this.showButton && permissionService.canManageMedicalTests" style="margin-top: 20%">
+    
     <app-button-add [content]="this.addButton[0]" (dataUpdated)="addDocument()"></app-button-add>
   </div>
+
+  
 
 </ion-content>
 
 <ion-footer>
+ 
     <app-tabs></app-tabs>
 </ion-footer>
