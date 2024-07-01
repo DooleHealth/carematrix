@@ -80,10 +80,8 @@
     </ng-template>
   </ion-modal>
   <ion-item lines="none">
-    <ion-label  stacked class="typography">
-     {{ 'documents_add.field_private' | translate }}
-    </ion-label>
-    <ion-checkbox color="primary" formControlName="private"></ion-checkbox>
+
+    <ion-checkbox color="primary"  formControlName="private" justify="space-between">{{ 'documents_add.field_private' | translate }}</ion-checkbox>
 
   </ion-item>
     <ion-list text-wrap>
